@@ -393,10 +393,15 @@ Route::view('help-desk-incident', 'frontend.forms.help-desk-incident');
 Route::view('review-management-report', 'frontend.review-management.review-management-report');
 
 
-//! ============================================
-//!                    External Audit
-//! ============================================
 
+//  ===================== OOS OOT OOC Form Route====================================
+Route::view('OOT_form', 'frontend.OOT.OOT_form');
+Route::view('out_of_calibration', 'frontend.OOC.out_of_calibration');
+
+Route::view('oos_form', 'frontend.OOS.oos_form');
+
+
+// ==========================================================
 
 /**
  * AJAX ROUTES
