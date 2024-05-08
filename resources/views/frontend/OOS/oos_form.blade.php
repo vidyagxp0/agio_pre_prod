@@ -321,21 +321,21 @@
 
     <div class="form-field-head">
         <!-- <div class="pr-id">
-            New Document
-        </div> -->
+                    New Document
+                </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
             QMS-North America / OOS
         </div>
         <!-- <div class="button-bar">
-                <button type="button">Save</button>
-                <button type="button">Cancel</button>
-                <button type="button">New</button>
-                <button type="button">Copy</button>
-                <button type="button">Child</button>
-                <button type="button">Check Spelling</button>
-                <button type="button">Change Project</button>
-            </div> -->
+                        <button type="button">Save</button>
+                        <button type="button">Cancel</button>
+                        <button type="button">New</button>
+                        <button type="button">Copy</button>
+                        <button type="button">Child</button>
+                        <button type="button">Check Spelling</button>
+                        <button type="button">Change Project</button>
+                    </div> -->
     </div>
 
 
@@ -490,10 +490,10 @@
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <!-- <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option> -->
+                                            <option>Deviation</option>
+                                            <option>Product Non-conformance</option>
+                                            <option>Inspectional Observation</option>
+                                            <option>Others</option> -->
 
                                 </select>
 
@@ -700,7 +700,7 @@
 
 
                         <!--
-    ------------------------------------------grid-3----------------------------------- -->
+            ------------------------------------------grid-3----------------------------------- -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -807,37 +807,37 @@
                             </div>
                         </div>
                         <!-- <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Facility Name"> Facility Name </label>
-                                    <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Group Name"> Group Name </label>
-                                    <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                        <option value="Piyush">Piyush Sahu</option>
-                                    </select>
-                                </div>
-                            </div> -->
+                                        <div class="group-input">
+                                            <label for="Facility Name"> Facility Name </label>
+                                            <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Group Name"> Group Name </label>
+                                            <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                                <option value="Piyush">Piyush Sahu</option>
+                                            </select>
+                                        </div>
+                                    </div> -->
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
@@ -931,7 +931,7 @@
                         </div>
 
                         <div class="col-12">
-                           <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
+                            <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
                             <div class="group-input">
                                 <div class="why-why-chart">
                                     <table class="table table-bordered">
@@ -1180,7 +1180,8 @@
                                             </tr>
                                             <tr>
                                                 <td>10</td>
-                                                <td>Equipment log book has been reviewed and no any failure or malfunction has been reviewed.</td>
+                                                <td>Equipment log book has been reviewed and no any failure or malfunction
+                                                    has been reviewed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1205,7 +1206,8 @@
                                             </tr>
                                             <tr>
                                                 <td>11</td>
-                                                <td>Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.</td>
+                                                <td>Any malfunctioning and / or out of calibration analytical instruments
+                                                    (including glassware) is used.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1230,7 +1232,9 @@
                                             </tr>
                                             <tr>
                                                 <td>12</td>
-                                                <td>Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.</td>
+                                                <td>Whether reference standard / working standard is correct (in terms of
+                                                    appearance, purity, LOD/water content & its storage) and assay values
+                                                    are determined correctly.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1255,7 +1259,8 @@
                                             </tr>
                                             <tr>
                                                 <td>13</td>
-                                                <td>Whether test solution / volumetric solution used are properly prepared & standardized.</td>
+                                                <td>Whether test solution / volumetric solution used are properly prepared &
+                                                    standardized.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1280,7 +1285,10 @@
                                             </tr>
                                             <tr>
                                                 <td>14</td>
-                                                <td>Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.</td>
+                                                <td>Review RSD, resolution factor and other parameters required for the
+                                                    suitability of the test system. Check if any out of limit parameters is
+                                                    included in the chromatographic analysis, correctness of the column used
+                                                    previous use of the column.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1305,7 +1313,8 @@
                                             </tr>
                                             <tr>
                                                 <td>15</td>
-                                                <td>In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.</td>
+                                                <td>In the raw data, including chromatograms and spectra; any anomalous or
+                                                    suspect peaks or data has been observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1330,7 +1339,8 @@
                                             </tr>
                                             <tr>
                                                 <td>16</td>
-                                                <td>Any such type of observation has been observed previously (Assay, Dissolution etc.).</td>
+                                                <td>Any such type of observation has been observed previously (Assay,
+                                                    Dissolution etc.).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1355,7 +1365,9 @@
                                             </tr>
                                             <tr>
                                                 <td>17</td>
-                                                <td>Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).</td>
+                                                <td>Any unusual or unexpected response observed with standard or test
+                                                    preparations (e.g. whether contamination of equipment by previous sample
+                                                    observed).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1380,7 +1392,8 @@
                                             </tr>
                                             <tr>
                                                 <td>18</td>
-                                                <td>System suitability conditions met (those before analysis and during analysis).</td>
+                                                <td>System suitability conditions met (those before analysis and during
+                                                    analysis).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1405,7 +1418,8 @@
                                             </tr>
                                             <tr>
                                                 <td>19</td>
-                                                <td>Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.</td>
+                                                <td>Correct and clean pipette / volumetric flasks volumes, glassware used as
+                                                    per recommendation.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1430,7 +1444,8 @@
                                             </tr>
                                             <tr>
                                                 <td>20</td>
-                                                <td>Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.</td>
+                                                <td>Other potentially interfering testing/activities occurring at the time
+                                                    of the test which might lead to OOS.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1455,7 +1470,8 @@
                                             </tr>
                                             <tr>
                                                 <td>21</td>
-                                                <td>Review of other data for other batches performed within the same analysis set and any nonconformance observed.</td>
+                                                <td>Review of other data for other batches performed within the same
+                                                    analysis set and any nonconformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1480,7 +1496,8 @@
                                             </tr>
                                             <tr>
                                                 <td>22</td>
-                                                <td>Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.</td>
+                                                <td>Consideration of any other OOS results obtained on the batch of material
+                                                    under test and any non-conformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1555,7 +1572,8 @@
                                             </tr>
                                             <tr>
                                                 <td>25</td>
-                                                <td>Whether, analysis was performed by any other alternate validated procedure</td>
+                                                <td>Whether, analysis was performed by any other alternate validated
+                                                    procedure</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
                                                         <div style="display: flex; gap: 20px;"><label
@@ -1928,8 +1946,8 @@
 
 
                             <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select multiple name="auditee" placeholder="Select Nature of Deviation" data-search="false"
-                                data-silent-initial-value-set="true" id="auditee">
+                            <select multiple name="auditee" placeholder="Select Nature of Deviation"
+                                data-search="false" data-silent-initial-value-set="true" id="auditee">
                                 <option value="">Chemical</option>
                                 <option value="">Microbiology</option>
 
@@ -2002,6 +2020,461 @@
                                 </div>
                             </div>
 
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="Reference Recores">PHASE II OOS INVESTIGATION </label>
+                        <div class="group-input">
+                            <div class="why-why-chart">
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5%;">Sr.No.</th>
+                                            <th style="width: 40%;">Question</th>
+                                            <th style="width: 20%;">Response</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Is correct batch manufacturing record used?</td>
+                                            <td>
+
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+
+
+                                            </td>
+                                            <td>
+                                                <textarea name="what_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Correct quantities of correct ingredients were used in manufacturing? </td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="where_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Balances used in dispensing / verification were calibrated using valid
+                                                standard weights?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="when_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>4</td>
+                                            <td>Equipment used in the manufacturing is as per batch manufacturing record?
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="coverage_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>5</td>
+                                            <td>Processing steps followed in correct sequence as per the BMR?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>6</td>
+                                            <td>Whether material used in the batch had any OOS result?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>7</td>
+                                            <td>All the processing parameters were within the range specified in BMR? </td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>8</td>
+                                            <td>Environmental conditions during manufacturing are as per BMR?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>9</td>
+                                            <td>Whether there was any deviation observed during manufacturing?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>10</td>
+                                            <td>The yields at different stages were within the acceptable range as per BMR?
+                                            </td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>11</td>
+                                            <td>All the equipment’s used during manufacturing are calibrated?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>12</td>
+                                            <td>Whether there is malfunctioning or breakdown of equipment during
+                                                manufacturing?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>13</td>
+                                            <td>Whether the processing equipment was maintained as per preventive
+                                                maintenance schedule?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>14</td>
+                                            <td>All the in process checks were carried out as per the frequency given in BMR
+                                                & the results were within acceptance limit?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>15</td>
+                                            <td>Whether there were any failures of utilities (like Power, Compressed air,
+                                                steam etc.) during manufacturing ?</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>16</td>
+                                            <td>Whether other batches/products impacted? </td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>17</td>
+                                            <td>Any Other</td>
+                                            <td>
+                                                <div style="display: flex; justify-content: space-around;">
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">Yes</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">No</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+                                                    <div style="display: flex; gap: 20px;"><label
+                                                            style="width: 20px;">N/A</label> <input type="radio"
+                                                            placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                    </div>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <textarea name="who_will_not_be"></textarea>
+                                            </td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
@@ -2740,11 +3213,11 @@
                         </div>
                     </div>
                     <!-- <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments">Required Action Plan? </label>
-                            <input type="num" name="num">
-                        </div>
-                    </div> -->
+                                <div class="group-input">
+                                    <label for="Report Attachments">Required Action Plan? </label>
+                                    <input type="num" name="num">
+                                </div>
+                            </div> -->
 
                     <div class="col-12">
                         <div class="group-input">
