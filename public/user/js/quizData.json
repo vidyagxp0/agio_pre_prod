@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+      "question": "What is the capital of France?",
+      "choices": ["Paris", "London", "Berlin", "Rome"],
+      "answer": 0
+    },
+    {
+        "id": 2,
+      "question": "Which of the following countries is in South America?",
+      "choices": ["Germany", "Japan", "Brazil", "Australia"],
+      "answer": [2, 3]
+    },
+    {
+        "id": 3,
+      "question": "What is the symbol for the chemical element oxygen?",
+      "choices": ["O", "C", "H", "N"],
+      "answer": "O"
+    },
+    {
+        "id": 4,
+      "question": "Which planet is known as the Red Planet?",
+      "choices": ["Mars", "Venus", "Mercury", "Jupiter"],
+      "answer": 0
+    }
+    
+  ]

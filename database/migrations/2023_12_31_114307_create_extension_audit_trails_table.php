@@ -1,0 +1,44 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('extension_audit_trails', function (Blueprint $table) {
+            $table->id();
+            $table->string('extension_id');
+            $table->string('activity_type');
+            $table->longText('previous')->nullable();
+            $table->longText('current')->nullable();
+            $table->longText('comment')->nullable();
+            $table->string('user_id');
+            $table->text('refrence_record')->nullable();
+            $table->string('initiated_through')->nullable();
+            $table->string('user_name');
+            $table->string('origin_state');
+            $table->string('user_role');
+            $table->string('stage')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('extension_audit_trails');
+    }
+};

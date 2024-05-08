@@ -1,0 +1,392 @@
+{
+	"info": {
+		"_postman_id": "340a8d89-5b33-49f4-8b07-9d3ee9fd99f9",
+		"name": "SA-PRO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26182568"
+	},
+	"item": [
+		{
+			"name": "card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}homeCard?user_id=6",
+					"host": [
+						"{{baseUrl}}homeCard"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "TAsklist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}taskList?user_id=6&card_id=1",
+					"host": [
+						"{{baseUrl}}taskList"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "6"
+						},
+						{
+							"key": "card_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task Details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}taskDetails?task_id=2",
+					"host": [
+						"{{baseUrl}}taskDetails"
+					],
+					"query": [
+						{
+							"key": "task_id",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Todays TAsk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}todaytaskList?user_id=6",
+					"host": [
+						"{{baseUrl}}todaytaskList"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}login?mobile=9087654321&password=admin",
+					"host": [
+						"{{baseUrl}}login"
+					],
+					"query": [
+						{
+							"key": "mobile",
+							"value": "9087654321"
+						},
+						{
+							"key": "password",
+							"value": "admin"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "QR",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}qrData?machine_id=197",
+					"host": [
+						"{{baseUrl}}qrData"
+					],
+					"query": [
+						{
+							"key": "machine_id",
+							"value": "197"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}profile?user_id=6",
+					"host": [
+						"{{baseUrl}}profile"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "profileUpdate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}profileUpdate?user_id=3&name=Shraddha&mobile=1234567890&password=12345678",
+					"host": [
+						"{{baseUrl}}profileUpdate"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "3"
+						},
+						{
+							"key": "name",
+							"value": "Shraddha"
+						},
+						{
+							"key": "mobile",
+							"value": "1234567890"
+						},
+						{
+							"key": "password",
+							"value": "12345678"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "areaList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}areaList",
+					"host": [
+						"{{baseUrl}}areaList"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LubricantList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}lubricantList?user_id=6",
+					"host": [
+						"{{baseUrl}}lubricantList"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "lubricant details",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}lubricantDetail?lubricant_id=22&area_id=7&user_id=6&startDate&endDate",
+					"host": [
+						"{{baseUrl}}lubricantDetail"
+					],
+					"query": [
+						{
+							"key": "lubricant_id",
+							"value": "22"
+						},
+						{
+							"key": "area_id",
+							"value": "7"
+						},
+						{
+							"key": "user_id",
+							"value": "6"
+						},
+						{
+							"key": "startDate",
+							"value": null
+						},
+						{
+							"key": "endDate",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lubricant Graph",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}lubricantGraph?area_id=7&lubricant_id=23&graph_title=Weekly",
+					"host": [
+						"{{baseUrl}}lubricantGraph"
+					],
+					"query": [
+						{
+							"key": "area_id",
+							"value": "7"
+						},
+						{
+							"key": "lubricant_id",
+							"value": "23"
+						},
+						{
+							"key": "graph_title",
+							"value": "Weekly"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "topupdetail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}topuplist?machine_id=197&user_id=6",
+					"host": [
+						"{{baseUrl}}topuplist"
+					],
+					"query": [
+						{
+							"key": "machine_id",
+							"value": "197"
+						},
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LeakList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}leakList?machine_id=197&user_id=6",
+					"host": [
+						"{{baseUrl}}leakList"
+					],
+					"query": [
+						{
+							"key": "machine_id",
+							"value": "197"
+						},
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OnsiteTesting",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}onsiteTesingList?machine_id=197&user_id=6",
+					"host": [
+						"{{baseUrl}}onsiteTesingList"
+					],
+					"query": [
+						{
+							"key": "machine_id",
+							"value": "197"
+						},
+						{
+							"key": "user_id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://sa.venturingdigitally.co.in/api/",
+			"type": "string"
+		},
+		{
+			"key": "local",
+			"value": "http://127.0.0.1:8000/api/",
+			"type": "string"
+		}
+	]
+}

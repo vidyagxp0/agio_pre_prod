@@ -1,0 +1,37 @@
+@php
+    $mainmenu = 'System Configuration';
+    $submenu = ' Edit department';
+
+@endphp
+@extends('admin.layout')
+
+@section('container')
+    <div class="modal-content">
+        <form action="{{ route('department.update', $department->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <div class="col-md-12">
+                <input type="hidden" name="type" value="appsettings" />
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="exampleInputName1">Department Code*</label>
+                        <input type="name" name="dc" class="form-control" id="exampleInputName1"
+                            placeholder="Enter Code" value="{{ $department->dc }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputName1">Department Name*</label>
+                        <input type="name" name="name" class="form-control" id="exampleInputName1"
+                            placeholder="Enter name" value="{{ $department->name }}" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </div>
+        </form>
+    </div>
+@endsection
+
+
+@section('jquery')
+@endsection

@@ -1,0 +1,48 @@
+.header
+{
+    background-color: black;
+    color:white;
+}
+.header2
+{
+ padding-left:2.6%;
+}
+.header2 ul li
+
+{
+ float:left;
+ padding:15px;
+ font-size:25px;
+}
+.header3 ul li
+{
+    /* float: right; */
+    padding: 10px;
+    color: white;
+}
+.top_bodyheader
+{
+    background-color: grey;
+    height: 63px;
+}
+
+.createpr
+{
+    background:#0000ff5c;
+}
+  .scopquer
+  {
+    font-size: 12px;
+  }
+  .scope
+  {
+    font-size: 12px;
+  }
+
+.headerPR
+{
+background:black;
+color:#fff;
+padding: 15px;
+font-weight: bold;
+}
