@@ -950,20 +950,19 @@
                                                 <td>
 
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
 
 
                                                 </td>
@@ -978,20 +977,19 @@
                                                     appearance.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="where_will_not_be"></textarea>
@@ -1003,20 +1001,19 @@
                                                 <td>The analyst is trained on the method.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="when_will_not_be"></textarea>
@@ -1029,20 +1026,19 @@
                                                     procedure has been used in testing.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="coverage_will_not_be"></textarea>
@@ -1056,20 +1052,19 @@
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1081,20 +1076,19 @@
                                                 <td>Correct sample(s) tested.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1106,20 +1100,19 @@
                                                 <td>Sample Integrity maintained, correct container is used in testing.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1133,20 +1126,19 @@
                                                     procedure. </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1158,20 +1150,19 @@
                                                 <td>All equipment used in the testing is within calibration due period.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1183,20 +1174,19 @@
                                                 <td>Equipment log book has been reviewed and no any failure or malfunction has been reviewed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1208,20 +1198,19 @@
                                                 <td>Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1233,20 +1222,19 @@
                                                 <td>Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1258,20 +1246,19 @@
                                                 <td>Whether test solution / volumetric solution used are properly prepared & standardized.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1283,20 +1270,19 @@
                                                 <td>Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1308,20 +1294,19 @@
                                                 <td>In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1333,20 +1318,19 @@
                                                 <td>Any such type of observation has been observed previously (Assay, Dissolution etc.).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1358,20 +1342,19 @@
                                                 <td>Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1383,20 +1366,19 @@
                                                 <td>System suitability conditions met (those before analysis and during analysis).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1408,20 +1390,19 @@
                                                 <td>Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1433,20 +1414,19 @@
                                                 <td>Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1458,20 +1438,19 @@
                                                 <td>Review of other data for other batches performed within the same analysis set and any nonconformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1483,20 +1462,19 @@
                                                 <td>Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1508,20 +1486,19 @@
                                                 <td>Media/Reagents prepared according to procedure.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1533,20 +1510,19 @@
                                                 <td>All the materials are within the due period of expiry.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1558,20 +1534,19 @@
                                                 <td>Whether, analysis was performed by any other alternate validated procedure</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1583,20 +1558,19 @@
                                                 <td>Whether environmental condition is suitable to perform the test.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>
@@ -1608,20 +1582,19 @@
                                                 <td>Interview with analyst to assess knowledge of the correct procedure</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">Yes</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">Yes</label>
+                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">No</label>
+                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
+                                                            </div>
+                                                            <div style="display: flex; gap: 20px;">
+                                                                <label style="width: 20px;">N/A</label>
+                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
+                                                            </div>
                                                         </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">No</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;"><label
-                                                                style="width: 20px;">N/A</label> <input type="radio"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-
-                                                    </div>
                                                 </td>
                                                 <td>
                                                     <textarea name="who_will_not_be"></textarea>

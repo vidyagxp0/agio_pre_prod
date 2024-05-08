@@ -1349,7 +1349,7 @@
                                                 <tr>
                                                     <td>31</td>
                                                     <td>Was the Specified storage condition of product sample
-                                                        maintained? 32 </td>
+                                                        maintained?  </td>
                                                     <td>
                                                         <div style="display: flex; justify-content: space-around;">
                                                             <div style="display: flex; gap: 20px;">
