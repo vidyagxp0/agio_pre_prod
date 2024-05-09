@@ -1499,10 +1499,12 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label> Recommended Action Refrence<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                    <label for="Reference Recores"> Recommended Action Refrence
+                                    </label>
+                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">1</option>
+                                        <option value="">2</option>
                                     </select>
                                 </div>
                             </div>

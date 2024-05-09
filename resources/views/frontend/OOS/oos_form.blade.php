@@ -545,19 +545,23 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input ">
-                                <label for="Short Description ">Reference System Document </label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="">
-
+                            <div class="group-input">
+                                <label for="Reference Recores">Reference System Document</label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description"> Reference Document</label>
-                                <input type="string" name="initiator_group_code" id="initiator_group_code"
-                                    value="">
-
+                                <label for="Reference Recores">Reference Document</label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
 
@@ -807,8 +811,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Agenda">Field Alert Ref.No.</label>
-                                <input type="num" name="num">
+                                <label for="Reference Recores">Field Alert Ref.No.
+                                </label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
 
@@ -864,8 +873,12 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Agenda">Verification Analysis Ref.</label>
-                                <input type="num" name="num">
+                                <label for="Reference Recores">Verification Analysis Ref.</label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
 
@@ -881,8 +894,12 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Agenda">Analyst Interview Ref.</label>
-                                <input type="num" name="num">
+                                <label for="Reference Recores">Analyst Interview Ref.</label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
 
@@ -922,8 +939,12 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Agenda">Phase I Investigation Ref.</label>
-                                <input type="num" name="num">
+                                <label for="Reference Recores">Phase I Investigation Ref.</label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -1649,8 +1670,13 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Agenda">Recommended Actions Reference</label>
-                                <input type="num" name="num">
+                                <label for="Reference Recores">Recommended Actions Reference
+                                </label>
+                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <option value="">--Select---</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -1866,8 +1892,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Manufacturing Invst. Ref. </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Manufacturing Invst. Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -1889,8 +1919,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Re-sampling Ref. No. </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Re-sampling Ref. No.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -1907,8 +1941,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Hypo/Exp. Reference </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Hypo/Exp. Reference</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -2386,8 +2424,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Observation Submitted By"> Recommended Action Reference</label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Recommended Action Reference</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2401,8 +2443,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Lead More Info Reqd By"> Invest. Ref. </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Invest ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-12">
@@ -2469,8 +2515,13 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Additional Test Reference. </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Additional Test Reference.
+                            </label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2485,8 +2536,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Comments"> Action Task Reference </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Action Task Reference</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -2647,8 +2702,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">CAPA Ref No.</label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">CAPA Ref No.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
@@ -2673,8 +2732,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">Action Plan Ref.</label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Action Plan Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
@@ -2807,7 +2870,11 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Refer.</label>
-                            <input type="num" name="num">
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2834,11 +2901,14 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Action Task Ref. </label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Action Task Reference.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -2853,8 +2923,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">Risk Assessment Ref.</label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Risk Assessment Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3060,10 +3134,14 @@
                         </div>
                     </div>
 
-                    <div class="col-12">
+                    <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Field alert reference </label>
-                            <input type="string" name="string">
+                            <label for="Reference Recores">Field alert reference</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3165,8 +3243,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">Phase-III Inves. Reference</label>
-                            <input type="num" name="num">
+                            <label for="Reference Recores">Phase-III Inves. Reference</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3336,8 +3418,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Action Task Reference No. </label>
-                            <input type="string" name="string">
+                            <label for="Reference Recores">Action Task Reference No.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3354,8 +3440,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Addi.Testing Ref. </label>
-                            <input type="string" name="string">
+                            <label for="Reference Recores">Addi.Testing Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3371,8 +3461,12 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Investigation Ref. </label>
-                            <input type="string" name="string">
+                            <label for="Reference Recores">Investigation Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
 
@@ -3389,8 +3483,12 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Report Attachments">Hypo-Exp Ref. </label>
-                            <input type="string" name="string">
+                            <label for="Reference Recores">Hypo-Exp Ref.</label>
+                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <option value="">--Select---</option>
+                                <option value="">1</option>
+                                <option value="">2</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-12">
