@@ -933,7 +933,7 @@
                         <div class="col-12">
                             <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
                             <div class="group-input">
-                                <div class="why-why-chart">
+                                 <div class="why-why-chart">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
