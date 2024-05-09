@@ -47,16 +47,23 @@ class DivisionSeeder extends Seeder
         // ---------------------------------------------
 
         $division = new QMSDivision();
-        $division->name = "KSA";
+        $division->name = "Corporate";
         $division->status = 1;
+        $division->save();
+
+        $division = new QMSDivision();
+        $division->name = "Plant";
+        $division->status = 1;
+        $division->save();
+
+        $division = new QMSDivision();
+        $division->name = "KSA";
         $division->save();
         $division = new QMSDivision();
         $division->name = "Egypt";
-        $division->status = 1;
         $division->save();
         $division = new QMSDivision();
         $division->name = "Estonia";
-        $division->status = 1;
         $division->save();
         $division = new QMSDivision();
         $division->name = "EHS - North America";

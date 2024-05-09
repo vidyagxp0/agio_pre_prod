@@ -74,36 +74,26 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Division Code<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>ABC-101</option>
-                                        <option>ABC-102</option>
-                                    </select>
+                                    <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                                    <input disabled type="text" name="division_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Shaleen mishra </option>
-                                        <option>Pankaj jat </option>
-                                    </select>
+                                    <input disabled type="text" name="division_code"
+                                            value="{{ Auth::user()->name }}">
                                 </div>
                             </div>
 
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                    <input type="date"/>
-                                    <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> -->
-                                    <!-- <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" />
-                                    </div> -->
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                 </div>
                             </div>
 
@@ -111,11 +101,6 @@
                                 <div class="group-input ">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <input type="date"/>
-
-                                    <!-- <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" />
-                                    </div> -->
                                 </div>
                             </div>
 
@@ -134,10 +119,11 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Shaleen mishra </option>
-                                        <option>Pankaj jat </option>
+                                    <select name="initiator_group">
+                                        <option selected disabled>---select---</option>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
+                                            <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -145,11 +131,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>A1B2 </option>
-                                        <option>A2B3 </option>
-                                    </select>
+                                    <input type="text" name="initiator_group_code" readonly>
                                 </div>
                             </div>
 
@@ -3287,6 +3269,11 @@
             ['view', ['fullscreen', 'codeview', 'help']]
         ]
     });
+
+    $('select[name=initiator_group]').change(function() {
+        let initiator_code = $(this).val();
+        $('input[name=initiator_group_code]').val(initiator_code);
+    })
 
     let referenceCount = 1;
 
