@@ -14,6 +14,7 @@ use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Models\EffectivenessCheck;
@@ -155,6 +156,15 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+
+
+            /**
+             * OOT
+             */
+            Route::group(['prefix' => 'oot', 'as' => 'oot.'], function() {
+                Route::get('/', [OOTController::class, 'index'])->name('index');
+            });
+
         }
     );
 });

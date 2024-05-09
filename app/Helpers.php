@@ -311,7 +311,33 @@ class Helpers
         return $resp;
     }
    
-public static function getInitiatorGroupFullName($shortName)
+    static function getInitiatorGroups() 
+    {
+        $initiator_groups = [
+            'CQA' => 'Corporate Quality Assurance',
+            'QAB' => 'Quality Assurance Biopharma',
+            'CQC' => 'Central Quality Control',
+            'MANU' => 'Manufacturing',
+            'PSG' => 'Plasma Sourcing Group',
+            'CS' => 'Central Stores',
+            'ITG' => 'Information Technology Group',
+            'MM' => 'Molecular Medicine',
+            'CL' => 'Central Laboratory',
+            'TT' => 'Tech team',
+            'QA' => 'Quality Assurance',
+            'QM' => 'Quality Management',
+            'IA' => 'IT Administration',
+            'ACC' => 'Accounting',
+            'LOG' => 'Logistics',
+            'SM' => 'Senior Management',
+            'BA' => 'Business Administration'
+        ];
+
+        return $initiator_groups;
+        
+    }
+
+    public static function getInitiatorGroupFullName($shortName)
     { 
 
         switch ($shortName) {
