@@ -1378,7 +1378,7 @@
                                                         <div style="display: flex; justify-content: space-around;">
                                                             <div style="display: flex; gap: 20px;">
                                                                 <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
+                                                                <input type="radio" name="response_option"  placeholder="Yes" style="height: 20px; width: 20px;" />
                                                             </div>
                                                             <div style="display: flex; gap: 20px;">
                                                                 <label style="width: 20px;">No</label>
