@@ -100,14 +100,14 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <input type="date"/>
+                                    <input type="date" name="due_date" />
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Severity Level <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="severity_level">
                                         <option>---select---</option>
                                         <option>20</option>
                                         <option>50 </option>
@@ -138,14 +138,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Initiated Through</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="initiated_through" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Short Description">If Others <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="if_others">
                                         <option>---select---</option>
                                         <option>ABC </option>
                                         <option>ABCd </option>
@@ -158,14 +158,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Is Repeat?</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="is_repeat" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Repeat Nature</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="repeat_nature" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -188,7 +188,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label>Deviation Occured On</label>
-                                    <input type="date" name="DeviationOccuredOn" />
+                                    <input type="date" name="deviation_occured_on" />
                                 </div>
                             </div>
 
@@ -202,7 +202,7 @@
                                         <div class="file-attachment-list" id="closure_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                            <input type="file" id="myfile" name="description_closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -211,7 +211,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initial Attachment <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="initial_attachment">
                                         <option>---select---</option>
                                         <option>Pdf </option>
                                         <option>Document </option>
@@ -222,7 +222,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Source Document Type <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="source_document">
                                         <option>---select---</option>
                                         <option>PDF </option>
                                         <option>Document </option>
@@ -233,7 +233,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Reference Record</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <select multiple id="reference_record" name="reference_record[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -244,7 +244,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Reference Document</label>
-                                    <input />
+                                    <input type="text"  name="reference_document"/>
                                 </div>
                             </div>
 
@@ -255,31 +255,31 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Product Material Name</label>
-                                    <input name="ProductMaterialName" />
+                                    <input type="text" name="product_material_name" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Grade/Type Of Water</label>
-                                    <input name="Grade/TypeOfWater" />
+                                    <input type="text" name="grade_typeofwater" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Sample Location/Point</label>
-                                    <input name="SampleLocation/Point" />
+                                    <input type="text" name="sample_locationpoint" />
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Market</label>
-                                    <input name="Market" />
+                                    <input type="text" name="market" />
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label>Customer</label>
-                                    <input name="Customer" />
+                                    <input type="text" name="customer" />
                                 </div>
                             </div>
 
@@ -328,7 +328,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Analyst Name<span class="text-danger"></span></label>
-                                    <input />
+                                    <input type="text"  name="analyst_name"/>
                                 </div>
                             </div>
 
@@ -336,7 +336,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Sample Type </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="sample_type[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -347,7 +347,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Others (Specify)<span class="text-danger"></span></label>
-                                    <input />
+                                    <input type="text" name="others_specify"/>
                                 </div>
                             </div>
 
@@ -355,7 +355,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Stability For </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="stability_for[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -408,14 +408,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Specification Procedure Number <span class="text-danger"></span></label>
-                                    <input />
+                                    <input type="text" name="specification_procedure_no" />
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Specification Limit<span class="text-danger"></span></label>
-                                    <input />
+                                    <input type="text" name="specification_limit"/>
                                 </div>
                             </div>
 
@@ -470,7 +470,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="gi_attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -499,14 +499,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="upl_comments" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Verification Analysis Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="verification_analysis_required">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -516,7 +516,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Verification Analysis Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <select multiple id="reference_record" name="upl_refrence_record[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -529,7 +529,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Analyst Interview Request<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="upl_anlyst_interview">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -539,7 +539,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Analyst Interview Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <select multiple id="reference_record" name="analyst_interview_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1344,14 +1344,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Justification If No Analyst Interview</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="justi_if_no_analyst" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Phase-I Investigation Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="phase_invest_required">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1361,7 +1361,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Phase-I Investigation <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="phase_investigation">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1371,7 +1371,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Phase-I Investigation Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
+                                    <select multiple id="reference_record" name="phase_invest_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1391,7 +1391,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="File_Attachment[]" oninput="addMultipleFiles(this, 'File_Attachment')" multiple>
+                                            <input type="file" id="myfile" name="upli_attachment[]" oninput="addMultipleFiles(this, 'File_Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1419,14 +1419,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Summary Of Preliminary Investigation</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="summary_preliminary_investigation" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Root Cause Identified? <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="root_cause_identified">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1436,7 +1436,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> OOT Category-Root Cause Identified<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="oot_category_root">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1447,21 +1447,21 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">SOOT Category (Others)</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="soot_category" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Root Cause Details</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="root_cause_details" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Impact Of Root Cause</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="impact_of_root_cause" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -1472,7 +1472,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Recommended Action Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="recommended_action_req">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1483,7 +1483,7 @@
                                 <div class="group-input">
                                     <label for="Reference Recores"> Recommended Action Refrence
                                     </label>
-                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
+                                    <select multiple id="reference_record" name="recommend_action_refre[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1494,7 +1494,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> CAPA Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="capa_required">
                                         <option>Yes</option>
                                         <option>No</option>
                                     </select>
@@ -1504,7 +1504,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> CAPA Refrence Number</label>
-                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
+                                    <select multiple id="reference_record" name="capa_refrence_no[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1517,7 +1517,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Delay Justification</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="delay_justification" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -1531,7 +1531,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                            <input type="file" id="myfile" name="conclusionattachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1559,7 +1559,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4">Review Comment</label>
-                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="review_comment" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -1611,7 +1611,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="capa_review">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1622,7 +1622,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> CAPA Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="capa_refrence_review[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -1633,7 +1633,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Phase II Inves. Req<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="phase_inves_req">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1651,7 +1651,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                            <input type="file" id="myfile" name="plir_attachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1680,14 +1680,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> QA Approver Report</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="qa_approver_report" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Manufacturing Investigation Required <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="manufacture_invest">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1699,7 +1699,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Manufacturing Investigation Type</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
+                                    <select multiple id="reference_record" name="manufacturing_invest[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1710,7 +1710,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Manufacturing Investigation Refrence</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
+                                    <select multiple id="reference_record" name="manufacturing_invest_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1723,7 +1723,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Re-Sampling Required <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="re_sampling_required">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1734,7 +1734,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Re-Sampling Refrence No</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
+                                    <select multiple id="reference_record" name="re_sampling_ref_no[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1747,7 +1747,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Hypo/Exp Required <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="hypo_required">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1759,7 +1759,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Hypo/Exp Refrence</label>
-                                    <select multiple id="reference_record" name="Manufacturing[]" id="">
+                                    <select multiple id="reference_record" name="hypo_expo_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1777,7 +1777,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="phase_inv_attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1806,14 +1806,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Summary Of Exp./Hyp.</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="summary_ofexp" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Summary Of Manufacturing Investigation</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="summary_manuf_invest" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -1821,7 +1821,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Root Cause Identified <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="root_cause_qcreview">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1832,7 +1832,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Category-Reason Identified <span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="oot_category_qcreview">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1843,27 +1843,27 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label>Others (OOT Category) <span class="text-danger"></span></label>
-                                    <input />
+                                    <input type="text" name="ott_category_others" />
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Details Of Root Cause</label>
-                                    <textarea class="summernote" name="Details" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="qcroot_details" id="summernote-16"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Impact Assessment</label>
-                                    <textarea class="summernote" name="ImpactAssessment" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="qcreview_impactassessment" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Recommended Action Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="qcr_recommend_action">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1874,7 +1874,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Recommended Action Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIInvestigationProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="qcr_action_refrence[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1886,7 +1886,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Investigation Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="qcr_investigation_req">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1898,7 +1898,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Investigation Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIInvestigationProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="qcr_invest_refrence[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">1</option>
                                         <option value="">2</option>
@@ -1909,7 +1909,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Justify If No Investigation Required</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="qcr_justify_required" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -1925,7 +1925,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="qcr_attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -1950,14 +1950,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Review Comment</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="atp_review_comment" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Additional Test Proposal<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="atp_add_test_proposal">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1968,7 +1968,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Additional Test Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="atp_add_test_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -1980,7 +1980,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Any Other Actions Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="atp_any_action_req">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -1991,7 +1991,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Action Task Refrence</label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="atp_action_task_ref[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2009,7 +2009,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="atp_attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2035,7 +2035,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Summary Of OOT Test Results</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="summary_of_OOT_test_results_oot_c" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2096,7 +2096,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Trend Limit</label>
-                                    <input />
+                                    <input type="text" name="trend_limit_oot_c"/>
                                 </div>
                             </div>
 
@@ -2104,7 +2104,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Stands<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="oot_stands_oot_c">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2115,7 +2115,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Result To Be Reported<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="result_to_be_reported_oot_c">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2127,14 +2127,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="">Reporting Results</label>
-                                    <input />
+                                    <input type="text" name="reporting_results_oot_c" />
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="capa_required_oot_c">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2145,7 +2145,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> CAPA Reference No </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="capa_reference_no_oot_c[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2156,7 +2156,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Action Plan Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="action_plan_required_oot_c">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2167,7 +2167,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Action Plan Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="action_plan_reference_oot_c[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2178,7 +2178,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Justification For Delay</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="'justification_for_delay_oot_c" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2193,7 +2193,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="attachment_if_any_oot_c[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2221,7 +2221,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Conclusion Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="conclusion_review_comments_oot_cr" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2273,7 +2273,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>CAPA Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="capa_required_oot_cr">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2285,7 +2285,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> CAPA Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="capa_reference_oot_cr[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2299,7 +2299,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Required Action Plan<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="required_action_plan_oot_cr">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2311,7 +2311,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Refrence Record Plan </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="reference_record_plan_oot_cr[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2323,7 +2323,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Action Task Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="action_task_required_oot_cr">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2335,7 +2335,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Action Task Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="action_task_reference_oot_cr[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2346,7 +2346,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Risk Assessment Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="risk_assessment_required_oot_cr">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2358,7 +2358,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Risk Assessment Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="risk_assessment_reference_oot_cr[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2376,7 +2376,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="ile_attachment_oot_cr[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2386,7 +2386,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> CQ Approver </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="cq_approver_oot_cr[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2417,7 +2417,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> CQ Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="cq_review_comments_oot_cq_r" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2425,7 +2425,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>CAPA Requirement<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="capa_requirement_oot_cq_r">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2437,7 +2437,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Reference Of CAPA </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="reference_of_capa_oot_cq_r[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2451,7 +2451,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Action Plan Requirement<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="action_plan_requirement_oot_cq_r">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2463,7 +2463,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Refrence Action Plan </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="reference_action_plan_oot_cq_r[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2484,7 +2484,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="qa_attachment_oot_cq_r[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2514,7 +2514,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Disposition Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="disposition_comments_bd" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2522,7 +2522,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Category<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="oot_category_bd">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2534,7 +2534,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Others</label>
-                                    <input />
+                                    <input type="text" name="others_bd" />
                                 </div>
                             </div>
 
@@ -2543,7 +2543,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label> Material Batch Release<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="material_batch_release_bd">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2555,14 +2555,14 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Conclusion</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="conclusion_bd" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Justify For Delay In Activity</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2577,7 +2577,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="file_attachment_bd[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2607,7 +2607,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Reason For Reopen</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="reason_for_reopen_re" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2621,7 +2621,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="reopen_attachment_re[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2654,7 +2654,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments"> Approval Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="approval_comments_uaa" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2672,7 +2672,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="approval_attachment_uaa[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2703,7 +2703,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Execution Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="execution_comments_uae" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2711,7 +2711,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>Action Task Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="action_task_required_uae">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2723,7 +2723,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Action Task Reference </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="action_task_reference_uae[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2737,7 +2737,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Add. Testing Required<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="add_testing_required_uae">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2749,7 +2749,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Add. Testing Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="add_testing_reference_uae[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2760,7 +2760,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Investigation Requirement<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="investigation_requirement_uae">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2772,7 +2772,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Investigation Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="investigation_reference_uae[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2783,7 +2783,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label> Hypothesis Experiment Requirement<span class="text-danger"></span></label>
-                                    <select>
+                                    <select name="hypothesis_experiment_requirement_uae">
                                         <option>---select---</option>
                                         <option>Yes </option>
                                         <option>No </option>
@@ -2795,7 +2795,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Hypothesis Experiment Refrence </label>
-                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                    <select multiple id="reference_record" name="hypothesis_experiment_reference_uae[]" id="">
                                         <option value="">--Select---</option>
                                         <option value="">Pankaj</option>
                                         <option value="">Gourav</option>
@@ -2813,7 +2813,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="any_attachment_uae[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2844,7 +2844,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Addendum Review Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="addendum_review_comments_uar" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2861,7 +2861,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="required_attachment_uar[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -2891,7 +2891,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Verification Comments</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="verification_comments_uav" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -2907,7 +2907,7 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="Attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            <input type="file" id="myfile" name="verification_attachment_uav[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
