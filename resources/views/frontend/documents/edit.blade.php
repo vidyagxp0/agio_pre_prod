@@ -77,6 +77,7 @@
                 <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button> --}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
@@ -1355,6 +1356,68 @@
 
                             <div class="col-md-6">
                                 <div class="group-input">
+                                    <label for="hods">HOD's</label>
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
+                                        name="hods[]" placeholder="Select HOD's" multiple>
+                                        @if (!empty($hods))
+                                            @foreach ($hods as $hod)
+                                            @if(Helpers::checkUserRolesApprovers($hod))
+                                                <option value="{{ $hod->id }}"
+                                                    @if ($document->hods) @php
+                                                   $data = explode(",",$document->hods);
+                                                    $count = count($data);
+                                                    $i=0;
+                                                @endphp
+                                                @for ($i = 0; $i < $count; $i++)
+                                                    @if ($data[$i] == $hod->id)
+                                                     selected @endif
+                                                    @endfor
+                                            @endif>
+                                            {{ $hod->name }}
+                                            </option>
+                                            @endif
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @foreach ($history as $tempHistory)
+                                        @if (
+                                            $tempHistory->activity_type == 'Approvers' &&
+                                                !empty($tempHistory->comment)  &&
+                                                $tempHistory->user_id == Auth::user()->id)
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                                {{-- <p id="approverError" style="color:red">**Approvers are required</p> --}}
+
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                    {{-- Add Comment  --}}
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="approvers_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
                                     <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}} 
                                         placeholder="Select Reviewers" multiple>
@@ -2546,6 +2609,58 @@
                     </div>
                 </div>
 
+                {{-- HOD REMARKS TAB START --}}
+                <div id="hod-remarks-tab" class="tabcontent">
+
+                    <div class="input-fields">
+                        <div class="group-input">
+                            <label for="hod-remark">HOD Comments</label>
+                            <textarea class="summernote" name="hod_comments">{{ $document->document_content ? $document->document_content->hod_comments : '' }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="input-fields">
+                        <label for="tran-attach">HOD Attachments</label>
+                        <div class="file-attachment-field">
+                            <div class="file-attachment-list" id="hod_attachments">
+                                @if ($document->document_content && $document->document_content->hod_attachments)
+                                    @foreach (json_decode($document->document_content->hod_attachments) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <input type="hidden" name="existing_hod_attachments[{{ $file }}]">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+                                @endif
+                            </div>
+                            <div class="add-btn">
+                                <div class="add-hod-attachment-btn">Add</div>
+                                <input type="file" id="myfile" name="hod_attachments[]"
+                                class="add-hod-attachment-file"
+                                    oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="button-block">
+                        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
+                        </button>
+                    </div>
+
+                </div>
+                {{-- HOD REMARKS TAB END --}}
+
                 <div id="annexures" class="tabcontent">
                     <div class="input-fields">
                         @if ($document->document_content && !empty($document->document_content->annexuredata))
@@ -3279,6 +3394,23 @@
         }
     </style>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.remove()
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
         var editor = new FroalaEditor('.summernote', {
@@ -3390,6 +3522,10 @@
             // Update the currentStep to the index of the clicked tab
             currentStep = index;
         }
+
+        $('.add-hod-attachment-btn').click(function() {
+            $('.add-hod-attachment-file').trigger('click');
+        });
 
         const saveButtons = document.querySelectorAll(".saveButton");
         const nextButtons = document.querySelectorAll(".nextButton");

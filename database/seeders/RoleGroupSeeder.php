@@ -1970,6 +1970,7 @@ $group->save();
             'OOT',
             'OOC',
             'Deviation',
+            'New Document'
         ];
 
         $roles = [

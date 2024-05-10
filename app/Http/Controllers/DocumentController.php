@@ -268,7 +268,16 @@ class DocumentController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
+        
+        $hods = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_roles_id', 4)
+            ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+            ->get();
 
+        return $hods;
 
 
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
@@ -288,6 +297,7 @@ class DocumentController extends Controller
             'user',
             'reviewer',
             'approvers',
+            'hods',
             'reviewergroup',
             'approversgroup',
             'trainer',
@@ -353,6 +363,15 @@ class DocumentController extends Controller
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
+        
+        $hods = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_roles_id', 4)
+            ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+            ->get();
+
 
         $trainer = User::get();
         
@@ -373,6 +392,7 @@ class DocumentController extends Controller
             'user',
             'reviewer',
             'approvers',
+            'hods',
             'reviewergroup',
             'approversgroup',
             'trainer',
@@ -501,6 +521,9 @@ class DocumentController extends Controller
             if (! empty($request->approvers)) {
                 $document->approvers = implode(',', $request->approvers);
             }
+            if (! empty($request->hods)) {
+                $document->hods = implode(',', $request->hods);
+            }
             if (! empty($request->reviewers_group)) {
                 $document->reviewers_group = implode(',', $request->reviewers_group);
             }
@@ -563,6 +586,21 @@ class DocumentController extends Controller
             $content->scope = $request->scope;
             $content->procedure = $request->procedure;
             $content->safety_precautions = $request->safety_precautions;
+            $content->hod_comments = $request->hod_comments;
+
+            if ($request->has('hod_attachments') && $request->hasFile('hod_attachments'))
+            {
+                $files = [];
+
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = $request->name . '-hod_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+
+                $content->hod_attachments = json_encode($files);
+            }
+
 
             if (! empty($request->materials_and_equipments)) {
                 $content->materials_and_equipments = serialize($request->materials_and_equipments);
@@ -700,6 +738,14 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
+        $hods = DB::table('user_roles')
+            ->join('users', 'user_roles.user_id', '=', 'users.id')
+            ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_roles_id', 4)
+            ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+            ->get();
+
     // dd( $document);
 
         return view('frontend.documents.edit', compact(
@@ -709,6 +755,7 @@ class DocumentController extends Controller
             'documentLanguages',
             'reviewer',
             'approvers',
+            'hods',
             'reviewergroup',
             'approversgroup',
             'year',
@@ -815,6 +862,9 @@ class DocumentController extends Controller
                 }
                 if (! empty($request->approvers)) {
                     $document->approvers = implode(',', $request->approvers);
+                }
+                if (! empty($request->hods)) {
+                    $document->hods = implode(',', $request->hods);
                 }
                 if (! empty($request->reviewers_group)) {
                     $document->reviewers_group = implode(',', $request->reviewers_group);
@@ -1275,6 +1325,22 @@ class DocumentController extends Controller
             $documentcontet->materials_and_equipments = $request->materials_and_equipments ? serialize($request->materials_and_equipments) : serialize([]);
             $documentcontet->references = $request->references ? serialize($request->references) : serialize([]);
             $documentcontet->ann = $request->ann ? serialize($request->ann) : serialize([]);
+
+            $documentcontet->hod_comments = $request->hod_comments;
+
+            $files = $request->has('existing_hod_attachments') && is_array($request->existing_hod_attachments) ? array_keys($request->existing_hod_attachments) : [];
+
+            if ($request->has('hod_attachments') && $request->hasFile('hod_attachments'))
+            {
+                foreach ($request->file('hod_attachments') as $file) {
+                    $name = 'hod_attachments-'. rand(1, 100) . '-' . time() . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $documentcontet->hod_attachments = json_encode($files);
+
             // if ($request->hasfile('references')) {
 
             //     $image = $request->file('references');

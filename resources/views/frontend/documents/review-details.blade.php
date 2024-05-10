@@ -792,6 +792,10 @@
                         </div>
                     </div>
                     @if ($document->stage == 2)
+                        <input type="hidden" name="stage_id" value="HOD Review Complete" />
+                    @endif
+
+                    @if ($document->stage == 4)
                         <input type="hidden" name="stage_id" value="Reviewed" />
                     @endif
 
@@ -802,7 +806,7 @@
                     @endif
 
 
-                    @if ($document->stage == 4)
+                    @if ($document->stage == 6)
                         <input type="hidden" name="stage_id" value="Approved" />
                     @endif
 
