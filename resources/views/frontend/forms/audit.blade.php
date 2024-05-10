@@ -14095,7 +14095,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                            1.11		Are the laboratory instruments/equipment qualified?
+                                                            		Are the laboratory instruments/equipment qualified?
                                                         </td>
                                                         <td>
                                                             <div
@@ -14288,12 +14288,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.18</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is there an SOP for corrective action if an instrument is found to be out of calibration?
                                                             
                                                         </td>
                                                         <td>
@@ -14318,13 +14315,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.19</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
-                                                            
+                                                            Where standards are used to calibrate an instrument, is there a written procedure for their preparation?
                                                         </td>
                                                         <td>
                                                             <div
@@ -14348,12 +14341,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.20</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is a specific person responsible for the receipt of samples for testing?
                                                             
                                                         </td>
                                                         <td>
@@ -14378,12 +14368,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.21</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is there a written SOP describing sample receipt and recording (logging in)?
                                                             
                                                         </td>
                                                         <td>
@@ -14408,12 +14395,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.22</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Where are samples stored before and after testing?
                                                             
                                                         </td>
                                                         <td>
@@ -14438,12 +14422,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.23</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?
                                                             
                                                         </td>
                                                         <td>
@@ -14468,12 +14449,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.24</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is there a time limit on how long a sample may remain in the laboratory prior to testing?
                                                             
                                                         </td>
                                                         <td>
@@ -14498,12 +14476,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.25</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is the approved vendor list for all raw materials and packing materials available?
                                                             
                                                         </td>
                                                         <td>
@@ -14528,12 +14503,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.26</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		Is there any data backup policy available?
                                                             
                                                         </td>
                                                         <td>
@@ -14558,12 +14530,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.27</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is there any written procedure for the Audit trail?
                                                             
                                                         </td>
                                                         <td>
@@ -14588,13 +14557,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.28</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
-                                                            
+                                                            Is there any written procedure for the management of software & creation of user ID?
                                                         </td>
                                                         <td>
                                                             <div
@@ -14618,12 +14583,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.29</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are there approved test procedures available for all tests performed in the laboratory?
                                                             
                                                         </td>
                                                         <td>
@@ -14648,12 +14610,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.30</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?
                                                             
                                                         </td>
                                                         <td>
@@ -14678,12 +14637,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.31</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Has the test method been validated for precision and reliability?
                                                             
                                                         </td>
                                                         <td>
@@ -14708,12 +14664,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.32</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Examine the work currently being performed on the HPLCs.
                                                             
                                                         </td>
                                                         <td>
@@ -14738,12 +14691,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.33</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?
                                                             
                                                         </td>
                                                         <td>
@@ -14768,12 +14718,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.34</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?
                                                             
                                                         </td>
                                                         <td>
@@ -14798,12 +14745,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.35</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?
                                                             
                                                         </td>
                                                         <td>
@@ -14828,12 +14772,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.36</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are laboratory records indicating the date of receipt of the sample and expiry date?
                                                             
                                                         </td>
                                                         <td>
@@ -14858,12 +14799,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.37</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are appropriate reference standards used and are they stored in a proper manner to ensure stability?  Are their expiration dates adequately monitored so they are not used beyond the expiration dates?
                                                             
                                                         </td>
                                                         <td>
@@ -14888,12 +14826,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.38</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is reference standard kept under proper storage condition?
                                                             
                                                         </td>
                                                         <td>
@@ -14918,12 +14853,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.39</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are working standards prepared as per the protocol? Check for its storage condition
                                                             
                                                         </td>
                                                         <td>
@@ -14948,12 +14880,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.40</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is there a record of the preparation of volumetric solutions? 
                                                             
                                                         </td>
                                                         <td>
@@ -14978,12 +14907,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.41</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are volumetric solutions freshly prepared? If stored, what expiration date is given? 
                                                             
                                                         </td>
                                                         <td>
@@ -15008,13 +14934,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.42</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
-                                                            
+                                                            	Are raw data reviewed prior to release from the laboratory by a person other than the analyst who performed the test?
                                                         </td>
                                                         <td>
                                                             <div
@@ -15038,12 +14960,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.43</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Check method validation for any product which is done in between two self-inspections with respect to SOP.
                                                             
                                                         </td>
                                                         <td>
@@ -15068,12 +14987,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.44</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is a stability study schedule available?
                                                             
                                                         </td>
                                                         <td>
@@ -15098,12 +15014,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.45</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are protocols for all stability study samples available?
                                                             
                                                         </td>
                                                         <td>
@@ -15128,12 +15041,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.46</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Does the procedure for keeping stability samples available?
                                                             
                                                         </td>
                                                         <td>
@@ -15158,12 +15068,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.47</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are stability samples kept as per the storage requirement?
                                                             
                                                         </td>
                                                         <td>
@@ -15188,12 +15095,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.48</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is the stability summary available?
                                                             
                                                         </td>
                                                         <td>
@@ -15218,12 +15122,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.49</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are records maintained of nonconforming materials, related investigations and corrective actions?
                                                             
                                                         </td>
                                                         <td>
@@ -15248,12 +15149,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.50</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?
                                                             
                                                         </td>
                                                         <td>
@@ -15278,12 +15176,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.51</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list)  maintained and are incoming raw materials checked against it?
                                                             
                                                         </td>
                                                         <td>
@@ -15308,12 +15203,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.52</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are statistical sampling plans used to assure that the samples are representative of the lot?
                                                             
                                                         </td>
                                                         <td>
@@ -15338,12 +15230,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.53</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are sampled containers labeled with sampler’s name and date of sampling?
                                                             
                                                         </td>
                                                         <td>
@@ -15368,12 +15257,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.54</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?
                                                             
                                                         </td>
                                                         <td>
@@ -15398,12 +15284,11 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.55</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	•	Are raw materials approved before being used in production?
+                                                            •	Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
+                                                            
                                                             
                                                         </td>
                                                         <td>
@@ -15428,12 +15313,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.56</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?
                                                             
                                                         </td>
                                                         <td>
@@ -15458,12 +15340,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.57</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is raw materials identification test performed on every batch and receipt?
                                                             
                                                         </td>
                                                         <td>
@@ -15488,12 +15367,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.58</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?
                                                             
                                                         </td>
                                                         <td>
@@ -15518,12 +15394,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.59</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?
                                                             
                                                         </td>
                                                         <td>
@@ -15548,12 +15421,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.60</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		If operators perform in-process testing, have they been trained and was the training documented?  Does QC periodically verify their results?
                                                             
                                                         </td>
                                                         <td>
@@ -15578,12 +15448,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.61</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?
                                                             
                                                         </td>
                                                         <td>
@@ -15608,12 +15475,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.62</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	When and where is the finished product sampled for release?
                                                             
                                                         </td>
                                                         <td>
@@ -15638,12 +15502,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.63</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is every product batch tested and approved before shipment?
                                                             
                                                         </td>
                                                         <td>
@@ -15668,13 +15529,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.64</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
-                                                            
+                                                            		Are there complete written instructions for testing and releasing final product, including methods, equipment, operating parameters, and acceptance specifications?
                                                         </td>
                                                         <td>
                                                             <div
@@ -15698,12 +15555,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.65</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?
                                                             
                                                         </td>
                                                         <td>
@@ -15728,12 +15582,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.66</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?
                                                             
                                                         </td>
                                                         <td>
@@ -15758,12 +15609,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.67</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is the stability protocol available?
                                                             
                                                         </td>
                                                         <td>
@@ -15788,12 +15636,16 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.68</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are these stability chambers available to carryout stability of the product at <br/>
+
+a)	25°C / 60% Rh<br/>
+b)	30°C / 75% Rh<br/>
+c)	40°C / 75% Rh<br/>
+d)	30°C/65% Rh<br/>
+e)	Stand By Chamber<br/>
+
                                                             
                                                         </td>
                                                         <td>
@@ -15818,12 +15670,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.69</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Do you keep both hard copy and electronic copy of temperature/Rh monitoring?
                                                             
                                                         </td>
                                                         <td>
@@ -15848,12 +15697,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.70</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		Are the stability results reviewed by a qualified, experienced person?
                                                             
                                                         </td>
                                                         <td>
@@ -15878,12 +15724,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.71</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Is stability study in primary pack done for different products?
                                                             
                                                         </td>
                                                         <td>
@@ -15908,12 +15751,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.72</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?
                                                             
                                                         </td>
                                                         <td>
@@ -15938,12 +15778,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.73</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are calibrated instruments labeled with date calibrated and date next calibration is due?
                                                             
                                                         </td>
                                                         <td>
@@ -15968,12 +15805,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.74</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?
                                                             
                                                         </td>
                                                         <td>
@@ -15998,12 +15832,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.75</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are in- process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?
                                                             
                                                         </td>
                                                         <td>
@@ -16028,12 +15859,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.76</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?
                                                             
                                                         </td>
                                                         <td>
@@ -16058,12 +15886,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.77</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Are written sampling and testing procedures and acceptance criteria available for each product?
                                                             
                                                         </td>
                                                         <td>
@@ -16088,12 +15913,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.78</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		Are specific tests for foreign particles done?
                                                             
                                                         </td>
                                                         <td>
@@ -16118,12 +15940,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.79</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are Packing materials approved before being used in production?
                                                             
                                                         </td>
                                                         <td>
@@ -16148,12 +15967,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.80</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            		Check for compliance of stability data and its summary
                                                             
                                                         </td>
                                                         <td>
@@ -16178,12 +15994,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.81</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            Check for Analytical Data Sheet
                                                             
                                                         </td>
                                                         <td>
@@ -16208,12 +16021,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.82</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?
                                                             
                                                         </td>
                                                         <td>
@@ -16238,12 +16048,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.83</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+	Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?
                                                             
                                                         </td>
                                                         <td>
@@ -16268,12 +16075,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.84</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms?  Are equipment ID numbers recorded for each analysis?
                                                             
                                                         </td>
                                                         <td>
@@ -16298,12 +16102,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.85</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are data and calculations checked by a second person and countersigned?
                                                             
                                                         </td>
                                                         <td>
@@ -16328,12 +16129,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.86</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Are Material safety data sheet (MSDS) of chemical which are used is available?
                                                             
                                                         </td>
                                                         <td>
@@ -16358,12 +16156,15 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     </tr>
 
                                                     <tr>
-                                                        <td class="flex text-center">1.13</td>
+                                                        <td class="flex text-center">1.87</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
-                                                            •	Expiration date?
+                                                            	Microbiological Laboratories <br/>
+a)	Are positive and negative controls used for testing?  Are their results recorded?<br/>
+b)	Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?<br/>
+c)	Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?<br/>
+d)	Are isolates from microbiological testing identified if appropriate?<br/>
+e)	Is each lot of microbial ID systems checked with positive and negative controls?
+
                                                             
                                                         </td>
                                                         <td>
