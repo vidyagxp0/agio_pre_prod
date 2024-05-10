@@ -1,0 +1,14 @@
+.custom-td {
+  vertical-align: middle;
+}
+
+.textarea-container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+}
+
+.textarea-container textarea {
+  border-radius: 7px;
+  border: 1.5px solid black;
+}

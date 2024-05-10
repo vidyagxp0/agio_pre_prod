@@ -97,6 +97,7 @@
                 <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>--}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <button class="tablinks" onclick="openData(event, 'hod-remarks-tab')">HOD Remarks</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
@@ -514,6 +515,30 @@
                                     <p id="approverError" style="color:red">** Approvers are required</p>
 
                                 </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="hods">HOD's<span class="text-danger">*</span></label>
+                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
+                                            name="hods[]" placeholder="Select HOD's" multiple required>
+                                            @if (!empty($hods))
+                                                @foreach ($hods as $hod)
+                                                    @if(Helpers::checkUserRolesApprovers($hod))
+                                                    <option value="{{ $hod->id }}">
+                                                        {{ $hod->name }}
+                                                    </option>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    {{-- <p id="hodError" style="color:red">** HOD's are required</p> --}}
+
+                                </div>
+
+                            </div>
+                            <div class="row">
+
                                 <div class="col-md-6">
 
                                     <div class="group-input">
@@ -992,6 +1017,34 @@
                             </button>
                         </div>
                     </div>
+
+                    {{-- HOD REMARKS TAB START --}}
+                    <div id="hod-remarks-tab" class="tabcontent">
+
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="hod-remark">HOD Comments</label>
+                                <textarea class="summernote" name="hod_comments"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="hod-attachments">HOD Attachments</label>
+                                <input type="file" name="hod_attachments[]" multiple>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
+                            </button>
+                        </div>
+
+                    </div>
+                    {{-- HOD REMARKS TAB END --}}
 
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
@@ -1586,29 +1639,29 @@
             ele: '#reference_record, #notify_to'
         });
 
-        // $('#summernote').summernote({
-        //     toolbar: [
-        //         ['style', ['style']],
-        //         ['font', ['bold', 'underline', 'clear', 'italic']],
-        //         ['color', ['color']],
-        //         ['para', ['ul', 'ol', 'paragraph']],
-        //         ['table', ['table']],
-        //         ['insert', ['link', 'picture', 'video']],
-        //         ['view', ['fullscreen', 'codeview', 'help']]
-        //     ]
-        // });
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
 
-        // $('.summernote').summernote({
-        //     toolbar: [
-        //         ['style', ['style']],
-        //         ['font', ['bold', 'underline', 'clear', 'italic']],
-        //         ['color', ['color']],
-        //         ['para', ['ul', 'ol', 'paragraph']],
-        //         ['table', ['table']],
-        //         ['insert', ['link', 'picture', 'video']],
-        //         ['view', ['fullscreen', 'codeview', 'help']]
-        //     ]
-        // });
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
 
         let referenceCount = 1;
 

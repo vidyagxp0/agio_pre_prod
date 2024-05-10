@@ -238,8 +238,8 @@ class DocumentDetailsController extends Controller
                 if ($document->reviewers) {
                   if ($reviewersData == 1) {
 
-                    $document->stage = 4;
-                    $document->status = Stage::where('id', 4)->value('name');
+                    $document->stage = 6;
+                    $document->status = Stage::where('id', 6)->value('name');
                     try {
                       Mail::send(
                         'mail.reviewed',
@@ -254,8 +254,8 @@ class DocumentDetailsController extends Controller
                     }
                   }
                 } else {
-                  $document->stage = 4;
-                  $document->status = Stage::where('id', 4)->value('name');
+                  $document->stage = 6;
+                  $document->status = Stage::where('id', 6)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
@@ -274,8 +274,8 @@ class DocumentDetailsController extends Controller
             if ($document->reviewers) {
               if ($document->reviewers_group) {
                 if ($reviewersDataforgroup == 1 && $reviewersData = 1) {
-                  $document->stage = 4;
-                  $document->status = Stage::where('id', 4)->value('name');
+                  $document->stage = 6;
+                  $document->status = Stage::where('id', 6)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
@@ -291,8 +291,8 @@ class DocumentDetailsController extends Controller
                 } 
               } else {
                 if ($reviewersData == 1) {
-                  $document->stage = 4;
-                  $document->status = Stage::where('id', 4)->value('name');
+                  $document->stage = 6;
+                  $document->status = Stage::where('id', 6)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
@@ -386,8 +386,8 @@ class DocumentDetailsController extends Controller
                 $reviewersDataforgroup = 1;
                 if ($document->reviewers) {
                   if ($reviewersData == 1) {
-                    $document->stage = 5;
-                    $document->status = Stage::where('id', 5)->value('name');
+                    $document->stage = 7;
+                    $document->status = Stage::where('id', 7)->value('name');
                     try {
                       Mail::send(
                         'mail.approved',
@@ -403,8 +403,8 @@ class DocumentDetailsController extends Controller
                     }
                   }
                 } else {
-                  $document->stage = 5;
-                  $document->status = Stage::where('id', 5)->value('name');
+                  $document->stage = 7;
+                  $document->status = Stage::where('id', 7)->value('name');
                   try {
                     Mail::send(
                       'mail.approved',
@@ -442,8 +442,8 @@ class DocumentDetailsController extends Controller
                 }
               } else {
                 if ($reviewersData == 1) {
-                  $document->stage = 5;
-                  $document->status = Stage::where('id', 5)->value('name');
+                  $document->stage = 7;
+                  $document->status = Stage::where('id', 7)->value('name');
                   try {
                     Mail::send(
                       'mail.approved',
@@ -461,9 +461,95 @@ class DocumentDetailsController extends Controller
               }
             }
           }
+        }
+
+        if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods))) {
+          // return "HOD";
+          if ($request->stage_id == "Cancel-by-HOD") {
+            $document->status = "Draft";
+            $document->stage = 1;
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Cancel-by-HOD';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'In-HOD Review';
+              $history->change_to = 'Draft';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'In-HOD Review';
+              $history->save();
+            try {
+              Mail::send(
+                'mail.approve-reject',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('Rejected by' . Auth::user()->name . '(HOD)');
+                }
+              );
+            } catch (\Exception $e) {
+              // 
+            }
+          } else {
+            try {
+              Mail::send(
+                'mail.approved',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('HOD Review completed by' . Auth::user()->name . '(HOD)');
+  
+                }
+              );
+            } catch (\Exception $e) {
+              // 
+            }
+            $reviewersData = 0;
+            $reviewersDataforgroup = 0;
+            if ($document->hods) {
+              $data = explode(',', $document->hods);
+              $review = 0;
+
+              for ($i = 0; $i < count($data); $i++) {
+                $stateCheak = StageManage::where('document_id', $request->document_id)->where('user_id', $data[$i])->where('stage', "In-HOD Review")->count();
+                if ($stateCheak > 0) {
+                  $review = $review + 1;
+                }
+              }
+              if ($review == count($data)) {
+                $reviewersData = 1;
+
+              }
+
+            }
+            
+            if ($document->hods) {
+                $document->stage = 5;
+                $document->status = Stage::where('id', 5)->value('name');
+                try {
+                  Mail::send(
+                    'mail.approved',
+                    ['document' => $document],
+                    function ($message) use ($originator) {
+                      $message->to($originator->email)
+                        ->subject("Document is now Approved");
+
+                    }
+                  );
+                } catch (\Exception $e) {
+                  // 
+                }
+            }
+          }
 
         }
-        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 11) {
+
+        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id && $request->stage_id == 2 || $request->stage_id == 4 || $request->stage_id == 6 ||  $request->stage_id == 8 || $request->stage_id == 11) {
+          
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');
@@ -489,7 +575,7 @@ class DocumentDetailsController extends Controller
               }
             }
             if ($request->stage_id == 4) {
-              if ($document->approvers) {
+              if ($document->hods) {
                 $document['stage'] = $request->stage_id;
                 $document['status'] = Stage::where('id', $request->stage_id)->value('name');
 
