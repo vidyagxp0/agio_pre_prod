@@ -252,23 +252,23 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
-                    Granulation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing 
+                      <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Audit Planning</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Audit Preparation</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Audit Execution</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
+                      Granulation</button>
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing 
                     </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule 
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule 
                     </button>
                     
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing 
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing 
                     </button>    
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
                     </button>  
                     
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
@@ -565,6 +565,7 @@
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
@@ -2830,6 +2831,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -4191,6 +4217,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -4201,8 +4252,8 @@
                         </div>
                     </div>
 
-             <div id="CCForm9" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
+                      <div id="CCForm9" class="inner-block cctabcontent">
+                                 <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
                                     Checklist for Tablet Coating
@@ -5509,6 +5560,31 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-4">
+                                    <div class="group-input">
+                                        <label for="Description Deviation">Delay Justification for P.I.</label>
+                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                            </textarea>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Supporting Attachment </label>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attach[]"
+                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                
                             <div class="button-block">
@@ -5520,8 +5596,9 @@
                             </div>
                         </div>
                     </div>
-</div>
-                <div id="CCForm10" class="inner-block cctabcontent">
+                    </div>
+
+                      <div id="CCForm10" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
@@ -6230,6 +6307,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6238,9 +6340,9 @@
                                         Exit </a> </button>
                             </div>
                         </div>
-                </div>
+                        </div>
 
-             <div id="CCForm11" class="inner-block cctabcontent">
+                     <div id="CCForm11" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                             <div class="sub-head">
@@ -7498,6 +7600,31 @@
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -9161,6 +9288,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -10504,6 +10656,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -11730,6 +11907,31 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12034,9 +12236,8 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                            a)	Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
-
-b)	Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?
+                                                            a -	Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments? <br/>
+                                                             b -	Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?
 
                                                         </td>
                                                         <td>
@@ -12607,6 +12808,31 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -12741,10 +12967,10 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
                                                             Have the employees undergone training in the following areas? <br>
-•	cGLP (Related: SOP for Good Laboratory Practices) <br>
-•	SOP’s <br>
-•	Analytical Techniques<br>
-•	EU_GMP
+                            •	cGLP (Related: SOP for Good Laboratory Practices) <br>
+                            •	SOPs <br>
+                            •	Analytical Techniques<br>
+                            •	EU_GMP
 
                                                         </td>
                                                         <td>
@@ -14448,11 +14674,11 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                         <td>
                                                             Are these stability chambers available to carryout stability of the product at <br/>
 
-a)	25°C / 60% Rh<br/>
-b)	30°C / 75% Rh<br/>
-c)	40°C / 75% Rh<br/>
-d)	30°C/65% Rh<br/>
-e)	Stand By Chamber<br/>
+                                                                a -	25°C / 60% Rh<br/>
+                                                                b -	30°C / 75% Rh<br/>
+                                                                c -	40°C / 75% Rh<br/>
+                                                                d -	30°C/65% Rh<br/>
+                                                                e -	Stand By Chamber<br/>
 
                                                             
                                                         </td>
@@ -14858,8 +15084,8 @@ e)	Stand By Chamber<br/>
                                                     <tr>
                                                         <td class="flex text-center">1.83</td>
                                                         <td>
-	Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?
-                                                            
+	                                                    Are all containers of materials or solutions adequately labeled to determine identity and dates of preparation and expiration (if applicable)?
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14967,11 +15193,11 @@ e)	Stand By Chamber<br/>
                                                         <td class="flex text-center">1.87</td>
                                                         <td>
                                                             	Microbiological Laboratories <br/>
-a)	Are positive and negative controls used for testing?  Are their results recorded?<br/>
-b)	Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?<br/>
-c)	Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?<br/>
-d)	Are isolates from microbiological testing identified if appropriate?<br/>
-e)	Is each lot of microbial ID systems checked with positive and negative controls?
+                                        a -	Are positive and negative controls used for testing?  Are their results recorded?<br/>
+                                        b -	Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?<br/>
+                                        c -	Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?<br/>
+                                        d -	Are isolates from microbiological testing identified if appropriate?<br/>
+                                        e -	Is each lot of microbial ID systems checked with positive and negative controls?
 
                                                             
                                                         </td>
@@ -15009,6 +15235,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                
 
                                
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -15747,6 +15998,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                 </tbody>
                                             </table>
 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                         </div>
                                     </div>
                                 </div>
@@ -16655,6 +16931,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                
 
                                 
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -18432,6 +18733,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-12 mb-4">
+                                                        <div class="group-input">
+                                                            <label for="Description Deviation">Delay Justification for P.I.</label>
+                                                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                                                </textarea>
+                                                        </div>
+                                                    </div>
+                            
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <label for="Audit Attachments"> Supporting Attachment </label>
+                                                            <small class="text-primary">
+                                                                Please Attach all relevant or supporting documents
+                                                            </small>
+                                                            <div class="file-attachment-field">
+                                                                <div class="file-attachment-list" id="file_attach"></div>
+                                                                <div class="add-btn">
+                                                                    <div>Add</div>
+                                                                    <input type="file" id="myfile" name="file_attach[]"
+                                                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -19690,7 +20016,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                         </div>
                                     </div>
                                 </div>                           
-                           </div>
+                           </div> <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Delay Justification for P.I.</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments"> Supporting Attachment </label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attach[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -20925,6 +21275,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-md-12 mb-4">
+                                    <div class="group-input">
+                                        <label for="Description Deviation">Delay Justification for P.I.</label>
+                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                            </textarea>
+                                    </div>
+                                </div>
+        
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Audit Attachments"> Supporting Attachment </label>
+                                        <small class="text-primary">
+                                            Please Attach all relevant or supporting documents
+                                        </small>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="file_attach[]"
+                                                    oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                                            <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -21540,6 +21915,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -22097,6 +22497,31 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                
 
                              
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        </textarea>
+                                </div>
+                            </div>
+    
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attach[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
