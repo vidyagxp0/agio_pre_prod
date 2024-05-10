@@ -1,5 +1,9 @@
 @extends('frontend.layout.main')
 @section('container')
+    @php
+        $users = DB::table('users')->select('id', 'name')->get();
+
+    @endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -322,10 +326,10 @@
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
-                        <div class="group-input">
+                        <div class="group-input" id="external-details-grid">
                             <label for="audit-agenda-grid">
                                 External Training Details
-                                <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -333,18 +337,19 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="onservation-field-table" style="width: 100%;">
+                                <table class="table table-bordered" id="onservation-field-table-details"
+                                    style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 50px;">Sr. No.</th>
                                             <th>Topic</th>
 
-                                            <th>External Training Date</th>
+                                            <th style="width: 200px;">External Training Date</th>
                                             <th>External Trainer</th>
 
                                             <th>External Training Agency</th>
-                                            <th>Certificate</th>
-                                            <th>Supporting Documents</th>
+                                            <th style="width: 200px;">Certificate</th>
+                                            <th style="width: 200px;">Supporting Documents</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -352,7 +357,6 @@
                                             <td><input disabled type="text" name="serial[]" value="1"></td>
                                             <td><input type="text" name="topic[]"></td>
                                             <td><input type="date" name="external_training_date[]"></td>
-
                                             <td><input type="text" name="external_trainer[]"></td>
                                             <td><input type="text" name="external_agency[]"></td>
                                             <td><input type="file" name="certificate[]"></td>
@@ -364,7 +368,40 @@
                                 </table>
                             </div>
                         </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#details-grid').click(function(e) {
+                                    function generateTableRow(serialNumber) {
+                                        var users = @json($users);
 
+                                        var html =
+                                            '<tr>' +
+                                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                            '"></td>' +
+                                            '<td><input type="text" name="topic[]"></td>' +
+                                            '<td><input type="date" name="external_training_date[]"></td>' +
+                                            '<td><input type="text" name="external_trainer[]"></td>' +
+                                            '<td><input type="text" name="external_agency[]"></td>' +
+                                            '<td><input type="file" name="certificate[]"></td>' +
+                                            '<td><input type="file" name="supproting_documents[]"></td>' +
+                                            '</tr>';
+
+                                        // for (var i = 0; i < users.length; i++) {
+                                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                        // }
+
+                                        '</tr>';
+
+                                        return html;
+                                    }
+
+                                    var tableBody = $('#onservation-field-table-details tbody');
+                                    var rowCount = tableBody.children('tr').length;
+                                    var newRow = generateTableRow(rowCount + 1);
+                                    tableBody.append(newRow);
+                                });
+                            });
+                        </script>
 
                     </div>
                 </div>

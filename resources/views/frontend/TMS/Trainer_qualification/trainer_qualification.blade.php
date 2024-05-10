@@ -171,6 +171,40 @@
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('#Trainer_Skill_table').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Trainer_skill_set[]"></td>' +
+
+                        '<td><input type="text" name="remarks[]"></td>' +
+                        '</tr>';
+
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+
+                    '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#Trainer_Skill_table_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
 
 
     <script>
@@ -478,23 +512,16 @@
 
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="trainer_skill_set">Trainer Skill Set</label>
-                                        {{-- <select multiple name="trainer_skill_set[]" id="trainerSkillSet">
-                                            <option value="">-- Select --</option>
-                                            <option value="Production">Production</option>
-                                            <option value="QC">QC</option>
-                                            <option value="QA">QA</option>
-                                            <option value="RA">RA</option>
-                                            <option value="Warehouse">Warehouse</option>
-                                            <option value="IT">IT</option>
-                                        </select>
-                                    </div> --}}
-                                        <table class="table table-bordered" id="attachmentgrid">
+                                        <label for="audit-agenda-grid">
+                                            Trainer Skill Set<button type="button" name="audit-agenda-grid"
+                                                id="Trainer_Skill_table">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="Trainer_Skill_table_details">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 5%;">Sr. No.</th>
-                                                    <th>Trainer Skill set</th>
-                                                    {{-- <th>Supporting Document</th> --}}
+                                                    <th>Trainer Skill Set</th>
+
                                                     <th>Remarks</th>
 
                                                 </tr>
@@ -502,8 +529,7 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td><input type="text" name="trainer_skill_set[]"></td>
-                                                {{-- <td><input type="text" name="supporting_document[]"></td> --}}
+                                                <td><input type="text" name="Trainer_skill_set[]"></td>
                                                 <td><input type="text" name="remarks[]"></td>
                                             </tbody>
                                         </table>
