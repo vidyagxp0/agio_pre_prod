@@ -1,9 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
     @php
-        $users = DB::table('users')
-            ->select('id', 'name')
-            ->get();
+        $users = DB::table('users')->select('id', 'name')->get();
 
     @endphp
     <style>
@@ -67,11 +65,11 @@
             cell7.innerHTML =
                 // '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
 
-            var cell8 = newRow.insertCell(7);
+                var cell8 = newRow.insertCell(7);
             cell8.innerHTML =
                 // '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
 
-            var cell9 = newRow.insertCell(8);
+                var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'>";
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
@@ -91,9 +89,23 @@
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, scheduled_start_date' + serialNumber +');checkDate(scheduled_start_date' + serialNumber +'_checkdate,scheduled_end_date' + serialNumber +'_checkdate)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
+                        serialNumber +
+                        '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, scheduled_start_date' +
+                        serialNumber + ');checkDate(scheduled_start_date' + serialNumber +
+                        '_checkdate,scheduled_end_date' + serialNumber +
+                        '_checkdate)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, scheduled_end_date' + serialNumber +');checkDate(scheduled_start_date' + serialNumber +'_checkdate,scheduled_end_date' + serialNumber +'_checkdate)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
+                        serialNumber +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                        serialNumber +
+                        '_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, scheduled_end_date' +
+                        serialNumber + ');checkDate(scheduled_start_date' + serialNumber +
+                        '_checkdate,scheduled_end_date' + serialNumber +
+                        '_checkdate)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
                         '<td><select name="auditor[]">' +
                         '<option value="">Select a value</option>';
@@ -136,22 +148,56 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="title_of document[]"></td>'+
-                        '<td><input type="text" name="supporting_document[]"></td>'+        
-                        '<td><input type="text" name="remarks[]"></td>'+
+                        '<td><input type="text" name="title_of document[]"></td>' +
+                        '<td><input type="text" name="supporting_document[]"></td>' +
+                        '<td><input type="text" name="remarks[]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                   
-                        '</tr>';
+
+                    '</tr>';
 
                     return html;
                 }
 
                 var tableBody = $('#attachmentgrid tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#Trainer_Skill_table').click(function(e) {
+
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Trainer_skill_set[]"></td>' +
+
+                        '<td><input type="text" name="remarks[]"></td>' +
+                        '</tr>';
+
+                    // for (var i = 0; i < users.length; i++) {
+                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    // }
+
+
+                    '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#Trainer_Skill_table_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -172,24 +218,24 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
-                     
-                       + '<option value="">Select a value</option>';
 
-                 
+                        +'<option value="">Select a value</option>';
+
+
                     html += '</select></td>' +
-                   
+
                         '<td><input type="text" name="observation_description[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
-                       '<td><input type="text" name="auditee_response[]"></td>'
-                     
-                        '<option value="">Select a value</option>';
+                        '<td><input type="text" name="auditee_response[]"></td>'
+
+                    '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
 
                     html += '</select></td>' +
-                   
+
                         '</tr>';
 
                     return html;
@@ -252,7 +298,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-               
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
@@ -272,8 +318,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="">
+                                        <input disabled type="text" name="record_number" value="">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -287,12 +332,12 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text"  value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
 
                                     </div>
                                 </div>
 
-                               
+
 
 
                                 <div class="col-lg-6">
@@ -318,89 +363,92 @@
                                         @enderror
                                     </div>
                                 </div>
-                             
-                               
+
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text"  name= "due_date" id="due_date" readonly
+                                            <input type="text" name= "due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
                                 </div>
-                              
-                               
+
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description</label><span id="rchars">255</span>
+                                        <label for="Short Description">Short Description</label><span
+                                            id="rchars">255</span>
                                         characters remaining
-                                        <input id="short_description" type="text" name="short_description" maxlength="255">
+                                        <input id="short_description" type="text" name="short_description"
+                                            maxlength="255">
                                     </div>
-                                </div>  
+                                </div>
 
-                                 <div class="sub-head">
+                                <div class="sub-head">
                                     Trainer Information
                                 </div>
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                              <label for="trainer">Trainer Name</label>
-                                                 <select name="trainer_name" id="trainer_name">
+                                        <label for="trainer">Trainer Name</label>
+                                        <select name="trainer_name" id="trainer_name">
                                             <option value="0">Select</option>
                                             <option value="trainer1">Trainer 1</option>
-                                         </select>
-                                        </div>
+                                        </select>
                                     </div>
+                                </div>
 
-                                     <div class="col-6">
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label for="qualification">Qualification</label>
                                         <input id="qualification" type="text" name="qualification" maxlength="255">
                                     </div>
                                 </div>
 
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                              <label for="Designation">Designation</label>
-                                                 <select name="designation" id="designation">
+                                        <label for="Designation">Designation</label>
+                                        <select name="designation" id="designation">
                                             <option value="0">Select</option>
                                             <option value="lead_trainer">Lead Trainer</option>
                                             <option value="senior_trainer">Senior Trainer</option>
                                             <option value="Instructor">Instructor</option>
                                             <option value="Evaluator">Evaluator</option>
-                                            </select>
-                                        </div>
+                                        </select>
                                     </div>
+                                </div>
 
-                                    <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                              <label for="Department">Department</label>
-                                                 <select name="department" id="department">
+                                        <label for="Department">Department</label>
+                                        <select name="department" id="department">
                                             <option value="0">Select</option>
                                             <option value="quality_assurance">Quality Assurance (QA)</option>
                                             <option value="operations">Operations</option>
                                             <option value="learning_deve">Learning and Development (L&D)</option>
                                             <option value="it">Information Technology (IT)</option>
                                             <option value="Finance">Finance</option>
-                                            </select>
-                                        </div>
+                                        </select>
                                     </div>
+                                </div>
 
-                                     <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                              <label for="Experience">Experience (No. of Years)</label>
-                                                 <select name="Experience" id="Experience">
-                                                    <option value="">Select </option>
-                                        @for ($i = 1; $i <= 70; $i++)
-                                            <option value="{{ $i }}">{{ $i }}</option>
-                                        @endfor
-                                    </select>
-                                     </div>
+                                        <label for="Experience">Experience (No. of Years)</label>
+                                        <select name="Experience" id="Experience">
+                                            <option value="">Select </option>
+                                            @for ($i = 1; $i <= 70; $i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
                                     </div>
+                                </div>
 
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="priority-level">Priority Level</label>
                                         <span class="text-primary">Priority levels in TMS can be tailored to suit the specific needs of the institution in managing the training program.</span>
@@ -411,13 +459,13 @@
                                             <option value="high">High Priority</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
-                               
 
-                                
 
-                                <div class="col-lg-6">
+
+
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
@@ -434,20 +482,20 @@
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="If Other">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="initiated_if_other"></textarea>
                                     </div>
-                                </div>
-                               
-                               
+                                </div> --}}
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="external_agencies">External Agencies</label>
                                         <select name="external_agencies"
-                                        onchange="otherController(this.value, 'others', 'external_agencies_req')">
+                                            onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                             <option value="">-- Select --</option>
                                             <option value="jordan_fda">Jordan FDA</option>
                                             <option value="us_fda">USFDA</option>
@@ -461,24 +509,33 @@
                                         </select>
                                     </div>
                                 </div>
-                               
-                                <div class="col-6">
+
+                                <div class="">
                                     <div class="group-input">
-                                        <label for="trainer_skill_set">Trainer Skill Set</label>
-                                        <select multiple name="trainer_skill_set[]" 
-                                            id="trainerSkillSet">
-                                            <option value="">-- Select --</option>
-                                                <option value="Production">Production</option>
-                                                <option value="QC">QC</option>
-                                                <option value="QA">QA</option>
-                                                <option value="RA">RA</option>
-                                                <option value="Warehouse">Warehouse</option>
-                                                <option value="IT">IT</option>                                                
-                                        </select>
+                                        <label for="audit-agenda-grid">
+                                            Trainer Skill Set<button type="button" name="audit-agenda-grid"
+                                                id="Trainer_Skill_table">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="Trainer_Skill_table_details">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr. No.</th>
+                                                    <th>Trainer Skill Set</th>
+
+                                                    <th>Remarks</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="Trainer_skill_set[]"></td>
+                                                <td><input type="text" name="remarks[]"></td>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                </div>
-                                
-                                <div class="group-input">
+
+                                    <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             List of Attachments<button type="button" name="audit-agenda-grid"
                                                 id="attachmentgrid-table">+</button>
@@ -486,7 +543,7 @@
                                         <table class="table table-bordered" id="attachmentgrid">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 5%;">Row#</th>
+                                                    <th style="width: 5%;">Sr. No.</th>
                                                     <th>Title of Document</th>
                                                     <th>Supporting Document</th>
                                                     <th>Remarks</th>
@@ -498,209 +555,211 @@
                                                 </td>
                                                 <td><input type="text" name="title_of document[]"></td>
                                                 <td><input type="text" name="supporting_document[]"></td>
-                                                                                              
+
                                                 <td><input type="text" name="remarks[]"></td>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
-                                 
-                                  <div class="col-6">
+
+                                <div class="">
                                     <div class="group-input">
-                                        <label for="trainingQualificationStatus">Training Qualification Status ?</label>
+                                        <label for="trainingQualificationStatus">Trainer</label>
                                         <select name="trainingQualificationStatus[]" id="trainingQualificationStatus">
                                             <option value="">-- Select --</option>
-                                                <option value="Production">Qualified</option>
-                                                <option value="QC">Not Qualified</option>
+                                            <option value="Production">Qualified</option>
+                                            <option value="QC">Not Qualified</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="sub-head">Evaluation Criteria</div>
 
-                        <div class="col-12">
-                            <div class="group-input">
-                                <div class="why-why-chart">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 7%;">Sr.No.</th>
-                                                <th style="width: 50%;">Evaluation Criteria</th>
-                                                <th>Rating</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td style="background: #DCD8D8">Clarity Of Objectives</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                              
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td style="background: #DCD8D8">Delivery & Knowledge Of Content</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                               
-
-                                            </tr>
-                                            <tr>
-                                                <td>3</td>
-                                                <td style="background: #DCD8D8">Oral & Written Languagee (Speaking Style Was Clear, Easily understood , Pleasant to hear)</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                              
-
-                                            </tr>
-                                            <tr>
-                                                <td>4</td>
-                                                <td style="background: #DCD8D8">Is Research Up to Date?</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                             
-
-                                            </tr>
-                                            <tr>
-                                                <td>5</td>
-                                                <td style="background: #DCD8D8">Interactions With Participants</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                                
-
-                                            </tr>
-                                            <tr>
-                                                <td>6</td>
-                                                <td style="background: #DCD8D8">Response To Participants</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                                
-
-                                            </tr>
-                                            <tr>
-                                                <td>7</td>
-                                                <td style="background: #DCD8D8">Discussion Techniques</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                               
-
-                                            </tr>
-                                            <tr>
-                                                <td>8</td>
-                                                <td style="background: #DCD8D8">Managed Pace Of The Training Well / Created a Comfortable learning environment</td>
-                                                <td>
-                                                    <select name="rating" id="">
-                                                        <option value=""> -- Select --</option>
-                                                        <option value=""> 1</option>
-                                                        <option value=""> 2</option>
-                                                        <option value=""> 3</option>
-
-                                                    </select>
-                                                </td>
-                                                
-
-                                            </tr>
-                                            
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                            </div>
-                                 <div class="col-md-12 mb-3">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Q_comment">Qualification Comments</label>
-                                       <textarea class="" name="Q_comment"></textarea>
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 7%;">Sr. No.</th>
+                                                        <th style="width: 50%;">Evaluation Criteria</th>
+                                                        <th>Rating</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>1</td>
+                                                        <td>Clarity Of Objectives</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>2</td>
+                                                        <td>Delivery & Knowledge Of Content</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>3</td>
+                                                        <td>Oral & Written Languagee (Speaking
+                                                            Style Was Clear, Easily understood , Pleasant to hear)</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
+                                                        <td>Is Research Up to Date?</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>5</td>
+                                                        <td>Interactions With Participants</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>6</td>
+                                                        <td>Response To Participants</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>7</td>
+                                                        <td>Discussion Techniques</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td>8</td>
+                                                        <td>Managed Pace Of The Training Well /
+                                                            Created a Comfortable learning environment</td>
+                                                        <td>
+                                                            <select name="rating" id="">
+                                                                <option value=""> -- Select --</option>
+                                                                <option value=""> 1</option>
+                                                                <option value=""> 2</option>
+                                                                <option value=""> 3</option>
+
+                                                            </select>
+                                                        </td>
+
+
+                                                    </tr>
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-md-12 mb-3">
+                                <div class="group-input">
+                                    <label for="Q_comment">Qualification Comments</label>
+                                    <textarea class="" name="Q_comment"></textarea>
+                                </div>
+                            </div>
 
-                               
-                                
- <script>
-        VirtualSelect.init({
-            ele: '#reference_record, #notify_to'
-        });
 
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
 
-        $('.summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+                            <script>
+                                VirtualSelect.init({
+                                    ele: '#reference_record, #notify_to'
+                                });
 
-        let referenceCount = 1;
+                                $('#summernote').summernote({
+                                    toolbar: [
+                                        ['style', ['style']],
+                                        ['font', ['bold', 'underline', 'clear', 'italic']],
+                                        ['color', ['color']],
+                                        ['para', ['ul', 'ol', 'paragraph']],
+                                        ['table', ['table']],
+                                        ['insert', ['link', 'picture', 'video']],
+                                        ['view', ['fullscreen', 'codeview', 'help']]
+                                    ]
+                                });
 
-        function addReference() {
-            referenceCount++;
-            let newReference = document.createElement('div');
-            newReference.classList.add('row', 'reference-data-' + referenceCount);
-            newReference.innerHTML = `
+                                $('.summernote').summernote({
+                                    toolbar: [
+                                        ['style', ['style']],
+                                        ['font', ['bold', 'underline', 'clear', 'italic']],
+                                        ['color', ['color']],
+                                        ['para', ['ul', 'ol', 'paragraph']],
+                                        ['table', ['table']],
+                                        ['insert', ['link', 'picture', 'video']],
+                                        ['view', ['fullscreen', 'codeview', 'help']]
+                                    ]
+                                });
+
+                                let referenceCount = 1;
+
+                                function addReference() {
+                                    referenceCount++;
+                                    let newReference = document.createElement('div');
+                                    newReference.classList.add('row', 'reference-data-' + referenceCount);
+                                    newReference.innerHTML = `
             <div class="col-lg-6">
                 <input type="text" name="reference-text">
             </div>
@@ -710,180 +769,180 @@
                 <input type="file" name="references" class="myclassname">
             </div>
         `;
-            let referenceContainer = document.querySelector('.reference-data');
-            referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
-        }
-    </script>
- 
-                    <script>
-        function removeHtmlTags() {
-            var textarea = document.getElementById("summernote-16");
-            var cleanValue = textarea.value.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
-            textarea.value = cleanValue;
-        }
-    </script>
+                                    let referenceContainer = document.querySelector('.reference-data');
+                                    referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+                                }
+                            </script>
+
+                            <script>
+                                function removeHtmlTags() {
+                                    var textarea = document.getElementById("summernote-16");
+                                    var cleanValue = textarea.value.replace(/<[^>]*>?/gm, ''); // Remove HTML tags
+                                    textarea.value = cleanValue;
+                                }
+                            </script>
 
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="inv_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
-                                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">Initial Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="inv_attachment[]"
+                                                oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                         </div>
-
                                     </div>
+
                                 </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
                             </div>
                         </div>
-                    </div>
-
-                   
-
-                    <!-- Activity Log content -->
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed By">Audit Response Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit Response Completed On">Audit Response Completed On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for=" Rejected By">Rejected By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Rejected On">Rejected On</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                    <a href="/rcms/qms-dashboard">
-                                        <button type="button" class="backButton">Back</button>
-                                    </a>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                        Exit </a> </button>
-                            </div>
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
-
                 </div>
-            </form>
+
+
+
+                <!-- Activity Log content -->
+                <div id="CCForm6" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Schedule On">Audit Schedule By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Schedule On">Audit Schedule On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled By">Cancelled By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Cancelled On">Cancelled On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Response Completed By">Audit Response Completed By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Response Completed On">Audit Response Completed On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Response Feedback Verified By">Response Feedback Verified By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Response Feedback Verified On">Response Feedback Verified On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for=" Rejected By">Rejected By</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Rejected On">Rejected On</label>
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" class="saveButton">Save</button>
+                            <a href="/rcms/qms-dashboard">
+                                <button type="button" class="backButton">Back</button>
+                            </a>
+                            <button type="submit">Submit</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
 
         </div>
+        </form>
+
+    </div>
     </div>
 
 
@@ -913,7 +972,7 @@
 
     <script>
         VirtualSelect.init({
-             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #trainerSkillSet'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #trainerSkillSet'
         });
 
         function openCity(evt, cityName) {
@@ -1006,11 +1065,11 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
-      <script>
+    <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
+            $('#rchars').text(textlen);
+        });
     </script>
-
 @endsection
