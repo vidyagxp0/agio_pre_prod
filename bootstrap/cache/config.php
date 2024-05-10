@@ -217,7 +217,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\framework/cache/data',
+        'path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -300,7 +300,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'trackw1',
+        'database' => 'ajio',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -310,7 +310,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackw1',
+        'database' => 'ajio',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -330,7 +330,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackw1',
+        'database' => 'ajio',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -345,7 +345,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'trackw1',
+        'database' => 'ajio',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -389,10 +389,10 @@
     'convert_entities' => true,
     'defines' => 
     array (
-      'font_dir' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\fonts',
-      'font_cache' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\fonts',
+      'font_dir' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\fonts',
+      'font_cache' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\fonts',
       'temp_dir' => 'C:\\Users\\VIDYAG~1\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod',
+      'chroot' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod',
       'enable_font_subsetting' => false,
       'pdf_backend' => 'CPDF',
       'default_media_type' => 'screen',
@@ -408,10 +408,10 @@
     'public_path' => NULL,
     'options' => 
     array (
-      'font_dir' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\fonts',
-      'font_cache' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\fonts',
+      'font_dir' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\fonts',
+      'font_cache' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\fonts',
       'temp_dir' => 'C:\\Users\\VIDYAG~1\\AppData\\Local\\Temp',
-      'chroot' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod',
+      'chroot' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod',
       'allowed_protocols' => 
       array (
         'file://' => 
@@ -554,7 +554,7 @@
     ),
     'temporary_files' => 
     array (
-      'local_path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\framework/cache/laravel-excel',
+      'local_path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\framework/cache/laravel-excel',
       'remote_disk' => NULL,
       'remote_prefix' => NULL,
       'force_resync_remote' => NULL,
@@ -568,7 +568,7 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\app',
+        'root' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\app',
         'throw' => false,
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
@@ -588,7 +588,7 @@
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\app/public',
+        'root' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -608,7 +608,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\public\\storage' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\app/public',
+      'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\public\\storage' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\app/public',
     ),
   ),
   'hashing' => 
@@ -647,13 +647,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -705,7 +705,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\logs/laravel.log',
+        'path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -771,7 +771,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\resources\\views/vendor/mail',
+        0 => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -882,7 +882,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\framework/sessions',
+    'files' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -948,9 +948,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\resources\\views',
+      0 => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod\\storage\\framework\\views',
+    'compiled' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod\\storage\\framework\\views',
   ),
   'flasher' => 
   array (
@@ -1107,7 +1107,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\Users\\VidyaGxp User 2\\Desktop\\agio_pre_prod',
+    'remote_sites_path' => 'C:\\Users\\VidyaGxp User 1\\Documents\\GitHub\\agio_pre_prod',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',
