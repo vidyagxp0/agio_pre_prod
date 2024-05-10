@@ -8267,7 +8267,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Dispensing
+                                    Checklist for Liquid/Ointment Dispensing and Manufacturing
                                 </div>
 
                                 <div class="col-12">
@@ -9734,12 +9734,32 @@
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-
-
-
                                                     </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="sub-head">
+                                    Checklist for Documentation
+                                </div>
+
+                                <div class="col-12">
+                                    {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
                                                     <tr>
-                                                        <td class="flex text-center">1.60</td>
+                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 40%;">Question</th>
+                                                        <th style="width: 20%;">Response</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                        <td class="flex text-center">2.1</td>
                                                         <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record.</td>
                                                         <td>
                                                             <div
@@ -9765,7 +9785,7 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.61</td>
+                                                        <td class="flex text-center">2.2</td>
                                                         <td>Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports.</td>
                                                         <td>
                                                             <div
@@ -9791,7 +9811,7 @@
 
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.62</td>
+                                                        <td class="flex text-center">2.3</td>
                                                         <td>Is the batch record is on line up to the current stage of a process?
                                                         </td>
                                                         <td>
@@ -9815,7 +9835,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.63</td>
+                                                        <td class="flex text-center">2.4</td>
                                                         <td> In process carried out as per the written instruction describe in batch record?
                                                         </td>
                                                         <td>
@@ -9839,7 +9859,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.64</td>
+                                                        <td class="flex text-center">2.5</td>
                                                         <td> Is there any area cleaning record available for all individual areas? 
                                                         </td>
                                                         <td>
@@ -9863,7 +9883,7 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="flex text-center">1.65</td>
+                                                        <td class="flex text-center">2.6</td>
                                                         <td> Current version of SOP's is available in respective areas?
                                                         </td>
                                                         <td>
