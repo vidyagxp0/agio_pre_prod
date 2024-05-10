@@ -549,885 +549,792 @@
 
                              {{-- Table --}}
                              <div class="col-12">
-                                <label for="Short Description" class="font-weight-bold">Preliminary Laboratory Investigation</label>
+                                <center>
+                                    <label style="font-weight: bold; for="Audit Attachments">Preliminary Laboratory Investigation</label>
+                                </center>
                                 <div class="group-input">
                                     <div class="why-why-chart">
                                         <table class="table table-bordered">
-                                            <thead>
-                                                <tr>
-                                                    <th style="width: 5%;">Sr.No.</th>
-                                                    <th style="width: 40%;">Question</th>
-                                                    <th style="width: 20%;">Response</th>
-                                                    <th>Remarks</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Were the equipment instrument used for analysis was in
-                                                        calibrated state?</td>
-                                                    <td>
-
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                        
-
-
+                                             <thead>
+                                                 <tr>
+                                                     <th style="width: 5%;">Sr.No.</th>
+                                                     <th style="width: 40%;">Question</th>
+                                                     <th style="width: 20%;">Response</th>
+                                                     <th>Remarks</th>
+                                                 </tr>
+                                             </thead>
+                                             <tbody>
+                                                 <tr>
+                                                <td class="flex text-center">1</td>
+                                                     <td>Were the equipment instrument used for analysis was in
+                                                         calibrated state?</td>
+                                                     <td>
+                                        
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                         
                                                     </td>
-                                                    <td>
-                                                        <textarea name="what_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Did all components/parts of equipment instrument function
-                                                        properly</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        <textarea name="where_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Was there any evidence that the sample is contaminated?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
+                                                    
+                                                     
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">2</td>
+                                                     <td>Did all components/parts of equipment instrument function
+                                                         properly</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     
+                                                       <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">3</td>
+                                                     <td>Was there any evidence that the sample is contaminated?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="when_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">4</td>
+                                                     <td>Is the SOP adequate and operation performed as per sop</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="coverage_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">5</td>
+                                                     <td>Was the glassware used of Class A? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">6</td>
+                                                     <td>Was there any evidence that the glassware used .may be
+                                                         contaminated?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">7</td>
+                                                     <td>Were the instrument problems such as noisy baseline, poor peak
+                                                         resolution, poor injection reproducibility, unidentified peak or
+                                                         contamination that affected peak integration, etc. noticed?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">8</td>
+                                                     <td>8 Any critical parts of equipment/instrument like detector, lamp
+                                                         etc. and needed replacement?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">9</td>
+                                                     <td>Was the correct testing procedure followed? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">10</td>
+                                                     <td>Was there change in instrument, column, method, integration
+                                                         technique or standard? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                
+                                                 <tr>
+                                                <td class="flex text-center">11</td>
+                                                     <td>Were the standards & reagents properly stored? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">12</td>
+                                                     <td>Were standards, reagents properly labelled? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">13</td>
+                                                     <td>Was there any evidence that the standards, reagents have
+                                                         degraded? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">14</td>
+                                                     <td>Were the reagents/chemicals used of recommended grade? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">15</td>
+                                                     <td>Was the evidence that the reagents, standards or other materials
+                                                         used for test were contaminated. </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">16</td>
+                                                     <td>Whether correct working /reference standard were used? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">17</td>
+                                                     <td>Was the testing procedure adequate and followed properly? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">18</td>
+                                                     <td>Was the glassware used properly washed?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">19</td>
+                                                     <td>Were standards, reagents used within their expiration dates?
+                                                     </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">20</td>
+                                                     <td>Were volumetric solutions standardized as per testing procedure?
+                                                     </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">21</td>
+                                                     <td>Were Working standards standardized as per testing procedure?
+                                                     </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">22</td>
+                                                     <td>Were the dilutions made in sample /standard preparation as per
+                                                         testing procedure?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">23</td>
+                                                     <td>Was the analyst trained / certified? </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">24</td>
+                                                     <td>Analyst understood the testing procedure?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">25</td>
+                                                     <td>Analyst calculated the results correctly as mentioned in testing
+                                                         procedure</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">26</td>
+                                                     <td>Was there any similar occurrence with the same analyst earlier?
+                                                     </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">27</td>
+                                                     <td>Was there any similar history with the product / material?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">28</td>
+                                                     <td>Retention time of concerned peak is comparable with respect to
+                                                         previous station (ln case of OOT in any individual and total
+                                                         impurity)</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">29</td>
+                                                     <td>Was the sample quantity is sufficient?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">30</td>
+                                                     <td>Was Error in labelling details on the sample container?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">31</td>
+                                                     <td>Was the Specified storage condition of product sample
+                                                         maintained?  </td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">32</td>
+                                                     <td>Transient equipment /Instrument malfunction is suspected</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
                                                         </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="when_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Is the SOP adequate and operation performed as per sop</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="coverage_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Was the glassware used of Class A? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>6</td>
-                                                    <td>Was there any evidence that the glassware used .may be
-                                                        contaminated?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>7</td>
-                                                    <td>Were the instrument problems such as noisy baseline, poor peak
-                                                        resolution, poor injection reproducibility, unidentified peak or
-                                                        contamination that affected peak integration, etc. noticed?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>8</td>
-                                                    <td>8 Any critical parts of equipment/instrument like detector, lamp
-                                                        etc. and needed replacement?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>9</td>
-                                                    <td>Was the correct testing procedure followed? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>10</td>
-                                                    <td>Was there change in instrument, column, method, integration
-                                                        technique or standard? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>10</td>
-                                                    <td>Was there change in instrument, column, method, integration
-                                                        technique or standard? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>11</td>
-                                                    <td>Were the standards & reagents properly stored? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>12</td>
-                                                    <td>Were standards, reagents properly labelled? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>13</td>
-                                                    <td>Was there any evidence that the standards, reagents have
-                                                        degraded? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>14</td>
-                                                    <td>Were the reagents/chemicals used of recommended grade? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>15</td>
-                                                    <td>Was the evidence that the reagents, standards or other materials
-                                                        used for test were contaminated. </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>16</td>
-                                                    <td>Whether correct working /reference standard were used? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>17</td>
-                                                    <td>Was the testing procedure adequate and followed properly? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>18</td>
-                                                    <td>Was the glassware used properly washed?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>19</td>
-                                                    <td>Were standards, reagents used within their expiration dates?
-                                                    </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>20</td>
-                                                    <td>Were volumetric solutions standardized as per testing procedure?
-                                                    </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>21</td>
-                                                    <td>Were Working standards standardized as per testing procedure?
-                                                    </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>22</td>
-                                                    <td>Were the dilutions made in sample /standard preparation as per
-                                                        testing procedure?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>23</td>
-                                                    <td>Was the analyst trained / certified? </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>24</td>
-                                                    <td>Analyst understood the testing procedure?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>25</td>
-                                                    <td>Analyst calculated the results correctly as mentioned in testing
-                                                        procedure</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>26</td>
-                                                    <td>Was there any similar occurrence with the same analyst earlier?
-                                                    </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>27</td>
-                                                    <td>Was there any similar history with the product / material?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>28</td>
-                                                    <td>Retention time of concerned peak is comparable with respect to
-                                                        previous station (ln case of OOT in any individual and total
-                                                        impurity)</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>29</td>
-                                                    <td>Was the sample quantity is sufficient?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>30</td>
-                                                    <td>Was Error in labelling details on the sample container?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>31</td>
-                                                    <td>Was the Specified storage condition of product sample
-                                                        maintained?  </td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>32</td>
-                                                    <td>Transient equipment /Instrument malfunction is suspected</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>33</td>
-                                                    <td>Where any change in the character of the sample observed?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>34</td>
-                                                    <td>Any other specific reason?</td>
-                                                    <td>
-                                                        <div style="display: flex; justify-content: space-around;">
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">Yes</label>
-                                                                <input type="radio" name="response_option" placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">No</label>
-                                                                <input type="radio" name="response_option" placeholder="No" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                            <div style="display: flex; gap: 20px;">
-                                                                <label style="width: 20px;">N/A</label>
-                                                                <input type="radio" name="response_option" placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <textarea name="who_will_not_be"></textarea>
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">33</td>
+                                                     <td>Where any change in the character of the sample observed?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                                 <tr>
+                                                <td class="flex text-center">34</td>
+                                                     <td>Any other specific reason?</td>
+                                                     <td>
+                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div>
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="who_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
+                                                                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                                            </div>
+                                                                                        </td>
+                                        
+                                                 </tr>
+                                             </tbody>
+                                         </table>
+                                        </div>
                                 </div>
                             </div>
 
@@ -1574,10 +1481,12 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label> Recommended Action Refrence<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                    <label for="Reference Recores"> Recommended Action Refrence
+                                    </label>
+                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">1</option>
+                                        <option value="">2</option>
                                     </select>
                                 </div>
                             </div>

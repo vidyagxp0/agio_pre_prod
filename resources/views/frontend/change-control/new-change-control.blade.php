@@ -493,2437 +493,1819 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
+                                             <tr>
+                                                <td class="flex text-center">1</td>
                                                 <td>Availability of Product Permission </td>
                                                 <td>
 
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
 
 
                                                 </td>
-                                                <td>
-                                                    <textarea name="what_will_not_be"></textarea>
+                                               <td>
+                                                    {{--<textarea name="where_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
+                                                
 
                                             </tr>
-                                            <tr>
-                                                <td>2</td>
+                                             <tr>
+                                                <td class="flex text-center">2</td>
                                                 <td>Availability of Manufacturing License</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="where_will_not_be"></textarea>
+                                                    {{--<textarea name="where_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>3</td>
+                                             <tr>
+                                                <td class="flex text-center">3</td>
                                                 <td>Availability of Marketing Authorization</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="when_will_not_be"></textarea>
+                                                    {{--<textarea name="when_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>4</td>
+                                             <tr>
+                                                <td class="flex text-center">4</td>
                                                 <td>Technical Agreement</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="coverage_will_not_be"></textarea>
+                                                    {{--<textarea name="coverage_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>5</td>
+                                             <tr>
+                                                <td class="flex text-center">5</td>
                                                 <td>Site Variation Filing (for New Site)</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>6</td>
+                                             <tr>
+                                                <td class="flex text-center">6</td>
                                                 <td>New Product Code</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>7</td>
+                                             <tr>
+                                                <td class="flex text-center">7</td>
                                                 <td>Facility Qualification / Modification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>8</td>
+                                             <tr>
+                                                <td class="flex text-center">8</td>
                                                 <td>Utility Requirements / Qualification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>9</td>
+                                             <tr>
+                                                <td class="flex text-center">9</td>
                                                 <td>Additional studies</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>10</td>
+                                             <tr>
+                                                <td class="flex text-center">10</td>
                                                 <td>Reagents/ Chemicals/ Solvents or any other Resources</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>11</td>
+                                             <tr>
+                                                <td class="flex text-center">11</td>
                                                 <td>Equipment/ Instrument Accessories/ Parts / Change Parts & Layout</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>12</td>
+                                             <tr>
+                                                <td class="flex text-center">12</td>
                                                 <td>Analytical Method Validation</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>13</td>
+                                             <tr>
+                                                <td class="flex text-center">13</td>
                                                 <td>Storage Requirement</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>14</td>
+                                             <tr>
+                                                <td class="flex text-center">14</td>
                                                 <td>BMR</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>15</td>
+                                             <tr>
+                                                <td class="flex text-center">15</td>
                                                 <td>BPR</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>16</td>
+                                             <tr>
+                                                <td class="flex text-center">16</td>
                                                 <td>Hold Time Study</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>17</td>
+                                             <tr>
+                                                <td class="flex text-center">17</td>
                                                 <td>Testing Feasibility</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>18</td>
+                                             <tr>
+                                                <td class="flex text-center">18</td>
                                                 <td>Annual Product Review</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>19</td>
+                                             <tr>
+                                                <td class="flex text-center">19</td>
                                                 <td>New Source/ Vendor Requirement</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>20</td>
+                                             <tr>
+                                                <td class="flex text-center">20</td>
                                                 <td>Vendor Qualification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>21</td>
+                                             <tr>
+                                                <td class="flex text-center">21</td>
                                                 <td>Approved Vendor List Updation</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>21</td>
+                                             <tr>
+                                                <td class="flex text-center">21</td>
                                                 <td>New Code Generation/ Item Codification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>22</td>
+                                             <tr>
+                                                <td class="flex text-center">22</td>
                                                 <td>List of Item Codes</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>23</td>
+                                             <tr>
+                                                <td class="flex text-center">23</td>
                                                 <td>Approved Specimen/ Shade Card</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>24</td>
+                                             <tr>
+                                                <td class="flex text-center">24</td>
                                                 <td>MOC Requirements</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>25</td>
+                                             <tr>
+                                                <td class="flex text-center">25</td>
                                                 <td>List of Equipment / instruments</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>26</td>
+                                             <tr>
+                                                <td class="flex text-center">26</td>
                                                 <td>New Utility Connections / Modifications</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>27</td>
+                                             <tr>
+                                                <td class="flex text-center">27</td>
                                                 <td>Drawings / layouts</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>28</td>
+                                             <tr>
+                                                <td class="flex text-center">28</td>
                                                 <td>Equipment P & I Diagram</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>29</td>
+                                             <tr>
+                                                <td class="flex text-center">29</td>
                                                 <td>Regulatory Submissions</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>30</td>
+                                             <tr>
+                                                <td class="flex text-center">30</td>
                                                 <td>Validation Activity (Other)</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>31</td>
+                                             <tr>
+                                                <td class="flex text-center">31</td>
                                                 <td>Equipment Location Layout</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>32</td>
+                                             <tr>
+                                                <td class="flex text-center">32</td>
                                                 <td>New Equipment Req. or Modifications</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>33</td>
+                                             <tr>
+                                                <td class="flex text-center">33</td>
                                                 <td>Process Validation</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option" placeholder="No"
-                                                                style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>34</td>
+                                             <tr>
+                                                <td class="flex text-center">34</td>
                                                 <td>Cleaning Validation / Stability studies</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>35</td>
+                                             <tr>
+                                                <td class="flex text-center">35</td>
                                                 <td>Master Formula Record</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>36</td>
+                                             <tr>
+                                                <td class="flex text-center">36</td>
                                                 <td>Master Packing Record</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>37</td>
+                                             <tr>
+                                                <td class="flex text-center">37</td>
                                                 <td>Raw Material Specifications</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>38</td>
+                                             <tr>
+                                                <td class="flex text-center">38</td>
                                                 <td>Packing Material Specification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>39</td>
+                                             <tr>
+                                                <td class="flex text-center">39</td>
                                                 <td>In process Specification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>40</td>
+                                             <tr>
+                                                <td class="flex text-center">40</td>
                                                 <td>Finished Product Specification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>41</td>
+                                             <tr>
+                                                <td class="flex text-center">41</td>
                                                 <td>Approved Art works/ Proofs</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>42</td>
+                                             <tr>
+                                                <td class="flex text-center">42</td>
                                                 <td>Packaging Specification / configuration</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>43</td>
+                                             <tr>
+                                                <td class="flex text-center">43</td>
                                                 <td>Site Master File</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>44</td>
+                                             <tr>
+                                                <td class="flex text-center">44</td>
                                                 <td>Validation Master Plan</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>45</td>
+                                             <tr>
+                                                <td class="flex text-center">45</td>
                                                 <td>Requirement of outside test</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>46</td>
+                                             <tr>
+                                                <td class="flex text-center">46</td>
                                                 <td>Additional Equipment / Instruments</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>47</td>
+                                             <tr>
+                                                <td class="flex text-center">47</td>
                                                 <td>Environmental Condition</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>48</td>
+                                             <tr>
+                                                <td class="flex text-center">48</td>
                                                 <td>Stability Protocol / Report</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>49</td>
+                                             <tr>
+                                                <td class="flex text-center">49</td>
                                                 <td>Stability Specification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>50</td>
+                                             <tr>
+                                                <td class="flex text-center">50</td>
                                                 <td>Updating of Product Lists</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>51</td>
+                                             <tr>
+                                                <td class="flex text-center">51</td>
                                                 <td>HPLC Column</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>52</td>
+                                             <tr>
+                                                <td class="flex text-center">52</td>
                                                 <td>Placebo</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>53</td>
+                                             <tr>
+                                                <td class="flex text-center">53</td>
                                                 <td>Impurity standards</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>54</td>
+                                             <tr>
+                                                <td class="flex text-center">54</td>
                                                 <td>Status of Old Stocks (for Usage I Destruction)</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>55</td>
+                                             <tr>
+                                                <td class="flex text-center">55</td>
                                                 <td>Customer/ Contract Giver Approval</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>56</td>
+                                             <tr>
+                                                <td class="flex text-center">56</td>
                                                 <td>Process Parameters</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>57</td>
+                                             <tr>
+                                                <td class="flex text-center">57</td>
                                                 <td>Training</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>58</td>
+                                             <tr>
+                                                <td class="flex text-center">58</td>
                                                 <td>GMP / GLP Requirements</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>59</td>
+                                             <tr>
+                                                <td class="flex text-center">59</td>
                                                 <td>Safety</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>60</td>
+                                             <tr>
+                                                <td class="flex text-center">60</td>
                                                 <td>Annual Maintenance Contract</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>61</td>
+                                             <tr>
+                                                <td class="flex text-center">61</td>
                                                 <td>Service agreement</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>62</td>
+                                             <tr>
+                                                <td class="flex text-center">62</td>
                                                 <td>Qualification / Re-qualification</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>63</td>
+                                             <tr>
+                                                <td class="flex text-center">63</td>
                                                 <td>SOP</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>64</td>
+                                             <tr>
+                                                <td class="flex text-center">64</td>
                                                 <td>STPs</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>65</td>
+                                             <tr>
+                                                <td class="flex text-center">65</td>
                                                 <td>Responsibilities</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>66</td>
+                                             <tr>
+                                                <td class="flex text-center">66</td>
                                                 <td>Intimation/ Notification to Regulatory Bodies</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>67</td>
+                                             <tr>
+                                                <td class="flex text-center">67</td>
                                                 <td>Quality Management System</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>68</td>
+                                             <tr>
+                                                <td class="flex text-center">68</td>
                                                 <td>Facility and Other Layouts</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>69</td>
+                                             <tr>
+                                                <td class="flex text-center">69</td>
                                                 <td>Pharmacopeia Requirements</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>70</td>
+                                             <tr>
+                                                <td class="flex text-center">70</td>
                                                 <td>Regulatory Requirements</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>71</td>
+                                             <tr>
+                                                <td class="flex text-center">71</td>
                                                 <td>Tech Transfer</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>72</td>
+                                             <tr>
+                                                <td class="flex text-center">72</td>
                                                 <td>Man & Material Movement</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>73</td>
+                                             <tr>
+                                                <td class="flex text-center">73</td>
                                                 <td>Temperature / RH/ Differential Pressures</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>74</td>
+                                             <tr>
+                                                <td class="flex text-center">74</td>
                                                 <td>Temperature Mapping</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>75</td>
+                                             <tr>
+                                                <td class="flex text-center">75</td>
                                                 <td>HVAC Validation</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>76</td>
+                                             <tr>
+                                                <td class="flex text-center">76</td>
                                                 <td>Status of Existing stock in case of Artwork/ packing material related
                                                     changes</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>77</td>
+                                             <tr>
+                                                <td class="flex text-center">77</td>
                                                 <td>Primary standards</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}}
+                                                     <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>78</td>
+                                             <tr>
+                                                <td class="flex text-center">78</td>
                                                 <td>Logbooks</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>79</td>
+                                             <tr>
+                                                <td class="flex text-center">79</td>
                                                 <td>Water System Validation</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>80</td>
+                                             <tr>
+                                                <td class="flex text-center">80</td>
                                                 <td>Quality Agreements with vendors</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>81</td>
+                                             <tr>
+                                                <td class="flex text-center">81</td>
                                                 <td>Mfg. Feasibility</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>82</td>
+                                             <tr>
+                                                <td class="flex text-center">82</td>
                                                 <td>Preventive Maintenance</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>83</td>
+                                             <tr>
+                                                <td class="flex text-center">83</td>
                                                 <td>Area Nomenclature</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>84</td>
+                                             <tr>
+                                                <td class="flex text-center">84</td>
                                                 <td>Calibration</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>85</td>
+                                             <tr>
+                                                <td class="flex text-center">85</td>
                                                 <td>Qualification document (URS/DQ/IQ/OQ/PQ)</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>86</td>
+                                             <tr>
+                                                <td class="flex text-center">86</td>
                                                 <td>Planner for PM</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>87</td>
+                                             <tr>
+                                                <td class="flex text-center">87</td>
                                                 <td>Qualified Personnel</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>88</td>
+                                             <tr>
+                                                <td class="flex text-center">88</td>
                                                 <td>Master Calibration Planner</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
-                                            <tr>
-                                                <td>89</td>
+                                             <tr>
+                                                <td class="flex text-center">89</td>
                                                 <td>Any other</td>
                                                 <td>
-                                                    <div style="display: flex; justify-content: space-around;">
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">Yes</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="Yes" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">No</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="No" style="height: 20px; width: 20px;" />
-                                                        </div>
-                                                        <div style="display: flex; gap: 20px;">
-                                                            <label style="width: 20px;">N/A</label>
-                                                            <input type="radio" name="response_option"
-                                                                placeholder="N/A" style="height: 20px; width: 20px;" />
-                                                        </div>
+                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
                                                     </div>
+                                                    
+                                                    
+                                                     {{-- <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="Yes">Yes</option>
+                                                            <option value="No">No</option>
+                                                            <option value="N/A">N/A</option>
+                                                        </select>
+                                                    </div> --}}
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                    </div>
                                                 </td>
 
                                             </tr>
