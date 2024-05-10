@@ -259,14 +259,14 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Audit Response & Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Checklist - Tablet Dispensing &
                     Granulation</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist Tablet -Compression</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing 
                     </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule 
                     </button>
                     
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Tablet Liquid/Ointment Dispensing & Manufacturing 
+                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing 
                     </button>    
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
                     </button>  
@@ -296,10 +296,10 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
                     </button>    
              
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Reasearch and Development
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
                     </button>    
              
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Reasearch and Development
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                     </button>    
              
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -312,6 +312,9 @@
                     <!-- General information content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
+                            <div class="sub-head">
+                                General Information
+                            </div>
                             <div class="row">
 
                                 @if (!empty($parent_id))
@@ -1174,7 +1177,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -1197,7 +1200,8 @@
                                                             </div>
                                                         </td>
                                                         {{--    <td>
-                                                            <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <textarea name="what_will_not_be"></textarea> --}}
+                                                             <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1526,15 +1530,16 @@
 
                                                     </tr>
                                                 </tbody>
-                                            </table>;
+                                            </table>
 
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for Tablet Granulation
+                                    Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION 
                                 </div>
+                               
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
@@ -1542,7 +1547,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -2645,7 +2650,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -2849,7 +2854,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -3967,7 +3972,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -4200,7 +4205,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Tablet  Production (Tablet Coating)   
+                                    Checklist for Tablet Coating
                                 </div>
 
                                 <div class="col-12">
@@ -4210,7 +4215,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -5326,7 +5331,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -5530,7 +5535,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -6058,7 +6063,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -6248,7 +6253,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -7338,7 +7343,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -7521,7 +7526,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -8995,7 +9000,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -9170,7 +9175,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for  LIQUID/ OINTMENT PACKING
+                                    Checklist for  Liquid/ Ointment Packing
 
                                 </div>
                         
@@ -9181,7 +9186,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -10311,7 +10316,7 @@
                                                             </div>
                             
                                                             <div class="sub-head">
-                                                                Checklist for DOCUMENTATION
+                                                                Checklist for Documentation
                                                             </div>
                                                             <div class="col-12">
                                                                 {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -10320,7 +10325,7 @@
                                                                         <table class="table table-bordered">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th style="width: 5%;">Sr.No.</th>
+                                                                                    <th style="width: 5%;">Sr. No.</th>
                                                                                     <th style="width: 40%;">Question</th>
                                                                                     <th style="width: 20%;">Response</th>
                                                                                     <th>Remarks</th>
@@ -10513,7 +10518,7 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                Checklist Quality Assurance
+                                Checklist for Quality Assurance
                                 </div>
 
                                 <div class="col-12">
@@ -10523,7 +10528,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -11749,7 +11754,7 @@
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -12343,7 +12348,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -12531,7 +12536,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -12570,8 +12575,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">3.2</td>
                                                         <td>	Check area cleanness and HEPA grills.
-                                                            be traced through manufacturing and distribution? Check for In
-                                                            process analytical reports.</td>
+                                                            </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -12616,7 +12620,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Quality COntrol
+                                    Checklist for Quality Control
                                 </div>
 
                                 <div class="col-12">
@@ -12626,7 +12630,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -12736,10 +12740,10 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            Have the employees undergone training in the following areas?
-•	cGLP (Related: SOP for Good Laboratory Practices)
-•	SOP’s
-•	Analytical Techniques
+                                                            Have the employees undergone training in the following areas? <br>
+•	cGLP (Related: SOP for Good Laboratory Practices) <br>
+•	SOP’s <br>
+•	Analytical Techniques<br>
 •	EU_GMP
 
                                                         </td>
@@ -12926,8 +12930,8 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">1.12</td>
                                                         <td>
-                                                            Are all reagents and solutions
-                                                            •	Clearly, labeled with their proper name?
+                                                            Are all reagents and solutions<br>
+                                                            •	Clearly, labeled with their proper name?<br>
                                                             •	Labeled with the date of receipt and/or expiration date?
                                                             
                                                         <td>
@@ -12956,9 +12960,9 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
                                                         <td>
-                                                            Are prepared solutions labeled with the
-                                                            •	Name of the person who prepared them?
-                                                            •	Date of preparation?
+                                                            Are prepared solutions labeled with the<br>
+                                                            •	Name of the person who prepared them?<br>
+                                                            •	Date of preparation?<br>
                                                             •	Expiration date?
                                                             
                                                         </td>
@@ -14090,7 +14094,7 @@ b)	Do SOPs assign responsibilities; include schedules; describe methods, equipme
                                                     <tr>
                                                         <td class="flex text-center">1.55</td>
                                                         <td>
-                                                            	•	Are raw materials approved before being used in production?
+                                                            	•	Are raw materials approved before being used in production?<br>
                                                             •	Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
                                                             
                                                             
@@ -15029,7 +15033,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -15760,7 +15764,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                Checklist Human Resource
+                                Checklist for Human Resource
                                 </div>
 
                                 <div class="col-12">
@@ -15770,7 +15774,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -16675,7 +16679,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -17034,16 +17038,15 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION 
-                                </div>
+                                    Checklist for - Injection Manufacturing / Filteration / Filling /Visual Inspection 
+                                </div>  
                                 <div class="col-12">
-                                    {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -18220,6 +18223,8 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                             </div>
                                                         </td>
                                                     </tr>
+
+                                                    
                                                   
                                                     <tr>
                                                         <td class="flex text-center">2.49</td>
@@ -18244,18 +18249,24 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                         </td>
                                                     </tr>
 
-                                                    <div class="sub-head">
-                                                        Checklist for Tablet Documentation
-                                                    </div>
-                    
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <div class="sub-head">
+                                        Checklist for Tablet Documentation
+                                    </div>
                                                     <div class="col-12">
                                                         {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                                        
                                                         <div class="group-input">
                                                             <div class="why-why-chart">
                                                                 <table class="table table-bordered">
                                                                     <thead>
                                                                         <tr>
-                                                                            <th style="width: 5%;">Sr.No.</th>
+                                                                            <th style="width: 5%;">Sr. No.</th>
                                                                             <th style="width: 40%;">Question</th>
                                                                             <th style="width: 20%;">Response</th>
                                                                             <th>Remarks</th>
@@ -18421,14 +18432,6 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                             </div>
                                                         </div>
                                                     </div>
-                                                  
-
-
-
-                               
-
-                               
-                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -18442,7 +18445,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">  
-                                STAGE 1: INJECTION PACKING
+                                Checklist for Injection Packing
                                 </div>
 
                                 <div class="col-12">
@@ -18452,7 +18455,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -19499,14 +19502,14 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
 
                                                     </tr>
                                                 </tbody>
-                                            </table>;
+                                            </table>
 
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="sub-head">
-                                STAGE 2: DOCUMENTATION
+                                Checklist for Documentation
                                 </div>
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
@@ -19515,7 +19518,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -19701,7 +19704,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for  POWDER MFG & FILLING
+                                    Checklist for Powder Manufacturing & Filling
                                 </div>
 
                                 <div class="col-12">
@@ -19711,7 +19714,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -20851,7 +20854,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -20955,7 +20958,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -21265,7 +21268,13 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
-                                                        <td>Are stability study carried out for the product at a) 25°C / 60% RH  (b) 30°C / 70% RH (C) 40°C / 75% RH</td>
+                                                        <td>Are stability study carried out for the product at <br/>
+                                                             a - 25°C / 60% RH <br/>
+                                                             
+                                                             b - 30°C / 70% RH<br/>
+                                                             
+                                                             C - 40°C / 75% RH
+                                                            </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -21544,7 +21553,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                Formulation Research and Development
+                                Checklist for Formulation Research and Development
                                 </div>
 
                                 <div class="col-12">
@@ -21554,7 +21563,7 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
-                                                        <th style="width: 5%;">Sr.No.</th>
+                                                        <th style="width: 5%;">Sr. No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
@@ -21926,7 +21935,11 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
-                                                        Are these stability chambers available to carryout stability of the product at -
+                                                        Are these stability chambers available to carryout stability of the product at - <br/>
+                                                        a -	25°C / 60% Rh<br/>
+                                                        b -	30°C / 65% Rh<br/>
+                                                        c -	40°C / 75% Rh
+
 
                                                         </td>
                                                         <td>
