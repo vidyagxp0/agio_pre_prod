@@ -21665,6 +21665,15 @@ e)	Is each lot of microbial ID systems checked with positive and negative contro
                             </div>
                         </div>
                     </div>
+
+                    
+                   
+
+
+                    <!-- Activity Log content -->
+                   
+
+                </div>
                    <div id="CCForm22" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
