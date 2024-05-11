@@ -393,7 +393,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code"> Initiator </label>
 
@@ -430,52 +430,94 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description"> Initiator group</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Initiator group code</label>
 
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"><b>Initiator Group</b></label>
+                                <select name="initiator_Group" id="initiator_group">
+                                    <option value="">-- Select --</option>
+                                    <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                        Corporate Quality Assurance</option>
+                                    <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                        Quality
+                                        Assurance Biopharma</option>
+                                    <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                        Central
+                                        Quality Control</option>
+                                    <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
+                                        Manufacturing</option>
+                                    <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
+                                        Sourcing Group</option>
+                                    <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
+                                        Central
+                                        Stores</option>
+                                    <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
+                                        Information Technology Group</option>
+                                    <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
+                                        Molecular Medicine</option>
+                                    <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
+                                        Central Laboratory</option>
+
+                                    <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
+                                        team</option>
+                                    <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
+                                        Quality Assurance</option>
+                                    <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
+                                        Quality Management</option>
+                                    <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
+                                        Administration</option>
+                                    <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
+                                        Accounting</option>
+                                    <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
+                                        Logistics</option>
+                                    <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
+                                        Senior Management</option>
+                                    <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
+                                        Business Administration</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group Code">Initiator Group Code</label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                    value="" readonly>
+                            </div>
+                        </div>           
+                        
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Initiated Through ?</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">Initiated Through </label>
+                                <label for="Initiator Group Code">If Others </label>
                                 <textarea name="text"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">If Others</label>
-
-
+                                <label for="Initiator Group">Is Repeat ?</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">Is Repeat?</label>
+                                
 
-                                <textarea name="text"></textarea>
-                            </div>
-                        </div>
+
 
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
@@ -741,8 +783,8 @@
                                             <th style="width: 16%">Specification Limit</th>
                                             <th style="width: 16%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 16%">Submit By</th>
-                                            <th style="width: 16%">Submit On</th>
+                                            {{-- <th style="width: 16%">Submit By</th>
+                                            <th style="width: 16%">Submit On</th> --}}
 
                                         </tr>
                                     </thead>
@@ -754,8 +796,8 @@
                                         <td><input type="text" name="Number[]"></td>
                                         <td><input type="text" name="text[]"></td>
                                         <td><input type="file" name="file[]"></td>
-                                        <td><input type="text" name="text[]"></td>
-                                        <td><input type="date" name="time[]"></td>
+                                        {{-- <td><input type="text" name="text[]"></td>
+                                        <td><input type="date" name="time[]"></td> --}}
 
 
 
@@ -1720,11 +1762,11 @@
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
+
+
+
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -3971,7 +4013,12 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-
+    <script>
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
