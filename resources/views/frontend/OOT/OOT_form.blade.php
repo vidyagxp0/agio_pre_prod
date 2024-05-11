@@ -32,7 +32,7 @@
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Under Preliminary Lab Investigation</button> 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Out of Trend Investigation </button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button> 
             <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist -  Preliminary Laboratory Investigation</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Investigation Conclusion</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>

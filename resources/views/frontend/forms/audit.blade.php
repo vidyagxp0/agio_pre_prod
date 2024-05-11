@@ -26934,28 +26934,33 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
             
                                                                 <tr>
                                                                     <td class="flex text-center">10.3</td>
+                                                                    
                                                                     <td>
                                                                         Are the following subjects regulated by law and/or specific standards: <br>
-                                                                        	emissions to air<br>
                                                                         	discharge of waste water<br>
+                                                                        	emissions to air<br>
                                                                         	disposal of hazardous waste<br>
-                                                                        	protection against/remediation of soil pollution<br>
+                                                                        	protection against/remediation of 
+                                                                            soil pollution<br>
                                                                         	risk control and reduction<br>
                                                                         	nuisance by noise/odour
+                                                                    </td>
 
         
-                                                                        </td>
-                                                                    <td>
-                                                                        <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+
+                                                                        <td>
+                                                                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
+                                                                                <select name="response1" id="response1" style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                                                    <option value="Select">Select an Option</option>
+                                                                                    <option value="Yes">Yes</option>
+                                                                                    <option value="No">No</option>
+                                                                                    <option value="N/A">N/A</option>
+                                                                                </select>
+                                                                               
+                                                                               
+                                                                               
+                                                                            </div>
+                                                                            
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26964,6 +26969,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
+                                                                    
                                                                 </tr>
         
                                                                 <tr>
