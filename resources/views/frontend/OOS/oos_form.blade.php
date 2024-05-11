@@ -741,8 +741,8 @@
                                             <th style="width: 16%">Specification Limit</th>
                                             <th style="width: 16%">Details of Obvious Error</th>
                                             <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 16%">Submit By</th>
-                                            <th style="width: 16%">Submit On</th>
+                                            {{-- <th style="width: 16%">Submit By</th>
+                                            <th style="width: 16%">Submit On</th> --}}
 
                                         </tr>
                                     </thead>
@@ -754,8 +754,8 @@
                                         <td><input type="text" name="Number[]"></td>
                                         <td><input type="text" name="text[]"></td>
                                         <td><input type="file" name="file[]"></td>
-                                        <td><input type="text" name="text[]"></td>
-                                        <td><input type="date" name="time[]"></td>
+                                        {{-- <td><input type="text" name="text[]"></td>
+                                        <td><input type="date" name="time[]"></td> --}}
 
 
 
@@ -1720,11 +1720,11 @@
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
+
+
+
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>

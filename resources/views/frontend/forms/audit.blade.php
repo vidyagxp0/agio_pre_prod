@@ -302,6 +302,9 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
                     </button>    
              
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
+                    </button>    
+             
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
@@ -504,6 +507,18 @@
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="If Other">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="initiated_if_other"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="audit_type">Audit Category</label>
+                                        <select name="audit_type"
+                                            onchange="otherController(this.value, 'others', 'type_of_audit_req')">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="R&D">Scheduled Internal Audit</option>
+                                            <option value="GLP">Unscheduled Internal Audit</option>
+                                            <option value="GCP">Surprise Internal Audit</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -18733,6 +18748,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    
                                                     <div class="col-md-12 mb-4">
                                                         <div class="group-input">
                                                             <label for="Description Deviation">Final Comments</label>
@@ -22532,6 +22548,4674 @@
                             </div>
                         </div>
                     </div>
+
+                    <div id="CCForm24" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="sub-head">  
+                                Checklist for Audit Assesment
+                                </div>
+
+                                <div class="col-12">
+                                    {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr. No.</th>
+                                                        <th style="width: 40%;">Question</th>
+                                                        <th style="width: 20%;">Response</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="flex text-center">1.1</td>
+                                                        <td>How long has company been manufacturing the material /s being audited?</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 2%; gap:5px">
+                                                               
+                                                                    <input type="number" style="width:120px; border: 1.5px solid black;""><span style="font-size: 1.3rem">years</span>
+                                                                    
+                                                               
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.2</td>
+                                                        <td>Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of certificate)</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                {{-- <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select> --}}
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.3</td>
+                                                        <td> Have the inspectional issues been resolved?</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.4</td>
+                                                        <td>Is there an FDA Drug Master File? 
+                                                            And is it periodically updated?
+                                                             </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.5</td>
+                                                        <td>
+                                                            Is there an Site Master File? 
+                                                            And is it periodically updated?
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.6</td>
+                                                        <td>
+                                                            Number of employees in Production, in QA / QC and overall number of employees. Production Dept:	    Quality Dept:	               Total:
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                {{-- <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select> --}}
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.7</td>
+                                                        <td>Contracts for employees : Permanent / Temporary / Casual</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Permanent</option>
+                                                                    <option value="No">Temporary</option>
+                                                                    <option value="N/A">Casual</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.8</td>
+                                                        <td>Are your personnel aware that the products supplied shall be used for Pharmaceuticals?</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.9</td>
+                                                        <td>
+                                                            Location : Urban, Rural, Industrial
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Urban</option>
+                                                                    <option value="No">Rural</option>
+                                                                    <option value="N/A">Industrial</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.10</td>
+                                                        <td>
+                                                            Do you make use of the service of sub-contractors?
+                                                            If yes, which firm and for which material? <br>
+                                                            a -  ___________________________________________________
+                                                            b -  ___________________________________________________
+                                                            c -  ___________________________________________________
+
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                {{-- <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select> --}}
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.11</td>
+                                                        <td>
+                                                            Do you take steps to assure yourselves of the integrity and security of your product whilst it is at your sub-contractors? If yes, then list the steps taken:
+
+
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.12</td>
+                                                        <td>
+                                                            Is there a separate system for manufacture and control of penicillin / β lactam / any product of biological or animal origin / hormones?
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        {{--    <td>
+                                                            <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.13</td>
+                                                        <td>
+                                                            Is Quality Policy available? (If Yes, Attach copy of Quality Policy).
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sub-head">
+                                Checklist for Personnel, Training and Education
+                                </div>
+                                <div class="col-12">
+                                    {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                    <div class="group-input">
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width: 5%;">Sr. No.</th>
+                                                        <th style="width: 40%;">Question</th>
+                                                        <th style="width: 20%;">Response</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td class="flex text-center">2.1</td>
+                                                        <td>Do you have written job descriptions for all personnel?</td>
+                                                        <td>
+
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+
+
+                                                        </td>
+                                                        </td>
+
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">2.2</td>
+                                                        <td>Do you have procedures that document how you perform training?</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">2.3</td>
+                                                        <td> Do you maintain records of the training?</td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+
+
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">2.4</td>
+                                                        <td>
+                                                            Does the Training Program in place have the following elements: <br>
+                                                            	Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)<br>
+                                                            	Training program for freshly recruited personnel?<br>
+                                                            	Periodic refresher training programs for established employees?<br>
+                                                            	At the start of new product manufacturing?<br>
+                                                            	When new methods are used?<br>
+                                                            	Quality techniques for production people?
+                                                            
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+
+
+
+                                                   
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>          
+                                <div class="sub-head">
+                                    Checklist for Facility and Utilities
+                                    </div>
+                                    <div class="col-12">
+                                        {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                        <div class="group-input">
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 5%;">Sr. No.</th>
+                                                            <th style="width: 40%;">Question</th>
+                                                            <th style="width: 20%;">Response</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="flex text-center">3.1</td>
+                                                            <td>Were the premises designed or adapted for the present use?</td>
+                                                            <td>
+    
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Designed</option>
+                                                                        <option value="No">Adapted</option>
+                                                                       
+                                                                    </select>
+                                                                </div>
+    
+    
+                                                            </td>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+    
+    
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex text-center">3.2</td>
+                                                            <td>
+                                                                Are there separate areas for: <br>
+                                                                	Handling of starting materials?<br>
+                                                                	Manufacturing?<br>
+                                                                	Quarantined finished products or are other control systems in place?<br>
+                                                                	Approved finished products?<br>
+                                                                	Packaging and dispatch?<br>
+                                                                	Rest and eating?
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+    
+    
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex text-center">3.3</td>
+                                                            <td>
+                                                                Does the present design prevent:<br>
+                                                                	Chemical contamination?<br>
+                                                                	Physical contamination?<br>
+                                                                	Microbial contamination?
+
+                                                                </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.4</td>
+                                                            <td>
+                                                                Are your working-rooms: <br>
+                                                                	Of proper size for the intended functions? <br>
+                                                                	Satisfactorily lighted, air-conditioned? <br>
+                                                                	Clean and cleaned-up?<br>
+                                                                	Designed to avoid cross-contamination?<br>
+                                                                	Supplied with security and fire protection measurements?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.5</td>
+                                                            <td>
+                                                                Do you have written Good House Keeping Procedures?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.6</td>
+                                                            <td>
+                                                                If yes, do you maintain follow- up records of these procedures?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.7</td>
+                                                            <td>
+                                                                Do your manufacturing locations follow Good Manufacturing Practices?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.8</td>
+                                                            <td>
+                                                                Are plant supply pipelines identified and labeled?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.9</td>
+                                                            <td>
+                                                                Is the core area is equipped with HVAC/AHU system?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.10</td>
+                                                            <td>
+                                                                Is there provision of compressed air in core area?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.11</td>
+                                                            <td>
+                                                                Have support systems like compressed air been validated?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.12</td>
+                                                            <td>
+                                                                Do you monitor the quality of the water used during the manufacturing process?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.13</td>
+                                                            <td>
+                                                                Is the premises situated in an environment which causes minimum risk of contamination to material or products?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.14</td>
+                                                            <td>
+                                                                Is area sufficient for orderly storage of materials?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.15</td>
+                                                            <td>
+                                                                Is area provided commensurate with production activities and adequate storage areas for under process materials and finished products provided?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.16</td>
+                                                            <td>
+                                                                Are procedures available for maintenance, cleaning and sanitation of buildings, premises and surroundings?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.17</td>
+                                                            <td>
+                                                                Are arrangements made for control of pest, rodent, and birds? If yes, please specify the frequency for such controls?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">3.18</td>
+                                                            <td>
+                                                                Do you have changing / toilet / refreshment facilities physically separated from production / storage areas?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+    
+    
+    
+    
+    
+    
+                                                       
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="sub-head">
+                                        Checklist for Machines and Equipment
+                                        </div>
+                                        <div class="col-12">
+                                            {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                            <div class="group-input">
+                                                <div class="why-why-chart">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">Sr. No.</th>
+                                                                <th style="width: 40%;">Question</th>
+                                                                <th style="width: 20%;">Response</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="flex text-center">4.1</td>
+                                                                <td>Is the production line multipurpose or single purpose?</td>
+                                                                <td>
+        
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Multi</option>
+                                                                            <option value="No">Single</option>
+                                                                          
+                                                                        </select>
+                                                                    </div>
+        
+        
+                                                                </td>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+        
+        
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="flex text-center">4.2</td>
+                                                                <td>
+                                                                    Is there a maintenance and preventative maintenance program for all pieces of equipment?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+        
+        
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="flex text-center">4.3</td>
+                                                                <td>
+                                                                    Do you have written maintenance and calibration procedures for critical equipment?
+    
+                                                                    </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.4</td>
+                                                                <td>
+                                                                    Can all critical apparatus and devices easily be recognized as such, e.g. by calibration stickers?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.5</td>
+                                                                <td>
+                                                                    Are these calibrations traceable back to national standards?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.6</td>
+                                                                <td>
+                                                                    Do you retain records of calibration as evidence of control?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.7</td>
+                                                                <td>
+                                                                    Is there a cleaning plan/procedure for production machines, equipment?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.8</td>
+                                                                <td>
+                                                                    Have the cleaning and sterilization processes been validated?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.9</td>
+                                                                <td>
+                                                                    Are logbooks for major equipments available for use, cleaning and maintenance?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.10</td>
+                                                                <td>
+                                                                    Is any manufacturing equipment software controlled?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.11</td>
+                                                                <td>
+                                                                    Do you have a documented procedure for the validation of all test and measuring equipment used to demonstrate the conformance of product to the specified requirements?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.12</td>
+                                                                <td>
+                                                                    Do you retain records of validation as evidence of control?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.13</td>
+                                                                <td>
+                                                                    If yes, <br>
+                                                                    	Is the software validated?<br>
+                                                                    	Are modifications of software (or its use) implemented by manufacturing personnel?<br>
+                                                                    	Is there a procedure concerning change of software and its copying?<br>
+                                                                    	Is the security of software controlled?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.14</td>
+                                                                <td>
+                                                                    Do you contract out any of the following services<br>
+                                                                    	Instrument Calibration?<br>
+                                                                    	Preventative / Breakdown Maintenance?
+
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">4.15</td>
+                                                                <td>
+                                                                    Are all equipments having status labels all the time?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                          
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div> <div class="sub-head">
+                                            Checklist for Production and Process Control
+                                            </div>
+                                            <div class="col-12">
+                                                {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                                <div class="group-input">
+                                                    <div class="why-why-chart">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="flex text-center">5.1</td>
+                                                                    <td>Is the workflow organized in the manufacturing area?</td>
+                                                                    <td>
+            
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+            
+            
+                                                                    </td>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+            
+            
+            
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="flex text-center">5.2</td>
+                                                                    <td>
+                                                                        Is your manufacturing process validated?
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+            
+            
+            
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="flex text-center">5.3</td>
+                                                                    <td>
+                                                                        If not, do you have plans to do so?
+        
+                                                                        </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.4</td>
+                                                                    <td>
+                                                                        If you do: what is your target date for completion?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.5</td>
+                                                                    <td>
+                                                                        Is distinct staging area for starting material or component used in manufacturing?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.6</td>
+                                                                    <td>
+                                                                        Do have procedure for general housekeeping and environmental control? 
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.7</td>
+                                                                    <td>
+                                                                        What is your normal lot/batch size?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.8</td>
+                                                                    <td>
+                                                                        Does each lot/batch have an identification number?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.9</td>
+                                                                    <td>
+                                                                        Do you manufacture according to a written procedure for each product supplied to the market?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.10</td>
+                                                                    <td>
+                                                                        Are these procedures approved by QA?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.11</td>
+                                                                    <td>
+                                                                        Do you have a batch record for each batch/lot manufactured?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.12</td>
+                                                                    <td>
+                                                                        If yes, do the batch records detail the following: <br>
+                                                                        	Description, Lot Number & Quantities of Material used?<br>
+                                                                        	Processing Conditions (Temperature, Time etc.)?<br>
+                                                                        	The identification of the Person who performed the particular step?<br>
+                                                                        	Results of any In-process tests?<br>
+                                                                        	All deviations from standard conditions?<br>
+                                                                        	All cleaning operations carried out before & after batch manufacture?
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.13</td>
+                                                                    <td>
+                                                                        If yes, for how long do you keep the batch records?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <input type="number" style="width:120px; border: 1.5px solid black;""><span style="font-size: 1.3rem">years</span>
+                                                                            {{-- <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select> --}}
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.14</td>
+                                                                    <td>
+                                                                        Do you maintain records of use, maintenance for process equipment, in order to demonstrate the traceability in batches, product processed and personnel?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.15</td>
+                                                                    <td>
+                                                                        Are computers used to store records of manufacture, testing, storage or distribution for the product you supply?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.16</td>
+                                                                    <td>
+                                                                        If yes, have these computer systems been validated (i.e.. have the complete life cycles of the systems been assessed and documented including stages of planning, specifications, programming, testing, commissioning, documentation, operation, monitoring and modifying)?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.17</td>
+                                                                    <td>
+                                                                        Do all product containers bear identification labels, e.g. stating batch/lot number, product name etc.?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">5.18</td>
+                                                                    <td>
+                                                                        Is there expiry or retest dates defined for all material?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+            
+                                                                <tr>
+                                                                    <td class="flex text-center">5.18</td>
+                                                                    <td>
+                                                                        Is there expiry or retest dates defined for all material?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.19</td>
+                                                                    <td>
+                                                                        Is there storage conditions defined for all material?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.20</td>
+                                                                    <td>
+                                                                        Is the product identifiable throughout the manufacturing process?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.21</td>
+                                                                    <td>
+                                                                        Is traceability of all raw materials used, maintained throughout manufacture?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.22</td>
+                                                                    <td>
+                                                                        Is there a procedure in place to prevent cross-contamination?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.23</td>
+                                                                    <td>
+                                                                        Are line clearances undertaken between product changes during manufacturing and labeling?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.24</td>
+                                                                    <td>
+                                                                        Do you use dedicated equipment for the production of the product in question?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.25</td>
+                                                                    <td>
+                                                                        Is testing or inspection performed between processes or manufacturing stages?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.26</td>
+                                                                    <td>
+                                                                        Is testing or inspection performed on finished products?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.27</td>
+                                                                    <td>
+                                                                        Are rejected lots identified as such and separated?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.28</td>
+                                                                    <td>
+                                                                        Do you perform a failure investigation in case of a reject?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.29</td>
+                                                                    <td>
+                                                                        Is reprocessing of rejected lots documented?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.30</td>
+                                                                    <td>
+                                                                        Do you have a procedure covering rework/reprocessing or recovery of material?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.31</td>
+                                                                    <td>
+                                                                        Is non-conforming final product ever blended with conforming product to bring it into specification?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>  <tr>
+                                                                    <td class="flex text-center">5.32</td>
+                                                                    <td>
+                                                                        Do you have procedures and records of plant sanitation?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+            
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div> 
+                                            <div class="sub-head">
+                                    Checklist for Materials Control
+                                    </div>
+                                    <div class="col-12">
+                                        {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                        <div class="group-input">
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 5%;">Sr. No.</th>
+                                                            <th style="width: 40%;">Question</th>
+                                                            <th style="width: 20%;">Response</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="flex text-center">6.1</td>
+                                                            <td>Do you have an approved supplier list?</td>
+                                                            <td>
+    
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+    
+    
+                                                            </td>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+    
+    
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex text-center">6.2</td>
+                                                            <td>
+                                                                Do you have agreements in place with all your suppliers that require them to notify you of any change in raw material or the manufacturing process of the product supplied?
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+    
+    
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex text-center">6.3</td>
+                                                            <td>
+                                                                Do you have written specifications for all incoming raw material?
+
+                                                                </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.4</td>
+                                                            <td>
+                                                                Who is responsible for establishing and approving the specifications of raw materials?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.5</td>
+                                                            <td>
+                                                                Are Certificates of Analysis routinely compared against a written specification?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.6</td>
+                                                            <td>
+                                                                Do you routinely test receipted materials to verify conformance with the supplier certification?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.7</td>
+                                                            <td>
+                                                                Is a defined sampling plan used for sampling of materials?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.8</td>
+                                                            <td>
+                                                                Do record of analysis indicate the sample traceability and date and sign of the analyst?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.9</td>
+                                                            <td>
+                                                                Is there a retention sample policy for key starting materials?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.10</td>
+                                                            <td>
+                                                                Are starting materials visibly controlled and marked with 
+Quarantine/Under test / Sampled / Approved / Rejected / Recalled
+
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.11</td>
+                                                            <td>
+                                                                Do you maintain information records for raw materials which include the following: <br>
+                                                                    	Your lot Identity?<br>
+                                                                    	Suppliers Lot No?<br>
+                                                                    	Date of Receipt?<br>
+                                                                    	Quantity?<br>
+                                                                    	Suppliers name?<br>
+                                                                    	Shelf Life?<br>
+                                                                    	Test Results?<br>
+                                                                    	Specification?<br>
+                                                                    	Accepted/Rejected?<br>
+                                                                    	Retained Sample?
+
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.12</td>
+                                                            <td>
+                                                                Do you have defined areas for Receipt, Identification, Sampling and Quarantine of incoming materials?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.13</td>
+                                                            <td>
+                                                                Are material properly segregated to avoid mix-ups?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.14</td>
+                                                            <td>
+                                                                Do you use stock rotation system (FIFO/FEFO)?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.15</td>
+                                                            <td>
+                                                                Are rejected material marked and stored separately in a secured area?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.16</td>
+                                                            <td>
+                                                                Do you have procedure for visual examination of materials for damage at the time of receipt?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.17</td>
+                                                            <td>
+                                                                Is controlled storage conditions maintained wherever required?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">6.18</td>
+                                                            <td>
+                                                                Is separate finished products storage available?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="flex text-center">6.19</td>
+                                                            <td>
+                                                                Is finished products distribution records maintained?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr> <tr>
+                                                            <td class="flex text-center">6.20</td>
+                                                            <td>
+                                                                Are records for action taken on rejected goods available?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr> <tr>
+                                                            <td class="flex text-center">6.21</td>
+                                                            <td>
+                                                                Are printed/ coded packing materials (if used) stored in secured area or with restricted access?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>                                                   
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> <div class="sub-head">
+                                        Checklist for Quality Control
+                                        </div>
+                                        <div class="col-12">
+                                            {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                            <div class="group-input">
+                                                <div class="why-why-chart">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">Sr. No.</th>
+                                                                <th style="width: 40%;">Question</th>
+                                                                <th style="width: 20%;">Response</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="flex text-center">7.1</td>
+                                                                <td>Is Quality Control (QC) independent of Production?</td>
+                                                                <td>
+        
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+        
+        
+                                                                </td>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+        
+        
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="flex text-center">7.2</td>
+                                                                <td>
+                                                                    Are records kept of all samples that are submitted to the laboratories?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+        
+        
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="flex text-center">7.3</td>
+                                                                <td>
+                                                                    Are there formal written procedures for all performed tests?
+    
+                                                                    </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.4</td>
+                                                                <td>
+                                                                    Are the analytical methods validated?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.5</td>
+                                                                <td>
+                                                                    Are analytical calculations checked by a second person?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.6</td>
+                                                                <td>
+                                                                    Do you perform trend analysis on analytical results?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.7</td>
+                                                                <td>
+                                                                    Are the results of reference standard testing maintained on file?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.8</td>
+                                                                <td>
+                                                                    Is there a procedure for documenting and investigating out-of-specification results?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.9</td>
+                                                                <td>
+                                                                    Do you use any contract laboratories?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.10</td>
+                                                                <td>
+                                                                    Have you qualified/evaluated these contract laboratories?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.11</td>
+                                                                <td>
+                                                                    Are quality standards or written control procedures available for: <br>
+                                                                    	Starting materials?<br>
+                                                                    	In-process control?<br>
+                                                                    	Physical identification at all stages (e.g. labeling of semi-finished products)?<br>
+                                                                    	Finished products?<br>
+                                                                    	Microbiological control?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.12</td>
+                                                                <td>
+                                                                    Are records kept of all control results?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.13</td>
+                                                                <td>
+                                                                    Is your critical analytical laboratory equipment fully qualified?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.14</td>
+                                                                <td>
+                                                                    Is there a maintenance plan/procedure for laboratory equipment?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.15</td>
+                                                                <td>
+                                                                    If yes: <br>
+                                                                    	Do you have a calibration scheme?<br>
+                                                                    	Do you have calibration instructions?<br>
+                                                                    	Do you keep all records of calibration performances?<br>
+                                                                    	Does any laboratory equipment have software control?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.16</td>
+                                                                <td>
+                                                                    If Yes, Is the software validated?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.17</td>
+                                                                <td>
+                                                                    Are samples of end product taken by appropriate trained personnel?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">7.18</td>
+                                                                <td>
+                                                                    Do you keep retain samples of each lot?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="flex text-center">7.19</td>
+                                                                <td>
+                                                                    For how long do you keep retain samples?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <input type="number" style="width:120px; border: 1.5px solid black;""><span style="font-size: 1.3rem">years</span>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr><tr>
+                                                                <td class="flex text-center">7.20</td>
+                                                                <td>
+                                                                    Is there a procedure in place to establish and manage reference standards?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr><tr>
+                                                                <td class="flex text-center">7.21</td>
+                                                                <td>
+                                                                    Is there a written stability program / Procedure?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr><tr>
+                                                                <td class="flex text-center">7.22</td>
+                                                                <td>
+                                                                    Is there annual stability Program?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr><tr>
+                                                                <td class="flex text-center">7.23</td>
+                                                                <td>
+                                                                    Is pre-defined sampling plan adopted on routine basis?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr><tr>
+                                                                <td class="flex text-center">7.24</td>
+                                                                <td>
+                                                                    Will you provide a certificate of analysis for each batch or lot supplied to us?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+               
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                        <div class="sub-head">
+                                    Checklist for Quality Assurance
+                                    </div>
+                                    <div class="col-12">
+                                        {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                        <div class="group-input">
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 5%;">Sr. No.</th>
+                                                            <th style="width: 40%;">Question</th>
+                                                            <th style="width: 20%;">Response</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="flex text-center">8.1</td>
+                                                            <td>
+                                                                Is there an independent Quality Assurance (QA) department within the company?
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+                                                        </tr>
+    
+                                                        <tr>
+                                                            <td class="flex text-center">8.2</td>
+                                                            <td>
+                                                                Do you have procedures covering the release or rejection of material?
+                                                                
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+    
+                                                        </tr>
+    
+    
+                                                        <tr>
+                                                            <td class="flex text-center">8.3</td>
+                                                            <td>
+                                                                Who is responsible for release and reject of your end product?
+
+                                                                </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.4</td>
+                                                            <td>
+                                                                Are batch records reviewed / approved by QA before the batch is dispatched?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.5</td>
+                                                            <td>
+                                                                Are deviations and non-conformances investigated, documented and filed?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.6</td>
+                                                            <td>
+                                                                Would you notify your Customer of any significant changes (Critical, Major) in analytical test methods and specifications or manufacturing procedures or site of production?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.7</td>
+                                                            <td>
+                                                                Do you introduce changes according to a written procedure?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.8</td>
+                                                            <td>
+                                                                Are pDo you supply a Certificate of Analysis with each batch?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.9</td>
+                                                            <td>
+                                                                Is there a company recall program?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.10</td>
+                                                            <td>
+                                                                Do you have defined validation program?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.11</td>
+                                                            <td>
+                                                                Do you have defined equipment qualification /re-qualification program?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.12</td>
+                                                            <td>
+                                                                Is there a self inspection program? If yes, what is the frequency?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.13</td>
+                                                            <td>
+                                                                Is product quality review performed and records available?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.14</td>
+                                                            <td>
+                                                                Is all GMP relevant documentation readily available?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.15</td>
+                                                            <td>
+                                                                Do you have OOS procedure in place?
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td class="flex text-center">8.16</td>
+                                                            <td>
+                                                                Are TSE/BSE certificates are available? If Yes provide the copy of certificate.
+                                                            </td>
+                                                            <td>
+                                                                <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <select name="response" id="response"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="Yes">Yes</option>
+                                                                        <option value="No">No</option>
+                                                                        <option value="N/A">N/A</option>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+    
+                                                            <td style="vertical-align: middle;">
+                                                                <div
+                                                                    style="margin: auto; display: flex; justify-content: center;">
+                                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+
+                                                       
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="sub-head">
+                                        Checklist for Packaging, Labelling and Shipping
+                                        </div>
+                                        <div class="col-12">
+                                            {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                            <div class="group-input">
+                                                <div class="why-why-chart">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th style="width: 5%;">Sr. No.</th>
+                                                                <th style="width: 40%;">Question</th>
+                                                                <th style="width: 20%;">Response</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="flex text-center">9.1</td>
+                                                                <td>
+                                                                    Are written procedures and specifications are available for <br>
+                                                                    •	Packaging components <br>
+                                                                    •	Packing operation<br>
+                                                                    •	Labels and labeling
+                                                                    
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+                                                            </tr>
+        
+                                                            <tr>
+                                                                <td class="flex text-center">9.2</td>
+                                                                <td>
+                                                                    Will each bag/container on a pallet have the lot/batch no. and/or description clearly visible on it?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+        
+                                                            </tr>
+        
+        
+                                                            <tr>
+                                                                <td class="flex text-center">9.3</td>
+                                                                <td>
+                                                                    Do you use your own transport for shipping to customers or do you use a contractor?
+    
+                                                                    </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Supplier-Contractor</option>
+                                                                            <option value="No">Owned</option>
+                                                                            
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.4</td>
+                                                                <td>
+                                                                    If you use a contractor, Do you have an agreed contract between parties which specifies required shipping conditions for materials?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.5</td>
+                                                                <td>
+                                                                    Are written instructions available for Packaging components? <br>
+                                                                    Packaging operation? <br>
+                                                                    Labels and labeling?
+
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.6</td>
+                                                                <td>
+                                                                    Does the labeling procedure emphasize special precautions to prevent unintentional mix-up or substitution?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.7</td>
+                                                                <td>
+                                                                    Do you maintain lot separation during packaging?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.8</td>
+                                                                <td>
+                                                                    Are you prepared to meet packaging and labeling requirements from your customers?
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.9</td>
+                                                                <td>
+                                                                    Does your labeling indicate: <br>
+                                                                    	Material Name with Pharmacopoeial grade?<br>
+                                                                    	Batch Number?<br>
+                                                                    	Site of manufacturing?<br>
+                                                                    	Batch Number?<br>
+                                                                    	Expiry / retest date?<br>
+                                                                    	Quantity?
+                                                                    
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                            <tr>
+                                                                <td class="flex text-center">9.10</td>
+                                                                <td>
+                                                                    What details do your place on your dispatch labels?  Give details.
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+        
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+    
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sub-head">
+                                            Checklist for Saftey, Health and Environment (She)
+                                            </div>
+                                            <div class="col-12">
+                                                {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
+                                                <div class="group-input">
+                                                    <div class="why-why-chart">
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 5%;">Sr. No.</th>
+                                                                    <th style="width: 40%;">Question</th>
+                                                                    <th style="width: 20%;">Response</th>
+                                                                    <th>Remarks</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="flex text-center">10.1</td>
+                                                                    <td>
+                                                                        Do you have an operational management system(s) for Safety, Health and Environment (SHE)?
+                                                                        
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                </tr>
+            
+                                                                <tr>
+                                                                    <td class="flex text-center">10.2</td>
+                                                                    <td>
+                                                                        If so, are these systems <br>
+                                                                        a.	based on an international standard (ISO 9001/14001/18001)?<br>
+                                                                        b.	certified by a accredited third party auditing body?
+                                                                        
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                </tr>
+            
+            
+                                                                <tr>
+                                                                    <td class="flex text-center">10.3</td>
+                                                                    <td>
+                                                                        Are the following subjects regulated by law and/or specific standards: <br>
+                                                                        	emissions to air<br>
+                                                                        	discharge of waste water<br>
+                                                                        	disposal of hazardous waste<br>
+                                                                        	protection against/remediation of soil pollution<br>
+                                                                        	risk control and reduction<br>
+                                                                        	nuisance by noise/odour
+
+        
+                                                                        </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.4</td>
+                                                                    <td>
+                                                                        Do you have a structured SHE program, which is regularly monitored and updated?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.5</td>
+                                                                    <td>
+                                                                        Does your site operate its own wastewater treatment installation?
+    
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.6</td>
+                                                                    <td>
+                                                                        Is your personnel instructed on the handling of any kind of hazardous materials that you use and on how to act in case of unwanted events?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.7</td>
+                                                                    <td>
+                                                                        Do you have an adequate emergency response plan and organization?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.8</td>
+                                                                    <td>
+                                                                        Are there enough extinguishers present to do the job?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.9</td>
+                                                                    <td>
+                                                                        Are extinguisher locations conspicuously marked?
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                                <tr>
+                                                                    <td class="flex text-center">10.10</td>
+                                                                    <td>
+                                                                        Are extinguishers properly mounted and easily accessible?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="flex text-center">10.11</td>
+                                                                    <td>
+                                                                        Are all extinguishers fully charged and operable?
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+        
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                           </div>
+                            <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Final Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments"> Supporting Attachment </label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attach[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                    
 
 
                     <!-- Activity Log content -->
