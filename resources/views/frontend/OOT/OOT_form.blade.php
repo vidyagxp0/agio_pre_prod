@@ -34,6 +34,8 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button> 
             <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button> 
             <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist -  Preliminary Laboratory Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -  Part B: Applicable if Laboratory error identified</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist -Part D: Communication of Confirmed of OOT With Technical Committee </button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Investigation Conclusion</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
@@ -1560,6 +1562,278 @@
                                                             </div>
                                                         </div>
                            
+
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm20" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Action Taken on OOT Result(s) :<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Retraining to Analyst Required ? <span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Remarks (If Yes)</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Correct the Error and Repeat the analysis on same sample<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Any Other Actions Required</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Summary Of Earlier OTT And CAPA
+                                    <button type="button" name="audit-agenda-grid" id="summaryadd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="summary_table_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row#</th>
+                                                <th style="width: 12%">OOT No.</th>
+                                                <th style="width: 16%"> OOT Reported Date</th>
+                                                <th style="width: 15%">Description Of OOT</th>
+                                                <th style="width: 15%">Previous OOT Root Cause</th>
+                                                <th style="width: 15%">CAPA </th>
+                                                <th style="width: 15%">Closure Date Of CAPA</th>
+                                             
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+
+                                            <td><input type="text" name="OOTNo[]"></td>
+                                            <td><input type="text" name="OOTReportedDate[]"></td>
+                                            <td><input type="text" name="DescriptionOfOOT[]"></td>
+                                            <td><input type="text" name="previousIntervalDetails[]"></td>
+                                            <td><input type="text" name="CAPA[]"></td>
+                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>CAPA Required<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores"> CAPA Reference </label>
+                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">Pankaj</option>
+                                        <option value="">Gourav</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Phase II Inves. Req<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Attachment </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
+
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="CCForm21" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">Review Comment</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Summary Of Earlier OTT And CAPA
+                                    <button type="button" name="audit-agenda-grid" id="summaryadd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="summary_table_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row#</th>
+                                                <th style="width: 12%">OOT No.</th>
+                                                <th style="width: 16%"> OOT Reported Date</th>
+                                                <th style="width: 15%">Description Of OOT</th>
+                                                <th style="width: 15%">Previous OOT Root Cause</th>
+                                                <th style="width: 15%">CAPA </th>
+                                                <th style="width: 15%">Closure Date Of CAPA</th>
+                                                <!-- <th style="width: 15%">CAPA Required</th>
+                                                <th style="width: 15%">CAPA Reference</th>
+                                                <th style="width: 15%">Phase II Inves. Req</th>
+                                                <th style="width: 15%">Supporting Attachment</th>
+                                                <th style="width: 15%">Pre. Lab Invest. Review By</th>
+                                                <th style="width: 15%">Pre. Lab Invest. Review On</th> -->
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+
+                                            <td><input type="text" name="OOTNo[]"></td>
+                                            <td><input type="text" name="OOTReportedDate[]"></td>
+                                            <td><input type="text" name="DescriptionOfOOT[]"></td>
+                                            <td><input type="text" name="previousIntervalDetails[]"></td>
+                                            <td><input type="text" name="CAPA[]"></td>
+                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>CAPA Required<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores"> CAPA Reference </label>
+                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">Pankaj</option>
+                                        <option value="">Gourav</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Phase II Inves. Req<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Attachment </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
 
 
                         </div>
