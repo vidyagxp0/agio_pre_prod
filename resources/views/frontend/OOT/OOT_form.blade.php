@@ -49,7 +49,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signatures</button>
         </div>
 
-        <form action="{{ route('actionItem.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('oot.ootstore') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div id="step-form">
@@ -135,30 +135,34 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-4">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Initiated Through</label>
-                                    <textarea class="summernote" name="initiated_through" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Short Description">If Others <span class="text-danger"></span></label>
-                                    <select name="if_others">
+                                    <select name="severity_level">
                                         <option>---select---</option>
-                                        <option>ABC </option>
-                                        <option>ABCd </option>
+                                        <option value="yes">yes</option>
+                                        <option value="no">No</option>
                                     </select>
                                 </div>
                             </div>
 
+                            <div class="col-lg-4">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Short Description">If Others <span class="text-danger"></span></label>
+                                     <input type="text" name="product_material_name" />
+                                </div>
+                            </div>
 
 
-                            <div class="col-12">
+
+                            <div class="col-4">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Is Repeat?</label>
-                                    <textarea class="summernote" name="is_repeat" id="summernote-16"></textarea>
+                                    <select name="severity_level">
+                                        <option>---select---</option>
+                                        <option value="yes">yes</option>
+                                        <option value="no">No</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -171,17 +175,13 @@
 
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="closure attachment">Nature Of Change </label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                        </div>
-                                    </div>
+                                    <label for="nature_of_change">Nature Of Change </label>
+                                    
+                                    <select name="nature_of_change">
+                                        <option>---select---</option>
+                                        <option value="yes">yes</option>
+                                        <option value="no">No</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -195,27 +195,24 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="closure attachment">Description </label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="description_closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                        </div>
-                                    </div>
+                            <textarea class="summernote" name="repeat_nature" id="summernote-16"></textarea>
+          
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                              <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Short Description">Initial Attachment <span class="text-danger"></span></label>
-                                    <select name="initial_attachment">
-                                        <option>---select---</option>
-                                        <option>Pdf </option>
-                                        <option>Document </option>
-                                    </select>
+                                    <label for="closure attachment">Initial Attachment </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -241,7 +238,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label>Reference Document</label>
                                     <input type="text"  name="reference_document"/>
@@ -310,14 +307,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="Item/ProductCode[]"></td>
                                             <td><input type="text" name="Lot/BatchNo[]"></td>
                                             <td><input type="text" name="A.R.Number[]"></td>
                                             <td><input type="text" name="MfgDate[]"></td>
                                             <td><input type="text" name="ExpiryDate[]"></td>
-                                            <td><input type="text" name="LabelClaim[]"></td>
+                                            <td><input type="text" name="LabelClaim[]"></td> --}}
 
                                         </tbody>
 
@@ -357,8 +354,8 @@
                                     <label for="Reference Recores">Stability For </label>
                                     <select multiple id="reference_record" name="stability_for[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
+                                        <option value="Pankaj">Pankaj</option>
+                                        <option value="Gourav">Gourav</option>
                                     </select>
                                 </div>
                             </div>
@@ -391,13 +388,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="ARNumber[]"></td>
                                             <td><input type="text" name="Condition:Temprature&RH[]"></td>
                                             <td><input type="text" name="Interval[]"></td>
                                             <td><input type="text" name="Orientation[]"></td>
-                                            <td><input type="text" name="PackDetails[]"></td>
+                                            <td><input type="text" name="PackDetails[]"></td> --}}
 
 
                                         </tbody>
@@ -444,7 +441,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="ARNumber[]"></td>
                                             <td><input type="text" name="TestNameOfOOT[]"></td>
@@ -452,7 +449,7 @@
                                             <td><input type="text" name="InitialIntervalDetails[]"></td>
                                             <td><input type="text" name="previousIntervalDetails[]"></td>
                                             <td><input type="text" name="DifferenceOfResults[]"></td>
-                                            <td><input type="text" name="TrendLimit[]"></td>
+                                            <td><input type="text" name="TrendLimit[]"></td> --}}
 
 
                                         </tbody>
@@ -489,8 +486,10 @@
                     </div>
                 </div>
 
-           
-                <!-- ==============Tab-2 start=============== -->
+
+
+  <!-- ==============Tab-2 start=============== -->
+
 
                 <div id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -1411,7 +1410,10 @@
                     </div>
                 </div>
 
-                <!-- ==============Tab-3 start=============== -->
+
+
+
+  <!-- ==============Tab-3 start=============== -->
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1427,8 +1429,8 @@
                                 <div class="group-input">
                                     <label> Root Cause Identified? <span class="text-danger"></span></label>
                                     <select name="root_cause_identified">
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
                             </div>
@@ -1437,8 +1439,8 @@
                                 <div class="group-input">
                                     <label> OOT Category-Root Cause Identified<span class="text-danger"></span></label>
                                     <select name="oot_category_root">
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                       <option value="yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
                             </div>
@@ -1473,8 +1475,8 @@
                                 <div class="group-input">
                                     <label> Recommended Action Required<span class="text-danger"></span></label>
                                     <select name="recommended_action_req">
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                     <option value="yes">Yes</option>
+                                        <option value="No">No</option>
                                     </select>
                                 </div>
                             </div>
@@ -1485,8 +1487,8 @@
                                     </label>
                                     <select multiple id="reference_record" name="recommend_action_refre[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
                                     </select>
                                 </div>
                             </div>
@@ -1495,8 +1497,8 @@
                                 <div class="group-input">
                                     <label> CAPA Required<span class="text-danger"></span></label>
                                     <select name="capa_required">
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
                                     </select>
                                 </div>
                             </div>
@@ -1506,8 +1508,8 @@
                                     <label for="Reference Recores"> CAPA Refrence Number</label>
                                     <select multiple id="reference_record" name="capa_refrence_no[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
                                     </select>
                                 </div>
                             </div>
@@ -1551,7 +1553,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- ==============Tab-4 start=============== -->
+           
+  <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1593,14 +1596,14 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="OOTNo[]"></td>
                                             <td><input type="text" name="OOTReportedDate[]"></td>
                                             <td><input type="text" name="DescriptionOfOOT[]"></td>
                                             <td><input type="text" name="previousIntervalDetails[]"></td>
                                             <td><input type="text" name="CAPA[]"></td>
-                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
+                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td> --}}
 
 
                                         </tbody>
@@ -1612,8 +1615,8 @@
                                 <div class="group-input">
                                     <label>CAPA Required<span class="text-danger"></span></label>
                                     <select name="capa_review">
-                                        <option>---select---</option>
-                                        <option>Yes </option>
+                                        <option value="0">---select---</option>
+                                        <option value="Yes">Yes </option>
                                         <option>No </option>
                                     </select>
                                 </div>
@@ -1624,8 +1627,8 @@
                                     <label for="Reference Recores"> CAPA Reference </label>
                                     <select multiple id="reference_record" name="capa_refrence_review[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
+                                        <option value="pankaj">Pankaj</option>
+                                        <option value="Gourav">Gourav</option>
                                     </select>
                                 </div>
                             </div>
@@ -1672,7 +1675,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ==============Tab-5 start=============== -->
+ <!-- ==============Tab-5 start=============== -->
                 <div id="CCForm5" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1797,7 +1800,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ==============Tab-6 start=============== -->
+ <!-- ==============Tab-6 start=============== -->
                 <div id="CCForm6" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -1865,8 +1868,8 @@
                                     <label>Recommended Action Required<span class="text-danger"></span></label>
                                     <select name="qcr_recommend_action">
                                         <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
+                                        <option  value ="yes">Yes </option>
+                                        <option value ="yes">No </option>
                                     </select>
                                 </div>
                             </div>
@@ -1943,7 +1946,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ==============Tab-7 start=============== -->
+ <!-- ==============Tab-7 start=============== -->
                 <div id="CCForm7" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -2028,7 +2031,7 @@
                         </div>
                     </div>
                 </div>
-                <!-- ==============Tab-8 start=============== -->
+  <!-- ==============Tab-8 start=============== -->
                 <div id="CCForm8" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
@@ -2070,7 +2073,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="InitialAnalysis[]"></td>
                                             <td><input type="text" name="ResultFromPhaseIInvestigation[]"></td>
@@ -2080,7 +2083,7 @@
                                             <td><input type="text" name="HypothesisExperimentRefrence/AdditionalTestingRefrenceNo[]"></td>
                                             <td><input type="text" name="Results[]"></td>
                                             <td><input type="text" name="AnalystName[]"></td>
-                                            <td><input type="text" name="Remarks[]"></td>
+                                            <td><input type="text" name="Remarks[]"></td> --}}
 
 
                                         </tbody>
@@ -2248,13 +2251,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
 
                                             <td><input type="text" name="Material/ProductName[]"></td>
                                             <td><input type="text" name="BatchNO[]"></td>
                                             <td><input type="text" name="AnyOtherInformation[]"></td>
                                             <td><input type="text" name="ActionTakenOnAffectedBatch[]"></td>
-
+ --}}
 
 
                                         </tbody>
@@ -2275,8 +2278,8 @@
                                     <label>CAPA Required<span class="text-danger"></span></label>
                                     <select name="capa_required_oot_cr">
                                         <option>---select---</option>
-                                        <option>Yes </option>
-                                        <option>No </option>
+                                        <option value="Yes">Yes </option>
+                                        <option value="No">No </option>
                                     </select>
                                 </div>
                             </div>
@@ -2287,8 +2290,8 @@
                                     <label for="Reference Recores"> CAPA Reference </label>
                                     <select multiple id="reference_record" name="capa_reference_oot_cr[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
+                                        <option value="Pankaj">Pankaj</option>
+                                        <option value="Gourav">Gourav</option>
                                     </select>
                                 </div>
                             </div>
@@ -2725,8 +2728,8 @@
                                     <label for="Reference Recores">Action Task Reference </label>
                                     <select multiple id="reference_record" name="action_task_reference_uae[]" id="">
                                         <option value="">--Select---</option>
-                                        <option value="">Pankaj</option>
-                                        <option value="">Gourav</option>
+                                        <option value="Pankajy">Pankaj</option>
+                                        <option value="Gourav">Gourav</option>
                                     </select>
                                 </div>
                             </div>
@@ -3150,6 +3153,7 @@
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </form>

@@ -163,6 +163,7 @@ Route::group(['prefix' => 'rcms'], function () {
              */
             Route::group(['prefix' => 'oot', 'as' => 'oot.'], function() {
                 Route::get('/', [OOTController::class, 'index'])->name('index');
+                Route::post('/ootstore', [OOTController::class, 'store'])->name('ootstore');
             });
 
         }

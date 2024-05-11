@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('if_others')->nullable();
             $table->longtext('is_repeat')->nullable();
             $table->longtext('repeat_nature')->nullable();
+            $table->longtext('nature_of_change')->nullable();
             $table->longtext('closure_attachment')->nullable();
             $table->date('deviation_occured_on')->nullable();
             $table->longtext('description_closure_attachment')->nullable();
@@ -76,7 +77,7 @@ return new class extends Migration
             $table->string('capa_required')->nullable();
             $table->longtext('capa_refrence_no')->nullable();
             $table->longtext('delay_justification')->nullable();
-            $table->longtext('conclusionattachment[')->nullable();
+            $table->longtext('conclusionattachment')->nullable();
 
             //tab 4
             $table->longtext('review_comment')->nullable();
