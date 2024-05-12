@@ -31,7 +31,11 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Under Preliminary Lab Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist -  Preliminary Laboratory Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -  Part B: Applicable if Laboratory error identified</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist -Part D: Communication of Confirmed of OOT With Technical Committee </button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Investigation Conclusion</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
@@ -187,8 +191,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label>Deviation Occured On</label>
-                                    <input type="date" name="deviation_occured_on" />
+                                    <label>OOT Occured On</label>
+                                    <input type="date" name="OOTOccuredOn" />
                                 </div>
                             </div>
 
@@ -213,6 +217,17 @@
                                             <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initial Attachment <span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Pdf </option>
+                                        <option>Document </option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -300,7 +315,7 @@
                                     <table class="table table-bordered" id="info_details">
                                         <thead>
                                             <tr>
-                                                <th style="width: 5%">Row#</th>
+                                                <th style="width: 5%">Row No.</th>
                                                 <th style="width: 12%">Item/Product Code</th>
                                                 <th style="width: 16%"> Lot/Batch No</th>
                                                 <th style="width: 15%">A.R.Number</th>
@@ -504,7 +519,7 @@
            
                 <!-- ==============Tab-2 start=============== -->
 
-                <div id="CCForm2" class="inner-block cctabcontent">
+                <di v id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
 
@@ -560,14 +575,14 @@
                             </div>
 
                              {{-- Table --}}
-                             {{-- <div class="col-12"> --}}
-                                {{-- <center> --}}
-                                    {{-- <label style="font-weight: bold; for="Audit Attachments">Preliminary Laboratory Investigation</label> --}}
-                                {{-- </center> --}}
-                                {{-- <div class="group-input"> --}}
-                                    {{-- <div class="why-why-chart"> --}}
-                                        {{-- <table class="table table-bordered"> --}}
-                                             {{-- <thead>
+                             <div class="col-12">
+                                <center>
+                                    <label style="font-weight: bold; for="Audit Attachments">Preliminary Laboratory Investigation</label>
+                                </center>
+                                <div class="group-input">
+                                    <div class="why-why-chart">
+                                        <table class="table table-bordered">
+                                             <thead>
                                                  <tr>
                                                      <th style="width: 5%;">Sr.No.</th>
                                                      <th style="width: 40%;">Question</th>
@@ -598,9 +613,9 @@
                                                         </div>
                                                     </td>
                                                     
-                                                      --}}
+                                                     
                                         
-                                                 {{-- </tr>
+                                                 </tr>
                                                  <tr>
                                                 <td class="flex text-center">2</td>
                                                      <td>Did all components/parts of equipment instrument function
@@ -636,10 +651,9 @@
                                                         </select>
                                                     </div>
                                                      </td>
-                                                     {{-- <td> --}}
-                                                         {{-- <textarea class="Remarks" name="when_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="when_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -658,10 +672,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
-                                                     {{-- <td> --}}
-                                                         {{-- <textarea class="Remarks" name="coverage_will_not_be"></textarea>
-                                                     </td>    <td style="vertical-align: middle;">
+                                                     </td>
+                                                     {{-- <td>
+                                                         <textarea class="Remarks" name="coverage_will_not_be"></textarea>
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -680,11 +694,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}
-                                                         {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -704,19 +717,16 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
-                                                        
-                                                        unusable line
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}    
-                                                     {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                         --}}
-                                                 {{-- </tr>
+                                        
+                                                 </tr>
                                                  <tr>
                                                 <td class="flex text-center">7</td>
                                                      <td>Were the instrument problems such as noisy baseline, poor peak
@@ -731,11 +741,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}    
-                                                     {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -755,11 +764,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}} 
-                                                        {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -778,11 +786,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -802,11 +809,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}
-                                                         {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -826,11 +832,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -849,11 +854,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -873,11 +877,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -896,11 +899,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -920,11 +922,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -943,11 +944,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -966,11 +966,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}} 
-                                                        {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -989,11 +988,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}} 
-                                                        {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1013,11 +1011,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1037,11 +1034,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}} 
-                                                        {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1061,11 +1057,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}} 
-                                                        {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1085,11 +1080,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1108,11 +1102,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1131,11 +1124,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1155,11 +1147,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1179,11 +1170,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}
-                                                         {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1202,11 +1192,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}    
-                                                     {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1227,11 +1216,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1250,11 +1238,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}
-                                                         {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1273,11 +1260,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1297,11 +1283,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1320,11 +1305,10 @@
                                                                 <option value="N/A">N/A</option>
                                                             </select>
                                                         </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1343,11 +1327,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}   
-                                                      {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1366,11 +1349,10 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                     </td> --}}
+                                                     </td>
                                                      {{-- <td>
                                                          <textarea class="Remarks" name="who_will_not_be"></textarea>
-                                                     </td> --}}  
-                                                       {{-- <td style="vertical-align: middle;">
+                                                     </td> --}}    <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
@@ -1378,10 +1360,10 @@
                                         
                                                  </tr>
                                              </tbody>
-                                         </table> --}}
-                                        {{-- </div> --}}
-                                {{-- </div> --}}
-                            {{-- </div> --}}
+                                         </table>
+                                        </div>
+                                </div>
+                            </div>
 
 
                             {{-- Table --}}
@@ -1389,50 +1371,100 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Justification If No Analyst Interview</label>
-                                    <textarea class="summernote" name="justi_if_no_analyst" id="summernote-16"></textarea>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Phase-I Investigation Required<span class="text-danger"></span></label>
-                                    <select name="phase_invest_required">
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
+                                    <select>
+                                        <option>Yes</option>
+                                        <option>No</option>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Any Other Actions Required</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Summary Of Earlier OTT And CAPA
+                                    <button type="button" name="audit-agenda-grid" id="summaryadd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="summary_table_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row#</th>
+                                                <th style="width: 12%">OOT No.</th>
+                                                <th style="width: 16%"> OOT Reported Date</th>
+                                                <th style="width: 15%">Description Of OOT</th>
+                                                <th style="width: 15%">Previous OOT Root Cause</th>
+                                                <th style="width: 15%">CAPA </th>
+                                                <th style="width: 15%">Closure Date Of CAPA</th>
+                                             
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+
+                                            <td><input type="text" name="OOTNo[]"></td>
+                                            <td><input type="text" name="OOTReportedDate[]"></td>
+                                            <td><input type="text" name="DescriptionOfOOT[]"></td>
+                                            <td><input type="text" name="previousIntervalDetails[]"></td>
+                                            <td><input type="text" name="CAPA[]"></td>
+                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
+
+
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description"> Phase-I Investigation <span class="text-danger"></span></label>
-                                    <select name="phase_investigation">
-                                        <option value="Phase I Chemical
-                                        ">Phase I Chemical
-                                        </option>
-                                        <option value="Phase I Microbiology
-                                        ">Phase I Microbiology
-                                    </option>
+                                    <select>
+                                        <option>Yes</option>
+                                        <option>No</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores"> Phase-I Investigation Ref.</label>
-                                    <select multiple id="reference_record" name="phase_invest_ref[]" id="">
-                                        <option value="0">--Select---</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                    <select multiple id="reference_record" name="refrence_record[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">1</option>
+                                        <option value="">2</option>
                                     </select>
                                 </div>
                             </div>
 
-
-
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="closure attachment">File Attachment </label>
+                                    <label>Phase II Inves. Req<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Attachment </label>
                                     <div><small class="text-primary">
                                         </small>
                                     </div>
@@ -1440,12 +1472,14 @@
                                         <div class="file-attachment-list" id="File_Attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile3" name="upli_attachment[]" oninput="addMultipleFiles(this, 'File_Attachment')" multiple>
+                                            <input type="file" id="myfile" name="File_Attachment[]" oninput="addMultipleFiles(this, 'File_Attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+
+                            
 
 
 
@@ -1459,7 +1493,126 @@
                         </div>
                     </div>
                 </div>
+                <div id="CCForm21" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
 
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">Review Comment</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Summary Of Earlier OTT And CAPA
+                                    <button type="button" name="audit-agenda-grid" id="summaryadd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="summary_table_details">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%">Row#</th>
+                                                <th style="width: 12%">OOT No.</th>
+                                                <th style="width: 16%"> OOT Reported Date</th>
+                                                <th style="width: 15%">Description Of OOT</th>
+                                                <th style="width: 15%">Previous OOT Root Cause</th>
+                                                <th style="width: 15%">CAPA </th>
+                                                <th style="width: 15%">Closure Date Of CAPA</th>
+                                                <!-- <th style="width: 15%">CAPA Required</th>
+                                                <th style="width: 15%">CAPA Reference</th>
+                                                <th style="width: 15%">Phase II Inves. Req</th>
+                                                <th style="width: 15%">Supporting Attachment</th>
+                                                <th style="width: 15%">Pre. Lab Invest. Review By</th>
+                                                <th style="width: 15%">Pre. Lab Invest. Review On</th> -->
+
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+
+                                            <td><input type="text" name="OOTNo[]"></td>
+                                            <td><input type="text" name="OOTReportedDate[]"></td>
+                                            <td><input type="text" name="DescriptionOfOOT[]"></td>
+                                            <td><input type="text" name="previousIntervalDetails[]"></td>
+                                            <td><input type="text" name="CAPA[]"></td>
+                                            <td><input type="text" name="ClosureDateOfCAPA[]"></td>
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>CAPA Required<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores"> CAPA Reference </label>
+                                    <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]" id="">
+                                        <option value="">--Select---</option>
+                                        <option value="">Pankaj</option>
+                                        <option value="">Gourav</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Phase II Inves. Req<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Attachment </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
+
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
                 <!-- ==============Tab-3 start=============== -->
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -3208,6 +3361,7 @@
                         </div>
                     </div>
                 </div>
+                
 
             </div>
         </form>
