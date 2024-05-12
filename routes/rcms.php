@@ -172,6 +172,7 @@ Route::group(['prefix' => 'rcms'], function () {
              */
             Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
             Route::get('/',[OOSController::class, 'index'])->name('index');
+            Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
             });
 
         }

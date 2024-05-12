@@ -100,8 +100,6 @@
                         '<td><input type="text" name="Number[]"></td>' +
                         '<td><input type="text" name="Product/ MaterialName[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
-
-
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -367,9 +365,15 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
-
+          <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <div id="step-form">
+                @if (!empty($parent_id))
+                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                <input type="hidden" name="parent_type" value="{{ $parent_type }}">
+                @endif
+            <!-- Tab content -->
             <!-- General Information -->
-
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
@@ -774,9 +778,6 @@
                     </div>
                 </div>
             </div>
-
-
-
             <!-- Preliminary Lab. Investigation -->
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1590,9 +1591,6 @@
                 </div>
 
             </div>
-
-
-
             <!-- Preliminary Lab Inv. Conclusion -->
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -2345,7 +2343,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Phase II QC Review -->
         <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2482,9 +2479,6 @@
                 </div>
             </div>
         </div>
-
-
-
         <!--Additional Testing Proposal  -->
         <div id="CCForm7" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2572,8 +2566,6 @@
                 </div>
             </div>
         </div>
-
-
         <!--OOS Conclusion  -->
         <div id="CCForm8" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2776,8 +2768,6 @@
                 </div>
             </div>
         </div>
-
-
         <!--OOS Conclusion Review -->
         <div id="CCForm9" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2973,11 +2963,6 @@
                 </div>
             </div>
         </div>
-
-
-
-
-
         <!--CQ Review Comments -->
         <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3067,11 +3052,6 @@
 
             </div>
         </div>
-
-
-
-
-
         <!-- Batch Disposition -->
         <div id="CCForm11" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3335,10 +3315,7 @@
             </div>
 
         </div>
-
-
         <!-- Under Addendum Approval -->
-
         <div id="CCForm13" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -3385,7 +3362,6 @@
             </div>
 
         </div>
-
         <!--Under Addendum Execution -->
         <div id="CCForm14" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3521,7 +3497,6 @@
             </div>
 
         </div>
-
         <!-- Under Addendum Review-->
         <div id="CCForm15" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3571,8 +3546,6 @@
             </div>
 
         </div>
-
-
         <!-- Under Addendum Verification -->
         <div id="CCForm16" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3622,9 +3595,7 @@
             </div>
         </div>
 
-
         <!----- Signature ----->
-
         <div id="CCForm17" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -3915,6 +3886,10 @@
                 </div>
             </div>
         </div>
+
+    </div>
+    </form>
+
     </div>
     </div>
 
