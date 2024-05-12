@@ -383,31 +383,32 @@
                             </div>
                         </div>
 
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"> Division Code </label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
+                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                                <input disabled type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Initiator Group Code"> Initiator </label>
 
-                                <input type="text">
-
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator"> Date of Initiation </label>
-                                <input type="date" id="date" name="date-time">
-
+                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
+                                <input disabled type="text" name="initiator"
+                                        value="{{ Auth::user()->name }}">
                             </div>
                         </div>
+
+                        <div class="col-md-6 ">
+                            <div class="group-input ">
+                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                            </div>
+                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Due Date
@@ -432,23 +433,19 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description"> Initiator group</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                <select name="initiator_group">
+                                    <option selected disabled>---select---</option>
+                                    @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
+                                        <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initiator group code</label>
-
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
+                                <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
+                                <input type="text" name="initiator_group_code" readonly>
                             </div>
                         </div>
                         <div class="col-lg-6">
