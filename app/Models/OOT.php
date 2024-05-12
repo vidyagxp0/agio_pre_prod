@@ -41,6 +41,15 @@ class OOT extends Model
         'specification_procedure_no',
         'specification_limit',
         'gi_attachment',
+
+        'reason_for_stability',
+        'brief_description_of_oot_details',
+        'product_history',
+        'probable_cause',
+        'preliminary_laboratory_invst_required',
+        'laboratory_error_identified',
+        'elaborate_the_reason',
+
         'upl_comments',
         'verification_analysis_required',
         'upl_refrence_record',
@@ -201,7 +210,13 @@ class OOT extends Model
         
          'ile_attachment_oot_cr' => 'array',
         
-        
+         'reason_for_stability'=>'array',
+         'brief_description_of_oot_details'=>'array',
+         'product_history'=>'array',
+         'probable_cause'=>'array',
+         'preliminary_laboratory_invst_required'=>'array',
+         'laboratory_error_identified'=>'array',
+         'elaborate_the_reason'=>'array',
     ];
     
    

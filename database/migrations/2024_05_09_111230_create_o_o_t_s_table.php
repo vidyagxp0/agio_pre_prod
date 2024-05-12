@@ -52,6 +52,15 @@ return new class extends Migration
             $table->text('specification_limit')->nullable();
             // grid
             $table->longtext('gi_attachment')->nullable();
+            $table->longtext('reason_for_stability')->nullable();
+            $table->longtext('brief_description_of_oot_details')->nullable();
+            $table->longtext('product_history')->nullable();
+            $table->longtext('probable_cause')->nullable();
+            $table->longtext('preliminary_laboratory_invst_required')->nullable();
+            $table->longtext('laboratory_error_identified')->nullable();
+            $table->longtext('elaborate_the_reason')->nullable();
+
+
              // tab 2 under preliminary lab 
             $table->longtext('upl_comments')->nullable();
             $table->text('verification_analysis_required')->nullable();

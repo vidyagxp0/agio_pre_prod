@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\OOT;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
 
 class OOTController extends Controller
 {
@@ -228,7 +229,7 @@ class OOTController extends Controller
             }
             $input['verification_attachment_uav'] = json_encode($files);
         }
-      
+      dd($input);
 
             OOT::create($input);
 
