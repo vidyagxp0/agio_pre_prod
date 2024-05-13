@@ -491,7 +491,17 @@
                 <di v id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Head QA/Designee <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Corrective Action</label>
@@ -544,6 +554,28 @@
                 <div id="CCForm18" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Analyst Name <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        QC/QA Head/Designee <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -1439,7 +1471,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="group-input">
-                                                                <label for="Short Description"> Laboratory error Identified OOT - Result(s)<span class="text-danger"></span></label>
+                                                                <label for="Short Description"> Laboratory error Identified for OOT - Result(s)<span class="text-danger"></span></label>
                                                                 <select>
                                                                     <option>Enter Your Selection Here</option>
                                                                     <option>Yes</option>
@@ -1451,6 +1483,17 @@
                                                             <div class="group-input">
                                                                 <label class="mt-4" for="Audit Comments">Elaborate The Reason(s) If Yes :</label>
                                                                 <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="search">
+                                                                    In-Charge <span class="text-danger"></span>
+                                                                </label>
+                                                                <select name="" id="">
+                                                                    <option value="">Person Name</option>
+                                                                
+                                                                </select>
                                                             </div>
                                                         </div>
                            
