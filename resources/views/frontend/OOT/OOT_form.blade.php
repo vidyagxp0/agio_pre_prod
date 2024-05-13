@@ -31,11 +31,13 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Under Preliminary Lab Investigation</button> 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Other Then Stability Batches </button> 
             <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist -  Preliminary Laboratory Investigation</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Investigation Conclusion</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -  Part B: Applicable if Laboratory error identified</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist -Part D: Communication of Confirmed of OOT With Technical Committee </button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Closure Conclusion</button>
+            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Investigation Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal</button>
@@ -47,7 +49,7 @@
             <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> --}}
             <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signatures</button>
         </div>
 
@@ -137,16 +139,9 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Initiated Through</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Short Description">If Others <span class="text-danger"></span></label>
+                                    <label for="Short Description">Initiated Through<span class="text-danger"></span></label>
                                     <select>
                                         <option>---select---</option>
                                         <option>ABC </option>
@@ -154,15 +149,27 @@
                                     </select>
                                 </div>
                             </div>
-
-
-
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Is Repeat?</label>
+                                    <label class="mt-4" for="Audit Comments">If Others </label>
                                     <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                 </div>
                             </div>
+
+                        
+
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Short Description">Is Repeat?<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -171,21 +178,17 @@
                                 </div>
                             </div>
 
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure attachment">Nature Of Change </label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                        </div>
-                                    </div>
+                                    <label for="Short Description">Nature Of Change<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Temporary </option>
+                                        <option>Permanent </option>
+                                    </select>
                                 </div>
                             </div>
+                            
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -194,19 +197,12 @@
                                 </div>
                             </div>
 
+                           
+
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="closure attachment">Description </label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small>
-                                    </div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
-                                        </div>
-                                    </div>
+                                    <label class="mt-4" for="Audit Comments">OOT Details</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
@@ -234,27 +230,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Initial Attachment <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>Pdf </option>
-                                        <option>Document </option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Source Document Type <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>---select---</option>
-                                        <option>PDF </option>
-                                        <option>Document </option>
-                                    </select>
-                                </div>
-                            </div>
+                            
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -267,13 +243,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label>Reference Document</label>
-                                    <input />
-                                </div>
-                            </div>
-
+                        
 
                             <div class="sub-head">OOT Information</div>
 
@@ -521,102 +491,36 @@
                 <di v id="CCForm2" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Head QA/Designee <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments">Corrective Action</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
 
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments">Preventive Action</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">Comments</label>
                                     <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                 </div>
                             </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description"> Verification Analysis Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores">Verification Analysis Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description"> Analyst Interview Request<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Analyst Interview Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
- 
-
-
-                            {{-- Table --}}
-
-                            <div class="col-12">
-                                 <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Justification If No Analyst Interview</label>
-                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description">Phase-I Investigation Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Short Description"> Phase-I Investigation <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Phase-I Investigation Ref.</label>
-                                    <select multiple id="reference_record" name="refrence_record[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -650,6 +554,28 @@
                 <div id="CCForm18" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        Analyst Name <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                        QC/QA Head/Designee <span class="text-danger"></span>
+                                    </label>
+                                    <select name="" id="">
+                                        <option value="">Person Name</option>
+                                    
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-12">
                                 <div class="group-input">
@@ -1545,7 +1471,7 @@
                                                         </div>
                                                         <div class="col-lg-12">
                                                             <div class="group-input">
-                                                                <label for="Short Description"> Laboratory error Identified OOT - Result(s)<span class="text-danger"></span></label>
+                                                                <label for="Short Description"> Laboratory error Identified for OOT - Result(s)<span class="text-danger"></span></label>
                                                                 <select>
                                                                     <option>Enter Your Selection Here</option>
                                                                     <option>Yes</option>
@@ -1559,7 +1485,190 @@
                                                                 <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                                             </div>
                                                         </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input">
+                                                                <label for="search">
+                                                                    In-Charge <span class="text-danger"></span>
+                                                                </label>
+                                                                <select name="" id="">
+                                                                    <option value="">Person Name</option>
+                                                                
+                                                                </select>
+                                                            </div>
+                                                        </div>
                            
+
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="CCForm20" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Action Taken on OOT Result(s) :<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Retraining to Analyst Required ? <span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Remarks (If Yes)</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Correct the Error and Repeat the analysis on same sample<span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Any Other Actions Required</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Re-analysis Result</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label>Is the Reanalysis results OOT <span class="text-danger"></span></label>
+                                    <select>
+                                        <option>---select---</option>
+                                        <option>Yes </option>
+                                        <option>No </option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Comments (If Yes)</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                           
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Attachment </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            
+
+
+
+                        </div>
+                        <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
+                                </a> </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="CCForm21" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+<div style=" background: #4274da; color: #ffffff;" class="sub-head">
+    QA Head___ + R&D___ + ADL___ + Regulatory___ + Manufacturing___ + QA Head
+</div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">R&D (F) Comments</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">ADL Comments</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">Regulatory Comments</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">Manufacturing Comments</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4">Comments</label>
+                                    <textarea class="summernote" name="ReviewComment" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="closure attachment">Supporting Documents </label>
+                                    <div><small class="text-primary">
+                                        </small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="File_Attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="ConclusionAttachment[]" oninput="addMultipleFiles(this, 'ConclusionAttachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+
 
 
                         </div>
@@ -1576,111 +1685,31 @@
                 <div id="CCForm3" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
-
+                            <div class="col-md-6 ">
+                                <div class="group-input ">
+                                    <label for="Last_due-date">Last Due Date <span class="text-danger"></span></label>
+                                    <input type="date"/>
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Summary Of Preliminary Investigation</label>
+                                    <label class="mt-4" for="Audit Comments">Progress/Justification for Delay</label>
+                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="group-input ">
+                                    <label for="tentative-date">Tentative Closure Date<span class="text-danger"></span></label>
+                                    <input type="date"/>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments">Remarks by QA Department</label>
                                     <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Root Cause Identified? <span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> OOT Category-Root Cause Identified<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">SOOT Category (Others)</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Root Cause Details</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Impact Of Root Cause</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
-                                </div>
-                            </div>
-
-
-
-
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> Recommended Action Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> Recommended Action Refrence
-                                    </label>
-                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label> CAPA Required<span class="text-danger"></span></label>
-                                    <select>
-                                        <option>Yes</option>
-                                        <option>No</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Reference Recores"> CAPA Refrence Number</label>
-                                    <select multiple id="reference_record" name="PreliminaryLabInvestigationdoneBy[]" id="">
-                                        <option value="">--Select---</option>
-                                        <option value="">1</option>
-                                        <option value="">2</option>
-                                    </select>
-                                </div>
-                            </div>
-
-
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label class="mt-4" for="Audit Comments">Delay Justification</label>
-                                    <textarea class="summernote" name="SummaryOfPreliminaryInvestigation" id="summernote-16"></textarea>
-                                </div>
-                            </div>
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -1711,7 +1740,7 @@
                                 </a> </button>
                         </div>
                     </div>
-                </div>
+                {{-- </div>
                 <!-- ==============Tab-4 start=============== -->
                 <div id="CCForm4" class="inner-block cctabcontent">
                     <div class="inner-block-content">
@@ -3087,7 +3116,7 @@
                                 </a> </button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- ==============Tab-17 start=============== -->
 
@@ -3315,7 +3344,7 @@
 
             </div>
         </form>
-
+        
     </div>
 </div>
 
