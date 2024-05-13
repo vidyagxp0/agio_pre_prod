@@ -20,7 +20,6 @@ return new class extends Migration
             // General Information =>Info On Product/Material
             $table->string('info_product_code')->nullable();
             $table->string('info_batch_no')->nullable();
-            $table->string('info_product_arnumber')->nullable();
             $table->date('info_mfg_date')->nullable();
             $table->date('info_expiry_date')->nullable();
             $table->string('info_label_claim')->nullable();
@@ -44,9 +43,9 @@ return new class extends Migration
             $table->string('oos_results_obtained')->nullable();
             $table->string('oos_specification_limit')->nullable();
             $table->string('oos_details_obvious_error')->nullable();
-            $table->string('oot_file_attachment')->nullable();
+            $table->string('oos_file_attachment')->nullable();
             $table->string('oos_submit_by')->nullable();
-            $table->string('oot_submit_on')->nullable();
+            $table->string('oos_submit_on')->nullable();
          //  Preliminary Lab Investigation => PHASE- I B INVESTIGATION REPORT
             $table->string('preliminary_phase1_question')->nullable();
             $table->string('preliminary_phase1_response')->nullable();
