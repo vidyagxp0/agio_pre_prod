@@ -165,36 +165,115 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Country">Country</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
+                                <select class="form-select country" aria-label="Default select example"
+                                    onchange="loadStates()">
+                                    <option selected>Select Country</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="City">City</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
+                                <label for="City">State</label>
+                                <select class="form-select state" aria-label="Default select example"
+                                    onchange="loadCities()">
+                                    <option selected>Select State/District</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="State/Distict">State/Distict</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                    <option></option>
+                                <label for="State/District">City</label>
+                                <select class="form-select city" aria-label="Default select example">
+                                    <option selected>Select City</option>
                                 </select>
                             </div>
                         </div>
+                        <script>
+                            var config = {
+                                cUrl: 'https://api.countrystatecity.in/v1',
+                                ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+                            };
+
+                            var countrySelect = document.querySelector('.country'),
+                                stateSelect = document.querySelector('.state'),
+                                citySelect = document.querySelector('.city');
+
+                            function loadCountries() {
+                                let apiEndPoint = `${config.cUrl}/countries`;
+
+                                $.ajax({
+                                    url: apiEndPoint,
+                                    headers: {
+                                        "X-CSCAPI-KEY": config.ckey
+                                    },
+                                    success: function(data) {
+                                        data.forEach(country => {
+                                            const option = document.createElement('option');
+                                            option.value = country.iso2;
+                                            option.textContent = country.name;
+                                            countrySelect.appendChild(option);
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error loading countries:', error);
+                                    }
+                                });
+                            }
+
+                            function loadStates() {
+                                stateSelect.disabled = false;
+                                stateSelect.innerHTML = '<option value="">Select State</option>';
+
+                                const selectedCountryCode = countrySelect.value;
+
+                                $.ajax({
+                                    url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                    headers: {
+                                        "X-CSCAPI-KEY": config.ckey
+                                    },
+                                    success: function(data) {
+                                        data.forEach(state => {
+                                            const option = document.createElement('option');
+                                            option.value = state.iso2;
+                                            option.textContent = state.name;
+                                            stateSelect.appendChild(option);
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error loading states:', error);
+                                    }
+                                });
+                            }
+
+                            function loadCities() {
+                                citySelect.disabled = false;
+                                citySelect.innerHTML = '<option value="">Select City</option>';
+
+                                const selectedCountryCode = countrySelect.value;
+                                const selectedStateCode = stateSelect.value;
+
+                                $.ajax({
+                                    url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                    headers: {
+                                        "X-CSCAPI-KEY": config.ckey
+                                    },
+                                    success: function(data) {
+                                        data.forEach(city => {
+                                            const option = document.createElement('option');
+                                            option.value = city.id;
+                                            option.textContent = city.name;
+                                            citySelect.appendChild(option);
+                                        });
+                                    },
+                                    error: function(xhr, status, error) {
+                                        console.error('Error loading cities:', error);
+                                    }
+                                });
+                            }
+                            $(document).ready(function() {
+                                loadCountries();
+                            });
+                        </script>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Site Name">Site Name</label>
