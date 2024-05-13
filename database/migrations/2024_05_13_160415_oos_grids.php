@@ -52,29 +52,29 @@ return new class extends Migration
             $table->string('preliminary_phase1_response')->nullable();
             $table->string('preliminary_phase1_remarks')->nullable();
         //   Preliminary Lab Invstigation Review => Info. On Product/ Material
-
            $table->string('info_oos_number')->nullable();
-        //    OOS Reported Date	
-        //    $table->date('summary_earlier_reported_date')->nullable();
-        //    $table->string('summary_earlier_description')->nullable();
-        //    $table->string('summary_earlier_previous_root_cause')->nullable();
-        //    $table->string('summary_earlier_capa')->nullable();
-        //    $table->date('summary_earlier_closure_date')->nullable();
-        //    //  OOT Conclusion => Summary Of OOT Test Results 
-        //    $table->string('summary_results_initial_analysis')->nullable();
-        //    $table->string('summary_results_phase_one_investigation')->nullable();
-        //    $table->string('summary_results_retesting_correction_assignable_cause')->nullable();
-        //    $table->string('summary_results_hypothesis_experimentation')->nullable();
-        //    $table->string('summary_results_additional_testing')->nullable();
-        //    $table->string('summary_results_hypothesis_experiment_refrence')->nullable();
-        //    $table->string('summary_results')->nullable();
-        //    $table->string('summary_results_analyst_name')->nullable();
-        //    $table->string('summary_results_remarks')->nullable();
-        //    //  OOT Conclusion Review => Impacted Product/Material
-        //    $table->string('impacted_product_name')->nullable();
-        //    $table->string('impacted_product_batch_no')->nullable();
-        //    $table->string('impacted_product_any_other_information')->nullable();
-        //    $table->string('impacted_product_action_affecte_batch')->nullable();
+           $table->date('info_oos_reported_date')->nullable();
+           $table->string('info_oos_description')->nullable();
+           $table->string('info_oos_previous_root_cause')->nullable();
+           $table->string('info_oos_capa')->nullable();
+           $table->date('info_oos_closure_date')->nullable();
+           $table->string('info_oos_capa_requirement')->nullable();
+           $table->string('info_oos_capa_reference_number')->nullable();
+        //  =====  PHASE II OOS INVESTIGATION =====
+            $table->string('phase2_question')->nullable();
+            $table->string('phase2_response')->nullable();
+            $table->string('phase2_remarks')->nullable();
+        // ====== OOS Conclusion=> Summary of OOS Test Results =====
+           $table->string('summary_results_analysis_detials')->nullable();
+           $table->string('summary_results_hypothesis_experimentation_test_pr_no')->nullable();
+           $table->string('summary_results')->nullable();
+           $table->string('summary_results_analyst_name')->nullable();
+           $table->string('summary_results_remarks')->nullable();
+        //    //  OOT Conclusion Review => Summary of OOS Test Results
+           $table->string('conclusion_review_product_name')->nullable();
+           $table->string('conclusion_review_batch_no')->nullable();
+           $table->string('conclusion_review_any_other_information')->nullable();
+           $table->string('conclusion_review_action_affecte_batch')->nullable();
         //   //Signatures 
         //    $table->string('signatures_submitted_by')->nullable();
         //    $table->string('signatures_submitted_on')->nullable();
