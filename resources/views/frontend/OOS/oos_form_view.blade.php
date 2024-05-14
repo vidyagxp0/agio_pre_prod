@@ -340,7 +340,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
-          <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
                 @if (!empty($parent_id))

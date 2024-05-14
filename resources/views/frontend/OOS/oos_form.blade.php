@@ -86,21 +86,24 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>'+
+                    '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
-                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
-                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
-                    '</tr>' +;
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
+                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
+                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
+                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
+                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
+                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
+                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
+                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                    '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -108,7 +111,7 @@
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -358,8 +361,6 @@
                                 <input type="number">
                             </div>
                         </div>
-
-                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -583,7 +584,7 @@
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
 
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -592,7 +593,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -614,7 +615,7 @@
                                         <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
                                         <td><input type="date" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
+                                        <td><input type="date" name="info_expiry_date[]" value=""></td>
                                         <td><input type="text" name="info_label_claim[]" value=""></td>
                                         <td><input type="text" name="info_pack_size[]" value=""></td>
                                         <td><input type="text" name="info_analyst_name[]" value=""></td>
