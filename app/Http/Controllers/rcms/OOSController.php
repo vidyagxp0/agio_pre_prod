@@ -17,6 +17,8 @@ class OOSController extends Controller
     public function store(Request $request)
     {   
         $input = $request->all();
+        $input['stage'] ="1";
+        $input['status']="Opened";
         //========== file attechment of all pages ==========
         if (!empty ($request->initial_attachment_gi)) {
             $files = [];
@@ -254,99 +256,102 @@ class OOSController extends Controller
                 $i++;  
                 }
             }
-            // ========== identifier_details_stability ======
-            $stability_study_arnumber = $request->stability_study_arnumber;
-            if(isset($stability_study_arnumber) && $stability_study_arnumber!=''){
-                 $j=0;
-                foreach ($stability_study_arnumber as $key => $value1) {
-                $StabilityData = array(
-                'oos_id'=> $OosDataRecord->id,
-                'identifier' => $request->identifier_details_stability[$j],
-                'stability_study_condition_temprature_rh' => $request->stability_study_condition_temprature_rh[$i],
-                'stability_study_Interval' => $request->stability_study_Interval[$j],
-                'stability_study_orientation' => $request->stability_study_orientation[$j],
-                'stability_study_pack_details' => $request->stability_study_pack_details[$j],
-                'stability_study_specification_no' => $request->stability_study_specification_no[$j],
-                'stability_study_sample_description' => $request->stability_study_sample_description[$j]
-                ); 
-                $StabilityDatas = Oosgrids::insert($StabilityData);
-                $j++;  
-                }
-            }
-            // ===========' identifier_oos_detail[$k]=========
-            $oos_arnumber = $request->oos_arnumber;
-            if(isset($oos_arnumber) && $oos_arnumber!=''){
-                    $k=0;
-                    foreach ($oos_arnumber as $key => $value1) {
-                    $OosDetailData = array(
-                    'oos_id'=> $OosDataRecord->id,
-                    'identifier' => $request->identifier_oos_detail[$k],
-                    'oos_test_name' => $request->oos_test_name[$k],
-                    'oos_results_obtained' => $request->oos_results_obtained[$k],
-                    'oos_specification_limit' => $request->oos_specification_limit[$k],
-                    'oos_details_obvious_error' => $request->oos_details_obvious_error[$k],
-                    'oos_file_attachment' => $request->oos_file_attachment[$k],
-                    'oos_submit_on' => $request->oos_submit_on[$k]
-                ); 
-                $OosDetailDatas = Oosgrids::insert($OosDetailData);
-                $k++;  
-                }
-            }
+           // ========== identifier_details_stability ======
+            // $stability_study_arnumber = $request->stability_study_arnumber;
+            // if(isset($stability_study_arnumber) && $stability_study_arnumber!=''){
+            //      $j=0;
+            //     foreach ($stability_study_arnumber as $key => $value1) {
+            //     $StabilityData = array(
+            //     'oos_id'=> $OosDataRecord->id,
+            //     'identifier' => $request->identifier_details_stability[$j],
+            //     'stability_study_condition_temprature_rh' => $request->stability_study_condition_temprature_rh[$i],
+            //     'stability_study_Interval' => $request->stability_study_Interval[$j],
+            //     'stability_study_orientation' => $request->stability_study_orientation[$j],
+            //     'stability_study_pack_details' => $request->stability_study_pack_details[$j],
+            //     'stability_study_specification_no' => $request->stability_study_specification_no[$j],
+            //     'stability_study_sample_description' => $request->stability_study_sample_description[$j]
+            //     ); 
+            //     $StabilityDatas = Oosgrids::insert($StabilityData);
+            //     $j++;  
+            //     }
+            // }
+            // // ===========' identifier_oos_detail[$k]=========
+            // $oos_arnumber = $request->oos_arnumber;
+            // if(isset($oos_arnumber) && $oos_arnumber!=''){
+            //         $k=0;
+            //         foreach ($oos_arnumber as $key => $value1) {
+            //         $OosDetailData = array(
+            //         'oos_id'=> $OosDataRecord->id,
+            //         'identifier' => $request->identifier_oos_detail[$k],
+            //         'oos_test_name' => $request->oos_test_name[$k],
+            //         'oos_results_obtained' => $request->oos_results_obtained[$k],
+            //         'oos_specification_limit' => $request->oos_specification_limit[$k],
+            //         'oos_details_obvious_error' => $request->oos_details_obvious_error[$k],
+            //         // 'oos_file_attachment' => $request->oos_file_attachment[$k],
+            //         'oos_submit_on' => $request->oos_submit_on[$k]
+            //     ); 
+            //     $OosDetailDatas = Oosgrids::insert($OosDetailData);
+            //     $k++;  
+            //     }
+            // }
 
-            $info_oos_number = $request->info_oos_number;
-            if(isset($info_oos_number) && $info_oos_number!=''){
-                $k=0;
-                foreach ($info_oos_number as $key => $value1) {
-                $OosCapaData = array(
-                'oos_id'=> $genaralDataRecord->id,
-                'identifier' => $request->identifier_oos_capa[$k],
-                'info_oos_reported_date' => $request->info_oos_reported_date[$k],
-                'info_oos_description' => $request->info_oos_description[$k],
-                'info_oos_previous_root_cause' => $request->info_oos_previous_root_cause[$k],
-                'info_oos_capa' => $request->info_oos_capa[$k],
-                'info_oos_closure_date' => $request->info_oos_closure_date[$k],
-                'info_oos_capa_requirement' => $request->info_oos_capa_requirement[$k],
-                'info_oos_capa_reference_number' => $request->info_oos_capa_reference_number[$k]
-                ); 
-                $genaralGridInfoDatas = Oosgrids::insert($OosCapaData);
-                $k++;  
-                }
+            // $info_oos_number = $request->info_oos_number;
+            // if(isset($info_oos_number) && $info_oos_number!=''){
+            //     $k=0;
+            //     foreach ($info_oos_number as $key => $value1) {
+            //     $OosCapaData = array(
+            //     'oos_id'=> $OosDataRecord->id,
+            //     'identifier' => $request->identifier_oos_capa[$k],
+            //     'info_oos_reported_date' => $request->info_oos_reported_date[$k],
+            //     'info_oos_description' => $request->info_oos_description[$k],
+            //     'info_oos_previous_root_cause' => $request->info_oos_previous_root_cause[$k],
+            //     'info_oos_capa' => $request->info_oos_capa[$k],
+            //     'info_oos_closure_date' => $request->info_oos_closure_date[$k],
+            //     'info_oos_capa_requirement' => $request->info_oos_capa_requirement[$k],
+            //     'info_oos_capa_reference_number' => $request->info_oos_capa_reference_number[$k]
+            //     ); 
+            //     $genaralGridInfoDatas = Oosgrids::insert($OosCapaData);
+            //     $k++;  
+            //     }
            
-            }
-            $summary_results_analysis_detials = $request->summary_results_analysis_detials;
-            if(isset($summary_results_analysis_detials) && $summary_results_analysis_detials!=''){
-                $l=0;
-                foreach ($summary_results_analysis_detials as $key => $value1) {
-                $genaralGridInfoData = array(
-                'oos_id'=> $genaralDataRecord->id,
-                'identifier' => $request->identifier_oos_conclusion[$l],
-                'summary_results_analysis_detials' => $summary_results_analysis_detials[$l],
-                'summary_results_hypothesis_experimentation_test_pr_no' => $request->summary_results_hypothesis_experimentation_test_pr_no[$l],
-                'summary_results' => $request->summary_results[$l],
-                'summary_results_analyst_name' => $request->summary_results_analyst_name[$l],
-                'summary_results_remarks' => $request->summary_results_remarks[$l]
-                ); 
-                $genaralGridInfoDatas = Oosgrids::insert($genaralGridInfoData);
-                $l++;  
-                }
-            }
+            // }
+            // // =============== identifier_oos_conclusion ========
+            // $summary_results_analysis_detials = $request->summary_results_analysis_detials;
+            // if(isset($summary_results_analysis_detials) && $summary_results_analysis_detials!=''){
+            //     $l=0;
+            //     foreach ($summary_results_analysis_detials as $key => $value1) {
+            //     $OosConclusionData = array(
+            //     'oos_id'=> $OosDataRecord->id,
+            //     'identifier' => $request->identifier_oos_conclusion[$l],
+            //     'summary_results_analysis_detials' => $summary_results_analysis_detials[$l],
+            //     'summary_results_hypothesis_experimentation_test_pr_no' => $request->summary_results_hypothesis_experimentation_test_pr_no[$l],
+            //     'summary_results' => $request->summary_results[$l],
+            //     'summary_results_analyst_name' => $request->summary_results_analyst_name[$l],
+            //     'summary_results_remarks' => $request->summary_results_remarks[$l]
+            //     ); 
+            //     $OosConclusionDatas = Oosgrids::insert($OosConclusionData);
+            //     $l++;  
+            //     }
+            // }
             // identifier_oos_conclusion_review
-            $conclusion_review_product_name = $request->conclusion_review_product_name;
-            if(isset($conclusion_review_product_name) && $conclusion_review_product_name!=''){
-                $m=0;
-                foreach ($conclusion_review_product_name as $key => $value1) {
-                $genaralGridInfoData = array(
-                'oos_id'=> $genaralDataRecord->id,
-                'identifier' => $request->identifier_oos_conclusion_review[$m],
-                'conclusion_review_batch_no'=>$request->conclusion_review_batch_no[$m],
-                'conclusion_review_any_other_information'=>$request->conclusion_review_any_other_information[$m],
-                'conclusion_review_action_affecte_batch'=>$request->conclusion_review_action_affecte_batch[$m],
-                ); 
-                $genaralGridInfoDatas = OosGrids::insert($genaralGridInfoData);
-                $m++;  
-                }
-            }
+            // $conclusion_review_product_name = $request->conclusion_review_product_name;
+            // if(isset($conclusion_review_product_name) && $conclusion_review_product_name!=''){
+            //     $m=0;
+            //     foreach ($conclusion_review_product_name as $key => $value1) {
+            //     $ConclusionReviewData = array(
+            //     'oos_id'=> $OosDataRecord->id,
+            //     'identifier' => $request->identifier_oos_conclusion_review[$m],
+            //     'conclusion_review_batch_no'=>$request->conclusion_review_batch_no[$m],
+            //     'conclusion_review_any_other_information'=>$request->conclusion_review_any_other_information[$m],
+            //     'conclusion_review_action_affecte_batch'=>$request->conclusion_review_action_affecte_batch[$m],
+            //     ); 
+            //     $ConclusionReviewDatas = OosGrids::insert($ConclusionReviewData);
+            //     $m++;  
+            //     }
+            // }
 
+            toastr()->success("Record is created Successfully");
+        return redirect(url('rcms/qms-dashboard'));
         }
         
     }
