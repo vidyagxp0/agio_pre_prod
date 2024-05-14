@@ -15,6 +15,7 @@ use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
+use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Models\EffectivenessCheck;
@@ -163,6 +164,15 @@ Route::group(['prefix' => 'rcms'], function () {
              */
             Route::group(['prefix' => 'oot', 'as' => 'oot.'], function() {
                 Route::get('/', [OOTController::class, 'index'])->name('index');
+                Route::post('/ootstore', [OOTController::class, 'store'])->name('ootstore');
+            });
+
+            /**
+             * OOS
+             */
+            Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
+            Route::get('/',[OOSController::class, 'index'])->name('index');
+            Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
             });
 
         }

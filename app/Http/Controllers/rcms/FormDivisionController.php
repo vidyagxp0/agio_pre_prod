@@ -37,13 +37,16 @@ class FormDivisionController extends Controller
             return redirect('meeting');
         }
         elseif ($request->process_name == 'OOS') {
-            return 'oos';
+            return redirect()->route('oos.index');
         }
         elseif ($request->process_name == 'OOT') {
             return redirect()->route('oot.index');
         }
         elseif ($request->process_name == 'OOC') {
-            return 'ooc';
+            return redirect()->route('ooc.index');
+        }
+        elseif ($request->process_name == 'OOS-Microbiology') {
+            return redirect()->route('oos_micro.index');
         }
         elseif ($request->process_name == 'Deviation') {
             return 'deviation';
