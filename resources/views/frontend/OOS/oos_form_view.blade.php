@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+    @endphp
     <style>
         textarea.note-codable {
             display: none !important;

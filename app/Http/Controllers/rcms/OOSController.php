@@ -19,6 +19,7 @@ class OOSController extends Controller
         $input = $request->all();
         $input['stage'] ="1";
         $input['status']="Opened";
+        $input['type']="OOS";
         //========== file attechment of all pages ==========
         if (!empty ($request->initial_attachment_gi)) {
             $files = [];
@@ -355,4 +356,17 @@ class OOSController extends Controller
         }
         
     }
+    public static function show($id)
+    {
+        $id = OOS::find($id);
+        return view('frontend.OOS.oos_form_view', compact('id'));
+
+    }
+    public function update(Request $request, $id)
+    {
+        $id = OOS::find($id);
+        toastr()->success("Record is created Successfully");
+        return redirect(url('rcms/qms-dashboard'));
+    }
+    
 }

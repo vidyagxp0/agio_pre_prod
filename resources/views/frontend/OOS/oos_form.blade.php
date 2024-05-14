@@ -667,7 +667,8 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>
+                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability">
+                                        <input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
