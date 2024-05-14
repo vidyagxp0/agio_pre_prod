@@ -92,7 +92,7 @@
                     '<tr>'+
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material" value="Info Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_description[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
@@ -125,7 +125,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>'+
+                        '<td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" id="stability_study_arnumber" name="stability_study_arnumber[]"></td>'+
                         '<td><input type="text" name="stability_study_condition_temprature_rh[]"></td>'+
                         '<td><input type="text" name="stability_study_Interval[]"></td>'+
                         '<td><input type="text" name="stability_study_orientation[]"></td>'+
@@ -153,13 +153,11 @@
         $(document).ready(function() {
             $('#OOS_Details').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                             '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                             '"></td>' +
-                            '<td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>'+
+                            '<td><input type="hidden" id="identifier_oos_detail" name="identifier_oos_detail[]" value="OOS Details"><input type="text" id="oos_arnumber" name="oos_arnumber[]"></td>'+
                             '<td><input type="text" name="oos_test_name[]"></td>' +
                             '<td><input type="text" name="oos_results_obtained[]"></td>' +
                             '<td><input type="text" name="oos_specification_limit[]"></td>' +
@@ -194,7 +192,7 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_description[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
@@ -612,7 +610,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_info_product_material" value="Info Product Material"><input type="text" name="info_product_code[]" value=""></td>
+                                        <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
                                         <td><input type="text" name="info_mfg_date[]" value=""></td>
                                         <td><input type="text" name="info_expiry_date[]" value=""></td>
@@ -1719,7 +1717,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="info_oos_number[]" value=""></td>
+                                        <td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="Info OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>
                                         <td><input type="text" name="info_oos_reported_date[]" value=""></td>
                                         <td><input type="text" name="info_oos_description[]" value=""></td>
                                         <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
@@ -2715,7 +2713,7 @@
                                 </thead>
                                 <tbody>
                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
+                                    <td><input type="hidden" id="identifier_oos_conclusion_review" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
                                     <td><input type="text" name="conclusion_review_batch_no[]"></td>
                                     <td><input type="text" name="conclusion_review_any_other_information[]"></td>
                                     <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
