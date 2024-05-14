@@ -435,9 +435,9 @@
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
                                 <select name="severity_level_gi" >
-                                    <option>Enter Your Selection Here</option>
-                                    <option >1</option>
-                                    <option>2</option>
+                                    <option value="o">Enter Your Selection Here</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -470,9 +470,9 @@
 
 
                                 <select name="if_others_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                   <option value="o">Enter Your Selection Here</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -494,14 +494,12 @@
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <!-- <option>Lab Incident</option>
-                                                <option>Deviation</option>
-                                                <option>Product Non-conformance</option>
-                                                <option>Inspectional Observation</option>
-                                                <option>Others</option> -->
-
+                                    <option value="0">Enter Your Selection Here</option>
+                                     <option value="lab_incident">Lab Incident</option>
+                                    <option value="deviation">Deviation</option>
+                                    <option value="product_nonconformance">Product Non-conformance</option>
+                                    <option value="inspectional_observation">Inspectional Observation</option>
+                                     <option value="others">Others</option>
                                 </select>
 
 
@@ -540,14 +538,13 @@
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
                                 <select name="source_document_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>OOT</option>
-                                    <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option>
-
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="oot">OOT</option>
+                                    <option value="lab_incident">Lab Incident</option>
+                                    <option value="deviation">Deviation</option>
+                                    <option value="product_nonconformance">Product Non-conformance</option>
+                                    <option value="inspectional_observation">Inspectional Observation</option>
+                                    <option value="others">Others</option>
                                 </select>
                             </div>
                         </div>
@@ -577,12 +574,12 @@
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Raw Material</option>
-                                    <option>Packing Material</option>
-                                    <option>Finished Product</option>
-                                    <option>Satbility Sample</option>
-                                    <option>Others</option>
+                                 <option value="0">Enter Your Selection Here</option>
+                                <option value="raw_material">Raw Material</option>
+                                <option value="packing_material">Packing Material</option>
+                                <option value="finished_product">Finished Product</option>
+                                <option value="stability_sample">Stability Sample</option>
+                                <option value="others">Others</option>
 
                                 </select>
                             </div>
@@ -910,12 +907,12 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
                                 <select name="phase_i_investigation_pli">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Phase I Micro</option>
-                                    <option>Phase I Chemical</option>
-                                    <option>Hypothesis</option>
-                                    <option>Resampling</option>
-                                    <option>Others</option>
+                                   <option value="0">Enter Your Selection Here</option>
+                                    <option value="phase_i_micro">Phase I Micro</option>
+                                    <option value="phase_i_chemical">Phase I Chemical</option>
+                                    <option value="hypothesis">Hypothesis</option>
+                                    <option value="resampling">Resampling</option>
+                                    <option value="others">Others</option>
                                 </select>
                             </div>
                         </div>
@@ -1597,11 +1594,11 @@
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
                                 <select name="oos_category_root_cause_ident_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Analyst Error</option>
-                                    <option>Instrument Error</option>
-                                    <option>Product/Material Related Error</option>
-                                    <option>Other Error</option>
+                                     <option value="0">Enter Your Selection Here</option>
+                                    <option value="analyst_error">Analyst Error</option>
+                                    <option value="instrument_error">Instrument Error</option>
+                                    <option value="product_material_error">Product/Material Related Error</option>
+                                    <option value="other_error">Other Error</option>
 
                                 </select>
                             </div>
@@ -1646,7 +1643,7 @@
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
                                 <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
-                                    <option value="1">--Select---</option>
+                                    <option value="0">--Select---</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
@@ -1785,8 +1782,8 @@
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
                                 <select name="phase_ii_inv_required_plir">
-                                    <option>Enter Your Selection Here</option>
-                                   <option value="0">--Select---</option>
+                                    <option value="0">Enter Your Selection Here</option>
+                                  
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                                 </select>
@@ -2359,11 +2356,11 @@
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Product/Material Related Error</option>
-                                <option>Other Error</option>
+                                <option value="0">Enter Your Selection Here</option>
+                                <option value="analyst_error">Analyst Error</option>
+                                <option value="instrument_error">Instrument Error</option>
+                                <option value="product_material_related_error">Product/Material Related Error</option>
+                                <option value="other_error">Other Error</option>
                             </select>
                         </div>
                     </div>
