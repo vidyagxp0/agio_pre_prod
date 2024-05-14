@@ -100,6 +100,12 @@
                         '<td><input type="text" name="Number[]"></td>' +
                         '<td><input type="text" name="Product/ MaterialName[]"></td>' +
                         '<td><input type="text" name="Remarks[]"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -525,7 +531,7 @@
                                     <div class="file-attachment-list" id=""></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi" oninput="" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -630,49 +636,43 @@
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
-
                                             <th style="width: 10%">Others (Specify)</th>
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><select name="packingMaterialType[]">
-                                                <option>Primary</option>
-                                                <option>Secondary</option>
-                                                <option>Tertiary</option>
-                                                <option>Not Applicable</option>
-                                            </select> </td>
-                                        <td><select name="stabilityfor[]">
-                                                <option>Submission</option>
-                                                <option>Commercial</option>
-                                                <option>Pack Evaluation</option>
-                                                <option>Not Applicable</option>
-                                            </select> </td> --}}
-
-
-
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="info_product_code[]" value=""></td>
+                                        <td><input type="text" name="info_batch_no[]" value=""></td>
+                                        <td><input type="text" name="info_mfg_date[]" value=""></td>
+                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
+                                        <td><input type="text" name="info_label_claim[]" value=""></td>
+                                        <td><input type="text" name="info_pack_size[]" value=""></td>
+                                        <td><input type="text" name="info_analyst_name[]" value=""></td>
+                                        <td><input type="text" name="info_others_specify[]" value=""></td>
+                                        <td><input type="text" name="info_process_sample_stage[]" value=""></td>
+                                        <td>
+                                            <select name="info_packing_material_type[]">
+                                                <option value="Primary">Primary</option>
+                                                <option value="Secondary">Secondary</option>
+                                                <option value="Tertiary">Tertiary</option>
+                                                <option value="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="info_stability_for[]">
+                                                <option vlaue="Submission">Submission</option>
+                                                <option vlaue="Commercial">Commercial</option>
+                                                <option vlaue="Pack Evaluation">Pack Evaluation</option>
+                                                <option vlaue="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </td>
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
                         <!-- -------------------------------grid-2  ----------------------------------   -->
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -696,30 +696,22 @@
                                             <th style="width: 16%">Pack Details (if any)</th>
                                             <th style="width: 16%">Specification No.</th>
                                             <th style="width: 16%">Sample Description</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td> --}}
-
-
-
+                                         <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="stability_study_arnumber[]"></td>
+                                        <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
+                                        <td><input type="text" name="stability_study_Interval[]"></td>
+                                        <td><input type="text" name="stability_study_orientation[]"></td>
+                                        <td><input type="text" name="stability_study_pack_details[]"></td>
+                                        <td><input type="text" name="stability_study_specification_no[]"></td>
+                                        <td><input type="text" name="stability_study_sample_description[]"></td> 
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
-                        <!--
-                ------------------------------------------grid-3----------------------------------- -->
+        <!----------------grid-3----------------------------------- -->
 
                         <div class="group-input">
                             <label for="audit-agenda-grid">
@@ -744,30 +736,22 @@
                                             <th style="width: 16%">File Attachment</th>
                                             <th style="width: 16%">Submit By</th>
                                             <th style="width: 16%">Submit On</th>
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="text[]"></td>
-                                        <td><input type="file" name="file[]"></td>
-                                        <td><input type="text" name="text[]"></td>
-                                        <td><input type="date" name="time[]"></td> --}}
-
-
-
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="oos_arnumber[]"></td>
+                                        <td><input type="text" name="oos_test_name[]"></td>
+                                        <td><input type="text" name="oos_results_obtained[]"></td>
+                                        <td><input type="text" name="oos_specification_limit[]"></td>
+                                        <td><input type="text" name="oos_details_obvious_error[]"></td>
+                                        <td><input type="file" name="oos_file_attachment[]"></td>
+                                        <td><input type="text" name="oos_submit_by[]"></td>
+                                        <td><input type="date" name="oos_submit_on[]"></td>
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
-
                         <div class="button-block">
                             <button type="submit" class="saveButton">Save</button>
                             <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
@@ -1004,11 +988,6 @@
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-
-
-                                                
-                                                
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2</td>
@@ -1229,8 +1208,6 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>

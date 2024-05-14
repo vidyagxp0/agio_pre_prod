@@ -35,18 +35,13 @@ return new class extends Migration
             $table->longText('reference_system_document_gi')->nullable();
             $table->longText('source_document_type_gi')->nullable();
             $table->longText('reference_document')->nullable();
-           
-           
             $table->text('sample_type_gi')->nullable();
             $table->text('product_material_name_gi')->nullable();
             $table->text('market_gi')->nullable();
             $table->text('customer_gi')->nullable();
-            
             // preliminary lab investigation
-           
             $table->longText('Comments_plidata')->nullable();
             $table->string('field_alert_required')->nullable();
-           
             $table->longText('field_alert_ref_no_pli')->nullable();
             $table->longText('justify_if_no_field_alert_pli')->nullable();
             $table->string('verification_analysis_required_pli')->nullable();
@@ -58,10 +53,7 @@ return new class extends Migration
             $table->string('phase_i_investigation_pli')->nullable();
             $table->longText('phase_i_investigation_ref_pli')->nullable();
             $table->longText('file_attachments_pli')->nullable();
-
-            
             // preliminary lab inv Conclution
-
             $table->longText('summary_of_prelim_investiga_plic')->nullable();
             $table->string('root_cause_identified_plic')->nullable();
             $table->string('oos_category_root_cause_ident_plic')->nullable();
@@ -73,15 +65,11 @@ return new class extends Migration
             $table->string('reference_capa_no_plic')->nullable();
             $table->longText('delay_justification_for_pi_plic')->nullable();
             $table->longText('supporting_attachment_plic')->nullable();
-
             // preliminary lab invst  Review
-
             $table->longText('review_comments_plir')->nullable();
             $table->string('phase_ii_inv_required_plir')->nullable();
             $table->longText('supporting_attachments_plir')->nullable();
-
-
-        // phase ii investigation
+            // phase ii investigation
              $table->longText('qa_approver_comments_piii')->nullable();
              $table->string('manufact_invest_required_piii')->nullable();
              $table->longText('manufacturing_invest_type_piii')->nullable();
@@ -92,12 +80,7 @@ return new class extends Migration
              $table->string('hypo_exp_required_piii')->nullable();
              $table->longText('hypo_exp_reference_piii')->nullable();
              $table->longText('attachment_piii')->nullable();
-
-
-
         // Phase ii QC Review
-
-
              $table->longText('summary_of_exp_hyp_piiqcr')->nullable();
              $table->longText('summary_mfg_investigation_piiqcr')->nullable();
              $table->string('root_casue_identified_piiqcr')->nullable();
@@ -110,17 +93,13 @@ return new class extends Migration
              $table->string('investi_required_piiqcr')->nullable();
              $table->longText('invest_ref_piiqcr')->nullable();
              $table->longText('attachments_piiqcr')->nullable();
-
-
              // Additional testing proposal
-
              $table->longText('review_comment_atp')->nullable();
              $table->string('additional_test_proposal_atp')->nullable();
              $table->longText('additional_test_reference_atp')->nullable();
              $table->string('any_other_actions_required_atp')->nullable();
              $table->longText('action_task_reference_atp')->nullable();
              $table->longText('additional_testing_attachment_atp')->nullable();
-
              //oos conclusion
              $table->longText('conclusion_comments_oosc')->nullable();
              $table->longText('specification_limit_oosc')->nullable();
@@ -146,7 +125,6 @@ return new class extends Migration
             $table->text('risk_assessment_req_ocr')->nullable();
             $table->longtext('justify_if_no_risk_assessment_ocr')->nullable();
             $table->text('conclusion_attachment_ocr')->nullable();
-
             $table->text('cq_review_comments_ocqr')->nullable();
             $table->text('capa_required_ocqr')->nullable();
             $table->text('reference_of_capa_ocqr')->nullable();
@@ -154,7 +132,6 @@ return new class extends Migration
             $table->text('ref_action_plan_ocqr')->nullable();
             $table->longtext('cq_attachment_ocqr')->nullable();
             $table->longtext('cq_approver')->nullable();
-
             $table->text('oos_category_bd')->nullable();
             $table->text('others_bd')->nullable();
             $table->text('material_batch_release_bd')->nullable();
@@ -173,13 +150,10 @@ return new class extends Migration
             $table->longtext('phase_inves_reference_bd')->nullable();
             $table->longtext('justify_for_delay_in_activity_bd')->nullable();
             $table->longtext('disposition_attachment_bd')->nullable();
-           
             $table->longtext('other_action_specify_ro')->nullable();
             $table->longtext('reopen_attachment_ro')->nullable();
-
             $table->longtext('reopen_approval_comments_uaa')->nullable();
             $table->longtext('addendum_attachment_uaa')->nullable();
-
             $table->text('execution_comments_uae')->nullable();
             $table->text('action_task_required_uae')->nullable();
             $table->longtext('action_task_reference_no_uae')->nullable();
@@ -190,13 +164,11 @@ return new class extends Migration
             $table->text('hypo_exp_req_uae')->nullable();
             $table->longtext('hypo_exp_ref_uae')->nullable();
             $table->longtext('addendum_attachments_uae')->nullable();
-
             $table->longtext('addendum_review_comments_uar')->nullable();
             $table->longtext('required_attachment_uar')->nullable();
-
-           $table->longtext('verification_comments_uav')->nullable();
-           $table->longtext('verification_attachment_uar')->nullable();
-           $table->softDeletes();
+            $table->longtext('verification_comments_uav')->nullable();
+            $table->longtext('verification_attachment_uar')->nullable();
+            $table->softDeletes();
            $table->timestamps();
 
         });
