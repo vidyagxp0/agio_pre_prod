@@ -13,47 +13,7 @@ class OOSController extends Controller
     {
         return view('frontend.OOS.oos_form');
     }
-    // public function store(Request $request)
-    // {   
-    //     $input = $request->all();
-    //     // file attechment of all pages
-    //     if (!empty ($request->initial_attachment_gi)) {
-    //         $files = [];
-    //         if ($request->hasfile('initial_attachment_gi')) {
-    //             foreach ($request->file('initial_attachment_gi') as $file) {
-                    
-    //                 $name =  'initial_attachment_gi' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
-    //                 $file->move('upload/', $name);
-    //                 $files[] = $name;
-    //             }
-    //         }
-    //         $input['initial_attachment_gi'] = json_encode($files);
-    //     }
-    //     $OosDataRecord = OOS::create($input);
-    //     // =========== oos grid start =====================
-    //     if(!empty($OosDataRecord)){
-    //         $info_product_item = $request->info_product_item;
-    //     // ======== General Information =>Info On Product/Material =========
-    //         if(isset($info_product_item) && $info_product_item!=''){
-    //             $i=0;
-    //             foreach ($info_product_item as $key => $value1) {
-    //             $genaralGridInfoData = array(
-    //             'oot_id'=> $genaralDataRecord->id,
-    //             'identifier' => $request->identifier[$i],
-    //             'info_product_item' => $info_product_item[$i],
-    //             'info_product_lot_batch' => $request->info_product_lot_batch[$i],
-    //             'info_product_arnumber' => $request->info_product_arnumber[$i],
-    //             'info_product_mfg_date' => $request->info_product_mfg_date[$i], 
-    //             'info_expiry_date' => $request->info_expiry_date[$i], 
-    //             'info_label_claim' => $request->info_label_claim[$i],
-    //             ); 
-    //             $genaralGridInfoDatas = OotGrids::insert($genaralGridInfoData);
-    //             $i++;  
-    //             }
-    //         }
-    //     }
-        
-    // }
+    
     public function store(Request $request)
     {   
         $input = $request->all();
@@ -277,20 +237,20 @@ class OOSController extends Controller
             $info_product_code = $request->info_product_code;
             if(isset($info_product_code) && $info_product_code!=''){
                 $i=0;
-                foreach ($info_product_item as $key => $value1) {
+                foreach ($info_product_code as $key => $value1) {
                 $ProductData = array(
-                'oot_id'=> $OosDataRecord->id,
+                'oos_id'=> $OosDataRecord->id,
                 'identifier' => $request->identifier_info_product_material[$i],
-                'info_batch_no' => $info_batch_no[$i],
-                'info_mfg_date' => $info_mfg_date[$i],
-                'info_expiry_date' => $info_expiry_date[$i],
-                'info_label_claim' => $info_label_claim[$i],
-                'info_pack_size' => $info_pack_size[$i],
-                'info_analyst_name' => $info_analyst_name[$i],
-                'info_others_specify' => $info_others_specify[$i],
-                'info_process_sample_stage' => $info_process_sample_stage[$i]
+                'info_batch_no' => $request->info_batch_no[$i],
+                'info_mfg_date' => $request->info_mfg_date[$i],
+                'info_expiry_date' => $request->info_expiry_date[$i],
+                'info_label_claim' => $request->info_label_claim[$i],
+                'info_pack_size' => $request->info_pack_size[$i],
+                'info_analyst_name' => $request->info_analyst_name[$i],
+                'info_others_specify' => $request->info_others_specify[$i],
+                'info_process_sample_stage' => $request->info_process_sample_stage[$i]
                 ); 
-                $ProductDatas = OotGrids::insert($ProductData);
+                $ProductDatas = Oosgrids::insert($ProductData);
                 $i++;  
                 }
             }
@@ -302,14 +262,14 @@ class OOSController extends Controller
                 $StabilityData = array(
                 'oos_id'=> $OosDataRecord->id,
                 'identifier' => $request->identifier_details_stability[$j],
-                'stability_study_condition_temprature_rh' => $stability_study_condition_temprature_rh[$i],
+                'stability_study_condition_temprature_rh' => $request->stability_study_condition_temprature_rh[$i],
                 'stability_study_Interval' => $request->stability_study_Interval[$j],
                 'stability_study_orientation' => $request->stability_study_orientation[$j],
                 'stability_study_pack_details' => $request->stability_study_pack_details[$j],
                 'stability_study_specification_no' => $request->stability_study_specification_no[$j],
                 'stability_study_sample_description' => $request->stability_study_sample_description[$j]
                 ); 
-                $StabilityDatas = OotGrids::insert($StabilityData);
+                $StabilityDatas = Oosgrids::insert($StabilityData);
                 $j++;  
                 }
             }
@@ -328,55 +288,64 @@ class OOSController extends Controller
                     'oos_file_attachment' => $request->oos_file_attachment[$k],
                     'oos_submit_on' => $request->oos_submit_on[$k]
                 ); 
-                $OosDetailDatas = OotGrids::insert($OosDetailData);
+                $OosDetailDatas = Oosgrids::insert($OosDetailData);
                 $k++;  
                 }
             }
 
-        //     $info_oos_number = $request->info_oos_number;
-        //     if(isset($info_oos_number) && $info_oos_number!=''){
-        //         $k=0;
-        //         foreach ($info_oos_number as $key => $value1) {
-        //         $genaralGridInfoData = array(
-        //         'oos_id'=> $genaralDataRecord->id,
-        //         'identifier' => $request->identifier_oos_capa[$k],
-
-        //         ); 
-        //         $genaralGridInfoDatas = OotGrids::insert($genaralGridInfoData);
-        //         $k++;  
-        //         }
+            $info_oos_number = $request->info_oos_number;
+            if(isset($info_oos_number) && $info_oos_number!=''){
+                $k=0;
+                foreach ($info_oos_number as $key => $value1) {
+                $OosCapaData = array(
+                'oos_id'=> $genaralDataRecord->id,
+                'identifier' => $request->identifier_oos_capa[$k],
+                'info_oos_reported_date' => $request->info_oos_reported_date[$k],
+                'info_oos_description' => $request->info_oos_description[$k],
+                'info_oos_previous_root_cause' => $request->info_oos_previous_root_cause[$k],
+                'info_oos_capa' => $request->info_oos_capa[$k],
+                'info_oos_closure_date' => $request->info_oos_closure_date[$k],
+                'info_oos_capa_requirement' => $request->info_oos_capa_requirement[$k],
+                'info_oos_capa_reference_number' => $request->info_oos_capa_reference_number[$k]
+                ); 
+                $genaralGridInfoDatas = Oosgrids::insert($OosCapaData);
+                $k++;  
+                }
            
-        //     }
-
-        //     $summary_results_analysis_detials = $request->summary_results_analysis_detials;
-        //     if(isset($summary_results_analysis_detials) && $summary_results_analysis_detials!=''){
-        //         $l=0;
-        //         foreach ($summary_results_analysis_detials as $key => $value1) {
-        //         $genaralGridInfoData = array(
-        //         'oos_id'=> $genaralDataRecord->id,
-        //         'identifier' => $request->identifier_oos_conclusion[$l],
-
-        //         ); 
-        //         $genaralGridInfoDatas = OotGrids::insert($genaralGridInfoData);
-        //         $l++;  
-        //         }
-        //     }
-
-            // $conclusion_review_product_name = $request->conclusion_review_product_name;
-            // if(isset($conclusion_review_product_name) && $conclusion_review_product_name!=''){
-            //     //identifier_oos_conclusion_review
-            //     $l=0;
-            //     foreach ($conclusion_review_product_name as $key => $value1) {
-            //     $genaralGridInfoData = array(
-            //     'oos_id'=> $genaralDataRecord->id,
-            //     'identifier' => $request->identifier_oos_conclusion_review[$l],
-
-            //     ); 
-            //     $genaralGridInfoDatas = OotGrids::insert($genaralGridInfoData);
-            //     $l++;  
-            //     }
-           
-            // }
+            }
+            $summary_results_analysis_detials = $request->summary_results_analysis_detials;
+            if(isset($summary_results_analysis_detials) && $summary_results_analysis_detials!=''){
+                $l=0;
+                foreach ($summary_results_analysis_detials as $key => $value1) {
+                $genaralGridInfoData = array(
+                'oos_id'=> $genaralDataRecord->id,
+                'identifier' => $request->identifier_oos_conclusion[$l],
+                'summary_results_analysis_detials' => $summary_results_analysis_detials[$l],
+                'summary_results_hypothesis_experimentation_test_pr_no' => $request->summary_results_hypothesis_experimentation_test_pr_no[$l],
+                'summary_results' => $request->summary_results[$l],
+                'summary_results_analyst_name' => $request->summary_results_analyst_name[$l],
+                'summary_results_remarks' => $request->summary_results_remarks[$l]
+                ); 
+                $genaralGridInfoDatas = Oosgrids::insert($genaralGridInfoData);
+                $l++;  
+                }
+            }
+            // identifier_oos_conclusion_review
+            $conclusion_review_product_name = $request->conclusion_review_product_name;
+            if(isset($conclusion_review_product_name) && $conclusion_review_product_name!=''){
+                $m=0;
+                foreach ($conclusion_review_product_name as $key => $value1) {
+                $genaralGridInfoData = array(
+                'oos_id'=> $genaralDataRecord->id,
+                'identifier' => $request->identifier_oos_conclusion_review[$m],
+                'conclusion_review_batch_no'=>$request->conclusion_review_batch_no[$m],
+                'conclusion_review_any_other_information'=>$request->conclusion_review_any_other_information[$m],
+                'conclusion_review_action_affecte_batch'=>$request->conclusion_review_action_affecte_batch[$m],
+                ); 
+                $genaralGridInfoDatas = OosGrids::insert($genaralGridInfoData);
+                $m++;  
+                }
+            }
 
         }
         

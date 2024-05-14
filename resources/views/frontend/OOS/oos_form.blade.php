@@ -584,6 +584,7 @@
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
                                 <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1718,7 +1719,7 @@
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
                                         <td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="Info OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>
-                                        <td><input type="text" name="info_oos_reported_date[]" value=""></td>
+                                        <td><input type="date" name="info_oos_reported_date[]" value=""></td>
                                         <td><input type="text" name="info_oos_description[]" value=""></td>
                                         <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
                                         <td><input type="text" name="info_oos_capa[]" value=""></td>
