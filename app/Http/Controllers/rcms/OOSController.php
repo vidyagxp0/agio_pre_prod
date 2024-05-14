@@ -16,6 +16,8 @@ class OOSController extends Controller
     public function store(Request $request)
     {   
         $input = $request->all();
+
+        dd($input);
         // file attechment of all pages
 
         // if (!empty ($request->gi_attachment)) {

@@ -19,9 +19,10 @@ return new class extends Migration
             $table->string('division_id')->nullable();
             $table->string('record_number')->nullable();
             $table->string('intiation_date')->nullable();
-            $table->string('initiator_group_gi')->nullable();
-            $table->string('initiator_group_code_gi')->nullable();
-            $table->date('Due Date_gi')->nullable();
+            $table->string('initiator')->nullable();
+            $table->string('initiator_group')->nullable();
+            $table->string('initiator_group_code')->nullable();
+            $table->date('due_date')->nullable();
             $table->string('severity_level_gi')->nullable();
             $table->text('initiated_through_gi')->nullable();
             $table->text('if_others_gi')->nullable();
@@ -33,17 +34,19 @@ return new class extends Migration
             $table->longText('initial_attachment_gi')->nullable();
             $table->longText('reference_system_document_gi')->nullable();
             $table->longText('source_document_type_gi')->nullable();
-            $table->longText('reference_document_gi')->nullable();
+            $table->longText('reference_document')->nullable();
            
            
             $table->text('sample_type_gi')->nullable();
-            $table->text('product/material_name_gi')->nullable();
+            $table->text('product_material_name_gi')->nullable();
             $table->text('market_gi')->nullable();
             $table->text('customer_gi')->nullable();
             
             // preliminary lab investigation
-            $table->longText('Comments')->nullable();
-            $table->string('field_alert_required_pli')->nullable();
+           
+            $table->longText('Comments_plidata')->nullable();
+            $table->string('field_alert_required')->nullable();
+           
             $table->longText('field_alert_ref_no_pli')->nullable();
             $table->longText('justify_if_no_field_alert_pli')->nullable();
             $table->string('verification_analysis_required_pli')->nullable();
@@ -62,7 +65,7 @@ return new class extends Migration
             $table->longText('summary_of_prelim_investiga_plic')->nullable();
             $table->string('root_cause_identified_plic')->nullable();
             $table->string('oos_category_root_cause_ident_plic')->nullable();
-            $table->longText('oos_category_(others)_plic')->nullable();
+            $table->longText('oos_category_others_plic')->nullable();
             $table->longText('root_cause_details_plic')->nullable();
             $table->string('recommended_actions_required_plic')->nullable();
             $table->longText('recommended_actions_reference_plic')->nullable();
@@ -85,9 +88,9 @@ return new class extends Migration
              $table->longText('manufacturing_invst_ref_piii')->nullable();
              $table->string('re_sampling_required_piii')->nullable();
              $table->longText('audit_comments_piii')->nullable();
-             $table->longText('re-sampling_ref_no_piii')->nullable();
-             $table->string('hypo/exp_required_piii')->nullable();
-             $table->longText('hypo/exp_reference_piii')->nullable();
+             $table->longText('re_sampling_ref_no_piii')->nullable();
+             $table->string('hypo_exp_required_piii')->nullable();
+             $table->longText('hypo_exp_reference_piii')->nullable();
              $table->longText('attachment_piii')->nullable();
 
 
@@ -95,11 +98,11 @@ return new class extends Migration
         // Phase ii QC Review
 
 
-             $table->longText('summary_of_exp/hyp_piiqcr')->nullable();
+             $table->longText('summary_of_exp_hyp_piiqcr')->nullable();
              $table->longText('summary_mfg_investigation_piiqcr')->nullable();
              $table->string('root_casue_identified_piiqcr')->nullable();
-             $table->string('oos_category-reason_identified_piiqcr')->nullable();
-             $table->longText('others_(oos_category)_piiqcr')->nullable();
+             $table->string('oos_category_reason_identified_piiqcr')->nullable();
+             $table->longText('others_oos_category_piiqcr')->nullable();
              $table->longText('details_of_root_cause_piiqcr')->nullable();
              $table->longText('impact_assessment_piiqcr')->nullable();
              $table->string('recommended_action_required_piiqcr')->nullable();
@@ -150,6 +153,7 @@ return new class extends Migration
             $table->longtext('action_plan_requirement_ocqr')->nullable();
             $table->text('ref_action_plan_ocqr')->nullable();
             $table->longtext('cq_attachment_ocqr')->nullable();
+            $table->longtext('cq_approver')->nullable();
 
             $table->text('oos_category_bd')->nullable();
             $table->text('others_bd')->nullable();
