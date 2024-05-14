@@ -9,10 +9,7 @@
             display: none;
         }
     </style>
-
-
     <!-- --------------------------------------button--------------------- -->
-
     <script>
         VirtualSelect.init({
             ele: '#related_records, #hod'
@@ -91,31 +88,23 @@
         $(document).ready(function() {
             $('#Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
-                        '<tr>' +
+                    '<tr>'+
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-                        '</tr>';
-
+                        '<td><input type="hidden" name="identifier_info_product_material" value="Info Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
+                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
+                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
+                    '</tr>' +;
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
-
                     // html += '</select></td>' + 
-
-                    '</tr>';
-
                     return html;
                 }
 
@@ -127,35 +116,28 @@
         });
     </script>
 
-
-
-    <!-- --------------------------------grid-2--------------------------script -->
-
+    <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
             $('#Details_Stability').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Stability_StudyName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>'+
+                        '<td><input type="text" name="stability_study_condition_temprature_rh[]"></td>'+
+                        '<td><input type="text" name="stability_study_Interval[]"></td>'+
+                        '<td><input type="text" name="stability_study_orientation[]"></td>'+
+                        '<td><input type="text" name="stability_study_pack_details[]"></td>'+
+                        '<td><input type="text" name="stability_study_specification_no[]"></td>'+
+                        '<td><input type="text" name="stability_study_sample_description[]"></td>'+
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
                     // html += '</select></td>' + 
-
-                    '</tr>';
-
                     return html;
                 }
 
@@ -175,23 +157,22 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="OOS_DetailsName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                            '"></td>' +
+                            '<td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>'+
+                            '<td><input type="text" name="oos_test_name[]"></td>' +
+                            '<td><input type="text" name="oos_results_obtained[]"></td>' +
+                            '<td><input type="text" name="oos_specification_limit[]"></td>' +
+                            '<td><input type="text" name="oos_details_obvious_error[]"></td>' +
+                            '<td><input type="file" name="oos_file_attachment[]"></td>' +
+                            '<td><input type="text" name="oos_submit_by[]"></td>' +
+                            '<td><input type="date" name="oos_submit_on[]"></td>' +
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
                     // html += '</select></td>' + 
-
-                    '</tr>';
-
                     return html;
                 }
 
@@ -209,27 +190,23 @@
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oos_capaName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input type="hidden" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
+                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
                     // html += '</select></td>' + 
-
-                    '</tr>';
-
                     return html;
                 }
 
@@ -248,17 +225,15 @@
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oos_conclusionName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>' +
+                        '<td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>' +
+                        '<td><input type="text" name="summary_results[]"></td>' +
+                        '<td><input type="text" name="summary_results_analyst_name[]"></td>' +
+                        '<td><input type="text" name="summary_results_remarks[]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -287,19 +262,15 @@
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oosconclusion_reviewName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input type="hidden" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_batch_no[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_any_other_information[]"></td>' +
+                        '<td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>' +
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -318,10 +289,7 @@
             });
         });
     </script>
-
-
-
-
+    <!-- ======GRID END  =============-->
 
     <div class="form-field-head">
         <!-- <div class="pr-id">
@@ -332,14 +300,14 @@
             QMS-North America / OOS
         </div>
         <!-- <div class="button-bar">
-                            <button type="button">Save</button>
-                            <button type="button">Cancel</button>
-                            <button type="button">New</button>
-                            <button type="button">Copy</button>
-                            <button type="button">Child</button>
-                            <button type="button">Check Spelling</button>
-                            <button type="button">Change Project</button>
-                        </div> -->
+            <button type="button">Save</button>
+            <button type="button">Cancel</button>
+            <button type="button">New</button>
+            <button type="button">Copy</button>
+            <button type="button">Child</button>
+            <button type="button">Check Spelling</button>
+            <button type="button">Change Project</button>
+        </div> -->
     </div>
 
 
@@ -644,7 +612,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="info_product_code[]" value=""></td>
+                                        <td><input type="hidden" name="identifier_info_product_material" value="Info Product Material"><input type="text" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
                                         <td><input type="text" name="info_mfg_date[]" value=""></td>
                                         <td><input type="text" name="info_expiry_date[]" value=""></td>
@@ -699,8 +667,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="stability_study_arnumber[]"></td>
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
@@ -740,7 +708,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="oos_arnumber[]"></td>
+                                        <td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>
                                         <td><input type="text" name="oos_test_name[]"></td>
                                         <td><input type="text" name="oos_results_obtained[]"></td>
                                         <td><input type="text" name="oos_specification_limit[]"></td>
@@ -1656,7 +1624,6 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
                                 <select name="capa_required_plic">
-                               
                                 <option value="0">--Select---</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
@@ -1693,9 +1660,6 @@
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
 
@@ -1750,37 +1714,26 @@
                                             <th style="width: 16%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
-
                                             <th style="width: 16%">Reference CAPA Number</th>
-
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><select name="CAPARequirement[]">
-                                                <option>Yes</option>
-                                                <option>No</option>
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="info_oos_number[]" value=""></td>
+                                        <td><input type="text" name="info_oos_reported_date[]" value=""></td>
+                                        <td><input type="text" name="info_oos_description[]" value=""></td>
+                                        <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
+                                        <td><input type="text" name="info_oos_capa[]" value=""></td>
+                                        <td><input type="date" name="info_oos_closure_date[]" value=""></td>
+                                        <td><select name="info_oos_capa_requirement[]">
+                                                <option value="yes">Yes</option>
+                                                <option value="No">No</option>
                                             </select></td>
-                                        <td><input type="text" name="Name[]"></td> --}}
-
-
+                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td> 
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
@@ -1792,7 +1745,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments"> Supporting Attachments</label>
@@ -1807,7 +1759,6 @@
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
 
@@ -2585,47 +2536,31 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
-
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td> --}}
-
-
-
+                                     <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>
+                                    <td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>
+                                    <td><input type="text" name="summary_results[]"></td>
+                                    <td><input type="text" name="summary_results_analyst_name[]"></td>
+                                    <td><input type="text" name="summary_results_remarks[]"></td> 
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
                             <input type="text" name="specification_limit_oosc">
                         </div>
                     </div>
-
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
                             <select name="results_to_be_reported_oosc">
                                 <option value="Intial">Initial</option>
                                 <option value="Retested_result">Retested Result</option>
-
                             </select>
                         </div>
                     </div>
@@ -2649,24 +2584,15 @@
                             <select name="oos_stands_oosc">
                                 <option value="Valid">Valid</option>
                                 <option value="Invalid">Invalid</option>
-
-
-
                             </select>
                         </div>
                     </div>
-
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
                             <select name="capa_req_oosc">
                                 <option name="Yes">Yes</option>
                                 <option name="No">No</option>
-
-
                             </select>
                         </div>
                     </div>
@@ -2695,8 +2621,6 @@
                             <select name="action_plan_req_oosc">
                                  <option value="Yes">Yes</option>
                                 <option value="No">No</option>
-
-
                             </select>
                         </div>
                     </div>
@@ -2787,30 +2711,18 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
-
-
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Number[]"></td> --}}
-
-
-
-
+                                    <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="hidden" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
+                                    <td><input type="text" name="conclusion_review_batch_no[]"></td>
+                                    <td><input type="text" name="conclusion_review_any_other_information[]"></td>
+                                    <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
-
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -2819,20 +2731,12 @@
                                     </textarea>
                         </div>
                     </div>
-
-
-
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
                             <select name="capa_req_ocr">
                                   <option value="Yes">Yes</option>
                                 <option value="No">No</option>
-
-
                             </select>
                         </div>
                     </div>
@@ -2989,21 +2893,15 @@
                                 <option value="0">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
-
                             </select>
                         </div>
                     </div>
-
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
                             <input type="text" name="ref_action_plan_ocqr">
                         </div>
                     </div>
-
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> CQ Attachment</label>
@@ -3018,10 +2916,8 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3041,9 +2937,6 @@
                     Batch Disposition
                 </div>
                 <div class="row">
-
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
@@ -3064,13 +2957,6 @@
                             <input type="text" name="others_bd">
                         </div>
                     </div>
-                    <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Report Attachments">Required Action Plan? </label>
-                                        <input type="num" name="num">
-                                    </div>
-                                </div> -->
-
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
@@ -3082,16 +2968,13 @@
                         </select>
                         </div>
                     </div>
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
@@ -3102,20 +2985,14 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="sub-head">Assessment for batch disposition</div>
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_parameters_results_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
-
-
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
@@ -3154,9 +3031,8 @@
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="any_market_complaints_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
-
                     </div>
 
                     <div class="col-md-12 mb-4">
@@ -3164,16 +3040,15 @@
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="statistical_evaluation_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
-
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="risk_analysis_disposition_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
 
                     </div>
@@ -3182,11 +3057,9 @@
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="conclusion_bd[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
-
                     </div>
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
@@ -3194,8 +3067,6 @@
                               <option value="0">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="No">No</option>
-
-
                             </select>
                         </div>
                     </div>
@@ -3209,7 +3080,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -3217,7 +3087,6 @@
                             <textarea class="summernote" name="justify_for_delay_in_activity_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
-
                     </div>
                     <div class="col-12">
                         <div class="group-input">
@@ -3261,7 +3130,7 @@
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_specify_ro[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
 
@@ -3279,10 +3148,8 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3302,16 +3169,14 @@
                     Addendum Approval Comment
                 </div>
                 <div class="row">
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Reopen Approval Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="reopen_approval_comments_uaa[]" id="summernote-1">
-                                    </textarea>
+                            </textarea>
                         </div>
                     </div>
-
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Addendum Attachment</label>
@@ -3328,8 +3193,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3484,13 +3347,12 @@
                     Under Addendum Review
                 </div>
                 <div class="row">
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Addendum Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="addendum_review_comments_uar[]" id="summernote-1">
-                    </textarea>
+                            </textarea>
                         </div>
                     </div>
 
@@ -3508,10 +3370,8 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3560,8 +3420,6 @@
 
                         </div>
                     </div>
-
-
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3595,13 +3453,10 @@
                             <div class="Date"></div>
                         </div>
                     </div>
-
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
                             <div class="static"></div>
-
                         </div>
                     </div>
 
@@ -3800,11 +3655,7 @@
                             <div class="date"></div>
                         </div>
                     </div>
-
-
-
-
-                    <!-- ====================================================================== -->
+<!-- ====================================================================== -->
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="submitted by">Submitted By :</label>
