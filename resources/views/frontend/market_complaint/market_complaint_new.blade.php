@@ -441,9 +441,37 @@
                                     </div>
                                 </div>
 
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#product_details').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="Product_Name[]"></td>' +
+                                                    '<td><input type="text" name="Batch_No[]"></td>' +
+                                                    '<td><input type="date" name="Mfg_Date[]"></td>' +
+                                                    '<td><input type="date" name="Exp_Date[]"></td>' +
+                                                    '<td><input type="text" name="Batch_Size[]"></td>' +
+                                                    '<td><input type="text" name="Pack_Size[]"></td>' +
+                                                    '<td><input type="text" name="Dispatch_Quantity[]"></td>' +
+                                                    '<td><input type="text" name="Remarks[]"></td>' +
 
 
+                                                    '</tr>';
 
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#product_details_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -661,7 +689,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Brain stroming Session/Discussion with Concered Person
-                                            <button type="button" onclick="add4Input('brain-stroming')">+</button>
+                                            <button type="button" id="brain-stroming">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -669,7 +697,8 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="brain-stroming" style="width: %;">
+                                            <table class="table table-bordered" id="brain-stroming-details"
+                                                style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -699,6 +728,32 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#brain-stroming').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="Possiblity[]"></td>' +
+                                                    '<td><input type="text" name="Facts/Controls[]" value="Facts Available"></td>' +
+                                                    '<td><input type="text" name="Probable_Cause[]"></td>' +
+                                                    '<td><input type="text" name="Remarks[]"></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#brain-stroming-details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
                                 <div class="button-block">
@@ -956,7 +1011,7 @@
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Product/Material Details
-                                        <button type="button" onclick="add4Input('Product_material')">+</button>
+                                        <button type="button" id="product_material">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-details-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -964,7 +1019,8 @@
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="Product_material" style="width: %;">
+                                        <table class="table table-bordered" id="product_material_details"
+                                            style="width: %;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Row #</th>
@@ -985,8 +1041,8 @@
                                                 </td>
                                                 <td><input type="text" name="Product_name[]"></td>
                                                 <td><input type="text" name="Batch_no[]"></td>
-                                                <td><input type="text" name="mfg_date[]"></td>
-                                                <td><input type="text" name="exp_date[]"></td>
+                                                <td><input type="date" name="mfg_date[]"></td>
+                                                <td><input type="date" name="exp_date[]"></td>
                                                 <td><input type="text" name="batch_size[]"></td>
                                                 <td><input type="text" name="pack_profile[]"></td>
                                                 <td><input type="text" name="released_quantity[]"></td>
@@ -999,6 +1055,37 @@
                                 </div>
                             </div>
 
+                            <script>
+                                $(document).ready(function() {
+                                    $('#product_material').click(function(e) {
+                                        function generateTableRow(serialNumber) {
+
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                '"></td>' +
+                                                '<td><input type="text" name="Product_Name[]"></td>' +
+                                                '<td><input type="text" name="Batch_No[]"></td>' +
+                                                '<td><input type="date" name="Mfg_Date[]"></td>' +
+                                                '<td><input type="date" name="Exp_Date[]"></td>' +
+                                                '<td><input type="text" name="Batch_Size[]"></td>' +
+                                                '<td><input type="text" name="pack_profile[]"></td>' +
+                                                '<td><input type="text" name="released_quantity[]"></td>' +
+                                                '<td><input type="text" name="remarks[]"></td>' +
+
+
+                                                '</tr>';
+
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#product_material_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount + 1);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
 
 
                             <div class="col-lg-12">
