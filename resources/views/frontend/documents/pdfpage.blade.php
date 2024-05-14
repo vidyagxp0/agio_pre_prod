@@ -414,20 +414,19 @@
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
+                        <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
                     </td>
                     <td class="title w-60" 
                     style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         <p 
-                        style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
+                        style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">{{ config('site.pdf_title') }}</p>
                         <br>
                         <p style="margin-top: -2rem; margin-bottom: 0px;">
-
                             {{ $data->document_name }}
                         </p>
                     </td>
-                    <td class="logo w-20 h-20">
-                        <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
+                    <td class="logo w-20">
+                        <img src="{{ asset('user/images/agio.jpg') }}" style="max-height: 60px; max-width: 40px;">
                     </td>
                 </tr>
             </tbody>

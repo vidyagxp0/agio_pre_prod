@@ -20,12 +20,15 @@ use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
+use App\Http\Controllers\rcms\OOCController;
+use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
@@ -401,10 +404,10 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 
 //  ===================== OOS OOT OOC Form Route====================================
 Route::view('OOT_form', 'frontend.OOT.OOT_form');
-Route::view('out_of_calibration', 'frontend.OOC.out_of_calibration');
+Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 
-Route::view('oos_form', 'frontend.OOS.oos_form');
-Route::view('oos_micro', 'frontend.OOS_Micro.oos_micro');
+Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new');
 
 
