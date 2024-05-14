@@ -396,8 +396,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
-                                            <button type="button"
-                                                onclick="add4Input('root-cause-first-table')">+</button>
+                                            <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -405,7 +404,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="root-cause-first-table"
+                                            <table class="table table-bordered" id="product_details_details"
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
@@ -426,14 +425,14 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Instrument_Name[]"></td>
-                                                    <td><input type="text" name="Instrument_ID[]"></td>
+                                                    <td><input type="text" name="Product_Name[]"></td>
+                                                    <td><input type="text" name="Batch_No[]"></td>
+                                                    <td><input type="date" name="Mfg_Date[]"></td>
+                                                    <td><input type="date" name="Exp_Date[]"></td>
+                                                    <td><input type="text" name="Batch_Size[]"></td>
+                                                    <td><input type="text" name="Pack_Size[]"></td>
+                                                    <td><input type="text" name="Dispatch_Quantity[]"></td>
                                                     <td><input type="text" name="Remarks[]"></td>
-                                                    <td><input type="text" name="Calibration_Parameter[]"></td>
-                                                    <td><input type="text" name="Acceptance_Criteria[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
 
 
                                                 </tbody>
@@ -449,7 +448,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Traceability
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" onclick="add4Input('traceblity')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -457,8 +456,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="traceblity" style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -526,7 +524,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Investingation Team
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" onclick="add4Input('Investing_team')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -534,29 +532,22 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="Investing_team" style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
                                                         <th>Name</th>
                                                         <th>Department</th>
                                                         <th>Remarks</th>
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    {{-- <td><input type="text" name="row[]"></td> --}}
                                                     <td><input type="text" name="Name[]"></td>
                                                     <td><input type="text" name="Department[]"></td>
                                                     <td><input type="text" name="Remarks[]"></td>
-
-
-
                                                 </tbody>
                                             </table>
                                         </div>
@@ -670,7 +661,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Brain stroming Session/Discussion with Concered Person
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" onclick="add4Input('brain-stroming')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -678,8 +669,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="brain-stroming" style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -808,7 +798,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Team Members
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" onclick="add4Input('team_members')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -816,8 +806,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="team_members" style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -851,7 +840,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Approval
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" onclick="add4Input('report_approval')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -859,8 +848,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="report_approval" style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -968,7 +956,7 @@
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Product/Material Details
-                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
+                                        <button type="button" onclick="add4Input('Product_material')">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-details-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -976,8 +964,7 @@
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="root-cause-first-table"
-                                            style="width: %;">
+                                        <table class="table table-bordered" id="Product_material" style="width: %;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Row #</th>
