@@ -416,3 +416,7 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
  */
 
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
+
+// ========================Errata==================================
+Route::view('errata_new', 'frontend.errata.errata_new');
+Route::view('errata_view', 'frontend.errata.errata_view');
