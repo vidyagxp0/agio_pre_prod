@@ -16,6 +16,7 @@ use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
+use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Models\EffectivenessCheck;
@@ -173,6 +174,15 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
             Route::get('/',[OOSController::class, 'index'])->name('index');
             Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
+            });
+
+            /**
+             * market coplaint
+             */
+            Route::group(['prefix' => 'marketcomplaint', 'as' => 'marketcomplaint.'], function() {
+                Route::get('/',[MarketComplaintController::class, 'index'])->name('index');
+                Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
+   
             });
 
         }
