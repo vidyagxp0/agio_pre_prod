@@ -204,11 +204,11 @@
     <div id="rcms_login_block" style="background-image: url('{{ asset('user/images/rcms-login-bg.png') }}')">
         <div class="login-form-block" style="background-image: url('{{ asset('user/images/rcms-login-bg2.png') }}')">
             <div class="top-block">
-                <div class="logo">
-                    <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." class="w-100 h-100">
+                <div class="logo" style="display: flex">
+                    <img src="{{ 'https://vidyagxp.com/vidhyaGxp.png    ' }}" alt="..." style="filter: none; scale: 3; max-width: 100px; margin: auto">
                 </div>
                 <div class="head">
-                    Welcome to Doculife
+                    Welcome to VidyaGXP
                 </div>
             </div>
             <form action="{{ url('rcms_check') }}" method="POST">

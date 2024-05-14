@@ -1975,6 +1975,8 @@ $group->save();
 
         $roles = [
             'Initiator',
+            'Reviewer',
+            'Approver',
             'HOD/Designee',
             'QA',
             'CFT/SME',

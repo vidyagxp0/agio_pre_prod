@@ -115,15 +115,11 @@
                     <div class="middle-head">
                         <div class="logo-container">
                             <div class="logo">
-                                <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
+                                <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..." class="w-100 h-100" style="scale: 3">
                             </div>
                             <div class="logo">
-                                <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100" style="scale: 2">
+                                <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
                             </div>
-                            {{-- <div class="logo">
-                                <img src="{{ asset('user/images/logo3.png') }}" alt="..." class="w-20 h-">
-                            </div>
-                             --}}
                         </div>
                         <div class="icon-grid">
                             <div class="icon-drop">
@@ -226,7 +222,7 @@
                                                 <a href="{{ route('documents.index') }}">Documents</a>
                                             </div>
                                         @endif
-                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2))
+                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
                                             <div>
                                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                             </div>

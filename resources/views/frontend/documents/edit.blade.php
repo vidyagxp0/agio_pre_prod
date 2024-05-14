@@ -1359,9 +1359,7 @@
                                     <label for="hods">HOD's</label>
                                     <select   @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
                                         name="hods[]" placeholder="Select HOD's" multiple>
-                                        @if (!empty($hods))
-                                            @foreach ($hods as $hod)
-                                            @if(Helpers::checkUserRolesApprovers($hod))
+                                        @foreach ($hods as $hod)
                                                 <option value="{{ $hod->id }}"
                                                     @if ($document->hods) @php
                                                    $data = explode(",",$document->hods);
@@ -1371,13 +1369,11 @@
                                                 @for ($i = 0; $i < $count; $i++)
                                                     @if ($data[$i] == $hod->id)
                                                      selected @endif
-                                                    @endfor
-                                            @endif>
+                                                @endfor>
                                             {{ $hod->name }}
                                             </option>
                                             @endif
                                         @endforeach
-                                        @endif
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -2615,7 +2611,7 @@
                     <div class="input-fields">
                         <div class="group-input">
                             <label for="hod-remark">HOD Comments</label>
-                            <textarea class="summernote" name="hod_comments">{{ $document->document_content ? $document->document_content->hod_comments : '' }}</textarea>
+                            <textarea class="summernote {{ !Helpers::checkRoles(4) ? 'summernote-disabled' : '' }}" name="hod_comments">{{ $document->document_content ? $document->document_content->hod_comments : '' }}</textarea>
                         </div>
                     </div>
 
@@ -2641,7 +2637,7 @@
                                 @endif
                             </div>
                             <div class="add-btn">
-                                <div class="add-hod-attachment-btn">Add</div>
+                                <div class="{{ !Helpers::checkRoles(4) ? 'btn-disabled' : 'add-hod-attachment-btn' }} ">Add</div>
                                 <input type="file" id="myfile" name="hod_attachments[]"
                                 class="add-hod-attachment-file"
                                     oninput="addMultipleFiles(this, 'hod_attachments')" multiple>
@@ -3425,6 +3421,9 @@
             videoUploadURL: "{{ route('api.upload.file') }}",
             videoMaxSize: 500 * 1024 * 1024,
         });
+
+        
+        $(".summernote-disabled").FroalaEditor("edit.off");
     </script>
     <script>
         VirtualSelect.init({

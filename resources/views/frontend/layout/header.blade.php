@@ -79,7 +79,7 @@
                             <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." class="w-100 h-100" style="scale: 3">
                         </div>
                         <div class="logo">
-                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
+                            <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
                         </div>
                     </div>
                     <div class="search-bar">
@@ -171,7 +171,7 @@
                                 <a href="{{ route('documents.index') }}">Documents</a>
                             </div>
                         @endif
-                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2))
+                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
                             <div>
                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                             </div>

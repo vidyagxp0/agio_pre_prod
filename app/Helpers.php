@@ -156,7 +156,25 @@ class Helpers
             $datauser = explode(',', $document->approvers);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
-                    if($document->stage >= 3){
+                    if($document->stage >= 4){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+    
+    public static function checkRoles_check_hods($document)
+    {
+        if ($document->hods) {
+            $datauser = explode(',', $document->approvers);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == Auth::user()->id) {
+                    if($document->stage >= 2){
                         return true;
                     } else {
                         return false;

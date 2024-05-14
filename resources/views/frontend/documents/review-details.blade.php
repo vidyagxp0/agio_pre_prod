@@ -98,6 +98,82 @@
                             </div>
                         </div>
                     </div>
+
+                    @if (Helpers::checkRoles(4))
+                        <div class="col-8">
+                            <div class="inner-block tracker">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="main-title">
+                                        Record Workflow
+                                    </div>
+                                    <div class="buttons"> 
+                                        @if (empty($review_reject))
+                                            @if ($stagereview && empty($stagereview_submit))
+                                                @if($document->stage < 3)
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                                @endif
+                                            @endif
+                                        @elseif($document->stage == 2)
+                                            <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                            </button>
+                                        @endif
+
+                                        @if (empty($stagehod))
+                                            @if (empty($review_reject))
+                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                    Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                            @elseif($document->stage == 2)
+                                                <button data-bs-toggle="modal" data-bs-target="#review-sign">
+                                                    Review&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                            @endif
+                                        @endif
+                                    </div>
+
+                                </div>
+                                <div class="status">
+                                    <div class="head">Current Status</div>
+                                    <div class="progress-bars">
+                                        @if ($document->stage >= 2)
+                                            <div class="active">Draft</div>
+                                        @else
+                                            <div>Draft</div>
+                                        @endif
+                                        {{-- @if ($review_reject)
+                                            <div class="active">Rejected </div>
+                                        @endif --}}
+                                        @if ($stagehod)
+                                            @if ($stagehod->stage == 'HOD Review Complete' AND $document->stage >= 2)
+                                                <div class="active">Reviewed</div>
+                                            @else
+                                                <div>Reviewed</div>
+                                            @endif
+                                        @else
+                                            <div>Reviewed</div>
+                                        @endif
+
+                                        @if ($stagereview_submit)
+                                            @if ($stagereview_submit->stage == 'Review-Submit')
+                                                {{-- <div class="active">Submitted</div> --}}
+                                            @else
+                                                {{-- <div>Submitted</div> --}}
+                                            @endif
+                                        @else
+                                            {{-- <div>Submitted</div> --}}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) )
                         <div class="col-8">
                             <div class="inner-block tracker">
@@ -174,10 +250,6 @@
                                         @else
                                             {{-- <div>Submitted</div> --}}
                                         @endif
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +303,7 @@
                                 <div class="status">
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
-                                        @if ($document->stage >= 4)
+                                        @if ($document->stage >= 6)
                                             <div class="active">Draft</div>
                                         @else
                                             @if ($stageapprove)
