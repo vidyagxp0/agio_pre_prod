@@ -80,9 +80,9 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     //Route::post('set/division', [DocumentController::class, 'division'])->name('division_submit');
     Route::post('dcrDivision', [DocumentController::class, 'dcrDivision'])->name('dcrDivision_submit');
     Route::get('documents/generatePdf/{id}', [DocumentController::class, 'createPDF']);
-    
+
     Route::get('documents/reviseCreate/{id}', [DocumentController::class, 'revise_create']);
-    
+
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::resource('documentsContent', DocumentContentController::class);
@@ -173,7 +173,7 @@ Route::post('reject_Risk/{id}', [RiskManagementController::class, 'RejectStateCh
 
 Route::get('riskAuditTrial/{id}', [RiskManagementController::class, 'riskAuditTrial']);
 Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDetailsrisk'])->name('showriskAuditDetails');
-Route::post('child/{id}',[RiskManagementController::class,'child'])->name('riskAssesmentChild');
+Route::post('child/{id}', [RiskManagementController::class, 'child'])->name('riskAssesmentChild');
 
 
 
@@ -287,10 +287,14 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
+Route::view('employee_new', 'frontend.TMS.Employee.employee_new');
+Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification');
+
+
 //! ============================================
 //!                    RCMS
 //! ============================================
-Route::get('chart-data',[DesktopController::class, 'fetchChartData']);
+Route::get('chart-data', [DesktopController::class, 'fetchChartData']);
 
 Route::view('rcms_login', 'frontend.rcms.login');
 
@@ -307,6 +311,7 @@ Route::view('Quality-Dashboard-Report', 'frontend.rcms.Quality-Dashboard');
 Route::view('Supplier-Dashboard-Report', 'frontend.rcms.Supplier-Dashboard');
 
 Route::view('QMSDashboardFormat', 'frontend.rcms.QMSDashboardFormat');
+
 
 
 //! ============================================
@@ -399,6 +404,9 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::view('out_of_calibration', 'frontend.OOC.out_of_calibration');
 
 Route::view('oos_form', 'frontend.OOS.oos_form');
+Route::view('oos_micro', 'frontend.OOS_Micro.oos_micro');
+Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new');
+
 
 
 // ==========================================================
@@ -407,5 +415,4 @@ Route::view('oos_form', 'frontend.OOS.oos_form');
  * AJAX ROUTES
  */
 
- Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
-
+Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');

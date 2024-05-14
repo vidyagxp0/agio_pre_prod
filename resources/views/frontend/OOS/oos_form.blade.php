@@ -441,6 +441,8 @@
                                 </select>
                             </div>
                         </div>
+
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
@@ -452,6 +454,7 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
@@ -471,8 +474,9 @@
 
                                 <select name="if_others_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                    
                                 </select>
                             </div>
                         </div>
@@ -1693,11 +1697,11 @@
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
+
+
+
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -3923,7 +3927,12 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-
+    <script>
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'

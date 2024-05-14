@@ -18,7 +18,7 @@
         <strong>Site Division/Project</strong> :
         QMS-North America / CAPA
     </div>
-    <div class="button-bar">
+    {{-- <div class="button-bar">
         <button type="button">Save</button>
         <button type="button">Cancel</button>
         <button type="button">New</button>
@@ -26,7 +26,7 @@
         <button type="button">Child</button>
         <button type="button">Check Spelling</button>
         <button type="button">Change Project</button>
-    </div>
+    </div> --}}
 </div>
 
 
