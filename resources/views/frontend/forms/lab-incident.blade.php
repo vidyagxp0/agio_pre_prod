@@ -33,13 +33,16 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Immediate Actions</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extensions</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Extension</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Incident Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Investigation Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QA Head/Designee Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">System Suitability Failure Inicidence</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
+                
             </div>
 
             <form action="{{ route('labIncidentCreate') }}" method="post" enctype="multipart/form-data">
@@ -102,7 +105,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
+                                        <label for="Date Due"> Due Date</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
@@ -158,56 +161,35 @@
                              
                              {{-- Table --}}
                              <div class="col-12">
-                                <center>
-                                    <label style="font-weight: bold; for="Audit Attachments">Incident Investigation Report</label>
-                                </center>
                                 <div class="group-input">
-                                    <div class="why-why-chart">
-                                        <table class="table table-bordered">
-                                             <thead>
-                                                 <tr>
-                                                     <th style="width: 5%;">Sr.No.</th>
-                                                     <th style="width: 40%;">Name Of Product/Name Of Material</th>
-                                                     <th style="width: 20%;">B.No. /A.R. No.</th>
-                                                     <th>Remarks</th>
-                                                 </tr>
-                                             </thead>
-                                             <tbody>
-                                                 <tr>
-                                                <td class="flex text-center">1</td>
-                                                     <td>Were the equipment instrument used for analysis was in
-                                                         calibrated state?</td>
-                                                     <td>
-                                        
-                                                        <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                         
-                                                    </td>
-                                                    <td style="vertical-align: middle;">
-                                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                        </div>
-                                                    </td>
-                                                    
-                                                     
-                                        
-                                                 </tr>
-                                                 <tr>
-                                                                                    
-                                                 </tr>
-                                             </tbody>
-                                         </table>
-                                        </div>
+                                    <label for="Material Details">
+                                    Incident Investigation Report<button type="button" name="ann" id="">+</button>
+                                    </label>
+                                    <table class="table table-bordered" id="">
+                                        <thead>
+                                            <tr>
+                                                <th>Sr. No.</th>
+                                                <th>Name of Product</th>
+                                                <th>B No./A.R. No.</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input type="text" name="serial_number[]"></td>
+                                               </td>
+                                                  <td><input type="text" name="Name_of_the_product[]" >                                             
+                                                <td><input type="text" name="B_no_AR_no[]"
+                                                    />
+                                                </td>
+                                                 <td><input type="text" name="GI_remark[]" >
+                                                 </td>
+                                            </tr>
+                                         </tbody>
+                                    </table>
                                 </div>
                             </div>
-
-
+                            
                             {{-- Table --}}       
                                 {{-- New Added --}}
                                 <div class="col-lg-12">
@@ -247,9 +229,9 @@
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_test_others">
-                                        <label for="Incident_test_others">Interval (If Applicable)<span
+                                        <label for="Incident_test_others">Test<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_test_others">
+                                        <input type="text" name="test_gi">
                                     </div>
 
                                 </div>
@@ -382,7 +364,7 @@
                                         <textarea name="Incident_Category_others"></textarea>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6">
+                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select name="Invocation_Type">
@@ -454,35 +436,36 @@
                                 <label for="proposed corrective action ">Proposed Corrective Action/Corrective Action Taken</label>
                             <textarea name="proposed_correctivei_ia"></textarea>
                         </div>
-                    </div>
+                     </div>
+                
                     
-                    <div class="col-12">
+                     <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
                         <textarea name="repeat_analysis_plan"></textarea>
-                    </div>
-                </div>
+                      </div>
+                         </div>
 
 
-                {{-- selection field --}}
+                          {{-- selection field --}}
                 
-                <div class="col-md-4">
-                    <div class="group-input">
-                        <label for="search">
-                            Investigator(QC) <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to">
+                           <div class="col-md-6">
+                          <div class="group-input">
+                                <label for="search">
+                            Investigator (QC) <span class="text-danger"></span>
+                          </label>
+                          <select id="select-state" placeholder="Select..." name="investigation_to">
                             <option value="">Select a value</option>
                             @foreach ($users as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach
-                        </select>
-                        @error('assign_to')
+                         </select>
+                          @error('investigation_to')
                             <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-md-4">
+                          @enderror
+                                   </div>
+                  </div>
+                <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
                             QC Review <span class="text-danger"></span>
@@ -498,22 +481,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="group-input">
-                        <label for="search">
-                            QC Approved By <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('assign_to')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
+                
                 {{-- selection field --}}
                 <div class="col-12">
                     <div class="group-input">
@@ -562,10 +530,10 @@
     
                 {{-- selection field --}}
                 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
-                            Investigator(QC) <span class="text-danger"></span>
+                            Investigator (QC) <span class="text-danger"></span>
                         </label>
                         <select id="select-state" placeholder="Select..." name="investigator_qc_im">
                             <option value="">Select a value</option>
@@ -578,7 +546,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="group-input">
                         <label for="search">
                             QC Review <span class="text-danger"></span>
@@ -594,7 +562,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
                             QC Approved By <span class="text-danger"></span>
@@ -609,7 +577,7 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div>
+                </div> --}}
                 {{-- selection field --}}
                 
 
@@ -629,15 +597,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12 sub-head">
-                                    Cancelation
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
-                                        <textarea name="Cancelation_Remarks"></textarea>
-                                    </div>
-                                </div> --}}
+                                
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -647,9 +607,236 @@
                             </div>
                         </div>
                     </div>
+                    
 
-                    <!-- Incident Details content -->
-                    <div id="CCForm8" class="inner-block cctabcontent">
+                  
+                    {{-- extension --}}
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                       <div class="inner-block-content">
+                        <div class="row">
+                            <div class="group-input">
+                                <div class="col-12 sub-head">
+                                    First Extension
+                                </div>
+
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Incident Details">Reason For Extension</label>
+                                    <textarea name="reasoon_for_extension"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="group-input">
+                                <label for="extension date">Extension Date (if required)</label>
+                                <input type="date" name="extension_date" id="extension_date">
+                                </div>
+                            </div>
+                               
+                            <div class="col-6">
+                                <div class="group-input">
+                                <label for="extension date">Extension Initiator Date</label>
+                                <input type="date" name="extension_date" id="extension_date">
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="search">
+                                    Extension HOD <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                             </div>
+                            </div>
+                            {{-- <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="search">
+                                    Extension Approved By<span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div> --}}
+
+                            
+
+
+                          </div>
+                          <div class="row">
+                               <div class="group-input">
+                                     <div class="col-12 sub-head">
+                                   Second Extension
+                                   </div>
+                               </div>
+                             <div class="col-12">
+                                 <div class="group-input">
+                                <label for="reason for extension sc">Reason For Extension</label>
+                                <textarea name="reasoon_for_extension_sc"></textarea>
+                                </div>
+                             </div>
+
+                          
+                             <div class="col-6">
+                                <div class="group-input">
+                                 <label for="extension date">Extension Date (if required)</label>
+                                  <input type="date" name="extension_date__sc" id="extension_date__sc">
+                                </div>
+                             </div>
+                           
+                                <div class="col-6">
+                                    <div class="group-input">
+                                    <label for="extension date">Extension Initiator Date</label>
+                                    <input type="date" name="extension_date_idsc" id="extension_date_idsc">
+                                    </div>
+                                </div>
+
+
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="search">
+                                            Extension HOD <span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to">
+                                                <option value="0">Select a value</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                    </div>
+                                     </div>
+                                    {{-- <div class="col-md-6">
+                                        <div class="group-input">
+                                            <label for="search">
+                                            Extension Approved By<span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to">
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div> --}}
+                          </div>
+
+                          {{-- third section --}}
+
+                          <div class="row">
+                            <div class="group-input">
+                                  <div class="col-12 sub-head">
+                                Third Extension
+                                </div>
+                            </div>
+                          <div class="col-12">
+                              <div class="group-input">
+                             <label for="reason for extension tc">Reason For Extension</label>
+                             <textarea name="reasoon_for_extension_tc"></textarea>
+                             </div>
+                          </div>
+
+                       
+                          <div class="col-6">
+                             <div class="group-input">
+                              <label for="extension date">Extension Date (if required)</label>
+                               <input type="date" name="extension_date__tc" id="extension_date__tc">
+                             </div>
+                          </div>
+                        
+                             <div class="col-6">
+                                 <div class="group-input">
+                                 <label for="extension date">Extension Initiator Date</label>
+                                 <input type="date" name="extension_date_idtc" id="extension_date_idtc">
+                                 </div>
+                             </div>
+
+
+                                 <div class="col-md-6">
+                                     <div class="group-input">
+                                         <label for="search">
+                                        Extension Approved By QA <span class="text-danger"></span>
+                                         </label>
+                                         <select id="select-state" placeholder="Select..." name="assign_to">
+                                             <option value="0">Select a value</option>
+                                             @foreach ($users as $data)
+                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                             @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                             <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                 </div>
+                                  </div>
+                                 <div class="col-md-6">
+                                     <div class="group-input">
+                                         <label for="search">
+                                         Extension Approved By CQA<span class="text-danger"></span>
+                                         </label>
+                                         <select id="select-state" placeholder="Select..." name="assign_to">
+                                             <option value="">Select a value</option>
+                                             @foreach ($users as $data)
+                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                             @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                             <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                     </div>
+                                 </div>
+                       </div>
+                       <div class="col-12">
+                        <div class="group-input">
+                            <label for="Attachments">Extension Attachments</label>
+                            <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                            <div class="file-attachment-field">
+                                <div class="file-attachment-list" id="extension_attachments"></div>
+                                <div class="add-btn">
+                                    <div>Add</div>
+                                    <input type="file" id="myfile" name="extension_attachments[]"
+                                        oninput="addMultipleFiles(this, 'extension_attachments')" multiple>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                    </div>
+                    
+                
+
+                       </div>
+                    </div>
+                    
+                    
+                    
+                      <!-- Incident Details content -->
+                      <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
@@ -721,259 +908,6 @@
                             </div>
                         </div>
                     </div>
-
-                    {{-- extensions --}}
-                    <div id="CCForm3" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="group-input">
-                                    <div class="col-12 sub-head">
-                                        First Extension
-                                    </div>
-                                    
-                                    <div><label for="reason for extensions">Reason For Extension</label></div>
-                                    <textarea name="reason_for_extension" id="reason_for_extension"></textarea>
-                                    
-                               
-                               
-                                    {{-- extension date --}}
-                                <div class="row">
-                                    
-                                    <div class="col-6"><label for="extension date">Extension Date (if required)</label>
-                                        <input type="date" name="extension_date" id="extension_date">
-                                    </div>
-                                       
-                                    <div class="col-6"><label for="extension date">Extension Initiator Date</label>
-                                        <input type="date" name="extension_date" id="extension_date">
-                                    </div>
-
-                                    
-                                </div>
-                                       {{-- extension date --}}
-
-                                       {{-- person field --}}
-
-                                      <div class="row"> <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                            Extension HOD <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                            Extension Approved By<span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                      </div>
-    
-                                       {{-- person field --}}
-                                       
-                                       {{-- second extension --}}
-                                       <div class="row">
-                                        <div class="group-input">
-                                            <div class="col-12 sub-head">
-                                                Second Extension
-                                            </div>
-                                            
-                                            <div><label for="reason for extension_second">Reason For Extension</label></div>
-                                            <textarea name="reason_for_extension_second" id="reason_for_extension_second"></textarea>
-                                            
-                                       
-                                       
-                                            {{-- extension date --}}
-                                        <div class="row">
-                                            
-                                            <div class="col-6"><label for="extension date second">Extension Date (if required)</label>
-                                                <input type="date" name="extension_date_second" id="extension_date_second">
-                                            </div>
-                                               
-                                            <div class="col-6"><label for="extension date">Extension Initiator Date</label>
-                                                <input type="date" name="extension_date_initiator" id="extension_date_initiator">
-                                            </div>
-        
-                                            
-                                        </div>
-                                               {{-- extension date --}}
-        
-                                               {{-- person field --}}
-        
-                                              <div class="row"> <div class="col-md-6">
-                                                <div class="group-input">
-                                                    <label for="search">
-                                                    Extension HOD <span class="text-danger"></span>
-                                                    </label>
-                                                    <select id="select-state" placeholder="Select..." name="assign_to">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('assign_to')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-                                            </div>
-        
-        
-                                            <div class="col-md-6">
-                                                <div class="group-input">
-                                                    <label for="search">
-                                                    Extension Approved By<span class="text-danger"></span>
-                                                    </label>
-                                                    <select id="select-state" placeholder="Select..." name="assign_to">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                        @endforeach
-                                                    </select>
-                                                    @error('assign_to')
-                                                        <p class="text-danger">{{ $message }}</p>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                              </div>
-            
-                                               {{-- person field --}}
-                                               
-        
-                                       {{-- second extension --}}
-                                       {{-- third extension --}}
-                                                                             
-                                                                             <div class="row">
-                                                                                <div class="group-input">
-                                                                                    <div class="col-12 sub-head">
-                                                                                        Third Extension
-                                                                                    </div>
-                                                                                    
-                                                                                    <div><label for="reason for extension_third">Reason For Extension</label></div>
-                                                                                    <textarea name="reason_for_extension_third" id="reason_for_extension_third"></textarea>
-                                                                                    
-                                                                               
-                                                                               
-                                                                                    {{-- extension date --}}
-                                                                                <div class="row">
-                                                                                    
-                                                                                    <div class="col-6"><label for="extension date third">Extension Date (if required)</label>
-                                                                                        <input type="date" name="extension_date_third" id="extension_date_third">
-                                                                                    </div>
-                                                                                       
-                                                                                    <div class="col-6"><label for="extension date">Extension Initiator Date</label>
-                                                                                        <input type="date" name="extension_date_initiator" id="extension_date_initiator">
-                                                                                    </div>
-                                                
-                                                                                    
-                                                                                </div>
-                                                                                       {{-- extension date --}}
-                                                
-                                                                                       {{-- person field --}}
-                                                
-                                                                                      <div class="row"> <div class="col-md-6">
-                                                                                        <div class="group-input">
-                                                                                            <label for="search">
-                                                                                            Extension Approved By QA <span class="text-danger"></span>
-                                                                                            </label>
-                                                                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                                                                <option value="">Select a value</option>
-                                                                                                @foreach ($users as $data)
-                                                                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                            @error('assign_to')
-                                                                                                <p class="text-danger">{{ $message }}</p>
-                                                                                            @enderror
-                                                                                        </div>
-                                                                                    </div>
-                                                
-                                                
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="group-input">
-                                                                                            <label for="search">
-                                                                                            Extension Approved By CQA<span class="text-danger"></span>
-                                                                                            </label>
-                                                                                            <select id="select-state" placeholder="Select..." name="assign_to">
-                                                                                                <option value="">Select a value</option>
-                                                                                                @foreach ($users as $data)
-                                                                                                    <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                                                                @endforeach
-                                                                                            </select>
-                                                                                            @error('assign_to')
-                                                                                                <p class="text-danger">{{ $message }}</p>
-                                                                                            @enderror
-                                                                                        </div>
-                                                                                    </div>
-                                                                                      </div>
-                                                    
-                                                                                       {{-- person field --}}
-                                                                                       
-                                                
-                                                                               
-                                       {{-- third extension --}}
-
-                                       <div class="col-12">
-                                    
-                                
-                               
-
-                                
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Attachments">Extension Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Attachments"> --}}
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="extension_attachments"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="extension_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'extension_attachments')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12 sub-head">
-                                    Cancelation
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Cancelation Remarks">Cancelation Remarks</label>
-                                        <textarea name="Cancelation_Remarks"></textarea>
-                                    </div>
-                                </div> --}}
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- extensions --}}
-                    
-                    
                     <!-- Investigation Details content -->
                     <div id="CCForm9" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1028,7 +962,9 @@
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
+                   
                     </div>
+                    
 
                     <!-- CAPA content -->
                     <div id="CCForm4" class="inner-block cctabcontent">
@@ -1192,6 +1128,354 @@
                         </div>
                     </div>
 
+                  <!-- Closure -->
+                  
+                  <div id="CCForm10" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                            <div class="row">
+                                                         {{-- Table --}}
+                                                         <div class="col-12">
+                                                            <div class="group-input">
+                                                                <label for="Material Details">
+                                                                    System Suitability Failure Incidence<button type="button" name="ann" id="">+</button>
+                                                                </label>
+                                                                <table class="table table-bordered" id="">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>Sr. No.</th>
+                                                                            <th>Name of Product</th>
+                                                                            <th>B No./A.R. No.</th>
+                                                                            <th>Remarks</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr>
+                                                                            <td><input type="text" name="serial_number[]"></td>
+                                                                           </td>
+                                                                              <td><input type="text" name="Name_of_the_product[]" >                                             
+                                                                            <td><input type="text" name="B_no_AR_no[]"
+                                                                                />
+                                                                            </td>
+                                                                             <td><input type="text" name="GI_remark[]" >
+                                                                             </td>
+                                                                        </tr>
+                                                                     </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        
+                        {{-- Table --}} 
+
+
+                                                        {{-- New Added --}}
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="Incident_invlvolved_others">
+                                                                <label for="Incident_Involved">Instrument Involved<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="involved_ssfi"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+                        
+                                                        
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input" id="Incident_stage">
+                                                                <label for="Incident_stage">Stage<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="stage_stage_ssfi">
+                                                            </div>
+                        
+                                                        </div><br>
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input" id="Incident_stability_cond">
+                                                                <label for="Incident_stability_cond">Stability Condition (If Applicable)<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="Incident_stability_cond_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input" id="Incident_interval_others">
+                                                                <label for="Incident_interval_others">Interval (If Applicable)<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="Incident_interval_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                                                        
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input" id="Incident_test_others">
+                                                                <label for="Incident_test_others">Test<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="test_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                        
+                                                         
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input" id="Incident_date_analysis">
+                                                                <label for="Incident_date_analysis">Date Of Analysis<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="date" name="Incident_date_analysis_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input" id="Incident_specification_no">
+                                                                <label for="Incident_specification_no">Specification Number<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="Incident_specification_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="group-input" id="Incident_stp_no">
+                                                                <label for="Incident_stp_no">STP Number<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="text" name="Incident_stp_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input">
+                                                                <label for="search">
+                                                                    Name Of Analyst <span class="text-danger"></span>
+                                                                </label>
+                                                                <select id="select-state" placeholder="Select..." name="assign_to">
+                                                                    <option value="">Select a value</option>
+                                                                    @foreach ($users as $data)
+                                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('assign_to')
+                                                                    <p class="text-danger">{{ $message }}</p>
+                                                                @enderror
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input" id="Incident_date_incidence">
+                                                                <label for="Incident_date_incidence">Date Of Incidence<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <input type="date" name="Incident_date_incidence_ssfi">
+                                                            </div>
+                        
+                                                        </div>
+
+                                                        <div class="col-lg-4">
+                                                            <div class="group-input">
+                                                                <label for="search">
+                                                                    QC Reviewer <span class="text-danger"></span>
+                                                                </label>
+                                                                <select id="select-state" placeholder="Select..." name="assign_to">
+                                                                    <option value="">Select a value</option>
+                                                                    @foreach ($users as $data)
+                                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                                @error('assign_to')
+                                                                    <p class="text-danger">{{ $message }}</p>
+                                                                @enderror
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="Description_incidence">
+                                                                <label for="Description_incidence"> Description Of Incidence<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="Description_incidence_ssfi"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="Detail_investigation">
+                                                                <label for="Detail_investigation"> Detail Investigation<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="Detail_investigation_ssfi"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="proposed corrective">
+                                                                <label for="Detail_investigation"> Proposed Corrective Action<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="proposed_corrective_ssfi"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="root cause">
+                                                                <label for="root_cause"> Root Cause<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="root_cause"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+
+                                                        <div class="col-lg-12">
+                                                            <div class="group-input" id="incident summary ssfi">
+                                                                <label for="incident summary ssfi"> Incident Summary<span
+                                                                        class="text-danger d-none">*</span></label>
+                                                                <textarea name="incident_summary_ssfi"></textarea>
+                                                            </div>
+                        
+                                                        </div>
+
+                                                        <div class="col-md-6">
+                                                            <div class="group-input">
+                                                                  <label for="search">
+                                                              Investigator(QC) <span class="text-danger"></span>
+                                                            </label>
+                                                            <select id="select-state" placeholder="Select..." name="assign_to">
+                                                              <option value="">Select a value</option>
+                                                              @foreach ($users as $data)
+                                                                  <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                              @endforeach
+                                                           </select>
+                                                            @error('assign_to')
+                                                              <p class="text-danger">{{ $message }}</p>
+                                                            @enderror
+                                                                     </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="group-input">
+                                                              <label for="search">
+                                                          Reviewed By(QC) <span class="text-danger"></span>
+                                                        </label>
+                                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                                          <option value="">Select a value</option>
+                                                          @foreach ($users as $data)
+                                                              <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                          @endforeach
+                                                       </select>
+                                                        @error('assign_to')
+                                                          <p class="text-danger">{{ $message }}</p>
+                                                        @enderror
+                                                                 </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="group-input">
+                                                        <label for="system_suitable_attachments">File Attachment</label>
+                                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                                        <div class="file-attachment-field">
+                                                            <div class="file-attachment-list" id="incident_initial_Attachment"></div>
+                                                            <div class="add-btn">
+                                                                <div>Add</div>
+                                                                <input type="file" id="myfile" name="system_suitable_attachments[]"
+                                                                    oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="button-block">
+                                                    <button type="submit" class="saveButton">Save</button>
+                                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                                </div>
+
+     
+                                                        
+                                                        
+                                                        {{-- New Added --}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Closure Tab -->
+                <div id="CCForm11" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="closure_incident">Closure Of Incident</label>
+                                        <input type="text" name="closure_incident_c">
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="affected documents closed"><b>Affected Documents Closed</b></label>
+                                        <select name="Initiator_Group" id="initiator_group" name="affected_documents_closed">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="NA">NA</option>
+                                          
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="head remark"><b>QC Head Remark</b></label>
+                                       <textarea name="qc_hear_remark_c"></textarea>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                          <label for="search">
+                                      QC Head <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to">
+                                      <option value="">Select a value</option>
+                                      @foreach ($users as $data)
+                                          <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                      @endforeach
+                                   </select>
+                                    @error('assign_to')
+                                      <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                             </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for=" qa head remark"><b>QA Head Remark</b></label>
+                                   <textarea name="qa_hear_remark_c"></textarea>
+                                </div>
+                            </div>
+
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="closure_attachments">File Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="closure_attachment_c"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="closure_attachment_c[]"
+                                                oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+
+                                
+                            </div>
+                        </div>
+                </div>
                     <!-- Activity Log content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1302,6 +1586,7 @@
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </form>
