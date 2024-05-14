@@ -1110,7 +1110,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Team Members
-                                            <button type="button" onclick="add4Input('team_members')">+</button>
+                                            <button type="button" id="team_members">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1118,7 +1118,8 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="team_members" style="width: %;">
+                                            <table class="table table-bordered" id="team_members_details"
+                                                style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -1147,12 +1148,37 @@
                                     </div>
                                 </div>
 
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#team_members').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="Names[]"></td>' +
+                                                    '<td><input type="text" name="Department[]"></td>' +
+                                                    '<td><input type="text" name="Sign[]"></td>' +
+                                                    '<td><input type="date" name="Date[]"></td>' +
+                                                    '</tr>';
+
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#team_members_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Approval
-                                            <button type="button" onclick="add4Input('report_approval')">+</button>
+                                            <button type="button" id="report_approval">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -1160,7 +1186,8 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="report_approval" style="width: %;">
+                                            <table class="table table-bordered" id="report_approval_details"
+                                                style="width: %;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -1188,6 +1215,31 @@
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#report_approval').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="Names[]"></td>' +
+                                                    '<td><input type="text" name="Department[]"></td>' +
+                                                    '<td><input type="text" name="Sign[]"></td>' +
+                                                    '<td><input type="date" name="Date[]"></td>' +
+                                                    '</tr>';
+
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#report_approval_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
 
