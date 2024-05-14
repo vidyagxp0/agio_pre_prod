@@ -313,6 +313,7 @@ Route::view('Supplier-Dashboard-Report', 'frontend.rcms.Supplier-Dashboard');
 Route::view('QMSDashboardFormat', 'frontend.rcms.QMSDashboardFormat');
 
 
+
 //! ============================================
 //!                    FORMS
 //! ============================================
@@ -404,6 +405,8 @@ Route::view('out_of_calibration', 'frontend.OOC.out_of_calibration');
 
 Route::view('oos_form', 'frontend.OOS.oos_form');
 Route::view('oos_micro', 'frontend.OOS_Micro.oos_micro');
+Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new');
+
 
 
 // ==========================================================
