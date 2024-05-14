@@ -104,7 +104,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Gender">Gender"</label>
+                                <label for="Gender">Gender</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
                                     <option>Female</option>
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Department">Department"</label>
+                                <label for="Department">Department</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Job Title">Job Title"</label>
+                                <label for="Job Title">Job Title</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
@@ -293,7 +293,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Building.">Building.</label>
+                                <label for="Building.">Building</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
                                     <option>A</option>
@@ -305,7 +305,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Floor...">Floor...</label>
+                                <label for="Floor...">Floor</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
                                     <option></option>

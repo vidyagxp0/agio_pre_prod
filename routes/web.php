@@ -287,8 +287,8 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
-Route::view('employee_new', 'frontend.TMS.Employee.employee_new');
-Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification');
+Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
 
 //! ============================================
