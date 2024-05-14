@@ -437,14 +437,14 @@
 
                                 <select name="if_others_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                    
+                                    <option></option>
+                                    <option></option>
                                 </select>
                             </div>
                         </div>
-                                
-
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group Code">Is Repeat?</label>
 
                                 <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
                             </div>
@@ -1661,9 +1661,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -3776,12 +3773,7 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-    </script>
+
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'
