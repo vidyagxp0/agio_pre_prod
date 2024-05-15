@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -205,12 +205,12 @@
                         <td class="w-30">@if($data->Initiator_Group){{$data->Initiator_Group}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        
+
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
@@ -223,20 +223,20 @@
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
-                    </tr>                     
+                    </tr>
                         <tr>
                          <th class="w-20">Quarter</th>
                          <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
                          <th class="w-20">Year</th>
                          <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
-                         </tr>                    
+                         </tr>
                         <tr>
                           <th class="w-20">URl's description</th>
                           <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
                           <th class="w-20">Severity Level</th>
                           <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
-                        </tr>   
-                        <tr>  
+                        </tr>
+                        <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                             <th class="w-20">Others</th>
@@ -248,7 +248,7 @@
                             <th class="w-20">Initiated Through</th>
                             <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                         </tr>
-                                            
+
                      </table>
                      <div class="border-table">
                     <div class="block-head">
@@ -280,8 +280,8 @@
                 </div>
             </div>
         </div>
-              
-             
+
+
      <!-- ------------------------------- audit program grid--------------------------------------- -->
             <!-- <div class="block">
                 <div class="block-head">
@@ -305,8 +305,8 @@
                             <td class="w-15">{{unserialize($data->Audit_Program->start_date)[$key] ?  unserialize($data->Audit_Program->start_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-5">{{unserialize($data->Audit_Program->end_date)[$key] ?  unserialize($data->Audit_Program->end_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Audit_Program->lead_investigator)[$key] ?  unserialize($data->Audit_Program->lead_investigator)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->comment)[$key] ?  unserialize($data->Audit_Program->comment)[$key] : "Not Applicable" }}</td>  
-                            
+                            <td class="w-15">{{unserialize($data->Audit_Program->comment)[$key] ?  unserialize($data->Audit_Program->comment)[$key] : "Not Applicable" }}</td>
+
                         </tr>
                         @endforeach
                         @else
@@ -339,7 +339,7 @@
                             Submitted On</th>
                         <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Audit Completed By</th>
                         <td class="w-30">{{ $data->Audit_Completed_By }}</td>

@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -205,44 +205,44 @@
                         <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
-                    
+
                     <tr>
                        <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
                      <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
-                       
+
 
                     </tr>
                     <tr>
                             <th class="w-20">Action Item Related Records</th>
                             <td class="w-80">@if($data->Reference_Recores1){{ Helpers::getDivisionName($data->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
-                          
+
                    </tr>
                    <tr>
                         <th class="w-20">HOD Persons</th>
                         <td class="w-80">@if($data->hod_preson)  @foreach(explode(',',$data->hod_preson) as $hod) {{  Helpers::getInitiatorName($hod)  }} ,  @endforeach @else Not Applicable @endif</td>
                     </tr>
-                  
+
                    <tr>
                         <th class="w-20">Description</th>
                         <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
 
                     </tr>
-                   
+
                     <tr>
                         <th class="w-20">Responsible Department</th>
                         <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
 
                     </tr>
 
-                    
-    
+
+
                        <div class="block-head">
                        File Attachments
                     </div>
@@ -279,12 +279,12 @@
                             <th class="w-20">CAPA Related Records</th>
                             <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
                         </tr>
-                    
+
 
                         </table>
                       </div>
                     </table>
-                   
+
                 </div>
             </div> -->
 
@@ -295,7 +295,7 @@
                      <tr>
                         <th class="w-20">Action Taken</th>
                         <td class="w-80">@if($data->action_taken){{ $data->action_taken }}@else Not Applicable @endif</td>
-                       
+
                      </tr>
                    <tr>
                         <th class="w-20">Action Start Date</th>
@@ -306,7 +306,7 @@
                    <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
-                       
+
                    </tr>
                    </table>
                      <div class="block-head">
@@ -316,13 +316,13 @@
                    <tr>
                         <th class="w-20">QA Review Comments</th>
                         <td class="w-80">@if($data->qa_comments){{ $data->qa_comments }}@else Not Applicable @endif</td>
-                       
+
                    </tr>
-               
+
                    </table>
-            
-                    
-                    
+
+
+
                   <div class="block-head">
                     Extension Justification
                   </div>
@@ -330,12 +330,12 @@
                      <tr>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
-                       
+
                       </tr>
-                   
+
                    </table>
-                
-                    
+
+
 
 
             <div class="block">
@@ -375,7 +375,7 @@
                         Completed On</th>
                         <td class="w-30">{{ $data->completed_on }}</td>
                     </tr>
-                   
+
                 </table>
             </div>
         </div>
