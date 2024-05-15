@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+    @endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -86,24 +89,21 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Info_Product_Material').click(function(e) {
+            $('#Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>' +
+                    '<tr>'+
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
-                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
-                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
-                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
-                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
-                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
-                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
-                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
-                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
-                    '</tr>';
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
+                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
+                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
+                    '</tr>' +;
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -111,7 +111,7 @@
                     return html;
                 }
 
-                var tableBody = $('#Info_Product_Material_details tbody');
+                var tableBody = $('#Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -340,7 +340,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
-          <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
                 @if (!empty($parent_id))
@@ -361,6 +361,8 @@
                                 <input type="number">
                             </div>
                         </div>
+
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -408,8 +410,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
@@ -421,7 +421,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
@@ -441,9 +440,8 @@
 
                                 <select name="if_others_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                    
+                                    <option></option>
+                                    <option></option>
                                 </select>
                             </div>
                         </div>
@@ -588,7 +586,7 @@
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
 
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -597,7 +595,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -619,7 +617,7 @@
                                         <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
                                         <td><input type="date" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="date" name="info_expiry_date[]" value=""></td>
+                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
                                         <td><input type="text" name="info_label_claim[]" value=""></td>
                                         <td><input type="text" name="info_pack_size[]" value=""></td>
                                         <td><input type="text" name="info_analyst_name[]" value=""></td>
@@ -672,8 +670,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability">
-                                        <input type="text" name="stability_study_arnumber[]"></td>
+                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
@@ -1667,9 +1664,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -3782,12 +3776,7 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-    </script>
+
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'

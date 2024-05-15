@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Oosgrids extends Model
 {
     use HasFactory;
+    protected $table = 'oos_grids';
     protected $fillable = [
         'info_product_code',
         'info_batch_no',

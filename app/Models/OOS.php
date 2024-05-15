@@ -156,6 +156,11 @@ class OOS extends Model
           'required_attachment_uar',
           'verification_comments_uav',
           'verification_attachment_uar',
+          'status',
+          'stage',
+          'type',
+          'date_open',
+          'date_close'
       ];
 
     protected $casts = [
