@@ -22579,7 +22579,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="number"
                                                             placeholder="Year"
-                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                         </div>
                                                         </td>
                                                         {{--    <td>
@@ -22604,7 +22604,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="number"
                                                             placeholder="Enter  value here"
-                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                         </div>
                                                         </td>
                                                         {{--    <td>
@@ -22624,7 +22624,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22651,7 +22651,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22680,7 +22680,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22730,7 +22730,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                     placeholder="Enter  value here"
-                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
                                                                     
                                                                   
@@ -22767,7 +22767,7 @@
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                     placeholder="Enter  value here"
-                                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                     
                                                                    
@@ -22805,7 +22805,7 @@
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                     placeholder="Enter  value here"
-                                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                 </div>
                                                                 
@@ -22835,7 +22835,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Permanent</option>
                                                                     <option value="No">Temporary</option>
@@ -22860,7 +22860,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22887,7 +22887,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Urban</option>
                                                                     <option value="No">Rural</option>
@@ -22940,8 +22940,8 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"placeholder="Enter  value here"
-                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <input type="text"
+                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
                                                             
@@ -22966,8 +22966,8 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"placeholder="Enter  value here"
-                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <input type="text"
+                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
                                                             
@@ -22992,8 +22992,8 @@
                                                         <td>
                                                             <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"placeholder="Enter  value here"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
                                                             
@@ -23020,7 +23020,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -23047,7 +23047,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -23074,7 +23074,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
