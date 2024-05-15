@@ -396,8 +396,8 @@ class OOSController extends Controller
     }
     public static function show($id)
     {
-        $id = OOS::find($id);
-        return view('frontend.OOS.oos_form_view', compact('id'));
+        $data = OOS::find($id);
+        return view('frontend.OOS.oos_form_view', compact('data'));
 
     }
     public function update(Request $request, $id)
