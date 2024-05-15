@@ -485,7 +485,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"> Short Description</label>
-                                <textarea name="description_gi" value="" required></textarea>
+                                <textarea  name="description_gi" value="" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">

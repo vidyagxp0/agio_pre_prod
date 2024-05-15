@@ -1003,8 +1003,8 @@
                 </div>
             </div>
 
-           <!-- Preliminary Lab. Investigation -->
-           <div id="CCForm2" class="inner-block cctabcontent">
+            <!-- Preliminary Lab. Investigation -->
+            <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab. Investigation </div>
                     <div class="row">
@@ -1016,8 +1016,8 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                         <textarea class="summernote" name="Comments_plidata[]" id="summernote-1">{{ $data->Comments_plidatants }}</textarea>
-                                        </textarea>
+                                        <textarea class="summernote" name="Comments_plidata[]" id="summernote-1">
+                                    </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1026,9 +1026,9 @@
                             <div class="group-input">
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
                                 <select name="field_alert_required">
-                                    <option value="0" {{ $data->field_alert_required == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->field_alert_required == 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="no" {{ $data->field_alert_required == 'no' ? 'selected' : '' }}>No</option>
+                                    <option name="0">Enter Your Selection Here</option>
+                                    <option name="yes">Yes</option>
+                                    <option name="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1037,9 +1037,9 @@
                                 <label for="Reference Recores">Field Alert Ref.No.
                                 </label>
                                 <select multiple id="reference_record" name="field_alert_ref_no_pli" id="">
-                                 <option value="0" {{ $data->field_alert_ref_no_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="1" {{ $data->field_alert_ref_no_pli == 'yes' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->field_alert_ref_no_pli == 'no' ? 'selected' : '' }}>2</option>
+                                    <option value="0">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -1047,9 +1047,9 @@
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
-                            
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
-                              {{ $data && $data->justify_if_no_field_alert_pli ? '' : '' }} </textarea>
+                                    </textarea>
                             </div>
                         </div>
                         <!-- <div class="col-lg-6">
@@ -1071,7 +1071,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Group Name"> Group Name </label>
-                                                <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial- value-set="true" id="group_name">
+                                                <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
                                                     <option value="Piyush">Piyush Sahu</option>
                                                     <option value="Piyush">Piyush Sahu</option>
                                                     <option value="Piyush">Piyush Sahu</option>
@@ -1088,10 +1088,9 @@
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
                                 <select name="verification_analysis_required_pli">
-                                  <option value="0" {{ $data->verification_analysis_required_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->verification_analysis_required_pli == 'yes' ? 'selected' : '' }}>yes</option>
-                                    <option value="no" {{ $data->verification_analysis_required_pli == 'no' ? 'selected' : '' }}>no</option>
-                              
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1099,10 +1098,9 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
                                 <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                                    <option value="0" {{ $data->verification_analysis_ref_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="1" {{ $data->verification_analysis_ref_pli == '1' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->verification_analysis_ref_pli == '2' ? 'selected' : '' }}>2</option>
-                              
+                                    <option value="0">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -1111,10 +1109,9 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
                                 <select name="analyst_interview_req_pli">
-                                    <option value="0" {{ $data->analyst_interview_req_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->analyst_interview_req_pli == 'yes' ? 'selected' : '' }}>yes</option>
-                                    <option value="no" {{ $data->analyst_interview_req_pli == 'no' ? 'selected' : '' }}>no</option>
-                              
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option name="yes">Yes</option>
+                                    <option name="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1122,10 +1119,9 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
                                 <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
-                                   <option value="0" {{ $data->analyst_interview_ref_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="1" {{ $data->analyst_interview_ref_pli == '1' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->analyst_interview_ref_pli == '2' ? 'selected' : '' }}>2</option>
-                              
+                                    <option value="0">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -1137,7 +1133,7 @@
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
-                                  {{$data && $data->justify_if_no_analyst_int_pli ? '': ''}}  </textarea>
+                                    </textarea>
 
                             </div>
                         </div>
@@ -1145,10 +1141,9 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
                                 <select name="phase_i_investigation_required_pli">
-                                  <option value="0" {{ $data->phase_i_investigation_required_pli == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->phase_i_investigation_required_pli == 'yes' ? 'selected' : '' }}>yes</option>
-                                    <option value="no" {{ $data->phase_i_investigation_required_pli == 'no' ? 'selected' : '' }}>no</option>
-                              
+                                     <option value="0">Enter Your Selection Here</option>
+                                    <option name="yes">Yes</option>
+                                    <option name="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1156,23 +1151,23 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
                                 <select name="phase_i_investigation_pli">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="phase_i_micro" {{ $data->phase_i_investigation_pli == 'phase_i_micro' ? 'selected' : '' }}>Phase I Micro</option>
-                                    <option value="phase_i_chemical" {{ $data->phase_i_investigation_pli == 'phase_i_chemical' ? 'selected' : '' }}>Phase I Chemical</option>
-                                    <option value="hypothesis" {{ $data->phase_i_investigation_pli == 'hypothesis' ? 'selected' : '' }}>Hypothesis</option>
-                                    <option value="resampling" {{ $data->phase_i_investigation_pli == 'resampling' ? 'selected' : '' }}>Resampling</option>
-                                    <option value="others" {{ $data->phase_i_investigation_pli == 'others' ? 'selected' : '' }}>Others</option>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Phase I Micro</option>
+                                    <option>Phase I Chemical</option>
+                                    <option>Hypothesis</option>
+                                    <option>Resampling</option>
+                                    <option>Others</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli">
-                                        <option value="0" {{ $data->phase_i_investigation_ref_pli == 0 ? 'selected' : '' }}>--Select---</option>
-                                        <option value="1" {{ $data->phase_i_investigation_ref_pli == 1 ? 'selected' : '' }}>1</option>
-                                        <option value="2" {{ $data->phase_i_investigation_ref_pli == 2 ? 'selected' : '' }}>2</option>
-                               </select>
+                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli" id="">
+                                    <option value="0">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -1183,23 +1178,6 @@
                                 </small>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="file_attach"></div>
-                                    @if ($data->file_attachments_pli)
-                                                            @foreach (json_decode($data->file_attachments_pli) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        {{-- @endif --}}
-                                                        @endif
-                                    
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attachments_pli[]"
@@ -1841,7 +1819,7 @@
                                 <label for="Description Deviation">Summary of Prelim.Investiga.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
-                                    {{ $data && $data->summary_of_prelim_investiga_plic ? '': ''}}</textarea>
+                                    </textarea>
                             </div>
                         </div>
 
@@ -1850,50 +1828,46 @@
                                 <label for="Lead Auditor">Root Cause Identified</label>
                                 <!-- <div class="text-primary">Please Choose the relevent units</div> -->
                                 <select name="root_cause_identified_plic">
-                                     <option value="0" {{ $data->root_cause_identified_plic == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' : '' }}>yes</option>
-                                    <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' : '' }}>no</option>
-                              
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                               <select name="oos_category_root_cause_ident_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="analyst_error" {{ $data->oos_category_root_cause_ident_plic == 'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
-                                    <option value="instrument_error" {{ $data->oos_category_root_cause_ident_plic == 'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
-                                    <option value="product_material_error" {{ $data->oos_category_root_cause_ident_plic == 'product_material_error' ? 'selected' : '' }}>Product/Material Related Error</option>
-                                    <option value="other_error" {{ $data->oos_category_root_cause_ident_plic == 'other_error' ? 'selected' : '' }}>Other Error</option>
+                                <select name="oos_category_root_cause_ident_plic">
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Analyst Error</option>
+                                    <option>Instrument Error</option>
+                                    <option>Product/Material Related Error</option>
+                                    <option>Other Error</option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> 
-                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1" value="{{$data->oos_category_others_plic}}">
-                                   {{ $data && $data->oos_category_others_plic ? $data->oos_category_others_plic : '' }}
-                 
-                                   </textarea>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
+                                    </textarea>
                             </div>
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
-                                   {{ $data->root_cause_details_plic }}
-                                </textarea>
-                               </div>
+                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
+                                    </textarea>
+                            </div>
                         </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
-                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> 
-                                <textarea class="summernote" name="Description_Deviation" id="summernote-1" value="">
-                               
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1902,9 +1876,9 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Recommended Actions Required?</label>
                                 <select name="recommended_actions_required_plic">
-                                    <option value="0" {{ $data->recommended_actions_required_plic == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data->recommended_actions_required_plic == 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="no" {{ $data->recommended_actions_required_plic == 'no' ? 'selected' : '' }}>No</option>
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1912,27 +1886,27 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
-                            <select multiple id="reference_record" name="recommended_actions_reference_plic[]">
-                                <option value="0" {{ $data->recommended_actions_reference_plic == '0' ? 'selected' : '' }}>--Select---</option>
-                                <option value="1" {{ $data->recommended_actions_reference_plic == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ $data->recommended_actions_reference_plic == '2' ? 'selected' : '' }}>2</option>
-                            </select>
+                                <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
+                                    <option value="1">--Select---</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
-                               <select name="capa_required_plic">
-                                    <option value="0" {{ $data->capa_required_plic == '0' ? 'selected' : '' }}>--Select---</option>
-                                    <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="no" {{ $data->capa_required_plic == 'no' ? 'selected' : '' }}>No</option>
+                                <select name="capa_required_plic">
+                                <option value="0">--Select---</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="text"  value="{{$data->reference_capa_no_plic}}" name="reference_capa_no_plic">
+                                <input type="text" name="reference_capa_no_plic">
                             </div>
                         </div>
 
@@ -1940,10 +1914,8 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1" value="">
-                                     {{ $data->delay_justification_for_pi_plic ? '' : ''  }}
-
-                                </textarea>
+                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
+                                    </textarea>
                             </div>
                         </div>
 
@@ -1954,35 +1926,13 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach">
-                                    
-                                    @if ($data->supporting_attachment_plic)
-                                        @foreach (json_decode($data->supporting_attachment_plic) as $file) 
-                                            <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i
-                                                    class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                        </h6> 
-                                        @endforeach 
-                                    @endif
-                                    
-                                    </div>
+                                    <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachment_plic[]"
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
-
-
-
                             </div>
                         </div>
 
@@ -2007,11 +1957,8 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="review_comments_plir" id="summernote-1" value="{{$data->review_comments_plir ? '' :''}}">
-                                  
-                           {{  $data->review_comments_plir ?'' : '' }}
-           
-                                </textarea>
+                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
+                                    </textarea>
                             </div>
                         </div>
 
@@ -2040,99 +1987,26 @@
                                             <th style="width: 16%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
-
                                             <th style="width: 16%">Reference CAPA Number</th>
-
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><select name="CAPARequirement[]">
-                                                <option>Yes</option>
-                                                <option>No</option>
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="Info OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>
+                                        <td><input type="date" name="info_oos_reported_date[]" value=""></td>
+                                        <td><input type="text" name="info_oos_description[]" value=""></td>
+                                        <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
+                                        <td><input type="text" name="info_oos_capa[]" value=""></td>
+                                        <td><input type="date" name="info_oos_closure_date[]" value=""></td>
+                                        <td><select name="info_oos_capa_requirement[]">
+                                                <option value="yes">Yes</option>
+                                                <option value="No">No</option>
                                             </select></td>
-                                        <td><input type="text" name="Name[]"></td> --}}
-
-
+                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td> 
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
-
-
-
-                       <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Start Date">Phase II Inv. Required?</label>
-                                <select name="phase_ii_inv_required_plir">
-                                    <option value="0" {{ $data && $data->phase_ii_inv_required_plir == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                    <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ? 'selected' : '' }}>Yes</option>
-                                    <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ? 'selected' : '' }}>No</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments"> Supporting Attachments</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach">
-                                    
-                                    
-                                       @if ($data->supporting_attachments_plir)
-                                            @foreach (json_decode($data->supporting_attachments_plir) as $file) 
-                                            <h6 type="button" class="file-container text-dark"
-                                            style="background-color: rgb(243, 242, 240);">
-                                            <b>{{ $file }}</b>
-                                            <a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><i
-                                                    class="fa fa-eye text-primary"
-                                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                                            <a type="button" class="remove-file"
-                                                data-file-name="{{ $file }}"><i
-                                                    class="fa-solid fa-circle-xmark"
-                                                    style="color:red; font-size:20px;"></i></a>
-                                              </h6> 
-                                              @endforeach 
-                                        @endif
-                                    
-                                    </div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
@@ -3517,8 +3391,8 @@
             </div>
 
         </div>
-        <!-- Re-Open -->
-        <div id="CCForm12" class="inner-block cctabcontent">
+                <!-- Re-Open -->
+                <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Reopen Request
@@ -3529,7 +3403,7 @@
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_specify_ro[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
 
@@ -3547,8 +3421,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3568,14 +3444,16 @@
                     Addendum Approval Comment
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Reopen Approval Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="reopen_approval_comments_uaa[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Addendum Attachment</label>
@@ -3592,6 +3470,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3746,12 +3626,13 @@
                     Under Addendum Review
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Addendum Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="addendum_review_comments_uar[]" id="summernote-1">
-                            </textarea>
+                    </textarea>
                         </div>
                     </div>
 
@@ -3769,8 +3650,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3819,6 +3702,8 @@
 
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
