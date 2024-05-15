@@ -8,7 +8,6 @@
         textarea.note-codable {
             display: none !important;
         }
-
         header {
             display: none;
         }
