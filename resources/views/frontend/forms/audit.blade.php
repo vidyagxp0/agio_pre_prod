@@ -21661,9 +21661,67 @@
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
                                                         <td>Are stability study carried out for the product at <br/>
-                                                             a - 25°C / 60% RH <br/>
                                                              
-                                                             b - 30°C / 70% RH<br/>
+                                                            </td>
+                                                        <td>
+                                                           
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.13.1</td>
+                                                        <td>
+                                                             a - 25°C / 60% RH 
+                                                            
+                                                            </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.13.2</td>
+                                                        <td> 
+                                                             b - 30°C / 70% RH
+                                                                                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.13.3</td>
+                                                        <td>
                                                              
                                                              C - 40°C / 75% RH
                                                             </td>
@@ -22352,9 +22410,78 @@
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
-                                                        Are these stability chambers available to carryout stability of the product at - <br/>
+                                                        Are these stability chambers available to carryout stability of the product at - 
+
+
+                                                        </td>
+                                                        <td>
+                                                           
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                           
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td class="flex text-center">1.15.1</td>
+                                                        <td>
+                                                        
                                                         a -	25°C / 60% Rh<br/>
+                                                        
+
+
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr> <tr>
+                                                        <td class="flex text-center">1.15.2</td>
+                                                        <td>
+                                                        
                                                         b -	30°C / 65% Rh<br/>
+                                                        
+
+
+                                                        </td>
+                                                        <td>
+                                                            <div
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <select name="response" id="response"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="No">No</option>
+                                                                    <option value="N/A">N/A</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td style="vertical-align: middle;">
+                                                            <div
+                                                                style="margin: auto; display: flex; justify-content: center;">
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr> <tr>
+                                                        <td class="flex text-center">1.15.3</td>
+                                                        <td>
+                                                        
                                                         c -	40°C / 75% Rh
 
 
@@ -22579,7 +22706,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="number"
                                                             placeholder="Year"
-                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                         </div>
                                                         </td>
                                                         {{--    <td>
@@ -22604,7 +22731,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="number"
                                                             placeholder="Enter  value here"
-                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                         </div>
                                                         </td>
                                                         {{--    <td>
@@ -22624,7 +22751,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22651,7 +22778,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22680,7 +22807,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22835,7 +22962,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Permanent</option>
                                                                     <option value="No">Temporary</option>
@@ -22860,7 +22987,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -22887,7 +23014,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Urban</option>
                                                                     <option value="No">Rural</option>
@@ -22922,7 +23049,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;" ></textarea>
                                                             </div>
                                                         </td>
 
@@ -22940,8 +23067,8 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"
-                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <input type="text"placeholder="Enter value here"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
                                                             
@@ -22966,8 +23093,8 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"
-                                                                style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                            <input type="text"placeholder="Enter value here"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
                                                             
@@ -22992,8 +23119,8 @@
                                                         <td>
                                                             <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <input type="text"placeholder="Enter value here"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
                                                             
@@ -23020,7 +23147,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
@@ -23047,7 +23174,7 @@
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
-                                                                    style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
