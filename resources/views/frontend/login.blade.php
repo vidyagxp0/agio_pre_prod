@@ -125,6 +125,8 @@
             width: 280px;
             margin: 0 auto 30px;
             /* margin-top: 151px; */
+            display: flex;
+    flex-direction: column;
         }
 
         #rcms_login_block .login-form-block .logo img {
@@ -222,7 +224,12 @@
             <div style="display: flex" class="main-block ">
                 <div class="top-block">
                     <div class="logo" style="display: flex">
-                        <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 2; max-width: 100px; margin: auto">
+    <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 1; max-width: 100px; margin: auto; margin-bottom: 33px;">
+
+
+    <img  src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 2; max-width: 100px; margin: auto">
+
+
                     </div>
                     
                 </div>
