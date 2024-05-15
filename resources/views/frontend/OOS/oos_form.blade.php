@@ -86,21 +86,24 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>'+
+                    '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
-                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
-                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
-                    '</tr>' +;
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
+                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
+                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
+                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
+                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
+                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
+                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
+                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                    '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -108,7 +111,7 @@
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -193,11 +196,12 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_reported_date[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_description[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
                         '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
+                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
@@ -358,8 +362,6 @@
                                 <input type="number">
                             </div>
                         </div>
-
-                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -437,14 +439,14 @@
 
                                 <select name="if_others_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-                                    
+                                    <option></option>
+                                    <option></option>
                                 </select>
                             </div>
                         </div>
-                                
-
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group Code">Is Repeat?</label>
 
                                 <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
                             </div>
@@ -583,7 +585,7 @@
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
 
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
@@ -592,7 +594,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -614,7 +616,7 @@
                                         <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
                                         <td><input type="date" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
+                                        <td><input type="date" name="info_expiry_date[]" value=""></td>
                                         <td><input type="text" name="info_label_claim[]" value=""></td>
                                         <td><input type="text" name="info_pack_size[]" value=""></td>
                                         <td><input type="text" name="info_analyst_name[]" value=""></td>
@@ -667,7 +669,8 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>
+                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability">
+                                        <input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
@@ -734,7 +737,6 @@
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab. Investigation </div>
                     <div class="row">
-
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -769,7 +771,6 @@
                                 </select>
                             </div>
                         </div>
-
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
@@ -918,11 +919,8 @@
                             <center>
                                 <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
                             </center>
-                            
-                            <div class="group-input " >
-                                
+                            <div class="group-input">
                                 <div class="why-why-chart mx-auto" style="width: 100%">
-
                                     <table class="table table-bordered ">
                                         <thead>
                                             <tr>
@@ -935,12 +933,11 @@
                                         <tbody>
                                             <tr>
                                                 <td class="flex text-center">1</td>
-                                                <td>Aliquot and standard solutions preserved.</td>
+                                                <td><input type="text" readonly name="question[]" value="Aliquot and standard solutions preserved">
+                                                </td>
                                                 <td>
-
-
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -948,21 +945,20 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2</td>
-                                                <td>Visual examination (solid and solution) reveals normal or abnormal
-                                                    appearance.</td>
+                                                <td><input type="text" readonly name="question[]" value="Visual examination (solid and solution) reveals normal or abnormal
+                                                    appearance">
+                                                .</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -970,21 +966,19 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">3</td>
-                                                <td>The analyst is trained on the method.</td>
+                                                <td><input type="text" readonly name="question[]" value="The analyst is trained on the method."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -992,22 +986,20 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
-                                               
                                                 <td class="flex text-center">4</td>
-                                                <td>Correct test procedure followed e.g. Current Version of standard testing
-                                                    procedure has been used in testing.</td>
+                                                <td><input type="text" readonly name="question[]" value="Correct test procedure followed e.g. Current Version of standard testing
+                                                    procedure has been used in testing.">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1019,19 +1011,19 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">5</td>
-                                                <td>Current Validated analytical Method has been used and the data of
-                                                    analytical method validation has been reviewed and found satisfactory.
+                                                <td><input type="text" readonly name="question[]" value="Current Validated analytical Method has been used and the data of
+                                                    analytical method validation has been reviewed and found satisfactory.">
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1039,21 +1031,20 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">6</td>
-                                                <td>Correct sample(s) tested.</td>
+                                                <td><input type="text" readonly name="question[]" value="Correct sample(s) tested.">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1061,21 +1052,18 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remakr[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">7</td>
-                                                <td>Sample Integrity maintained, correct container is used in testing.</td>
+                                                <td><input type="text" readonly name="question[]" value="Sample Integrity maintained, correct container is used in testing."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1083,23 +1071,22 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">8</td>
-                                                <td>Assessment of the possibility that the sample contamination (sample left
+                                                <td><input type="text" readonly name="question[]" value="Assessment of the possibility that the sample contamination (sample left
                                                     open to air or unattended) has occurred during the testing/ re-testing
-                                                    procedure. </td>
+                                                    procedure">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1107,21 +1094,19 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">9</td>
-                                                <td>All equipment used in the testing is within calibration due period.</td>
+                                                <td><input type="text" readonly name="question[]" value=" All equipment used in the testing is within calibration due period."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1133,18 +1118,18 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10</td>
-                                                <td>Equipment log book has been reviewed and no any failure or malfunction
-                                                    has been reviewed.</td>
+                                                <td><input type="text" readonly name="question[]" value="Equipment log book has been reviewed and no any failure or malfunction
+                                                    has been reviewed."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1152,22 +1137,20 @@
                                                         </select>
                                                     </div>
                                                 </td>
-
-
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">11</td>
-                                                <td>Any malfunctioning and / or out of calibration analytical instruments
-                                                    (including glassware) is used.</td>
+                                                <td><input type="text" readonly name="question[]" value="Any malfunctioning and / or out of calibration analytical instruments
+                                                    (including glassware) is used."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1177,19 +1160,19 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">12</td>
-                                                <td>Whether reference standard / working standard is correct (in terms of
+                                                <td><input type="text" readonly name="question[]" value="Whether reference standard / working standard is correct (in terms of
                                                     appearance, purity, LOD/water content & its storage) and assay values
-                                                    are determined correctly.</td>
+                                                    are determined correctly."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1199,18 +1182,19 @@
                                                 </td>
                                                <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">13</td>
-                                                <td>Whether test solution / volumetric solution used are properly prepared &
-                                                    standardized.</td>
+                                                <td><input type="text" readonly name="question[]" value="Whether test solution / volumetric solution used are properly prepared &
+                                                    standardized.">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1220,20 +1204,20 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">14</td>
-                                                <td>Review RSD, resolution factor and other parameters required for the
+                                                <td><input type="text" readonly name="question[]" value="Review RSD, resolution factor and other parameters required for the
                                                     suitability of the test system. Check if any out of limit parameters is
                                                     included in the chromatographic analysis, correctness of the column used
-                                                    previous use of the column.</td>
+                                                    previous use of the column."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1243,18 +1227,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">15</td>
-                                                <td>In the raw data, including chromatograms and spectra; any anomalous or
-                                                    suspect peaks or data has been observed.</td>
+                                                <td><input type="text" readonly name="question[]" value="In the raw data, including chromatograms and spectra; any anomalous or
+                                                    suspect peaks or data has been observed."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1264,18 +1248,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">16</td>
-                                                <td>Any such type of observation has been observed previously (Assay,
-                                                    Dissolution etc.).</td>
+                                                <td><input type="text" readonly name="question[]" value="Any such type of observation has been observed previously (Assay,
+                                                    Dissolution etc.)."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1285,19 +1269,19 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">17</td>
-                                                <td>Any unusual or unexpected response observed with standard or test
+                                                <td><input type="text" readonly name="question[]" value="Any unusual or unexpected response observed with standard or test
                                                     preparations (e.g. whether contamination of equipment by previous sample
-                                                    observed).</td>
+                                                    observed)."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1307,18 +1291,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">18</td>
-                                                <td>System suitability conditions met (those before analysis and during
+                                                <td><input type="text" readonly name="question[]" value="">System suitability conditions met (those before analysis and during
                                                     analysis).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1328,18 +1312,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">19</td>
-                                                <td>Correct and clean pipette / volumetric flasks volumes, glassware used as
-                                                    per recommendation.</td>
+                                                <td><input type="text" readonly name="question[]" value="Correct and clean pipette / volumetric flasks volumes, glassware used as
+                                                    per recommendation."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1349,18 +1333,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">20</td>
-                                                <td>Other potentially interfering testing/activities occurring at the time
+                                                <td><input type="text" readonly name="question[]" value="">Other potentially interfering testing/activities occurring at the time
                                                     of the test which might lead to OOS.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1370,18 +1354,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">21</td>
-                                                <td>Review of other data for other batches performed within the same
-                                                    analysis set and any nonconformance observed.</td>
+                                                <td><input type="text" readonly name="question[]" value="Review of other data for other batches performed within the same
+                                                    analysis set and any nonconformance observed."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1391,18 +1375,18 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">22</td>
-                                                <td>Consideration of any other OOS results obtained on the batch of material
-                                                    under test and any non-conformance observed.</td>
+                                                <td><input type="text" readonly name="question[]" value="Consideration of any other OOS results obtained on the batch of material
+                                                    under test and any non-conformance observed."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1412,17 +1396,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">23</td>
-                                                <td>Media/Reagents prepared according to procedure.</td>
+                                                <td><input type="text" readonly name="question[]" value="Media/Reagents prepared according to procedure.">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1432,17 +1417,18 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">24</td>
-                                                <td>All the materials are within the due period of expiry.</td>
+                                                <td><input type="text" readonly name="question[]" value="All the materials are within the due period of expiry.">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1452,18 +1438,19 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">25</td>
-                                                <td>Whether, analysis was performed by any other alternate validated
-                                                    procedure</td>
+                                                <td><input type="text" readonly name="question[]" value=" Whether, analysis was performed by any other alternate validated
+                                                    procedure">
+                                               </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1473,16 +1460,16 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">26</td>
-                                                <td>Whether environmental condition is suitable to perform the test.</td>
+                                                <td><input type="text" readonly name="question[]" value="Whether environmental condition is suitable to perform the test."></td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1492,17 +1479,18 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">27</td>
-                                                <td>Interview with analyst to assess knowledge of the correct procedure</td>
+                                                <td><input type="text" readonly name="question[]" value="Interview with analyst to assess knowledge of the correct procedure">
+                                                </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1512,7 +1500,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1661,9 +1649,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -3776,12 +3761,7 @@
             referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
         }
     </script>
-    <script>
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
-    </script>
+
     <script>
         VirtualSelect.init({
             ele: '#facility_name, #group_name, #auditee, #audit_team'

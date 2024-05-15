@@ -33,7 +33,7 @@
                                     <td>Vikas Prajapati</td>
                                     <td>Tech Support</td>
                                     <td>6264992922</td>
-                                    <td>vikas.prajapati@connexo.io</td>
+                                    <td>vikas.prajapati@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -44,7 +44,7 @@
                                     <td>Gopal Sen</td>
                                     <td>Tech Support</td>
                                     <td>8009109401</td>
-                                    <td>gopal.sen@connexo.io</td>
+                                    <td>gopal.sen@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -55,7 +55,7 @@
                                     {{-- <td>Amit Patel</td> --}}
                                     <td>Tech Support</td>
                                     <td>7354654474</td>
-                                    <td>amit.patel@connexo.io</td>
+                                    <td>amit.patel@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -66,7 +66,7 @@
                                     <td>Anshul Patel</td>
                                     <td>Tech Support</td>
                                     <td>8305375136</td>
-                                    <td>anshul.patel@connexo.io</td>
+                                    <td>anshul.patel@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -77,7 +77,7 @@
                                     <td>Anshul Jain</td>
                                     <td>Tech Support</td>
                                     <td>8303993561</td>
-                                    <td>anshul.jain@connexo.io</td>
+                                    <td>anshul.jain@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -88,7 +88,7 @@
                                     <td>Rohit Thakur</td>
                                     <td>Tech Support</td>
                                     <td>7447011439</td>
-                                    <td>rohit.thakur@connexo.io</td>
+                                    <td>rohit.thakur@vidyaGxP.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>
@@ -97,7 +97,7 @@
                         </table>
                     </div>
                     <div class="note">
-                        HD indicates HelpDesk specific personnel. Others are Connexo Administrators, which should be
+                        HD indicates HelpDesk specific personnel. Others are vidyaGxP Administrators, which should be
                         contacted only when no HelpDesk Specific persons are available.
                     </div>
                 </div>
