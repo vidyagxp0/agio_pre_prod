@@ -355,8 +355,42 @@ class OOSController extends Controller
                 $m++;  
                 }
             }
-            toastr()->success("Record is created Successfully");
-            return redirect(url('rcms/qms-dashboard'));
+             // ============= Phase -1  ==========
+            //  $questions = $request->question;
+            //  if(isset($questions) && $questions!=''){
+            //     //  $p=0;
+            //      foreach ($questions as $key => $value1) {
+            //         $Phase1Data = array(
+            //         'oos_id'=> $OosDataRecord->id,
+            //         'identifier'=> 'identifier_phase1',
+            //         'question' => is_array($questions) ? $questions : [],
+            //         //  'response'=> is_array($request->response) ? $request->response : [] ,
+            //         // 'remark'=> is_array($request->remark) ? $request->remark : []
+            //         ); 
+            //         $Phase1Datas = Oosgrids::insert($Phase1Data);
+            //         //  $p++;  
+            //      }
+            //     //  dd($Phase1Data);
+                
+            //  }
+             // ============= Phase -2  ==========
+            //  $question = $request->question;
+            //  if(isset($question) && $question!=''){
+            //      $p=0;
+            //      foreach ($question as $key => $value1) {
+            //      $Phase1Data = array(
+            //      'oos_id'=> $OosDataRecord->id,
+            //      'identifier' => $request->identifier_phase1[$p],
+            //      'question' => $request->question[$p],
+            //      'response'=>$request->response[$p],
+            //      'remark'=>$request->remark[$p]
+            //      ); 
+            //      $Phase1Datas = OosGrids::insert($Phase1Data);
+            //      $p++;  
+            //      }
+            //  }
+            // toastr()->success("Record is created Successfully");
+            // return redirect(url('rcms/qms-dashboard'));
         }
         
     }
