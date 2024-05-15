@@ -223,7 +223,7 @@ class TMSController extends Controller
             $training->training_start_date = $request->training_start_date;
             $training->training_end_date = $request->training_end_date;
             $training->assessment_required = $request->assessment_required;
-            $training->desc = $request->desc;
+            $training->desc = $request->desc; 
 
             $training->sops = !empty($request->sops) ? implode(',', $request->sops) : '';
             $training->classRoom_training = !empty($request->classRoom_training) ? implode(',', $request->classRoom_training) : '';
