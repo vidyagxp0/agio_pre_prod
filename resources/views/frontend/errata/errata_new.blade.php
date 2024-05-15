@@ -38,7 +38,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
             </div>
 
-            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
