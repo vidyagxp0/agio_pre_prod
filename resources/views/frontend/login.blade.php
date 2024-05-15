@@ -198,6 +198,10 @@
         #rcms_login_block input[type="submit"]:hover {
            letter-spacing: 2px; 
         }
+        .black-placeholder::placeholder {
+        color: black;
+        opacity: 1; /* Necessary to ensure the color is not translucent */
+    }
     </style>
 </head>
 
@@ -230,11 +234,12 @@
                         @csrf
                         <div class="group-input">
                             <label for="username"><i class="fa-solid fa-envelope"></i></label>
-                            <input type="text" name="email" placeholder="Enter Your E-Mail">
+                            <input type="text" name="email" placeholder="Enter Your E-Mail" class="black-placeholder">
                         </div>
+                       
                         <div class="group-input">
                             <label for="password"><i class="fa-solid fa-lock"></i></label>
-                            <input type="password" name="password" placeholder="Enter Your Password">
+                            <input type="password" name="password" placeholder="Enter Your Password" class="black-placeholder">
                         </div>
                         <div class="group-input">
                             <label for="timezone"><i class="fa-solid fa-calendar-check"></i></label>
