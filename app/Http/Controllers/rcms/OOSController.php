@@ -389,8 +389,8 @@ class OOSController extends Controller
             //      $p++;  
             //      }
             //  }
-            // toastr()->success("Record is created Successfully");
-            // return redirect(url('rcms/qms-dashboard'));
+            toastr()->success("Record is created Successfully");
+            return redirect(url('rcms/qms-dashboard'));
         }
         
     }
@@ -404,7 +404,6 @@ class OOSController extends Controller
     {
         dd($request->all());
         $id = OOS::find($id);
-
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
