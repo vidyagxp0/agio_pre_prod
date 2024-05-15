@@ -2548,8 +2548,8 @@
                 </div>
             </div>
         </div>
-        <!-- Phase II QC Review -->
-        <div id="CCForm6" class="inner-block cctabcontent">
+                <!-- Phase II QC Review -->
+                <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">Summary of Phase II Testing</div>
                 <div class="row">
@@ -2583,11 +2583,11 @@
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Product/Material Related Error</option>
-                                <option>Other Error</option>
+                                <option value="0">Enter Your Selection Here</option>
+                                <option value="analyst_error">Analyst Error</option>
+                                <option value="instrument_error">Instrument Error</option>
+                                <option value="product_material_related_error">Product/Material Related Error</option>
+                                <option value="other_error">Other Error</option>
                             </select>
                         </div>
                     </div>
@@ -2809,31 +2809,47 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>
-                                    <td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>
-                                    <td><input type="text" name="summary_results[]"></td>
-                                    <td><input type="text" name="summary_results_analyst_name[]"></td>
-                                    <td><input type="text" name="summary_results_remarks[]"></td> 
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td> --}}
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
                             <input type="text" name="specification_limit_oosc">
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
                             <select name="results_to_be_reported_oosc">
                                 <option value="Intial">Initial</option>
                                 <option value="Retested_result">Retested Result</option>
+
                             </select>
                         </div>
                     </div>
@@ -2857,15 +2873,24 @@
                             <select name="oos_stands_oosc">
                                 <option value="Valid">Valid</option>
                                 <option value="Invalid">Invalid</option>
+
+
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
                             <select name="capa_req_oosc">
                                 <option name="Yes">Yes</option>
                                 <option name="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2894,6 +2919,8 @@
                             <select name="action_plan_req_oosc">
                                  <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2984,18 +3011,30 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" id="identifier_oos_conclusion_review" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
-                                    <td><input type="text" name="conclusion_review_batch_no[]"></td>
-                                    <td><input type="text" name="conclusion_review_any_other_information[]"></td>
-                                    <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Number[]"></td> --}}
+
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -3004,12 +3043,20 @@
                                     </textarea>
                         </div>
                     </div>
+
+
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
                             <select name="capa_req_ocr">
                                   <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -3121,8 +3168,8 @@
                 </div>
             </div>
         </div>
-        <!--CQ Review Comments -->
-        <div id="CCForm10" class="inner-block cctabcontent">
+                <!--CQ Review Comments -->
+                <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     CQ Review Comments
@@ -3166,15 +3213,21 @@
                                 <option value="0">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
                             <input type="text" name="ref_action_plan_ocqr">
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> CQ Attachment</label>
@@ -3189,8 +3242,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3210,6 +3265,9 @@
                     Batch Disposition
                 </div>
                 <div class="row">
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
@@ -3230,6 +3288,13 @@
                             <input type="text" name="others_bd">
                         </div>
                     </div>
+                    <!-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Report Attachments">Required Action Plan? </label>
+                                        <input type="num" name="num">
+                                    </div>
+                                </div> -->
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
@@ -3241,13 +3306,16 @@
                         </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
@@ -3258,14 +3326,20 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="sub-head">Assessment for batch disposition</div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_parameters_results_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
@@ -3304,8 +3378,9 @@
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="any_market_complaints_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
 
                     <div class="col-md-12 mb-4">
@@ -3313,15 +3388,16 @@
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="statistical_evaluation_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="risk_analysis_disposition_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
 
                     </div>
@@ -3330,9 +3406,11 @@
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="conclusion_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
@@ -3340,6 +3418,8 @@
                               <option value="0">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -3353,6 +3433,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -3360,6 +3441,7 @@
                             <textarea class="summernote" name="justify_for_delay_in_activity_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
+
                     </div>
                     <div class="col-12">
                         <div class="group-input">
@@ -3392,7 +3474,7 @@
 
         </div>
                 <!-- Re-Open -->
-                <div id="CCForm12" class="inner-block cctabcontent">
+        <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     Reopen Request
