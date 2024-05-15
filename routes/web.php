@@ -407,8 +407,10 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 
 Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+// Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
-Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new');
+
+Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 
@@ -421,5 +423,5 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
-Route::view('errata_new', 'frontend.errata.errata_new');
+Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
