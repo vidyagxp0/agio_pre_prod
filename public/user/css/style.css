@@ -3527,7 +3527,7 @@ section#pdf-page .watermark {
 #change-control-view .inner-block .block-list .block .bar {
     margin-bottom: 5px;
 }
-    
+
 #change-control-view .state-block .progress-bars {
     display: flex;
 }
@@ -4213,8 +4213,8 @@ section#pdf-page .watermark {
 
 #change-control-fields .inner-block .main-head {
     padding: 15px;
-    color: white;
-    background: #4274da;
+    color: black;
+    /* background: #4274da; */
     margin-bottom: 0;
     font-weight: bold;
     font-size: 1.2rem;
@@ -6287,7 +6287,7 @@ section#pdf-page .watermark {
     background-color:  #0d6efd;
 
   }
-  
+
   #calendar > div.fc-header-toolbar.fc-toolbar > div:nth-child(3) > button{
     text-transform: capitalize;
   }
@@ -6317,7 +6317,7 @@ section#pdf-page .watermark {
     border-radius: 5px;
     text-align: center;
     padding: 5px;
-    
+
   }
   .file-attachment-field .add-btn input{
     position: absolute;
@@ -6327,4 +6327,3 @@ section#pdf-page .watermark {
     z-index: 2;
     opacity: 0;
   }
-  
