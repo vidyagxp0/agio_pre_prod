@@ -22730,7 +22730,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                     placeholder="Enter  value here"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
                                                                     
                                                                   
@@ -22767,7 +22767,7 @@
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                     placeholder="Enter  value here"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                     
                                                                    
@@ -22805,7 +22805,7 @@
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                     placeholder="Enter  value here"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
+                                                                        style="padding: 2px; width:100%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                 </div>
                                                                 
@@ -22940,7 +22940,7 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"
+                                                            <input type="text"placeholder="Enter  value here"
                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
@@ -22966,7 +22966,7 @@
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                            <input type="text"
+                                                            <input type="text"placeholder="Enter  value here"
                                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
         
                                                         </div>
@@ -22992,7 +22992,7 @@
                                                         <td>
                                                             <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
+                                                    <input type="text"placeholder="Enter  value here"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
