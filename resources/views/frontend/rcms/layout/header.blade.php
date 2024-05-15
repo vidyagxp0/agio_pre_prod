@@ -44,42 +44,42 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <style>
-     .bottom-links {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-    margin-left: 10px;
-    position: relative;
-}
+        .bottom-links {
+            display: flex;
+            align-items: center;
+            margin-top: 15px;
+            margin-left: 10px;
+            position: relative;
+        }
 
- .bottom-links div {
-    height: 35px;
-    margin-right: 15px;
-    display: grid;
-    place-items: center;
-}
+        .bottom-links div {
+            height: 35px;
+            margin-right: 15px;
+            display: grid;
+            place-items: center;
+        }
 
- .bottom-links a {
-    color: black;
-    width: 100%;
-    display: grid;
-    place-items: center;
-    height: 100%;
-    transition: all 0.3s linear;
-    text-decoration: none;
-}
+        .bottom-links a {
+            color: black;
+            width: 100%;
+            display: grid;
+            place-items: center;
+            height: 100%;
+            transition: all 0.3s linear;
+            text-decoration: none;
+        }
 
- .bottom-links a:hover {
-    color: #4274da;
-    text-decoration: none;
-}
+        .bottom-links a:hover {
+            color: #4274da;
+            text-decoration: none;
+        }
 
-.bottom-links .notification {
-    position: absolute;
-    right: 0;
-    font-size: 1.2rem;
-}
-</style>
+        .bottom-links .notification {
+            position: absolute;
+            right: 0;
+            font-size: 1.2rem;
+        }
+    </style>
 </head>
 
 <body>
@@ -115,7 +115,8 @@
                     <div class="middle-head">
                         <div class="logo-container">
                             <div class="logo">
-                                <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..." class="w-100 h-100" style="scale: 3">
+                                <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..."
+                                    class="w-100 h-100" style="scale: 3">
                             </div>
                             <div class="logo">
                                 <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
@@ -193,58 +194,58 @@
                 </div>
             </div>
             <div class="header-bottom">
-                            <div class="container-fluid">
-                                <div class="bottom-links">
-                                    <div>
-                                        <a href="#"><i class="fa-solid fa-braille"></i></a>
-                                    </div>
-                                    <div>
-                                        <a href="/dashboard">DMS Dashboard</a>
-                                    </div>
-                                    <div>
-                                         <a href="/TMS">TMS Dashboard</a> 
-                                    </div>
-                                    <div>
-                                        <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
-                                    </div> 
-                                    {{-- <div>
+                <div class="container-fluid">
+                    <div class="bottom-links">
+                        <div>
+                            <a href="#"><i class="fa-solid fa-braille"></i></a>
+                        </div>
+                        <div>
+                            <a href="/dashboard">DMS Dashboard</a>
+                        </div>
+                        <div>
+                            <a href="/TMS">TMS Dashboard</a>
+                        </div>
+                        <div>
+                            <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
+                        </div>
+                        {{-- <div>
                                     <a href="/analytics">Analytics</a> 
                                     </div>  --}}
 
-                                    @if (Auth::user())
-                                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
-                                            <div>
-                                                <a href="/mydms">My DMS</a>
-                                            </div>
-                                        @endif
-                                        @if (Helpers::checkRoles(3))
-                                            <div>
-                                                <a href="{{ route('documents.index') }}">Documents</a>
-                                            </div>
-                                        @endif
-                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
-                                            <div>
-                                                <a href="{{ url('mytaskdata') }}">My Tasks</a>
-                                            </div>
-                                        @endif
-                                        {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
+                        @if (Auth::user())
+                            @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
+                                <div>
+                                    <a href="/mydms">My DMS</a>
+                                </div>
+                            @endif
+                            @if (Helpers::checkRoles(3))
+                                <div>
+                                    <a href="{{ route('documents.index') }}">Documents</a>
+                                </div>
+                            @endif
+                            @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(4))
+                                <div>
+                                    <a href="{{ url('mytaskdata') }}">My Tasks</a>
+                                </div>
+                            @endif
+                            {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                                             <div>
                                                 <a href="{{ route('change-control.index') }}">Change Control</a>
                                             </div>
                                         @endif --}}
-                                    @endif
+                        @endif
 
 
-                                    {{-- <div class="notification">
+                        {{-- <div class="notification">
                                         <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
                                     </div> --}}
-                                    <!-- <div id="create-record-button">
+                        <!-- <div id="create-record-button">
                                         <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
                                                 Record</button> </a>
                                     </div> -->
-                                </div>
-                            </div>
-                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
@@ -323,7 +324,7 @@
                         <strong>Name : </strong> Amit Guru
                     </div>
                     <div class="bar">
-                        <strong>E-Mail : </strong> amit.guru@connexo.io
+                        <strong>E-Mail : </strong> amit.guru@vidyaGxP.io
                     </div>
                     <div class="bar">
                         <a href="#">Change Password</a>
@@ -363,7 +364,7 @@
                         April 23, 2023
                     </div>
                     <div class="bar">
-                        <strong>Licensed to : </strong> Connexo
+                        <strong>Licensed to : </strong> vidyaGxP
                     </div>
                     <div class="bar">
                         <strong>Environment : </strong> Master Demo Dev
@@ -373,7 +374,7 @@
                     </div>
                     <div class="copyright-bar">
                         <i class="fa-regular fa-copyright"></i>&nbsp;
-                        Copyright 2023 Connexo Asia Limited
+                        Copyright 2023 vidyaGxP Asia Limited
                     </div>
                 </div>
 
