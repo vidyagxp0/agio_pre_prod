@@ -15,7 +15,8 @@ class OOSController extends Controller
     }
     
     public function store(Request $request)
-    {   
+    { 
+
         $input = $request->all();
         $input['stage'] ="1";
         $input['status']="Opened";
