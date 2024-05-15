@@ -38,7 +38,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
             </div>
 
-            <form action="{{ route('actionItem.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
@@ -54,7 +54,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Originator"><b>Record No</b></label>
-                                        <input type="text" name="Originator" value="">
+                                        <input type="text" name="record_no" value="">
                                     </div>
                                 </div>
 
@@ -63,11 +63,11 @@
                                         <label for="search">
                                             Site/Location Code <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="location_code">
                                             <option value="">Select a value</option>
-                                            <option value="">001</option>
-                                            <option value="">002</option>
-                                            <option value="">003</option>
+                                            <option value="001">001</option>
+                                            <option value="002">002</option>
+                                            <option value="003">003</option>
                                         </select>
 
                                     </div>
@@ -75,7 +75,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>ERRATA Date </b></label>
-                                        <input type="date" name="Date Opened" value="">
+                                        <input type="date" name="errata_date" value="">
 
                                     </div>
                                 </div>
@@ -85,11 +85,11 @@
                                         <label for="search">
                                             ERRATA Issued By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="errata_issued_by">
                                             <option value="">Select a value</option>
-                                            <option value="">Pankaj Jat</option>
-                                            <option value="">Gaurav</option>
-                                            <option value="">Manish</option>
+                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            <option value="Gaurav">Gaurav</option>
+                                            <option value="Manish">Manish</option>
                                         </select>
                                     </div>
                                 </div>
@@ -99,11 +99,11 @@
                                         <label for="search">
                                             Initiated By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="initiated_by">
                                             <option value="">Select a value</option>
-                                            <option value="">Pankaj Jat</option>
-                                            <option value="">Gaurav</option>
-                                            <option value="">Manish</option>
+                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            <option value="Gaurav">Gaurav</option>
+                                            <option value="Manish">Manish</option>
                                         </select>
                                     </div>
                                 </div>
@@ -113,11 +113,11 @@
                                         <label for="search">
                                             Department<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="Department">
                                             <option value="">Select a value</option>
-                                            <option value="">Pankaj Jat</option>
-                                            <option value="">Gaurav</option>
-                                            <option value="">Manish</option>
+                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            <option value="Gaurav">Gaurav</option>
+                                            <option value="Manish">Manish</option>
                                         </select>
                                     </div>
                                 </div>
@@ -127,11 +127,11 @@
                                         <label for="search">
                                             Department Code<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="department_code">
                                             <option value="">Select a value</option>
-                                            <option value="">DC01</option>
-                                            <option value="">DC02</option>
-                                            <option value="">DC03</option>
+                                            <option value="DC01">DC01</option>
+                                            <option value="DC02">DC02</option>
+                                            <option value="DC03">DC03</option>
                                         </select>
                                     </div>
                                 </div>
@@ -141,11 +141,11 @@
                                         <label for="search">
                                             Document Type<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="document_type">
                                             <option value="">Select a value</option>
-                                            <option value="">D01</option>
-                                            <option value="">D02</option>
-                                            <option value="">D03</option>
+                                            <option value="D01">D01</option>
+                                            <option value="D02">D02</option>
+                                            <option value="D03">D03</option>
                                         </select>
                                     </div>
                                 </div>
@@ -153,18 +153,18 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Document Title</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="summernote" name="documenet_title" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
                                 <div class="">
                                     <div class="group-input">
                                         <label for="Reference Recores">Refrence Documents </label>
-                                        <select multiple id="reference_record" name="PhaseIIQCReviewProposedBy[]"
+                                        <select multiple id="reference_record" name="reference_document[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            <option value="">RD01</option>
-                                            <option value="">RD02</option>
+                                            <option value="RD01">RD01</option>
+                                            <option value="RD02">RD02</option>
                                         </select>
                                     </div>
                                 </div>
@@ -180,7 +180,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Brief Description</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="summernote" name="brief_description" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -189,12 +189,12 @@
                                         <label for="search">
                                             Type Of Error<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..." name="type_of_error">
                                             <option value="">-- Select a value --</option>
-                                            <option value="">Typographical Error (TE)</option>
-                                            <option value="">Calculation Error (CE)</option>
-                                            <option value="">Grammatical Error (GE)</option>
-                                            <option value="">Missing Word Error (ME)</option>
+                                            <option value="Typographical Error (TE)">Typographical Error (TE)</option>
+                                            <option value="Calculation Error (CE)">Calculation Error (CE)</option>
+                                            <option value="Grammatical Error (GE)">Grammatical Error (GE)</option>
+                                            <option value="Missing Word Error (ME)">Missing Word Error (ME)</option>
                                         </select>
                                     </div>
                                 </div>
@@ -202,7 +202,7 @@
                                 <div class="group-input">
                                     <label for="audit-agenda-grid">
                                         Details
-                                        <button type="button" name="audit-agenda-grid" id="Details-add">+</button>
+                                        <button type="button" name="details" id="Details-add">+</button>
                                         <span class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#observation-field-instruction-modal"
                                             style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -238,7 +238,7 @@
                                 <div class="">
                                     <div class="group-input">
                                         <label for="dateandtime"><b>Date And Time Of Correction </b></label>
-                                        <input type="date" name="Date Opened" value="">
+                                        <input type="date" name="Date_and_time_of_correction" value="">
 
                                     </div>
                                 </div>
@@ -263,7 +263,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">HOD Remarks</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -274,7 +274,7 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
+                                            <div class="file-attachment-list" id="hod_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Attachment[]"
@@ -300,7 +300,7 @@
                         </div>
                     </div>
                     <!-- -----------Tab-3------------ -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">Production</div>
@@ -309,7 +309,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted by">Production Review Required </label>
-                                        <select>
+                                        <select name="production_review_required">
                                             <option>--select--</option>
                                             <option>Yes</option>
                                             <option>No</option>
@@ -320,7 +320,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted by">Production Person </label>
-                                        <select>
+                                        <select name="">
                                             <option>--select--</option>
                                             <option>Pankaj</option>
                                             <option>Manish</option>
@@ -1516,15 +1516,15 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- -----------Tab-4------------ -->
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">QA Feedbacks</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <label class="mt-4" for="QA Feedbacks">QA Feedbacks</label>
+                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -1538,13 +1538,30 @@
                                             <div class="file-attachment-list" id="File_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
+                                                <input type="file" id="myfile" name="QA_Attachments[]"
                                                     oninput="addMultipleFiles(this, 'Attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
+                                <script>
+                                    function showSelectedFiles(input) {
+                                        var files = input.files;
+                                        var fileListContainer = document.getElementById('fileAttachmentList');
+                                        fileListContainer.innerHTML = '';
+
+                                        if (files.length > 0) {
+                                            var fileList = document.createElement('ul');
+                                            for (var i = 0; i < files.length; i++) {
+                                                var listItem = document.createElement('li');
+                                                listItem.textContent = files[i].name;
+                                                fileList.appendChild(listItem);
+                                            }
+                                            fileListContainer.appendChild(fileList);
+                                        }
+                                    }
+                                </script>
 
 
                                 <div class="button-block">
@@ -1569,7 +1586,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label class="" for="Audit Comments">Closure Comments</label>
-                                        <input type="text" />
+                                        <input type="text" name="Closure_Comments" />
                                     </div>
                                 </div>
 
@@ -1578,10 +1595,11 @@
                                         <label for="search">
                                             All Impacting Documents Corrected <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select id="select-state" placeholder="Select..."
+                                            name="All_Impacting_Documents_Corrected">
                                             <option value="">Select a value</option>
-                                            <option value="">Yes</option>
-                                            <option value="">No</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1589,7 +1607,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments"> Remarks (If Any)</label>
-                                        <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                        <textarea class="summernote" name="Remarks" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
