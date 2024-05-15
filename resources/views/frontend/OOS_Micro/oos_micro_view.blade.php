@@ -344,6 +344,126 @@
                     DATA FIELDS
     ======================================= --}}
     <div id="change-control-fields">
+        {{-- ======================================
+                    WORK FLOW
+    ======================================= --}}
+        <div class="inner-block state-block">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="main-head">Record Workflow </div>
+
+                <div class="d-flex" style="gap:20px;">
+                    @php
+                    $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                    $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                @endphp
+                    <button class="button_theme1" onclick="window.print();return false;"
+                        class="new-doc-btn">Print</button>
+                    <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
+                            Audit Trail </a> </button>
+
+                    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Acknowledge
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            Cancel
+                        </button>
+                    @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Submit
+                        </button>
+                    @elseif($data->stage == 5)
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Group/ CFT Review
+                            Required
+
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            Group/ CFT Review Not
+                            Required
+
+                        </button>
+                    @elseif($data->stage == 4)
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Approve
+
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Info Required
+
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Group Feedback
+                        </button>
+                    @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            QA Review Complete
+                        </button>
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            More Information
+                            Required
+                        </button>
+                    @endif
+                    <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        </a> </button>
+                </div>
+             </div>
+            <div class="status">
+                <div class="head">Current Status</div>
+                {{-- ------------------------------By Pankaj-------------------------------- --}}
+                @if ($data->stage == 0)
+                    <div class="progress-bars">
+                        <div class="bg-danger">Closed-Cancelled</div>
+                    </div>
+                @else
+                    <div class="progress-bars">
+                        @if ($data->stage >= 1)
+                            <div class="active">Opened</div>
+                        @else
+                            <div class="">Opened</div>
+                        @endif
+
+                        @if ($data->stage >= 2)
+                            <div class="active">Investigation in Progress </div>
+                        @else
+                            <div class="">Investigation in Progress</div>
+                        @endif
+
+
+                        {{-- @if ($data->stage >= 3)
+                            <div class="active">Pending Group Review Discussion</div>
+                        @else
+                            <div class="">Pending Group Review Discussion</div>
+                        @endif
+
+                        @if ($data->stage >= 4)
+                            <div class="active">Pending Group Review</div>
+                        @else
+                            <div class="">Pending Group Review</div>
+                        @endif --}}
+
+
+                        @if ($data->stage >= 3)
+                            <div class="active">Pending QA Review</div>
+                        @else
+                            <div class="">Pending QA Review</div>
+                        @endif
+                        @if ($data->stage >= 6)
+                            <div class="bg-danger">Closed - Done</div>
+                        @else
+                            <div class="">Closed - Done</div>
+                        @endif
+                    </div>
+                @endif
+
+
+            </div>
+
+        </div>
+        {{-- ======================================
+                    WORK FLOW
+    ======================================= --}}
+        
         <div class="container-fluid">
 
             <!-- Tab links -->
