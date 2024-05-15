@@ -234,7 +234,7 @@
                         {{-- @if ($data->stage >= 2) --}}
                         {{-- <div class="active">HOD Review </div> --}}
                         {{-- @else --}}
-                        <div class="active">HOD Review</div>
+                        <div class="">HOD Review</div>
                         {{-- @endif --}}
 
                         {{-- @if ($data->stage >= 3) --}}
