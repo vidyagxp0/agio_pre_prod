@@ -413,6 +413,10 @@ Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.i
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
+// ====================OOS/OOT======================================
+Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
+// ====================OOS/OOT======================================
+
 
 // ==========================================================
 
