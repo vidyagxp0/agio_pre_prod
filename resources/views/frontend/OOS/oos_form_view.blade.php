@@ -883,6 +883,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
                                         <td><input type="text" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
