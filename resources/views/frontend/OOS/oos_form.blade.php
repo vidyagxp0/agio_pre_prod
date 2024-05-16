@@ -365,12 +365,6 @@
                                 </select>
                             </div>
                         </div>
-<script>
-        document.getElementById("dynamicSelectType").addEventListener("change", function() {
-            var selectedRoute = this.value;
-            window.location.href = selectedRoute; // Redirect to the selected route
-        });
-    </script>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
@@ -3724,6 +3718,12 @@
 
     </div>
     </div>
+    <script>
+        document.getElementById("dynamicSelectType").addEventListener("change", function() {
+            var selectedRoute = this.value;
+            window.location.href = selectedRoute; // Redirect to the selected route
+        });
+    </script>
 
 
     <script>
