@@ -401,8 +401,8 @@
                             <div class="group-input">
                                 <label for="Initiator Group">Type </label>
                                 <select id="dynamicSelectType" name="type">
+                                <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
                                     <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
                                     <option value="{{ route('oot.index');  }}">OOT</option>
                                 </select>
                             </div>
