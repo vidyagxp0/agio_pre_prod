@@ -8205,13 +8205,11 @@
                                             <td>
 
                                                 <div class="group-input">
-                                                    <label for="Audit Attachments">File Attachments</label>
-                                                    <small class="text-primary">
-                                                        Please Attach all relevant or supporting documents
-                                                    </small>
+                                                   
                                                     <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="file_attach"></div>
-                                                        <div class="add-btn">
+                                                        <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
+                                                        id="file_attach "></div>
+                                                        <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="file_attach[]"
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
@@ -8288,13 +8286,11 @@
                                             <td>
 
                                                 <div class="group-input">
-                                                    <label for="Audit Attachments">File Attachments</label>
-                                                    <small class="text-primary">
-                                                        Please Attach all relevant or supporting documents
-                                                    </small>
+                                                   
                                                     <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="file_attach"></div>
-                                                        <div class="add-btn">
+                                                        <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
+                                                        id="file_attach "></div>
+                                                        <div class="add-btn" style="position:relative; left:23px; width: 75px; height: 43px; background-color:white;" >
                                                             <div>Add</div>
                                                             <input type="file" id="myfile" name="file_attach[]"
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
