@@ -108,7 +108,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -148,7 +148,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -184,7 +184,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -222,7 +222,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -261,7 +261,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -300,7 +300,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -372,7 +372,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Investigation of MediaSuitability Test</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-                
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
@@ -5723,12 +5723,12 @@
                 </div>
 
 
-                
+
 
                 <div class="col-lg-12">
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                        
+
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="file_attach"></div>
                             <div class="add-btn">
@@ -5758,7 +5758,7 @@
         <div id="CCForm19" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Review of Training records Analyst Involved in Testing  
+                    Checklist for Review of Training records Analyst Involved in Testing
                 </div>
                 <div class="row">
 
@@ -5909,7 +5909,7 @@
                                             </td>
                                         </tr>
 
-                                      
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6119,7 +6119,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="flex text-center">3.1</td>
-                                            <td>Was correct applicable specification and method of analysis used for analysis? 
+                                            <td>Was correct applicable specification and method of analysis used for analysis?
                                             </td>
                                             <td>
 
@@ -6249,7 +6249,7 @@
                                             </td>
 
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6534,7 +6534,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6741,7 +6741,7 @@
                         </div>
                     </div>
                 </div>
-   
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -6905,7 +6905,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">6.1.6</td>
                                             <td>Was area fumigation done as per schedule?</td>
@@ -6958,13 +6958,13 @@
                                         </tr>
 
                                         <tr>
-                                            
+
                                             <td>
                                                  <tr>
                                                 <td class="flex text-center">6.1.8</td>
                                                 <td>Were there any spillages in the area?</td>
                                                 <td>
-    
+
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
@@ -6975,8 +6975,8 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-    
-    
+
+
                                                 </td>
                                                 <td>
                                                     {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -6986,11 +6986,11 @@
                                                 </td>
                                             </tr>
                                                 </td>
-                                           
-                                           
+
+
                                         </tr>
 
-                                     
+
 
                                     </tbody>
                                 </table>
@@ -7000,11 +7000,11 @@
                 </div>
 
 
-               
-               
 
 
-               
+
+
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -7219,7 +7219,7 @@
                 </div>
 
 
-               
+
                 <div class="col-lg-12">
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
@@ -7250,13 +7250,13 @@
             </div>
 
 
-        </div>        
-       
+        </div>
+
 
         <div id="CCForm20" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                Checklist for Review of Training records Analyst Involved in Testing  
+                Checklist for Review of Training records Analyst Involved in Testing
                 </div>
                 <div class="row">
 
@@ -7452,7 +7452,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -7824,7 +7824,7 @@
                                             </td>
 
                                         </tr>
-                                     
+
 
 
 
@@ -8145,7 +8145,7 @@
 
                                         </tr>
 
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -8217,7 +8217,7 @@
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                                         </div>
                                                     </div>
-                    
+
                                                 </div>
 
 
@@ -8300,7 +8300,7 @@
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                                         </div>
                                                     </div>
-                    
+
                                                 </div>
 
 
@@ -8339,7 +8339,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -8374,7 +8374,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="text"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8416,7 +8416,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8436,7 +8436,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8456,7 +8456,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8576,7 +8576,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8720,9 +8720,9 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
-                                            </td> 
-                                           
+                                                </div>
+                                            </td>
+
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -8764,7 +8764,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8784,7 +8784,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8829,7 +8829,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8849,7 +8849,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8944,7 +8944,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -9005,7 +9005,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
 
                                     </tbody>
                                 </table>
@@ -9014,7 +9014,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
 
 
@@ -9187,7 +9187,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
 
                                     </tbody>
                                 </table>
@@ -9545,8 +9545,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                      
-                                       
+
+
 
                                     </tbody>
                                 </table>
@@ -9555,7 +9555,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -9676,7 +9676,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    
+
 
                                     </tbody>
                                 </table>
@@ -9686,7 +9686,7 @@
                 </div>
             </div>
 
-               
+
 
                 <div class="col-lg-12">
                     <div class="group-input">
@@ -9716,9 +9716,9 @@
                             Exit </a> </button>
                 </div>
             </div>
-           
 
-           
+
+
 
 
         </div>
@@ -9730,17 +9730,17 @@
 
                 <div class="sub-head">
 
-                    Checklist for Review of Training records Analyst Involved in Testing 
+                    Checklist for Review of Training records Analyst Involved in Testing
 
                 </div>
 
                 <div class="row">
 
- 
 
- 
 
- 
+
+
+
 
                     <div class="col-12">
 
@@ -9776,7 +9776,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9798,9 +9798,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -9816,7 +9816,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -9828,7 +9828,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9850,9 +9850,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -9868,7 +9868,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -9890,7 +9890,7 @@
 
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"/>
 
- 
+
 
                                                 </div>
 
@@ -9910,7 +9910,7 @@
 
                                         </tr>
 
-                                       
+
 
                                     </tbody>
 
@@ -9926,7 +9926,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -9970,7 +9970,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9992,9 +9992,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10010,7 +10010,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10022,7 +10022,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10044,9 +10044,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10062,7 +10062,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10076,7 +10076,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10098,9 +10098,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10116,7 +10116,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10130,7 +10130,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10152,9 +10152,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10170,7 +10170,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10184,7 +10184,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10206,9 +10206,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10224,11 +10224,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                     </tbody>
 
@@ -10244,7 +10244,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -10290,7 +10290,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10312,9 +10312,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10330,7 +10330,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10342,7 +10342,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10352,13 +10352,13 @@
 
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"/>
 
- 
+
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10374,11 +10374,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10388,7 +10388,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10410,9 +10410,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10428,7 +10428,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10442,7 +10442,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10464,9 +10464,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10482,11 +10482,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10498,7 +10498,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10520,9 +10520,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10538,7 +10538,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10552,7 +10552,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10574,9 +10574,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10592,7 +10592,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10604,13 +10604,13 @@
 
                                                 (Applicable for Antibiotics –Microbial Assay)
 
-                                               
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10632,9 +10632,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10650,11 +10650,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10666,7 +10666,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10688,9 +10688,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10706,11 +10706,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
-                                        
+
 
                                     </tbody>
 
@@ -10726,7 +10726,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -10775,7 +10775,7 @@
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                             </div>
- 
+
 
                                             </td>
 
@@ -10791,7 +10791,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10803,7 +10803,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10825,9 +10825,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10843,7 +10843,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10855,7 +10855,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10867,9 +10867,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10885,7 +10885,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10897,7 +10897,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10909,9 +10909,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10927,7 +10927,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10939,7 +10939,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10951,9 +10951,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10969,7 +10969,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10985,7 +10985,7 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
 
@@ -11007,9 +11007,9 @@
 
                                                     </div>
 
-   
 
-    
+
+
 
                                                 </td>
 
@@ -11025,7 +11025,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11037,7 +11037,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11059,9 +11059,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11077,7 +11077,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11089,7 +11089,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11101,9 +11101,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11119,7 +11119,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11131,7 +11131,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11153,9 +11153,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11171,7 +11171,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11183,7 +11183,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11205,9 +11205,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11223,7 +11223,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11237,7 +11237,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11259,9 +11259,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11277,7 +11277,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11289,7 +11289,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11301,9 +11301,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11319,7 +11319,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11336,7 +11336,7 @@
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                             </div>
- 
+
 
                                                </td>
 
@@ -11352,7 +11352,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11362,13 +11362,13 @@
 
                                             <td>Were the challenged samples stored in appropriate storage condition ?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11390,9 +11390,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11408,7 +11408,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11418,13 +11418,13 @@
 
                                             <td>Was the standard weighty accurately as mentioned in test procedure?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11446,9 +11446,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11464,7 +11464,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11476,7 +11476,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11498,9 +11498,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11516,7 +11516,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11530,7 +11530,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11552,9 +11552,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11570,7 +11570,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11580,13 +11580,13 @@
 
                                             <td>Was the working standard prepared with appropriate dilutions?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11608,9 +11608,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11626,11 +11626,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11645,7 +11645,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
                                             </td>
 
@@ -11661,11 +11661,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11673,24 +11673,24 @@
 
                                             <td>Use before date :
 
- 
+
 
                                             </td>
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11706,11 +11706,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11722,7 +11722,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11744,9 +11744,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11762,7 +11762,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11772,23 +11772,23 @@
 
                                             <td>Lot/Batch No. of petriplates
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11804,7 +11804,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11814,23 +11814,23 @@
 
                                             <td>Size of the petriplates
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11846,7 +11846,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11856,13 +11856,13 @@
 
                                             <td>Size of the petriplates
 
- 
+
 
                                             </td>
 
                                              <td>
 
- 
+
 
                                                 <div
 
@@ -11884,9 +11884,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11902,7 +11902,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11912,22 +11912,22 @@
 
                                             <td>Dilutor prepared on:
 
- 
+
 
                                             </td>
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    </div> 
- 
+                                                    </div>
 
- 
+
+
 
                                             </td>
 
@@ -11943,7 +11943,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11953,23 +11953,23 @@
 
                                             <td>Validity time of the dilutor:
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11985,7 +11985,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11999,17 +11999,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12025,13 +12025,13 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
 
- 
+
+
 
                                     </tbody>
 
@@ -12047,7 +12047,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -12091,17 +12091,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="text"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12117,7 +12117,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12129,7 +12129,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12141,9 +12141,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12159,7 +12159,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12171,11 +12171,11 @@
 
                                             </td>
 
- 
+
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12197,9 +12197,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12217,7 +12217,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12227,7 +12227,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12249,9 +12249,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12269,7 +12269,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12281,7 +12281,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12303,9 +12303,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12323,7 +12323,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12335,7 +12335,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12357,9 +12357,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12377,11 +12377,11 @@
 
                                         </tr>
 
- 
 
- 
 
- 
+
+
+
 
                                     </tbody>
 
@@ -12395,11 +12395,11 @@
 
                 </div>
 
- 
+
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -12443,7 +12443,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12465,9 +12465,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12483,7 +12483,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12493,13 +12493,13 @@
 
                                             <td>Was differential pressure of the area within limit:
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12522,9 +12522,9 @@
                                                 </div>
 
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12540,7 +12540,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12554,7 +12554,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12576,9 +12576,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12596,7 +12596,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12610,9 +12610,9 @@
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
+
 
                                             </td>
 
@@ -12630,9 +12630,9 @@
 
                                         </tr>
 
- 
 
-                                       
+
+
 
                                     </tbody>
 
@@ -12646,9 +12646,9 @@
 
                 </div>
 
- 
 
- 
+
+
 
             </div>
 
@@ -12696,7 +12696,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12718,9 +12718,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12736,7 +12736,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12748,7 +12748,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12760,9 +12760,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12778,7 +12778,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12792,17 +12792,17 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
- 
+                                                </div>
 
- 
+
+
 
                                             </td>
 
@@ -12820,7 +12820,7 @@
 
                                         </tr>
 
-                                       
+
 
                                         <tr>
 
@@ -12830,7 +12830,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12852,9 +12852,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12880,18 +12880,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12917,7 +12917,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12939,9 +12939,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12967,18 +12967,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13004,18 +13004,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13041,18 +13041,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13078,7 +13078,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13100,9 +13100,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13120,7 +13120,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -13130,7 +13130,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13152,9 +13152,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13180,17 +13180,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                            </div> 
- 
+                                            </div>
 
- 
+
+
 
                                             </td>
 
@@ -13216,16 +13216,16 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>  
+                                                </div>
 
- 
+
 
                                             </td>
 
@@ -13253,7 +13253,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13275,9 +13275,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13295,11 +13295,11 @@
 
                                         </tr>
 
- 
 
- 
 
- 
+
+
+
 
                                     </tbody>
 
@@ -13313,7 +13313,7 @@
 
                 </div>
 
- 
+
 
             </div>
 
@@ -13361,7 +13361,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -13383,9 +13383,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13401,7 +13401,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -13411,13 +13411,13 @@
 
                                             <td>Was the disinfectant prepared as per validated concentration?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -13429,9 +13429,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13447,7 +13447,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -13461,7 +13461,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13483,9 +13483,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13538,23 +13538,23 @@
 
                         </div>
 
- 
+
 
                     </div>
 
                 </div>
 
- 
 
-               
 
- 
 
-                
 
- 
 
- 
+
+
+
+
+
+
 
                 <div class="button-block">
 
@@ -13617,7 +13617,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.1.1</td>
@@ -13638,7 +13638,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.1.2</td>
@@ -13690,7 +13690,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.4.1</td>
@@ -13711,7 +13711,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.4.2</td>
@@ -13752,7 +13752,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -13796,7 +13796,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.2</td>
@@ -13818,7 +13818,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.3</td>
@@ -13839,7 +13839,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.4</td>
@@ -13855,7 +13855,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.5</td>
@@ -13876,9 +13876,9 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
-    
+
                                     </tbody>
                                 </table>
                             </div>
@@ -13921,7 +13921,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.2</td>
@@ -13942,7 +13942,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.3</td>
@@ -13963,7 +13963,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.4</td>
@@ -14160,7 +14160,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                         <tr>
                                             <td class="flex text-center">4.1.5</td>
                                             <td>Media expiry date</td>
@@ -14212,7 +14212,7 @@
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-    
+
                                                 </div>
                                             </td>
                                             <td>
@@ -14337,7 +14337,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                     </tbody>
                                 </table>
                             </div>
@@ -14552,7 +14552,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                         <tr>
                                             <td class="flex text-center">8.1.2</td>
                                             <td>Was the fogging agent used for fogging and validated?</td>
@@ -15154,30 +15154,30 @@
                     <div class="col-lg-12">
 
                         <div class="group-input">
-    
+
                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-    
-    
+
+
                             <div class="file-attachment-field">
-    
+
                                 <div class="file-attachment-list" id="file_attach"></div>
-    
+
                                 <div class="add-btn">
-    
+
                                     <div>Add</div>
-    
+
                                     <input type="file" id="myfile" name="file_attach[]"
-    
+
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple/>
-    
+
                                 </div>
-    
+
                             </div>
-    
-     
-    
+
+
+
                         </div>
-    
+
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -15189,12 +15189,12 @@
                 </div>
             </div>
         </div>
-    
+
 
         <div id="CCForm23" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Analyst training & Procedure 
+                    Checklist for Analyst training & Procedure
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -15422,7 +15422,7 @@
                                                 <input type="number"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 </div>
-                                                
+
                                             </td>
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -15435,7 +15435,7 @@
                                             <td class="flex text-center">2.4</td>
                                             <td>Date /Time of Incubation:
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -15443,7 +15443,7 @@
                                                 <input type="date"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 </div>
-                                                
+
                                             </td>
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -15521,7 +15521,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
             </div>
             <div class="inner-block-content">
@@ -15617,7 +15617,7 @@
                                             <td class="flex text-center">3.3.1</td>
                                             <td>Date of culture dilution:
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -15702,12 +15702,12 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div><div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Sterilize Accessories : 
+                    Checklist for Sterilize Accessories :
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -15789,7 +15789,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                      
+
                                             <td class="flex text-center">2.6</td>
                                             <td>Results of other plates released for GPT is within acceptance?</td>
                                             <td>
@@ -15817,7 +15817,7 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16028,7 +16028,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">5.4.1</td>
                                             <td>Refrigerator (2-8̊ C) ID:</td>
@@ -16166,7 +16166,7 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16256,9 +16256,9 @@
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">6.3</td>
-                                            <td>Was the disinfectant prepared as per validated concentration? 
+                                            <td>Was the disinfectant prepared as per validated concentration?
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -16279,14 +16279,14 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16379,37 +16379,37 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
-                                       
+
+
                                     </tbody>
                                 </table>
                                 <div class="col-lg-12">
 
                                     <div class="group-input">
-                
+
                                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                
-                
+
+
                                         <div class="file-attachment-field">
-                
+
                                             <div class="file-attachment-list" id="file_attach"></div>
-                
+
                                             <div class="add-btn">
-                
+
                                                 <div>Add</div>
-                
+
                                                 <input type="file" id="myfile" name="file_attach[]"
-                
+
                                                     oninput="addMultipleFiles(this, 'file_attach')" multiple/>
-                
+
                                             </div>
-                
+
                                         </div>
-                
-                 
-                
+
+
+
                                     </div>
-                
+
                                 </div>
                             </div>
                         </div>
@@ -16422,11 +16422,11 @@
                         onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>
 
