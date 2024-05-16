@@ -1359,7 +1359,7 @@ header .header-bottom.bottom-pr-links {
 #data-fields .group-input p {
     margin-bottom: 0;
     font-size: 0.8rem;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #data-fields .comment .button {
@@ -3527,7 +3527,7 @@ section#pdf-page .watermark {
 #change-control-view .inner-block .block-list .block .bar {
     margin-bottom: 5px;
 }
-    
+
 #change-control-view .state-block .progress-bars {
     display: flex;
 }
@@ -3576,6 +3576,7 @@ section#pdf-page .watermark {
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);
 }
+
 #rejection-modal1 .group-input label {
     display: block;
     font-size: 0.9rem;
@@ -3611,6 +3612,7 @@ section#pdf-page .watermark {
     border-radius: 5px;
     margin-bottom: 20px;
 }
+
 #modal1 .group-input input,
 #modal1 .group-input select {
     display: block;
@@ -3632,6 +3634,7 @@ section#pdf-page .watermark {
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);
 }
+
 #modal1 .modal-footer button {
     color: white;
     background: #4274da;
@@ -4201,7 +4204,7 @@ section#pdf-page .watermark {
 #change-control-fields {
     /* padding: 20px 0px; */
     background: #4274da;
-     min-height: calc(100vh - 150px);
+    min-height: calc(100vh - 150px);
 }
 
 #change-control-fields .inner-block {
@@ -4213,8 +4216,8 @@ section#pdf-page .watermark {
 
 #change-control-fields .inner-block .main-head {
     padding: 15px;
-    color: white;
-    background: #4274da;
+    color: black;
+    /* background: #4274da; */
     margin-bottom: 0;
     font-weight: bold;
     font-size: 1.2rem;
@@ -6063,13 +6066,14 @@ section#pdf-page .watermark {
     margin-left: 3px;
     cursor: pointer;
 }
+
 /*  Date Picker css*/
 
 .new-date-data-field {
     margin-bottom: 20px;
-  }
+}
 
-  .new-date-data-field label {
+.new-date-data-field label {
     font-size: 0.9rem;
     margin-bottom: 5px;
     display: block;
@@ -6078,220 +6082,264 @@ section#pdf-page .watermark {
     display: flex;
     align-items: center;
     gap: 10px;
-  }
+}
 
-  .new-date-data-field input {
+.new-date-data-field input {
     border: 1px solid grey;
     border-radius: 5px;
     padding: 5px 15px;
     display: block;
     width: 100%;
     background: white;
-  }
+}
 
-  .new-date-data-field .input-date {
+.new-date-data-field .input-date {
     position: relative;
-  }
+}
 
-  .new-date-data-field .input-date input.hide-input {
+.new-date-data-field .input-date input.hide-input {
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
-  }
+}
 
-  .new-date-data-field .input-date input::-webkit-calendar-picker-indicator {
+.new-date-data-field .input-date input::-webkit-calendar-picker-indicator {
     width: 100%;
-  }
-  .calenderauditee{
+}
+
+.calenderauditee {
     position: relative;
-  }
-  #doc-content > div.input-fields > div > div.col-md-12.mb-3 > div > div.note-editor.note-frame > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
-  }
-  #doc-content > div.input-fields > div > div:nth-child(8) > div > div.note-editor.note-frame > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
-  }
-  #annexures > div.input-fields > div:nth-child(1) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
-  }
-  #annexures > div.input-fields > div:nth-child(2) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(3) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
-  }
-  #annexures > div.input-fields > div:nth-child(4) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#doc-content>div.input-fields>div>div.col-md-12.mb-3>div>div.note-editor.note-frame>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(9) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#doc-content>div.input-fields>div>div:nth-child(8)>div>div.note-editor.note-frame>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(8) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(1)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(7) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(2)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(6) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(5) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(3)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(20) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(4)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(19) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(18) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(9)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(17) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(15) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(8)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(16) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(13) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(7)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(12) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(11) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(6)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(14) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(10) > div > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(5)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #doc-content > div.input-fields > div > div:nth-child(13) > div > div.note-editor.note-frame > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #doc-content > div.input-fields > div > div:nth-child(14) > div > div.note-editor.note-frame > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(20)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
+}
 
-  #annexures > div.input-fields > div:nth-child(24) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(19)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(21) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(18) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(18)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(15) > div.note-modal.open > div > div.note-modal-footer > input{
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(12) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(17)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(9) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(12) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(15)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(3) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(6) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(16)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(9) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(39) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(13)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(36) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(33) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(12)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(30) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(27) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(11)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(45) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(48) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(14)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(51) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(54) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#annexures>div.input-fields>div:nth-child(10)>div>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  #annexures > div.input-fields > div:nth-child(57) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
+#doc-content>div.input-fields>div>div:nth-child(13)>div>div.note-editor.note-frame>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  #annexures > div.input-fields > div:nth-child(60) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+}
 
-  }
-  #annexures > div.input-fields > div:nth-child(42) > div.note-modal.open > div > div.note-modal-footer > input{
-    background-color:  #0d6efd;
+#doc-content>div.input-fields>div>div:nth-child(14)>div>div.note-editor.note-frame>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
 
-  }
-  
-  #calendar > div.fc-header-toolbar.fc-toolbar > div:nth-child(3) > button{
+}
+
+#annexures>div.input-fields>div:nth-child(24)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(21)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(18)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(15)>div.note-modal.open>div>div.note-modal-footer>input {}
+
+#annexures>div.input-fields>div:nth-child(12)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(9)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(12)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(3)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(6)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(9)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(39)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(36)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(33)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(30)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(27)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(45)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(48)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(51)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(54)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(57)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(60)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#annexures>div.input-fields>div:nth-child(42)>div.note-modal.open>div>div.note-modal-footer>input {
+    background-color: #0d6efd;
+
+}
+
+#calendar>div.fc-header-toolbar.fc-toolbar>div:nth-child(3)>button {
     text-transform: capitalize;
-  }
-  .file-attachment-list{
+}
+
+.file-attachment-list {
     background: white;
     border: 1px solid rgb(126, 124, 124);
     padding: 5px 10px;
@@ -6300,31 +6348,31 @@ section#pdf-page .watermark {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-  }
+}
 
-  .file-attachment-field{
+.file-attachment-field {
     display: grid;
     grid-template-columns: 1fr 150px;
     align-items: start;
     gap: 20px;
     margin-bottom: 20px;
-  }
+}
 
-  .file-attachment-field .add-btn{
+.file-attachment-field .add-btn {
     background: #6f81dd;
     color: white;
     margin-top: 13px;
     border-radius: 5px;
     text-align: center;
     padding: 5px;
-    
-  }
-  .file-attachment-field .add-btn input{
+
+}
+
+.file-attachment-field .add-btn input {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 2;
     opacity: 0;
-  }
-  
+}

@@ -108,8 +108,8 @@
                                     </button>
                                 @endif
 
-                                @if ($document->stage == 6)
-                                    <input type="hidden" name="stage_id" value="7" />
+                                @if ($document->stage == 5)
+                                    <input type="hidden" name="stage_id" value="6" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
@@ -868,7 +868,10 @@
                         @endif
                     @else
                         @if ($document->stage == 5)
-                            <input type="hidden" name="stage_id" value="8" />
+                            <input type="hidden" name="stage_id" value="6" />
+                        @endif
+                        @if ($document->stage == 7)
+                            <input type="hidden" name="stage_id" value="10" />
                         @endif
                     @endif
 

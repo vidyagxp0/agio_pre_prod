@@ -373,6 +373,7 @@ class DocumentController extends Controller
             ->get();
 
 
+
         $trainer = User::get();
         
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
