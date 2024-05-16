@@ -662,9 +662,9 @@
                                     <label for="Short Description"> Severity Level</label>
                                     <select name="severity_level_gi">
                                         <option value="o">Enter Your Selection Here</option>
-                                        <option value="1" {{ $data->reference_system_document_gi == '1' ? 'selected' :
+                                        <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' :
                                             '' }}>1</option>
-                                        <option value="2" {{ $data->reference_system_document_gi == '2' ? 'selected' :
+                                        <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' :
                                             '' }}>2</option>
                                     </select>
                                 </div>
@@ -682,7 +682,6 @@
                                     </select>
                                 </div>
                             </div>
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group Code <span
@@ -728,6 +727,8 @@
                                 <div class="group-input">
                                     <label for="Initiator Group">Nature of Change</label>
                                     <select name="nature_of_change_gi">
+                                    <!-- <option value="Yes" {{ $data->action_plan_requirement_ocqr == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option> -->
                                         <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : ''
                                             }}>Enter Your Selection Here</option>
                                         <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ?
@@ -802,8 +803,8 @@
                                     <label for="Source Document Type">Source Document Type</label>
                                     <select name="source_document_type_gi">
                                         <option value="0">Enter Your Selection Here</option>
-
-
+                                        <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>doc</option>
+                                        <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>pdf</option>
                                     </select>
                                 </div>
                             </div>
@@ -824,7 +825,7 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recores">Reference Document</label>
-                                    <select multiple id="reference_record" name="reference_document" id="">
+                                    <select multiple id="reference_record" name="reference_document[]" id="">
                                         <option value="0">--Select---</option>
                                         <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1
                                         </option>
