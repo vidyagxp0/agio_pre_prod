@@ -1558,7 +1558,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Prelim.Investiga.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>

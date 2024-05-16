@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Oosgrids;
 
 class OOS extends Model
 {
@@ -220,4 +221,9 @@ class OOS extends Model
       // 'addendum_review_comments_uar' => 'array',
     //   'verification_comments_uav' => 'array',
        ];
+    public function oosgridrecord()
+    {
+      return $this->hasMany(Oosgrids::class, 'oos_id');
+      
+    }
 }

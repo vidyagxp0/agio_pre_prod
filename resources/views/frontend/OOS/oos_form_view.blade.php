@@ -121,21 +121,24 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>'+
+                    '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
-                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
-                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
-                    '</tr>' +;
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
+                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
+                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
+                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
+                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
+                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
+                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
+                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                    '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -143,14 +146,13 @@
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
         });
     </script>
-
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
@@ -890,7 +892,7 @@
                             <div class="group-input">
                                 <label for="audit-agenda-grid">
                                     Info. On Product/ Material
-                                    <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+                                    <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-details-field-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -898,7 +900,7 @@
                                     </span>
                                 </label>
                                 <div class="table-responsive">
-                                    <table class="table table-bordered" id="Product_Material_details"
+                                    <table class="table table-bordered" id="Info_Product_Material_details"
                                         style="width: 100%;">
                                         <thead>
                                             <tr>
@@ -916,34 +918,54 @@
                                                 <th style="width: 16% pt-2"> Stability for</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-                                            <td><input type="text" name="info_product_code[]" value=""></td>
-                                            <td><input type="text" name="info_batch_no[]" value=""></td>
-                                            <td><input type="text" name="info_mfg_date[]" value=""></td>
-                                            <td><input type="text" name="info_expiry_date[]" value=""></td>
-                                            <td><input type="text" name="info_label_claim[]" value=""></td>
-                                            <td><input type="text" name="info_pack_size[]" value=""></td>
-                                            <td><input type="text" name="info_analyst_name[]" value=""></td>
-                                            <td><input type="text" name="info_others_specify[]" value=""></td>
-                                            <td><input type="text" name="info_process_sample_stage[]" value=""></td>
-                                            <td>
-                                                <select name="info_packing_material_type[]">
-                                                    <option value="Primary">Primary</option>
-                                                    <option value="Secondary">Secondary</option>
-                                                    <option value="Tertiary">Tertiary</option>
-                                                    <option value="Not Applicable">Not Applicable</option>
-                                                </select>
-                                            </td>
-                                            <td>
-                                                <select name="info_stability_for[]">
-                                                    <option vlaue="Submission">Submission</option>
-                                                    <option vlaue="Commercial">Commercial</option>
-                                                    <option vlaue="Pack Evaluation">Pack Evaluation</option>
-                                                    <option vlaue="Not Applicable">Not Applicable</option>
-                                                </select>
-                                            </td>
-                                        </tbody>
+                                        
+                                       
+                                        @if(!empty($data->oosgridrecord))
+                                       
+
+                                        @foreach($data->oosgridrecord as $key => $oosgridrecords)
+                                         
+
+                                        @if($oosgridrecords->identifier == "Info Product Material")
+                                        
+                                        <tr>
+                                        <td><input disabled type="text" name="serial[]" value="">
+                                        
+                                        <?php echo"<pre>";print_r($oosgridrecords->oos_id);?></td>
+                                        <td><?php echo"<pre>";print_r($oosgridrecords['identifier']);?><input type="text" id="info_product_code" name="info_product_code[]" value="{{$oosgridrecords->info_product_code}}">{{  $oosgridrecords->info_product_code }}</td>
+                                        <td><input type="text" name="info_batch_no[]" value="{{$oosgridrecords->info_batch_no}}">{{$oosgridrecords->info_batch_no}}</td>
+                                        <td><input type="date" name="info_mfg_date[]" value="{{$oosgridrecords->info_mfg_date}}">{{$oosgridrecords->info_mfg_date}}</td>
+                                        <td><input type="date" name="info_expiry_date[]" value="{{$oosgridrecords->info_expiry_date}}">{{$oosgridrecords->info_expiry_date}}</td>
+                                        <td><input type="text" name="info_label_claim[]" value="{{$oosgridrecords->info_label_claim}}">{{$oosgridrecords->info_label_claim}}</td>
+                                        <td><input type="text" name="info_pack_size[]" value="{{$oosgridrecords->info_pack_size}}">{{$oosgridrecords->info_pack_size}}</td>
+                                        <td><input type="text" name="info_analyst_name[]" value="{{$oosgridrecords->info_analyst_name}}">{{$oosgridrecords->info_analyst_name}}</td>
+                                        <td><input type="text" name="info_others_specify[]" value="{{$oosgridrecords->info_others_specify}}">{{$oosgridrecords->info_others_specify}}</td>
+                                        <td><input type="text" name="info_process_sample_stage[]" value="{{$oosgridrecords->info_process_sample_stage}}">{{$oosgridrecords->info_process_sample_stage}}</td>
+                                        <td>
+                                            <select name="info_packing_material_type[]">
+                                                <option value="Primary">Primary</option>
+                                                <option value="Secondary">Secondary</option>
+                                                <option value="Tertiary">Tertiary</option>
+                                                <option value="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select name="info_stability_for[]">
+                                                <option vlaue="Submission">Submission</option>
+                                                <option vlaue="Commercial">Commercial</option>
+                                                <option vlaue="Pack Evaluation">Pack Evaluation</option>
+                                                <option vlaue="Not Applicable">Not Applicable</option>
+                                            </select>
+                                        </td>
+                                        <tr>
+                                        @endif
+                                        @endforeach
+                                        @else
+                                        <tr>
+                                        <td> Record Not Found </td>
+                                        </tr>
+                                        @endif
+                                        
                                     </table>
                                 </div>
                             </div>
@@ -1911,7 +1933,7 @@
                                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
                                         id="summernote-1">
-                                    {{ $data && $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic: ''}}</textarea>
+                                    {{ $data->summary_of_prelim_investiga_plic ? $data->summary_of_prelim_investiga_plic : ''}}</textarea>
                                 </div>
                             </div>
 
@@ -2130,15 +2152,13 @@
                                                 <th style="width: 16%"> CAPA</th>
                                                 <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                                 <th style="width: 16%">CAPA Requirement</th>
-
                                                 <th style="width: 16%">Reference CAPA Number</th>
-
-
-
-
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           
+                                            
+
                                             {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
                                             <td><input type="text" name="Number[]"></td>
                                             <td><input type="text" name="Name[]"></td>

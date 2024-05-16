@@ -115,4 +115,7 @@ class Oosgrids extends Model
         'conclusion_review_any_other_information' => 'array',
         'conclusion_review_action_affecte_batch' => 'array'
     ];
+
+    
+    // 
 }

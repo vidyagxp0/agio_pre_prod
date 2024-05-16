@@ -248,6 +248,7 @@ class OOSController extends Controller
                 $ProductData = array(
                 'oos_id'=> $OosDataRecord->id,
                 'identifier' => $request->identifier_info_product_material[$i],
+                'info_product_code' => $info_product_code,
                 'info_batch_no' => $request->info_batch_no[$i],
                 'info_mfg_date' => $request->info_mfg_date[$i],
                 'info_expiry_date' => $request->info_expiry_date[$i],
@@ -257,8 +258,11 @@ class OOSController extends Controller
                 'info_others_specify' => $request->info_others_specify[$i],
                 'info_process_sample_stage' => $request->info_process_sample_stage[$i]
                 ); 
+                $i++; 
+                // if($i<=1){
                 $ProductDatas = Oosgrids::insert($ProductData);
-                $i++;  
+                //  }
+                // $i++;  
                 }
             }
            // ========== identifier_details_stability ======
@@ -397,7 +401,8 @@ class OOSController extends Controller
     }
     public static function show($id)
     {
-        $data = OOS::find($id);
+        $data = OOS::with('oosgridrecord')->find($id);
+        // dd($data);
         return view('frontend.OOS.oos_form_view', compact('data'));
 
     }
