@@ -15,7 +15,8 @@ class OOSController extends Controller
     }
     
     public function store(Request $request)
-    {   
+    { 
+
         $input = $request->all();
         $input['stage'] ="1";
         $input['status']="Opened";
@@ -396,14 +397,34 @@ class OOSController extends Controller
     }
     public static function show($id)
     {
-        $data= OOS::find($id);
+        $data = OOS::find($id);
         return view('frontend.OOS.oos_form_view', compact('data'));
 
     }
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        $id = OOS::find($id);
+        $data = OOS::find($id);
+        $input = $request->all();
+        $data->update($input);
+        // if($request->source_doc!=""){
+        //          if (!empty ($request->CAPA_Closure_attachment)) {
+        //             $files = [];
+        //             if ($request->hasfile('CAPA_Closure_attachment')) {
+
+        //                 foreach ($request->file('CAPA_Closure_attachment') as $file) {
+        //                     $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
+        //                     $file->move('upload/', $name);
+        //                     $files[] = $name;
+        //                 }
+        //             }
+        //             $deviation->CAPA_Closure_attachment = json_encode($files);
+                    
+        //         }
+        //         $deviation->update();
+        //         toastr()->success('Document Sent');
+        //         return back();
+        //         }
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }

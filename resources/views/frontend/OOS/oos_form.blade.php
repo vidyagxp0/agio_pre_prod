@@ -427,8 +427,8 @@
                                 <label for="Short Description"> Severity Level</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -436,48 +436,8 @@
                         
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"><b>Initiator Group</b></label>
-                                <select name="initiator_Group" id="initiator_group">
-                                    <option value="">-- Select --</option>
-                                    <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                        Corporate Quality Assurance</option>
-                                    <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
-                                        Quality
-                                        Assurance Biopharma</option>
-                                    <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
-                                        Central
-                                        Quality Control</option>
-                                    <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
-                                        Manufacturing</option>
-                                    <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
-                                        Sourcing Group</option>
-                                    <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
-                                        Central
-                                        Stores</option>
-                                    <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
-                                        Information Technology Group</option>
-                                    <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
-                                        Molecular Medicine</option>
-                                    <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
-                                        Central Laboratory</option>
-
-                                    <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                        team</option>
-                                    <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
-                                        Quality Assurance</option>
-                                    <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
-                                        Quality Management</option>
-                                    <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
-                                        Administration</option>
-                                    <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
-                                        Accounting</option>
-                                    <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
-                                        Logistics</option>
-                                    <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
-                                        Senior Management</option>
-                                    <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
-                                        Business Administration</option>
-                                </select>
+                                <label for="Initiator Group Code">Is Repeat?</label>
+                                <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
                             </div>
                         </div>
 
@@ -532,7 +492,8 @@
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select>
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
+                                    <option value="abc">abc</option>
+                                    <option value="abcd">abcd</option>
                                     <!-- <option>Lab Incident</option>
                                                 <option>Deviation</option>
                                                 <option>Product Non-conformance</option>
@@ -553,8 +514,8 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Description</label>
-                                <textarea name="text"></textarea>
+                                <label for="Initiator Group"> Short Description</label>
+                                <textarea  name="description_gi" value="" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -584,7 +545,6 @@
                                     <option>Product Non-conformance</option>
                                     <option>Inspectional Observation</option>
                                     <option>Others</option>
-
                                 </select>
                             </div>
                         </div>
@@ -638,7 +598,7 @@
                                 <input type="number" name="num">
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
                                 <select>
@@ -837,7 +797,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea class="summernote" name="Comments_plidata" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -869,7 +829,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -953,7 +913,7 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
                                     </textarea>
 
                             </div>
@@ -1165,7 +1125,7 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -1682,7 +1642,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1690,7 +1650,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1698,7 +1658,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="Description_Deviation" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1745,7 +1705,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1791,7 +1751,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="review_comments_plir" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1904,7 +1864,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2402,7 +2362,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2410,7 +2370,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary Mfg. Investigation</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2446,7 +2406,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2454,7 +2414,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2543,7 +2503,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Review Comment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="review_comment_atp" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2632,7 +2592,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2713,7 +2673,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justifi. for Averaging Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2759,7 +2719,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if CAPA not required</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2789,7 +2749,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justification for Delay</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2836,7 +2796,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2891,7 +2851,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2981,7 +2941,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3036,7 +2996,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">CQ Review comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3160,12 +3120,28 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>To Be Release</option>
-                                <option>To Be Rejected</option>
-                                <option>Other Action (Specify)</option>
-
+                        <select name="material_batch_release_bd">
+                            <option value="default">Enter Your Selection Here</option>
+                            <option value="release">To Be Released</option>
+                            <option value="reject">To Be Rejected</option>
+                            <option value="other">Other Action (Specify)</option>
+                        </select>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-4">
+                        <div class="group-input">
+                            <label for="Description Deviation">Other Action (Specify)</label>
+                            <textarea class="summernote" name="other_action_bd" id="summernote-1">
+                            </textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Reference Recores">Field alert reference</label>
+                            <select multiple id="reference_record" name="field_alert_reference_bd[]" id="">
+                                <option value="0">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="No">No</option>
                             </select>
                         </div>
                     </div>
@@ -3195,9 +3171,8 @@
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
 
@@ -3207,7 +3182,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3216,7 +3191,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Stability Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="stability_data_bd" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3224,7 +3199,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Process Validation Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="process_validation_data_bd" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3232,7 +3207,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Method Validation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="method_validation_bd" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3240,8 +3215,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="any_market_complaints_bd" id="summernote-1">
+                            </textarea>
                         </div>
 
                     </div>
@@ -3250,8 +3225,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="statistical_evaluation_bd" id="summernote-1">
+                            </textarea>
                         </div>
 
                     </div>
@@ -3259,8 +3234,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="risk_analysis_disposition_bd" id="summernote-1">
+                            </textarea>
                         </div>
 
                     </div>
@@ -3268,8 +3243,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="conclusion_bd" id="summernote-1">
+                            </textarea>
                         </div>
 
                     </div>
@@ -3301,7 +3276,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3347,8 +3322,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
 
@@ -3397,8 +3372,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Reopen Approval Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
 
@@ -3445,7 +3420,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Execution Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="execution_comments_uae" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3581,8 +3556,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Addendum Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                    </textarea>
+                            <textarea class="summernote" name="addendum_review_comments_uar" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
 
@@ -3632,7 +3607,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Verification Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="verification_comments_uav" id="summernote-1">
                     </textarea>
                         </div>
                     </div>
