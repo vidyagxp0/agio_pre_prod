@@ -71,6 +71,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
             </div>
+            <form id="auditform" action="{{ route('employee.store') }}" method="post" enctype="multipart/form-data">
 
             <!-- Tab content -->
             <div id="CCForm1" class="inner-block cctabcontent">
@@ -398,6 +399,14 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+
                 </div>
             </div>
 
@@ -483,9 +492,15 @@
                         </script>
 
                     </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
                 </div>
             </div>
-
+            </form>
         </div>
     </div>
 

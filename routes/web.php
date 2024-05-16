@@ -27,9 +27,11 @@ use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
+use App\Http\Controllers\tms\EmployeeController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
+use App\Http\Controllers\tms\TrainerController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -416,3 +418,10 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
  */
 
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
+
+
+
+// ================EMPLOYEE & TRAINER===================
+
+Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');

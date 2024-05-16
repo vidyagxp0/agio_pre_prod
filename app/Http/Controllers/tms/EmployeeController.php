@@ -4,6 +4,7 @@ namespace App\Http\Controllers\tms;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\EmployeeGrid;
 use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
@@ -24,7 +25,7 @@ class EmployeeController extends Controller
             $employee->gender = $request->gender;
             $employee->department = $request->department;
             $employee->job_title = $request->job_title;
-            
+
             if (!empty($request->attached_cv) && $request->file('attached_cv')) {
                 $files = [];
                 foreach ($request->file('attached_cv') as $file) {
@@ -34,8 +35,8 @@ class EmployeeController extends Controller
                 }
                 // Save the file paths in the database
                 $employee->attached_cv = json_encode($files);
-            } 
-            
+            }
+
             if (!empty($request->certification) && $request->file('certification')) {
                 $files = [];
                 foreach ($request->file('certification') as $file) {
@@ -46,7 +47,7 @@ class EmployeeController extends Controller
                 // Save the file paths in the database
                 $employee->certification = json_encode($files);
             }
-           
+
             $employee->zone = $request->zone;
             $employee->country = $request->country;
             $employee->state = $request->state;
@@ -66,7 +67,7 @@ class EmployeeController extends Controller
                 // Save the file paths in the database
                 $employee->picture = json_encode($files);
             }
-            
+
             if (!empty($request->specimen_signature) && $request->file('specimen_signature')) {
                 $files = [];
                 foreach ($request->file('specimen_signature') as $file) {
@@ -77,7 +78,7 @@ class EmployeeController extends Controller
                 // Save the file paths in the database
                 $employee->specimen_signature = json_encode($files);
             }
-            
+
             $employee->hod = $request->hod;
             $employee->designee = $request->designee;
             $employee->comment = $request->comment;
@@ -93,17 +94,48 @@ class EmployeeController extends Controller
                 $employee->file_attachment = json_encode($files);
             }
 
-            // external_comment
-            // external_attachment
+            $employee->external_comment = $request->external_comment;
+            $employee->external_attachment = $request->external_attachment;
 
             $employee->save();
-            
+
+            $employee_id = $employee->id;
+
+            $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrCreate();
+            $employeeJobGrid->employee_id = $employee_id;
+            $employeeJobGrid->identifier = 'jobResponsibilites';
+            $employeeJobGrid->data = $request->employee_job_data;
+
+            $employeeJobGrid->save();
+
+            if (!empty($request->employee_external_training_data) && $request->file('employee_external_training_data')) {
+                $files = [];
+                foreach ($request->file('employee_external_training_data') as $file) {
+                    $name = $request->employee_id . 'employee_external_training_data' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] =  $name; // Store the file path
+                }
+            }
+
+            // $requestGridData = $request->employee_external_training_data;
+
+            // $requestGridData[0]['filename'] = $files;
+
+
+            $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrCreate();
+            $employeeExternalGrid->employee_id = $employee_id;
+            $employeeExternalGrid->identifier = 'external_training';
+            $employeeExternalGrid->data = $request->employee_external_training_data;
+            $employeeExternalGrid->save();
+
         } catch (\Exception $e) {
             $res['status'] = 'error';
             $res['message'] = $e->getMessage();
 
         }
 
-        return response()->json($res);
+        toastr()->success("Record is created Successfully");
+        return redirect(url('TMS'));
+        // return response()->json($res);
     }
 }
