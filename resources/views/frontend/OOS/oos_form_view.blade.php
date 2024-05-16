@@ -2,7 +2,7 @@
 @section('container')
 @php
         $users = DB::table('users')->get();
-    @endphp
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -12,6 +12,38 @@
             display: none;
         }
     </style>
+    <style>
+        .progress-bars div {
+            flex: 1 1 auto;
+            border: 1px solid grey;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+            /* border-right: none; */
+            background: white;
+        }
+
+        .state-block {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bars div.active {
+            background: green;
+            font-weight: bold;
+        }
+
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+            border-radius: 20px 0px 0px 20px;
+        }
+
+       
+        #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(7){
+            border-radius: 0px 20px 20px 0px;
+
+        }
+    </style>
+
     <!-- --------------------------------------button--------------------- -->
     <script>
         VirtualSelect.init({
@@ -318,6 +350,229 @@
     ======================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
+        <div id="change-control-fields">
+        <div class="container-fluid">
+
+  <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                        {{-- @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp --}}
+                        {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
+                        {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
+
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
+                        {{-- @if ($data->stage >= 9)
+                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
+                                    Close Done </a> </button>
+                        @endif --}}
+                        {{-- @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Submit
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Cancel
+                            </button>
+                        {{-- @elseif($data->stage == 2  && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                         
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                HOD Review Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info-required
+                            </button>
+                        {{-- @elseif($data->stage == 3  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                           
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information required
+                            </button> --}}
+                            
+                        {{-- @elseif($data->stage == 4  && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                           
+                            
+                        {{-- @elseif($data->stage == 6  && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            {{-- @if ($evaluation->training_required == 'yes') --}}
+                               
+                            {{-- @endif --}}
+                        {{-- @elseif($data->stage == 7  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Implemented
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button>
+                        {{-- @elseif($data->stage == 8) --}}
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Final Review Complete
+                            </button> --}}
+                        {{-- @endif --}}
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- @if ($data->stage == 0)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars">
+                            @if ($data->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+                            {{--  @if ($data->stage >= 2)
+                            <div class="active">Superviser Review</div>
+                        @else
+                            <div class="">Superviser Review</div>
+                        @endif  --}}
+                    {{-- @if ($data->stage >= 2)
+                                <div class="active">Under Superviser Review </div>
+                            @else
+                                <div class="">Under Superviser Review </div>
+                            @endif
+                            @if ($info->Quality_Approver == 'yes')
+                            @if ($data->stage >= 3)
+                                <div class="active">QA Review</div>
+                            @else
+                                <div class="">QA Review</div>
+                            @endif
+                            @endif
+                            @if ($info->Microbiology == 'yes')
+                            @if ($data->stage >= 4)
+                                <div class="active">Pending CFT Review</div>
+                            @else
+                                <div class="">Pending CFT Review</div>
+                            @endif
+
+
+                            @if ($data->stage >= 5)
+                                <div class="active">CFT Review Completed</div>
+                            @else
+                                <div class="">CFT Review Completed</div>
+                            @endif
+                            @endif
+                            @if ($evaluation->training_required == 'yes')
+                                @if ($data->stage >= 6)
+                                    <div class="active">Pending Training Completion</div>
+                                @else
+                                    <div class="">Pending Training Completion</div>
+                                @endif
+                            @endif
+
+                            @if ($data->stage >= 7)
+                                <div class="active">Pending Change Implementation</div>
+                            @else
+                                <div class="">Pending Change Implementation</div>
+                            @endif
+                            @if ($info->Quality_Approver == 'yes')
+                            @if ($data->stage >= 8)
+                                <div class="active">QA Final Review</div>
+                            @else
+                                <div class="">QA Final Review</div>
+                            @endif
+                            @endif
+
+                            @if ($data->stage >= 9)
+                                <div class="active">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+
+
+                        </div>
+                    @endif --}}
+
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    {{-- @if ($data->stage == 0) --}}
+                        {{-- <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div> --}}
+                    {{-- @else --}}
+                        <div class="progress-bars d-flex">
+                            {{-- @if ($data->stage >= 1) --}}
+                                <div class="active">Opened</div>
+                            {{-- @else --}}
+                                {{-- <div class="">Opened</div> --}}
+                            {{-- @endif --}}
+                            {{--  @if ($data->stage >= 2)
+                        <div class="active">Superviser Review</div>
+                    @else
+                        <div class="">Superviser Review</div>
+                    @endif  --}}
+                            {{-- @if ($data->stage >= 2) --}}
+                                {{-- <div class="active">Under HOD Review </div> --}}
+                            {{-- @else --}}
+                                <div class="">Pending Initial Assessment
+                                & Lab Incident
+                                </div>
+                            {{-- @endif --}}
+                            {{-- @if ($info->Quality_Approver == 'yes') --}}
+                            {{-- @if ($data->stage >= 3) --}}
+                                {{-- <div class="active">Pending CFT/SME/QA Review</div> --}}
+                            {{-- @else --}}
+                                <div class="">Under Phase I Investigation</div>
+                            {{-- @endif --}}
+                            {{-- @endif
+                            @if ($info->Microbiology == 'yes') --}}
+                            {{-- @if ($data->stage >= 4) --}}
+                                {{-- <div class="active"> CFT/SME/QA Review</div> --}}
+                            {{-- @else --}}
+                                <div class=""> Under Phase I Correction</div>
+                            {{-- @endif --}}
+
+
+                            {{-- @if ($data->stage >= 5)
+                            <div class="active">CFT Review Completed</div>
+                        @else
+                            <div class="">CFT Review Completed</div>
+                        {{-- @endif --}}
+                            {{-- @endif --}}
+                            {{-- @if ($evaluation->training_required == 'yes')
+                            @if ($data->stage >= 6)
+                                <div class="active">Pending Training Completion</div>
+                            @else
+                                <div class="">Pending Training Completion</div>
+                            @endif
+                        @endif --}}
+
+                            {{-- @if ($data->stage >= 7) --}}
+                                {{-- <div class="active">Pending Change Implementation</div> --}}
+                            {{-- @else --}}
+                                <div class="">Under Phase I b
+                                    Investigation 
+                                </div>
+                                <div class="">Under HypothesisExperiment 
+                                </div>
+                                <div class=""> Under Repeat Analysis
+                                </div>
+                               
+
+
+                            {{-- @endif --}}
+                            {{-- @if ($data->stage >= 8) --}}
+                                {{-- <div class="bg-danger">Closed - Done</div> --}}
+                            {{-- @else --}}
+                                {{-- <div class="">Closed - Done</div> --}}
+                            {{-- @endif --}}
+
+
+                        </div>
+                    {{-- @endif --}}
+                    {{-- ---------------------------------------------------------------------------------------- --}}
+                </div>
+            </div>
+
 
             <!-- Tab links -->
             <div class="cctab">
@@ -349,6 +604,8 @@
                 @endif
             <!-- Tab content -->
             <!-- General Information -->
+            <!-- Tab content -->
+            <!-- General Information -->
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
@@ -358,7 +615,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
-                                <input type="number">
+                            <input type="number" value="{{ $data->record_number ?? '' }}">
                             </div>
                         </div>
 
@@ -396,97 +653,91 @@
                                 <small class="text-primary">
                                     Please mention expected date of completion
                                 </small>
-                                <input type="date" id="date" name="due_date">
+                                <input type="date" id="date" name="due_date" value="{{ $data->due_date ?? '' }}">
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
-                                <select name="severity_level_gi" >
-                                    <option>Enter Your Selection Here</option>
-                                    <option >1</option>
-                                    <option>2</option>
+                               <select name="severity_level_gi">
+                                    <option value="o">Enter Your Selection Here</option>
+                                    <option value="1" {{ $data->reference_system_document_gi == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->reference_system_document_gi == '2' ? 'selected' : '' }}>2</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 <select name="initiator_group">
                                     <option selected disabled>---select---</option>
                                     @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                        <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option>
+                                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" readonly>
+                                <input type="text" name="initiator_group_code" readonly value="{{ $data->initiator_group_code ?? '' }}">
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiated Through </label>
-                                <textarea  type="text" name="initiated_through_gi"></textarea>
+                                <textarea type="text" name="initiated_through_gi">{{ $data->initiated_through_gi ?? '' }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">If Others</label>
-
-
-                                <select name="if_others_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
-                            </div>
+                        <div class="group-input">
+                            <label for="Initiator Group Code">If Others</label>
+                            <select name="if_others_gi">
+                                <option value="o" {{ $data->if_others_gi == 'o' ? 'selected' : '' }}>Enter Your Selection Here</option>
+                                <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>2</option>
+                            </select>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">Is Repeat?</label>
-
-                                <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
-                            </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group Code">Is Repeat?</label>
+                            <textarea type="is_repeat_gi" name="is_repeat_gi">{{ $data->is_repeat_gi }}</textarea>
                         </div>
-
-                        <div class="col-lg-6 mt-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Repeat Nature</label>
-                                <textarea  type="text" name="repeat_nature_gi"></textarea>
-                            </div>
+                    </div>
+                    <div class="col-lg-6 mt-4">
+                        <div class="group-input">
+                            <label for="Initiator Group">Repeat Nature</label>
+                            <textarea type="text" name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Nature of Change</label>
-                                <select name="nature_of_change_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <!-- <option>Lab Incident</option>
-                                                <option>Deviation</option>
-                                                <option>Product Non-conformance</option>
-                                                <option>Inspectional Observation</option>
-                                                <option>Others</option> -->
-
-                                </select>
-
-
-                            </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group">Nature of Change</label>
+                            <select name="nature_of_change_gi">
+                                <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
+                                <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ? 'selected' : '' }}>Lab Incident</option>
+                                <option value="deviation" {{ $data->nature_of_change_gi == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                <option value="product_nonconformance" {{ $data->nature_of_change_gi == 'product_nonconformance' ? 'selected' : '' }}>Product Non-                                             conformance</option>
+                                <option value="inspectional_observation" {{ $data->nature_of_change_gi == 'inspectional_observation' ? 'selected' : '' }}>Inspectional            Observation</option>
+                                <option value="others" {{ $data->nature_of_change_gi == 'others' ? 'selected' : '' }}>Others</option>
+                            </select>
                         </div>
+                    </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="deviation_occured_on_gi">
+                                <label for="Initiator Group">Deviation Occurred On</label>
+                                <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Description</label>
-                                <textarea name="text" name="description_gi"></textarea>
+                                <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -497,7 +748,28 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="">
+                                      {{-- @if (is_array($data->capa_attachment)) --}}
+                                                        @if ($data->initial_attachment_gi)
+                                                            @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        {{-- @endif --}}
+                                                        @endif
+                                    
+                                    
+                                    </div>
+
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="" multiple>
@@ -505,28 +777,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Tnitiaror Grouo">Source Document Type</label>
-                                <select name="source_document_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>OOT</option>
-                                    <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option>
+                       <div class="col-lg-6">
+    
+                <div class="group-input">
+                        <label for="Source Document Type">Source Document Type</label>
+                        <select name="source_document_type_gi">
+                            <option value="0">Enter Your Selection Here</option>
+                                
+                                 
+                        </select>
+                    </div>
+                </div>
 
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                   <option value="o">Enter Your Selection Here</option>
+                                    <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2</option>
+                              
                                 </select>
                             </div>
                         </div>
@@ -535,8 +805,9 @@
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document" id="">
                                     <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2</option>
+                              
                                 </select>
                             </div>
                         </div>
@@ -545,14 +816,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
-                                <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Raw Material</option>
-                                    <option>Packing Material</option>
-                                    <option>Finished Product</option>
-                                    <option>Satbility Sample</option>
-                                    <option>Others</option>
-
+                               <select name="sample_type_gi">
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ? 'selected' : '' }}>Raw Material</option>
+                                    <option value="packing_material" {{ $data->sample_type_gi == 'packing_material' ? 'selected' : '' }}>Packing Material</option>
+                                    <option value="finished_product" {{ $data->sample_type_gi == 'finished_product' ? 'selected' : '' }}>Finished Product</option>
+                                    <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample' ? 'selected' : '' }}>Stability Sample</option>
+                                    <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : '' }}>Others</option>
                                 </select>
                             </div>
                         </div>
@@ -560,24 +830,25 @@
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
 
-                                <input type="text" name="product_material_name_gi">
+                                <input type="text"  value="{{$data->product_material_name_gi}}" name="product_material_name_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
 
-                                <input type="text" name="market_gi">
+                                <input type="text" name="market_gi" value="{{$data->market_gi}}">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select name="customer_gi">
-                                     <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
+                             <select name="customer_gi">
+                     <option value="0">Enter Your Selection Here</option>
+                    <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                    <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No</option>
+                </select> 
+
                             </div>
                         </div>
 
@@ -587,7 +858,6 @@
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
                                 <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
-
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -613,10 +883,11 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
+                                        <td><input type="text" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
-                                        <td><input type="date" name="info_mfg_date[]" value=""></td>
+                                        <td><input type="text" name="info_mfg_date[]" value=""></td>
                                         <td><input type="text" name="info_expiry_date[]" value=""></td>
                                         <td><input type="text" name="info_label_claim[]" value=""></td>
                                         <td><input type="text" name="info_pack_size[]" value=""></td>
@@ -669,8 +940,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" name="stability_study_arnumber[]"></td>
+                                         <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
@@ -710,7 +981,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>
+                                        <td><input type="text" name="oos_arnumber[]"></td>
                                         <td><input type="text" name="oos_test_name[]"></td>
                                         <td><input type="text" name="oos_results_obtained[]"></td>
                                         <td><input type="text" name="oos_specification_limit[]"></td>
@@ -732,6 +1003,7 @@
                     </div>
                 </div>
             </div>
+
             <!-- Preliminary Lab. Investigation -->
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -2277,8 +2549,8 @@
                 </div>
             </div>
         </div>
-        <!-- Phase II QC Review -->
-        <div id="CCForm6" class="inner-block cctabcontent">
+                <!-- Phase II QC Review -->
+                <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">Summary of Phase II Testing</div>
                 <div class="row">
@@ -2312,11 +2584,11 @@
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Product/Material Related Error</option>
-                                <option>Other Error</option>
+                                <option value="0">Enter Your Selection Here</option>
+                                <option value="analyst_error">Analyst Error</option>
+                                <option value="instrument_error">Instrument Error</option>
+                                <option value="product_material_related_error">Product/Material Related Error</option>
+                                <option value="other_error">Other Error</option>
                             </select>
                         </div>
                     </div>
@@ -2538,31 +2810,47 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>
-                                    <td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>
-                                    <td><input type="text" name="summary_results[]"></td>
-                                    <td><input type="text" name="summary_results_analyst_name[]"></td>
-                                    <td><input type="text" name="summary_results_remarks[]"></td> 
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td> --}}
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
                             <input type="text" name="specification_limit_oosc">
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
                             <select name="results_to_be_reported_oosc">
                                 <option value="Intial">Initial</option>
                                 <option value="Retested_result">Retested Result</option>
+
                             </select>
                         </div>
                     </div>
@@ -2586,15 +2874,24 @@
                             <select name="oos_stands_oosc">
                                 <option value="Valid">Valid</option>
                                 <option value="Invalid">Invalid</option>
+
+
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
                             <select name="capa_req_oosc">
                                 <option name="Yes">Yes</option>
                                 <option name="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2623,6 +2920,8 @@
                             <select name="action_plan_req_oosc">
                                  <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2713,18 +3012,30 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" id="identifier_oos_conclusion_review" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
-                                    <td><input type="text" name="conclusion_review_batch_no[]"></td>
-                                    <td><input type="text" name="conclusion_review_any_other_information[]"></td>
-                                    <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Number[]"></td> --}}
+
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
@@ -2733,12 +3044,20 @@
                                     </textarea>
                         </div>
                     </div>
+
+
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
                             <select name="capa_req_ocr">
                                   <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2850,8 +3169,8 @@
                 </div>
             </div>
         </div>
-        <!--CQ Review Comments -->
-        <div id="CCForm10" class="inner-block cctabcontent">
+                <!--CQ Review Comments -->
+                <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     CQ Review Comments
@@ -2895,15 +3214,21 @@
                                 <option value="0">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
                             <input type="text" name="ref_action_plan_ocqr">
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> CQ Attachment</label>
@@ -2918,8 +3243,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2939,6 +3266,9 @@
                     Batch Disposition
                 </div>
                 <div class="row">
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
@@ -2959,6 +3289,13 @@
                             <input type="text" name="others_bd">
                         </div>
                     </div>
+                    <!-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Report Attachments">Required Action Plan? </label>
+                                        <input type="num" name="num">
+                                    </div>
+                                </div> -->
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
@@ -2970,13 +3307,16 @@
                         </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
@@ -2987,14 +3327,20 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="sub-head">Assessment for batch disposition</div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_parameters_results_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
@@ -3033,8 +3379,9 @@
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="any_market_complaints_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
 
                     <div class="col-md-12 mb-4">
@@ -3042,15 +3389,16 @@
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="statistical_evaluation_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="risk_analysis_disposition_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
 
                     </div>
@@ -3059,9 +3407,11 @@
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="conclusion_bd[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
+
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
@@ -3069,6 +3419,8 @@
                               <option value="0">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -3082,6 +3434,7 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -3089,6 +3442,7 @@
                             <textarea class="summernote" name="justify_for_delay_in_activity_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
+
                     </div>
                     <div class="col-12">
                         <div class="group-input">
@@ -3120,7 +3474,7 @@
             </div>
 
         </div>
-        <!-- Re-Open -->
+                <!-- Re-Open -->
         <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -3132,7 +3486,7 @@
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_specify_ro[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
 
@@ -3150,8 +3504,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3171,14 +3527,16 @@
                     Addendum Approval Comment
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Reopen Approval Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="reopen_approval_comments_uaa[]" id="summernote-1">
-                            </textarea>
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Addendum Attachment</label>
@@ -3195,6 +3553,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3349,12 +3709,13 @@
                     Under Addendum Review
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Addendum Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="addendum_review_comments_uar[]" id="summernote-1">
-                            </textarea>
+                    </textarea>
                         </div>
                     </div>
 
@@ -3372,8 +3733,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3422,6 +3785,8 @@
 
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
