@@ -607,453 +607,493 @@
             <!-- Tab content -->
             <!-- General Information -->
             <div id="CCForm1" class="inner-block cctabcontent">
-                <div class="inner-block-content">
+                    <div class="inner-block-content">
 
-                    <div class="sub-head">General Information</div>
-                    <div class="row">
+                        <div class="sub-head">General Information</div>
+                        <div class="row">
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"> Record Number </label>
-                            <input type="number" value="{{ $data->record_number ?? '' }}">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator"> Record Number </label>
+                                    <input type="number" value="{{ $data->record_number ?? '' }}">
+                                </div>
                             </div>
-                        </div>
 
-                       
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
-                                <input disabled type="text" name="division_code"
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label disabled for="Short Description">Division Code<span
+                                            class="text-danger"></span></label>
+                                    <input disabled type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initiator <span class="text-danger"></span></label>
+                                    <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-6 ">
-                            <div class="group-input ">
-                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                            <div class="col-md-6 ">
+                                <div class="group-input ">
+                                    <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                </div>
                             </div>
-                        </div>
-                        
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator"> Due Date
-                                </label>
 
-                                <small class="text-primary">
-                                    Please mention expected date of completion
-                                </small>
-                                <input type="date" id="date" name="due_date" value="{{ $data->due_date ?? '' }}">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator"> Due Date
+                                    </label>
 
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description"> Severity Level</label>
-                               <select name="severity_level_gi">
-                                    <option value="o">Enter Your Selection Here</option>
-                                    <option value="1" {{ $data->reference_system_document_gi == '1' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->reference_system_document_gi == '2' ? 'selected' : '' }}>2</option>
-                                </select>
-                            </div>
-                        </div>
-                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
-                                <select name="initiator_group">
-                                    <option selected disabled>---select---</option>
-                                    @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                                    <small class="text-primary">
+                                        Please mention expected date of completion
+                                    </small>
+                                    <input type="date" id="date" name="due_date" value="{{ $data->due_date ?? '' }}">
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" readonly value="{{ $data->initiator_group_code ?? '' }}">
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">Initiated Through </label>
-                                <textarea type="text" name="initiated_through_gi">{{ $data->initiated_through_gi ?? '' }}</textarea>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description"> Severity Level</label>
+                                    <select name="severity_level_gi">
+                                        <option value="o">Enter Your Selection Here</option>
+                                        <option value="1" {{ $data->reference_system_document_gi == '1' ? 'selected' :
+                                            '' }}>1</option>
+                                        <option value="2" {{ $data->reference_system_document_gi == '2' ? 'selected' :
+                                            '' }}>2</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Initiator Group Code">If Others</label>
-                            <select name="if_others_gi">
-                                <option value="o" {{ $data->if_others_gi == 'o' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>1</option>
-                                <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Initiator Group Code">Is Repeat?</label>
-                            <textarea type="is_repeat_gi" name="is_repeat_gi">{{ $data->is_repeat_gi }}</textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 mt-4">
-                        <div class="group-input">
-                            <label for="Initiator Group">Repeat Nature</label>
-                            <textarea type="text" name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Initiator Group">Nature of Change</label>
-                            <select name="nature_of_change_gi">
-                                <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ? 'selected' : '' }}>Lab Incident</option>
-                                <option value="deviation" {{ $data->nature_of_change_gi == 'deviation' ? 'selected' : '' }}>Deviation</option>
-                                <option value="product_nonconformance" {{ $data->nature_of_change_gi == 'product_nonconformance' ? 'selected' : '' }}>Product Non-                                             conformance</option>
-                                <option value="inspectional_observation" {{ $data->nature_of_change_gi == 'inspectional_observation' ? 'selected' : '' }}>Inspectional            Observation</option>
-                                <option value="others" {{ $data->nature_of_change_gi == 'others' ? 'selected' : '' }}>Others</option>
-                            </select>
-                        </div>
-                    </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Deviation Occurred On</label>
-                                <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initiator Group <span
+                                            class="text-danger"></span></label>
+                                    <select name="initiator_group">
+                                        <option selected disabled>---select---</option>
+                                        @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
+                                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
+                                            @endif>{{ $initiator_group }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Description</label>
-                                <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description">Initiator Group Code <span
+                                            class="text-danger"></span></label>
+                                    <input type="text" name="initiator_group_code" readonly
+                                        value="{{ $data->initiator_group_code ?? '' }}">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Initial Attachment</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
 
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="">
-                                      {{-- @if (is_array($data->capa_attachment)) --}}
-                                                        @if ($data->initial_attachment_gi)
-                                                            @foreach (json_decode($data->initial_attachment_gi) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
-                                                                    style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
-                                                                    <a href="{{ asset('upload/' . $file) }}"
-                                                                        target="_blank"><i class="fa fa-eye text-primary"
-                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
-                                                        {{-- @endif --}}
-                                                        @endif
-                                    
-                                    
-                                    </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Initiated Through </label>
+                                    <textarea type="text"
+                                        name="initiated_through_gi">{{ $data->initiated_through_gi ?? '' }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">If Others</label>
+                                    <select name="if_others_gi">
+                                        <option value="o" {{ $data->if_others_gi == 'o' ? 'selected' : '' }}>Enter Your
+                                            Selection Here</option>
+                                        <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>1</option>
+                                        <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group Code">Is Repeat?</label>
+                                    <textarea type="is_repeat_gi"
+                                        name="is_repeat_gi">{{ $data->is_repeat_gi }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-4">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Repeat Nature</label>
+                                    <textarea type="text"
+                                        name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Nature of Change</label>
+                                    <select name="nature_of_change_gi">
+                                        <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ?
+                                            'selected' : '' }}>Lab Incident</option>
+                                        <option value="deviation" {{ $data->nature_of_change_gi == 'deviation' ?
+                                            'selected' : '' }}>Deviation</option>
+                                        <option value="product_nonconformance" {{ $data->nature_of_change_gi ==
+                                            'product_nonconformance' ? 'selected' : '' }}>Product Non-conformance
+                                        </option>
+                                        <option value="inspectional_observation" {{ $data->nature_of_change_gi ==
+                                            'inspectional_observation' ? 'selected' : '' }}>Inspectional Observation
+                                        </option>
+                                        <option value="others" {{ $data->nature_of_change_gi == 'others' ? 'selected' :
+                                            '' }}>Others</option>
+                                    </select>
+                                </div>
+                            </div>
 
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="" multiple>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Deviation Occurred On</label>
+                                    <input type="date" name="deviation_occured_on_gi"
+                                        value="{{ $data->deviation_occured_on_gi }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Description</label>
+                                    <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Initial Attachment</label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="">
+                                            {{-- @if (is_array($data->capa_attachment)) --}}
+                                            @if ($data->initial_attachment_gi)
+                                            @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                        class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                            @endforeach
+                                            {{-- @endif --}}
+                                            @endif
+
+
+                                        </div>
+
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="initial_attachment_gi[]" oninput=""
+                                                multiple>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-6">
+
+                                <div class="group-input">
+                                    <label for="Source Document Type">Source Document Type</label>
+                                    <select name="source_document_type_gi">
+                                        <option value="0">Enter Your Selection Here</option>
+
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Reference System Document</label>
+                                    <select multiple id="reference_record" name="reference_system_document_gi" id="">
+                                        <option value="o">Enter Your Selection Here</option>
+                                        <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1
+                                        </option>
+                                        <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Reference Document</label>
+                                    <select multiple id="reference_record" name="reference_document" id="">
+                                        <option value="0">--Select---</option>
+                                        <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1
+                                        </option>
+                                        <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2
+                                        </option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="sub-head pt-3">OOS Information</div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Tnitiaror Grouo">Sample Type</label>
+                                    <select name="sample_type_gi">
+                                        <option value="0">Enter Your Selection Here</option>
+                                        <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ?
+                                            'selected' : '' }}>Raw Material</option>
+                                        <option value="packing_material" {{ $data->sample_type_gi == 'packing_material'
+                                            ? 'selected' : '' }}>Packing Material</option>
+                                        <option value="finished_product" {{ $data->sample_type_gi == 'finished_product'
+                                            ? 'selected' : '' }}>Finished Product</option>
+                                        <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample'
+                                            ? 'selected' : '' }}>Stability Sample</option>
+                                        <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : ''
+                                            }}>Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Short Description ">Product / Material Name</label>
+
+                                    <input type="text" value="{{$data->product_material_name_gi}}"
+                                        name="product_material_name_gi">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input ">
+                                    <label for="Short Description ">Market</label>
+
+                                    <input type="text" name="market_gi" value="{{$data->market_gi}}">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Customer*</label>
+                                    <select name="customer_gi">
+                                        <option value="0">Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes
+                                        </option>
+                                        <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+
+
+                            <!-- ---------------------------grid-1 -------------------------------- -->
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Info. On Product/ Material
+                                    <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-details-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="Product_Material_details"
+                                        style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 10%">Item/Product Code</th>
+                                                <th style="width: 8%"> Batch No*.</th>
+                                                <th style="width: 8%"> Mfg.Date</th>
+                                                <th style="width: 8%">Expiry Date</th>
+                                                <th style="width: 8%"> Label Claim.</th>
+                                                <th style="width: 8%">Pack Size</th>
+                                                <th style="width: 8%">Analyst Name</th>
+                                                <th style="width: 10%">Others (Specify)</th>
+                                                <th style="width: 10%"> In- Process Sample Stage.</th>
+                                                <th style="width: 12% pt-3">Packing Material Type</th>
+                                                <th style="width: 16% pt-2"> Stability for</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td><input type="text" name="info_product_code[]" value=""></td>
+                                            <td><input type="text" name="info_batch_no[]" value=""></td>
+                                            <td><input type="text" name="info_mfg_date[]" value=""></td>
+                                            <td><input type="text" name="info_expiry_date[]" value=""></td>
+                                            <td><input type="text" name="info_label_claim[]" value=""></td>
+                                            <td><input type="text" name="info_pack_size[]" value=""></td>
+                                            <td><input type="text" name="info_analyst_name[]" value=""></td>
+                                            <td><input type="text" name="info_others_specify[]" value=""></td>
+                                            <td><input type="text" name="info_process_sample_stage[]" value=""></td>
+                                            <td>
+                                                <select name="info_packing_material_type[]">
+                                                    <option value="Primary">Primary</option>
+                                                    <option value="Secondary">Secondary</option>
+                                                    <option value="Tertiary">Tertiary</option>
+                                                    <option value="Not Applicable">Not Applicable</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select name="info_stability_for[]">
+                                                    <option vlaue="Submission">Submission</option>
+                                                    <option vlaue="Commercial">Commercial</option>
+                                                    <option vlaue="Pack Evaluation">Pack Evaluation</option>
+                                                    <option vlaue="Not Applicable">Not Applicable</option>
+                                                </select>
+                                            </td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- -------------------------------grid-2  ----------------------------------   -->
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Details of Stability Study
+                                    <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-details-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="Details_Stability_details"
+                                        style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 8%">AR Number</th>
+                                                <th style="width: 12%">Condition: Temperature & RH</th>
+                                                <th style="width: 12%">Interval</th>
+                                                <th style="width: 16%">Orientation</th>
+                                                <th style="width: 16%">Pack Details (if any)</th>
+                                                <th style="width: 16%">Specification No.</th>
+                                                <th style="width: 16%">Sample Description</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td><input type="text" name="stability_study_arnumber[]"></td>
+                                            <td><input type="text" name="stability_study_condition_temprature_rh[]">
+                                            </td>
+                                            <td><input type="text" name="stability_study_Interval[]"></td>
+                                            <td><input type="text" name="stability_study_orientation[]"></td>
+                                            <td><input type="text" name="stability_study_pack_details[]"></td>
+                                            <td><input type="text" name="stability_study_specification_no[]"></td>
+                                            <td><input type="text" name="stability_study_sample_description[]"></td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!----------------grid-3----------------------------------- -->
+
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    OOS Details
+                                    <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-details-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 8%">AR Number.</th>
+                                                <th style="width: 8%">Test Name of OOS</th>
+                                                <th style="width: 12%">Results Obtained</th>
+                                                <th style="width: 16%">Specification Limit</th>
+                                                <th style="width: 16%">Details of Obvious Error</th>
+                                                <th style="width: 16%">File Attachment</th>
+                                                <th style="width: 16%">Submit By</th>
+                                                <th style="width: 16%">Submit On</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td><input type="text" name="oos_arnumber[]"></td>
+                                            <td><input type="text" name="oos_test_name[]"></td>
+                                            <td><input type="text" name="oos_results_obtained[]"></td>
+                                            <td><input type="text" name="oos_specification_limit[]"></td>
+                                            <td><input type="text" name="oos_details_obvious_error[]"></td>
+                                            <td><input type="file" name="oos_file_attachment[]"></td>
+                                            <td><input type="text" name="oos_submit_by[]"></td>
+                                            <td><input type="date" name="oos_submit_on[]"></td>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
                         </div>
-                       <div class="col-lg-6">
-    
-                <div class="group-input">
-                        <label for="Source Document Type">Source Document Type</label>
-                        <select name="source_document_type_gi">
-                            <option value="0">Enter Your Selection Here</option>
-                                
-                                 
-                        </select>
                     </div>
                 </div>
+                <!-- Preliminary Lab. Investigation -->
+                <div id="CCForm2" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">Preliminary Lab. Investigation </div>
+                        <div class="row">
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                   <option value="o">Enter Your Selection Here</option>
-                                    <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2</option>
-                              
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="reference_document" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2</option>
-                              
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="sub-head pt-3">OOS Information</div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Tnitiaror Grouo">Sample Type</label>
-                               <select name="sample_type_gi">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ? 'selected' : '' }}>Raw Material</option>
-                                    <option value="packing_material" {{ $data->sample_type_gi == 'packing_material' ? 'selected' : '' }}>Packing Material</option>
-                                    <option value="finished_product" {{ $data->sample_type_gi == 'finished_product' ? 'selected' : '' }}>Finished Product</option>
-                                    <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample' ? 'selected' : '' }}>Stability Sample</option>
-                                    <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : '' }}>Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Short Description ">Product / Material Name</label>
-
-                                <input type="text"  value="{{$data->product_material_name_gi}}" name="product_material_name_gi">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input ">
-                                <label for="Short Description ">Market</label>
-
-                                <input type="text" name="market_gi" value="{{$data->market_gi}}">
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Initiator Group">Customer*</label>
-                             <select name="customer_gi">
-                     <option value="0">Enter Your Selection Here</option>
-                    <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes</option>
-                    <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No</option>
-                </select> 
-
-                            </div>
-                        </div>
-
-
-                        <!-- ---------------------------grid-1 -------------------------------- -->
-                        <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 10%">Item/Product Code</th>
-                                            <th style="width: 8%"> Batch No*.</th>
-                                            <th style="width: 8%"> Mfg.Date</th>
-                                            <th style="width: 8%">Expiry Date</th>
-                                            <th style="width: 8%"> Label Claim.</th>
-                                            <th style="width: 8%">Pack Size</th>
-                                            <th style="width: 8%">Analyst Name</th>
-                                            <th style="width: 10%">Others (Specify)</th>
-                                            <th style="width: 10%"> In- Process Sample Stage.</th>
-                                            <th style="width: 12% pt-3">Packing Material Type</th>
-                                            <th style="width: 16% pt-2"> Stability for</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="info_product_code[]" value=""></td>
-                                        <td><input type="text" name="info_batch_no[]" value=""></td>
-                                        <td><input type="text" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
-                                        <td><input type="text" name="info_label_claim[]" value=""></td>
-                                        <td><input type="text" name="info_pack_size[]" value=""></td>
-                                        <td><input type="text" name="info_analyst_name[]" value=""></td>
-                                        <td><input type="text" name="info_others_specify[]" value=""></td>
-                                        <td><input type="text" name="info_process_sample_stage[]" value=""></td>
-                                        <td>
-                                            <select name="info_packing_material_type[]">
-                                                <option value="Primary">Primary</option>
-                                                <option value="Secondary">Secondary</option>
-                                                <option value="Tertiary">Tertiary</option>
-                                                <option value="Not Applicable">Not Applicable</option>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <select name="info_stability_for[]">
-                                                <option vlaue="Submission">Submission</option>
-                                                <option vlaue="Commercial">Commercial</option>
-                                                <option vlaue="Pack Evaluation">Pack Evaluation</option>
-                                                <option vlaue="Not Applicable">Not Applicable</option>
-                                            </select>
-                                        </td>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- -------------------------------grid-2  ----------------------------------   -->
-                        <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                Details of Stability Study
-                                <button type="button" name="audit-agenda-grid" id="Details_Stability">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="Details_Stability_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 8%">AR Number</th>
-                                            <th style="width: 12%">Condition: Temperature & RH</th>
-                                            <th style="width: 12%">Interval</th>
-                                            <th style="width: 16%">Orientation</th>
-                                            <th style="width: 16%">Pack Details (if any)</th>
-                                            <th style="width: 16%">Specification No.</th>
-                                            <th style="width: 16%">Sample Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="stability_study_arnumber[]"></td>
-                                        <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
-                                        <td><input type="text" name="stability_study_Interval[]"></td>
-                                        <td><input type="text" name="stability_study_orientation[]"></td>
-                                        <td><input type="text" name="stability_study_pack_details[]"></td>
-                                        <td><input type="text" name="stability_study_specification_no[]"></td>
-                                        <td><input type="text" name="stability_study_sample_description[]"></td> 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-        <!----------------grid-3----------------------------------- -->
-
-                        <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                OOS Details
-                                <button type="button" name="audit-agenda-grid" id="OOS_Details">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="OOS_Details_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 8%">AR Number.</th>
-                                            <th style="width: 8%">Test Name of OOS</th>
-                                            <th style="width: 12%">Results Obtained</th>
-                                            <th style="width: 16%">Specification Limit</th>
-                                            <th style="width: 16%">Details of Obvious Error</th>
-                                            <th style="width: 16%">File Attachment</th>
-                                            <th style="width: 16%">Submit By</th>
-                                            <th style="width: 16%">Submit On</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="oos_arnumber[]"></td>
-                                        <td><input type="text" name="oos_test_name[]"></td>
-                                        <td><input type="text" name="oos_results_obtained[]"></td>
-                                        <td><input type="text" name="oos_specification_limit[]"></td>
-                                        <td><input type="text" name="oos_details_obvious_error[]"></td>
-                                        <td><input type="file" name="oos_file_attachment[]"></td>
-                                        <td><input type="text" name="oos_submit_by[]"></td>
-                                        <td><input type="date" name="oos_submit_on[]"></td>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Preliminary Lab. Investigation -->
-            <div id="CCForm2" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">Preliminary Lab. Investigation </div>
-                    <div class="row">
-
-                        <div class="col-lg-12 mb-4">
-                            <div class="group-input">
-                                <label for="Audit Schedule Start Date"> Comments </label>
-                                <div class="col-md-12 4">
-                                    <div class="group-input">
-                                        <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                                        <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Comments_plidata[]" id="summernote-1">
-                                    </textarea>
+                            <div class="col-lg-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Audit Schedule Start Date"> Comments </label>
+                                    <div class="col-md-12 4">
+                                        <div class="group-input">
+                                            <!-- <label for="Description Deviation">Description of Deviation</label> -->
+                                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                            <textarea class="summernote" name="Comments_plidata" value=""
+                                                id="summernote-1">{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
+                                            </textarea>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Schedule End Date"> Field Alert Required</label>
-                                <select name="field_alert_required">
-                                    <option name="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Schedule End Date"> Field Alert Required</label>
+                                    <select name="field_alert_required">
+                                        <option value="0" {{ $data->field_alert_required == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->field_alert_required == 'yes' ? 'selected' : ''
+                                            }}>Yes</option>
+                                        <option value="no" {{ $data->field_alert_required == 'no' ? 'selected' : ''
+                                            }}>No</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Field Alert Ref.No.
-                                </label>
-                                <select multiple id="reference_record" name="field_alert_ref_no_pli" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Field Alert Ref.No.
+                                    </label>
+                                    <select multiple id="reference_record" name="field_alert_ref_no_pli" id="">
+                                        <option value="0" {{ $data->field_alert_ref_no_pli == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="1" {{ $data->field_alert_ref_no_pli == 'yes' ? 'selected' : ''
+                                            }}>1</option>
+                                        <option value="2" {{ $data->field_alert_ref_no_pli == 'no' ? 'selected' : ''
+                                            }}>2</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Justify if no Field Alert</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
-                                    </textarea>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Justify if no Field Alert</label>
+
+                                    <textarea class="summernote" name="justify_if_no_field_alert_pli" value=""
+                                        id="summernote-1">
+                              {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
+                                </div>
                             </div>
-                        </div>
-                        <!-- <div class="col-lg-6">
+                            <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Facility Name"> Facility Name </label>
                                                 <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
@@ -1085,968 +1125,1234 @@
                                                 </select>
                                             </div>
                                         </div> -->
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name"> Verification Analysis Required</label>
-                                <select name="verification_analysis_required_pli">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Verification Analysis Ref.</label>
-                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name"> Verification Analysis Required</label>
+                                    <select name="verification_analysis_required_pli">
+                                        <option value="0" {{ $data->verification_analysis_required_pli == '0' ?
+                                            'selected' : '' }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->verification_analysis_required_pli == 'yes' ?
+                                            'selected' : '' }}>yes</option>
+                                        <option value="no" {{ $data->verification_analysis_required_pli == 'no' ?
+                                            'selected' : '' }}>no</option>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Analyst Interview Req.</label>
-                                <select name="analyst_interview_req_pli">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12 mb-4">
-                            <div class="group-input">
-                                <label for="Audit Schedule Start Date">Justify if no Analyst Int. </label>
-
-                                <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
-                                    </textarea>
-
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Phase I Investigation Required</label>
-                                <select name="phase_i_investigation_required_pli">
-                                     <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Phase I Investigation</label>
-                                <select name="phase_i_investigation_pli">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Phase I Micro</option>
-                                    <option>Phase I Chemical</option>
-                                    <option>Hypothesis</option>
-                                    <option>Resampling</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments">File Attachments</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attachments_pli[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                    </div>
+                                    </select>
                                 </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Verification Analysis Ref.</label>
+                                    <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
+                                        <option value="0" {{ $data->verification_analysis_ref_pli == '0' ? 'selected' :
+                                            '' }}>Enter Your Selection Here</option>
+                                        <option value="1" {{ $data->verification_analysis_ref_pli == '1' ? 'selected' :
+                                            '' }}>1</option>
+                                        <option value="2" {{ $data->verification_analysis_ref_pli == '2' ? 'selected' :
+                                            '' }}>2</option>
 
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name">Analyst Interview Req.</label>
+                                    <select name="analyst_interview_req_pli">
+                                        <option value="0" {{ $data->analyst_interview_req_pli == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->analyst_interview_req_pli == 'yes' ? 'selected' :
+                                            '' }}>yes</option>
+                                        <option value="no" {{ $data->analyst_interview_req_pli == 'no' ? 'selected' : ''
+                                            }}>no</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Analyst Interview Ref.</label>
+                                    <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
+                                        <option value="0" {{ $data->analyst_interview_ref_pli == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="1" {{ $data->analyst_interview_ref_pli == '1' ? 'selected' : ''
+                                            }}>1</option>
+                                        <option value="2" {{ $data->analyst_interview_ref_pli == '2' ? 'selected' : ''
+                                            }}>2</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Audit Schedule Start Date">Justify if no Analyst Int. </label>
+
+                                    <!-- <label for="Description Deviation">Description of Deviation</label> -->
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="justify_if_no_analyst_int_pli" value=""
+                                        id="summernote-1">
+                                  {{$data && $data->justify_if_no_analyst_int_pli ? $data->justify_if_no_analyst_int_pli : ''}}  </textarea>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name">Phase I Investigation Required</label>
+                                    <select name="phase_i_investigation_required_pli">
+                                        <option value="0" {{ $data->phase_i_investigation_required_pli == '0' ?
+                                            'selected' : '' }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->phase_i_investigation_required_pli == 'yes' ?
+                                            'selected' : '' }}>yes</option>
+                                        <option value="no" {{ $data->phase_i_investigation_required_pli == 'no' ?
+                                            'selected' : '' }}>no</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name">Phase I Investigation</label>
+                                    <select name="phase_i_investigation_pli">
+                                        <option value="0">Enter Your Selection Here</option>
+                                        <option value="phase_i_micro" {{ $data->phase_i_investigation_pli ==
+                                            'phase_i_micro' ? 'selected' : '' }}>Phase I Micro</option>
+                                        <option value="phase_i_chemical" {{ $data->phase_i_investigation_pli ==
+                                            'phase_i_chemical' ? 'selected' : '' }}>Phase I Chemical</option>
+                                        <option value="hypothesis" {{ $data->phase_i_investigation_pli == 'hypothesis' ?
+                                            'selected' : '' }}>Hypothesis</option>
+                                        <option value="resampling" {{ $data->phase_i_investigation_pli == 'resampling' ?
+                                            'selected' : '' }}>Resampling</option>
+                                        <option value="others" {{ $data->phase_i_investigation_pli == 'others' ?
+                                            'selected' : '' }}>Others</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Phase I Investigation Ref.</label>
+                                    <select multiple id="reference_record" name="phase_i_investigation_ref_pli">
+                                        <option value="0" {{ $data->phase_i_investigation_ref_pli == 0 ? 'selected' : ''
+                                            }}>--Select---</option>
+                                        <option value="1" {{ $data->phase_i_investigation_ref_pli == 1 ? 'selected' : ''
+                                            }}>1</option>
+                                        <option value="2" {{ $data->phase_i_investigation_ref_pli == 2 ? 'selected' : ''
+                                            }}>2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Attachments">File Attachments</label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach"></div>
+                                        @if ($data->file_attachments_pli)
+                                        @foreach (json_decode($data->file_attachments_pli) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        {{-- @endif --}}
+                                        @endif
+
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="file_attachments_pli[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <center>
+                                    <label style="font-weight: bold; for=" Audit Attachments">PHASE- I B INVESTIGATION
+                                        REPORT</label>
+                                </center>
+
+                                <div class="group-input ">
+
+                                    <div class="why-why-chart mx-auto" style="width: 100%">
+
+                                        <table class="table table-bordered ">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 5%;">Sr.No.</th>
+                                                    <th style="width: 40%;">Question</th>
+                                                    <th style="width: 20%;">Response</th>
+                                                    <th>Remarks</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="flex text-center">1</td>
+                                                    <td>Aliquot and standard solutions preserved.</td>
+                                                    <td>
+
+
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">2</td>
+                                                    <td>Visual examination (solid and solution) reveals normal or
+                                                        abnormal
+                                                        appearance.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">3</td>
+                                                    <td>The analyst is trained on the method.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+
+                                                    <td class="flex text-center">4</td>
+                                                    <td>Correct test procedure followed e.g. Current Version of standard
+                                                        testing
+                                                        procedure has been used in testing.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">5</td>
+                                                    <td>Current Validated analytical Method has been used and the data
+                                                        of
+                                                        analytical method validation has been reviewed and found
+                                                        satisfactory.
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">6</td>
+                                                    <td>Correct sample(s) tested.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">7</td>
+                                                    <td>Sample Integrity maintained, correct container is used in
+                                                        testing.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">8</td>
+                                                    <td>Assessment of the possibility that the sample contamination
+                                                        (sample left
+                                                        open to air or unattended) has occurred during the testing/
+                                                        re-testing
+                                                        procedure. </td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">9</td>
+                                                    <td>All equipment used in the testing is within calibration due
+                                                        period.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">10</td>
+                                                    <td>Equipment log book has been reviewed and no any failure or
+                                                        malfunction
+                                                        has been reviewed.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+
+
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">11</td>
+                                                    <td>Any malfunctioning and / or out of calibration analytical
+                                                        instruments
+                                                        (including glassware) is used.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">12</td>
+                                                    <td>Whether reference standard / working standard is correct (in
+                                                        terms of
+                                                        appearance, purity, LOD/water content & its storage) and assay
+                                                        values
+                                                        are determined correctly.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">13</td>
+                                                    <td>Whether test solution / volumetric solution used are properly
+                                                        prepared &
+                                                        standardized.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">14</td>
+                                                    <td>Review RSD, resolution factor and other parameters required for
+                                                        the
+                                                        suitability of the test system. Check if any out of limit
+                                                        parameters is
+                                                        included in the chromatographic analysis, correctness of the
+                                                        column used
+                                                        previous use of the column.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">15</td>
+                                                    <td>In the raw data, including chromatograms and spectra; any
+                                                        anomalous or
+                                                        suspect peaks or data has been observed.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">16</td>
+                                                    <td>Any such type of observation has been observed previously
+                                                        (Assay,
+                                                        Dissolution etc.).</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">17</td>
+                                                    <td>Any unusual or unexpected response observed with standard or
+                                                        test
+                                                        preparations (e.g. whether contamination of equipment by
+                                                        previous sample
+                                                        observed).</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">18</td>
+                                                    <td>System suitability conditions met (those before analysis and
+                                                        during
+                                                        analysis).</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">19</td>
+                                                    <td>Correct and clean pipette / volumetric flasks volumes, glassware
+                                                        used as
+                                                        per recommendation.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">20</td>
+                                                    <td>Other potentially interfering testing/activities occurring at
+                                                        the time
+                                                        of the test which might lead to OOS.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">21</td>
+                                                    <td>Review of other data for other batches performed within the same
+                                                        analysis set and any nonconformance observed.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">22</td>
+                                                    <td>Consideration of any other OOS results obtained on the batch of
+                                                        material
+                                                        under test and any non-conformance observed.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">23</td>
+                                                    <td>Media/Reagents prepared according to procedure.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">24</td>
+                                                    <td>All the materials are within the due period of expiry.</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">25</td>
+                                                    <td>Whether, analysis was performed by any other alternate validated
+                                                        procedure</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">26</td>
+                                                    <td>Whether environmental condition is suitable to perform the test.
+                                                    </td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">27</td>
+                                                    <td>Interview with analyst to assess knowledge of the correct
+                                                        procedure</td>
+                                                    <td>
+                                                        <div
+                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                            <select name="response" id="response"
+                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="Yes">Yes</option>
+                                                                <option value="No">No</option>
+                                                                <option value="N/A">N/A</option>
+                                                            </select>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div
+                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="what_will_not_be"
+                                                                style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" id="ChangeNextButton" class="nextButton"
+                                    onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="col-12">
-                            <center>
-                                <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
-                            </center>
-                            
-                            <div class="group-input " >
-                                
-                                <div class="why-why-chart mx-auto" style="width: 100%">
+                </div>
+                <!-- Preliminary Lab Inv. Conclusion -->
+                <div id="CCForm3" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">Investigation Conclusion</div>
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Summary of Prelim.Investiga.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="summary_of_prelim_investiga_plic"
+                                        id="summernote-1">
+                                    {{ $data && $data->summary_of_prelim_investiga_plic ? '': ''}}</textarea>
+                                </div>
+                            </div>
 
-                                    <table class="table table-bordered ">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Lead Auditor">Root Cause Identified</label>
+                                    <!-- <div class="text-primary">Please Choose the relevent units</div> -->
+                                    <select name="root_cause_identified_plic">
+                                        <option value="0" {{ $data->root_cause_identified_plic == '0' ? 'selected' : ''
+                                            }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->root_cause_identified_plic == 'yes' ? 'selected' :
+                                            '' }}>yes</option>
+                                        <option value="no" {{ $data->root_cause_identified_plic == 'no' ? 'selected' :
+                                            '' }}>no</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
+                                    <select name="oos_category_root_cause_ident_plic">
+                                        <option value="0">Enter Your Selection Here</option>
+                                        <option value="analyst_error" {{ $data->oos_category_root_cause_ident_plic ==
+                                            'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
+                                        <option value="instrument_error" {{ $data->oos_category_root_cause_ident_plic ==
+                                            'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
+                                        <option value="product_material_error" {{ $data->
+                                            oos_category_root_cause_ident_plic == 'product_material_error' ? 'selected'
+                                            : '' }}>Product/Material Related Error</option>
+                                        <option value="other_error" {{ $data->oos_category_root_cause_ident_plic ==
+                                            'other_error' ? 'selected' : '' }}>Other Error</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">OOS Category (Others)</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="oos_category_others_plic" id="summernote-1"
+                                        value="">
+                                   {{ $data->oos_category_others_plic }}
+                 
+                                   </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Root Cause Details</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
+                                   {{ $data->root_cause_details_plic }}
+                                </textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not
+                                            require completion</small></div>
+                                    <textarea class="summernote" name="Description_Deviation" id="summernote-1"
+                                        value="">
+
+                                    </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name">Recommended Actions Required?</label>
+                                    <select name="recommended_actions_required_plic">
+                                        <option value="0" {{ $data->recommended_actions_required_plic == '0' ?
+                                            'selected' : '' }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data->recommended_actions_required_plic == 'yes' ?
+                                            'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ $data->recommended_actions_required_plic == 'no' ?
+                                            'selected' : '' }}>No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Recores">Recommended Actions Reference
+                                    </label>
+                                    <select multiple id="reference_record" name="recommended_actions_reference_plic[]">
+                                        <option value="0" {{ $data->recommended_actions_reference_plic == '0' ?
+                                            'selected' : '' }}>--Select---</option>
+                                        <option value="1" {{ $data->recommended_actions_reference_plic == '1' ?
+                                            'selected' : '' }}>1</option>
+                                        <option value="2" {{ $data->recommended_actions_reference_plic == '2' ?
+                                            'selected' : '' }}>2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Product/Material Name">CAPA Required</label>
+                                    <select name="capa_required_plic">
+                                        <option value="0" {{ $data->capa_required_plic == '0' ? 'selected' : ''
+                                            }}>--Select---</option>
+                                        <option value="yes" {{ $data->capa_required_plic == 'yes' ? 'selected' : ''
+                                            }}>Yes</option>
+                                        <option value="no" {{ $data->capa_required_plic == 'no' ? 'selected' : '' }}>No
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Agenda">Reference CAPA No.</label>
+                                    <input type="text" value="{{$data->reference_capa_no_plic}}"
+                                        name="reference_capa_no_plic">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="delay_justification_for_pi_plic"
+                                        id="summernote-1" value="">
+                                     {{ $data->delay_justification_for_pi_plic ? '' : ''  }}
+
+                                </textarea>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachment </label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach">
+
+                                            @if ($data->supporting_attachment_plic)
+                                            @foreach (json_decode($data->supporting_attachment_plic) as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                        class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                            @endforeach
+                                            @endif
+
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="supporting_attachment_plic[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" id="ChangeNextButton" class="nextButton"
+                                    onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Preliminary Lab Invst. Review--->
+                <div id="CCForm4" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="sub-head">Preliminary Lab Invstigation Review</div>
+                        <div class="row">
+                            <div class="col-md-12 mb-4">
+                                <div class="group-input">
+                                    <label for="Description Deviation">Review Comments</label>
+                                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                    <textarea class="summernote" name="review_comments_plir" id="summernote-1"
+                                        value="">
+
+                           {{  $data->review_comments_plir ?'' : '' }}
+           
+                                </textarea>
+                                </div>
+                            </div>
+
+                            <div class="sub-head">OOS Review for Similar Nature</div>
+
+                            <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Info. On Product/ Material
+                                    <button type="button" name="audit-agenda-grid" id="oos_capa">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-details-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="oos_capa_details" style="width: 100%;">
                                         <thead>
                                             <tr>
-                                                <th style="width: 5%;">Sr.No.</th>
-                                                <th style="width: 40%;">Question</th>
-                                                <th style="width: 20%;">Response</th>
-                                                <th>Remarks</th>
+                                                <th style="width: 4%">Row#</th>
+                                                <th style="width: 8%">OOS Number</th>
+                                                <th style="width: 8%"> OOS Reported Date</th>
+                                                <th style="width: 12%">Description of OOS</th>
+                                                <th style="width: 16%">Previous OOS Root Cause</th>
+                                                <th style="width: 16%"> CAPA</th>
+                                                <th style="width: 16% pt-3">Closure Date of CAPA</th>
+                                                <th style="width: 16%">CAPA Requirement</th>
+
+                                                <th style="width: 16%">Reference CAPA Number</th>
+
+
+
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td class="flex text-center">1</td>
-                                                <td>Aliquot and standard solutions preserved.</td>
-                                                <td>
+                                            {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                            <td><input type="text" name="Number[]"></td>
+                                            <td><input type="text" name="Name[]"></td>
+                                            <td><input type="text" name="Remarks[]"></td>
+                                            <td><input type="text" name="Number[]"></td>
+                                            <td><input type="text" name="Name[]"></td>
+                                            <td><input type="text" name="Remarks[]"></td>
+                                            <td><select name="CAPARequirement[]">
+                                                    <option>Yes</option>
+                                                    <option>No</option>
+                                                </select></td>
+                                            <td><input type="text" name="Name[]"></td> --}}
 
 
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">2</td>
-                                                <td>Visual examination (solid and solution) reveals normal or abnormal
-                                                    appearance.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">3</td>
-                                                <td>The analyst is trained on the method.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                               
-                                                <td class="flex text-center">4</td>
-                                                <td>Correct test procedure followed e.g. Current Version of standard testing
-                                                    procedure has been used in testing.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">5</td>
-                                                <td>Current Validated analytical Method has been used and the data of
-                                                    analytical method validation has been reviewed and found satisfactory.
-                                                </td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">6</td>
-                                                <td>Correct sample(s) tested.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">7</td>
-                                                <td>Sample Integrity maintained, correct container is used in testing.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">8</td>
-                                                <td>Assessment of the possibility that the sample contamination (sample left
-                                                    open to air or unattended) has occurred during the testing/ re-testing
-                                                    procedure. </td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">9</td>
-                                                <td>All equipment used in the testing is within calibration due period.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">10</td>
-                                                <td>Equipment log book has been reviewed and no any failure or malfunction
-                                                    has been reviewed.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-
-
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">11</td>
-                                                <td>Any malfunctioning and / or out of calibration analytical instruments
-                                                    (including glassware) is used.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">12</td>
-                                                <td>Whether reference standard / working standard is correct (in terms of
-                                                    appearance, purity, LOD/water content & its storage) and assay values
-                                                    are determined correctly.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                               <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">13</td>
-                                                <td>Whether test solution / volumetric solution used are properly prepared &
-                                                    standardized.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">14</td>
-                                                <td>Review RSD, resolution factor and other parameters required for the
-                                                    suitability of the test system. Check if any out of limit parameters is
-                                                    included in the chromatographic analysis, correctness of the column used
-                                                    previous use of the column.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">15</td>
-                                                <td>In the raw data, including chromatograms and spectra; any anomalous or
-                                                    suspect peaks or data has been observed.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">16</td>
-                                                <td>Any such type of observation has been observed previously (Assay,
-                                                    Dissolution etc.).</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                 <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">17</td>
-                                                <td>Any unusual or unexpected response observed with standard or test
-                                                    preparations (e.g. whether contamination of equipment by previous sample
-                                                    observed).</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">18</td>
-                                                <td>System suitability conditions met (those before analysis and during
-                                                    analysis).</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">19</td>
-                                                <td>Correct and clean pipette / volumetric flasks volumes, glassware used as
-                                                    per recommendation.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">20</td>
-                                                <td>Other potentially interfering testing/activities occurring at the time
-                                                    of the test which might lead to OOS.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">21</td>
-                                                <td>Review of other data for other batches performed within the same
-                                                    analysis set and any nonconformance observed.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                 <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">22</td>
-                                                <td>Consideration of any other OOS results obtained on the batch of material
-                                                    under test and any non-conformance observed.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">23</td>
-                                                <td>Media/Reagents prepared according to procedure.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                 <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">24</td>
-                                                <td>All the materials are within the due period of expiry.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                 <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">25</td>
-                                                <td>Whether, analysis was performed by any other alternate validated
-                                                    procedure</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">26</td>
-                                                <td>Whether environmental condition is suitable to perform the test.</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                 <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td class="flex text-center">27</td>
-                                                <td>Interview with analyst to assess knowledge of the correct procedure</td>
-                                                <td>
-                                                    <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
-                                                        </select>
-                                                    </div>
-                                                </td>
-                                                <td style="vertical-align: middle;">
-                                                    <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                    </div>
-                                                </td>
-                                            </tr>
                                         </tbody>
+
                                     </table>
                                 </div>
-                                
                             </div>
-                        </div>
 
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
 
-            </div>
-            <!-- Preliminary Lab Inv. Conclusion -->
-            <div id="CCForm3" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">Investigation Conclusion</div>
-                    <div class="row">
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Summary of Prelim.Investiga.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Lead Auditor">Root Cause Identified</label>
-                                <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                                <select name="root_cause_identified_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                                <select name="oos_category_root_cause_ident_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Analyst Error</option>
-                                    <option>Instrument Error</option>
-                                    <option>Product/Material Related Error</option>
-                                    <option>Other Error</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Root Cause Details</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Recommended Actions Required?</label>
-                                <select name="recommended_actions_required_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Recommended Actions Reference
-                                </label>
-                                <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
-                                    <option value="1">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">CAPA Required</label>
-                                <select name="capa_required_plic">
-                                <option value="0">--Select---</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="text" name="reference_capa_no_plic">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Delay Justification for P.I.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Audit Attachments"> Supporting Attachment </label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                    </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Start Date">Phase II Inv. Required?</label>
+                                    <select name="phase_ii_inv_required_plir">
+                                        <option value="0" {{ $data && $data->phase_ii_inv_required_plir == '0' ?
+                                            'selected' : '' }}>Enter Your Selection Here</option>
+                                        <option value="yes" {{ $data && $data->phase_ii_inv_required_plir == 'yes' ?
+                                            'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ $data && $data->phase_ii_inv_required_plir == 'no' ?
+                                            'selected' : '' }}>No</option>
+                                    </select>
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Preliminary Lab Invst. Review--->
-            <div id="CCForm4" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">Preliminary Lab Invstigation Review</div>
-                    <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Audit Attachments"> Supporting Attachments</label>
+                                    <small class="text-primary">
+                                        Please Attach all relevant or supporting documents
+                                    </small>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="file_attach">
 
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Review Comments</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
 
-                        <div class="sub-head">OOS Review for Similar Nature</div>
+                                            @if ($data->supporting_attachments_plir)
+                                            @foreach (json_decode($data->supporting_attachments_plir) as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                        class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                            @endforeach
+                                            @endif
 
-                        <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
-                        <div class="group-input">
-                            <label for="audit-agenda-grid">
-                                Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="oos_capa">+</button>
-                                <span class="text-primary" data-bs-toggle="modal"
-                                    data-bs-target="#document-details-field-instruction-modal"
-                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                    (Launch Instruction)
-                                </span>
-                            </label>
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="oos_capa_details" style="width: 100%;">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 4%">Row#</th>
-                                            <th style="width: 8%">OOS Number</th>
-                                            <th style="width: 8%"> OOS Reported Date</th>
-                                            <th style="width: 12%">Description of OOS</th>
-                                            <th style="width: 16%">Previous OOS Root Cause</th>
-                                            <th style="width: 16%"> CAPA</th>
-                                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
-                                            <th style="width: 16%">CAPA Requirement</th>
-                                            <th style="width: 16%">Reference CAPA Number</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="Info OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>
-                                        <td><input type="date" name="info_oos_reported_date[]" value=""></td>
-                                        <td><input type="text" name="info_oos_description[]" value=""></td>
-                                        <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
-                                        <td><input type="text" name="info_oos_capa[]" value=""></td>
-                                        <td><input type="date" name="info_oos_closure_date[]" value=""></td>
-                                        <td><select name="info_oos_capa_requirement[]">
-                                                <option value="yes">Yes</option>
-                                                <option value="No">No</option>
-                                            </select></td>
-                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td> 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Start Date"> Phase II Inv. Required?</label>
-                                <select name="phase_ii_inv_required_plir">
-                                    <option>Enter Your Selection Here</option>
-                                   <option value="0">--Select---</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Attachments"> Supporting Attachments</label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="supporting_attachments_plir[]"
+                                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
                                     </div>
+
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
+                            <div class="button-block">
+                                <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" id="ChangeNextButton" class="nextButton"
+                                    onclick="nextStep()">Next</button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                        Exit </a> </button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
 
         {{-- done by kuldip --}}
@@ -2061,8 +2367,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
+                            {{$data->qa_approver_comments_piii ? $data->qa_approver_comments_piii : ""}}</textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -2070,27 +2376,26 @@
                             <label for="Report Attachments"> Manufact. Invest. Required? </label>
                             <select name="manufact_invest_required_piii">
                                 <option value="0">Enter Your Selection Here</option>
-                                <option value="no">Yes</option>
-                                <option value="no">No</option>
+                                <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
+                                        '' }}>1</option>
+                                <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
+                                        }}>2</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
-
-
                             <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="0">Chemical</option>
-                                <option value="1">Microbiology</option>
-
+                                <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
+                                        '' }}>Chemical</option>
+                                <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
+                                        }}>Microbiology</option>
                             </select>
                         </div>
                     </div>
-
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
@@ -2114,7 +2419,9 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Comments"> Audit Comments </label>
-                            <textarea  input type="audit_comments_piii" name="audit_comments_piii"></textarea>
+                            <textarea  input type="audit_comments_piii" name="audit_comments_piii">
+                            {{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
+                            </textarea>
                         </div>
                     </div>
 
@@ -2123,8 +2430,10 @@
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
                             <select multiple id="reference_record" name="re_sampling_ref_no_piii" id="">
                                 <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                <option value="yes" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
+                                        '' }}>1</option>
+                                <option value="no" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
+                                        }}>2</option>
                             </select>
                         </div>
                     </div>
@@ -2549,197 +2858,252 @@
                 </div>
             </div>
         </div>
-                <!-- Phase II QC Review -->
-                <div id="CCForm6" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">Summary of Phase II Testing</div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Summary of Exp./Hyp.</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Summary Mfg. Investigation</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Cancelled By"> Root Casue Identified. </label>
-                            <select name="root_casue_identified_piiqcr">
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Cancelled By">OOS Category-Reason identified </label>
-                            <select name="oos_category_reason_identified_piiqcr">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="analyst_error">Analyst Error</option>
-                                <option value="instrument_error">Instrument Error</option>
-                                <option value="product_material_related_error">Product/Material Related Error</option>
-                                <option value="other_error">Other Error</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Preparation Completed On">Others (OOS category)</label>
-                            <input type="text" name="others_oos_category_piiqcr">
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Details of Root Cause</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Impact Assessment.</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
-                          <select name="recommended_action_required_piiqcr">
-                                <option value="yes">Yes</option>
-                                <option  value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Recommended Action Reference</label>
-                            <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Observation Submitted On">Investi. Required</label>
-                            <select name="investi_required_piiqcr">
-                                <option value="yes">Yes</option>
-                                <option  value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Invest ref.</label>
-                            <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Audit Lead More Info Reqd On">Attachments </label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
+               <!-- Phase II QC Review -->
+            <div id="CCForm6" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">Summary of Phase II Testing</div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Summary of Exp./Hyp.</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
+                            {{$data->summary_of_exp_hyp_piiqcr ?  $data->summary_of_exp_hyp_piiqcr : ''}}
+                            </textarea>
                             </div>
-
                         </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Summary Mfg. Investigation</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1">
+                            {{$data->summary_mfg_investigation_piiqcr ? $data->summary_mfg_investigation_piiqcr : ''}}
+                                    
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Cancelled By"> Root Casue Identified. </label>
+                                <select name="root_casue_identified_piiqcr">
+                                    <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
+                                        '' }}>Yes</option>
+                                    <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
+                                        }}>No</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Cancelled By">OOS Category-Reason identified </label>
+                                <select name="oos_category_reason_identified_piiqcr">
+                                    <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
+                                        'selected' : '' }}>Enter Your Selection Here</option>
+                                    <option value="analyst_error" {{ $data->oos_category_reason_identified_piiqcr ===
+                                        'analyst_error' ? 'selected' : '' }}>Analyst Error</option>
+                                    <option value="instrument_error" {{ $data->oos_category_reason_identified_piiqcr ===
+                                        'instrument_error' ? 'selected' : '' }}>Instrument Error</option>
+                                    <option value="product_material_related_error" {{ $data->
+                                        oos_category_reason_identified_piiqcr === 'product_material_related_error' ?
+                                        'selected' : '' }}>Product/Material Related Error</option>
+                                    <option value="other_error" {{ $data->oos_category_reason_identified_piiqcr ===
+                                        'other_error' ? 'selected' : '' }}>Other Error</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Preparation Completed On">Others (OOS category)</label>
+                                <input type="text" name="others_oos_category_piiqcr"
+                                    value="{{$data->others_oos_category_piiqcr}}">
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Details of Root Cause</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                            {{$data->impact_assessment_piiqcr ? '$data->impact_assessment_piiqcr' : ''}}
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Impact Assessment.</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
+                              {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ""}}
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
+                                <select name="root_casue_identified_piiqcr">
+                                    <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
+                                        '' }}>Yes</option>
+                                    <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
+                                        }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Recommended Action Reference</label>
+                                <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]">
+                                    <option value="0" {{ $data->recommended_action_reference_piiqcr === '0' ? 'selected'
+                                        : '' }}>--Select---</option>
+                                    <option value="1" {{ $data->recommended_action_reference_piiqcr === '1' ? 'selected'
+                                        : '' }}>1</option>
+                                    <option value="2" {{ $data->recommended_action_reference_piiqcr === '2' ? 'selected'
+                                        : '' }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Observation Submitted On">Investi. Required</label>
+                                <select name="investi_required_piiqcr">
+                                    <option value="yes" {{ $data->investi_required_piiqcr === 'yes' ? 'selected' : ''
+                                        }}>Yes</option>
+                                    <option value="no" {{ $data->investi_required_piiqcr === 'no' ? 'selected' : ''
+                                        }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Invest ref.</label>
+                                <select multiple id="reference_record" name="invest_ref_piiqcr[]">
+                                    <option value="0" {{ $data->invest_ref_piiqcr === '0' ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ $data->invest_ref_piiqcr === '1' ? 'selected' : '' }}>1
+                                    </option>
+                                    <option value="2" {{ $data->invest_ref_piiqcr === '2' ? 'selected' : '' }}>2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Lead More Info Reqd On">Attachments </label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->attachments_piiqcr)
+                                        @foreach(json_decode($data->attachments_piiqcr) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="attachments_piiqcr[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+
+
+
+
                     </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-
-
-
-
                 </div>
             </div>
-        </div>
-        <!--Additional Testing Proposal  -->
-        <div id="CCForm7" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Additional Testing Proposal by QA
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Review Comment</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="review_comment_atp[]" id="summernote-1">
-                                    </textarea>
-                        </div>
+            <!--Additional Testing Proposal  -->
+            <div id="CCForm7" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Additional Testing Proposal by QA
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments"> Additional Test Proposal </label>
-                            <select name="additional_test_proposal_atp">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Review Comment</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="review_comment_atp" id="summernote-1">
+                            {{ $data->review_comment_atp ?? '' }}
+                        </textarea>
+                            </div>
                         </div>
-                    </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments"> Additional Test Proposal </label>
+                                <select name="additional_test_proposal_atp">
+                                    <option value="0" {{ $data->additional_test_proposal_atp == '0' ? 'selected' : ''
+                                        }}>Enter Your Selection Here</option>
+                                    <option value="Yes" {{ $data->additional_test_proposal_atp == 'Yes' ? 'selected' :
+                                        '' }}>Yes</option>
+                                    <option value="No" {{ $data->additional_test_proposal_atp == 'No' ? 'selected' : ''
+                                        }}>No</option>
+                                </select>
+                            </div>
+                        </div>
 
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Additional Test Reference.
-                            </label>
-                            <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Additional Test Reference</label>
+                                <select multiple id="reference_record" name="additional_test_reference_atp[]">
+                                    <option value="0" {{ in_array('0', $data->additional_test_reference_atp ?? []) ?
+                                        'selected' : '' }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->additional_test_reference_atp ?? []) ?
+                                        'selected' : '' }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->additional_test_reference_atp ?? []) ?
+                                        'selected' : '' }}>2</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Any Other Actions Required</label>
-                            <select name="any_other_actions_required_atp">
-                                <option value="Yes">Yes</option>
-                                <option name="No">No</option>
-
-                            </select>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments"> Any Other Actions Required</label>
+                                <select name="any_other_actions_required_atp">
+                                    <option value="Yes" {{ $data->any_other_actions_required_atp == 'Yes' ? 'selected' :
+                                        '' }}>Yes</option>
+                                    <option value="No" {{ $data->any_other_actions_required_atp == 'No' ? 'selected' :
+                                        '' }}>No</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Reference</label>
-                            <select multiple id="reference_record" name="action_task_reference_atp" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Action Task Reference</label>
+                                <select multiple id="reference_record" name="action_task_reference_atp">
+                                    <option value="0" {{ in_array('0', $data->action_task_reference_atp ?? []) ?
+                                        'selected' : '' }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->action_task_reference_atp ?? []) ?
+                                        'selected' : '' }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->action_task_reference_atp ?? []) ?
+                                        'selected' : '' }}>2</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -2750,7 +3114,23 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+
+                                    @if ($data->additional_testing_attachment_atp)
+                                    @foreach(json_decode($data->additional_testing_attachment_atp) as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                    @endforeach
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
@@ -2771,1034 +3151,1254 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <!--OOS Conclusion  -->
-        <div id="CCForm8" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Conclusion Comments
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Conclusion Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_comments_oosc[]" id="summernote-1">
+    <!-- </div> -->
+            <!--OOS Conclusion  -->
+            <div id="CCForm8" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Conclusion Comments
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Conclusion Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">
+                                    {{ $data->conclusion_comments_oosc ?? '' }}
                                     </textarea>
-                        </div>
-                    </div>
-
-
-                    <!-- ---------------------------grid-1 -------------------------------- -->
-                    <div class="group-input">
-                        <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
-                            <span class="text-primary" data-bs-toggle="modal"
-                                data-bs-target="#document-details-field-instruction-modal"
-                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Analysis Detials</th>
-                                        <th style="width: 16%">Hypo./Exp./Add.Test PR No.</th>
-                                        <th style="width: 16%">Results</th>
-                                        <th style="width: 16%">Analyst Name.</th>
-                                        <th style="width: 16%">Remarks</th>
-
-
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td> --}}
-
-
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments">Specification Limit </label>
-                            <input type="text" name="specification_limit_oosc">
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Results to be Reported</label>
-                            <select name="results_to_be_reported_oosc">
-                                <option value="Intial">Initial</option>
-                                <option value="Retested_result">Retested Result</option>
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Final Reportable Results</label>
-                            <input type="text" name="final_reportable_results_oosc">
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justifi. for Averaging Results</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justifi_for_averaging_results_oosc[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">OOS Stands </label>
-                            <select name="oos_stands_oosc">
-                                <option value="Valid">Valid</option>
-                                <option value="Invalid">Invalid</option>
-
-
-
-                            </select>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CAPA Req.</label>
-                            <select name="capa_req_oosc">
-                                <option name="Yes">Yes</option>
-                                <option name="No">No</option>
-
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">CAPA Ref No.</label>
-                            <select multiple id="reference_record" name="capa_ref_no_oosc" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justify if CAPA not required</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_if_capa_not_required_oosc[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Action Plan Req.</label>
-                            <select name="action_plan_req_oosc">
-                                 <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Plan Ref.</label>
-                            <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justification for Delay</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justification_for_delay_oosc[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Attachments if Any</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!--OOS Conclusion Review -->
-        <div id="CCForm9" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Conclusion Review Comments
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Conclusion Review Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_review_comments_ocr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-
-                    <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
-                    <div class="group-input">
-                        <label for="audit-agenda-grid">
-                            Summary of OOS Test Results
-                            <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
-                            <span class="text-primary" data-bs-toggle="modal"
-                                data-bs-target="#document-details-field-instruction-modal"
-                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                (Launch Instruction)
-                            </span>
-                        </label>
-                        <div class="table-responsive">
-                            <table class="table table-bordered" id="oosconclusion_review_details"
-                                style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 4%">Row#</th>
-                                        <th style="width: 16%">Material/Product Name</th>
-                                        <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
-                                        <th style="width: 16%">Any Other Information</th>
-                                        <th style="width: 16%">Action Taken on Affec.batch</th>
-
-
-
-
-
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Number[]"></td> --}}
-
-
-
-
-                                </tbody>
-
-                            </table>
-                        </div>
-                    </div>
-
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Action Taken on Affec.batch</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-
-
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CAPA Req?</label>
-                            <select name="capa_req_ocr">
-                                  <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">CAPA Refer.</label>
-                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments">Required Action Plan? </label>
-                            <select name="req_action_plan_ocr">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Required Action Task?</label>
-                            <select name="req_action_task_ocr">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Reference.</label>
-                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Risk Assessment Req?</label>
-                            <select name="risk_assessment_req_ocr">
-                                <option name="Yes">Yes</option>
-                                <option name="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Risk Assessment Ref.</label>
-                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justify if No Risk Assessment</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Conclusion Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Approver</label>
-                            <input type="text" name="cq_approver">
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-                <!--CQ Review Comments -->
-                <div id="CCForm10" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    CQ Review Comments
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">CQ Review comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="cq_review_comments_ocqr[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments"> CAPA Required ?</label>
-                            <select name="capa_required_ocqr">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reference of CAPA </label>
-                            <input type="text" name="reference_of_capa_ocqr">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-
-
-                            <label for="Auditee"> Action plan requirement ? </label>
-                            <select multiple name="action_plan_requirement_ocqr" placeholder="Select Nature of Deviation"
-                                data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Ref Action Plan </label>
-                            <input type="text" name="ref_action_plan_ocqr">
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> CQ Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="cq_attachment_ocqr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Batch Disposition -->
-        <div id="CCForm11" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Batch Disposition
-                </div>
-                <div class="row">
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Category</label>
-                           <select name="oos_category_bd">
-                                <option value="default">Enter Your Selection Here</option>
-                                <option value="analyst_error">Analyst Error</option>
-                                <option value="instrument_error">Instrument Error</option>
-                                <option value="procedure_error">Procedure Error</option>
-                                <option value="product_related_error">Product Related Error</option>
-                                <option value="material_related_error">Material Related Error</option>
-                                <option value="other_error">Other Error</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Other's</label>
-                            <input type="text" name="others_bd">
-                        </div>
-                    </div>
-                    <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Report Attachments">Required Action Plan? </label>
-                                        <input type="num" name="num">
-                                    </div>
-                                </div> -->
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Material/Batch Release</label>
-                        <select name="material_batch_release_bd">
-                            <option value="default">Enter Your Selection Here</option>
-                            <option value="release">To Be Released</option>
-                            <option value="reject">To Be Rejected</option>
-                            <option value="other">Other Action (Specify)</option>
-                        </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_action_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="field_alert_reference_bd[]" id="">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="sub-head">Assessment for batch disposition</div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Parameters Results</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_parameters_results_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Trend of Previous Batches</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="trend_of_previous_batches_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Stability Data</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="stability_data_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Process Validation Data</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="process_validation_data_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Method Validation </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="method_validation_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Any Market Complaints </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="any_market_complaints_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Statistical Evaluation </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="statistical_evaluation_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Risk Analysis for Disposition </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="risk_analysis_disposition_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Conclusion </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Phase-III Inves. Required?</label>
-                            <select name="phase_inves_required_bd">
-                              <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-
-
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Phase-III Inves. Reference</label>
-                            <select multiple id="reference_record" name="phase_inves_reference_bd[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Justify for Delay in Activity</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_for_delay_in_activity_bd[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Disposition Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-                <!-- Re-Open -->
-        <div id="CCForm12" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Reopen Request
-                </div>
-                <div class="row">
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_action_specify_ro[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="reopen_attachment_ro[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!-- Under Addendum Approval -->
-        <div id="CCForm13" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Approval Comment
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Reopen Approval Comments </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="reopen_approval_comments_uaa[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="addendum_attachment_uaa[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
                             </div>
                         </div>
-                    </div>
 
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <!--Under Addendum Execution -->
-        <div id="CCForm14" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Execution Comment
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
+                        <!-- ---------------------------grid-1 -------------------------------- -->
                         <div class="group-input">
-                            <label for="Description Deviation">Execution Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="execution_comments_uae[]" id="summernote-1">
-                                    </textarea>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Required?</label>
-                            <select name="action_task_required_uae">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Reference No.</label>
-                            <select multiple id="reference_record" name="action_task_reference_no_uae[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addi.Testing Req?</label>
-                            <select name="addi_testing_req_uae">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addi.Testing Ref.</label>
-                            <select multiple id="reference_record" name="Addi_testing_ref_uae[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Investigation Req.?</label>
-                            <select name="investigation_req_uae">
-                               <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Investigation Ref.</label>
-                            <select multiple id="reference_record" name="investigation_ref_uae[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Hypo-Exp Req?</label>
-                            <select name="hypo_exp_req_uae">
-                             <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Hypo-Exp Ref.</label>
-                            <select multiple id="reference_record" name="hypo_exp_ref_uae[]" id="">
-                               <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Attachments
+                            <label for="audit-agenda-grid">
+                                Summary of OOS Test Results
+                                <button type="button" name="audit-agenda-grid" id="oos_conclusion">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
                             </label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="addendum_attachments_uae[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
-                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="oos_conclusion_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 16%">Analysis Detials</th>
+                                            <th style="width: 16%">Hypo./Exp./Add.Test PR No.</th>
+                                            <th style="width: 16%">Results</th>
+                                            <th style="width: 16%">Analyst Name.</th>
+                                            <th style="width: 16%">Remarks</th>
 
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td> --}}
+
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Specification Limit </label>
+                                <input type="text" value="{{$data->specification_limit_oosc}}" name="specification_limit_oosc">
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Results to be Reported</label>
+                                <select name="results_to_be_reported_oosc">
+                                    <option value="Initial" {{ $data->results_to_be_reported_oosc == 'Initial' ? 'selected' : ''
+                                        }}>Initial</option>
+                                    <option value="Retested_result" {{ $data->results_to_be_reported_oosc == 'Retested_result' ?
+                                        'selected' : '' }}>Retested Result</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Final Reportable Results</label>
+                                <input type="text" name="final_reportable_results_oosc"
+                                    value="{{ $data->final_reportable_results_oosc ?? '' }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justifi. for Averaging Results</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">
+                                            {{ $data->justifi_for_averaging_results_oosc ?? '' }}
+                                        </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">OOS Stands </label>
+                                <select name="oos_stands_oosc">
+                                    <option value="Valid" {{ $data->oos_stands_oosc == 'Valid' ? 'selected' : '' }}>Valid
+                                    </option>
+                                    <option value="Invalid" {{ $data->oos_stands_oosc == 'Invalid' ? 'selected' : '' }}>Invalid
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CAPA Req.</label>
+                                <select name="capa_req_oosc">
+                                    <option value="Yes" {{ $data->capa_req_oosc == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->capa_req_oosc == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">CAPA Ref No.</label>
+                                <select multiple id="reference_record" name="capa_ref_no_oosc[]">
+                                    <option value="0">--Select---</option>
+                                    {{-- {{ in_array('0', $data->capa_ref_no_oosc ?? []) ? 'selected' : '' }} --}}
+                                    
+                                    <option value="1">1
+                                    </option>
+
+                                    <option value="2">2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justify if CAPA not required</label>
+                                <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
+                                            {{ $data->justify_if_capa_not_required_oosc ?? '' }}
+                                        </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Action Plan Req.</label>
+                                <select name="action_plan_req_oosc">
+                                    <option value="Yes" {{ $data->action_plan_req_oosc == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->action_plan_req_oosc == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Action Plan Ref.</label>
+                                <select multiple id="reference_record" name="action_plan_ref_oosc[]">
+                                    <option value="0" {{ in_array('0', $data->action_plan_ref_oosc ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>1
+                                    </option>
+                                    <option value="2" {{ in_array('2', $data->action_plan_ref_oosc ?? []) ? 'selected' : '' }}>2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justification for Delay</label>
+                                <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
+                                            {{ $data->justification_for_delay_oosc ?? '' }}
+                                        </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Attachments if Any</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if ($data->file_attachments_if_any_ooscattach)
+                                        @foreach(json_decode($data->file_attachments_if_any_ooscattach) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!--OOS Conclusion Review -->
+            <div id="CCForm9" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Conclusion Review Comments
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Conclusion Review Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
+                                    {{ $data->conclusion_review_comments_ocr ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+
+
+                        <!-- ---------------------------grid-1 ------"OOSConclusion_Review-------------------------- -->
+                        <div class="group-input">
+                            <label for="audit-agenda-grid">
+                                Summary of OOS Test Results
+                                <button type="button" name="audit-agenda-grid" id="oosconclusion_review">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="oosconclusion_review_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 16%">Material/Product Name</th>
+                                            <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
+                                            <th style="width: 16%">Any Other Information</th>
+                                            <th style="width: 16%">Action Taken on Affec.batch</th>
+
+
+
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td> --}}
+
+
+
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Action Taken on Affec.batch</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
+                                {{ $data->action_taken_on_affec_batch_ocr ?? 'NA' }}
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CAPA Req?</label>
+                                <select name="capa_req_ocr">
+                                    <option value="Yes" {{ $data->capa_req_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->capa_req_ocr == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">CAPA Reference</label>
+                                <select multiple id="reference_record" name="capa_refer_ocr[]">
+                                    <option value="0" {{ in_array('0', $data->capa_refer_ocr ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>1
+                                    </option>
+                                    <option value="2" {{ in_array('2', $data->capa_refer_ocr ?? []) ? 'selected' : '' }}>2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">Required Action Plan?</label>
+                                <select name="req_action_plan_ocr">
+                                    <option value="Yes" {{ $data->req_action_plan_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->req_action_plan_ocr == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Required Action Task?</label>
+                                <select name="req_action_task_ocr">
+                                    <option value="Yes" {{ $data->req_action_task_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->req_action_task_ocr == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Action Task Reference</label>
+                                <select multiple id="reference_record" name="action_task_reference_ocr[]">
+                                    <option value="0" {{ in_array('0', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
+                                        }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
+                                        }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Risk Assessment Req?</label>
+                                <select name="risk_assessment_req_ocr">
+                                    <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Risk Assessment Req?</label>
+                                <select name="risk_assessment_req_ocr">
+                                    <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Risk Assessment Ref.</label>
+                                <select multiple id="reference_record" name="risk_assessment_ref_ocr[]">
+                                    <option value="0" {{ in_array('0', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
+                                        }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
+                                        }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justify if No Risk Assessment</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
+                                        {{ $data->justify_if_no_risk_assessment_ocr ?? 'NA' }}
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Conclusion Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->conclusion_attachment_ocr)
+                                        @foreach (json_decode($data->conclusion_attachment_ocr) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">CQ Approver</label>
+                                <input type="text" name="cq_approver" value="{{$data->cq_approver}}">
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--CQ Review Comments -->
+            <div id="CCForm10" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        CQ Review Comments
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">CQ Review comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
+                                            {{ $data->cq_review_comments_ocqr ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Report Attachments">CAPA Required?</label>
+                                <select name="capa_required_ocqr">
+                                    <option value="0" {{ $data->capa_required_ocqr == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="Yes" {{ $data->capa_required_ocqr == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->capa_required_ocqr == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reference of CAPA </label>
+                                <input type="text" name="reference_of_capa_ocqr" value="{{$data->reference_of_capa_ocqr}}">
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Auditee">Action Plan Requirement?</label>
+                                <select multiple name="action_plan_requirement_ocqr" id="auditee">
+                                    <option value="0" {{ $data->action_plan_requirement_ocqr == '0' ? 'selected' : '' }}>Enter
+                                        Your Selection Here</option>
+                                    <option value="Yes" {{ $data->action_plan_requirement_ocqr == 'Yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->action_plan_requirement_ocqr == 'No' ? 'selected' : '' }}>No
+                                    </option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">Ref Action Plan</label>
+                                <input type="text" name="ref_action_plan_ocqr" value="{{ $data->ref_action_plan_ocqr ?? '' }}">
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Audit Attachments"> CQ Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->cq_attachment_ocqr)
+                                        @foreach (json_decode($data->cq_attachment_ocqr) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="cq_attachment_ocqr[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+                </div>
+            </div>
+            <!-- Batch Disposition -->
+            <div id="CCForm11" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Batch Disposition
+                    </div>
+                    <div class="row">
+
+
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Audit Attachments">OOS Category</label>
+                                <select name="oos_category_bd">
+                                    <option value="default" {{ $data->oos_category_bd == 'default' ? 'selected' : '' }}>Enter
+                                        Your Selection Here</option>
+                                    <option value="analyst_error" {{ $data->oos_category_bd == 'analyst_error' ? 'selected' : ''
+                                        }}>Analyst Error</option>
+                                    <option value="instrument_error" {{ $data->oos_category_bd == 'instrument_error' ?
+                                        'selected' : '' }}>Instrument Error</option>
+                                    <option value="procedure_error" {{ $data->oos_category_bd == 'procedure_error' ? 'selected'
+                                        : '' }}>Procedure Error</option>
+                                    <option value="product_related_error" {{ $data->oos_category_bd == 'product_related_error' ?
+                                        'selected' : '' }}>Product Related Error</option>
+                                    <option value="material_related_error" {{ $data->oos_category_bd == 'material_related_error'
+                                        ? 'selected' : '' }}>Material Related Error</option>
+                                    <option value="other_error" {{ $data->oos_category_bd == 'other_error' ? 'selected' : ''
+                                        }}>Other Error</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Others Field -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Other's</label>
+                                <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}">
+                            </div>
+                        </div>
+
+                        <!-- Textarea for Justification -->
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justify if No Risk Assessment</label>
+                                <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
+                    {{ $data->justify_if_no_risk_assessment_ocr ?? 'NA' }}
+                </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Material/Batch Release Selection -->
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Records">Material/Batch Release</label>
+                                <select name="material_batch_release_bd">
+                                    <option value="default" {{ $data->material_batch_release_bd == 'default' ? 'selected' : ''
+                                        }}>Enter Your Selection Here</option>
+                                    <option value="release" {{ $data->material_batch_release_bd == 'release' ? 'selected' : ''
+                                        }}>To Be Released</option>
+                                    <option value="reject" {{ $data->material_batch_release_bd == 'reject' ? 'selected' : ''
+                                        }}>To Be Rejected</option>
+                                    <option value="other" {{ $data->material_batch_release_bd == 'other' ? 'selected' : ''
+                                        }}>Other Action (Specify)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Action (Specify)</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="other_action_bd" id="summernote-1">
+                                        {{$data->other_action_bd ??  ''}}
+                                            </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Field Alert Reference -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Field alert reference</label>
+                                <select multiple id="reference_record" name="field_alert_reference_bd[]">
+                                    <option value="0" {{ in_array('0', $data->field_alert_reference_bd ?? []) ? 'selected' : ''
+                                        }}>Enter Your Selection Here</option>
+                                    <option value="yes" {{ in_array('yes', $data->field_alert_reference_bd ?? []) ? 'selected' :
+                                        '' }}>Yes</option>
+                                    <option value="No" {{ in_array('No', $data->field_alert_reference_bd ?? []) ? 'selected' :
+                                        '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Other Parameters Results -->
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Parameters Results</label>
+                                <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1">
+                                        {{ $data->other_parameters_results_bd ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Trend of Previous Batches -->
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Trend of Previous Batches</label>
+                                <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1">
+                                        {{ $data->trend_of_previous_batches_bd ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Stability Data -->
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Stability Data</label>
+                                <textarea class="summernote" name="stability_data_bd" id="summernote-1">
+                                        {{ $data->stability_data_bd ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+
+                        <!-- Process Validation Data -->
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Process Validation Data</label>
+                                <textarea class="summernote" name="process_validation_data_bd" id="summernote-1">
+                                        {{ $data->process_validation_data_bd ?? '' }}
+                                    </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Method Validation </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="method_validation_bd" id="summernote-1">
+                                                    {{ $data->method_validation_bd ?? '' }}
+                                            </textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Any Market Complaints </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="any_market_complaints_bd" id="summernote-1">
+                                            {{ $data->any_market_complaints_bd ?? '' }}
+                                            </textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Statistical Evaluation </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="statistical_evaluation_bd" id="summernote-1">
+                                    {{ $data->statistical_evaluation_bd ?? '' }}
+                                    </textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Risk Analysis for Disposition </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="risk_analysis_disposition_bd" id="summernote-1">
+                                            {{ $data->risk_analysis_disposition_bd ?? '' }}
+                                            </textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Conclusion </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="conclusion_bd" id="summernote-1">
+                                                {{ $data->conclusion_bd ?? '' }}
+                                            </textarea>
+                            </div>
+
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Phase-III Inves. Required?</label>
+                                <select name="phase_inves_required_bd">
+                                    <option value="0" {{ $data->phase_inves_required_bd == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="yes" {{ $data->phase_inves_required_bd == 'yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->phase_inves_required_bd == 'No' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Phase-III Inves. Reference</label>
+                                <select multiple id="reference_record" name="phase_inves_reference_bd[]">
+                                    <option value="0" {{ in_array('0', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
+                                        }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
+                                        }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Justify for Delay in Activity</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1">
+                                                {{ $data->justify_for_delay_in_activity_bd ?? '' }}
+                                            </textarea>
+                            </div>
+
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Disposition Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->disposition_attachment_bd)
+                                        @foreach (json_decode($data->disposition_attachment_bd) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="disposition_attachment_bd[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
                     </div>
                 </div>
 
             </div>
+            <!-- Re-Open -->
+            <div id="CCForm12" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Reopen Request
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Other Action (Specify)</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
 
-        </div>
-        <!-- Under Addendum Review-->
-        <div id="CCForm15" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Under Addendum Review
-                </div>
-                <div class="row">
+                                            {{ $data->other_action_specify_ro ?? '' }}
+                                            </textarea>
+                            </div>
+                        </div>
 
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Addendum Review Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="addendum_review_comments_uar[]" id="summernote-1">
-                    </textarea>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Reopen Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->reopen_attachment_ro)
+                                        @foreach (json_decode($data->reopen_attachment_ro) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="reopen_attachment_ro[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Required Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="required_attachment_uar[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+            </div>
+            <!-- Under Addendum Approval -->
+            <div id="CCForm13" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Addendum Approval Comment
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Reopen Approval Comments </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
+                                            {{ $data->reopen_approval_comments_uaa ?? '' }}
+                                            </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->addendum_attachment_uaa)
+                                        @foreach (json_decode($data->addendum_attachment_uaa) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="addendum_attachment_uaa[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
                                 </div>
                             </div>
+                        </div>
 
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+            </div>
+            <!--Under Addendum Execution -->
+            <div id="CCForm14" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Addendum Execution Comment
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Execution Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="execution_comments_uae" id="summernote-1">
+
+                                            {{ $data->execution_comments_uae ?? '' }}
+                                            </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Action Task Required?</label>
+                                <select name="action_task_required_uae">
+                                    <option value="0" {{ $data->action_task_required_uae == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="yes" {{ $data->action_task_required_uae == 'yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->action_task_required_uae == 'No' ? 'selected' : '' }}>No
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Action Task Reference No. -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Action Task Reference No.</label>
+                                <select multiple id="reference_record" name="action_task_reference_no_uae[]">
+                                    <option value="0" {{ in_array('0', $data->action_task_reference_no_uae ?? []) ? 'selected' :
+                                        '' }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->action_task_reference_no_uae ?? []) ? 'selected' :
+                                        '' }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->action_task_reference_no_uae ?? []) ? 'selected' :
+                                        '' }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Additional Testing Required? -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Addi.Testing Req?</label>
+                                <select name="addi_testing_req_uae">
+                                    <option value="0" {{ $data->addi_testing_req_uae == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="yes" {{ $data->addi_testing_req_uae == 'yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->addi_testing_req_uae == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Additional Testing Reference -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Addi.Testing Ref.</label>
+                                <select multiple id="reference_record" name="Addi_testing_ref_uae[]">
+                                    <option value="0" {{ in_array('0', $data->Addi_testing_ref_uae ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->Addi_testing_ref_uae ?? []) ? 'selected' : '' }}>1
+                                    </option>
+                                    <option value="2" {{ in_array('2', $data->Addi_testing_ref_uae ?? []) ? 'selected' : '' }}>2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Investigation Required? -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Investigation Req.?</label>
+                                <select name="investigation_req_uae">
+                                    <option value="0" {{ $data->investigation_req_uae == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="yes" {{ $data->investigation_req_uae == 'yes' ? 'selected' : '' }}>Yes
+                                    </option>
+                                    <option value="No" {{ $data->investigation_req_uae == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Recores">Investigation Ref.</label>
+                                <select multiple id="reference_record" name="investigation_ref_uae[]" id="">
+                                    <option value="0" {{ in_array('0', $data->investigation_ref_uae ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->investigation_ref_uae ?? []) ? 'selected' : ''
+                                        }}>1</option>
+                                    <option value="2" {{ in_array('2', $data->investigation_ref_uae ?? []) ? 'selected' : ''
+                                        }}>2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Hypo-Exp Req?</label>
+                                <select name="hypo_exp_req_uae">
+                                    <option value="0" {{ $data->hypo_exp_req_uae == '0' ? 'selected' : '' }}>Enter Your
+                                        Selection Here</option>
+                                    <option value="yes" {{ $data->hypo_exp_req_uae == 'yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->hypo_exp_req_uae == 'No' ? 'selected' : '' }}>No</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Hypo-Exp Ref. -->
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Reference Records">Hypo-Exp Ref.</label>
+                                <select multiple id="reference_record" name="hypo_exp_ref_uae[]">
+                                    <option value="0" {{ in_array('0', $data->hypo_exp_ref_uae ?? []) ? 'selected' : ''
+                                        }}>--Select---</option>
+                                    <option value="1" {{ in_array('1', $data->hypo_exp_ref_uae ?? []) ? 'selected' : '' }}>1
+                                    </option>
+                                    <option value="2" {{ in_array('2', $data->hypo_exp_ref_uae ?? []) ? 'selected' : '' }}>2
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Addendum Attachments
+                                </label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if ($data->addendum_attachments_uae)
+                                        @foreach (json_decode($data->addendum_attachments_uae) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="addendum_attachments_uae[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
                     </div>
 
                 </div>
 
             </div>
-
-        </div>
-        <!-- Under Addendum Verification -->
-        <div id="CCForm16" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Addendum Verification Comment
-                </div>
-                <div class="row">
-
-                    <div class="col-md-12 mb-4">
-                        <div class="group-input">
-                            <label for="Description Deviation">Verification Comments </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="verification_comments_uav[]" id="summernote-1">
-                    </textarea>
-                        </div>
+            <!-- Under Addendum Review-->
+            <div id="CCForm15" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Under Addendum Review
                     </div>
+                    <div class="row">
 
-                    <div class="col-12">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Attachment</label>
-                            <small class="text-primary">
-                                Please Attach all relevant or supporting documents
-                            </small>
-                            <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
-                                <div class="add-btn">
-                                    <div>Add</div>
-                                    <input type="file" id="myfile" name="verification_attachment_uar[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                </div>
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Addendum Review Comments</label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="addendum_review_comments_uar" id="summernote-1">
+
+                                {{$data->addendum_review_comments_uar ?? 'na'}}
+                                </textarea>
                             </div>
-
                         </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Required Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                        @if ($data->required_attachment_uar)
+                                        @foreach (json_decode($data->required_attachment_uar) as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        @endforeach
+                                        @endif
+                                    </div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="required_attachment_uar[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+
                     </div>
 
+                </div>
 
-                    <div class="button-block">
-                        <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton"
-                            onclick="nextStep()">Next</button>
-                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                Exit </a> </button>
+            </div>
+            <!-- Under Addendum Verification -->
+            <div id="CCForm16" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="sub-head">
+                        Addendum Verification Comment
                     </div>
+                    <div class="row">
 
+                        <div class="col-md-12 mb-4">
+                            <div class="group-input">
+                                <label for="Description Deviation">Verification Comments </label>
+                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                                <textarea class="summernote" name="verification_comments_uav" id="summernote-1">
+                                                    {{$data->verification_comments_uav ?? 'na'}}
+                            </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="group-input">
+                                <label for="Reference Recores">Verification Attachment</label>
+                                <small class="text-primary">
+                                    Please Attach all relevant or supporting documents
+                                </small>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if (!empty($data->verification_attachment_uar))
+                                      
+                                        <!-- @foreach (json_decode($data->verification_attachment_uar) as $file) -->
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b></b>
+                                            <a href="{{ asset('upload/') }}" target="_blank"><i
+                                                    class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file" data-file-name=""><i
+                                                    class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                        <!-- @endforeach -->
+                                        @else
+                                        <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="verification_attachment_uar[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        </div>
+
+                                        @endif
+
+                                    </div>
+                                   
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </div>
+
 
         <!----- Signature ----->
         <div id="CCForm17" class="inner-block cctabcontent">
