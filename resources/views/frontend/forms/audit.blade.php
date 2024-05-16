@@ -1,3 +1,5 @@
+
+
 @extends('frontend.layout.main')
 @section('container')
     @php
@@ -25131,7 +25133,7 @@
                                                         <tbody>
                                                             <tr>
                                                                 <td class="flex text-center">4.1</td>
-                                                                <td>Is the production line multipurpose or single purpose?</td>
+                                                                <td>Is the production line ? multipurpose or single purpose?</td>
                                                                 <td>
         
                                                                     <div
@@ -25457,23 +25459,11 @@
                                                                     
                                                                 </td>
                                                                 <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                                   
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
-                                                                    <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
+                                                                    
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -25794,15 +25784,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="date"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -25872,15 +25858,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26020,15 +26002,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26047,15 +26025,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26074,15 +26048,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
-                                                                        </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26101,15 +26071,11 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
+                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                         <input type="text"
+                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
+
                                                                     </td>
             
                                                                     <td style="vertical-align: middle;">
@@ -26129,14 +26095,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
+                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                         <input type="text"
+                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
             
@@ -26158,14 +26119,9 @@
                                                                     </td>
                                                                     <td>
                                                                         <div
-                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                            <select name="response" id="response"
-                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                                <option value="Yes">Select an Option</option>
-                                                                                <option value="Yes">Yes</option>
-                                                                                <option value="No">No</option>
-                                                                                <option value="N/A">N/A</option>
-                                                                            </select>
+                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                         <input type="text"
+                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
             
@@ -26806,15 +26762,11 @@
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27008,15 +26960,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27035,15 +26983,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27062,15 +27006,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <input type="date"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+            
+                                                            </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27089,15 +27029,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27116,15 +27052,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27143,15 +27075,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <input type="text"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+            
+                                                            </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27170,15 +27098,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <input type="text"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+            
+                                                            </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27197,15 +27121,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <input type="text"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+            
+                                                            </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -27229,8 +27149,8 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
+                                                                        <option value="Yes">Accepted</option>
+                                                                        <option value="No">Rejected</option>
                                                                         <option value="N/A">N/A</option>
                                                                     </select>
                                                                 </div>
@@ -28483,15 +28403,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                             <td>
                                                                 <div
-                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
-                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
-                                                                        <option value="Yes">Yes</option>
-                                                                        <option value="No">No</option>
-                                                                        <option value="N/A">N/A</option>
-                                                                    </select>
-                                                                </div>
+                                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                <input type="text"
+                                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+            
+                                                            </div>
                                                             </td>
     
                                                             <td style="vertical-align: middle;">
@@ -29254,15 +29170,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                                 <td>
                                                                     <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
@@ -29306,17 +29218,12 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     
                                                                     
                                                                 </td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                                <td> <div
+                                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                    <input type="number"
+                                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                
+                                                                </div>
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
@@ -29335,15 +29242,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                                 <td>
                                                                     <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="date"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
@@ -29363,15 +29266,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                                 <td>
                                                                     <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="number"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
@@ -29389,15 +29288,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 </td>
                                                                 <td>
                                                                     <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
+                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                    <input type="text"
+                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+
+                                                </div>
                                                                 </td>
         
                                                                 <td style="vertical-align: middle;">
@@ -29463,8 +29358,24 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td class="flex text-center">10.2</td>
                                                                     <td>
                                                                         If so, are these systems <br>
-                                                                        a.	based on an international standard (ISO 9001/14001/18001)?<br>
-                                                                        b.	certified by a accredited third party auditing body?
+                                                                        
+                                                                        
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                       
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                       
+                                                                    </td>
+            
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="flex text-center">10.2.1</td>
+                                                                    <td>
+                                                                        
+                                                                        	based on an international standard (ISO 9001/14001/18001)?
                                                                         
                                                                         
                                                                     </td>
@@ -29489,6 +29400,36 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </td>
             
                                                                 </tr>
+                                                                <tr>
+                                                                    <td class="flex text-center">10.2.2</td>
+                                                                    <td>
+                                                                        
+                                                                        certified by a accredited third party auditing body?
+                                                                        
+                                                                        
+                                                                    </td>
+                                                                    <td>
+                                                                        <div
+                                                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                            <select name="response" id="response"
+                                                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                                <option value="Yes">Select an Option</option>
+                                                                                <option value="Yes">Yes</option>
+                                                                                <option value="No">No</option>
+                                                                                <option value="N/A">N/A</option>
+                                                                            </select>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                    <td style="vertical-align: middle;">
+                                                                        <div
+                                                                            style="margin: auto; display: flex; justify-content: center;">
+                                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                        </div>
+                                                                    </td>
+            
+                                                                </tr>
+            
             
             
                                                                 <tr>

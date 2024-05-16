@@ -1,3 +1,4 @@
+
 @extends('frontend.layout.main')
 @section('container')
 <style>
@@ -16,7 +17,7 @@
         </div> --}}
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        / Out Of Calibration
+        / OOC_Out Of Calibration
     </div>
 </div>
 
