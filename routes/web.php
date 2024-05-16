@@ -411,8 +411,11 @@ Route::view('oos_micro_view', 'frontend.OOS_Micro.oos_micro_view');
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new');
 
 
+// ====================OOS/OOT======================================
+Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
+// ====================OOS/OOT======================================
 
-// ==========================================================
+
 
 /**
  * AJAX ROUTES
