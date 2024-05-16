@@ -156,6 +156,11 @@ class OOS extends Model
           'required_attachment_uar',
           'verification_comments_uav',
           'verification_attachment_uar',
+          'status',
+          'stage',
+          'type',
+          'date_open',
+          'date_close'
       ];
 
     protected $casts = [
@@ -165,8 +170,8 @@ class OOS extends Model
         'analyst_interview_ref_pli' => 'array',
         'justify_if_no_analyst_int_pli' => 'array',
         'summary_of_prelim_investiga_plic' => 'array',
-        'oos_category_others_plic' => 'array',
-        'root_cause_details_plic' => 'array',
+      //  'oos_category_others_plic' => 'array',
+        // 'root_cause_details_plic' => 'array',
         'Description_Deviation' => 'array',
         'delay_justification_for_pi_plic' => 'array',
         'review_comments_plir' => 'array',

@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Oosgrids extends Model
 {
     use HasFactory;
+    protected $table = 'oos_grids';
     protected $fillable = [
+        'oos_id',
+        'identifier',
         'info_product_code',
         'info_batch_no',
         'info_product_arnumber',
@@ -36,9 +39,9 @@ class Oosgrids extends Model
         'oot_file_attachment',
         'oos_submit_by',
         'oot_submit_on',
-        'preliminary_phase1_question',
-        'preliminary_phase1_response',
-        'preliminary_phase1_remarks',
+        'question',
+        'response',
+        'remark',
         'info_oos_number',
         'info_oos_reported_date',
         'info_oos_description',
@@ -88,9 +91,9 @@ class Oosgrids extends Model
         'oot_file_attachment' => 'array',
         'oos_submit_by' => 'array',
         'oot_submit_on' => 'array',
-        'preliminary_phase1_question' => 'array',
-        'preliminary_phase1_response' => 'array',
-        'preliminary_phase1_remarks' => 'array',
+        'question' => 'array',
+        'response' => 'array',
+        'remark' => 'array',
         'info_oos_number' => 'array',
         'info_oos_reported_date' => 'array',
         'info_oos_description' => 'array',

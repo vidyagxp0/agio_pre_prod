@@ -47,9 +47,9 @@ return new class extends Migration
             $table->string('oos_submit_by')->nullable();
             $table->string('oos_submit_on')->nullable();
          //  Preliminary Lab Investigation => PHASE- I B INVESTIGATION REPORT
-            $table->string('preliminary_phase1_question')->nullable();
-            $table->string('preliminary_phase1_response')->nullable();
-            $table->string('preliminary_phase1_remarks')->nullable();
+            $table->string('question')->nullable();
+            $table->string('response')->nullable();
+            $table->string('remark')->nullable();
         //   Preliminary Lab Invstigation Review => Info. On Product/ Material
            $table->string('info_oos_number')->nullable();
            $table->date('info_oos_reported_date')->nullable();

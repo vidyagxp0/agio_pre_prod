@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -9,6 +12,38 @@
             display: none;
         }
     </style>
+    <style>
+        .progress-bars div {
+            flex: 1 1 auto;
+            border: 1px solid grey;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+            /* border-right: none; */
+            background: white;
+        }
+
+        .state-block {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bars div.active {
+            background: green;
+            font-weight: bold;
+        }
+
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+            border-radius: 20px 0px 0px 20px;
+        }
+
+       
+        #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(7){
+            border-radius: 0px 20px 20px 0px;
+
+        }
+    </style>
+
     <!-- --------------------------------------button--------------------- -->
     <script>
         VirtualSelect.init({
@@ -86,24 +121,21 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Info_Product_Material').click(function(e) {
+            $('#Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>' +
+                    '<tr>'+
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
-                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
-                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
-                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
-                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
-                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
-                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
-                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
-                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
-                    '</tr>';
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
+                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
+                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
+                    '</tr>' +;
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
@@ -111,7 +143,7 @@
                     return html;
                 }
 
-                var tableBody = $('#Info_Product_Material_details tbody');
+                var tableBody = $('#Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
@@ -196,12 +228,11 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_reported_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_description[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
                         '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
-                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td><option value="yes">Yes</option><option value="No">No</option></select></td>' +
                         '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
@@ -319,6 +350,229 @@
     ======================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
+        <div id="change-control-fields">
+        <div class="container-fluid">
+
+  <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                        {{-- @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp --}}
+                        {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
+                        {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
+
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
+                        {{-- @if ($data->stage >= 9)
+                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
+                                    Close Done </a> </button>
+                        @endif --}}
+                        {{-- @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Submit
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Cancel
+                            </button>
+                        {{-- @elseif($data->stage == 2  && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                         
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                HOD Review Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info-required
+                            </button>
+                        {{-- @elseif($data->stage == 3  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                           
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information required
+                            </button> --}}
+                            
+                        {{-- @elseif($data->stage == 4  && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                           
+                            
+                        {{-- @elseif($data->stage == 6  && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            {{-- @if ($evaluation->training_required == 'yes') --}}
+                               
+                            {{-- @endif --}}
+                        {{-- @elseif($data->stage == 7  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Implemented
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button>
+                        {{-- @elseif($data->stage == 8) --}}
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Final Review Complete
+                            </button> --}}
+                        {{-- @endif --}}
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- @if ($data->stage == 0)
+                        <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars">
+                            @if ($data->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+                            {{--  @if ($data->stage >= 2)
+                            <div class="active">Superviser Review</div>
+                        @else
+                            <div class="">Superviser Review</div>
+                        @endif  --}}
+                    {{-- @if ($data->stage >= 2)
+                                <div class="active">Under Superviser Review </div>
+                            @else
+                                <div class="">Under Superviser Review </div>
+                            @endif
+                            @if ($info->Quality_Approver == 'yes')
+                            @if ($data->stage >= 3)
+                                <div class="active">QA Review</div>
+                            @else
+                                <div class="">QA Review</div>
+                            @endif
+                            @endif
+                            @if ($info->Microbiology == 'yes')
+                            @if ($data->stage >= 4)
+                                <div class="active">Pending CFT Review</div>
+                            @else
+                                <div class="">Pending CFT Review</div>
+                            @endif
+
+
+                            @if ($data->stage >= 5)
+                                <div class="active">CFT Review Completed</div>
+                            @else
+                                <div class="">CFT Review Completed</div>
+                            @endif
+                            @endif
+                            @if ($evaluation->training_required == 'yes')
+                                @if ($data->stage >= 6)
+                                    <div class="active">Pending Training Completion</div>
+                                @else
+                                    <div class="">Pending Training Completion</div>
+                                @endif
+                            @endif
+
+                            @if ($data->stage >= 7)
+                                <div class="active">Pending Change Implementation</div>
+                            @else
+                                <div class="">Pending Change Implementation</div>
+                            @endif
+                            @if ($info->Quality_Approver == 'yes')
+                            @if ($data->stage >= 8)
+                                <div class="active">QA Final Review</div>
+                            @else
+                                <div class="">QA Final Review</div>
+                            @endif
+                            @endif
+
+                            @if ($data->stage >= 9)
+                                <div class="active">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+
+
+                        </div>
+                    @endif --}}
+
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    {{-- @if ($data->stage == 0) --}}
+                        {{-- <div class="progress-bars">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div> --}}
+                    {{-- @else --}}
+                        <div class="progress-bars d-flex">
+                            {{-- @if ($data->stage >= 1) --}}
+                                <div class="active">Opened</div>
+                            {{-- @else --}}
+                                {{-- <div class="">Opened</div> --}}
+                            {{-- @endif --}}
+                            {{--  @if ($data->stage >= 2)
+                        <div class="active">Superviser Review</div>
+                    @else
+                        <div class="">Superviser Review</div>
+                    @endif  --}}
+                            {{-- @if ($data->stage >= 2) --}}
+                                {{-- <div class="active">Under HOD Review </div> --}}
+                            {{-- @else --}}
+                                <div class="">Pending Initial Assessment
+                                & Lab Incident
+                                </div>
+                            {{-- @endif --}}
+                            {{-- @if ($info->Quality_Approver == 'yes') --}}
+                            {{-- @if ($data->stage >= 3) --}}
+                                {{-- <div class="active">Pending CFT/SME/QA Review</div> --}}
+                            {{-- @else --}}
+                                <div class="">Under Phase I Investigation</div>
+                            {{-- @endif --}}
+                            {{-- @endif
+                            @if ($info->Microbiology == 'yes') --}}
+                            {{-- @if ($data->stage >= 4) --}}
+                                {{-- <div class="active"> CFT/SME/QA Review</div> --}}
+                            {{-- @else --}}
+                                <div class=""> Under Phase I Correction</div>
+                            {{-- @endif --}}
+
+
+                            {{-- @if ($data->stage >= 5)
+                            <div class="active">CFT Review Completed</div>
+                        @else
+                            <div class="">CFT Review Completed</div>
+                        {{-- @endif --}}
+                            {{-- @endif --}}
+                            {{-- @if ($evaluation->training_required == 'yes')
+                            @if ($data->stage >= 6)
+                                <div class="active">Pending Training Completion</div>
+                            @else
+                                <div class="">Pending Training Completion</div>
+                            @endif
+                        @endif --}}
+
+                            {{-- @if ($data->stage >= 7) --}}
+                                {{-- <div class="active">Pending Change Implementation</div> --}}
+                            {{-- @else --}}
+                                <div class="">Under Phase I b
+                                    Investigation 
+                                </div>
+                                <div class="">Under HypothesisExperiment 
+                                </div>
+                                <div class=""> Under Repeat Analysis
+                                </div>
+                               
+
+
+                            {{-- @endif --}}
+                            {{-- @if ($data->stage >= 8) --}}
+                                {{-- <div class="bg-danger">Closed - Done</div> --}}
+                            {{-- @else --}}
+                                {{-- <div class="">Closed - Done</div> --}}
+                            {{-- @endif --}}
+
+
+                        </div>
+                    {{-- @endif --}}
+                    {{-- ---------------------------------------------------------------------------------------- --}}
+                </div>
+            </div>
+
 
             <!-- Tab links -->
             <div class="cctab">
@@ -341,13 +595,15 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
-          <form action="{{ route('oos.oosstore') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ route('oos.oosupdate', $data->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div id="step-form">
                 @if (!empty($parent_id))
                 <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                 <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                 @endif
+            <!-- Tab content -->
+            <!-- General Information -->
             <!-- Tab content -->
             <!-- General Information -->
             <div id="CCForm1" class="inner-block cctabcontent">
@@ -359,9 +615,11 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
-                                <input type="number">
+                            <input type="number" value="{{ $data->record_number ?? '' }}">
                             </div>
                         </div>
+
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -395,94 +653,91 @@
                                 <small class="text-primary">
                                     Please mention expected date of completion
                                 </small>
-                                <input type="date" id="date" name="due_date">
+                                <input type="date" id="date" name="due_date" value="{{ $data->due_date ?? '' }}">
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description"> Severity Level</label>
-                                <select name="severity_level_gi" >
+                               <select name="severity_level_gi">
                                     <option value="o">Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1" {{ $data->reference_system_document_gi == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->reference_system_document_gi == '2' ? 'selected' : '' }}>2</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 <select name="initiator_group">
                                     <option selected disabled>---select---</option>
                                     @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                        <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option>
+                                        <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" readonly>
+                                <input type="text" name="initiator_group_code" readonly value="{{ $data->initiator_group_code ?? '' }}">
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiated Through </label>
-                                <textarea  type="text" name="initiated_through_gi"></textarea>
+                                <textarea type="text" name="initiated_through_gi">{{ $data->initiated_through_gi ?? '' }}</textarea>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group Code">If Others</label>
+                            <select name="if_others_gi">
+                                <option value="o" {{ $data->if_others_gi == 'o' ? 'selected' : '' }}>Enter Your Selection Here</option>
+                                <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>1</option>
+                                <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group Code">Is Repeat?</label>
+                            <textarea type="is_repeat_gi" name="is_repeat_gi">{{ $data->is_repeat_gi }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mt-4">
+                        <div class="group-input">
+                            <label for="Initiator Group">Repeat Nature</label>
+                            <textarea type="text" name="repeat_nature_gi">{{ $data->repeat_nature_gi }}</textarea>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group">Nature of Change</label>
+                            <select name="nature_of_change_gi">
+                                <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : '' }}>Enter Your Selection Here</option>
+                                <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ? 'selected' : '' }}>Lab Incident</option>
+                                <option value="deviation" {{ $data->nature_of_change_gi == 'deviation' ? 'selected' : '' }}>Deviation</option>
+                                <option value="product_nonconformance" {{ $data->nature_of_change_gi == 'product_nonconformance' ? 'selected' : '' }}>Product Non-                                             conformance</option>
+                                <option value="inspectional_observation" {{ $data->nature_of_change_gi == 'inspectional_observation' ? 'selected' : '' }}>Inspectional            Observation</option>
+                                <option value="others" {{ $data->nature_of_change_gi == 'others' ? 'selected' : '' }}>Others</option>
+                            </select>
+                        </div>
+                    </div>
+
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Deviation Occurred On</label>
+                                <input type="date" name="deviation_occured_on_gi" value="{{ $data->deviation_occured_on_gi }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code">If Others</label>
-
-
-                                <select name="if_others_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">Is Repeat?</label>
-                                <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6 mt-4">
-                            <div class="group-input">
-                                <label for="Initiator Group">Repeat Nature</label>
-                                <textarea  type="text" name="repeat_nature_gi"></textarea>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Nature of Change</label>
-                                <select name="nature_of_change_gi">
-                                    <option value="0">Enter Your Selection Here</option>
-                                     <option value="lab_incident">Lab Incident</option>
-                                    <option value="deviation">Deviation</option>
-                                    <option value="product_nonconformance">Product Non-conformance</option>
-                                    <option value="inspectional_observation">Inspectional Observation</option>
-                                     <option value="others">Others</option>
-                                </select>
-
-
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="deviation_occured_on_gi">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"> Short Description</label>
-                                <textarea  name="description_gi" value="" required></textarea>
+                                <label for="Initiator Group">Description</label>
+                                <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -493,7 +748,28 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="">
+                                      {{-- @if (is_array($data->capa_attachment)) --}}
+                                                        @if ($data->initial_attachment_gi)
+                                                            @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        {{-- @endif --}}
+                                                        @endif
+                                    
+                                    
+                                    </div>
+
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="" multiple>
@@ -501,27 +777,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Tnitiaror Grouo">Source Document Type</label>
-                                <select name="source_document_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>OOT</option>
-                                    <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option>
-                                </select>
-                            </div>
-                        </div>
+                       <div class="col-lg-6">
+    
+                <div class="group-input">
+                        <label for="Source Document Type">Source Document Type</label>
+                        <select name="source_document_type_gi">
+                            <option value="0">Enter Your Selection Here</option>
+                                
+                                 
+                        </select>
+                    </div>
+                </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                   <option value="o">Enter Your Selection Here</option>
+                                    <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2</option>
+                              
                                 </select>
                             </div>
                         </div>
@@ -530,8 +805,9 @@
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document" id="">
                                     <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1</option>
+                                    <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2</option>
+                              
                                 </select>
                             </div>
                         </div>
@@ -540,14 +816,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
-                                <select name="sample_type_gi">
-                                 <option value="0">Enter Your Selection Here</option>
-                                <option value="raw_material">Raw Material</option>
-                                <option value="packing_material">Packing Material</option>
-                                <option value="finished_product">Finished Product</option>
-                                <option value="stability_sample">Stability Sample</option>
-                                <option value="others">Others</option>
-
+                               <select name="sample_type_gi">
+                                    <option value="0">Enter Your Selection Here</option>
+                                    <option value="raw_material" {{ $data->sample_type_gi == 'raw_material' ? 'selected' : '' }}>Raw Material</option>
+                                    <option value="packing_material" {{ $data->sample_type_gi == 'packing_material' ? 'selected' : '' }}>Packing Material</option>
+                                    <option value="finished_product" {{ $data->sample_type_gi == 'finished_product' ? 'selected' : '' }}>Finished Product</option>
+                                    <option value="stability_sample" {{ $data->sample_type_gi == 'stability_sample' ? 'selected' : '' }}>Stability Sample</option>
+                                    <option value="others" {{ $data->sample_type_gi == 'others' ? 'selected' : '' }}>Others</option>
                                 </select>
                             </div>
                         </div>
@@ -555,24 +830,25 @@
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
 
-                                <input type="text" name="product_material_name_gi">
+                                <input type="text"  value="{{$data->product_material_name_gi}}" name="product_material_name_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
 
-                                <input type="text" name="market_gi">
+                                <input type="text" name="market_gi" value="{{$data->market_gi}}">
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select name="customer_gi">
-                                     <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
+                             <select name="customer_gi">
+                     <option value="0">Enter Your Selection Here</option>
+                    <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                    <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No</option>
+                </select> 
+
                             </div>
                         </div>
 
@@ -581,8 +857,7 @@
                         <div class="group-input">
                             <label for="audit-agenda-grid">
                                 Info. On Product/ Material
-                                <button type="button" name="audit-agenda-grid" id="Info_Product_Material">+</button>
-
+                                <button type="button" name="audit-agenda-grid" id="Product_Material">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#document-details-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -590,7 +865,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="Info_Product_Material_details" style="width: 100%;">
+                                <table class="table table-bordered" id="Product_Material_details" style="width: 100%;">
                                     <thead>
                                         <tr>
                                             <th style="width: 4%">Row#</th>
@@ -609,10 +884,10 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
+                                        <td><input type="text" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
-                                        <td><input type="date" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="date" name="info_expiry_date[]" value=""></td>
+                                        <td><input type="text" name="info_mfg_date[]" value=""></td>
+                                        <td><input type="text" name="info_expiry_date[]" value=""></td>
                                         <td><input type="text" name="info_label_claim[]" value=""></td>
                                         <td><input type="text" name="info_pack_size[]" value=""></td>
                                         <td><input type="text" name="info_analyst_name[]" value=""></td>
@@ -664,9 +939,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability">
-                                        <input type="text" name="stability_study_arnumber[]"></td>
+                                         <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="stability_study_arnumber[]"></td>
                                         <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
                                         <td><input type="text" name="stability_study_Interval[]"></td>
                                         <td><input type="text" name="stability_study_orientation[]"></td>
@@ -706,7 +980,7 @@
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>
+                                        <td><input type="text" name="oos_arnumber[]"></td>
                                         <td><input type="text" name="oos_test_name[]"></td>
                                         <td><input type="text" name="oos_results_obtained[]"></td>
                                         <td><input type="text" name="oos_specification_limit[]"></td>
@@ -728,11 +1002,13 @@
                     </div>
                 </div>
             </div>
+
             <!-- Preliminary Lab. Investigation -->
             <div id="CCForm2" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="sub-head">Preliminary Lab. Investigation </div>
                     <div class="row">
+
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
                                 <label for="Audit Schedule Start Date"> Comments </label>
@@ -740,7 +1016,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Comments_plidata" id="summernote-1">
+                                        <textarea class="summernote" name="Comments_plidata[]" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -767,11 +1043,12 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -855,7 +1132,7 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
                                     </textarea>
 
                             </div>
@@ -874,12 +1151,12 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
                                 <select name="phase_i_investigation_pli">
-                                   <option value="0">Enter Your Selection Here</option>
-                                    <option value="phase_i_micro">Phase I Micro</option>
-                                    <option value="phase_i_chemical">Phase I Chemical</option>
-                                    <option value="hypothesis">Hypothesis</option>
-                                    <option value="resampling">Resampling</option>
-                                    <option value="others">Others</option>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Phase I Micro</option>
+                                    <option>Phase I Chemical</option>
+                                    <option>Hypothesis</option>
+                                    <option>Resampling</option>
+                                    <option>Others</option>
                                 </select>
                             </div>
                         </div>
@@ -915,8 +1192,11 @@
                             <center>
                                 <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
                             </center>
-                            <div class="group-input">
+                            
+                            <div class="group-input " >
+                                
                                 <div class="why-why-chart mx-auto" style="width: 100%">
+
                                     <table class="table table-bordered ">
                                         <thead>
                                             <tr>
@@ -929,11 +1209,12 @@
                                         <tbody>
                                             <tr>
                                                 <td class="flex text-center">1</td>
-                                                <td><input type="text" readonly name="question[]" value="Aliquot and standard solutions preserved">
-                                                </td>
+                                                <td>Aliquot and standard solutions preserved.</td>
                                                 <td>
+
+
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -941,20 +1222,21 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">2</td>
-                                                <td><input type="text" readonly name="question[]" value="Visual examination (solid and solution) reveals normal or abnormal
-                                                    appearance">
-                                                .</td>
+                                                <td>Visual examination (solid and solution) reveals normal or abnormal
+                                                    appearance.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -962,19 +1244,21 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">3</td>
-                                                <td><input type="text" readonly name="question[]" value="The analyst is trained on the method."></td>
+                                                <td>The analyst is trained on the method.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -982,20 +1266,22 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
+                                               
                                                 <td class="flex text-center">4</td>
-                                                <td><input type="text" readonly name="question[]" value="Correct test procedure followed e.g. Current Version of standard testing
-                                                    procedure has been used in testing.">
-                                                </td>
+                                                <td>Correct test procedure followed e.g. Current Version of standard testing
+                                                    procedure has been used in testing.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1007,19 +1293,19 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">5</td>
-                                                <td><input type="text" readonly name="question[]" value="Current Validated analytical Method has been used and the data of
-                                                    analytical method validation has been reviewed and found satisfactory.">
+                                                <td>Current Validated analytical Method has been used and the data of
+                                                    analytical method validation has been reviewed and found satisfactory.
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1027,20 +1313,21 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">6</td>
-                                                <td><input type="text" readonly name="question[]" value="Correct sample(s) tested.">
-                                                </td>
+                                                <td>Correct sample(s) tested.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1048,18 +1335,21 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">7</td>
-                                                <td><input type="text" readonly name="question[]" value="Sample Integrity maintained, correct container is used in testing."></td>
+                                                <td>Sample Integrity maintained, correct container is used in testing.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1067,22 +1357,23 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">8</td>
-                                                <td><input type="text" readonly name="question[]" value="Assessment of the possibility that the sample contamination (sample left
+                                                <td>Assessment of the possibility that the sample contamination (sample left
                                                     open to air or unattended) has occurred during the testing/ re-testing
-                                                    procedure">
-                                                </td>
+                                                    procedure. </td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1090,19 +1381,21 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">9</td>
-                                                <td><input type="text" readonly name="question[]" value=" All equipment used in the testing is within calibration due period."></td>
+                                                <td>All equipment used in the testing is within calibration due period.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1114,18 +1407,18 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10</td>
-                                                <td><input type="text" readonly name="question[]" value="Equipment log book has been reviewed and no any failure or malfunction
-                                                    has been reviewed."></td>
+                                                <td>Equipment log book has been reviewed and no any failure or malfunction
+                                                    has been reviewed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1133,20 +1426,22 @@
                                                         </select>
                                                     </div>
                                                 </td>
+
+
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">11</td>
-                                                <td><input type="text" readonly name="question[]" value="Any malfunctioning and / or out of calibration analytical instruments
-                                                    (including glassware) is used."></td>
+                                                <td>Any malfunctioning and / or out of calibration analytical instruments
+                                                    (including glassware) is used.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1156,19 +1451,19 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">12</td>
-                                                <td><input type="text" readonly name="question[]" value="Whether reference standard / working standard is correct (in terms of
+                                                <td>Whether reference standard / working standard is correct (in terms of
                                                     appearance, purity, LOD/water content & its storage) and assay values
-                                                    are determined correctly."></td>
+                                                    are determined correctly.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1178,19 +1473,18 @@
                                                 </td>
                                                <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">13</td>
-                                                <td><input type="text" readonly name="question[]" value="Whether test solution / volumetric solution used are properly prepared &
-                                                    standardized.">
-                                                </td>
+                                                <td>Whether test solution / volumetric solution used are properly prepared &
+                                                    standardized.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1200,20 +1494,20 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">14</td>
-                                                <td><input type="text" readonly name="question[]" value="Review RSD, resolution factor and other parameters required for the
+                                                <td>Review RSD, resolution factor and other parameters required for the
                                                     suitability of the test system. Check if any out of limit parameters is
                                                     included in the chromatographic analysis, correctness of the column used
-                                                    previous use of the column."></td>
+                                                    previous use of the column.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1223,18 +1517,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">15</td>
-                                                <td><input type="text" readonly name="question[]" value="In the raw data, including chromatograms and spectra; any anomalous or
-                                                    suspect peaks or data has been observed."></td>
+                                                <td>In the raw data, including chromatograms and spectra; any anomalous or
+                                                    suspect peaks or data has been observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1244,18 +1538,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">16</td>
-                                                <td><input type="text" readonly name="question[]" value="Any such type of observation has been observed previously (Assay,
-                                                    Dissolution etc.)."></td>
+                                                <td>Any such type of observation has been observed previously (Assay,
+                                                    Dissolution etc.).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1265,19 +1559,19 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">17</td>
-                                                <td><input type="text" readonly name="question[]" value="Any unusual or unexpected response observed with standard or test
+                                                <td>Any unusual or unexpected response observed with standard or test
                                                     preparations (e.g. whether contamination of equipment by previous sample
-                                                    observed)."></td>
+                                                    observed).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1287,18 +1581,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">18</td>
-                                                <td><input type="text" readonly name="question[]" value="">System suitability conditions met (those before analysis and during
+                                                <td>System suitability conditions met (those before analysis and during
                                                     analysis).</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1308,18 +1602,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">19</td>
-                                                <td><input type="text" readonly name="question[]" value="Correct and clean pipette / volumetric flasks volumes, glassware used as
-                                                    per recommendation."></td>
+                                                <td>Correct and clean pipette / volumetric flasks volumes, glassware used as
+                                                    per recommendation.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1329,18 +1623,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">20</td>
-                                                <td><input type="text" readonly name="question[]" value="">Other potentially interfering testing/activities occurring at the time
+                                                <td>Other potentially interfering testing/activities occurring at the time
                                                     of the test which might lead to OOS.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1350,18 +1644,18 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">21</td>
-                                                <td><input type="text" readonly name="question[]" value="Review of other data for other batches performed within the same
-                                                    analysis set and any nonconformance observed."></td>
+                                                <td>Review of other data for other batches performed within the same
+                                                    analysis set and any nonconformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1371,18 +1665,18 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">22</td>
-                                                <td><input type="text" readonly name="question[]" value="Consideration of any other OOS results obtained on the batch of material
-                                                    under test and any non-conformance observed."></td>
+                                                <td>Consideration of any other OOS results obtained on the batch of material
+                                                    under test and any non-conformance observed.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1392,18 +1686,17 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">23</td>
-                                                <td><input type="text" readonly name="question[]" value="Media/Reagents prepared according to procedure.">
-                                                </td>
+                                                <td>Media/Reagents prepared according to procedure.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1413,18 +1706,17 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">24</td>
-                                                <td><input type="text" readonly name="question[]" value="All the materials are within the due period of expiry.">
-                                                </td>
+                                                <td>All the materials are within the due period of expiry.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1434,19 +1726,18 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">25</td>
-                                                <td><input type="text" readonly name="question[]" value=" Whether, analysis was performed by any other alternate validated
-                                                    procedure">
-                                               </td>
+                                                <td>Whether, analysis was performed by any other alternate validated
+                                                    procedure</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1456,16 +1747,16 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">26</td>
-                                                <td><input type="text" readonly name="question[]" value="Whether environmental condition is suitable to perform the test."></td>
+                                                <td>Whether environmental condition is suitable to perform the test.</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1475,18 +1766,17 @@
                                                 </td>
                                                  <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">27</td>
-                                                <td><input type="text" readonly name="question[]" value="Interview with analyst to assess knowledge of the correct procedure">
-                                                </td>
+                                                <td>Interview with analyst to assess knowledge of the correct procedure</td>
                                                 <td>
                                                     <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response[]" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                        <select name="response" id="response" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
@@ -1496,7 +1786,7 @@
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark[]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -1548,11 +1838,11 @@
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
                                 <select name="oos_category_root_cause_ident_plic">
-                                     <option value="0">Enter Your Selection Here</option>
-                                    <option value="analyst_error">Analyst Error</option>
-                                    <option value="instrument_error">Instrument Error</option>
-                                    <option value="product_material_error">Product/Material Related Error</option>
-                                    <option value="other_error">Other Error</option>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Analyst Error</option>
+                                    <option>Instrument Error</option>
+                                    <option>Product/Material Related Error</option>
+                                    <option>Other Error</option>
 
                                 </select>
                             </div>
@@ -1561,7 +1851,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="oos_category_others_plic" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1569,7 +1859,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic" id="summernote-1">
+                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1577,7 +1867,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation" id="summernote-1">
+                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1597,7 +1887,7 @@
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
                                 <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
-                                    <option value="0">--Select---</option>
+                                    <option value="1">--Select---</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
                                 </select>
@@ -1624,7 +1914,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">
+                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1667,7 +1957,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="review_comments_plir" id="summernote-1">
+                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1721,8 +2011,8 @@
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
                                 <select name="phase_ii_inv_required_plir">
-                                    <option value="0">Enter Your Selection Here</option>
-                                  
+                                    <option>Enter Your Selection Here</option>
+                                   <option value="0">--Select---</option>
                                 <option value="yes">Yes</option>
                                 <option value="no">No</option>
                                 </select>
@@ -1770,7 +2060,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2258,8 +2548,8 @@
                 </div>
             </div>
         </div>
-        <!-- Phase II QC Review -->
-        <div id="CCForm6" class="inner-block cctabcontent">
+                <!-- Phase II QC Review -->
+                <div id="CCForm6" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">Summary of Phase II Testing</div>
                 <div class="row">
@@ -2267,7 +2557,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr" id="summernote-1">
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2275,7 +2565,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary Mfg. Investigation</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr" id="summernote-1">
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2311,7 +2601,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2319,7 +2609,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="impact_assessment_piiqcr" id="summernote-1">
+                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2405,7 +2695,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Review Comment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="review_comment_atp" id="summernote-1">
+                            <textarea class="summernote" name="review_comment_atp[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2492,7 +2782,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_comments_oosc[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2519,31 +2809,47 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>
-                                    <td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>
-                                    <td><input type="text" name="summary_results[]"></td>
-                                    <td><input type="text" name="summary_results_analyst_name[]"></td>
-                                    <td><input type="text" name="summary_results_remarks[]"></td> 
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td> --}}
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
                             <input type="text" name="specification_limit_oosc">
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
                             <select name="results_to_be_reported_oosc">
                                 <option value="Intial">Initial</option>
                                 <option value="Retested_result">Retested Result</option>
+
                             </select>
                         </div>
                     </div>
@@ -2557,7 +2863,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justifi. for Averaging Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">
+                            <textarea class="summernote" name="justifi_for_averaging_results_oosc[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2567,15 +2873,24 @@
                             <select name="oos_stands_oosc">
                                 <option value="Valid">Valid</option>
                                 <option value="Invalid">Invalid</option>
+
+
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
                             <select name="capa_req_oosc">
                                 <option name="Yes">Yes</option>
                                 <option name="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2594,7 +2909,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if CAPA not required</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_capa_not_required_oosc[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2604,6 +2919,8 @@
                             <select name="action_plan_req_oosc">
                                  <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2622,7 +2939,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justification for Delay</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
+                            <textarea class="summernote" name="justification_for_delay_oosc[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2667,7 +2984,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_review_comments_ocr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2694,32 +3011,52 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" id="identifier_oos_conclusion_review" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
-                                    <td><input type="text" name="conclusion_review_batch_no[]"></td>
-                                    <td><input type="text" name="conclusion_review_any_other_information[]"></td>
-                                    <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
+                                    {{-- <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Number[]"></td> --}}
+
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
+
+
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
                             <select name="capa_req_ocr">
                                   <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -2792,7 +3129,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2831,8 +3168,8 @@
                 </div>
             </div>
         </div>
-        <!--CQ Review Comments -->
-        <div id="CCForm10" class="inner-block cctabcontent">
+                <!--CQ Review Comments -->
+                <div id="CCForm10" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
                     CQ Review Comments
@@ -2842,7 +3179,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">CQ Review comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="cq_review_comments_ocqr" id="summernote-1">
+                            <textarea class="summernote" name="cq_review_comments_ocqr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2876,15 +3213,21 @@
                                 <option value="0">Enter Your Selection Here</option>
                                 <option value="Yes">Yes</option>
                                 <option value="No">No</option>
+
                             </select>
                         </div>
                     </div>
+
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
                             <input type="text" name="ref_action_plan_ocqr">
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> CQ Attachment</label>
@@ -2899,8 +3242,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2920,6 +3265,9 @@
                     Batch Disposition
                 </div>
                 <div class="row">
+
+
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
@@ -2940,6 +3288,13 @@
                             <input type="text" name="others_bd">
                         </div>
                     </div>
+                    <!-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Report Attachments">Required Action Plan? </label>
+                                        <input type="num" name="num">
+                                    </div>
+                                </div> -->
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
@@ -2951,13 +3306,16 @@
                         </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
-                            <textarea class="summernote" name="other_action_bd" id="summernote-1">
-                            </textarea>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="other_action_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
@@ -2968,19 +3326,25 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="sub-head">Assessment for batch disposition</div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
-                            <textarea class="summernote" name="other_parameters_results_bd" id="summernote-1">
-                            </textarea>
+                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <textarea class="summernote" name="other_parameters_results_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
                     </div>
+
+
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="trend_of_previous_batches_bd" id="summernote-1">
+                            <textarea class="summernote" name="trend_of_previous_batches_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -2989,7 +3353,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Stability Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="stability_data_bd" id="summernote-1">
+                            <textarea class="summernote" name="stability_data_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2997,7 +3361,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Process Validation Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="process_validation_data_bd" id="summernote-1">
+                            <textarea class="summernote" name="process_validation_data_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3005,7 +3369,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Method Validation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="method_validation_bd" id="summernote-1">
+                            <textarea class="summernote" name="method_validation_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3013,25 +3377,27 @@
                         <div class="group-input">
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="any_market_complaints_bd" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="any_market_complaints_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
+
                     </div>
 
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="statistical_evaluation_bd" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="statistical_evaluation_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
+
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="risk_analysis_disposition_bd" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="risk_analysis_disposition_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
 
                     </div>
@@ -3039,10 +3405,12 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="conclusion_bd" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="conclusion_bd[]" id="summernote-1">
+                                    </textarea>
                         </div>
+
                     </div>
+
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
@@ -3050,6 +3418,8 @@
                               <option value="0">Enter Your Selection Here</option>
                                 <option value="yes">Yes</option>
                                 <option value="No">No</option>
+
+
                             </select>
                         </div>
                     </div>
@@ -3063,13 +3433,15 @@
                             </select>
                         </div>
                     </div>
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="justify_for_delay_in_activity_bd" id="summernote-1">
+                            <textarea class="summernote" name="justify_for_delay_in_activity_bd[]" id="summernote-1">
                                     </textarea>
                         </div>
+
                     </div>
                     <div class="col-12">
                         <div class="group-input">
@@ -3101,7 +3473,7 @@
             </div>
 
         </div>
-        <!-- Re-Open -->
+                <!-- Re-Open -->
         <div id="CCForm12" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -3112,8 +3484,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="other_action_specify_ro[]" id="summernote-1">
+                                    </textarea>
                         </div>
                     </div>
 
@@ -3131,8 +3503,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3152,14 +3526,16 @@
                     Addendum Approval Comment
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Reopen Approval Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="reopen_approval_comments_uaa[]" id="summernote-1">
+                                    </textarea>
                         </div>
                     </div>
+
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Addendum Attachment</label>
@@ -3176,6 +3552,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3200,7 +3578,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Execution Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="execution_comments_uae" id="summernote-1">
+                            <textarea class="summernote" name="execution_comments_uae[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3330,12 +3708,13 @@
                     Under Addendum Review
                 </div>
                 <div class="row">
+
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Addendum Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="addendum_review_comments_uar" id="summernote-1">
-                            </textarea>
+                            <textarea class="summernote" name="addendum_review_comments_uar[]" id="summernote-1">
+                    </textarea>
                         </div>
                     </div>
 
@@ -3353,8 +3732,10 @@
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -3381,7 +3762,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Verification Comments </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="verification_comments_uav" id="summernote-1">
+                            <textarea class="summernote" name="verification_comments_uav[]" id="summernote-1">
                     </textarea>
                         </div>
                     </div>
@@ -3403,6 +3784,8 @@
 
                         </div>
                     </div>
+
+
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>

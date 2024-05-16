@@ -168,6 +168,12 @@ return new class extends Migration
             $table->longtext('required_attachment_uar')->nullable();
             $table->longtext('verification_comments_uav')->nullable();
             $table->longtext('verification_attachment_uar')->nullable();
+            $table->text('stage')->nullable();
+            $table->text('status')->nullable();
+            $table->text('date_open')->nullable();
+            $table->text('date_close')->nullable();
+            $table->text('type')->nullable();
+            $table->text('parent_record')->nullable();
             $table->softDeletes();
            $table->timestamps();
 
