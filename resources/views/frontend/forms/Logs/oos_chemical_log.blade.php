@@ -1,4 +1,3 @@
-
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
@@ -34,7 +33,7 @@
     <div id="rcms-desktop">
 
         <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">Risk Review Log Book </div>
+            <div class="active" onclick="openTab('internal-audit', this)">OOS_Chemical Log </div>
 
         </div>
 
@@ -50,18 +49,20 @@
                         </div>
                         <div class="table-block" style="">
                             <div class="table-responsive" style="height: 73vh">
+
                                 <table class="table table-bordered" style="width: 100%;">
                                     <tbody>
                                         <thead class="thead-dark">
                                             <tr>
                                                 <th style="width: 5%;">Sr.No.</th>
-                                                <th>Date</th>
-                                                <th>Periodic Review / Action Plan</th>
-                                                <th>Details of the Risk Review</th>
-                                                <th>Output of Risk Management Review </th>
-                                                <th>Prepared By sign / Date</th>
-                                                <th>reviewed By sign / Date</th>
-                                                
+                                                <th>Date of Initiation</th>
+                                                <th>OOS Report No.</th>
+                                                <th>Description of OOS</th>
+                                                <th>Annexure no.</th>
+                                                <th>Issued by</th>
+                                                <th>Received by</th>
+                                                <th>Closure Date</th>
+                                                <th>Remarks</th>
                                             </tr>
                                         </thead>
                                     <tbody>
@@ -72,6 +73,9 @@
                                             <td>1</td>
                                             <td>1</td>
                                             <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
+                                            <td>1</td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
@@ -80,6 +84,9 @@
                                             <td>2</td>
                                             <td>2</td>
                                             <td>2</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td>1</td>
                                         </tr>
                                         <tr>
                                             <td>3</td>
@@ -88,6 +95,9 @@
                                             <td>3</td>
                                             <td>3</td>
                                             <td>3</td>
+                                            <td>3</td>
+                                            <td>3</td>
+                                            <td>1</td>
                                         </tr>
                                         <tr>
                                             <td>4</td>
@@ -96,6 +106,9 @@
                                             <td>4</td>
                                             <td>4</td>
                                             <td>4</td>
+                                            <td>4</td>
+                                            <td>4</td>
+                                            <td>1</td>
                                         </tr>
                                         <tr>
                                             <td>5</td>
@@ -104,6 +117,9 @@
                                             <td>5</td>
                                             <td>5</td>
                                             <td>5</td>
+                                            <td>5</td>
+                                            <td>5</td>
+                                            <td>1</td>
                                         </tr>
                                         <tr>
                                             <td>6</td>
@@ -112,9 +128,13 @@
                                             <td>6</td>
                                             <td>6</td>
                                             <td>6</td>
+                                            <td>6</td>
+                                            <td>6</td>
+                                            <td>1</td>
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>

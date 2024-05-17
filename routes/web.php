@@ -423,8 +423,16 @@ Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
 Route::view('market_complaint_log', 'frontend.forms.Logs.Market-Complaint-registerLog');
 Route::view('incident_register_log', 'frontend.forms.Logs.incidentregisterLog');
 Route::view('laboratory_incidence_log', 'frontend.forms.Logs.laboratoryIncidentlog');
-Route::view('risk_review_log', 'frontend.forms.Logs.riskreviewLog');
-Route::view('errata_log', 'frontend.forms.Logs.ErrataLog');
+Route::view('risk_management_log', 'frontend.forms.Logs.riskmanagementLog');
+Route::view('errata_log', 'frontend.forms.Logs.errata_log');
+Route::view('laboratory_log', 'frontend.forms.Logs.laboratoryIncidentLog');
+Route::view('capa_log', 'frontend.forms.Logs.capa_log');
+Route::view('non_conformance_log', 'frontend.forms.Logs.non_conformance_log');
+Route::view('deviation_log', 'frontend.forms.Logs.deviation_log');
+Route::view('oos_chemical_log', 'frontend.forms.Logs.oos_chemical_log');
+Route::view('oot_log', 'frontend.forms.Logs.OOT_log');
+Route::view('OOC_log', 'frontend.forms.Logs.OOC_log');
+
 
 // =================LOGS=========================================
 
