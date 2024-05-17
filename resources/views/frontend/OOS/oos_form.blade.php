@@ -1,6 +1,12 @@
 @extends('frontend.layout.main')
 @section('container')
-    <style>
+@php
+$users = DB::table('users')
+    ->select('id', 'name')
+    ->get();
+
+    @endphp
+    <style> 
         textarea.note-codable {
             display: none !important;
         }
@@ -88,26 +94,31 @@
         $(document).ready(function() {
             $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
+                    var users = @json($users); 
                     var html =
                     '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
-                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
-                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
-                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
-                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
-                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
-                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
-                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
-                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
-                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><input type="text" id="info_product_code" name="Info_Product_Material[' + serialNumber + ']info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_batch_no]" value=""></td>'+
+                        '<td><input type="date" name="Info_Product_Material[' + serialNumber + '][info_mfg_date]" value=""></td>' +
+                        '<td><input type="date" name="Info_Product_Material[' + serialNumber + '][info_expiry_date]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_label_claim]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_analyst_name]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_others_specify]" value=""></td>' +
+                        '<td><input type="text" name="Info_Product_Material[' + serialNumber + '][info_process_sample_stage]" value=""></td>' +
+                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_packing_material_type]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="Info_Product_Material[' + serialNumber + '][info_stability_for]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
                     '</tr>';
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-                    // html += '</select></td>' + 
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
+                        '</tr>';
+
                     return html;
                 }
 
@@ -126,15 +137,14 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="details_stability[ '+ serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability"><input type="text" id="stability_study_arnumber" name="stability_study_arnumber[]"></td>'+
-                        '<td><input type="text" name="stability_study_condition_temprature_rh[]"></td>'+
-                        '<td><input type="text" name="stability_study_Interval[]"></td>'+
-                        '<td><input type="text" name="stability_study_orientation[]"></td>'+
-                        '<td><input type="text" name="stability_study_pack_details[]"></td>'+
-                        '<td><input type="text" name="stability_study_specification_no[]"></td>'+
-                        '<td><input type="text" name="stability_study_sample_description[]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_arnumber]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_condition_temprature_rh]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_Interval]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_orientation]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_specification_no]"></td>'+
+                        '<td><input type="text" name="details_stability[ '+ serialNumber + '][stability_study_sample_description]"></td>'+
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -158,16 +168,16 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                            '<td><input disabled type="text" name="oos_detail['+ serialNumber +'][serial]" value="' + serialNumber +
                             '"></td>' +
-                            '<td><input type="hidden" id="identifier_oos_detail" name="identifier_oos_detail[]" value="OOS Details"><input type="text" id="oos_arnumber" name="oos_arnumber[]"></td>'+
-                            '<td><input type="text" name="oos_test_name[]"></td>' +
-                            '<td><input type="text" name="oos_results_obtained[]"></td>' +
-                            '<td><input type="text" name="oos_specification_limit[]"></td>' +
-                            '<td><input type="text" name="oos_details_obvious_error[]"></td>' +
-                            '<td><input type="file" name="oos_file_attachment[]"></td>' +
-                            '<td><input type="text" name="oos_submit_by[]"></td>' +
-                            '<td><input type="date" name="oos_submit_on[]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_arnumber]"></td>'+
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_test_name]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_results_obtained]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_specification_limit]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_details_obvious_error]"></td>' +
+                            '<td><input type="file" name="oos_detail['+ serialNumber +'][oos_file_attachment]"></td>' +
+                            '<td><input type="text" name="oos_detail['+ serialNumber +'][oos_submit_by]"></td>' +
+                            '<td><input type="date" name="oos_detail['+ serialNumber +'][oos_submit_on]"></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -193,16 +203,16 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="oos_capa['+ serialNumber +'][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_reported_date[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_description[]" value=""></td>' +
-                        '<td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>' +
-                        '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
-                        '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
-                        '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_number]" value=""></td>' +
+                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_reported_date]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_description]" value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_previous_root_cause]"value=""></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa]" value=""></td>' +
+                        '<td><input type="date" name="oos_capa['+ serialNumber +'][info_oos_closure_date]" value=""></td>' +
+                        '<td><select name="oos_capa['+ serialNumber +'][info_oos_capa_requirement]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="oos_capa['+ serialNumber +'][info_oos_capa_reference_number]" value=""></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -229,13 +239,13 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="oos_conclusion[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>' +
-                        '<td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>' +
-                        '<td><input type="text" name="summary_results[]"></td>' +
-                        '<td><input type="text" name="summary_results_analyst_name[]"></td>' +
-                        '<td><input type="text" name="summary_results_remarks[]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analysis_detials]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_hypothesis_experimentation_test_pr_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_analyst_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion[' + serialNumber + '][summary_results_remarks]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -266,12 +276,12 @@
                 function generateTableRow(serialNumber) {
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="oos_conclusion_review[' + serialNumber + '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="hidden" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>' +
-                        '<td><input type="text" name="conclusion_review_batch_no[]"></td>' +
-                        '<td><input type="text" name="conclusion_review_any_other_information[]"></td>' +
-                        '<td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_product_name]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_batch_no]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_any_other_information]"></td>' +
+                        '<td><input type="text" name="oos_conclusion_review[' + serialNumber + '][conclusion_review_action_affecte_batch]"></td>' +
                         '</tr>';
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -621,19 +631,22 @@
                                             <th style="width: 16% pt-2"> Stability for</th>
                                         </tr>
                                     </thead>
+                                       
+                                    
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>
-                                        <td><input type="text" name="info_batch_no[]" value=""></td>
-                                        <td><input type="date" name="info_mfg_date[]" value=""></td>
-                                        <td><input type="date" name="info_expiry_date[]" value=""></td>
-                                        <td><input type="text" name="info_label_claim[]" value=""></td>
-                                        <td><input type="text" name="info_pack_size[]" value=""></td>
-                                        <td><input type="text" name="info_analyst_name[]" value=""></td>
-                                        <td><input type="text" name="info_others_specify[]" value=""></td>
-                                        <td><input type="text" name="info_process_sample_stage[]" value=""></td>
+                                      
+                                        <td><input disabled type="text" name="info_product_material[0][serial]" value="1"></td>
+                                        <td><input type="text" name="info_product_material[0][info_product_code]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_batch_no]" value=""></td>
+                                        <td><input type="date" name="info_product_material[0][info_mfg_date]" value=""></td>
+                                        <td><input type="date" name="info_product_material[0][info_expiry_date]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_label_claim]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_pack_size]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_analyst_name]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_others_specify]" value=""></td>
+                                        <td><input type="text" name="info_product_material[0][info_process_sample_stage]" value=""></td>
                                         <td>
-                                            <select name="info_packing_material_type[]">
+                                            <select name="info_product_material[0][info_packing_material_type]">
                                                 <option value="Primary">Primary</option>
                                                 <option value="Secondary">Secondary</option>
                                                 <option value="Tertiary">Tertiary</option>
@@ -641,13 +654,14 @@
                                             </select>
                                         </td>
                                         <td>
-                                            <select name="info_stability_for[]">
+                                            <select name="info_product_material[0][info_stability_for]">
                                                 <option vlaue="Submission">Submission</option>
                                                 <option vlaue="Commercial">Commercial</option>
                                                 <option vlaue="Pack Evaluation">Pack Evaluation</option>
                                                 <option vlaue="Not Applicable">Not Applicable</option>
                                             </select>
                                         </td>
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -678,15 +692,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_details_stability[]" value="Details_Stability">
-                                        <input type="text" name="stability_study_arnumber[]"></td>
-                                        <td><input type="text" name="stability_study_condition_temprature_rh[]"></td>
-                                        <td><input type="text" name="stability_study_Interval[]"></td>
-                                        <td><input type="text" name="stability_study_orientation[]"></td>
-                                        <td><input type="text" name="stability_study_pack_details[]"></td>
-                                        <td><input type="text" name="stability_study_specification_no[]"></td>
-                                        <td><input type="text" name="stability_study_sample_description[]"></td> 
+                                        <td><input disabled type="text" name="details_stability[0][serial]" value="1"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_arnumber]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_condition_temprature_rh]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_Interval]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_orientation]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_pack_details]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_specification_no]"></td>
+                                        <td><input type="text" name="details_stability[0][stability_study_sample_description]"></td> 
                                     </tbody>
                                 </table>
                             </div>
@@ -719,15 +732,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" name="identifier_oos_detail[]" value="OOS Details"><input type="text" name="oos_arnumber[]"></td>
-                                        <td><input type="text" name="oos_test_name[]"></td>
-                                        <td><input type="text" name="oos_results_obtained[]"></td>
-                                        <td><input type="text" name="oos_specification_limit[]"></td>
-                                        <td><input type="text" name="oos_details_obvious_error[]"></td>
-                                        <td><input type="file" name="oos_file_attachment[]"></td>
-                                        <td><input type="text" name="oos_submit_by[]"></td>
-                                        <td><input type="date" name="oos_submit_on[]"></td>
+                                        <td><input disabled type="text" name="oos_detail[0][serial]" value="1"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_arnumber]"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_test_name]"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
+                                        <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
+                                        <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
+                                        <td><input type="date" name="oos_detail[0][oos_submit_on]"></td>
                                     </tbody>
                                 </table>
                             </div>
@@ -1731,18 +1744,18 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="hidden" id="identifier_oos_capa" name="identifier_oos_capa[]" value="Info OOS Capa"><input type="text" id="info_oos_number" name="info_oos_number[]" value=""></td>
-                                        <td><input type="date" name="info_oos_reported_date[]" value=""></td>
-                                        <td><input type="text" name="info_oos_description[]" value=""></td>
-                                        <td><input type="text" name="info_oos_previous_root_cause[]"value=""></td>
-                                        <td><input type="text" name="info_oos_capa[]" value=""></td>
-                                        <td><input type="date" name="info_oos_closure_date[]" value=""></td>
-                                        <td><select name="info_oos_capa_requirement[]">
+                                        <td><input disabled type="text" name="oos_capa[0][serial]" value="1"></td>
+                                        <td><input type="text" id="info_oos_number" name="oos_capa[0][info_oos_number]" value=""></td>
+                                        <td><input type="date" name="oos_capa[0][info_oos_reported_date]" value=""></td>
+                                        <td><input type="text" name="oos_capa[0][info_oos_description]" value=""></td>
+                                        <td><input type="text" name="oos_capa[0][info_oos_previous_root_cause]"value=""></td>
+                                        <td><input type="text" name="oos_capa[0][info_oos_capa]" value=""></td>
+                                        <td><input type="date" name="oos_capa[0][info_oos_closure_date]" value=""></td>
+                                        <td><select name="oos_capa[0][info_oos_capa_requirement]">
                                                 <option value="yes">Yes</option>
                                                 <option value="No">No</option>
                                             </select></td>
-                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td> 
+                                        <td><input type="text" name="oos_capa[0][info_oos_capa_reference_number]" value=""></td> 
                                     </tbody>
                                 </table>
                             </div>
@@ -2570,12 +2583,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" name="identifier_oos_conclusion[]" value="identifier_oos_conclusion"><input type="text" name="summary_results_analysis_detials[]"></td>
-                                    <td><input type="text" name="summary_results_hypothesis_experimentation_test_pr_no[]"></td>
-                                    <td><input type="text" name="summary_results[]"></td>
-                                    <td><input type="text" name="summary_results_analyst_name[]"></td>
-                                    <td><input type="text" name="summary_results_remarks[]"></td> 
+                                     <td><input disabled type="text" name="oos_conclusion[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_analysis_detials]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_hypothesis_experimentation_test_pr_no]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_analyst_name]"></td>
+                                    <td><input type="text" name="oos_conclusion[0][summary_results_remarks]"></td> 
                                 </tbody>
                             </table>
                         </div>
@@ -2745,11 +2758,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="hidden" id="identifier_oos_conclusion_review" name="identifier_oos_conclusion_review[]" value="identifier_oos_conclusion_review"><input type="text" name="conclusion_review_product_name[]"></td>
-                                    <td><input type="text" name="conclusion_review_batch_no[]"></td>
-                                    <td><input type="text" name="conclusion_review_any_other_information[]"></td>
-                                    <td><input type="text" name="conclusion_review_action_affecte_batch[]"></td>
+                                    <td><input disabled type="text" name="oos_conclusion_review[0][serial]" value="1"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_product_name]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_batch_no]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_any_other_information]"></td>
+                                    <td><input type="text" name="oos_conclusion_review[0][conclusion_review_action_affecte_batch]"></td>
                                 </tbody>
                             </table>
                         </div>

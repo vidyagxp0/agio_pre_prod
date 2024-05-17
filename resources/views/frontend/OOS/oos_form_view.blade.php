@@ -918,29 +918,19 @@
                                                 <th style="width: 16% pt-2"> Stability for</th>
                                             </tr>
                                         </thead>
-                                        
-                                       
-                                        @if(!empty($data->oosgridrecord))
-                                       
-
-                                        @foreach($data->oosgridrecord as $key => $oosgridrecords)
-                                         
-
-                                        @if($oosgridrecords->identifier == "Info Product Material")
-                                        
+                                        @if(!empty($productDatasa))
+                                        @foreach($productDatasa->data as $productDatas)
                                         <tr>
-                                        <td><input disabled type="text" name="serial[]" value="">
-                                        
-                                        <?php echo"<pre>";print_r($oosgridrecords->oos_id);?></td>
-                                        <td><?php echo"<pre>";print_r($oosgridrecords['identifier']);?><input type="text" id="info_product_code" name="info_product_code[]" value="{{$oosgridrecords->info_product_code}}">{{  $oosgridrecords->info_product_code }}</td>
-                                        <td><input type="text" name="info_batch_no[]" value="{{$oosgridrecords->info_batch_no}}">{{$oosgridrecords->info_batch_no}}</td>
-                                        <td><input type="date" name="info_mfg_date[]" value="{{$oosgridrecords->info_mfg_date}}">{{$oosgridrecords->info_mfg_date}}</td>
-                                        <td><input type="date" name="info_expiry_date[]" value="{{$oosgridrecords->info_expiry_date}}">{{$oosgridrecords->info_expiry_date}}</td>
-                                        <td><input type="text" name="info_label_claim[]" value="{{$oosgridrecords->info_label_claim}}">{{$oosgridrecords->info_label_claim}}</td>
-                                        <td><input type="text" name="info_pack_size[]" value="{{$oosgridrecords->info_pack_size}}">{{$oosgridrecords->info_pack_size}}</td>
-                                        <td><input type="text" name="info_analyst_name[]" value="{{$oosgridrecords->info_analyst_name}}">{{$oosgridrecords->info_analyst_name}}</td>
-                                        <td><input type="text" name="info_others_specify[]" value="{{$oosgridrecords->info_others_specify}}">{{$oosgridrecords->info_others_specify}}</td>
-                                        <td><input type="text" name="info_process_sample_stage[]" value="{{$oosgridrecords->info_process_sample_stage}}">{{$oosgridrecords->info_process_sample_stage}}</td>
+                                        <td><input disabled type="text" name="serial[]" value=""></td>
+                                        <td><input type="text" name="info_product_code[]" value="{{ $productDatas['info_product_code'] }}"></td>
+                                        <td><input type="text" name="info_batch_no[]" value="{{ $productDatas['info_batch_no'] }}"></td>
+                                        <td><input type="date" name="info_mfg_date[]" value="{{ $productDatas['info_mfg_date'] }}"></td>
+                                        <td><input type="date" name="info_expiry_date[]" value="{{ $productDatas['info_expiry_date'] }}"></td>
+                                        <td><input type="text" name="info_label_claim[]" value="{{ $productDatas['info_label_claim'] }}"></td>
+                                        <td><input type="text" name="info_pack_size[]" value="{{ $productDatas['info_pack_size'] }}"></td>
+                                        <td><input type="text" name="info_analyst_name[]" value="{{ $productDatas['info_analyst_name'] }}"></td>
+                                        <td><input type="text" name="info_others_specify[]" value="{{ $productDatas['info_others_specify'] }}"></td>
+                                        <td><input type="text" name="info_process_sample_stage[]" value="{{ $productDatas['info_process_sample_stage'] }}"></td>
                                         <td>
                                             <select name="info_packing_material_type[]">
                                                 <option value="Primary">Primary</option>
@@ -958,14 +948,8 @@
                                             </select>
                                         </td>
                                         <tr>
-                                        @endif
-                                        @endforeach
-                                        @else
-                                        <tr>
-                                        <td> Record Not Found </td>
-                                        </tr>
-                                        @endif
-                                        
+                                       @endforeach
+                                       @endif 
                                     </table>
                                 </div>
                             </div>
@@ -995,17 +979,20 @@
                                                 <th style="width: 16%">Sample Description</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-                                            <td><input type="text" name="stability_study_arnumber[]"></td>
-                                            <td><input type="text" name="stability_study_condition_temprature_rh[]">
-                                            </td>
-                                            <td><input type="text" name="stability_study_Interval[]"></td>
-                                            <td><input type="text" name="stability_study_orientation[]"></td>
-                                            <td><input type="text" name="stability_study_pack_details[]"></td>
-                                            <td><input type="text" name="stability_study_specification_no[]"></td>
-                                            <td><input type="text" name="stability_study_sample_description[]"></td>
-                                        </tbody>
+                                        @if(!empty($stabilityData))
+                                        @foreach ($stabilityData->data as $row)
+                                           <tr>
+                                           <td><input disabled type="text" name="serial[]" value="1"></td>
+                                                <td><input type="text" name="stability_study_arnumber[]" value="{{ $row['stability_study_arnumber'] }}"></td>
+                                                <td><input type="text" name="stability_study_condition_temprature_rh[]" value="{{ $row['stability_study_condition_temprature_rh'] }}"></td>
+                                                <td><input type="text" name="stability_study_Interval[]" value="{{ $row['stability_study_Interval'] }}"></td>
+                                                <td><input type="text" name="stability_study_orientation[]" value="{{ $row['stability_study_orientation'] }}"></td>
+                                                <td><input type="text" name="stability_study_specification_no[]" value="{{ $row['stability_study_specification_no'] }}"></td>
+                                                <td><input type="text" name="stability_study_sample_description[]" value="{{ $row['stability_study_sample_description'] }}"></td>
+                                        </tr>
+                                        @endforeach
+                                       
+                                        @endif
                                     </table>
                                 </div>
                             </div>
