@@ -1359,7 +1359,7 @@ header .header-bottom.bottom-pr-links {
 #data-fields .group-input p {
     margin-bottom: 0;
     font-size: 0.8rem;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #data-fields .comment .button {

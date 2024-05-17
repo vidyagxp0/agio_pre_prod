@@ -521,15 +521,13 @@
                                         <label for="hods">HOD's<span class="text-danger">*</span></label>
                                         <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                             name="hods[]" placeholder="Select HOD's" multiple required>
-                                            @if (!empty($hods))
-                                                @foreach ($hods as $hod)
-                                                    @if(Helpers::checkUserRolesApprovers($hod))
-                                                    <option value="{{ $hod->id }}">
-                                                        {{ $hod->name }}
-                                                    </option>
-                                                    @endif
-                                                @endforeach
-                                            @endif
+                                            @foreach ($hods as $hod)
+                                                {{-- @if(Helpers::checkUserRolesApprovers($hod)) --}}
+                                                <option value="{{ $hod->id }}">
+                                                    {{ $hod->name }}
+                                                </option>
+                                                {{-- @endif --}}
+                                            @endforeach
                                         </select>
                                     </div>
                                     {{-- <p id="hodError" style="color:red">** HOD's are required</p> --}}

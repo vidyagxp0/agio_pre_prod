@@ -76,7 +76,22 @@ class MytaskController extends Controller
                     }
                 }
 
+                if ($data->hods) {
+                    $datauser = explode(',', $data->hods);
+                    for ($i = 0; $i < count($datauser); $i++) {
+                        if ($datauser[$i] == Auth::user()->id) {
+                            array_push($array2, $data);
+                            // echo "<pre>";
+                            // print_r($array2);
+                            // die;
+
+                        }
+                    }
+                }
+
             }
+
+
             $arrayTask = array_unique(array_merge($array1, $array2));
             foreach ($arrayTask as $temp) {
                 $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
@@ -85,6 +100,35 @@ class MytaskController extends Controller
             $task = $this->paginate($arrayTask);
             return view('frontend.tasks', ['task' => $task]);
         
+
+
+            if (Helpers::checkRoles(4)) {
+                $array1 = [];
+                $array2 = [];
+                $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
+    
+                foreach ($document as $data) {
+                    $data->originator_name = User::where('id', $data->originator_id)->value('name');
+                    
+                    if ($data->hods) {
+                        $datauser = explode(',', $data->hods);
+                        for ($i = 0; $i < count($datauser); $i++) {
+                            if ($datauser[$i] == Auth::user()->id) {
+                                array_push($array2, $data);
+                            }
+                        }
+                    }
+    
+                }
+                $arrayTask = array_unique(array_merge($array1, $array2));
+                foreach ($arrayTask as $temp) {
+                    $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
+                    ->value('name');
+                }
+                $task = $this->paginate($arrayTask);
+    
+                return view('frontend.tasks', ['task' => $task]);
+            }
 
         if (Helpers::checkRoles(2)) {
             $array1 = [];
@@ -126,6 +170,7 @@ class MytaskController extends Controller
                 ->value('name');
             }
             $task = $this->paginate($arrayTask);
+
             return view('frontend.tasks', ['task' => $task]);
         }
 
@@ -173,7 +218,11 @@ class MytaskController extends Controller
         $document->last_modify = DocumentHistory::where('document_id', $document->id)->latest()->first();
         $stagereview = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Reviewed")->latest()->first();
         $stagereview_submit = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Review-Submit")->latest()->first();
-         $stageapprove = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
+        
+        $stagehod_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"HOD Review-Submit")->latest()->first();
+        $stagehod = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"HOD Review Complete")->latest()->first();
+        
+        $stageapprove = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
         $stageapprove_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
        // $stageapprove = '';
         //$stageapprove_submit = '';
@@ -186,7 +235,7 @@ class MytaskController extends Controller
         $approvers = User::where('role', 1)->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
-        return view('frontend.documents.review-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup', 'stagereview', 'stagereview_submit', 'stageapprove', 'stageapprove_submit', 'review_reject', 'approval_reject'));
+        return view('frontend.documents.review-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup', 'stagereview', 'stagereview_submit', 'stageapprove', 'stageapprove_submit', 'review_reject', 'approval_reject', 'stagehod_submit', 'stagehod'));
 
     }
 

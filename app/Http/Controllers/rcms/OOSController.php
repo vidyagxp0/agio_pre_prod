@@ -15,7 +15,8 @@ class OOSController extends Controller
     }
     
     public function store(Request $request)
-    {   
+    { 
+
         $input = $request->all();
         $input['stage'] ="1";
         $input['status']="Opened";
@@ -355,6 +356,40 @@ class OOSController extends Controller
                 $m++;  
                 }
             }
+             // ============= Phase -1  ==========
+            //  $questions = $request->question;
+            //  if(isset($questions) && $questions!=''){
+            //     //  $p=0;
+            //      foreach ($questions as $key => $value1) {
+            //         $Phase1Data = array(
+            //         'oos_id'=> $OosDataRecord->id,
+            //         'identifier'=> 'identifier_phase1',
+            //         'question' => is_array($questions) ? $questions : [],
+            //         //  'response'=> is_array($request->response) ? $request->response : [] ,
+            //         // 'remark'=> is_array($request->remark) ? $request->remark : []
+            //         ); 
+            //         $Phase1Datas = Oosgrids::insert($Phase1Data);
+            //         //  $p++;  
+            //      }
+            //     //  dd($Phase1Data);
+                
+            //  }
+             // ============= Phase -2  ==========
+            //  $question = $request->question;
+            //  if(isset($question) && $question!=''){
+            //      $p=0;
+            //      foreach ($question as $key => $value1) {
+            //      $Phase1Data = array(
+            //      'oos_id'=> $OosDataRecord->id,
+            //      'identifier' => $request->identifier_phase1[$p],
+            //      'question' => $request->question[$p],
+            //      'response'=>$request->response[$p],
+            //      'remark'=>$request->remark[$p]
+            //      ); 
+            //      $Phase1Datas = OosGrids::insert($Phase1Data);
+            //      $p++;  
+            //      }
+            //  }
             toastr()->success("Record is created Successfully");
             return redirect(url('rcms/qms-dashboard'));
         }
@@ -362,14 +397,33 @@ class OOSController extends Controller
     }
     public static function show($id)
     {
-        $id = OOS::find($id);
-        return view('frontend.OOS.oos_form_view', compact('id'));
+        $data = OOS::find($id);
+        return view('frontend.OOS.oos_form_view', compact('data'));
 
     }
     public function update(Request $request, $id)
     {
-        dd($request->all());
-        $id = OOS::find($id);
+        $data = OOS::find($id);
+        $input = $request->all();
+        $data->update($input);
+        // if($request->source_doc!=""){
+        //          if (!empty ($request->CAPA_Closure_attachment)) {
+        //             $files = [];
+        //             if ($request->hasfile('CAPA_Closure_attachment')) {
+
+        //                 foreach ($request->file('CAPA_Closure_attachment') as $file) {
+        //                     $name = 'capa_closure_attachment-' . time() . '.' . $file->getClientOriginalExtension();
+        //                     $file->move('upload/', $name);
+        //                     $files[] = $name;
+        //                 }
+        //             }
+        //             $deviation->CAPA_Closure_attachment = json_encode($files);
+                    
+        //         }
+        //         $deviation->update();
+        //         toastr()->success('Document Sent');
+        //         return back();
+        //         }
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
