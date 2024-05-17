@@ -60,7 +60,7 @@
     <div id="rcms-desktop">
 
         <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">Non Conformance Log </div>
+            <div class="active" onclick="openTab('internal-audit', this)">Incident Log </div>
         </div>
         <div class="main-content">
             <div class="container-fluid">
@@ -68,6 +68,7 @@
                     <div class="process-table active" id="internal-audit">
                         <div class="mt-1 mb-2 bg-white " style="height: 65px">
                             <div class="d-flex align-items-center">
+
                                 <div class="scope-bar ml-3">
                                     <button style="width: 70px;margin-left:5px"
                                         class="print-btn btn btn-primary">Print</button>
@@ -103,7 +104,7 @@
                                             </select>
                                         </div> 
                                         <div class="filter-item">
-                                            <label for="originator">Type of Document</label>
+                                            <label for="originator">Incident Related to</label>
                                             <select class="custom-select" id="originator">
                                                 <option value="all">All Records</option>
 
@@ -128,26 +129,32 @@
                             <div class="table-responsive" style="height: 300px">
                                 <table class="table table-bordered" style="width: 120%;">
                                     <thead>
+                                       
+                                        
                                         <tr>
                                             <th style="width: 5%;">Sr.No.</th>
                                             <th>Date of Initiation</th>
-                                            <th>NCR No.</th>
+                                            <th>Incident No.</th>
                                             <th>Originator</th>
-                                            <th>Division</th>
                                             <th>Department</th>
-                                            <th>Description of Non Conformance</th>
-                                            <th>Name of Product</th>
-                                            <th>No. of Extension</th>
+                                            <th>Division</th>
+                                            <th>Description of Incidence</th>
+                                            <th>Incident Related to</th>
+                                            <th>Classification of Incident</th>
+                                            <th>Material / Product name</th>
+                                            <th>Batch No. </th>
                                             <th>Due Date</th>
                                             <th>Date of Clouser</th>
                                             <th>Status</th>
-                                            
                                         </tr>
+                                        
+                                        
                                     </thead>
-
                                     <tbody>
                                         <tr>
 
+                                            <td></td>
+                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>

@@ -27,127 +27,169 @@
         .filter-sub {
             display: flex;
             gap: 16px;
-            margin-left: 13px;
+            margin-left: 13px
+        }
+    </style>
+    <style>
+        .filter-bar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .filter-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .table-responsive {
+            height: 100vh;
+            overflow-x: scroll;
+
+        }
+
+        .filter-item label {
+            margin-right: 10px;
         }
 
         table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-              border: 1px solid lightgrey;
-            padding: 8px;
-            text-align: left;
-        }
-
-        th[colspan] {
-            text-align: center;
+            overflow: scroll
         }
     </style>
     <div id="rcms-desktop">
 
         <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">Market Complaint Log</div>
+            <div class="active" onclick="openTab('internal-audit', this)">Market Complaint Log </div>
         </div>
-
         <div class="main-content">
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="scope-bar">
-                            <button style="width: 70px;" class="print-btn theme-btn-1">Print</button>
+                        <div class="mt-1 mb-2 bg-white " style="height: 65px">
+                            <div class="d-flex align-items-center">
+                                <div class="scope-bar ml-3">
+                                    <button style="width: 70px;margin-left:5px"
+                                        class="print-btn btn btn-primary">Print</button>
+                                </div>
+                                <div class="flex-grow-2" style="margin-left:-50px; margin-bottom:12px">
+                                    <div class="filter-bar d-flex justify-content-between">
+                                        <div class="filter-item">
+                                            <label for="process">Department</label>
+                                            <select class="custom-select" id="process">
+                                                <option value="all">All Records</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="filter-item">
+                                            <label for="criteria">Division</label>
+                                            <select class="custom-select" id="criteria">
+                                                <option value="all">All Records</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="filter-item">
+                                            <label for="division">Date From</label>
+                                            <select class="custom-select" id="division">
+                                                <option value="all">All Records</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="filter-item">
+                                            <label for="originator">Date To</label>
+                                            <select class="custom-select" id="originator">
+                                                <option value="all">All Records</option>
+
+                                            </select>
+                                        </div> 
+                                        <div class="filter-item">
+                                            <label for="originator">Nature of complaint</label>
+                                            <select class="custom-select" id="originator">
+                                                <option value="all">All Records</option>
+
+                                            </select>
+                                        </div>
+                                        <div class="filter-item">
+                                            <label for="datewise">Select Period</label>
+                                            <select class="custom-select" id="datewise">
+                                                <option value="all">Select</option>
+                                                <option value="all">Yearly</option>
+                                                <option value="all">Quarterly</option>
+                                                <option value="all">Mothly</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="table-block" style="">
-                            <div class="table-responsive" style="height: 73vh">
-                                <table>
-                                    <tr>
-                                        <th rowspan="2">Sr. No.</th>
-                                        <th rowspan="2">Complaint No.</th>
-                                        <th rowspan="2">Date of receipt</th>
-                                        <th colspan="4">Product Details</th>
-                                        <th rowspan="2">Nature of complaint</th>
-                                        <th rowspan="2">Category of complaint</th>
-                                        <th rowspan="2">Details of Complaint</th>
-                                        <th rowspan="2">Response / Report sent on (Date)</th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Name & strength</th>
-                                        <th>Batch No.</th>
-                                        <th>Mfg. Date</th>
-                                        <th>Exp. Date</th>
-                                    </tr>
-                                    <!-- Add data rows here -->
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>2024-05-01</td>
-                                        <td>Product A</td>
-                                        <td>12345</td>
-                                        <td>2023-01-01</td>
-                                        <td>2025-01-01</td>
-                                        <td>Defective packaging</td>
-                                        <td>Quality</td>
-                                        <td>Packaging was damaged upon receipt</td>
-                                        <td>2024-05-05</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>002</td>
-                                        <td>2024-05-02</td>
-                                        <td>Product B</td>
-                                        <td>67890</td>
-                                        <td>2023-02-01</td>
-                                        <td>2025-02-01</td>
-                                        <td>Color inconsistency</td>
-                                        <td>Quality</td>
-                                        <td>Product color did not match the description</td>
-                                        <td>2024-05-06</td>
-                                    </tr> <tr>
-                                        <td>2</td>
-                                        <td>002</td>
-                                        <td>2024-05-02</td>
-                                        <td>Product B</td>
-                                        <td>67890</td>
-                                        <td>2023-02-01</td>
-                                        <td>2025-02-01</td>
-                                        <td>Color inconsistency</td>
-                                        <td>Quality</td>
-                                        <td>Product color did not match the description</td>
-                                        <td>2024-05-06</td>
-                                    </tr> <tr>
-                                        <td>2</td>
-                                        <td>002</td>
-                                        <td>2024-05-02</td>
-                                        <td>Product B</td>
-                                        <td>67890</td>
-                                        <td>2023-02-01</td>
-                                        <td>2025-02-01</td>
-                                        <td>Color inconsistency</td>
-                                        <td>Quality</td>
-                                        <td>Product color did not match the description</td>
-                                        <td>2024-05-06</td>
-                                    </tr> <tr>
-                                        <td>2</td>
-                                        <td>002</td>
-                                        <td>2024-05-02</td>
-                                        <td>Product B</td>
-                                        <td>67890</td>
-                                        <td>2023-02-01</td>
-                                        <td>2025-02-01</td>
-                                        <td>Color inconsistency</td>
-                                        <td>Quality</td>
-                                        <td>Product color did not match the description</td>
-                                        <td>2024-05-06</td>
-                                    </tr>
+
+                        <div class="table-block">
+                            <div class="table-responsive" style="height: 300px">
+                                <table class="table table-bordered" style="width: 120%;">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">Sr. No.</th>
+                                            <th rowspan="2">Date of Initiation</th>
+                                            <th rowspan="2">Complaint No.</th>
+                                            <th rowspan="2">Description of Complaint</th>
+                                            <th rowspan="2">Originator</th>
+                                            <th rowspan="2">Department</th>
+                                            <th rowspan="2">Division</th>
+                                            <th colspan="4" style="text-align: center">Product Details</th>
+                                            <th rowspan="2">Nature of complaint</th>
+                                            <th rowspan="2">Category of complaint</th>
+                                            <th rowspan="2">Response / Report (Date)</th>
+                                            <th rowspan="2">Due Date</th>
+                                            <th rowspan="2">Clouser Date</th>
+                                            <th rowspan="2">Status</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Product Name & strength</th>
+                                            <th>Batch No.</th>
+                                            <th>Mfg. Date</th>
+                                            <th>Exp. Date</th>
+                                        </tr>
+                                        
+                                    </thead>
+                                            
+
+                                    <tbody>
+                                        <tr>
+
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+
+                                        </tr>
+
+                                    </tbody>
                                 </table>
                             </div>
                         </div>
+
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    </div>
+
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training'
