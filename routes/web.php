@@ -419,8 +419,18 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
 
+// =================LOGS=========================================
 
-// ==========================================================
+Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
+Route::view('market_complaint_log', 'frontend.forms.Logs.Market-Complaint-registerLog');
+Route::view('incident_register_log', 'frontend.forms.Logs.incidentregisterLog');
+Route::view('laboratory_incidence_log', 'frontend.forms.Logs.laboratoryIncidentlog');
+Route::view('risk_review_log', 'frontend.forms.Logs.riskreviewLog');
+Route::view('errata_log', 'frontend.forms.Logs.ErrataLog');
+
+// =================LOGS=========================================
+
+
 
 /**
  * AJAX ROUTES

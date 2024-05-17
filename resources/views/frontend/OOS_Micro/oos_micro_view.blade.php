@@ -90,25 +90,18 @@
     <script>
         $(document).ready(function() {
             $('#Product_Material').click(function(e) {
-                let loopIndex= 0 ;
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
+
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="info_of_product_material['+ loopIndex +'][serial]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][item_product_code]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][batch_no]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][mfg_date]"></td>' +
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][expiry_date]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][label_claim]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][pack_size]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][analyst_name]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][others_specify]"></td>'+
-                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][in_process_sample_stage]"></td>'+
-                        '<td><select name="info_of_product_material['+ loopIndex +'][packingMaterialType]"><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="tertiary">Tertiary</option><option value="not_applicable">Not Applicable</option></select></td>'+
-                        '<td><select name="info_of_product_material['+ loopIndex +'][stabilityfor]"><option value="submission">Submission</option><option value="commercial">Commercial</option><option value="pack_evaluation">Pack Evaluation</option><option value="not_applicable">Not Applicable</option></select></td>'+
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
+
+
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -137,21 +130,17 @@
     <script>
         $(document).ready(function() {
             $('#Details_Stability').click(function(e) {
-                let loopIndex = 0 ;
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
+
 
                     var html =
                         '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="Stability_StudyName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
 
-                                        '<td><input disabled type="text" name="stability_study['+ loopIndex +'][serial_no]" value="'+  serialNumber +'"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][ar_number]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][condition_temperature_rh]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][interval]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][orientation]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][pack_details]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][specification_no]"></td>'+
-                                        '<td><input type="text" name="stability_study['+ loopIndex +'][sample_description]"></td>'+
 
                         '</tr>';
 
@@ -177,20 +166,16 @@
     <script>
         $(document).ready(function() {
             $('#OOS_Details').click(function(e) {
-                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
+
 
                     var html =
                         '<tr>' +
-                       '<td><input disabled type="text" name="oos_details['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][ar_number]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][test_name_of_oos]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][results_obtained]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][specification_limit]"></td>'+
-                                        '<td><input type="text" name="oos_details['+ loopIndex +'][details_of_obvious_error]"></td>'+
-                                        '<td><input type="file" name="oos_details['+ loopIndex +'][file_attachment_oos_details]"></td>'+
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="OOS_DetailsName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
 
 
                         '</tr>';
@@ -219,30 +204,28 @@
     <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
-                let loopIndex = 0
-
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
+
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="info_product_oos_capa['+loopIndex+'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_number]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_reported_date]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][description_of_oos]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][previous_oos_root_cause]"></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][capa]"></td>'+
-                                        '<td><input type="text" name="info_product_oos_capa['+loopIndex+'][closure_date_of_capa]"></td>'+
-                                        '<td><select name="info_product_oos_capa['+loopIndex+'][capa_Requirement]"><option  value="yes">Yes</option><option value="no">No</option></select></td>'+
-                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][reference_capa_number]"></td>'+
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="oos_capaName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
+
+
                         '</tr>';
+
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
                     // html += '</select></td>' +
+
                     '</tr>';
+
                     return html;
                 }
 
@@ -260,27 +243,31 @@
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
-                let loopIndex = 0
                 function generateTableRow(serialNumber) {
-                    loopIndex++;
+
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="oos_conclusion['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analysis_details]"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][hypo_exp_add_test_pr_no]"></td>'
-                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][results]"></td>'
-                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analyst_name]"></td>'
-                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][Remarks]"></td>'
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="oos_conclusionName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
+
+
                         '</tr>';
+
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
+
                     // html += '</select></td>' +
+
                     '</tr>';
+
                     return html;
                 }
+
                 var tableBody = $('#oos_conclusion_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -295,25 +282,26 @@
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
-                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-                    loopIndex++ ;
+
 
                     var html =
                         '<tr>' +
-                      ' <td><input disabled type="text" name="oosConclusion_review['+ loopIndex +'][serial]" value="' + serialNumber +
-                        '"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][material_product_no]"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][batch_no_ar_no]"></td>'+
-                                   ' <td><input type="text" name="oosConclusion_review['+ loopIndex +'][any_other_information]"></td>'+
-                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][action_taken_on_affecBatch]"></td>'+
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="Number[]"></td>' +
+                        '<td><input type="text" name="oosconclusion_reviewName[]"></td>' +
+                        '<td><input type="text" name="Remarks[]"></td>' +
 
 
                         '</tr>';
+
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
+
                     // html += '</select></td>' +
+
                     '</tr>';
 
                     return html;
@@ -326,6 +314,8 @@
             });
         });
     </script>
+
+
 
 
 
@@ -415,24 +405,27 @@
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
-                                <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                <label for="Initiator Group"> Division Code </label>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option></option>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                                <label for="Initiator Group Code"> Initiator </label>
+
+                                <input type="text">
+
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Date Due">Date of Initiation</label>
-                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                <label for="Initiator"> Date of Initiation </label>
+                                <input type="date" id="date" name="date-time">
+
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -449,12 +442,11 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Severity Level</label>
-                                <select name="severity_level_form">
-                                    <option value="0">-- Select --</option>
-                                    <option value="minor">Minor</option>
-                                    <option value="major">Major</option>
-                                    <option value="critical">Critical</option>
+                                <label for="Short Description"> Severity Level</label>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option></option>
+                                    <option></option>
                                 </select>
                             </div>
                         </div>
@@ -511,26 +503,18 @@
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="">
+                                    value="" readonly>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
-                                <select name="initiated_through"
-                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="internal_audit">Internal Audit</option>
-                                            <option value="external_audit">External Audit</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
-                                            <option value="others">Others</option>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+
                                 </select>
                             </div>
                         </div>
@@ -543,12 +527,11 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Is Repeat ?</label>
-                                <select name="repeat"
-                                        onchange="otherController(this.value, 'Yes', 'repeat_nature')">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        <option value="NA">NA</option>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+
                                 </select>
                             </div>
                         </div>
@@ -569,10 +552,10 @@
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <!-- <option>Lab Incident</option>
-                                         <option>Deviation</option>
-                                         <option>Product Non-conformance</option>
-                                         <option>Inspectional Observation</option>
-                                         <option>Others</option> -->
+                                                                            <option>Deviation</option>
+                                                                            <option>Product Non-conformance</option>
+                                                                            <option>Inspectional Observation</option>
+                                                                            <option>Others</option> -->
 
                                 </select>
 
@@ -708,23 +691,27 @@
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
+
                                             <th style="width: 10%">Others (Specify)</th>
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
+
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="item_product_code[]"></td>
-                                        <td><input type="text" name="batch_no[]"></td>
-                                        <td><input type="text" name="mfg_date[]"></td>
-                                        <td><input type="text" name="expiry_date[]"></td>
-                                        <td><input type="text" name="label_claim[]"></td>
-                                        <td><input type="text" name="pack_size[]"></td>
-                                        <td><input type="text" name="analyst_name[]"></td>
-                                        <td><input type="text" name="others_specify[]"></td>
-                                        <td><input type="text" name="in_process_sample_stage[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
                                         <td><select name="packingMaterialType[]">
                                                 <option>Primary</option>
                                                 <option>Secondary</option>
@@ -774,14 +761,17 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="stability_study[0][serial_no]" value="1"></td>
-                                        <td><input type="text" name="stability_study[0][ar_number]"></td>
-                                        <td><input type="text" name="stability_study[0][condition_temperature_rh]"></td>
-                                        <td><input type="text" name="stability_study[0][interval]"></td>
-                                        <td><input type="text" name="stability_study[0][orientation]"></td>
-                                        <td><input type="text" name="stability_study[0][pack_details]"></td>
-                                        <td><input type="text" name="stability_study[0][specification_no]"></td>
-                                        <td><input type="text" name="stability_study[0][sample_description]"></td>
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+
+
+
                                     </tbody>
 
                                 </table>
@@ -819,13 +809,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="oos_details[0][serial]" value="1"></td>
-                                        <td><input type="text" name="oos_details[0][ar_number]"></td>
-                                        <td><input type="text" name="oos_details[0][test_name_of_oos]"></td>
-                                        <td><input type="text" name="oos_details[0][results_obtained]"></td>
-                                        <td><input type="text" name="oos_details[0][specification_limit]"></td>
-                                        <td><input type="text" name="oos_details[0][details_of_obvious_error]"></td>
-                                        <td><input type="file" name="oos_details[0][file_attachment_oos_details]"></td>
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="text[]"></td>
+                                        <td><input type="file" name="file[]"></td>
                                         {{-- <td><input type="text" name="text[]"></td>
                                         <td><input type="date" name="time[]"></td> --}}
 
@@ -1904,23 +1894,31 @@
                                             <th style="width: 16%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
+
                                             <th style="width: 16%">Reference CAPA Number</th>
+
+
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="info_product_oos_capa[0][serial]" value="1"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][oos_number]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][oos_reported_date]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][description_of_oos]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][previous_oos_root_cause]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][capa]"></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][closure_date_of_capa]"></td>
-                                        <td><select name="info_product_oos_capa[0][capa_Requirement]">
+                                        <td><input disabled type="text" name="serial[]" value="1"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="Number[]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><select name="CAPARequirement[]">
                                                 <option>Yes</option>
                                                 <option>No</option>
                                             </select></td>
-                                        <td><input type="text" name="info_product_oos_capa[0][reference_capa_number]"></td>
+                                        <td><input type="text" name="Name[]"></td>
+
+
                                     </tbody>
+
                                 </table>
                             </div>
                         </div>
@@ -2762,6 +2760,8 @@
                                     </textarea>
                         </div>
                     </div>
+
+
                     <!-- ---------------------------grid-1 -------------------------------- -->
                     <div class="group-input">
                         <label for="audit-agenda-grid">
@@ -2783,16 +2783,24 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="summary_of_oos_test_results[0][serial]" value="1"></td>
-                                    <td><input type="text" name="summary_of_oos_test_results[0][analysis_details]"></td>
-                                    <td><input type="text" name="summary_of_oos_test_results[0][hypo_exp_add_test_pr_no]"></td>
-                                    <td><input type="text" name="summary_of_oos_test_results[0][results]"></td>
-                                    <td><input type="text" name="summary_of_oos_test_results[0][analyst_name]"></td>
-                                    <td><input type="text" name="summary_of_oos_test_results[0][Remarks]"></td>
+                                    <td><input disabled type="text" name="serial[]" value="1"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+
+
+
                                 </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -2979,15 +2987,19 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
+
+
+
+
+
                                     </tr>
                                 </thead>
                                 <tbody>
-
                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="oosConclusion_review[0][material_product_no]"></td>
-                                    <td><input type="text" name="oosConclusion_review[0][batch_no_ar_no]"></td>
-                                    <td><input type="text" name="oosConclusion_review[0][any_other_information]"></td>
-                                    <td><input type="text" name="oosConclusion_review[0][action_taken_on_affecBatch]"></td>
+                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="Name[]"></td>
+                                    <td><input type="text" name="Remarks[]"></td>
+                                    <td><input type="text" name="Number[]"></td>
 
 
 
