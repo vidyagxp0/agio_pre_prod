@@ -852,7 +852,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -1112,7 +1112,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_31" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_30" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -1272,7 +1272,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="38" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_38" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -1412,7 +1412,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="45" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_45" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -1712,7 +1712,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="60" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_60" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -2033,7 +2033,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="76" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_76" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -2254,7 +2254,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="87" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_87" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -2274,7 +2274,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="88" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_88" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 
@@ -2304,7 +2304,7 @@
                                                 </td>
                                                 <td>
                                                     {{--<textarea name="who_will_not_be"></textarea>--}} <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="89" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
+                                                        <textarea name="remark_89" style="border-radius: 7px; border: 1.5px solid black; black; height:42px;"></textarea>
                                                     </div>
                                                 </td>
 

@@ -378,7 +378,7 @@ class CCController extends Controller
         $impactassement->remark_64 = $request->remark_64;
         $impactassement->remark_65 = $request->remark_65;
         $impactassement->remark_66 = $request->remark_66;
-        //$impactassement->remark_67 = $request->remark_67;
+        $impactassement->remark_67 = $request->remark_67;
         $impactassement->remark_68 = $request->remark_68;
         $impactassement->remark_69 = $request->remark_69;
         $impactassement->remark_70 = $request->remark_70;
