@@ -354,7 +354,7 @@
                         {{-- @if ($data->stage >= 2) --}}
                         {{-- <div class="active">HOD Review </div> --}}
                         {{-- @else --}}
-                        <div class="active">HOD Review</div>
+                        <div class="">HOD Review</div>
                         {{-- @endif --}}
 
                         {{-- @if ($data->stage >= 3) --}}
@@ -483,7 +483,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiator_Group" id="initiator_group">
+                                        <select name="initiator_group_gi" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA">
                                                 Corporate Quality Assurance</option>
@@ -523,11 +523,15 @@
                                         </select>
                                     </div>
                                 </div>
+
+
+
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="">
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
+                                            value="{{ $data->initiator_Group}}">
                                     </div>
                                 </div>
 
@@ -535,7 +539,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through" onchange="">
+                                        <select name="initiated_through_gi" onchange="">
                                             <option value="">-- select --</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
@@ -554,7 +558,7 @@
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_if_other" id="summernote-1">
+                                        <textarea class="summernote" name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -562,7 +566,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Is Repeat</label>
-                                        <select name="is_repeat" onchange="">
+                                        <select name="is_repeat_gi" onchange="">
                                             <option value="">-- select --</option>
                                             <option value=""></option>
 
@@ -575,7 +579,7 @@
                                         <label for="Repeat Nature">Repeat Nature</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Repeat_Nature" id="summernote-1">
+                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
 
                                     </textarea>
                                     </div>
@@ -588,7 +592,7 @@
                                         <label for="Description">Description</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Description" id="summernote-1">
+                                        <textarea class="summernote" name="description_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -606,7 +610,7 @@
                                             <div class="file-attachment-list" id=""></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="" oninput=""
+                                                <input type="file" id="myfile" name="initial_attachment_gi[]" oninput=""
                                                     multiple>
                                             </div>
                                         </div>
@@ -616,7 +620,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
-                                        <select name="complainant" onchange="">
+                                        <select name="complainant_gi" onchange="">
                                             <option value="">-- select --</option>
                                             <option value="">person</option>
 
@@ -630,7 +634,7 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
+                                            <input type="date" name="complaint_reported_on_gi"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="" />
                                         </div>
@@ -644,7 +648,7 @@
                                             Complaint</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="details_nature_market_complaint" id="summernote-1">
+                                        <textarea class="summernote" name="details_of_nature_market_complaint_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -775,7 +779,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Categorization of complaint</label>
-                                        <select name="categorization_of_complaint" onchange="">
+                                        <select name="categorization_of_complaint_gi" onchange="">
                                             <option value="">-- select --</option>
                                             <option value="">Critical</option>
                                             <option value="">Major</option>
@@ -789,7 +793,7 @@
                                         <label for="Review of Complaint Sample">Review of Complaint Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_complaint_sample" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_complaint_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -799,7 +803,7 @@
                                         <label for="Review of Control Sample">Review of Control Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_control_sample" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_control_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -846,7 +850,7 @@
                                             record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -860,7 +864,7 @@
                                             manufacturing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_raw_materials" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -871,7 +875,7 @@
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_packing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -883,7 +887,7 @@
                                             packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -893,7 +897,7 @@
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_analytical_data" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -904,7 +908,7 @@
                                             of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -915,7 +919,7 @@
                                             of Equipment/Instrument qualification/Calibration record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment" id="summernote-1">
+                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -926,7 +930,7 @@
                                             Equipment Break-down and Maintainance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -937,7 +941,7 @@
                                             product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_past_history_of_product" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1036,7 +1040,7 @@
                                         <label for="Conclusion">Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Conclusion" id="summernote-1">
+                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1046,7 +1050,7 @@
                                         <label for="Root Cause Analysis">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Root_Cause_Analysis" id="summernote-1">
+                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1058,7 +1062,7 @@
                                             most probable root causes identified of the complaint are as below</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="The_most_probable_root" id="summernote-1">
+                                        <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1068,7 +1072,7 @@
                                         <label for="Impact Assessment">Impact Assessment :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Impact_Assessment" id="summernote-1">
+                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1079,7 +1083,7 @@
                                         <label for="Corrective Action">Corrective Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Corrective_Action" id="summernote-1">
+                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1090,7 +1094,7 @@
                                         <label for="Preventive Action">Preventive Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Preventive_Action" id="summernote-1">
+                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1100,7 +1104,7 @@
                                         <label for="Summary and Conclusion">Summary and Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Summary_and_Conclusion" id="summernote-1">
+                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1255,7 +1259,7 @@
                                             <div class="file-attachment-list" id=""></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="" oninput=""
+                                                <input type="file" id="myfile" name="initial_attachment_hodsr[]" oninput=""
                                                     multiple>
                                             </div>
                                         </div>
@@ -1266,7 +1270,7 @@
                                         <label for="Comments">Comments(if Any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Comments" id="summernote-1">
+                                        <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1311,7 +1315,7 @@
                                     <label for="Manufacturer name & Address">Manufacturer name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="Manufacturer_name_and_Address" id="summernote-1">
+                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -1400,7 +1404,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
-                                    <select name="Complaint_Sample_Required" onchange="">
+                                    <select name="complaint_sample_required_ca" onchange="">
                                         <option value="">-- select --</option>
                                         <option value="">Yes</option>
                                         <option value="">No</option>
@@ -1413,7 +1417,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Status">Complaint Sample Status</label>
-                                    <input type="text" name="Complaint_Sample_Status" id="date_of_initiation">
+                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation">
                                 </div>
                             </div>
 
@@ -1422,7 +1426,7 @@
                                     <label for="Brief Description of complaint">Brief Description of complaint:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Brief_Description_of_complaint" id="summernote-1">
+                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1432,7 +1436,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Batch_Record_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1442,7 +1446,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Analytical_Data_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1452,7 +1456,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Retention_sample_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1461,7 +1465,7 @@
                                     <label for="Stablity study data review">Stablity study data review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Stablity_study_data_review" id="summernote-1">
+                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1471,7 +1475,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="QMS_Events_review_Observation" id="summernote-1">
+                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1481,7 +1485,7 @@
                                         for product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Repeated_complaints_queries_for_product" id="summernote-1">
+                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1491,7 +1495,7 @@
                                         sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Interpretation_on_compalint_sample" id="summernote-1">
+                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1500,7 +1504,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Comments" id="summernote-1">
+                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1529,7 +1533,7 @@
                                                     <td>
 
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
 
 
@@ -1538,7 +1542,7 @@
 
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
 
@@ -1550,14 +1554,14 @@
                                                     <td>Additional info. From Complainant</td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                     </div>
                                     </td>
 
                                     <td style="vertical-align: middle;">
                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -1569,13 +1573,13 @@
                                         <td>Analysis of complaint Sample</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1588,13 +1592,13 @@
                                         <td>QRM Approach</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1606,13 +1610,13 @@
                                         <td>Others</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1639,7 +1643,7 @@
                                     <div class="file-attachment-list" id=""></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_ca[]" oninput="" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1672,7 +1676,7 @@
                             <label for="Closure Comment">Closure Comment</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                     require completion</small></div>
-                            <textarea class="summernote" name="Closure_Comment" id="summernote-1">
+                            <textarea class="summernote" name="closure_comment_c" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -1689,7 +1693,7 @@
                                 <div class="file-attachment-list" id=""></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="" oninput="" multiple>
+                                    <input type="file" id="myfile" name="initial_attachment_c[]" oninput="" multiple>
                                 </div>
                             </div>
                         </div>

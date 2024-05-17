@@ -200,14 +200,13 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-md-6 ">
                                     <div class="group-input ">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="" name="intiation_date_gi">
-                                        <input type="hidden" value="" name="intiation_date_gi">
+                                        <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -297,7 +296,7 @@
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="if_other_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -306,8 +305,10 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Is Repeat</label>
                                         <select name="is_repeat_gi" onchange="">
-                                            <option value="">-- select --</option>
-                                            <option value=""></option>
+                                            <option value="0">-- select --</option>
+                                            <option value="asdsa">sfs</option>
+                                            <option value="asddvdsdsa">sfdsvsdvs</option>
+
 
                                         </select>
                                     </div>
@@ -318,7 +319,7 @@
                                         <label for="Repeat Nature">Repeat Nature</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="repeat_nature_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
 
                                     </textarea>
                                     </div>
@@ -331,7 +332,7 @@
                                         <label for="Description">Description</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="description_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="description_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -387,7 +388,7 @@
                                             Complaint</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="details_of_nature_market_complaint_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="details_of_nature_market_complaint_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -396,7 +397,13 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
-                                            <button type="button" id="product_details">+</button>
+                                            {{-- <button type="button" id="product_details">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#document-details-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span> --}}
+                                            <button type="button" onclick="add4Input('product_details_details')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -425,14 +432,14 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Product_Name[]"></td>
-                                                    <td><input type="text" name="Batch_No[]"></td>
-                                                    <td><input type="date" name="Mfg_Date[]"></td>
-                                                    <td><input type="date" name="Exp_Date[]"></td>
-                                                    <td><input type="text" name="Batch_Size[]"></td>
-                                                    <td><input type="text" name="Pack_Size[]"></td>
-                                                    <td><input type="text" name="Dispatch_Quantity[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                    <td><input type="text" name="info_product_name[]"></td>
+                                                    <td><input type="text" name="info_batch_no[]"></td>
+                                                    <td><input type="date" name="info_mfg_date[]"></td>
+                                                    <td><input type="date" name="info_expiry_date[]"></td>
+                                                    <td><input type="text" name="info_batch_size[]"></td>
+                                                    <td><input type="text" name="info_pack_size[]"></td>
+                                                    <td><input type="text" name="info_dispatch_quantity[]"></td>
+                                                    <td><input type="text" name="info_remarks[]"></td>
 
 
                                                 </tbody>
@@ -501,10 +508,10 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Instrument_Name[]"></td>
-                                                    <td><input type="text" name="Instrument_ID[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-                                                    <td><input type="text" name="Calibration_Parameter[]"></td>
+                                                    <td><input type="text" name="product_name_tr[]"></td>
+                                                    <td><input type="text" name="batch_no_tr[]"></td>
+                                                    <td><input type="text" name="manufacturing_location_tr[]"></td>
+                                                    <td><input type="text" name="remarks_tr[]"></td>
 
 
 
@@ -542,7 +549,7 @@
                                         <label for="Review of Control Sample">Review of Control Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_control_sample_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_control_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -557,7 +564,7 @@
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>
+                                            </span>Product Details
                                         </label>
                                         <div class="table-responsive">
                                             <table class="table table-bordered" id="Investing_team" style="width: %;">
@@ -573,9 +580,9 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                    <td><input type="text" name="name_inv_tem[]"></td>
+                                                    <td><input type="text" name="department_inv_tem[]"></td>
+                                                    <td><input type="text" name="remarks_inv_tem[]"></td>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -589,7 +596,7 @@
                                             record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -603,7 +610,7 @@
                                             manufacturing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -614,7 +621,7 @@
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -626,7 +633,7 @@
                                             packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -636,7 +643,7 @@
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_analytical_data_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -647,7 +654,7 @@
                                             of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -658,7 +665,7 @@
                                             of Equipment/Instrument qualification/Calibration record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -669,7 +676,7 @@
                                             Equipment Break-down and Maintainance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -680,7 +687,7 @@
                                             product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi[]" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -715,11 +722,11 @@
                                                             value="1">
                                                     </td>
                                                     {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="Possiblity[]"></td>
-                                                    <td><input type="text" name="Facts/Controls[]"
+                                                    <td><input type="text" name="possiblity_bssd[]"></td>
+                                                    <td><input type="text" name="factscontrols_bssd[]"
                                                             value="Facts Available"></td>
-                                                    <td><input type="text" name="Probable_Cause[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                    <td><input type="text" name="probable_cause_bssd[]"></td>
+                                                    <td><input type="text" name="remarks_bssd[]"></td>
 
 
 
@@ -779,7 +786,7 @@
                                         <label for="Conclusion">Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="conclusion_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -801,7 +808,7 @@
                                             most probable root causes identified of the complaint are as below</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="probable_root_causes_complaint_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -811,7 +818,7 @@
                                         <label for="Impact Assessment">Impact Assessment :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="impact_assessment_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -822,7 +829,7 @@
                                         <label for="Corrective Action">Corrective Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="corrective_action_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -833,7 +840,7 @@
                                         <label for="Preventive Action">Preventive Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="preventive_action_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -843,7 +850,7 @@
                                         <label for="Summary and Conclusion">Summary and Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="summary_and_conclusion_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -878,10 +885,10 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Names[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
+                                                    <td><input type="text" name="names_tm[]"></td>
+                                                    <td><input type="text" name="department_tm[]"></td>
+                                                    <td><input type="text" name="sign_tm[]"></td>
+                                                    <td><input type="date" name="date_tm[]"></td>
 
 
 
@@ -948,10 +955,10 @@
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
+                                                    <td><input type="text" name="names_rrv[]"></td>
+                                                    <td><input type="text" name="department_rrv[]"></td>
+                                                    <td><input type="text" name="sign_rrv[]"></td>
+                                                    <td><input type="date" name="date_rrv[]"></td>
 
 
 
@@ -1011,7 +1018,7 @@
                                         <label for="Comments">Comments(if Any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="comments_if_any_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -1056,7 +1063,7 @@
                                     <label for="Manufacturer name & Address">Manufacturer name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="manufacturer_name_address_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -1093,14 +1100,14 @@
                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td><input type="text" name="Product_name[]"></td>
-                                                <td><input type="text" name="Batch_no[]"></td>
-                                                <td><input type="date" name="mfg_date[]"></td>
-                                                <td><input type="date" name="exp_date[]"></td>
-                                                <td><input type="text" name="batch_size[]"></td>
-                                                <td><input type="text" name="pack_profile[]"></td>
-                                                <td><input type="text" name="released_quantity[]"></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <td><input type="text" name="product_name_pmd[]"></td>
+                                                <td><input type="text" name="batch_no_pmd[]"></td>
+                                                <td><input type="date" name="mfg_date_pmd[]"></td>
+                                                <td><input type="date" name="expiry_date_pmd[]"></td>
+                                                <td><input type="text" name="batch_size_pmd[]"></td>
+                                                <td><input type="text" name="pack_profile_pmd[]"></td>
+                                                <td><input type="text" name="released_quantity_pmd[]"></td>
+                                                <td><input type="text" name="remarks_pmd[]"></td>
 
 
                                             </tbody>
@@ -1167,7 +1174,7 @@
                                     <label for="Brief Description of complaint">Brief Description of complaint:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="brief_description_of_complaint_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1177,7 +1184,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="batch_record_review_observation_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1187,7 +1194,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="analytical_data_review_observation_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1197,7 +1204,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="retention_sample_review_observation_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1206,7 +1213,7 @@
                                     <label for="Stablity study data review">Stablity study data review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="stability_study_data_review_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1216,7 +1223,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1226,7 +1233,7 @@
                                         for product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1236,7 +1243,7 @@
                                         sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1245,7 +1252,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="comments_ifany_ca[]" id="summernote-1">
+                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1274,7 +1281,7 @@
                                                     <td>
 
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
 
 
@@ -1283,7 +1290,7 @@
 
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
 
@@ -1295,14 +1302,14 @@
                                                     <td>Additional info. From Complainant</td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                     </div>
                                     </td>
 
                                     <td style="vertical-align: middle;">
                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -1314,13 +1321,13 @@
                                         <td>Analysis of complaint Sample</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1333,13 +1340,13 @@
                                         <td>QRM Approach</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1351,13 +1358,13 @@
                                         <td>Others</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1417,7 +1424,7 @@
                             <label for="Closure Comment">Closure Comment</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                     require completion</small></div>
-                            <textarea class="summernote" name="closure_comment_c[]" id="summernote-1">
+                            <textarea class="summernote" name="closure_comment_c" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -1712,4 +1719,20 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+    
+    function setCurrentDate(item){
+        if(item == 'yes'){
+            $('#effect_check_date').val('{{ date('d-M-Y')}}');
+        }
+        else{
+            $('#effect_check_date').val('');
+        }
+    }
+</script>
 @endsection
