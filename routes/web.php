@@ -19,6 +19,7 @@ use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
@@ -418,5 +419,11 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
+
 Route::view('errata_new', 'frontend.errata.errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
+
+Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
+Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
+// Route::get('errata/edit/{id}', [ErrataController::class, 'edit'])->name('errata.edit');
+Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('errata.update');

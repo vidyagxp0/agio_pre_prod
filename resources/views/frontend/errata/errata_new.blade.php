@@ -153,7 +153,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Document Title</label>
-                                        <textarea class="summernote" name="documenet_title" id="summernote-16"></textarea>
+                                        <textarea class="summernote" name="document_title" id="summernote-16"></textarea>
                                     </div>
                                 </div>
 
@@ -223,11 +223,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td><input type="text" name="ListOfImpactingDocument[]"></td>
-                                                <td><input type="text" name="PreparedBy[]"></td>
-                                                <td><input type="text" name="CheckedBy[]"></td>
-                                                <td><input type="text" name="ApprovedBy[]"></td>
+                                                <td><input disabled type="text" name="details[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="details[0][ListOfImpactingDocument]"></td>
+                                                <td><input type="text" name="details[0][PreparedBy]"></td>
+                                                <td><input type="text" name="details[0][CheckedBy]"></td>
+                                                <td><input type="text" name="details[0][ApprovedBy]"></td>
 
                                             </tbody>
 
@@ -237,7 +238,7 @@
 
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="dateandtime"><b>Date And Time Of Correction </b></label>
+                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
                                         <input type="date" name="Date_and_time_of_correction" value="">
 
                                     </div>
@@ -269,16 +270,16 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">HOD Attachments </label>
+                                        <label for="HOD attachment">HOD Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_Attachment"></div>
+                                            <div class="file-attachment-list" id="HOD_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="HOD_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1530,38 +1531,20 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">QA Attachments </label>
+                                        <label for="QA Attachment">QA Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
+                                            <div class="file-attachment-list" id="QA_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="QA_Attachments" name="QA_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <script>
-                                    function showSelectedFiles(input) {
-                                        var files = input.files;
-                                        var fileListContainer = document.getElementById('fileAttachmentList');
-                                        fileListContainer.innerHTML = '';
-
-                                        if (files.length > 0) {
-                                            var fileList = document.createElement('ul');
-                                            for (var i = 0; i < files.length; i++) {
-                                                var listItem = document.createElement('li');
-                                                listItem.textContent = files[i].name;
-                                                fileList.appendChild(listItem);
-                                            }
-                                            fileListContainer.appendChild(fileList);
-                                        }
-                                    }
-                                </script>
 
 
                                 <div class="button-block">
@@ -1618,11 +1601,12 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
+                                            <div class="file-attachment-list" id="Closure_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="Closure_Attachments"
+                                                    name="Closure_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1821,17 +1805,15 @@
         $(document).ready(function() {
             $('#Details-add').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
-                    var html =
-                        '<tr>' +
+                    var html = '';
+                    html += '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="ListOfImpactingDocument[]"></td>' +
-                        '<td><input type="text" name="PreparedBy[]"></td>' +
-                        '<td><input type="text" name="CheckedBy[]"></td>' +
-                        '<td><input type="text" name="ApprovedBy[]"></td>' +
-
+                        '<td><input type="text" name="details[' + serialNumber +
+                        '][ListOfImpactingDocument]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
 
                         '</tr>';
 
