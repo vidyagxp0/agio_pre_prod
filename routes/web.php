@@ -33,8 +33,10 @@ use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -434,6 +436,8 @@ Route::view('errata_log', 'frontend.forms.Logs.ErrataLog');
  * AJAX ROUTES
  */
 
+//  Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
+ Route::post('/ootstore', [OOTController::class, 'store'])->name('oot.ootstore');
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================

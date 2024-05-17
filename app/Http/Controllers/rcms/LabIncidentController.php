@@ -79,8 +79,63 @@ class LabIncidentController extends Controller
         $data->occurance_date = $request->occurance_date;
         $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
+
+        $data->instrument_involved_SSFI= $request->instrument_involved_SSFI;
+        $data->stage_SSFI= $request->stage_SSFI;
+        $data->stability_condition_SSFI= $request->stability_condition_SSFI;
+        $data->interval_SSFI= $request->interval_SSFI;
+        $data->test_SSFI= $request->test_SSFI;
+        $data->date_of_analysis_SSFI= $request->date_of_analysis_SSFI;
+        $data->specification_number_SSFI= $request->specification_number_SSFI;
+        $data->stp_number_SSFI= $request->stp_number_SSFI;
+        $data->name_of_analyst_SSFI= $request->name_of_analyst_SSFI;
+        $data->date_of_incidence_SSFI= $request->date_of_incidence_SSFI;
+        $data->qc_reviewer_SSFI= $request->qc_reviewer_SSFI;
+        $data->description_of_incidence_SSFI= $request->description_of_incidence_SSFI;
+        $data->detail_investigation_SSFI= $request->detail_investigation_SSFI;
+        $data->proposed_corrective_action_SSFI= $request->proposed_corrective_action_SSFI;
+        $data->root_cause_SSFI= $request->root_cause_SSFI;
+        $data->incident_summary_SSFI= $request->incident_summary_SSFI;
+        $data->investigator_qc_SSFI= $request->investigator_qc_SSFI;
+        $data->reviewed_by_qc_SSFI= $request->reviewed_by_qc_SSFI;
+
+
+
+        $data->closure_of_incident_closure= $request->closure_of_incident_closure;
+        $data->affected_documents_closed_closure= $request->affected_documents_closed_closure;
+        $data->qc_head_remark_closure= $request->qc_head_remark_closure;
+        $data->qc_head_closure= $request->qc_head_closure;
+        $data->qa_head_remark_closure= $request->qa_head_remark_closure;
+
+
         $data->status = 'Opened';
         $data->stage = 1;
+
+
+        if (!empty($request->file_attachment_SSFI)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_SSFI')) {
+                foreach ($request->file('file_attachment_SSFI') as $file) {
+                    $name = $request->name . 'file_attachment_SSFI' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->file_attachment_SSFI = json_encode($files);
+        }
+
+        if (!empty($request->file_attachment_closure)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_closure')) {
+                foreach ($request->file('file_attachment_closure') as $file) {
+                    $name = $request->name . 'file_attachment_closure' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->file_attachment_closure = json_encode($files);
+        }
+
 
         if (!empty($request->Initial_Attachment)) {
             $files = [];
@@ -1214,11 +1269,11 @@ class LabIncidentController extends Controller
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
-                      
+
                         if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
-                          
+
                               Mail::send(
                                   'mail.view-mail',
                                    ['data' => $changeControl],
@@ -1228,7 +1283,7 @@ class LabIncidentController extends Controller
                                 }
                               );
                             }
-                     } 
+                     }
                   }
 
                 $changeControl->update();
@@ -1257,7 +1312,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id == $changeControl ->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
-                          
+
                               Mail::send(
                                   'mail.view-mail',
                                    ['data' => $changeControl ],
@@ -1267,7 +1322,7 @@ class LabIncidentController extends Controller
                                 }
                               );
                             }
-                     } 
+                     }
                   }
 
                 $changeControl->update();
@@ -1296,7 +1351,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
-                          
+
                               Mail::send(
                                   'mail.view-mail',
                                    ['data' => $changeControl],
@@ -1306,7 +1361,7 @@ class LabIncidentController extends Controller
                                 }
                               );
                             }
-                     } 
+                     }
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1337,7 +1392,7 @@ class LabIncidentController extends Controller
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending QA Review";
                 $changeControl->review_completed_by = Auth::user()->name;
-                $changeControl->review_completed_on = Carbon::now()->format('d-M-Y'); 
+                $changeControl->review_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -1349,13 +1404,13 @@ class LabIncidentController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Review Completed';
-                $history->save();  
+                $history->save();
                 $list = Helpers::getQAUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id ==$changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
                          if ($email !== null) {
-                      
+
                           Mail::send(
                               'mail.view-mail',
                                ['data' => $changeControl],
@@ -1365,8 +1420,8 @@ class LabIncidentController extends Controller
                             }
                           );
                         }
-                 } 
-              }          
+                 }
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1415,7 +1470,7 @@ class LabIncidentController extends Controller
                         if($u->q_m_s_divisions_id ==$changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
                              if ($email !== null) {
-                          
+
                               Mail::send(
                                   'mail.view-mail',
                                    ['data' => $changeControl],
@@ -1425,7 +1480,7 @@ class LabIncidentController extends Controller
                                 }
                               );
                             }
-                     } 
+                     }
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');

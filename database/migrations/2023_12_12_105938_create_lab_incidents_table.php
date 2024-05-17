@@ -66,6 +66,43 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
 
+
+            //System Suitability Failure Incidence
+            $table->longText('instrument_involved_SSFI')->nullable();
+            $table->string('stage_SSFI')->nullable();
+            $table->string('stability_condition_SSFI')->nullable();
+            $table->string('interval_SSFI')->nullable();
+            $table->string('test_SSFI')->nullable();
+            $table->string('date_of_analysis_SSFI')->nullable();
+            $table->string('specification_number_SSFI')->nullable();
+            $table->string('stp_number_SSFI')->nullable();
+            $table->string('name_of_analyst_SSFI')->nullable();
+            $table->string('date_of_incidence_SSFI')->nullable();
+            $table->string('qc_reviewer_SSFI')->nullable();
+            $table->longText('description_of_incidence_SSFI')->nullable();
+            $table->longText('detail_investigation_SSFI')->nullable();
+            $table->longText('proposed_corrective_action_SSFI')->nullable();
+            $table->longText('root_cause_SSFI')->nullable();
+            $table->longText('incident_summary_SSFI')->nullable();
+            $table->string('investigator_qc_SSFI')->nullable();
+            $table->string('reviewed_by_qc_SSFI')->nullable();
+            $table->longText('file_attachment_SSFI')->nullable();
+
+            //Closure
+            $table->string('closure_of_incident_closure')->nullable();
+            $table->string('affected_documents_closed_closure')->nullable();
+            $table->string('qc_head_remark_closure')->nullable();
+            $table->string('qc_head_closure')->nullable();
+            $table->longText('qa_head_remark_closure')->nullable();
+            $table->longText('file_attachment_closure')->nullable();
+
+
+
+
+
+
+
+
             $table->string('submitted_by')->nullable();
             $table->string('incident_review_completed_by')->nullable();
             $table->string('investigation_completed_by')->nullable();

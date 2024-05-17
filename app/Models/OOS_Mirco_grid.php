@@ -5,8 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class LabIncident extends Model
+class OOS_Mirco_grid extends Model
 {
     use HasFactory;
-    // protected $fillable=[];
 }
