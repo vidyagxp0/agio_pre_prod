@@ -405,24 +405,27 @@
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
-                                <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                <label for="Initiator Group"> Division Code </label>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option></option>
+                                    <option></option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                                <label for="Initiator Group Code"> Initiator </label>
+
+                                <input type="text">
+
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Date Due">Date of Initiation</label>
-                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                <label for="Initiator"> Date of Initiation </label>
+                                <input type="date" id="date" name="date-time">
+
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -439,12 +442,11 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Severity Level</label>
-                                <select name="severity_level_form">
-                                    <option value="0">-- Select --</option>
-                                    <option value="minor">Minor</option>
-                                    <option value="major">Major</option>
-                                    <option value="critical">Critical</option>
+                                <label for="Short Description"> Severity Level</label>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option></option>
+                                    <option></option>
                                 </select>
                             </div>
                         </div>
@@ -501,26 +503,18 @@
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                 <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="">
+                                    value="" readonly>
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
-                                <select name="initiated_through"
-                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                            <option value="">Enter Your Selection Here</option>
-                                            <option value="internal_audit">Internal Audit</option>
-                                            <option value="external_audit">External Audit</option>
-                                            <option value="recall">Recall</option>
-                                            <option value="return">Return</option>
-                                            <option value="deviation">Deviation</option>
-                                            <option value="complaint">Complaint</option>
-                                            <option value="regulatory">Regulatory</option>
-                                            <option value="lab-incident">Lab Incident</option>
-                                            <option value="improvement">Improvement</option>
-                                            <option value="others">Others</option>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+
                                 </select>
                             </div>
                         </div>
@@ -533,12 +527,11 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Is Repeat ?</label>
-                                <select name="repeat"
-                                        onchange="otherController(this.value, 'Yes', 'repeat_nature')">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        <option value="NA">NA</option>
+                                <select>
+                                    <option>Enter Your Selection Here</option>
+                                    <option>Yes</option>
+                                    <option>No</option>
+
                                 </select>
                             </div>
                         </div>
@@ -559,10 +552,10 @@
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <!-- <option>Lab Incident</option>
-                                         <option>Deviation</option>
-                                         <option>Product Non-conformance</option>
-                                         <option>Inspectional Observation</option>
-                                         <option>Others</option> -->
+                                                                            <option>Deviation</option>
+                                                                            <option>Product Non-conformance</option>
+                                                                            <option>Inspectional Observation</option>
+                                                                            <option>Others</option> -->
 
                                 </select>
 
