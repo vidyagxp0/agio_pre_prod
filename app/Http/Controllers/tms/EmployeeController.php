@@ -10,13 +10,14 @@ use Illuminate\Http\Request;
 class EmployeeController extends Controller
 {
     public function store(Request $request) {
-
         $res = [
             'status' => 'ok',
             'message' => 'success',
             'body' => [],
         ];
-        try {
+
+        // return $request->all();
+        // try {
             $employee = new Employee();
             $employee->assigned_to = $request->assigned_to;
             $employee->start_date = $request->start_date;
@@ -26,26 +27,18 @@ class EmployeeController extends Controller
             $employee->department = $request->department;
             $employee->job_title = $request->job_title;
 
-            if (!empty($request->attached_cv) && $request->file('attached_cv')) {
-                $files = [];
-                foreach ($request->file('attached_cv') as $file) {
-                    $name = $request->employee_id . 'attached_cv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $employee->attached_cv = json_encode($files);
+            if ($request->hasFile('attached_cv')) {
+                $file = $request->file('attached_cv');
+                $name = $request->employee_id . 'attached_cv' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->attached_cv = $name; // Store only the file name
             }
 
-            if (!empty($request->certification) && $request->file('certification')) {
-                $files = [];
-                foreach ($request->file('certification') as $file) {
-                    $name = $request->employee_id . 'certification' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $employee->certification = json_encode($files);
+            if ($request->hasFile('certification')) {
+                $file = $request->file('certification');
+                $name = $request->employee_id . 'certification' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->certification = $name; // Store only the file name
             }
 
             $employee->zone = $request->zone;
@@ -57,46 +50,39 @@ class EmployeeController extends Controller
             $employee->floor = $request->floor;
             $employee->room = $request->room;
 
-            if (!empty($request->picture) && $request->file('picture')) {
-                $files = [];
-                foreach ($request->file('picture') as $file) {
-                    $name = $request->employee_id . 'picture' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $employee->picture = json_encode($files);
+            if ($request->hasFile('picture')) {
+                $file = $request->file('picture');
+                $name = $request->employee_id . 'picture' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->picture = $name; // Store only the file name
             }
 
-            if (!empty($request->specimen_signature) && $request->file('specimen_signature')) {
-                $files = [];
-                foreach ($request->file('specimen_signature') as $file) {
-                    $name = $request->employee_id . 'specimen_signature' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $employee->specimen_signature = json_encode($files);
+            if ($request->hasFile('specimen_signature')) {
+                $file = $request->file('specimen_signature');
+                $name = $request->employee_id . 'specimen_signature' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->specimen_signature = $name; // Store only the file name
             }
 
-            $employee->hod = $request->hod;
-            $employee->designee = $request->designee;
+            $employee->hod = is_array($request->hod) ? implode(',', $request->hod) : '';
+            $employee->designee = is_array($request->designee) ? implode(',', $request->designee) : '';
             $employee->comment = $request->comment;
 
-            if (!empty($request->file_attachment) && $request->file('file_attachment')) {
-                $files = [];
-                foreach ($request->file('file_attachment') as $file) {
-                    $name = $request->employee_id . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $employee->file_attachment = json_encode($files);
+            if ($request->hasFile('file_attachment')) {
+                $file = $request->file('file_attachment');
+                $name = $request->employee_id . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->file_attachment = $name; // Store only the file name
             }
 
             $employee->external_comment = $request->external_comment;
-            $employee->external_attachment = $request->external_attachment;
 
+            if ($request->hasFile('external_attachment')) {
+                $file = $request->file('external_attachment');
+                $name = $request->employee_id . 'external_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $employee->external_attachment = $name; // Store only the file name
+            }
             $employee->save();
 
             $employee_id = $employee->id;
@@ -128,11 +114,11 @@ class EmployeeController extends Controller
             $employeeExternalGrid->data = $request->employee_external_training_data;
             $employeeExternalGrid->save();
 
-        } catch (\Exception $e) {
-            $res['status'] = 'error';
-            $res['message'] = $e->getMessage();
+        // } catch (\Exception $e) {
+        //     $res['status'] = 'error';
+        //     $res['message'] = $e->getMessage();
 
-        }
+        // }
 
         toastr()->success("Record is created Successfully");
         return redirect(url('TMS'));

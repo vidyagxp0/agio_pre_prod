@@ -16,7 +16,7 @@ class TrainerController extends Controller
             'message' => 'success',
             'body' => [],
         ];
-        try {
+        // try {
             $trainer = new TrainerQualification();
             $trainer->record_number = $request->record_number;
             $trainer->site_code = $request->site_code;
@@ -42,15 +42,11 @@ class TrainerController extends Controller
             $trainer->evaluation_criteria_8 = $request->evaluation_criteria_8;
             $trainer->qualification_comments = $request->qualification_comments;
 
-            if (!empty($request->initial_attachment) && $request->file('initial_attachment')) {
-                $files = [];
-                foreach ($request->file('initial_attachment') as $file) {
-                    $name = $request->trainer_name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name; // Store the file path
-                }
-                // Save the file paths in the database
-                $trainer->initial_attachment = json_encode($files);
+            if ($request->hasFile('initial_attachment')) {
+                $file = $request->file('initial_attachment');
+                $name = $request->trainer_name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $trainer->initial_attachment = $name; // Store only the file name
             }
 
             $trainer->save();
@@ -69,12 +65,14 @@ class TrainerController extends Controller
             $$trainerListGrid->data = $request->trainer_listOfAttachment;
             $$trainerListGrid->save();
 
-        } catch (\Exception $e) {
-            $res['status'] = 'error';
-            $res['message'] = $e->getMessage();
+        // } catch (\Exception $e) {
+        //     $res['status'] = 'error';
+        //     $res['message'] = $e->getMessage();
 
-        }
+        // }
 
-        return response()->json($res);
+        toastr()->success("Record is created Successfully");
+        return redirect(url('TMS'));
+        // return response()->json($res);
     }
 }
