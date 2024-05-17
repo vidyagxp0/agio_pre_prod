@@ -1,3 +1,5 @@
+
+
 <?php
 
 use App\Http\Controllers\ActionItemController;
@@ -419,10 +421,10 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 
 // =================LOGS=========================================
 
+
 Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
 Route::view('market_complaint_log', 'frontend.forms.Logs.Market-Complaint-registerLog');
 Route::view('incident_register_log', 'frontend.forms.Logs.incidentregisterLog');
-Route::view('laboratory_incidence_log', 'frontend.forms.Logs.laboratoryIncidentlog');
 Route::view('risk_management_log', 'frontend.forms.Logs.riskmanagementLog');
 Route::view('errata_log', 'frontend.forms.Logs.errata_log');
 Route::view('laboratory_log', 'frontend.forms.Logs.laboratoryIncidentLog');
