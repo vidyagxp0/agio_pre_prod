@@ -60,7 +60,7 @@
     <div id="rcms-desktop">
 
         <div class="process-groups">
-            <div class="active" onclick="openTab('internal-audit', this)">Non Conformance Log </div>
+            <div class="active" onclick="openTab('internal-audit', this)">OOS / OOT Log </div>
         </div>
         <div class="main-content">
             <div class="container-fluid">
@@ -129,18 +129,20 @@
                                 <table class="table table-bordered" style="width: 120%;">
                                     <thead>
                                         <tr>
+                                          <tr>
                                             <th style="width: 5%;">Sr.No.</th>
                                             <th>Date of Initiation</th>
-                                            <th>NCR No.</th>
-                                            <th>Originator</th>
-                                            <th>Division</th>
-                                            <th>Department</th>
-                                            <th>Description of Non Conformance</th>
-                                            <th>Name of Product</th>
-                                            <th>No. of Extension</th>
+                                            <th>Record No.</th>
+                                            <th>Short Description </th>
+                                            <th>Type of Document </th>
+                                            <th>Product / Material  </th>
+                                            <th>Batch No. / AR No. </th>
                                             <th>Due Date</th>
-                                            <th>Date of Clouser</th>
+                                            <th>Closure Date</th>
                                             <th>Status</th>
+                                            
+                                            
+                                        </tr>
                                             
                                         </tr>
                                     </thead>
@@ -148,8 +150,6 @@
                                     <tbody>
                                         <tr>
 
-                                            <td></td>
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
