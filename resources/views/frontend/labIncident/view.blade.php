@@ -240,7 +240,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                             
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
@@ -253,8 +253,8 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>  
-                                
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -321,13 +321,13 @@
                                         <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->Initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
-                                        
+
                                         <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
@@ -335,7 +335,7 @@
                                 </div>
 
                                  {{-- Table --}}
-                           
+
 
 
 
@@ -357,7 +357,7 @@
                                         <tr>
                                             <td><input type="text" name="serial_number[]"></td>
                                            </td>
-                                              <td><input type="text" name="Name_of_the_product[]" >                                             
+                                              <td><input type="text" name="Name_of_the_product[]" >
                                             <td><input type="text" name="B_no_AR_no[]"
                                                 />
                                             </td>
@@ -370,7 +370,7 @@
                         </div>
 
 
-                        {{-- Table --}} 
+                        {{-- Table --}}
 
                         {{-- New Added --}}
                         <div class="col-lg-12">
@@ -488,7 +488,7 @@
                         </div>
 
                                  {{-- New Added --}}
-                        
+
 
 
 
@@ -504,7 +504,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <!-- <div class="col-lg-6">
                              <div class="col-lg-6">
                                     <div class="group-input">
@@ -527,7 +527,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> 
+                                </div>
                                 </div>-->
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -567,7 +567,7 @@
                                         </select>
                                     </div>
                                 </div>
-                             
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
@@ -618,7 +618,7 @@
                                         <textarea name="immediate_action"></textarea>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input" id="immediate_date_ia">
                                         <label for="immediate_date_ia">Analyst Sign/Date<span
@@ -645,8 +645,8 @@
                             <textarea name="proposed_correctivei_ia"></textarea>
                         </div>
                      </div>
-                
-                    
+
+
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
@@ -656,7 +656,7 @@
 
 
                           {{-- selection field --}}
-                
+
                           <div class="col-md-4">
                             <div class="group-input">
                                 <label for="search">
@@ -704,7 +704,7 @@
                                     <p class="text-danger">{{ $message }}</p>
                                 @enderror
                             </div>
-                        </div> 
+                        </div>
                 {{-- selection field --}}
                 <div class="col-12">
                     <div class="group-input">
@@ -744,15 +744,15 @@
                 <option value="Analyst Error">Analyst Error</option>
                 <option value="Instrument Error">Instrument Error</option>
                 <option value="Atypical Error">Atypical Error</option>
-              
+
             </select>
         </div>
     </div>
     {{-- type of incidence --}}
 
-    
+
                 {{-- selection field --}}
-                
+
                 <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
@@ -803,9 +803,9 @@
                 </div>
 
                 {{-- selection field --}}
-                
 
-                               
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachments</label>
@@ -821,7 +821,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -840,23 +840,23 @@
                                  <div class="col-12 sub-head">
                                      First Extension
                                  </div>
- 
+
                              </div>
- 
+
                              <div class="col-12">
                                  <div class="group-input">
                                      <label for="Incident Details">Reason For Extension</label>
                                      <textarea name="reasoon_for_extension"></textarea>
                                  </div>
                              </div>
- 
+
                              <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Date (if required)</label>
                                  <input type="date" name="extension_date" id="extension_date">
                                  </div>
                              </div>
-                                
+
                              <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Initiator Date</label>
@@ -864,7 +864,7 @@
                                  </div>
                              </div>
                              {{-- person field --}}
- 
+
                              <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="search">
@@ -898,12 +898,12 @@
                                     @enderror
                                 </div>
                             </div>
-                            
-                             
-                           
-                             
- 
- 
+
+
+
+
+
+
                            </div>
                            <div class="row">
                                 <div class="group-input">
@@ -917,22 +917,22 @@
                                  <textarea name="reasoon_for_extension_sc"></textarea>
                                  </div>
                               </div>
- 
-                           
+
+
                               <div class="col-6">
                                  <div class="group-input">
                                   <label for="extension date">Extension Date (if required)</label>
                                    <input type="date" name="extension_date__sc" id="extension_date__sc">
                                  </div>
                               </div>
-                            
+
                                  <div class="col-6">
                                      <div class="group-input">
                                      <label for="extension date">Extension Initiator Date</label>
                                      <input type="date" name="extension_date_idsc" id="extension_date_idsc">
                                      </div>
                                  </div>
- 
+
                                                 {{-- person field --}}
 
                                                 <div class="col-md-6">
@@ -969,9 +969,9 @@
                                                 </div>
 
                            </div>
- 
+
                            {{-- third section --}}
- 
+
                            <div class="row">
                              <div class="group-input">
                                    <div class="col-12 sub-head">
@@ -984,15 +984,15 @@
                               <textarea name="reasoon_for_extension_tc"></textarea>
                               </div>
                            </div>
- 
-                        
+
+
                            <div class="col-6">
                               <div class="group-input">
                                <label for="extension date">Extension Date (if required)</label>
                                 <input type="date" name="extension_date__tc" id="extension_date__tc">
                               </div>
                            </div>
-                         
+
                               <div class="col-6">
                                   <div class="group-input">
                                   <label for="extension date">Extension Initiator Date</label>
@@ -1000,7 +1000,7 @@
                                   </div>
                               </div>
                                     {{-- person field --}}
- 
+
                                     <div class="col-md-4">
                                         <div class="group-input">
                                             <label for="search">
@@ -1017,7 +1017,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-md-4">
                                         <div class="group-input">
                                             <label for="search">
@@ -1055,16 +1055,16 @@
                          <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                          <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                      </div>
-                     
-                 
- 
+
+
+
                         </div>
                      </div>
-                   
-                   
-                   
-                   
-                   
+
+
+
+
+
                     <!-- Incident Details content -->
                     <div id="CCForm8" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1370,7 +1370,7 @@
                                             </option>
                                         </select>
                                     </div> -->
-                                </div> 
+                                </div>
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
@@ -1387,7 +1387,7 @@
                                             <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
-                                    </div> 
+                                    </div>
                                 </div>  -->
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1433,7 +1433,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     {{-- System Suitability Failure Inicidence --}}
 
                     <div id="CCForm10" class="inner-block cctabcontent">
@@ -1460,7 +1460,7 @@
                                                                             <tr>
                                                                                 <td><input type="text" name="serial_number[]"></td>
                                                                                </td>
-                                                                                  <td><input type="text" name="Name_of_the_product[]" >                                             
+                                                                                  <td><input type="text" name="Name_of_the_product[]" >
                                                                                 <td><input type="text" name="B_no_AR_no[]"
                                                                                     />
                                                                                 </td>
@@ -1471,86 +1471,86 @@
                                                                     </table>
                                                                 </div>
                                                             </div>
-                                                            
-                                    
-                                    
 
 
 
 
-                            
-                            {{-- Table --}} 
-    
-    
+
+
+
+
+                            {{-- Table --}}
+
+
                                                             {{-- New Added --}}
                                                             <div class="col-lg-12">
                                                                 <div class="group-input" id="Incident_invlvolved_others">
                                                                     <label for="Incident_Involved">Instrument Involved<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="involved_ssfi"></textarea>
+                                                                    <textarea name="involved_ssfi">{{ $data->instrument_involved_SSFI }}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
-                            
-                                                            
+
+
                                                             <div class="col-lg-4">
                                                                 <div class="group-input" id="Incident_stage">
                                                                     <label for="Incident_stage">Stage<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="stage_stage_ssfi">
+                                                                    <input type="text" name="stage_SSFI" value="{{ $data->stage_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div><br>
                                                             <div class="col-lg-4">
                                                                 <div class="group-input" id="Incident_stability_cond">
                                                                     <label for="Incident_stability_cond">Stability Condition (If Applicable)<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_stability_cond_ssfi">
+                                                                    <input type="text" name="stability_condition_SSFI" value="{{ $data->stability_condition_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div>
                                                             <div class="col-lg-4">
-                                                                <div class="group-input" id="Incident_interval_others">
+                                                                <div class="group-input" id="interval_SSFI">
                                                                     <label for="Incident_interval_others">Interval (If Applicable)<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_interval_ssfi">
+                                                                    <input type="text" name="interval_SSFI" value="{{ $data->interval_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div>
-                                                            
+
                                                             <div class="col-lg-6">
-                                                                <div class="group-input" id="Incident_test_others">
-                                                                    <label for="Incident_test_others">Test<span
+                                                                <div class="group-input" id="test_SSFI">
+                                                                    <label for="test_SSFI">Test<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="test_ssfi">
+                                                                    <input type="text" name="test_SSFI" value="{{ $data->test_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div>
-                            
-                                                             
+
+
                                                             <div class="col-lg-6">
-                                                                <div class="group-input" id="Incident_date_analysis">
-                                                                    <label for="Incident_date_analysis">Date Of Analysis<span
+                                                                <div class="group-input" id="date_of_analysis_SSFI">
+                                                                    <label for="date_of_analysis_SSFI">Date Of Analysis<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="date" name="Incident_date_analysis_ssfi">
+                                                                    <input type="date" name="date_of_analysis_SSFI" value="{{ $data->date_of_analysis_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div>
                                                             <div class="col-lg-6">
-                                                                <div class="group-input" id="Incident_specification_no">
+                                                                <div class="group-input" id="specification_number_SSFI">
                                                                     <label for="Incident_specification_no">Specification Number<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_specification_ssfi">
+                                                                    <input type="text" name="specification_number_SSFI" value="{{ $data->specification_number_SSFI }}">
                                                                 </div>
-                            
+
                                                             </div>
                                                             <div class="col-lg-6">
-                                                                <div class="group-input" id="Incident_stp_no">
+                                                                <div class="group-input" id="stp_number_SSFI">
                                                                     <label for="Incident_stp_no">STP Number<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="Incident_stp_ssfi">
+                                                                    <input type="text" name="stp_number_SSFI" value="{{ $data->stp_number_SSFI}}">
                                                                 </div>
-                            
+
                                                             </div>
 
                                                             <div class="col-md-4">
@@ -1558,119 +1558,99 @@
                                                                     <label for="search">
                                                                         Name Of Analyst<span class="text-danger"></span>
                                                                     </label>
-                                                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                                    <select id="select-state" placeholder="Select..." name="name_of_analyst_SSFI" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $key=> $value)
-                                                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            <option  @if ($data->name_of_analyst_SSFI == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    @error('assign_to')
+                                                                    @error('name_of_analyst_SSFI')
                                                                         <p class="text-danger">{{ $message }}</p>
                                                                     @enderror
                                                                 </div>
                                                             </div>
-                                                            {{-- <div class="col-lg-4">
-                                                                <div class="group-input">
-                                                                    <label for="search">
-                                                                        Name Of Analyst <span class="text-danger"></span>
-                                                                    </label>
-                                                                    <select id="select-state" placeholder="Select..." name="assign_to">
-                                                                        <option value="">Select a value</option>
-                                                                        @foreach ($users as $data)
-                                                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                    @error('assign_to')
-                                                                        <p class="text-danger">{{ $message }}</p>
-                                                                    @enderror
-                                                                </div>
-                            
-                                                            </div> --}}
+
                                                             <div class="col-lg-4">
-                                                                <div class="group-input" id="Incident_date_incidence">
-                                                                    <label for="Incident_date_incidence">Date Of Incidence<span
+                                                                <div class="group-input" id="date_of_incidence_SSFI">
+                                                                    <label for="date_of_incidence_SSFI">Date Of Incidence<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="date" name="Incident_date_incidence_ssfi">
+                                                                    <input type="date" name="date_of_incidence_SSFI" value="{{ $data->date_of_incidence_SSFI}}">
                                                                 </div>
-                            
+
                                                             </div>
-
-
-
                                                             <div class="col-md-4">
                                                                 <div class="group-input">
                                                                     <label for="search">
                                                                         QC Reviewer<span class="text-danger"></span>
                                                                     </label>
-                                                                    <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                                                    <select id="select-state" placeholder="Select..." name="qc_reviewer_SSFI" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $key=> $value)
-                                                                            <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                                            <option  @if ($data->qc_reviewer_SSFI == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                                                         @endforeach
                                                                     </select>
-                                                                    @error('assign_to')
+                                                                    @error('qc_reviewer_SSFI')
                                                                         <p class="text-danger">{{ $message }}</p>
                                                                     @enderror
                                                                 </div>
                                                             </div>
-   
                                                             <div class="col-lg-12">
-                                                                <div class="group-input" id="Description_incidence">
-                                                                    <label for="Description_incidence"> Description Of Incidence<span
+                                                                <div class="group-input" id="description_of_incidence_SSFI">
+                                                                    <label for="description_of_incidence_SSFI"> Description Of Incidence<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="Description_incidence_ssfi"></textarea>
+                                                                    <textarea name="description_of_incidence_SSFI">{{ $data->date_of_incidence_SSFI}}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
                                                             <div class="col-lg-12">
-                                                                <div class="group-input" id="Detail_investigation">
+                                                                <div class="group-input" id="detail_investigation_SSFI">
                                                                     <label for="Detail_investigation"> Detail Investigation<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="Detail_investigation_ssfi"></textarea>
+                                                                    <textarea name="detail_investigation_SSFI">{{ $data->detail_investigation_SSFI}}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
-    
+
                                                             <div class="col-lg-12">
                                                                 <div class="group-input" id="proposed corrective">
                                                                     <label for="Detail_investigation"> Proposed Corrective Action<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="proposed_corrective_ssfi"></textarea>
+                                                                    <textarea name="proposed_corrective_action_SSFI">{{ $data->proposed_corrective_action_SSFI}}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
-    
+
                                                             <div class="col-lg-12">
                                                                 <div class="group-input" id="root cause">
                                                                     <label for="root_cause"> Root Cause<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="root_cause"></textarea>
+                                                                    <textarea name="root_cause_SSFI">{{ $data->root_cause_SSFI}}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
-    
+
                                                             <div class="col-lg-12">
-                                                                <div class="group-input" id="incident summary ssfi">
+                                                                <div class="group-input" id="incident_summary_SSFI">
                                                                     <label for="incident summary ssfi"> Incident Summary<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="incident_summary_ssfi"></textarea>
+                                                                    <textarea name="incident_summary_SSFI">{{ $data->incident_summary_SSFI}}</textarea>
                                                                 </div>
-                            
+
                                                             </div>
-    
-                                                            
+
+
                                     <div class="col-md-4">
                                         <div class="group-input">
                                             <label for="search">
                                                 QC Reviewer <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                            <select id="select-state" placeholder="Select..." name="investigator_qc_SSFI" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key=> $value)
-                                                    <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    <option  @if ($data->investigator_qc_SSFI == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                                 @endforeach
                                             </select>
-                                            @error('assign_to')
+                                            @error('investigator_qc_SSFI')
                                                 <p class="text-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
@@ -1697,26 +1677,26 @@
                                                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                             {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                             <div class="file-attachment-field">
-                                                                <div class="file-attachment-list" id="incident_initial_Attachment"></div>
+                                                                <div class="file-attachment-list" id="file_attachment_SSFI"></div>
                                                                 <div class="add-btn">
                                                                     <div>Add</div>
-                                                                    <input type="file" id="myfile" name="system_suitable_attachments[]"
-                                                                        oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
+                                                                    <input type="file" id="myfile" name="file_attachment_SSFI[]"
+                                                                        oninput="addMultipleFiles(this, 'file_attachment_SSFI')" value="{{$data->file_attachment_SSFI}}" multiple>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-    
+
                                                     <div class="button-block">
                                                         <button type="submit" class="saveButton">Save</button>
                                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                                     </div>
-    
-         
-                                                            
-                                                            
+
+
+
+
                                                             {{-- New Added --}}
                             </div>
                         </div>
@@ -1730,30 +1710,43 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="closure_incident">Closure Of Incident</label>
-                                    <input type="text" name="closure_incident_c">
+                                    <input type="text" name="closure_of_incident_closure" value="{{$data->closure_of_incident_closure}}">
                                 </div>
 
                             </div>
-
+{{--
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                    <select name="Initiator_Group" id="initiator_group" name="affected_documents_closed">
+                                    <select name="Initiator_Group" id="initiator_group" name="affected_documents_closed_closure">
                                         <option value="0">-- Select --</option>
                                         <option value="Yes">Yes</option>
                                         <option value="No">No</option>
                                         <option value="NA">NA</option>
-                                      
+
                                     </select>
+                                </div>
+                            </div> --}}
+
+                            <div class="col-lg-12">
+                            <div class="group-input">
+                                <label for="affected_documents_closed"><b>Affected Documents Closed</b></label>
+                                <select name="affected_documents_closed_closure" id="affected_documents_closed_closure">
+                                    <option value="0" {{ $data->affected_documents_closed_closure == '0' ? 'selected' : '' }}>-- Select --</option>
+                                    <option value="Yes" {{ $data->affected_documents_closed_closure == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                    <option value="No" {{ $data->affected_documents_closed_closure == 'No' ? 'selected' : '' }}>No</option>
+                                    <option value="NA" {{ $data->affected_documents_closed_closure == 'NA' ? 'selected' : '' }}>NA</option>
+                                </select>
                                 </div>
                             </div>
 
-                            <div class="col-lg-12">
+
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="head remark"><b>QC Head Remark</b></label>
-                                   <textarea name="qc_hear_remark_c"></textarea>
+                                   <textarea name="qc_head_remark_closure">{{$data->qc_head_remark_closure>}}</textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
 
@@ -1777,8 +1770,15 @@
 
                         <div class="col-lg-12">
                             <div class="group-input">
+                                <label for=" qa head remark"><b>QC Head Closure</b></label>
+                               <textarea name="qc_head_closure">{{$data->qc_head_closure}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="group-input">
                                 <label for=" qa head remark"><b>QA Head Remark</b></label>
-                               <textarea name="qa_hear_remark_c"></textarea>
+                               <textarea name="qa_head_remark_closure">{{$data->qa_head_remark_closure}}</textarea>
                             </div>
                         </div>
 
@@ -1789,11 +1789,11 @@
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="closure_attachment_c"></div>
+                                    <div class="file-attachment-list" id="file_attachment_closure"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="closure_attachment_c[]"
-                                            oninput="addMultipleFiles(this, 'closure_attachment_c')" multiple>
+                                        <input type="file" id="myfile" name="file_attachment_closure[]"
+                                            oninput="addMultipleFiles(this, 'file_attachment_closure')" value="{{$data->file_attachment_closure}}" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1807,11 +1807,11 @@
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                         </div>
 
-                            
+
                         </div>
                     </div>
             </div>
-          
+
 
                     <!-- Activity Log content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
@@ -1879,7 +1879,7 @@
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
@@ -1903,7 +1903,7 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
@@ -2000,7 +2000,7 @@
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
-                              
+
                      </div>
                 </form>
             </div>
@@ -2048,14 +2048,14 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    
+
 
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -2100,7 +2100,7 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
             </div>
@@ -2135,7 +2135,7 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
 
@@ -2170,7 +2170,7 @@
                     </div> -->
                     <div class="modal-footer">
                               <button type="submit">Submit</button>
-                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                             <button type="button" data-bs-dismiss="modal">Close</button>
                    </div>
                 </form>
 
