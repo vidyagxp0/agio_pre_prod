@@ -31,8 +31,8 @@
         <!-- Tab links -->
         <div class="cctab">
             <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button> 
-            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button> 
+            <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab Investigation</button>
+            <button class="cctablinks" onclick="openCity(event, 'CCForm18')">OOT (Other Then Stability Batches) Investigation </button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist -  Preliminary Laboratory Investigation</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -  Part B: Applicable if Laboratory error identified</button>
             <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist -Part D: Communication of Confirmed of OOT With Technical Committee </button>
@@ -180,7 +180,7 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="nature_of_change">Nature Of Change </label>
-                                    
+
                                     <select name="nature_of_change">
                                         <option value="0">---select---</option>
                                         <option value="yes">yes</option>
@@ -200,7 +200,7 @@
                                 <div class="group-input">
                                     <label for="closure attachment">Description </label>
                             <textarea class="summernote" name="repeat_nature" id="summernote-16"></textarea>
-          
+
                                 </div>
                             </div>
 
@@ -217,6 +217,53 @@
                                             <input type="file" id="myfile" name="closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label>OOT Occured On</label>
+                                    <input type="date" name="OOTOccuredOn" />
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="closure attachment">Description </label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small>
+                                    </div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="closure_attachment"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="description_closure_attachment[]" oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Product History</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Probable Cause</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Investigation Details</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label class="mt-4" for="Audit Comments"> Comments</label>
+                                    <textarea class="summernote" name="Disposition_Batch" id="summernote-16"></textarea>
                                 </div>
                             </div>
 
@@ -516,7 +563,7 @@
                 </div>
 
 
-           
+
                 <!-- ==============Tab-2 start=============== -->
 
                 <di v id="CCForm2" class="inner-block cctabcontent">
@@ -596,7 +643,7 @@
                                                      <td>Were the equipment instrument used for analysis was in
                                                          calibrated state?</td>
                                                      <td>
-                                        
+
                                                         <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response" style="padding:   2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                             <option value="Yes">Select an Option</option>
@@ -605,16 +652,16 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-                                                         
+
                                                     </td>
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
-                                                    
-                                                     
-                                        
+
+
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">2</td>
@@ -630,13 +677,13 @@
                                                         </select>
                                                     </div>
                                                      </td>
-                                                     
+
                                                        <td style="vertical-align: middle;">
                                                                                             <div style="margin: auto; display: flex; justify-content: center;">
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">3</td>
@@ -658,7 +705,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">4</td>
@@ -680,7 +727,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">5</td>
@@ -702,7 +749,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">6</td>
@@ -725,7 +772,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">7</td>
@@ -749,7 +796,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">8</td>
@@ -772,7 +819,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">9</td>
@@ -794,7 +841,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">10</td>
@@ -817,9 +864,9 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
-                                                
+
                                                  <tr>
                                                 <td class="flex text-center">11</td>
                                                      <td>Were the standards & reagents properly stored? </td>
@@ -840,7 +887,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">12</td>
@@ -862,7 +909,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">13</td>
@@ -885,7 +932,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">14</td>
@@ -907,7 +954,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">15</td>
@@ -930,7 +977,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">16</td>
@@ -952,7 +999,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">17</td>
@@ -974,7 +1021,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">18</td>
@@ -996,7 +1043,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">19</td>
@@ -1019,7 +1066,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">20</td>
@@ -1042,7 +1089,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">21</td>
@@ -1065,7 +1112,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">22</td>
@@ -1088,7 +1135,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">23</td>
@@ -1110,7 +1157,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">24</td>
@@ -1132,7 +1179,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">25</td>
@@ -1155,7 +1202,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">26</td>
@@ -1178,7 +1225,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">27</td>
@@ -1200,7 +1247,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">28</td>
@@ -1224,7 +1271,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">29</td>
@@ -1246,7 +1293,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">30</td>
@@ -1268,7 +1315,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">31</td>
@@ -1291,7 +1338,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">32</td>
@@ -1313,7 +1360,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">33</td>
@@ -1335,7 +1382,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                                  <tr>
                                                 <td class="flex text-center">34</td>
@@ -1357,7 +1404,7 @@
                                                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                             </div>
                                                                                         </td>
-                                        
+
                                                  </tr>
                                              </tbody>
                                          </table>
@@ -1409,7 +1456,7 @@
                                                 <th style="width: 15%">Previous OOT Root Cause</th>
                                                 <th style="width: 15%">CAPA </th>
                                                 <th style="width: 15%">Closure Date Of CAPA</th>
-                                             
+
 
 
                                             </tr>
@@ -1479,7 +1526,7 @@
                             </div>
 
 
-                            
+
 
 
 
@@ -1599,7 +1646,7 @@
                             </div>
 
 
-                            
+
 
 
 
@@ -1864,7 +1911,7 @@
                             </div>
 
 
-                            
+
 
 
 
@@ -1990,7 +2037,7 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
@@ -2140,7 +2187,7 @@
                                 </div>
                             </div>
 
-                        
+
 
                         </div>
                         <div class="button-block">
@@ -2224,7 +2271,7 @@
                                 </div>
                             </div>
 
-                           
+
 
 
                         </div>
@@ -2248,7 +2295,7 @@
                                 </div>
                             </div>
 
-{{-- 
+{{--
                             <div class="group-input">
                                 <label for="audit-agenda-grid">
                                     Details Of Stability Study
@@ -2408,7 +2455,7 @@
                                 </div>
                             </div>
 
-                          
+
 
 
 
@@ -2603,7 +2650,7 @@
                                 </div>
                             </div>
 
-                            
+
 
 
 
@@ -2700,7 +2747,7 @@
                             </div>
 
 
-                       
+
 
                         </div>
                         <div class="button-block">
@@ -2795,14 +2842,14 @@
                             </div>
 
 
-                            
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>                       
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -2839,10 +2886,10 @@
                             </div>
 
 
-                            
 
 
-                            
+
+
 
 
                         </div>
@@ -2890,14 +2937,14 @@
                             </div>
 
 
-                           
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>  
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3031,7 +3078,7 @@
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -3079,14 +3126,14 @@
                             </div>
 
 
-                          
+
 
 
                         </div>
                         <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>   
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit
                                 </a> </button>
                         </div>
@@ -3125,7 +3172,7 @@
                             </div>
 
 
-                           
+
 
 
                         </div>
@@ -3170,7 +3217,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -3337,7 +3384,7 @@
                                     <label for="Approved on">Addendum Review   On</label>
                                     <div class="Date"></div>
                                 </div>
-                            </div> 
+                            </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -3361,7 +3408,7 @@
                         </div>
                     </div>
                 </div>
-                
+
 
             </div>
         </form>
@@ -3690,7 +3737,7 @@
     var fileList = inputElement.files;
     var containerId = inputElement.getAttribute('data-container-id');
     var container = document.getElementById(containerId);
-    
+
     // Clear the existing files
     container.innerHTML = '';
 

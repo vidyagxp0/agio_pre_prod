@@ -56,46 +56,59 @@ class DivisionSeeder extends Seeder
         $division->status = 1;
         $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "KSA";
-        $division->save();
-        $division = new QMSDivision();
-        $division->name = "Egypt";
-        $division->save();
-        $division = new QMSDivision();
-        $division->name = "Estonia";
-        $division->save();
-        $division = new QMSDivision();
-        $division->name = "EHS - North America";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "KSA";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "Global";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "Egypt";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "Jordan";
-        $division->status = 1;
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "Estonia";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "India";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "EHS - North America";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "QMS - Asia";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "Global";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "QMS - EMEA";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "Jordan";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "SQM - APAC";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "India";
+        // $division->status = 0;
+        // $division->save();
 
-        $division = new QMSDivision();
-        $division->name = "QMS - South America";
-        $division->save();
+        // $division = new QMSDivision();
+        // $division->name = "QMS - Asia";
+        // $division->status = 0;
+        // $division->save();
+
+        // $division = new QMSDivision();
+        // $division->name = "QMS - EMEA";
+        // $division->status = 0;
+        // $division->save();
+
+        // $division = new QMSDivision();
+        // $division->name = "SQM - APAC";
+        // $division->status = 0;
+        // $division->save();
+
+        // $division = new QMSDivision();
+        // $division->name = "QMS - South America";
+        // $division->status = 0;
+        // $division->save();
     }
 }

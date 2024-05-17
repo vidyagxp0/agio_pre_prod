@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Connexo Dashbaord Report</title>
+    <title>vidyaGxP Dashbaord Report</title>
 </head>
 
 <body style="margin: 0px">
@@ -85,7 +85,8 @@
                                     document.write(data);
                                 </script>
                             </td>
-                            <td style="padding: 8px; font-size: 0.8rem; text-align: right; width:250px;">Page 1 of 10</td>
+                            <td style="padding: 8px; font-size: 0.8rem; text-align: right; width:250px;">Page 1 of 10
+                            </td>
                         </tr>
                     </table>
                 </td>

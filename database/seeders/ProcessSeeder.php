@@ -74,18 +74,23 @@ class ProcessSeeder extends Seeder
             "Change Control",
             "New Document",
             "Lab Incident",
-            "Effective Check",
-            "OOS",
+            "Effectiveness Check",
+            "OOS Chemical",
             "OOT",
             "OOC",
             "Deviation",
+            //new added
+            "Market Complaint",
+            "Non Conformance",
+            "Incident",
+            "Failure Investigation",
+            "ERRATA",
+            "OOS Microbiology"
         ];
 
         // Loop through each process name
         foreach ($processNames as $index => $processName) {
-            // Loop through 8 divisions
-            // Loop through 8 divisions
-            for ($divisionId = 1; $divisionId <= 8; $divisionId++) {
+            for ($divisionId = 1; $divisionId <= 13; $divisionId++) {
                 $process = new QMSProcess();
                 $process->division_id = $divisionId;
                 $process->process_name = $processName;

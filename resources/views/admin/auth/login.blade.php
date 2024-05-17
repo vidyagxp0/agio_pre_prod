@@ -17,10 +17,10 @@
             <div class="login-logo">
               <div class="logo-container">
                         <div class="logo" style="display:flex;">
-                    <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100" >
+                    <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..." class="w-100 h-100" style="max-width: 300px">
                         </div>
                         <div class="logo">
-                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
+                            <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100" style="max-width: 150px">
                         </div>
                     </div>
             <!-- <img style="border-radius: 8% " src="{{ asset('images/logo/logo.png') }}" height="80" alt=""><br> -->

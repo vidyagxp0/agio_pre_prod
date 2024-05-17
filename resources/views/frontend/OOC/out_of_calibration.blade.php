@@ -16,7 +16,7 @@
         </div> --}}
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        / OOC_Out Of Calibration
+        / Out Of Calibration
     </div>
 </div>
 
