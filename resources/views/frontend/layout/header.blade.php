@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-    <title>Connexo - Software</title>
+    <title>Vidyagxp - Software</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
         integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
@@ -21,8 +21,9 @@
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
     </script> --}}
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
@@ -43,7 +44,6 @@
             display: none;
             margin-left: auto;
         }
-        
     </style>
 
 
@@ -76,7 +76,8 @@
                 <div class="middle-head">
                     <div class="logo-container">
                         <div class="logo">
-                            <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." class="w-100 h-100" style="scale: 3">
+                            <img src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." class="w-100 h-100"
+                                style="scale: 3">
                         </div>
                         <div class="logo">
                             <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
@@ -122,14 +123,14 @@
                                 <!-- <div class="image">
                                     @if (Auth::user())
                                         @if (Helpers::checkRoles(3))
-                                            <img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
+<img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
                                                 class="w-100 h-100">
-                                        @else
-                                            <img src="{{ asset('user/images/login.jpg') }}" alt="..."
+@else
+<img src="{{ asset('user/images/login.jpg') }}" alt="..."
                                                 class="w-100 h-100">
-                                        @endif
-                                    @else
-                                        <img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
+@endif
+@else
+<img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
                                             class="w-100 h-100">
                                     @endif
 
@@ -150,7 +151,7 @@
         <div class="container-fluid header-bottom">
             <div class="container-fluid">
                 <div class="bottom-links">
-                    <div >
+                    <div>
                         <a href="#"><i class="fa-solid fa-braille"></i></a>
                     </div>
                     <div>
@@ -176,7 +177,7 @@
                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                             </div>
                         @endif
-                        {{-- @if (Helpers::checkRoles(4) ||Helpers::checkRoles(5) || Helpers::checkRoles(3))
+                        {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                             <div>
                                 <a href="{{ route('change-control.index') }}">Change Control</a>
                             </div>
@@ -219,7 +220,7 @@
                         <strong>Name : </strong> Amit Guru
                     </div>
                     <div class="bar">
-                        <strong>E-Mail : </strong> amit.guru@connexo.io
+                        <strong>E-Mail : </strong> amit.guru@vidyaGxP.io
                     </div>
                     <div class="bar">
                         <a href="#">Change Password</a>
@@ -259,7 +260,7 @@
                         April 23, 2023
                     </div>
                     <div class="bar">
-                        <strong>Licensed to : </strong> Connexo
+                        <strong>Licensed to : </strong> vidyaGxP
                     </div>
                     <div class="bar">
                         <strong>Environment : </strong> Master Demo Dev
@@ -269,7 +270,7 @@
                     </div>
                     <div class="copyright-bar">
                         <i class="fa-regular fa-copyright"></i>&nbsp;
-                        Copyright 2023 Connexo Asia Limited
+                        Copyright 2023 vidyaGxP Asia Limited
                     </div>
                 </div>
 
@@ -1265,7 +1266,7 @@
         </div>
     </div>
 
-        {{-- ============================================
+    {{-- ============================================
                 Document Management System (DMS) - 1
     ============================================= --}}
     <div class="modal fade" id="document-management-system-modal">
@@ -1279,19 +1280,19 @@
 
                 <div class="modal-body">
                     <ol class="list-group">
-                            <p>For the initial version of a document, set the Major Count to "1".
-                               
+                        <p>For the initial version of a document, set the Major Count to "1".
 
-                            <p> For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
-                                2 for the 2nd version
-                                3 for the 3rd version
-                                And so forth, up to N.</p>
 
-                            <p>This protocol ensures clear and organized version management within the DMS.
-                                Please adhere to these instructions when creating or updating documents.</p>
+                        <p> For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
+                            2 for the 2nd version
+                            3 for the 3rd version
+                            And so forth, up to N.</p>
+
+                        <p>This protocol ensures clear and organized version management within the DMS.
+                            Please adhere to these instructions when creating or updating documents.</p>
                         </p>
 
-                            <strong>Thank you for your cooperation!</strong>
+                        <strong>Thank you for your cooperation!</strong>
                     </ol>
                 </div>
 
@@ -1299,7 +1300,7 @@
         </div>
     </div>
 
-            {{-- ============================================
+    {{-- ============================================
                 Document Management System (DMS) - 2
     ============================================= --}}
     <div class="modal fade" id="document-management-system-modal-minor">
@@ -1313,20 +1314,19 @@
 
                 <div class="modal-body">
                     <ol class="list-group">
-                            <p>For the initial version of a document, set the Major Count to "X.O". </p>
-                            <p>  For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
-                                X.1 for the 2nd version
-                                X.2 for the 3rd version
-                                And so forth, up to X.9.</p>
+                        <p>For the initial version of a document, set the Major Count to "X.O". </p>
+                        <p> For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
+                            X.1 for the 2nd version
+                            X.2 for the 3rd version
+                            And so forth, up to X.9.</p>
 
-                            <p>This protocol ensures clear and organized version management within the DMS. 
-                                Please adhere to these instructions when creating or updating documents.</p>
-                                
-                            <strong>Thank you for your cooperation in!</strong>
+                        <p>This protocol ensures clear and organized version management within the DMS.
+                            Please adhere to these instructions when creating or updating documents.</p>
+
+                        <strong>Thank you for your cooperation in!</strong>
                     </ol>
                 </div>
 
             </div>
         </div>
     </div>
-

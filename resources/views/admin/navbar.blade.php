@@ -95,7 +95,7 @@
     <!-- Brand Logo -->
     <div class="logo-container">
                         <div class="logo" >
-                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-50 h-50">
+                            <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-50 h-50" style="max-width: 100px">
                         </div>
 </div>
     <!-- <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
