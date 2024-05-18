@@ -441,6 +441,10 @@ Route::view('internal_audit_log', 'frontend.forms.Logs.Internal_audit_Log');
 
 
 
+// ====================OOS/OOT======================================
+Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
+// ====================OOS/OOT======================================
+
 
 
 /**
