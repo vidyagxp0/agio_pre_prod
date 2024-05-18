@@ -167,6 +167,12 @@ Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::cla
 /********************************************* Deviation Starts *******************************************/
 
 Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
+
+Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
+Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+
+/********************************************* Deviation Ends *******************************************/
+
 // ==============================end ==============================
 //! ============================================
 //!                    Risk Management

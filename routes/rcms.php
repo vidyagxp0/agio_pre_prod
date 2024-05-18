@@ -36,6 +36,12 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::middleware(['rcms'])->group(
         function () {
             Route::resource('CC', CCController::class);
+
+            Route::post('send-initiator/{id}', [DeviationController::class, 'sendToInitiator'])->name('send-initiator');
+            Route::post('send-pending-supervisor/{id}', [DeviationController::class, 'sendToPendinSupervisor'])->name('send-pending-supervisor');
+            Route::post('send-pending-initialQA/{id}', [DeviationController::class, 'sendToPendingInitialQA'])->name('send-pending-initialQA');
+            Route::post('send-QaApproval/{id}', [DeviationController::class, 'sendToQaApprover'])->name('send-QaApproval');
+
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
             Route::get('action-item-audittrialshow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('showActionItemAuditTrial');

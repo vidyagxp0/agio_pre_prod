@@ -806,7 +806,7 @@ class DeviationController extends Controller
 
         $Cft->save();
 
-        $history = new DeviationAuditTrail();
+            $history = new DeviationAuditTrail();
             $history->deviation_id = $deviation->id;
             $history->activity_type = 'Initiator';
             $history->previous = "Null";
@@ -4568,5 +4568,37 @@ class DeviationController extends Controller
             toastr()->error('E-signature Not match');
             return back();
         }
+    }
+
+    public function store_audit_review(Request $request, $id)
+    {
+            $history = new AuditReviewersDetails;
+            $history->deviation_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->reviewer_comment = $request->reviewer_comment;
+            $history->reviewer_comment_by = Auth::user()->name;
+            $history->reviewer_comment_on = Carbon::now()->toDateString();
+            $history->save();
+
+        return redirect()->back();
+    }
+
+    public function rootAuditTrial($id)
+    {
+        $audit = RootAuditTrial::where('root_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $today = Carbon::now()->format('d-m-y');
+        $document = RootCauseAnalysis::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+
+        return view("frontend.root-cause-analysis.root-audit-trail", compact('audit', 'document', 'today'));
+    }
+
+    public function DeviationAuditTrial($id)
+    {
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(5);
+        $today = Carbon::now()->format('d-m-y');
+        $document = Deviation::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
     }
 }
