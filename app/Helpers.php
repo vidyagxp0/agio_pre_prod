@@ -283,6 +283,52 @@ class Helpers
     {
         return   str_pad($id, 5, '0', STR_PAD_LEFT);
     }
+
+    public static function getHodUserList(){
+        
+        return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
+    }
+    public static function getQAUserList(){
+        
+        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    }
+    public static function getInitiatorUserList(){
+        
+        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
+    }
+    public static function getApproverUserList(){
+        
+        return $ApproverUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'1'])->get();
+    }
+    public static function getReviewerUserList(){
+        
+        return $ReviewerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'2'])->get();
+    }
+    public static function getCFTUserList(){
+        
+        return $CFTUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'5'])->get();
+    }
+    public static function getTrainerUserList(){
+        
+        return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
+    }
+    static public function getDueDate($date, $addDays = false, $format = null)
+    {
+        try {
+            if ($date) {
+                $format = $format ? $format : 'd M Y';
+                $dateInstance = Carbon::parse($date);
+                if ($addDays) {
+                    $dateInstance->addDays(30);
+                }
+                return $dateInstance->format($format);
+        }
+        } catch (\Exception $e) {
+            return 'NA';
+        }
+    }
+
+    
     public static function getDepartmentWithString($id)
     {
         $response = [];
