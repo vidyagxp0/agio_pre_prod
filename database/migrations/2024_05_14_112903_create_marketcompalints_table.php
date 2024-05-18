@@ -17,13 +17,13 @@ return new class extends Migration
             // {{-- --General Information --}}
 
             $table->id();
-            $table->integer('initiator_id_gi')->nullable();
-            $table->string('division_id_gi')->nullable();
-            $table->string('initiator_group_gi')->nullable();
-            $table->string('intiation_date_gi')->nullable();
-            $table->date('due_date_gi')->nullable();
-            $table->string('initiator_group_code_gi')->nullable();
-            $table->string('record_number_gi')->nullable();
+            $table->integer('initiator_id')->nullable();
+            $table->string('division_id')->nullable();
+            $table->string('initiator_group')->nullable();
+            $table->string('intiation_date')->nullable();
+            $table->date('due_date')->nullable();
+            $table->string('initiator_group_code')->nullable();
+            $table->string('record_number')->nullable();
 
             $table->string('initiated_through_gi')->nullable();
             $table->longText('if_other_gi')->nullable();

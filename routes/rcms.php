@@ -185,7 +185,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::group(['prefix' => 'marketcomplaint', 'as' => 'marketcomplaint.'], function() {
                 Route::get('/',[MarketComplaintController::class, 'index'])->name('index');
                 Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
-                Route::get('/marketcomplaint/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
+                Route::get('/marketcomplaint_view/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
                 Route::get('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');
 
    

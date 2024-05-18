@@ -5,7 +5,8 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
 use App\Models\MarketComplaintGrids ;
-
+use Illuminate\Support\Facades\Auth;
+use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 
 class MarketComplaintController extends Controller
@@ -23,13 +24,13 @@ class MarketComplaintController extends Controller
 $marketComplaint = new MarketComplaint();
 
 // Manually assigning each field from the request
-        $marketComplaint->initiator_id_gi = $request->initiator_id_gi;
-        $marketComplaint->division_id_gi = $request->division_id_gi;
-        $marketComplaint->initiator_group_gi = $request->initiator_group_gi;
-        $marketComplaint->intiation_date_gi = $request->intiation_date_gi;
-        $marketComplaint->due_date_gi = $request->due_date_gi;
-        $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
-        $marketComplaint->record_number_gi = $request->record_number_gi;
+        $marketComplaint->initiator_id = Auth::user()->id;
+        $marketComplaint->division_id = $request->division_id;
+        $marketComplaint->initiator_group = $request->initiator_group;
+        $marketComplaint->intiation_date = $request->intiation_date;
+        $marketComplaint->due_date = $request->due_date;
+        $marketComplaint->initiator_group_code = $request->initiator_group_code_gi;
+        $marketComplaint->record_number =((RecordNumber::first()->value('counter')) + 1);
         $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
         $marketComplaint->if_other_gi = $request->if_other_gi;
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
@@ -79,10 +80,14 @@ $marketComplaint = new MarketComplaint();
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
         $marketComplaint->initial_attachment_c = $request->initial_attachment_c;
 
-        // $marketComplaint->save();
+        $marketComplaint->form_type="Market Complaint";
+    //    dd($marketComplaint);
+        
+//  dd($marketComplaint);
+        $marketComplaint->save();
 
 
-
+//dd($marketComplaint);
 
 
         // ====================================intance end
@@ -99,6 +104,31 @@ $marketComplaint = new MarketComplaint();
 
 
             // {{----.File attachemenet   }}
+
+
+            $request->validate([
+                'initial_attachment_gi.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
+            ]);
+        
+            $filePaths = [];
+        
+            if ($request->hasFile('initial_attachment_gi')) {
+                foreach ($request->file('initial_attachment_gi') as $file) {
+                    $fileName = time().'_'.$file->getClientOriginalName();
+                    $filePath = $file->storeAs('uploads', $fileName, 'public');
+                    $filePaths[] = $fileName;
+                }
+            }
+        
+            $marketComplaint = new MarketComplaint();
+            $marketComplaint->initial_attachment_gi = json_encode($filePaths);
+            // Save other fields as needed
+            $marketComplaint->save();
+        
+
+
+
+
         if (!empty ($request->initial_attachment_gi)) {
             $files = [];
             if ($request->hasfile('initial_attachment_gi')) {
@@ -437,16 +467,17 @@ $marketComplaint = new MarketComplaint();
     public function show($id)
     {
         $data = MarketComplaint::find($id);
+        
     
         if (!$data) {
             // Data not found, you can handle this case as per your application's requirements
             // For example, redirecting to an error page or returning a message
             return redirect()->route('error.page')->with('error', 'Data not found');
         }
-    dd($data);
+    // dd($data);
         $records = MarketComplaint::all(); 
-    
-        return view('frontend.market_complaint.market_complaint_view', compact('data', 'records'));
+        //  dd($records);
+        return view('frontend.market_complaint.market_complaint_view', compact('data', 'records','id'));
     }
     
 

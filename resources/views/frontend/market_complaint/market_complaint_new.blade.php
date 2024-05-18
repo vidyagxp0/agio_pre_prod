@@ -222,49 +222,56 @@
                                 </div>
 
 
+                               
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiator_group_gi" id="initiator_group">
+                                        <select name="initiator_group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA">
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB">Quality
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                                Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC">Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                                Central
                                                 Quality Control</option>
-                                            <option value="MANU">
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG">Plasma
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS">Central
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
+                                                Central
                                                 Stores</option>
-                                            <option value="ITG">
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM">
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL">
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
                                                 Central Laboratory</option>
-
-                                            <option value="TT">Tech
+        
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA">
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM">
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA">IT
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC">
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG">
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM">
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA">
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
+        
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
@@ -527,9 +534,9 @@
                                         <label for="Initiator Group">Categorization of complaint</label>
                                         <select name="categorization_of_complaint_gi" onchange="">
                                             <option value="">-- select --</option>
-                                            <option value="">Critical</option>
-                                            <option value="">Major</option>
-                                            <option value="">Minor</option>
+                                            <option value="Critical">Critical</option>
+                                            <option value="Critical">Major</option>
+                                            <option value="Critical">Minor</option>
                                         </select>
                                     </div>
                                 </div>

@@ -75,6 +75,8 @@ class MarketComplaint extends Model
        
    //  ];
 
+                  // {{-- -casting --}}
+
     protected $casts = [
 
 // 'if_other_gi' => 'array',
