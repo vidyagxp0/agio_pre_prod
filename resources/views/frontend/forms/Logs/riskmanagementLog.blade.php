@@ -66,13 +66,13 @@
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white " style="height: 65px">
+                        <div class="mt-1 mb-2 bg-white " style="height: 75px">
                             <div class="d-flex align-items-center">
                                 <div class="scope-bar ml-3">
                                     <button style="width: 70px;margin-left:5px; margin-bottom:35px"
                                         class="print-btn btn btn-primary">Print</button>
                                 </div>
-                                <div class="flex-grow-2" style="margin-left:-100px; margin-bottom:30px">
+                                <div class="flex-grow-2" style="margin-left:-100px; margin-bottom:30px;">
                                     <div class="filter-bar d-flex justify-content-between">
                                         <div class="filter-item">
                                             <label for="process">Department</label>

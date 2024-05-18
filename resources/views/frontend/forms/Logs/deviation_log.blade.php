@@ -66,7 +66,7 @@
             <div class="container-fluid">
                 <div class="process-tables-list">
                     <div class="process-table active" id="internal-audit">
-                        <div class="mt-1 mb-2 bg-white " style="height: 65px">
+                        <div class="mt-1 mb-2 bg-white " style="height: 75px">
                             <div class="d-flex align-items-center">
                                 <div class="scope-bar ml-3">
                                     <button style="width: 70px;margin-left:5px"
