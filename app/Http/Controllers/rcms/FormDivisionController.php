@@ -55,7 +55,7 @@ class FormDivisionController extends Controller
             return redirect()->route('market_complaint_new');
         }
         elseif ($request->process_name == 'Deviation') {
-            return 'deviation';
+            return redirect()->route('deviation');
         }
         elseif ($request->process_name == "New Document") {
 

@@ -71,9 +71,8 @@
         </div>
     </div>
 
-    {{-- ======================================
-                CHANGE CONTROL VIEW
-    ======================================= --}}
+    <!-- /* Change Control View Data Fields */ -->
+
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -88,69 +87,126 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
-                        {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
-                        <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
-                        {{-- @if ($data->stage >= 9)
+                        <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> 
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button> -->
+
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
+
+                        <!-- @if ($data->stage >= 9)
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
                                     Close Done </a> </button>
-                        @endif --}}
+                        @endif -->
+
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Submit
+                                Submitdddsd
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                                Child
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                HOD Review Complete
-                            </button>
+                        @elseif($data->stage == 2 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info-required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to CFT/SME/QA Reviewers
+                                Supervisor Review Complete
+                            </button>
+                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Initial Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
-                                CFT/SME/QA Review Not Required
+                                CFT Review Not Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Information required
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                RA Review Complete
                             </button>
                         @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Request More Info
+                                Send to Opened State
                             </button>
-                        @elseif($data->stage == 6 && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds)))
-                            @if ($evaluation->training_required == 'yes')
-                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                    Training Completed
-                                </button>
-                            @endif
-                        @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Send to Pending Supervisor Review
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Send to Pending Initial QA Reviewer
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                QA Approver Review Complete
+                            </button>
+                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Supervisor Final Review Complete
+                            </button>
+                        @elseif($data->stage == 7 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Implemented
+                                All Child Closed
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
-                        @elseif($data->stage == 8)
+                        @elseif($data->stage == 8 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Final Review Complete
+                                Send to Opened State
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to Pending Supervisor Review
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to Pending Initial QA Reviewer
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Post Implementation Review Complete
+                            </button>
+                        @elseif($data->stage == 9 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to Initiator
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to Supervisor/HOD/Designee
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to QA Reviewer
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Send to QA Approver
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                QA Head Review Complete
+                            </button>
+                        @elseif($data->stage == 10 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Re-open
+                            </button>
+                        @elseif($data->stage == 11 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Re-open Addendum Complete
+                            </button>
+                        @elseif($data->stage == 12 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Addendum Approved Complete
+                            </button>
+                        @elseif($data->stage == 13 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Reject Re-open Request
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Addendum Execution Complete
+                            </button>
+                        @elseif($data->stage == 14 && (in_array(18, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                All Re-open Child Closed
+                            </button>
+                        @elseif($data->stage == 15 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Supervisor Final Review Complete
+                            </button>
+                        @else
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -161,47 +217,38 @@
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- @if ($data->stage == 0)
+                    @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
                         </div>
-                    @else
+                    @elseif ($data->stage >= 1 || $data->stage < 10 )
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
                                 <div class="active">Opened</div>
                             @else
                                 <div class="">Opened</div>
                             @endif
-                            {{--  @if ($data->stage >= 2)
-                            <div class="active">Superviser Review</div>
-                        @else
-                            <div class="">Superviser Review</div>
-                        @endif  --}}
-                    {{-- @if ($data->stage >= 2)
-                                <div class="active">Under Superviser Review </div>
+                            @if ($data->stage >= 2)
+                                <div class="active">Pending Supervisor Review</div>
                             @else
-                                <div class="">Under Superviser Review </div>
+                                <div class="">Pending Supervisor Review</div>
                             @endif
-                            @if ($info->Quality_Approver == 'yes')
                             @if ($data->stage >= 3)
-                                <div class="active">QA Review</div>
+                                <div class="active">Pending Initial QA Review</div>
                             @else
-                                <div class="">QA Review</div>
+                                <div class="">Pending Initial QA Review</div>
                             @endif
-                            @endif
-                            @if ($info->Microbiology == 'yes')
                             @if ($data->stage >= 4)
                                 <div class="active">Pending CFT Review</div>
                             @else
                                 <div class="">Pending CFT Review</div>
                             @endif
-
-
                             @if ($data->stage >= 5)
-                                <div class="active">CFT Review Completed</div>
+                                <div class="active">Pending QA Approve Review</div>
                             @else
-                                <div class="">CFT Review Completed</div>
+                                <div class="">Pending QA Approve Review</div>
                             @endif
+<<<<<<< HEAD
                             @endif
                             @if ($evaluation->training_required == 'yes')
                                 @if ($data->stage >= 6)
@@ -279,28 +326,68 @@
                         {{-- @endif --}}
                             {{-- @endif --}}
                             {{-- @if ($evaluation->training_required == 'yes')
+=======
+>>>>>>> origin/gauravpandit
                             @if ($data->stage >= 6)
-                                <div class="active">Pending Training Completion</div>
+                                <div class="active">Pending Supervisor Final Review</div>
                             @else
-                                <div class="">Pending Training Completion</div>
+                                <div class="">Pending Supervisor Final Review</div>
                             @endif
-                        @endif --}}
-
                             @if ($data->stage >= 7)
-                                <div class="active">Pending Change Implementation</div>
+                                <div class="active">Pending Child closure</div>
                             @else
-                                <div class="">Pending Change Implementation</div>
+                                <div class="">Pending Child closure</div>
                             @endif
                             @if ($data->stage >= 8)
+                                <div class="active">Pending Post Implementation Review</div>
+                            @else
+                                <div class="">Pending Post Implementation Review</div>
+                            @endif
+                            @if ($data->stage >= 9)
+                                <div class="active">Pending QA Head Review</div>
+                            @else
+                                <div class="">Pending QA Head Review</div>
+                            @endif
+                            @if ($data->stage >= 10)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
                             @endif
-
-
+                        </div>
+                    @else
+                        <div class="progress-bars">
+                            @if ($data->stage >= 11)
+                                <div class="active">Pending for Re-open Addendum</div>
+                            @else
+                                <div class="">Pending for Re-open Addendum</div>
+                            @endif
+                            @if ($data->stage >= 12)
+                                <div class="active">Pending Addendum Approved</div>
+                            @else
+                                <div class="">Pending Addendum Approved</div>
+                            @endif
+                            @if ($data->stage >= 13)
+                                <div class="active">Under Addendum Execution</div>
+                            @else
+                                <div class="">Under Addendum Execution</div>
+                            @endif
+                            @if ($data->stage >= 14)
+                                <div class="active">Pending Re-open Child Close</div>
+                            @else
+                                <div class="">Pending Re-open Child Close</div>
+                            @endif
+                            @if ($data->stage >= 15)
+                                <div class="active">Under Addendum Verification</div>
+                            @else
+                                <div class="">Under Addendum Verification</div>
+                            @endif
+                            @if ($data->stage >= 16)
+                                <div class="active">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
                         </div>
                     @endif
-                    {{-- ---------------------------------------------------------------------------------------- --}}
                 </div>
             </div>
 
