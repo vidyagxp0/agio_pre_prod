@@ -29,7 +29,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
-                                <th>email</th>
+                                <th>Email</th>
                                 <th>Department</th>
                                 <th>Role</th>
                                 <th>Actions</th>
