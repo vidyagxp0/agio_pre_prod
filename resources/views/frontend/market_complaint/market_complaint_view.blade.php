@@ -417,9 +417,9 @@
 
             </div>
 
-            <form action="{{ route('actionItem.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('marketcomplaint.marketcomplaintupdate',$data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
+            @method('put')
                 <div id="step-form">
                     @if (!empty($parent_id))
                         <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -630,8 +630,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="product_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="product_details_details" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -643,69 +642,58 @@
                                                         <th>Pack Size</th>
                                                         <th>Dispatch Quantity</th>
                                                         <th>Remarks</th>
-
-
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @foreach ($productDetails as $index => $detail)
-                                                    <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_product_name]" value="{{ $detail['info_product_name'] }}"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_batch_no]" value="{{ $detail['info_batch_no'] }}"></td>
-                                                    <td><input type="date" name="serial_number_gi[0][info_mfg_date]" value="{{ $detail['info_mfg_date'] }}"></td>
-                                                    <td><input type="date" name="serial_number_gi[0][info_expiry_date]" value="{{ $detail['info_expiry_date'] }}"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_batch_size]" value="{{ $detail['info_batch_size'] }}"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_pack_size]" value="{{ $detail['info_pack_size'] }}"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]" value="{{ $detail['info_dispatch_quantity'] }}"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_remarks]" value="{{ $detail['info_remarks'] }}"></td>
+                                                    @if(!empty($productsgi))
+                                                    @foreach ($productsgi->data as  $detail)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value=""></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_product_name]" value="{{ $detail['info_product_name'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_no]" value="{{ $detail['info_batch_no'] }}"></td>
+                                                        <td><input type="date" name="serial_number_gi[0][info_mfg_date]" value="{{ $detail['info_mfg_date'] }}"></td>
+                                                        <td><input type="date" name="serial_number_gi[0][info_expiry_date]" value="{{ $detail['info_expiry_date'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_size]" value="{{ $detail['info_batch_size'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_pack_size]" value="{{ $detail['info_pack_size'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]" value="{{ $detail['info_dispatch_quantity'] }}"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_remarks]" value="{{ $detail['info_remarks'] }}"></td>
+                                                    </tr>
                                                     @endforeach
+                                                @else
+                                                    <tr><td colspan="9">No product details found</td></tr>
+                                                @endif
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <script>
-                                    $(document).ready(function() {
-
-                                        $('#product_details_details').click(function(e) {
-                                            serialNumber = 0;
-                                            function generateTableRow(serialNumber) {
-                                                serialNumber++;
-                                                var users = @json($users); 
-                                                var html =
-                                                '<tr>' +
-                                                    '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" id="info_product_code" name="serial_number_gi[' + serialNumber + ']info_product_code[]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]" value=""></td>'+
-                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_batch_no]" value=""></td>' +
-                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]" value=""></td>' +
-                                                   
-                                                '</tr>';
-                                                for (var i = 0; i < users.length; i++) {
-                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                                }
-                                
-                                                html += '</select></td>' +
-                                
-                                                    '</tr>';
-                                
-                                                return html;
-                                            }
-                                
-                                            var tableBody = $('#Info_Product_Material_details tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
-                                            tableBody.append(newRow);
-                                        });
+                                $(document).ready(function() {
+                                    $('#product_details').click(function(e) {
+                                        e.preventDefault();
+                                        var serialNumber = $('#product_details_details tbody tr').length;
+                                        var newRow = generateTableRow(serialNumber);
+                                        $('#product_details_details tbody').append(newRow);
                                     });
+                                
+                                    function generateTableRow(serialNumber) {
+                                        var html = '<tr>' +
+                                            '<td>' + (serialNumber + 1) + '</td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]" value=""></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]" value=""></td>' +
+                                            '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" value=""></td>' +
+                                            '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" value=""></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]" value=""></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]" value=""></td>' +
+                                            '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]" value=""></td>' +
+                                            '</tr>';
+                                        return html;
+                                    }
+                                });
                                 </script>
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -732,16 +720,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @if(!empty($traceability_gi))
+                                                    @foreach ($traceability_gi->data as $tracebil )
+                                                        
                                                     <td><input disabled type="text" name="serial_number[]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Instrument_Name[]"></td>
-                                                    <td><input type="text" name="Instrument_ID[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-                                                    <td><input type="text" name="Calibration_Parameter[]"></td>
+                                                    <td><input type="text" name="trace_ability[0][product_name_tr]" value="{{ $tracebil['product_name_tr'] }}"></td>
+                                                    <td><input type="text" name="trace_ability[0][batch_no_tr]" value="{{ $tracebil['batch_no_tr'] }}"></td>
+                                                    <td><input type="text" name="trace_ability[0][manufacturing_location_tr]" value="{{ $tracebil['manufacturing_location_tr'] }}"></td>
+                                                    <td><input type="text" name="trace_ability[0][remarks_tr]" value="{{ $tracebil['remarks_tr'] }}"></td>
 
 
 
+                                                    @endforeach
+                                                    @else
+                                                    <tr><td colspan="9">No  found</td></tr>
+                                                @endif
                                                 </tbody>
                                             </table>
                                         </div>
@@ -804,12 +799,21 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                   @if (!@empty($investing_team))
+                                                       @foreach ($investing_team->data as $inves )
+                                                       
+                                                       <td><input disabled type="text" name="serial_number_gi[0]"
+                                                        value="1">
+                                                </td>
+                                                <td><input type="text" name="Investing_team[0][name_inv_tem]" value="{{ $inves['name_inv_tem'] }}"></td>
+                                                <td><input type="text" name="Investing_team[0][department_inv_tem]"> value="{{ $inves['department_inv_tem'] }}"</td>
+                                                <td><input type="text" name="Investing_team[0][remarks_inv_tem]" value="{{ $inves['remarks_inv_tem'] }}"></td>
+
+
+                                                       @endforeach
+                                
+                                                       
+                                                   @endif
                                                 </tbody>
                                             </table>
                                         </div>
@@ -945,17 +949,23 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    @if(!empty($brain_stroming_session))
+                                                    @foreach ($brain_stroming_session->data as  $bra_st_s)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
-                                                    {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="Possiblity[]"></td>
-                                                    <td><input type="text" name="Facts/Controls[]"
-                                                            value="Facts Available"></td>
-                                                    <td><input type="text" name="Probable_Cause[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][possiblity_bssd]" value=""{{ $bra_st_s['possiblity_bssd'] }}></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]" value="{{ $bra_st_s['factscontrols_bssd']}}"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]" value=""{{$bra_st_s['probable_cause_bssd']  }}></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][remarks_bssd]" value=""{{ $bra_st_s['remarks_bssd'] }}></td>
 
 
+                                                    </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr><td colspan="9">No product details found</td></tr>
+                                                @endif
 
                                                 </tbody>
                                             </table>
@@ -1109,14 +1119,18 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
-
+                                                   @if (!empty($team_members))
+                                                       @foreach ($team_members->data as $tem_meb  )
+                                                       <td><input disabled type="text" name="serial_number[0]" value="1">
+                                                </td>
+                                                <td><input type="text" name="Team_Members[0][names_tm]" value="{{ $tem_meb['names_tm'] }}"></td>
+                                                <td><input type="text" name="Team_Members[0][department_tm]" value="{{$tem_meb['department_tm'] }}"></td>
+                                                <td><input type="text" name="Team_Members[0][sign_tm]" value="{{ $tem_meb['sign_tm'] }}"></td>
+                                                <td><input type="date" name="Team_Members[0][date_tm]" value="{{ $tem_meb['date_tm'] }}"></td>
+                                                       @endforeach
+                                                       @else 
+                                                       <tr><td colspan="9">No product details found</td></tr>
+                                                   @endif
 
 
                                                 </tbody>
@@ -1177,15 +1191,16 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
+                                                   @if (!empty($report_approval))
+                                                       @foreach ($report_approval->data as $rep_ap )
+                                                       <td><input disabled type="text" name="serial_number[0]" value="1"></td>
+                                                <td><input type="text" name="Report_Approval[0][names_rrv]" value="{{ $rep_ap['names_rrv'] }}"></td>
+                                                <td><input type="text" name="Report_Approval[0][department_rrv]" value="{{ $rep_ap['department_rrv'] }}"></td>
+                                                <td><input type="text" name="Report_Approval[0][sign_rrv]" value="{{ $rep_ap['sign_rrv'] }}"></td>
+                                                <td><input type="date" name="Report_Approval[0][date_rrv]" value="{{ $rep_ap['date_rrv'] }}"></td>
 
-
+                                                       @endforeach
+                                                   @endif
 
                                                 </tbody>
                                             </table>
@@ -1323,18 +1338,21 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="Product_name[]"></td>
-                                                <td><input type="text" name="Batch_no[]"></td>
-                                                <td><input type="date" name="mfg_date[]"></td>
-                                                <td><input type="date" name="exp_date[]"></td>
-                                                <td><input type="text" name="batch_size[]"></td>
-                                                <td><input type="text" name="pack_profile[]"></td>
-                                                <td><input type="text" name="released_quantity[]"></td>
-                                                <td><input type="text" name="remarks[]"></td>
-
-
+                                               @if(is_array($product_materialDetails) && !empty($product_materialDetails))
+                                                   @foreach ($product_materialDetails as $prod_ca)
+                                                   <td><input disabled type="text" name="Product_MaterialDetails[0]" value="1">
+                                                   </td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][product_name_pmd]" value="{{ $prod_ca['product_name_pmd'] }}"></td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd]" value="{{ $prod_ca['batch_no_pmd'] }}"></td>
+                                                   <td><input type="date" name="Product_MaterialDetails[0][mfg_date_pmd]" value="{{ $prod_ca['mfg_date_pmd'] }}"></td>
+                                                   <td><input type="date" name="Product_MaterialDetails[0][expiry_date_pmd]" value="{{ $prod_ca['expiry_date_pmd'] }}"></td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd]" value="{{ $prod_ca['batch_size_pmd'] }}"></td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd]" value="{{ $prod_ca['pack_profile_pmd'] }}"></td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd]" value="{{ $prod_ca['released_quantity_pmd'] }}"></td>
+                                                   <td><input type="text" name="Product_MaterialDetails[0][remarks_pmd]" value="{{ $prod_ca['remarks_pmd'] }}"></td>
+   
+                                                   @endforeach
+                                               @endif
                                             </tbody>
                                         </table>
                                     </div>
