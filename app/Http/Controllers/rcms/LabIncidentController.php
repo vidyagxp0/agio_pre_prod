@@ -12,6 +12,7 @@ use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Models\lab_incidents_grid;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -36,7 +37,7 @@ class LabIncidentController extends Controller
     }
     public function create(request $request)
     {
-        // return $request;
+        // return dd($request->all());
         if (!$request->short_desc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -51,7 +52,7 @@ class LabIncidentController extends Controller
         $data->intiation_date = $request->intiation_date;
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;
-        $data->Other_Ref= $request->Other_Ref;
+        $data->Other_Ref= $request->Other_Ref;  
         $data->due_date = $request->due_date;
         $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
@@ -81,7 +82,93 @@ class LabIncidentController extends Controller
         $data->due_date_extension= $request->due_date_extension;
         $data->status = 'Opened';
         $data->stage = 1;
+        $data->incident_involved_others_gi =$request->incident_involved_others_gi;
+        $data->description_incidence_gi =$request->description_incidence_gi;
+        $data->stage_stage_gi =$request->stage_stage_gi;
+        $data->incident_stability_cond_gi =$request->incident_stability_cond_gi;
+        $data->incident_interval_others_gi =$request->incident_interval_others_gi;
+        $data->test_gi =$request->test_gi;
+        $data->date_gi =$request->date_gi;
+        $data->incident_date_analysis_gi =$request->incident_date_analysis_gi;
+        $data->incident_specification_no_gi =$request->incident_specification_no_gi;
+        $data->incident_stp_no_gi =$request->incident_stp_no_gi;
+        $data->Incident_name_analyst_no_gi =$request->Incident_name_analyst_no_gi;
+        $data->incident_date_incidence_gi =$request->incident_date_incidence_gi;
+        $data->analyst_sign_date_gi =$request->analyst_sign_date_gi;
+        $data->section_sign_date_gi =$request->section_sign_date_gi;
+        $data->immediate_action_ia =$request->immediate_action_ia;
+        $data->section_date_ia =$request->section_date_ia;
+        $data->details_investigation_ia =$request->details_investigation_ia;
+        $data->proposed_correctivei_ia =$request->proposed_correctivei_ia;
+        $data->repeat_analysis_plan_ia =$request->repeat_analysis_plan_ia;
+        $data->result_of_repeat_analysis_ia =$request->result_of_repeat_analysis_ia;
+        $data->corrective_and_preventive_action_ia =$request->corrective_and_preventive_action_ia;
+        $data->capa_number_im =$request->capa_number_im;
+        $data->investigation_summary_ia =$request->investigation_summary_ia;
+        $data->type_incidence_ia =$request->type_incidence_ia;
+        $data->reasoon_for_extension_e=$request->reasoon_for_extension_e;
+        $data->extension_date_e=$request->extension_date_e;
+        $data->extension_date_initiator=$request->extension_date_initiator;
+        $data->reasoon_for_extension_esc=$request->reasoon_for_extension_esc;
+        $data->extension_date_esc=$request->extension_date_esc;
+        $data->extension_date_idsc=$request->extension_date_idsc;
+        $data->reasoon_for_extension_tc=$request->reasoon_for_extension_tc;
+        $data->extension_date__tc=$request->extension_date__tc;
+        $data->extension_date_idtc=$request->extension_date_idtc;
+        $data->immediate_date_ia =$request->immediate_date_ia;
+        $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
+       
+       
+        if (!empty($request->system_suitable_attachments)) {
+            $files = [];
+            if ($request->hasfile('system_suitable_attachments')) {
+                foreach ($request->file('system_suitable_attachments') as $file) {
+                    $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->system_suitable_attachments = json_encode($files);
+        }
 
+    
+    
+
+        
+
+        if (!empty($request->extension_attachments_e)) {
+            $files = [];
+            if ($request->hasfile('extension_attachments_e')) {
+                foreach ($request->file('extension_attachments_e') as $file) {
+                    $name = $request->name . 'extension_attachments_e' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->extension_attachments_e = json_encode($files);
+        }
+        if (!empty($request->attachments_ia)) {
+            $files = [];
+            if ($request->hasfile('attachments_ia')) {
+                foreach ($request->file('attachments_ia') as $file) {
+                    $name = $request->name . 'attachments_ia' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->attachments_ia = json_encode($files);
+        }
+        if (!empty($request->attachments_gi)) {
+            $files = [];
+            if ($request->hasfile('attachments_gi')) {
+                foreach ($request->file('attachments_gi') as $file) {
+                    $name = $request->name . 'attachments_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->attachments_gi = json_encode($files);
+        }
         if (!empty($request->Initial_Attachment)) {
             $files = [];
             if ($request->hasfile('Initial_Attachment')) {
@@ -138,6 +225,43 @@ class LabIncidentController extends Controller
             $data->QA_Head_Attachment = json_encode($files);
         }
          $data->save();
+
+
+
+
+    
+
+
+
+
+
+
+
+
+            // For "Incident Report"
+            $griddata = $data->id;
+
+            $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+            $incidentReport->labincident_id = $griddata;
+            $incidentReport->identifier = 'Incident Report';
+            $incidentReport->data = $request->investrecord;
+            $incidentReport->save();
+
+
+            
+                // For "Sutability" report
+            $identifier = 'Sutability';
+        
+            $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
+            $suitabilityReport->labincident_id = $griddata;
+            $suitabilityReport->identifier = $identifier;
+            $suitabilityReport->data = $request->investigation;
+            $suitabilityReport->save();
+
+       
+
+
+         //=======================================Grid ==============================================//
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -638,6 +762,77 @@ class LabIncidentController extends Controller
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
 
+        // new added 
+        $data->incident_involved_others_gi =$request->incident_involved_others_gi;
+        $data->description_incidence_gi =$request->description_incidence_gi;
+        $data->stage_stage_gi =$request->stage_stage_gi;
+        $data->incident_stability_cond_gi =$request->incident_stability_cond_gi;
+        $data->incident_interval_others_gi =$request->incident_interval_others_gi;
+        $data->test_gi =$request->test_gi;
+        $data->date_gi =$request->date_gi;
+        $data->incident_date_analysis_gi =$request->incident_date_analysis_gi;
+        $data->incident_specification_no_gi =$request->incident_specification_no_gi;
+        $data->incident_stp_no_gi =$request->incident_stp_no_gi;
+        $data->Incident_name_analyst_no_gi =$request->Incident_name_analyst_no_gi;
+        $data->incident_date_incidence_gi =$request->incident_date_incidence_gi;
+        $data->analyst_sign_date_gi =$request->analyst_sign_date_gi;
+        $data->section_sign_date_gi =$request->section_sign_date_gi;
+        $data->immediate_action_ia =$request->immediate_action_ia;
+        $data->immediate_date_ia =$request->immediate_date_ia;
+        $data->section_date_ia =$request->section_date_ia;
+        $data->details_investigation_ia =$request->details_investigation_ia;
+        $data->proposed_correctivei_ia =$request->proposed_correctivei_ia;
+        $data->repeat_analysis_plan_ia =$request->repeat_analysis_plan_ia;
+        $data->result_of_repeat_analysis_ia =$request->result_of_repeat_analysis_ia;
+        $data->corrective_and_preventive_action_ia =$request->corrective_and_preventive_action_ia;
+        $data->capa_number_im =$request->capa_number_im;
+        $data->investigation_summary_ia =$request->investigation_summary_ia;
+        $data->type_incidence_ia =$request->type_incidence_ia;
+        // extension
+        $data->reasoon_for_extension_e=$request->reasoon_for_extension_e;
+        $data->extension_date_e=$request->extension_date_e;
+        $data->extension_date_initiator=$request->extension_date_initiator;
+        $data->reasoon_for_extension_esc=$request->reasoon_for_extension_esc;
+        $data->extension_date_esc=$request->extension_date_esc;
+        $data->extension_date_idsc=$request->extension_date_idsc;
+        $data->reasoon_for_extension_tc=$request->reasoon_for_extension_tc;
+        $data->extension_date__tc=$request->extension_date__tc;
+        $data->extension_date_idtc=$request->extension_date_idtc;
+        
+
+        if (!empty($request->extension_attachments_e)) {
+            $files = [];
+            if ($request->hasfile('extension_attachments_e')) {
+                foreach ($request->file('extension_attachments_e') as $file) {
+                    $name = $request->name . 'extension_attachments_e' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->extension_attachments_e = json_encode($files);
+        }
+        if (!empty($request->attachments_ia)) {
+            $files = [];
+            if ($request->hasfile('attachments_ia')) {
+                foreach ($request->file('attachments_ia') as $file) {
+                    $name = $request->name . 'attachments_ia' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->attachments_ia = json_encode($files);
+        }
+        if (!empty($request->system_suitable_attachments)) {
+            $files = [];
+            if ($request->hasfile('system_suitable_attachments')) {
+                foreach ($request->file('system_suitable_attachments') as $file) {
+                    $name = $request->name . 'system_suitable_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $data->system_suitable_attachments = json_encode($files);
+        }
 
         if (!empty($request->Initial_Attachment)) {
             $files = [];
@@ -696,6 +891,39 @@ class LabIncidentController extends Controller
         }
 
         $data->update();
+
+
+
+        //=====================================grid update======================================//
+        if (isset($data) && isset($request)) {
+                    // For "Sutability" report
+                    if (isset($data->id) && isset($request->investigation)){
+                    $griddata = $data->id;
+                    $identifier = 'Sutability';
+        
+                    $suitabilityReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => $identifier])->firstOrNew();
+                    $suitabilityReport->labincident_id = $griddata;
+                    $suitabilityReport->identifier = $identifier;
+                    $suitabilityReport->data = $request->investigation;
+                    $suitabilityReport->update();
+                    }else{
+                        throw new Exception('Required data or request object is not set.');
+                    }
+                    
+                    if (isset($data->id) && isset($request->investrecord)) {
+                    // For "Incident Report"
+                    $incidentReport = lab_incidents_grid::where(['labincident_id' => $griddata, 'identifier' => 'incident report'])->firstOrNew();
+                    $incidentReport->labincident_id = $griddata;
+                    $incidentReport->identifier = 'incident report';
+                    $incidentReport->data = $request->investrecord;
+                    $incidentReport->update();
+                    // dd($incidentReport);
+                }
+             } else {
+                    throw new Exception('Required data or request object is not set.');
+                }
+                    
+        //=====================================grid update======================================//
 
         if ($lastDocument->short_desc != $data->short_desc || !empty($request->short_desc_comment)) {
 
@@ -1154,13 +1382,18 @@ class LabIncidentController extends Controller
 
     public function LabIncidentShow($id)
     {
-
-        $data = LabIncident::find($id);
+        // dd($id);
+        $data = LabIncident::where('id', $id)->first();
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        return view('frontend.labIncident.view', compact('data'));
-    }
+        
+        $report = lab_incidents_grid::where('labincident_id', $id)->first();
+        $systemSutData = lab_incidents_grid::where(['labincident_id' => $id,'identifier' => 'Sutability'])->first();
+        // dd( $systemSutData);
+        return view('frontend.labIncident.view', compact('data','report','systemSutData'));
+
+           }
     public function lab_incident_capa_child(Request $request, $id)
     {
         $cft = [];
@@ -1199,7 +1432,7 @@ class LabIncidentController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->status = "Pending Incident Review";
+                $changeControl->status = "Pending Incident Verification";
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -1212,32 +1445,43 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submited';
                 $history->save();
-                $list = Helpers::getHodUserList();
+                
+                try {
+                    $list = Helpers::getHodUserList();
+        
                     foreach ($list as $u) {
-                      
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
-                          
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Submitted By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                    if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+        
+                    // if ($email !== null) {
+                    // try {
+                    //  Mail::send(
+                    //  'mail.view-mail',
+                    //  ['data' => $changeControl],
+                    //  function ($message) use ($email) {
+                    //  $message->to($email)
+                    //  ->subject("Document is Submitted By " . Auth::user()->name);
+                    //  }
+                    //  );
+                    //  } catch (\Exception $e) {
+                    // //  return response()->json(['error' => 'Failed to send Email ' . $e->getMessage()], 500);
+                    //  }
+                    //  }
+                     }
+                        }
+                } catch (\Exception $e) {
+                    // return response()->json(['error' => 'An error Occured: ' . $e->getMessage()], 500);
+                }
+              
 
+                
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Pending Investigation";
+                $changeControl->status = "Pending Preliminary Investigation";
                 $changeControl->incident_review_completed_by = Auth::user()->name;
                 $changeControl->incident_review_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
@@ -1250,7 +1494,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Incident Review completed';
+                $history->stage='Verification Complete';
                 $history->save();
                 $list = Helpers::getQCHeadUserList();
                     foreach ($list as $u) {
@@ -1276,7 +1520,7 @@ class LabIncidentController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Pending Activity Completion";
+                $changeControl->status = "Evaluation of Finding";
                 $changeControl->investigation_completed_by = Auth::user()->name;
                 $changeControl->investigation_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
@@ -1289,32 +1533,53 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Investigation Completed';
+                $history->stage='Preliminary Investigation';
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
                         if($u->q_m_s_divisions_id == $changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                            //  if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Investigation is Completed By ".Auth::user()->name);
-                                }
-                              );
-                            }
+                            //   Mail::send(
+                            //       'mail.view-mail',
+                            //        ['data' => $changeControl],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Investigation is Completed By ".Auth::user()->name);
+                            //     }
+                            //   );
+                            // }
                      } 
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
+                if ($changeControl->stage == 4) {
+                    $changeControl->stage = "5";
+                    $changeControl->status = "Pending Solution & Sample Test";
+                    $changeControl->all_activities_completed_by = Auth::user()->name;
+                    $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
+                    $history = new LabIncidentAuditTrial();
+                    $history->LabIncident_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = $lastDocument->all_activities_completed_by;
+                    $history->current = $changeControl->all_activities_completed_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage='Assignable Cause Identification';
+                    $history->save();
+                    $changeControl->update();
+                    toastr()->success('Document Sent');
+                    return back();
+                }
             if ($changeControl->stage == 4) {
-                $changeControl->stage = "5";
-                $changeControl->status = "Pending CAPA";
+                $changeControl->stage = "6";
+                $changeControl->status = "Pending Extended Investigation";
                 $changeControl->all_activities_completed_by = Auth::user()->name;
                 $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
@@ -1327,7 +1592,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='All Activities Completed';
+                $history->stage='No Assignable Cause Identification';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1335,7 +1600,7 @@ class LabIncidentController extends Controller
             }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
-                $changeControl->status = "Pending QA Review";
+                $changeControl->status = "CAPA Initiation & Approval";
                 $changeControl->review_completed_by = Auth::user()->name;
                 $changeControl->review_completed_on = Carbon::now()->format('d-M-Y'); 
                 $history = new LabIncidentAuditTrial();
@@ -1348,23 +1613,23 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Review Completed';
+                $history->stage='Solution Validation';
                 $history->save();  
                 $list = Helpers::getQAUserList();
                 foreach ($list as $u) {
                     if($u->q_m_s_divisions_id ==$changeControl->division_id){
                         $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
+                        //  if ($email !== null) {
                       
-                          Mail::send(
-                              'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Submitted By ".Auth::user()->name);
-                            }
-                          );
-                        }
+                        //   Mail::send(
+                        //       'mail.view-mail',
+                        //        ['data' => $changeControl],
+                        //     function ($message) use ($email) {
+                        //         $message->to($email)
+                        //             ->subject("Document is Submitted By ".Auth::user()->name);
+                        //     }
+                        //   );
+                        // }
                  } 
               }          
                 $changeControl->update();
@@ -1373,7 +1638,7 @@ class LabIncidentController extends Controller
             }
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "7";
-                $changeControl->status = "Pending QA Head Approval";
+                $changeControl->status = "Final QA/Head Assessment";
                 $changeControl->qA_review_completed_by = Auth::user()->name;
                 $changeControl->qA_review_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
@@ -1386,7 +1651,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='QA Review Completed';
+                $history->stage='All Action Approved';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1395,6 +1660,43 @@ class LabIncidentController extends Controller
 
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
+                $changeControl->status = "Pending Approval";
+                $changeControl->qA_head_approval_completed_by = Auth::user()->name;
+                $changeControl->qA_head_approval_completed_on = Carbon::now()->format('d-M-Y');
+                $history = new LabIncidentAuditTrial();
+                $history->LabIncident_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->qA_review_completed_by;
+                $history->current = $changeControl->qA_review_completed_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Assessment Completed';
+                $history->save();
+                $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id ==$changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                            //  if ($email !== null) {
+                            //     Mail::send(
+                            //       'mail.view-mail',
+                            //        ['data' => $changeControl],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is send By ".Auth::user()->name);
+                            //     }
+                            //   );
+                            // }
+                     } 
+                  }
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 8) {
+                $changeControl->stage = "9";
                 $changeControl->status = "Closed - Done";
                 $changeControl->qA_head_approval_completed_by = Auth::user()->name;
                 $changeControl->qA_head_approval_completed_on = Carbon::now()->format('d-M-Y');
@@ -1408,30 +1710,35 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='QA Head Approval Completed';
+                $history->stage='Closure Completed';
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
                         if($u->q_m_s_divisions_id ==$changeControl->division_id){
                             $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                            //  if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is send By ".Auth::user()->name);
-                                }
-                              );
-                            }
+                            //   Mail::send(
+                            //       'mail.view-mail',
+                            //        ['data' => $changeControl],
+                            //     function ($message) use ($email) {
+                            //         $message->to($email)
+                            //             ->subject("Document is send By ".Auth::user()->name);
+                            //     }
+                            //   );
+                            // }
                      } 
                   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-        } else {
+
+
+
+
+        }
+         else {
             toastr()->error('E-signature Not match');
             return back();
         }
@@ -1453,28 +1760,42 @@ class LabIncidentController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
-                $changeControl->status = "Pending Incident Review";
+                $changeControl->status = "Pending Incident Verification";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "3";
+                $changeControl->status = "Pending  Preliminary Investigation";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 5) {
-                $changeControl->stage = "3";
-                $changeControl->status = "Pending Investigation";
+                $changeControl->stage = "4";
+                $changeControl->status = "Evaluation of Finding";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "5";
-                $changeControl->status = "Pending CAPA";
+                $changeControl->status = "Pending Solution & Sample Test";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
-                $changeControl->status = "Pending QA Review";
+                $changeControl->status = "CAPA Initiation & Approval";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 8) {
+                $changeControl->stage = "7";
+                $changeControl->status = "Final QA/Head Assessment";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1491,15 +1812,13 @@ class LabIncidentController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
 
-            if ($changeControl->stage == 2) {
-                $changeControl->stage = "0";
-                $changeControl->status = "Closed - Cancelled";
-                $changeControl->cancelled_by = Auth::user()->name;
-                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            $changeControl->stage = "8";
+            $changeControl->status = "Closed - Cancelled";
+            $changeControl->cancelled_by = Auth::user()->name;
+            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+            $changeControl->update();
+            toastr()->success('Document Sent');
+            return back();
         } else {
             toastr()->error('E-signature Not match');
             return back();
