@@ -823,7 +823,7 @@
                                             record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">{{ $data->review_of_batch_manufacturing_record_BMR_gi }}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1045,7 +1045,7 @@
                                         <label for="Impact Assessment">Impact Assessment :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">{{ $data->impact_assessment_hodsr}}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1056,7 +1056,7 @@
                                         <label for="Corrective Action">Corrective Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">{{ $data->corrective_action_hodsr}}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1067,7 +1067,7 @@
                                         <label for="Preventive Action">Preventive Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">{{ $data->preventive_action_hodsr}}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1077,7 +1077,7 @@
                                         <label for="Summary and Conclusion">Summary and Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">{{ $data->summary_and_conclusion_hodsr}}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1243,7 +1243,7 @@
                                         <label for="Comments">Comments(if Any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                        <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">{{ $data->comments_if_any_hodsr}}
                                     </textarea>
                                     </div>
                                 </div>
@@ -1288,7 +1288,7 @@
                                     <label for="Manufacturer name & Address">Manufacturer name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">{{ $data->probable_root_causes_complaint_hodsr}}
+                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">{{ $data->manufacturer_name_address_ca}}
                                     </textarea>
                                 </div>
                             </div>
@@ -1379,9 +1379,10 @@
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
                                     <select name="complaint_sample_required_ca" onchange="">
                                         <option value="">-- select --</option>
-                                        <option value="">Yes</option>
-                                        <option value="">No</option>
-                                        <option value="">NA</option>
+                                        <option value="yes" {{ $data->complaint_sample_required_ca == 'yes' ? 'selected' : '' }}>Yes</option>
+                                        <option value="no" {{ $data->complaint_sample_required_ca == 'no' ? 'selected' : '' }}>No</option>
+                                        <option value="na" {{ $data->complaint_sample_required_ca == 'na' ? 'selected' : '' }}>NA</option>
+        
                                     </select>
                                 </div>
                             </div>
@@ -1390,7 +1391,7 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Status">Complaint Sample Status</label>
-                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation">
+                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation" value="{{ $data->complaint_sample_status_ca}}">
                                 </div>
                             </div>
 
@@ -1399,7 +1400,7 @@
                                     <label for="Brief Description of complaint">Brief Description of complaint:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">
+                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">{{ $data->brief_description_of_complaint_ca }}
                                 </textarea>
                                 </div>
                             </div>
@@ -1409,7 +1410,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">
+                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">{{ $data->batch_record_review_observation_ca }}
                                 </textarea>
                                 </div>
                             </div>
@@ -1419,7 +1420,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">
+                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">{{ $data->analytical_data_review_observation_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1429,7 +1430,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">
+                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">{{ $data->retention_sample_review_observation_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1438,7 +1439,7 @@
                                     <label for="Stablity study data review">Stablity study data review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">
+                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">{{ $data->stability_study_data_review_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1448,7 +1449,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">
+                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">{{ $data->qms_events_ifany_review_observation_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1458,7 +1459,7 @@
                                         for product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">
+                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">{{ $data->repeated_complaints_queries_for_product_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1468,7 +1469,7 @@
                                         sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
+                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">{{ $data->interpretation_on_complaint_sample_ifrecieved_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1477,7 +1478,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">
+                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">{{ $data->comments_ifany_ca}}
                                 </textarea>
                                 </div>
                             </div>
@@ -1649,7 +1650,7 @@
                             <label for="Closure Comment">Closure Comment</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                     require completion</small></div>
-                            <textarea class="summernote" name="closure_comment_c" id="summernote-1">
+                            <textarea class="summernote" name="closure_comment_c" id="summernote-1">{{ $data->closure_comment_c}}
                                     </textarea>
                         </div>
                     </div>

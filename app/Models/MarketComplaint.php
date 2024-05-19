@@ -104,7 +104,7 @@ class MarketComplaint extends Model
         // // 'corrective_action_hodsr' => 'array',
         // // 'preventive_action_hodsr' => 'array',
         // // 'summary_and_conclusion_hodsr' => 'array',
-        // 'initial_attachment_hodsr' => 'array',
+      //   'initial_attachment_hodsr' => 'array',
         // // 'comments_if_any_hodsr' => 'array',
         
         // // 'manufacturer_name_address_ca' => 'array',
