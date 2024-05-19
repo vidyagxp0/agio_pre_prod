@@ -566,24 +566,24 @@
                                 </div>
 
 
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
-                                        <div>
-                                            <small class="text-primary">
-                                                Please Attach all relevant or supporting documents
-                                            </small>
-                                        </div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id=""></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="initial_attachment_gi[]" oninput=""
-                                                    multiple>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">Initial Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="initial_attachment_gi"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="initial_attachment_gi" name="initial_attachment_gi[]" oninput="addMultipleFiles(this,'initial_attachment_gi')"
+                                                        multiple>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -621,7 +621,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Product Details
+                                            Product Details   
                                             <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
@@ -648,19 +648,17 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Product_Name[]"></td>
-                                                    <td><input type="text" name="Batch_No[]"></td>
-                                                    <td><input type="date" name="Mfg_Date[]"></td>
-                                                    <td><input type="date" name="Exp_Date[]"></td>
-                                                    <td><input type="text" name="Batch_Size[]"></td>
-                                                    <td><input type="text" name="Pack_Size[]"></td>
-                                                    <td><input type="text" name="Dispatch_Quantity[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-
-
+                                                    @foreach ($productDetails as $index => $detail)
+                                                    <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_product_name]" value="{{ $detail['info_product_name'] }}"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_batch_no]" value="{{ $detail['info_batch_no'] }}"></td>
+                                                    <td><input type="date" name="serial_number_gi[0][info_mfg_date]" value="{{ $detail['info_mfg_date'] }}"></td>
+                                                    <td><input type="date" name="serial_number_gi[0][info_expiry_date]" value="{{ $detail['info_expiry_date'] }}"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_batch_size]" value="{{ $detail['info_batch_size'] }}"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_pack_size]" value="{{ $detail['info_pack_size'] }}"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]" value="{{ $detail['info_dispatch_quantity'] }}"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_remarks]" value="{{ $detail['info_remarks'] }}"></td>
+                                                    @endforeach
                                                 </tbody>
                                             </table>
                                         </div>
@@ -669,29 +667,39 @@
 
                                 <script>
                                     $(document).ready(function() {
-                                        $('#product_details').click(function(e) {
+
+                                        $('#product_details_details').click(function(e) {
+                                            serialNumber = 0;
                                             function generateTableRow(serialNumber) {
-
+                                                serialNumber++;
+                                                var users = @json($users); 
                                                 var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
                                                     '"></td>' +
-                                                    '<td><input type="text" name="Product_Name[]"></td>' +
-                                                    '<td><input type="text" name="Batch_No[]"></td>' +
-                                                    '<td><input type="date" name="Mfg_Date[]"></td>' +
-                                                    '<td><input type="date" name="Exp_Date[]"></td>' +
-                                                    '<td><input type="text" name="Batch_Size[]"></td>' +
-                                                    '<td><input type="text" name="Pack_Size[]"></td>' +
-                                                    '<td><input type="text" name="Dispatch_Quantity[]"></td>' +
-                                                    '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                                                    '<td><input type="text" id="info_product_code" name="serial_number_gi[' + serialNumber + ']info_product_code[]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]" value=""></td>'+
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_batch_no]" value=""></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]" value=""></td>' +
+                                                   
+                                                '</tr>';
+                                                for (var i = 0; i < users.length; i++) {
+                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                }
+                                
+                                                html += '</select></td>' +
+                                
                                                     '</tr>';
-
+                                
                                                 return html;
                                             }
-
-                                            var tableBody = $('#product_details_details tbody');
+                                
+                                            var tableBody = $('#Info_Product_Material_details tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount + 1);
                                             tableBody.append(newRow);

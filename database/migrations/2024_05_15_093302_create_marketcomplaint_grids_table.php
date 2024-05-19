@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('marketcomplaint_grids', function (Blueprint $table) {
             $table->id();
-            $table->string('identifers')->unique();
+            $table->integer('mc_id');
+            $table->string('identifers')->nullable();
             $table->text('data');          
           
             $table->timestamps();

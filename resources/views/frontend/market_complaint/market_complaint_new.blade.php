@@ -10,6 +10,9 @@
         }
     </style>
 
+@php
+        $users = DB::table('users')->get();
+    @endphp
     <div class="form-field-head">
         {{-- <div class="pr-id">
             New Child
@@ -138,6 +141,16 @@
             });
         });
     </script>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -354,10 +367,10 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id=""></div>
+                                            <div class="file-attachment-list" id="initial_attachment_gi"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="initial_attachment_gi[]" oninput=""
+                                                <input type="file" id="initial_attachment_gi" name="initial_attachment_gi[]" oninput="addMultipleFiles(this,'initial_attachment_gi')"
                                                     multiple>
                                             </div>
                                         </div>
@@ -435,18 +448,17 @@
 
                                                     </tr>
                                                 </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="info_product_name[]"></td>
-                                                    <td><input type="text" name="info_batch_no[]"></td>
-                                                    <td><input type="date" name="info_mfg_date[]"></td>
-                                                    <td><input type="date" name="info_expiry_date[]"></td>
-                                                    <td><input type="text" name="info_batch_size[]"></td>
-                                                    <td><input type="text" name="info_pack_size[]"></td>
-                                                    <td><input type="text" name="info_dispatch_quantity[]"></td>
-                                                    <td><input type="text" name="info_remarks[]"></td>
+                                                <tbody>                                   
+                                                                                         {{-- serial_number          --}}
+                                                    <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
+                                                    <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td>
+                                                    <td><input type="date" name="serial_number_gi[0][info_expiry_date]"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
+                                                    <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
 
 
                                                 </tbody>
@@ -454,38 +466,48 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <script>
                                     $(document).ready(function() {
-                                        $('#product_details').click(function(e) {
+
+                                        $('#product_details_details').click(function(e) {
+                                            serialNumber = 0;
                                             function generateTableRow(serialNumber) {
-
+                                                serialNumber++;
+                                                var users = @json($users); 
                                                 var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
                                                     '"></td>' +
-                                                    '<td><input type="text" name="Product_Name[]"></td>' +
-                                                    '<td><input type="text" name="Batch_No[]"></td>' +
-                                                    '<td><input type="date" name="Mfg_Date[]"></td>' +
-                                                    '<td><input type="date" name="Exp_Date[]"></td>' +
-                                                    '<td><input type="text" name="Batch_Size[]"></td>' +
-                                                    '<td><input type="text" name="Pack_Size[]"></td>' +
-                                                    '<td><input type="text" name="Dispatch_Quantity[]"></td>' +
-                                                    '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                                                    '<td><input type="text" id="info_product_code" name="serial_number_gi[' + serialNumber + ']info_product_code[]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]" value=""></td>'+
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_batch_no]" value=""></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]" value=""></td>' +
+                                                   
+                                                '</tr>';
+                                                for (var i = 0; i < users.length; i++) {
+                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                }
+                                
+                                                html += '</select></td>' +
+                                
                                                     '</tr>';
-
+                                
                                                 return html;
                                             }
-
-                                            var tableBody = $('#product_details_details tbody');
+                                
+                                            var tableBody = $('#Info_Product_Material_details tbody');
                                             var rowCount = tableBody.children('tr').length;
                                             var newRow = generateTableRow(rowCount + 1);
                                             tableBody.append(newRow);
                                         });
                                     });
                                 </script>
+                                                                {{-- {{ ---end s code }} --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
@@ -512,13 +534,11 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="product_name_tr[]"></td>
-                                                    <td><input type="text" name="batch_no_tr[]"></td>
-                                                    <td><input type="text" name="manufacturing_location_tr[]"></td>
-                                                    <td><input type="text" name="remarks_tr[]"></td>
+                                                    <td><input disabled type="text" name="serial_number_gi[0]" value="1"> </td>
+                                                    <td><input type="text" name="trace_ability[0][product_name_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][batch_no_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][manufacturing_location_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][remarks_tr]"></td>
 
 
 
@@ -527,6 +547,43 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        let tracebilityIndex = 0;
+                                        $('#traceblity ').click(function(e) {
+
+                                            function generateTableRow(serialNumber) {
+                                                tracebilityIndex++;
+                                                var users = @json($users); 
+                                                var html =
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="Info_Traceblity[' + tracebilityIndex + '][serial]" value="' + tracebilityIndex +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="serial_number_tr_gi[' + tracebilityIndex + '][product_name_tr]" value=""></td>'+
+                                                    '<td><input type="date" name="serial_number_tr_gi[' + tracebilityIndex + '][batch_no_tr]" value=""></td>' +
+                                                    '<td><input type="date" name="serial_number_tr_gi[' + tracebilityIndex + '][manufacturing_location_tr]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_tr_gi[' + tracebilityIndex + '][remarks_tr]" value=""></td>' +
+                                                                                                     
+                                                '</tr>';
+                                                for (var i = 0; i < users.length; i++) {
+                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                }
+                                
+                                                html += '</select></td>' +
+                                
+                                                    '</tr>';
+                                
+                                                return html;
+                                            }
+                                
+                                            var tableBody = $('#Info_Traceblity tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
                                 <div class="col-lg-12">
@@ -584,17 +641,53 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="serial_number_gi[0]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="name_inv_tem[]"></td>
-                                                    <td><input type="text" name="department_inv_tem[]"></td>
-                                                    <td><input type="text" name="remarks_inv_tem[]"></td>
+                                                    <td><input type="text" name="Investing_team[0][name_inv_tem]"></td>
+                                                    <td><input type="text" name="Investing_team[0][department_inv_tem]"></td>
+                                                    <td><input type="text" name="Investing_team[0][remarks_inv_tem]"></td>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).ready(function() {
+                                        let Investing_team = 0;
+                                        $('#Investing_team ').click(function(e) {
+
+                                            function generateTableRow(serialNumber) {
+                                                Investing_team++;
+                                                var users = @json($users); 
+                                                var html =
+                                                '<tr>' +
+                                                    '<td><input disabled type="text" name="Info_Traceblity[' + Investing_team + '][serial]" value="' + Investing_team +
+                                                    '"></td>' +
+                                                    '<td><input type="text" name="serial_number_tr_gi[' + Investing_team + '][product_name_tr]" value=""></td>'+
+                                                    '<td><input type="date" name="serial_number_tr_gi[' + Investing_team + '][batch_no_tr]" value=""></td>' +
+                                                    '<td><input type="date" name="serial_number_tr_gi[' + Investing_team + '][manufacturing_location_tr]" value=""></td>' +
+                                                    '<td><input type="text" name="serial_number_tr_gi[' + Investing_team + '][remarks_tr]" value=""></td>' +
+                                                                                                     
+                                                '</tr>';
+                                                for (var i = 0; i < users.length; i++) {
+                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                                }
+                                
+                                                html += '</select></td>' +
+                                
+                                                    '</tr>';
+                                
+                                            return html;
+                                            }
+                                
+                                            var tableBody = $('#Info_Traceblity tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -703,7 +796,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Brain stroming Session/Discussion with Concered Person
-                                            <button type="button" id="brain-stroming">+</button>
+                                            <button type="button" id="brain_stroming_details" onclick="('brain_stroming_details')">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -711,7 +804,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="brain-stroming-details"
+                                            <table class="table table-bordered" id="brain_stroming_details"
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
@@ -725,15 +818,15 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
                                                     {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="possiblity_bssd[]"></td>
-                                                    <td><input type="text" name="factscontrols_bssd[]"
-                                                            value="Facts Available"></td>
-                                                    <td><input type="text" name="probable_cause_bssd[]"></td>
-                                                    <td><input type="text" name="remarks_bssd[]"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][possiblity_bssd]"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][remarks_bssd]"></td>
 
 
 
@@ -747,16 +840,18 @@
 
                                 <script>
                                     $(document).ready(function() {
-                                        $('#brain-stroming').click(function(e) {
+                                       let brain_stroming_details = 0;
+                                        $('#brain_stroming_details').click(function(e) {
                                             function generateTableRow(serialNumber) {
+                                                brain_stroming_details++;
                                                 var html =
                                                     '<tr>' +
-                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                                    '<td><input disabled type="text" name="brain_stroming_details[ '+ brain_stroming_details +']serial[]" value="' + brain_stroming_details +
                                                     '"></td>' +
-                                                    '<td><input type="text" name="Possiblity[]"></td>' +
-                                                    '<td><input type="text" name="Facts/Controls[]" value="Facts Available"></td>' +
-                                                    '<td><input type="text" name="Probable_Cause[]"></td>' +
-                                                    '<td><input type="text" name="Remarks[]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Possiblity]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Facts/Controls]" value="Facts Available"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Probable_Cause]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Remarks]"></td>' +
                                                     '</tr>';
                                                 return html;
                                             }
@@ -803,7 +898,7 @@
                                         <label for="Root Cause Analysis">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="root_cause_analysis_hodsr[]" id="summernote-1">
+                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -867,7 +962,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Team Members
-                                            <button type="button" id="team_members">+</button>
+                                            <button type="button" id="team_members_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -889,13 +984,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="names_tm[]"></td>
-                                                    <td><input type="text" name="department_tm[]"></td>
-                                                    <td><input type="text" name="sign_tm[]"></td>
-                                                    <td><input type="date" name="date_tm[]"></td>
+                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
+                                                    <td><input type="date" name="Team_Members[0][date_tm]"></td>
 
 
 
@@ -907,7 +1002,7 @@
 
                                 <script>
                                     $(document).ready(function() {
-                                        $('#team_members').click(function(e) {
+                                        $('#team_members_details').click(function(e) {
                                             function generateTableRow(serialNumber) {
 
                                                 var html =
@@ -937,7 +1032,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Approval
-                                            <button type="button" id="report_approval">+</button>
+                                            <button type="button" id="Report_Approval">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -945,7 +1040,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="report_approval_details"
+                                            <table class="table table-bordered" id="Report_Approval"
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
@@ -959,13 +1054,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="names_rrv[]"></td>
-                                                    <td><input type="text" name="department_rrv[]"></td>
-                                                    <td><input type="text" name="sign_rrv[]"></td>
-                                                    <td><input type="date" name="date_rrv[]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][names_rrv]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][department_rrv]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][sign_rrv]"></td>
+                                                    <td><input type="date" name="Report_Approval[0][date_rrv]"></td>
 
 
 
@@ -976,32 +1071,6 @@
                                 </div>
 
 
-                                <script>
-                                    $(document).ready(function() {
-                                        $('#report_approval').click(function(e) {
-                                            function generateTableRow(serialNumber) {
-
-                                                var html =
-                                                    '<tr>' +
-                                                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="Names[]"></td>' +
-                                                    '<td><input type="text" name="Department[]"></td>' +
-                                                    '<td><input type="text" name="Sign[]"></td>' +
-                                                    '<td><input type="date" name="Date[]"></td>' +
-                                                    '</tr>';
-
-                                                return html;
-                                            }
-
-                                            var tableBody = $('#report_approval_details tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
@@ -1011,10 +1080,10 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id=""></div>
+                                            <div class="file-attachment-list" id="initial_attachment_hodsr"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="initial_attachment_hodsr[]" oninput=""
+                                                <input type="file" id="initial_attachment_hodsr" name="initial_attachment_hodsr[]" oninput="addMultipleFiles(this,'initial_attachment_hodsr')"
                                                     multiple>
                                             </div>
                                         </div>
@@ -1105,16 +1174,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="text" name="Product_MaterialDetails[0]" value="1">
                                                 </td>
-                                                <td><input type="text" name="product_name_pmd[]"></td>
-                                                <td><input type="text" name="batch_no_pmd[]"></td>
-                                                <td><input type="date" name="mfg_date_pmd[]"></td>
-                                                <td><input type="date" name="expiry_date_pmd[]"></td>
-                                                <td><input type="text" name="batch_size_pmd[]"></td>
-                                                <td><input type="text" name="pack_profile_pmd[]"></td>
-                                                <td><input type="text" name="released_quantity_pmd[]"></td>
-                                                <td><input type="text" name="remarks_pmd[]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][product_name_pmd]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd]"></td>
+                                                <td><input type="date" name="Product_MaterialDetails[0][mfg_date_pmd]"></td>
+                                                <td><input type="date" name="Product_MaterialDetails[0][expiry_date_pmd]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd]"></td>
+                                                <td><input type="text" name="Product_MaterialDetails[0][remarks_pmd][]"></td>
 
 
                                             </tbody>
@@ -1283,7 +1352,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="flex text-center">1</td>
+                                                    <td class="flex text-center" name="">1</td>
                                                     <td>Complaint sample Required</td>
                                                     <td>
 
@@ -1395,10 +1464,10 @@
                                     </small>
                                 </div>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_ca"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_ca[]" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_ca" name="initial_attachment_ca[]" oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1445,10 +1514,10 @@
                                 </small>
                             </div>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id=""></div>
+                                <div class="file-attachment-list" id="initial_attachment_c"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="initial_attachment_c[]" oninput="" multiple>
+                                    <input type="file" id="initial_attachment_c" name="initial_attachment_c[]" oninput="addMultipleFiles(this,'initial_attachment_c')" multiple>
                                 </div>
                             </div>
                         </div>

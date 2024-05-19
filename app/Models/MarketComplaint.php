@@ -144,13 +144,13 @@ class MarketComplaint extends Model
      'review_of_past_history_of_product_gi' => 'array',
         
      'conclusion_hodsr' => 'array',
-     'root_cause_analysis_hodsr' => 'array',
+   // 'root_cause_analysis_hodsr' => 'array',
      'probable_root_causes_complaint_hodsr' => 'array',
      'impact_assessment_hodsr' => 'array',
      'corrective_action_hodsr' => 'array',
         'preventive_action_hodsr' => 'array',
      'summary_and_conclusion_hodsr' => 'array',
-        'initial_attachment_hodsr' => 'array',
+       'initial_attachment_hodsr' => 'array',
      'comments_if_any_hodsr' => 'array',
         
      'manufacturer_name_address_ca' => 'array',
@@ -175,5 +175,10 @@ class MarketComplaint extends Model
 
         
     ];
+
+
+    public function marketcomplaintrecord(){
+      return $this->hasMany(MarketComplaintGrids::class,'');
+    }
 
 }

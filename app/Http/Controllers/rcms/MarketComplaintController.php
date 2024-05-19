@@ -36,7 +36,7 @@ $marketComplaint = new MarketComplaint();
         $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
         $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
         $marketComplaint->description_gi = $request->description_gi;
-        $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
+        // $marketComplaint->initial_attachment_gi = $request->initial_attachment_gi;
         $marketComplaint->complainant_gi = $request->complainant_gi;
         $marketComplaint->complaint_reported_on_gi = $request->complaint_reported_on_gi;
         $marketComplaint->details_of_nature_market_complaint_gi = $request->details_of_nature_market_complaint_gi;
@@ -59,7 +59,7 @@ $marketComplaint = new MarketComplaint();
         $marketComplaint->corrective_action_hodsr = $request->corrective_action_hodsr;
         $marketComplaint->preventive_action_hodsr = $request->preventive_action_hodsr;
         $marketComplaint->summary_and_conclusion_hodsr = $request->summary_and_conclusion_hodsr;
-        $marketComplaint->initial_attachment_hodsr = $request->initial_attachment_hodsr;
+        // $marketComplaint->initial_attachment_hodsr = $request->initial_attachment_hodsr;
         $marketComplaint->comments_if_any_hodsr = $request->comments_if_any_hodsr;
 
         $marketComplaint->manufacturer_name_address_ca = $request->manufacturer_name_address_ca;
@@ -74,20 +74,23 @@ $marketComplaint = new MarketComplaint();
         $marketComplaint->repeated_complaints_queries_for_product_ca = $request->repeated_complaints_queries_for_product_ca;
         $marketComplaint->interpretation_on_complaint_sample_ifrecieved_ca = $request->interpretation_on_complaint_sample_ifrecieved_ca;
         $marketComplaint->comments_ifany_ca = $request->comments_ifany_ca;
-        $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
+        // $marketComplaint->initial_attachment_ca = $request->initial_attachment_ca;
 
         // Closure section
         $marketComplaint->closure_comment_c = $request->closure_comment_c;
-        $marketComplaint->initial_attachment_c = $request->initial_attachment_c;
+        // $marketComplaint->initial_attachment_c = $request->initial_attachment_c;
 
+
+
+        
         $marketComplaint->form_type="Market Complaint";
-    //    dd($marketComplaint);
+//    dd($marketComplaint);
         
 //  dd($marketComplaint);
-        $marketComplaint->save();
+        
 
 
-//dd($marketComplaint);
+// $marketComplaint->save();
 
 
         // ====================================intance end
@@ -106,361 +109,142 @@ $marketComplaint = new MarketComplaint();
             // {{----.File attachemenet   }}
 
 
-            $request->validate([
-                'initial_attachment_gi.*' => 'file|mimes:jpg,jpeg,png,pdf,doc,docx|max:2048',
-            ]);
-        
-            $filePaths = [];
-        
-            if ($request->hasFile('initial_attachment_gi')) {
-                foreach ($request->file('initial_attachment_gi') as $file) {
-                    $fileName = time().'_'.$file->getClientOriginalName();
-                    $filePath = $file->storeAs('uploads', $fileName, 'public');
-                    $filePaths[] = $fileName;
+            if (!empty($request->initial_attachment_gi)) {
+                $files = [];
+                if ($request->hasfile('initial_attachment_gi')) {
+                    foreach ($request->file('initial_attachment_gi') as $file) {
+                        $name = $request->name . 'initial_attachment_gi' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
                 }
+                $marketComplaint->initial_attachment_gi = json_encode($files);
             }
-        
-            $marketComplaint = new MarketComplaint();
-            $marketComplaint->initial_attachment_gi = json_encode($filePaths);
-            // Save other fields as needed
-            $marketComplaint->save();
-        
 
 
 
-
-        if (!empty ($request->initial_attachment_gi)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_gi')) {
-                foreach ($request->file('initial_attachment_gi') as $file) {
-                    
-                    $name =  'initial_attachment_gi' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+            if (!empty($request->initial_attachment_hodsr)) {
+                $files = [];
+                if ($request->hasfile('initial_attachment_hodsr')) {
+                    foreach ($request->file('initial_attachment_hodsr') as $file) {
+                        $name = $request->name . 'initial_attachment_hodsr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
                 }
+                $marketComplaint->initial_attachment_hodsr = json_encode($files);
             }
-            $input['initial_attachment_gi'] = json_encode($files);
-        }
 
-        if (!empty ($request->initial_attachment_hodsr)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_hodsr')) {
-                foreach ($request->file('initial_attachment_hodsr') as $file) {
-                    
-                    $name =  'initial_attachment_hodsr' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+
+            if (!empty($request->initial_attachment_ca)) {
+                $files = [];
+                if ($request->hasfile('initial_attachment_ca')) {
+                    foreach ($request->file('initial_attachment_ca') as $file) {
+                        $name = $request->name . 'initial_attachment_ca' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
                 }
+                $marketComplaint->initial_attachment_ca = json_encode($files);
             }
-            $input['initial_attachment_hodsr'] = json_encode($files);
-        }
-
-        if (!empty ($request->initial_attachment_ca)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_ca')) {
-                foreach ($request->file('initial_attachment_ca') as $file) {
-                    
-                    $name =  'initial_attachment_ca' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
+            if (!empty($request->initial_attachment_c)) {
+                $files = [];
+                if ($request->hasfile('initial_attachment_c')) {
+                    foreach ($request->file('initial_attachment_c') as $file) {
+                        $name = $request->name . 'initial_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
                 }
+                $marketComplaint->initial_attachment_c = json_encode($files);
             }
-            $input['initial_attachment_ca'] = json_encode($files);
-        }
+            // dd($marketComplaint);
 
-
-        if (!empty ($request->initial_attachment_c)) {
-            $files = [];
-            if ($request->hasfile('initial_attachment_c')) {
-                foreach ($request->file('initial_attachment_c') as $file) {
-                    
-                    $name =  'initial_attachment_c' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $input['initial_attachment_c'] = json_encode($files);
-        }
-
-        
+         $marketComplaint->save();
+            // dd($marketComplaint);
             // {{-- --produts grid gi  --}}
 
 
 
-         $request->validate([
-            // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-            'info_product_name' => 'required',
-            'info_batch_no' => 'required',
-            'info_mfg_date' => 'required',
-            'info_expiry_date' => 'required',
-            'info_batch_size' => 'required',
-            'info_pack_size' => 'required',
-            'info_dispatch_quantity' => 'required',
-            'info_remarks' => 'required',
+
+
+
+
+            // For "Product Details"
+            $griddata = $marketComplaint->id;
+
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'ProductDetails';
+            $marketrproducts->data = $request->serial_number_gi;
+            $marketrproducts->save();
+// dd($marketrproducts->data);
+//Traceability
+            // $griddata = $marketComplaint->id;
+
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Traceability';
+            $marketrproducts->data = $request->trace_ability;
+            $marketrproducts->save();
+
+                // {{-- Investing_team --}}
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Investing_team';
+            $marketrproducts->data = $request->Investing_team;
+            $marketrproducts->save();
+                // {{-- Brain stroming Session --}}
+
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Brain stroming Session'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Brain stroming Session';
+            $marketrproducts->data = $request->brain_stroming_details;
+            $marketrproducts->save();
+                // {{ Team Members }}
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team Members'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Team Members';
+            $marketrproducts->data = $request->Team_Members ;
+            $marketrproducts->save();
+                // {{ Report_Approval }}
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Report_Approval';
+            $marketrproducts->data = $request->Report_Approval ;
+            $marketrproducts->save();
+
+            // {{ Product_MaterialDetails }}
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Product_MaterialDetails';
+            $marketrproducts->data = $request->Product_MaterialDetails ;
+            $marketrproducts->save();
+
+
+                // {{  g}}
+            $griddata = $marketComplaint->id;
+
+            // Create MarketComplaintGrids record for Proposal to accomplish investigation
+            $investigationData = [
+                'Complaint sample Required' => ['csr1' => $request->csr1, 'csr2' => $request->csr2],
+                'Additional info. From Complainant' => ['afc1' => $request->afc1, 'afc2' => $request->afc2],
+                'Analysis of complaint Sample' => ['acs1' => $request->acs1, 'acs2' => $request->acs2],
+                'QRM Approach' => ['qrm1' => $request->qrm1, 'qrm2' => $request->qrm2],
+                'Others' => ['oth1' => $request->oth1, 'oth2' => $request->oth2]
+            ];
+        
+            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Proposal_to_accomplish_investigation'])->firstOrNew();
+            $marketrproducts->mc_id = $griddata;
+            $marketrproducts->identifier = 'Proposal_to_accomplish_investigation';
+            $marketrproducts->data = json_encode($investigationData); // Encode data to JSON
+            $marketrproducts->save();
+        
            
-
-        ]);
-        $concatenatedData = '';
-
-        // Adding null checks and fixing potential typos in array keys
-        $concatenatedData .= !empty($request->input('info_product_name')) ? $request->input('info_product_name')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_batch_no')) ? $request->input('info_batch_no')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_mfg_date')) ? $request->input('info_mfg_date')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-        $concatenatedData .= !empty($request->input('info_expiry_date')) ? $request->input('info_expiry_date')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_batch_size')) ? $request->input('info_batch_size')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_pack_size')) ? $request->input('info_pack_size')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_dispatch_quantity')) ? $request->input('info_dispatch_quantity')[0] . ' ' : '';
-        $concatenatedData .= !empty($request->input('info_remarks')) ? $request->input('info_remarks')[0] . ' ' : '';
-        
-        $concatenatedData = trim($concatenatedData);
-        $identifers = 'Product Details'. uniqid();
-        
-        $report1 = new MarketComplaintGrids();
-        $report1->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-        $report1->data = $concatenatedData;
-        $report1->save();
-
-            // {{-- ---Traceability grid gi  --}}
-
-
-
-            $request->validate([
-                // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                'product_name_tr' => 'required',
-                'batch_no_tr' => 'required',
-                'manufacturing_location_tr' => 'required',
-                'remarks_tr' => 'required',
-                
-    
-            ]);
-
-            $concatenatedData = '';
-
-            // Adding null checks and fixing potential typos in array keys
-            $concatenatedData .= !empty($request->input('product_name_tr')) ? $request->input('product_name_tr')[0] . ' ' : '';
-            $concatenatedData .= !empty($request->input('batch_no_tr')) ? $request->input('batch_no_tr')[0] . ' ' : '';
-            $concatenatedData .= !empty($request->input('manufacturing_location_tr')) ? $request->input('manufacturing_location_tr')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-            $concatenatedData .= !empty($request->input('remarks_tr')) ? $request->input('remarks_tr')[0] . ' ' : '';
-            
-            $concatenatedData = trim($concatenatedData);
-            $identifers = 'Traceability '. uniqid();
-            
-            $report2 = new MarketComplaintGrids();
-            $report2->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-            $report2->data = $concatenatedData;
-    
-        $report2->save();
-
-                // {{-- --Investingation Team gi- --}}
-
-                $request->validate([
-                    // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                    'name_inv_tem' => 'required',
-                    'department_inv_tem' => 'required',
-                    'remarks_inv_tem' => 'required',
-                    
-        
-                ]);
-    
-                $concatenatedData = '';
-    
-                // Adding null checks and fixing potential typos in array keys
-                $concatenatedData .= !empty($request->input('name_inv_tem')) ? $request->input('name_inv_tem')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('department_inv_tem')) ? $request->input('department_inv_tem')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('remarks_inv_tem')) ? $request->input('remarks_inv_tem')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                
-                $concatenatedData = trim($concatenatedData);
-                $identifers = 'Investingation Team '. uniqid();
-                
-                $report_itgi = new MarketComplaintGrids();
-                $report_itgi->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                $report_itgi->data = $concatenatedData;
-        
-            $report_itgi->save();
-
-
-
-
-                        //  {{-- --Brain stroming Session/Discussion with Concered Person gi --}}
-
-
-
-                        $request->validate([
-                            // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                            'possiblity_bssd' => 'required',
-                            'factscontrols_bssd' => 'required',
-                            'probable_cause_bssd' => 'required',
-                            'remarks_bssd' => 'required',
-                            
-                
-                        ]);
-            
-                        $concatenatedData = '';
-            
-                        // Adding null checks and fixing potential typos in array keys
-                        $concatenatedData .= !empty($request->input('possiblity_bssd')) ? $request->input('possiblity_bssd')[0] . ' ' : '';
-                        $concatenatedData .= !empty($request->input('factscontrols_bssd')) ? $request->input('factscontrols_bssd')[0] . ' ' : '';
-                        $concatenatedData .= !empty($request->input('probable_cause_bssd')) ? $request->input('probable_cause_bssd')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                        $concatenatedData .= !empty($request->input('remarks_bssd')) ? $request->input('remarks_bssd')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                        
-                        $concatenatedData = trim($concatenatedData);    
-                        $identifers = 'Brain stroming Session/Discussion with Concered Person'. uniqid();
-                        
-                        $report_bssd = new MarketComplaintGrids();
-                        $report_bssd->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                        $report_bssd->data = $concatenatedData;
-                
-                    $report_bssd->save();
         
 
-        
-                // {{-- -HOD   Team Members  --}}
-
-
-                $request->validate([
-                    // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                    'names_tm' => 'required',
-                    'department_tm' => 'required',
-                    'sign_tm' => 'required',
-                    'date_tm' => 'required',
-                    
-        
-                ]);
-    
-                $concatenatedData = '';
-    
-                // Adding null checks and fixing potential typos in array keys
-                $concatenatedData .= !empty($request->input('names_tm')) ? $request->input('names_tm')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('department_tm')) ? $request->input('department_tm')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('sign_tm')) ? $request->input('sign_tm')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                $concatenatedData .= !empty($request->input('date_tm')) ? $request->input('date_tm')[0] . ' ' : '';
-                
-                $concatenatedData = trim($concatenatedData);
-                $identifers = 'Team Members  '. uniqid();
-                
-                $report3 = new MarketComplaintGrids();
-                $report3->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                $report3->data = $concatenatedData;
-        
-                 $report3->save();
-
-
-
-                   // {{-- -HOD   Report Approval --}}
-
-
-                $request->validate([
-                    // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                    'names_rrv' => 'required',
-                    'department_rrv' => 'required',
-                    'sign_rrv' => 'required',
-                    'date_rrv' => 'required',
-                    
-        
-                ]);
-    
-                $concatenatedData = '';
-    
-                // Adding null checks and fixing potential typos in array keys
-                $concatenatedData .= !empty($request->input('names_rrv')) ? $request->input('names_rrv')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('department_rrv')) ? $request->input('department_rrv')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('sign_rrv')) ? $request->input('sign_rrv')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                $concatenatedData .= !empty($request->input('date_rrv')) ? $request->input('date_rrv')[0] . ' ' : '';
-                
-                $concatenatedData = trim($concatenatedData);
-                $identifers = 'Report Approval  '. uniqid();
-                
-                $report4 = new MarketComplaintGrids();
-                $report4->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                $report4->data = $concatenatedData;
-        
-                 $report4->save();
-            
-
-                  // {{-- Complaint Acknowledgement    Product/Material Details--}}
-
-
-                  $request->validate([
-                    // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                    'product_name_pmd' => 'required',
-                    'batch_no_pmd' => 'required',
-                    'mfg_date_pmd' => 'required',
-                    'expiry_date_pmd' => 'required',
-                    'batch_size_pmd' => 'required',
-                    'pack_profile_pmd' => 'required',
-                    'released_quantity_pmd' => 'required',
-                    'remarks_pmd' => 'required',
-
-                    
-        
-                ]);
-    
-                $concatenatedData = '';
-    
-                // Adding null checks and fixing potential typos in array keys
-                $concatenatedData .= !empty($request->input('product_name_pmd')) ? $request->input('product_name_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('batch_no_pmd')) ? $request->input('batch_no_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('mfg_date_pmd')) ? $request->input('mfg_date_pmd')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                $concatenatedData .= !empty($request->input('expiry_date_pmd')) ? $request->input('expiry_date_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('batch_size_pmd')) ? $request->input('batch_size_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('pack_profile_pmd')) ? $request->input('pack_profile_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('released_quantity_pmd')) ? $request->input('released_quantity_pmd')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('remarks_pmd')) ? $request->input('remarks_pmd')[0] . ' ' : '';
-                
-                $concatenatedData = trim($concatenatedData);
-                $identifers = 'Report Approval  '. uniqid();
-                
-                $report4 = new MarketComplaintGrids();
-                $report4->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                $report4->data = $concatenatedData;
-        
-                 $report4->save();
-
-
-                //  {{-- -Proposal to accomplish investigation  complete ack--}}
-
-              $request->validate([
-                    // 'investigation_report_gi' => 'required|string|unique:incident_investigation_report,investigation_report_gi',
-                    'csr1' => 'required',
-                    'csr2' => 'required',
-                    'afc1' => 'required',
-                    'acs1' => 'required',
-                    'acs2' => 'required',
-                    'qrm1' => 'required',
-                    'qrm2' => 'required',
-                    'oth1' => 'required',
-                    'oth2' => 'required',
-
-                    
-        
-                ]);
-    
-                $concatenatedData = '';
-     
-                // Adding null checks and fixing potential typos in array keys
-                $concatenatedData .= !empty($request->input('csr1')) ? $request->input('csr1')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('csr2')) ? $request->input('csr2')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('afc1')) ? $request->input('afc1')[0] . ' ' : ''; // Assuming 'info_mfg_date' is the correct input name
-                $concatenatedData .= !empty($request->input('acs1')) ? $request->input('acs1')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('acs2')) ? $request->input('acs2')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('qrm1')) ? $request->input('qrm1')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('qrm2')) ? $request->input('qrm2')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('oth1')) ? $request->input('oth1')[0] . ' ' : '';
-                $concatenatedData .= !empty($request->input('oth2')) ? $request->input('oth2')[0] . ' ' : '';
-                
-                $concatenatedData = trim($concatenatedData);
-                $identifers = 'Report Approval  '. uniqid();
-                
-                $report4 = new MarketComplaintGrids();
-                $report4->identifers = $identifers; // Ensure this is 'identifiers' if that is the correct column name
-                $report4->data = $concatenatedData;
-        
-                 $report4->save();
-
-
-
-
-
+return redirect()->route('marketcomplaint.index')->with('success', 'Market Complaint created successfully.');    
+               
     }
 
 
