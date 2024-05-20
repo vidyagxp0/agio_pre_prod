@@ -37,10 +37,10 @@ Route::group(['prefix' => 'rcms'], function () {
         function () {
             Route::resource('CC', CCController::class);
 
-            Route::post('send-initiator/{id}', [DeviationController::class, 'sendToInitiator'])->name('send-initiator');
-            Route::post('send-pending-supervisor/{id}', [DeviationController::class, 'sendToPendinSupervisor'])->name('send-pending-supervisor');
-            Route::post('send-pending-initialQA/{id}', [DeviationController::class, 'sendToPendingInitialQA'])->name('send-pending-initialQA');
-            Route::post('send-QaApproval/{id}', [DeviationController::class, 'sendToQaApprover'])->name('send-QaApproval');
+            Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
+            Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);
+            Route::post('send-initialQA/{id}', [CCController::class, 'sendToInitialQA']);
+            Route::post('send-cft-from-QA/{id}', [CCController::class, 'sendToCft']);
 
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
@@ -182,6 +182,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('deviation/stage/{id}', [DeviationController::class, 'deviation_send_stage'])->name('deviation_send_stage');
             Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
             Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
+            Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
 
             Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
             Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');

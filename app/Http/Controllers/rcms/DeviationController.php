@@ -4601,4 +4601,44 @@ class DeviationController extends Controller
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
         return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
     }
+
+    public static function singleReport($id)
+    {
+        $data = Deviation::find($id);
+        $data1 =  DeviationCft::where('deviation_id', $id)->first();
+        if (!empty ($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $grid_data = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Deviation")->first();
+            $grid_data1 = DeviationGrid::where('deviation_grid_id', $id)->where('type', "Document")->first();
+
+            $investigation_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'investication'])->first();
+            $root_cause_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'rootCause'])->first();
+            $why_data = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'why'])->first();
+
+            $capaExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Capa"])->first();
+            $qrmExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "QRM"])->first();
+            $investigationExtension = LaunchExtension::where(['deviation_id' => $id, "extension_identifier" => "Investigation"])->first();
+
+            $grid_data_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'failure_mode_qrms'])->first();
+            $grid_data_matrix_qrms = DeviationGridQrms::where(['deviation_id' => $id, 'identifier' => 'matrix_qrms'])->first();
+
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.forms.deviation.SingleReportdeviation', compact('data','grid_data_qrms','grid_data_matrix_qrms','capaExtension','qrmExtension','investigationExtension','root_cause_data','why_data','investigation_data','grid_data','grid_data1', 'data1'))
+                ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Deviation' . $id . '.pdf');
+        }
+    }
 }

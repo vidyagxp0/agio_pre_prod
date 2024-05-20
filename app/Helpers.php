@@ -312,6 +312,64 @@ class Helpers
         
         return $TrainerUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'6'])->get();
     }
+
+    static function getFullDepartmentName($code)
+    {
+        $full_department_name = '';
+
+        switch ($code) {
+            case 'CQA':
+                $full_department_name = "Corporate Quality Assurance";
+                break;
+            case 'QAB':
+                $full_department_name = "Quality Assurance Biopharma";
+                break;
+            case 'CQC':
+                $full_department_name = "Central Quality Control";
+                break;
+            case 'MANU':
+                $full_department_name = "Manufacturing";
+                break;
+            case 'PSG':
+                $full_department_name = "Plasma Sourcing Group";
+                break;
+            case 'CS':
+                $full_department_name = "Central Stores";
+                break;
+            case 'ITG':
+                $full_department_name = "Information Technology Group";
+                break;
+            case 'MM':
+                $full_department_name = "Molecular Medicine";
+                break;
+            case 'CL':
+                $full_department_name = "Central Laboratory";
+                break;
+            case 'TT':
+                $full_department_name = "Tech team";
+                break;
+            case 'ACC':
+                $full_department_name = "Accounting";
+                break;
+            case 'LOG':
+                $full_department_name = "Logistics";
+                break;
+            case 'SM':
+                $full_department_name = "Senior Management";
+                break;
+            case 'BA':
+                $full_department_name = "Business Administration";
+                break;
+            
+            default:
+                break;
+        }
+
+        return $full_department_name;
+
+    }
+
+    
     static public function getDueDate($date, $addDays = false, $format = null)
     {
         try {

@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class ChangeControlCftResponse extends Model
 {
     use HasFactory;
-    use SoftDelete;
+    use SoftDeletes;
     protected $table = 'change_control_cft_responses';
 }

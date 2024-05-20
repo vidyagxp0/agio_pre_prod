@@ -306,11 +306,11 @@
                             </div>
                             <div class="group-input">
                                 <label for="Reviewer Completed By">Reviewer Completed By</label>
-                                <input disabled type="text" name="reviewer_completed_by" id="reviewer_completed_by" value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
+                                <input disabled type="text" class="form-control" name="reviewer_completed_by" id="reviewer_completed_by" value="{{ $auditCollect ? $auditCollect->reviewer_comment_by : '' }}">
                             </div>
                             <div class="group-input">
                                 <label for="Reviewer Completed on">Reviewer Completed On</label>
-                                <input disabled type="text" name="reviewer_completed_on" id="reviewer_completed_on" value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
+                                <input disabled type="text" class="form-control" name="reviewer_completed_on" id="reviewer_completed_on" value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                             </div>
                         </div>
                         <div class="modal-footer">

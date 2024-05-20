@@ -1533,14 +1533,14 @@ class CCController extends Controller
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
 
-        $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
+        // $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
 
-        $impactassement->cc_id = $openState->id;
+        // $impactassement->cc_id = $openState->id;
 
-        if (!$impactassement) {
-            return response()->json(['error' => 'Record not found'], 404);
-        }
-        $result = $impactassement->update($request->all());
+        // if (!$impactassement) {
+        //     return response()->json(['error' => 'Record not found'], 404);
+        // }
+        // $result = $impactassement->update($request->all());
 
         // if ($result)
         // {
@@ -1630,7 +1630,7 @@ class CCController extends Controller
 
         $openState->due_date_extension = $request->due_date_extension;
         $openState->update();
-        $impactassement->update();
+        // $impactassement->update();
 
         if (!empty($request->in_attachment)) {
             $files = [];
@@ -2958,7 +2958,7 @@ class CCController extends Controller
             $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
-                    $changeControl->status = "Pending Supervisor Review";
+                    $changeControl->status = "HOD Review";
                     $history = new RcmDocHistory;
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3006,13 +3006,13 @@ class CCController extends Controller
                     $history->status = $changeControl->status;
                     $history->save();
                     // Helpers::hodMail($changeControl);
-                    toastr()->success('Sent to Pending Supervisor Review');
+                    toastr()->success('Sent to HOD Review');
                     return back();
 
             }
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
-                    $changeControl->status = "Pending Initial QA Review";
+                    $changeControl->status = "QA Initial Review";
                     $history = new RcmDocHistory;
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3023,7 +3023,7 @@ class CCController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Supervisor Review Complete';
+                    $history->stage = 'HOD Review Complete';
                     $history->save();
                     //  $list = Helpers::getHodUserList();
                     //     foreach ($list as $u) {
@@ -3060,12 +3060,12 @@ class CCController extends Controller
                     $history->status = $changeControl->status;
                     $history->save();
                     // Helpers::hodMail($changeControl);
-                    toastr()->success('Sent to Pending Initial QA Review');
+                    toastr()->success('Sent to QA Initial Review');
                     return back();
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Pending CFT Review";
+                $changeControl->status = "Pending RA Review";
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3076,7 +3076,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Initial Review Complete';
+                $history->stage = 'RA Review Required';
                 $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3113,12 +3113,12 @@ class CCController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending CFT Review');
+                toastr()->success('Sent to Pending RA Review');
                 return back();
             }
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "5";
-                $changeControl->status = "Pending QA Approve Review";
+                $changeControl->status = "CFT Review";
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3129,7 +3129,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Review Complete';
+                $history->stage = 'RA Review Complete';
                 $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3166,12 +3166,12 @@ class CCController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
-                toastr()->success('Pending QA Approve Review');
+                toastr()->success('Pending CFT Review');
                 return back();
             }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
-                $changeControl->status = "Pending Supervisor Final Review";
+                $changeControl->status = "QA Final Review";
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3182,7 +3182,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'QA Approver Review Complete';
+                $history->stage = 'CFT Review Complete';
                 $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3219,12 +3219,12 @@ class CCController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending Supervisor Final Review');
+                toastr()->success('Sent to QA Final Review');
                 return back();
             } 
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "7";
-                $changeControl->status = "Pending Child closure";
+                $changeControl->status = "QA Head/Manager Designee Approval";
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3235,7 +3235,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Supervisor Final Review Complete';
+                $history->stage = 'QA Final Review Complete';
                 $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3272,12 +3272,12 @@ class CCController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending Child closure');
+                toastr()->success('Sent to QA Head/Manager Designee Approval');
                 return back();
             }
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
-                $changeControl->status = "Pending Post Implementation Review";
+                $changeControl->status = "Closed Done";
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3288,7 +3288,7 @@ class CCController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'All Child Closed';
+                $history->stage = 'Approved';
                 $history->save();
                 //  $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -3325,434 +3325,9 @@ class CCController extends Controller
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending Post Implementation Review');
+                toastr()->success('Sent Closed Done');
                 return back();
             }
-            if ($changeControl->stage == 8) {
-                $changeControl->stage = "9";
-                $changeControl->status = "Pending QA Head Review";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Post Implementation Review Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending QA Head Review');
-                return back();
-            }
-            if ($changeControl->stage == 9) {
-                $changeControl->stage = "10";
-                $changeControl->status = "Closed - Done";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'QA Head Review Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Closed - Done');
-                return back();
-            }
-            if ($changeControl->stage == 10) {
-                $changeControl->stage = "11";
-                $changeControl->status = "Pending for Re-open Addendum";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Re-open';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending for Re-open Addendum');
-                return back();
-            }
-            if ($changeControl->stage == 11) {
-                $changeControl->stage = "12";
-                $changeControl->status = "Pending Addendum Approved";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Re-open Addendum Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending Addendum Approved');
-                return back();
-            }
-            if ($changeControl->stage == 12) {
-                $changeControl->stage = "13";
-                $changeControl->status = "Under Addendum Execution";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Addendum Approved Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Under Addendum Execution');
-                return back();
-            }
-            if ($changeControl->stage == 13) {
-                $changeControl->stage = "14";
-                $changeControl->status = "Pending Re-open Child Close";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Addendum Execution Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Sent to Pending Re-open Child Close');
-                return back();
-            }
-            if ($changeControl->stage == 14) {
-                $changeControl->stage = "15";
-                $changeControl->status = "Under Addendum Verification";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'All Re-open Child Closed';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Under Addendum Verification');
-                return back();
-            }
-            if ($changeControl->stage == 15) {
-                $changeControl->stage = "16";
-                $changeControl->status = "Closed - Done";
-                $history = new RcmDocHistory;
-                $history->cc_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = Auth::user()->name;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = 'Supervisor Final Review Complete';
-                $history->save();
-                //  $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                
-                $history = new CCStageHistory();
-                $history->type = "Activity-log";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // Helpers::hodMail($changeControl);
-                toastr()->success('Closed - Done');
-                return back();
-            }
-
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3831,7 +3406,7 @@ class CCController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
-                $changeControl->status = "Pending Supervisor Review";
+                $changeControl->status = "HOD Review";
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3856,14 +3431,14 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Supervisor Review";
+                $history->status = "HOD Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Pending Initial QA Review";
+                $changeControl->status = "QA Initial Review";
             //     $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -3888,14 +3463,14 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Initial QA Review";
+                $history->status = "QA Initial Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "4";
-                $changeControl->status = "Pending CFT Review";
+                $changeControl->status = "Pending RA Review";
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3903,13 +3478,13 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending CFT Review";
+                $history->status = "Pending RA Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }if ($changeControl->stage == 6) {
                 $changeControl->stage = "5";
-                $changeControl->status = "Pending QA Approve Review";
+                $changeControl->status = "CFT Review";
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3917,14 +3492,14 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending QA Approve Review";
+                $history->status = "CFT Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
-                $changeControl->status = "Pending Supervisor Final Review";
+                $changeControl->status = "QA Final Review";
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3932,14 +3507,14 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Supervisor Final Review";
+                $history->status = "QA Final Review";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 8) {
                 $changeControl->stage = "7";
-                $changeControl->status = "Pending Child closure";
+                $changeControl->status = "QA Head/Manager Designee Approval";
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3947,127 +3522,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Child closure";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 9) {
-                $changeControl->stage = "8";
-                $changeControl->status = "Pending Post Implementation Review";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Post Implementation Review";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 10) {
-                $changeControl->stage = "9";
-                $changeControl->status = "Pending QA Head Review";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Pending QA Head Review";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 11) {
-                $changeControl->stage = "10";
-                $changeControl->status = "Closed - Done";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Closed - Done";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 12) {
-                $changeControl->stage = "11";
-                $changeControl->status = "Pending for Re-open Addendum";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Pending for Re-open Addendum";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 13) {
-                $changeControl->stage = "12";
-                $changeControl->status = "Pending Addendum Approved";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Addendum Approved";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 14) {
-                $changeControl->stage = "13";
-                $changeControl->status = "Under Addendum Execution";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Under Addendum Execution";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 15) {
-                $changeControl->stage = "14";
-                $changeControl->status = "Pending Re-open Child Close";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Pending Re-open Child Close";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
-            if ($changeControl->stage == 16) {
-                $changeControl->stage = "15";
-                $changeControl->status = "Under Addendum Verification";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "Under Addendum Verification";
+                $history->status = "QA Head/Manager Designee Approval";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
@@ -4105,14 +3560,15 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
         $history->stage = 'Send to Opened State';
+        // dd($history);
         $history->save();
         $changeControl->update();
-        $history = new DeviationHistory();
+        $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $deviation->stage;
+        $history->stage_id = $changeControl->stage;
         $history->status = "Send to Opened State";
         $history->save();
         // foreach ($list as $u) {
@@ -4145,7 +3601,7 @@ class CCController extends Controller
         }
     }
 
-    public function sendToPendinSupervisor(Request $request, $id)
+    public function sendToHod(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
@@ -4158,7 +3614,7 @@ class CCController extends Controller
 
 
         $changeControl->stage = "2";
-        $changeControl->status = "Pending Supervisor Review";
+        $changeControl->status = "HOD Review";
         $changeControl->qa_more_info_required_by = Auth::user()->name;
         $changeControl->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $history = new RcmDocHistory();
@@ -4171,16 +3627,16 @@ class CCController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to Pending Supervisor Review';
+        $history->stage = 'Send HOD Review';
         $history->save();
         $changeControl->update();
-        $history = new DeviationHistory();
+        $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $deviation->stage;
-        $history->status = "Send to Pending Supervisor Review";
+        $history->stage_id = $changeControl->stage;
+        $history->status = "Send HOD Review";
         $history->save();
         // foreach ($list as $u) {
         //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4212,7 +3668,7 @@ class CCController extends Controller
         }
     }
 
-    public function sendToPendingInitialQA(Request $request, $id)
+    public function sendToInitialQA(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
@@ -4225,7 +3681,7 @@ class CCController extends Controller
 
 
         $changeControl->stage = "3";
-        $changeControl->status = "Pending Initial QA Review";
+        $changeControl->status = "QA Initial Review";
         $changeControl->qa_more_info_required_by = Auth::user()->name;
         $changeControl->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $history = new RcmDocHistory();
@@ -4238,16 +3694,16 @@ class CCController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to Pending Initial QA Review';
+        $history->stage = 'Send to QA Initial Review';
         $history->save();
         $changeControl->update();
-        $history = new DeviationHistory();
+        $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $deviation->stage;
-        $history->status = "Send to Pending Initial QA Review";
+        $history->stage_id = $changeControl->stage;
+        $history->status = "Sent to QA Initial Review";
         $history->save();
         // foreach ($list as $u) {
         //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4280,7 +3736,7 @@ class CCController extends Controller
     }
 
 
-    public function sendToQaApprover(Request $request, $id)
+    public function sendToCft(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
@@ -4293,7 +3749,7 @@ class CCController extends Controller
 
 
         $changeControl->stage = "5";
-        $changeControl->status = "Pending QA Approve Review";
+        $changeControl->status = "CFT Review";
         $changeControl->qa_more_info_required_by = Auth::user()->name;
         $changeControl->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $history = new RcmDocHistory();
@@ -4306,16 +3762,16 @@ class CCController extends Controller
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $lastDocument->status;
-        $history->stage = 'Send to Pending QA Approve Review';
+        $history->stage = 'Send to CFT Review';
         $history->save();
         $changeControl->update();
-        $history = new DeviationHistory();
+        $history = new RcmDocHistory();
         $history->type = "CC";
         $history->doc_id = $id;
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
-        $history->stage_id = $deviation->stage;
-        $history->status = "Send to Pending QA Approve Review";
+        $history->stage_id = $changeControl->stage;
+        $history->status = "Send to CFT Review";
         $history->save();
         // foreach ($list as $u) {
         //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
@@ -4355,8 +3811,8 @@ class CCController extends Controller
             $lastDocument = CC::find($id);
             $openState = CC::find($id);
 
-            $changeControl->stage = "7";
-            $changeControl->status = "Pending Change Implementation";
+            $changeControl->stage = "6";
+            $changeControl->status = "QA Final Review";
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Activity Log';
@@ -4367,7 +3823,7 @@ class CCController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->stage = 'CFT/SME/QA Review Not required';
+            $history->stage = 'CFT Review Not required';
             $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
@@ -4662,6 +4118,7 @@ class CCController extends Controller
     public function single_pdf($id)
     {
         $data = CC::find($id);
+        $cftData =  CcCft::where('cc_id', $id)->first();
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
 
@@ -4681,6 +4138,7 @@ class CCController extends Controller
             $pdf = PDF::loadview('frontend.change-control.change_control_single_pdf', compact(
                 'data',
                 'docdetail',
+                'cftData',
                 'review',
                 'evaluation',
                 'info',
