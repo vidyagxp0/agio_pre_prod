@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Models\Labincident_Second;
 use Illuminate\Http\Request;
 use App\Models\Capa;
 use Illuminate\Support\Facades\DB;
@@ -13,6 +14,7 @@ use App\Models\LabIncidentAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\User;
 use App\Models\lab_incidents_grid;
+// use App\Models\Labincident_Second;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -116,10 +118,32 @@ class LabIncidentController extends Controller
         $data->extension_date__tc=$request->extension_date__tc;
         $data->extension_date_idtc=$request->extension_date_idtc;
         $data->immediate_date_ia =$request->immediate_date_ia;
-        $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
+        // $data->assign_to_qc_reviewer = $request->assign_to_qc_reviewer;
+        $labnew = new Labincident_Second();
+        $labnew->involved_ssfi =$request->involved_ssfi;
+        $labnew->stage_stage_ssfi = $request->stage_stage_ssfi;
+        $labnew->Incident_stability_cond_ssfi   = $request->Incident_stability_cond_ssfi;
+        $labnew->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
+        $labnew->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        $labnew->Incident_specification_ssfi = $request->Incident_specification_ssfi;
+        $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+        $labnew->Incident_stp_ssfi = $request->Incident_stp_ssfi;
+        $labnew->description_incidence_ssfi = $request->description_incidence_ssfi;
+        $labnew->Detail_investigation_ssfi = $request->Detail_investigation_ssfi;
+        $labnew->proposed_corrective_ssfi = $request->proposed_corrective_ssfi;
+        $labnew->root_cause_ssfi = $request->root_cause_ssfi;
+        $labnew->incident_summary_ssfi = $request->incident_summary_ssfi;
+        // $data->system_suitable_attachments = $request->system_suitable_attachments;
+        $labnew->closure_incident_c = $request->closure_incident_c;
+        $labnew->affected_document_closure = $request->affected_document_closure;
+        $labnew->qc_hear_remark_c = $request->qc_hear_remark_c;
+        $labnew->qa_hear_remark_c = $request->qa_hear_remark_c;
+        $labnew->test_ssfi = $request->test_ssfi;
+        // $data->closure_attachment_c = $request->closure_attachment_c;
+
        
-       
-        if (!empty($request->system_suitable_attachments)) {
+        
+       if (!empty($request->system_suitable_attachments)) {
             $files = [];
             if ($request->hasfile('system_suitable_attachments')) {
                 foreach ($request->file('system_suitable_attachments') as $file) {
@@ -128,11 +152,23 @@ class LabIncidentController extends Controller
                     $files[] = $name;
                 }
             }
-            $data->system_suitable_attachments = json_encode($files);
+            $labnew->system_suitable_attachments = json_encode($files);
         }
 
-    
-    
+        if (!empty($request->closure_attachment_c)) {
+            $files = [];
+            if ($request->hasfile('closure_attachment_c')) {
+                foreach ($request->file('closure_attachment_c') as $file) {
+                    $name = $request->name . 'closure_attachment_c' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $labnew->closure_attachment_c = json_encode($files);
+        }
+        $labnew->save();
+        
+
 
         
 
@@ -891,6 +927,33 @@ class LabIncidentController extends Controller
         }
 
         $data->update();
+        
+
+
+
+        //====================================================suitability/closure====================================================================================================//
+        $labnew = Labincident_Second::find($id);
+        $labnew->involved_ssfi =$request->involved_ssfi;
+        $labnew->stage_stage_ssfi = $request->stage_stage_ssfi;
+        $labnew->Incident_stability_cond_ssfi   = $request->Incident_stability_cond_ssfi;
+        $labnew->Incident_interval_ssfi  = $request->Incident_interval_ssfi;
+        $labnew->Incident_date_analysis_ssfi = $request->Incident_date_analysis_ssfi;
+        $labnew->Incident_specification_ssfi = $request->Incident_specification_ssfi;
+        $labnew->Incident_date_incidence_ssfi = $request->Incident_date_incidence_ssfi;
+        $labnew->Incident_stp_ssfi = $request->Incident_stp_ssfi;
+        $labnew->description_incidence_ssfi = $request->description_incidence_ssfi;
+        $labnew->Detail_investigation_ssfi = $request->Detail_investigation_ssfi;
+        $labnew->proposed_corrective_ssfi = $request->proposed_corrective_ssfi;
+        $labnew->root_cause_ssfi = $request->root_cause_ssfi;
+        $labnew->incident_summary_ssfi = $request->incident_summary_ssfi;
+        // $data->system_suitable_attachments = $request->system_suitable_attachments;
+        $labnew->closure_incident_c = $request->closure_incident_c;
+        $labnew->affected_document_closure = $request->affected_document_closure;
+        $labnew->qc_hear_remark_c = $request->qc_hear_remark_c;
+        $labnew->qa_hear_remark_c = $request->qa_hear_remark_c;
+        $labnew->test_ssfi = $request->test_ssfi;
+        
+        //====================================================suitability/closure====================================================================================================//
 
 
 
@@ -1391,7 +1454,9 @@ class LabIncidentController extends Controller
         $report = lab_incidents_grid::where('labincident_id', $id)->first();
         $systemSutData = lab_incidents_grid::where(['labincident_id' => $id,'identifier' => 'Sutability'])->first();
         // dd( $systemSutData);
-        return view('frontend.labIncident.view', compact('data','report','systemSutData'));
+
+        $labnew = Labincident_Second::find($id);
+        return view('frontend.labIncident.view', compact('data','report','systemSutData','labnew'));
 
            }
     public function lab_incident_capa_child(Request $request, $id)
@@ -1420,6 +1485,41 @@ class LabIncidentController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+    }
+    public function LabIncidentStateTwo(Request $request,$id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $labstate = LabIncident::find($id);
+            $lastDocument =  LabIncident::find($id);
+
+
+           if( $labstate->stage == 4){
+            $labstate->stage = "6";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+            $labstate->status = "Pending Extended Investigation";
+            
+            $labstate->update();
+
+            return redirect()->back();
+           }
+        //  if( $labstate->stage == 6){
+        //     $labstate->stage = "8";
+        //     $labstate->submitted_by = Auth::user()->name;
+        //     $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+        //     $labstate->status ="Final QA/Head Assessment";
+        //     $labstate->update();
+            
+        //    }
+        //    dd($labstate);
+        
+        // Log::info('checkFunction method was called.');
+
+        }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
     }
     public function LabIncidentStateChange(Request $request, $id)
     {
@@ -1576,30 +1676,12 @@ class LabIncidentController extends Controller
                     $changeControl->update();
                     toastr()->success('Document Sent');
                     return back();
+
+                    
                 }
-            if ($changeControl->stage == 4) {
-                $changeControl->stage = "6";
-                $changeControl->status = "Pending Extended Investigation";
-                $changeControl->all_activities_completed_by = Auth::user()->name;
-                $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
-                $history = new LabIncidentAuditTrial();
-                $history->LabIncident_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->all_activities_completed_by;
-                $history->current = $changeControl->all_activities_completed_by;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage='No Assignable Cause Identification';
-                $history->save();
-                $changeControl->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
+           
             if ($changeControl->stage == 5) {
-                $changeControl->stage = "6";
+                $changeControl->stage = "7";
                 $changeControl->status = "CAPA Initiation & Approval";
                 $changeControl->review_completed_by = Auth::user()->name;
                 $changeControl->review_completed_on = Carbon::now()->format('d-M-Y'); 
@@ -1637,7 +1719,7 @@ class LabIncidentController extends Controller
                 return back();
             }
             if ($changeControl->stage == 6) {
-                $changeControl->stage = "7";
+                $changeControl->stage = "8";
                 $changeControl->status = "Final QA/Head Assessment";
                 $changeControl->qA_review_completed_by = Auth::user()->name;
                 $changeControl->qA_review_completed_on = Carbon::now()->format('d-M-Y');
@@ -1651,7 +1733,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='All Action Approved';
+                $history->stage='Extended Inv. Complete';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1660,7 +1742,7 @@ class LabIncidentController extends Controller
 
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
-                $changeControl->status = "Pending Approval";
+                $changeControl->status = "Final QA/Head Assessment";
                 $changeControl->qA_head_approval_completed_by = Auth::user()->name;
                 $changeControl->qA_head_approval_completed_on = Carbon::now()->format('d-M-Y');
                 $history = new LabIncidentAuditTrial();
@@ -1673,7 +1755,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Assessment Completed';
+                $history->stage='All Action Approved';
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -1734,6 +1816,14 @@ class LabIncidentController extends Controller
                 return back();
             }
 
+            if ($changeControl->stage == 9) {
+                $changeControl->stage = "10";
+                $changeControl->status = "Closed-Done";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
 
 
 
@@ -1780,26 +1870,34 @@ class LabIncidentController extends Controller
                 return back();
             }
             if ($changeControl->stage == 6) {
+                $changeControl->stage = "4";
+                $changeControl->status = "Evaluation of Finding";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 7) {
                 $changeControl->stage = "5";
                 $changeControl->status = "Pending Solution & Sample Test";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 7) {
+            if ($changeControl->stage == 8) {
                 $changeControl->stage = "6";
-                $changeControl->status = "CAPA Initiation & Approval";
+                $changeControl->status = "Pending Extended Investigation";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 8) {
-                $changeControl->stage = "7";
+            if ($changeControl->stage == 9) {
+                $changeControl->stage = "8";
                 $changeControl->status = "Final QA/Head Assessment";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
+           
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1812,7 +1910,7 @@ class LabIncidentController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
 
-            $changeControl->stage = "8";
+            $changeControl->stage = "0";
             $changeControl->status = "Closed - Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
