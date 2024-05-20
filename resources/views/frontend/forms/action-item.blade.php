@@ -122,13 +122,14 @@
                                         <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="" name="due_date"> -->
                                         <div class="calenderauditee">                                     
-                                            <input type="text"  id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            <input type="text"  id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, false) }}" />
+                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}"
                                             class="hide-input"
-                                            oninput="handleDateInput(this, 'due_date')"/>
+                                            oninput="handleDateInput(this, 'due_date_display')"/>
                                         </div>
                                     </div>
                                 </div>
+                             
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -142,7 +143,7 @@
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
-                                            <option value="">--select record--</option>
+                                            {{-- <option value="">--select record--</option> --}}
                                             <!-- @if (!empty($old_record)) -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">

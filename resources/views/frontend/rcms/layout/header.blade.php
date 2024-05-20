@@ -116,7 +116,7 @@
                         <div class="logo-container">
                             <div class="logo">
                                 <img src="{{ asset('user/images/vidyagxplogo.png') }}" alt="..."
-                                    class="w-100 h-100" style="scale: 3">
+                                    class="w-100 h-100" style="scale: 5">
                             </div>
                             <div class="logo">
                                 <img src="{{ asset('user/images/agio.jpg') }}" alt="..." class="w-100 h-100">
