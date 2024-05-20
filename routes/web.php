@@ -1,3 +1,5 @@
+
+
 <?php
 
 use App\Http\Controllers\ActionItemController;
@@ -428,7 +430,32 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
 
 
-// ==========================================================
+// =================LOGS=========================================
+
+Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
+Route::view('market_complaint_log', 'frontend.forms.Logs.Market-Complaint-registerLog');
+Route::view('incident_log', 'frontend.forms.Logs.incidentLog');
+Route::view('risk_management_log', 'frontend.forms.Logs.riskmanagementLog');
+Route::view('errata_log', 'frontend.forms.Logs.errata_log');
+Route::view('laboratory_log', 'frontend.forms.Logs.laboratoryIncidentLog');
+Route::view('capa_log', 'frontend.forms.Logs.capa_log');
+Route::view('non_conformance_log', 'frontend.forms.Logs.non_conformance_log');
+Route::view('deviation_log', 'frontend.forms.Logs.deviation_log');
+Route::view('OOC_log', 'frontend.forms.Logs.OOC_log');
+Route::view('OOS_OOT_log', 'frontend.forms.Logs.OOS_OOT_log');
+Route::view('Failure_invst_log', 'frontend.forms.Logs.Failure_investigation_Log');
+Route::view('internal_audit_log', 'frontend.forms.Logs.Internal_audit_Log');
+
+// =================LOGS=========================================
+
+
+
+
+// ====================OOS/OOT======================================
+Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
+// ====================OOS/OOT======================================
+
+
 
 /**
  * AJAX ROUTES

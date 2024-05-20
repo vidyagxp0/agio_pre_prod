@@ -10,6 +10,7 @@ use App\Models\{CC,ChangeControlCftResponse};
 use App\Models\RecordNumber;
 use App\Models\CCStageHistory;
 use App\Models\ChangeClosure;
+use App\Models\table_cc_impactassement;
 use App\Models\Docdetail;
 use App\Models\CcCft;
 use App\Models\Evaluation;
@@ -57,7 +58,7 @@ class CCController extends Controller
                 $record_number = '0001';
             }
         }
-        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -101,7 +102,7 @@ class CCController extends Controller
         $cft = User::get();
         $pre = CC::all();
 
-        return view('frontend.change-control.new-change-control', compact("riskData", "record_number", "due_date","hod","cft","pre"));
+        return view('frontend.change-control.new-change-control', compact("riskData", "record_number", "due_date", "hod", "cft", "pre"));
     }
 
     public function store(Request $request)
@@ -130,7 +131,7 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
 
         $openState->type_chnage = $request->type_chnage;
@@ -144,13 +145,13 @@ class CCController extends Controller
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
-       $openState->Microbiology = $request->Microbiology;
-       if ($request->Microbiology_Person) {
-           $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-       } else {
-           toastr()->warning('CFT reviewers can not be empty');
-           return back();
-       }
+        $openState->Microbiology = $request->Microbiology;
+        if ($request->Microbiology_Person) {
+            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        } else {
+            toastr()->warning('CFT reviewers can not be empty');
+            return back();
+        }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -160,7 +161,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         $openState->cft_attchament = json_encode($request->cft_attchament);
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -204,7 +205,7 @@ class CCController extends Controller
             }
             $openState->in_attachment = json_encode($files);
         }
- 
+
         $openState->status = 'Opened';
         $openState->stage = 1;
         $openState->save();
@@ -597,6 +598,8 @@ class CCController extends Controller
         $docdetail->supervisor_comment = $request->supervisor_comment;
         $docdetail->save();
 
+
+
         $review = new Qareview();
         $review->cc_id = $openState->id;
         $review->type_chnage = $request->type_chnage;
@@ -609,7 +612,7 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                
+
                     $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -648,17 +651,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-         if ($request->Microbiology == "yes") {
-             $info->Microbiology = $request->Microbiology;
-            
-         }
-         if ($request->Microbiology_Person) {
-             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
-        
+        if ($request->Microbiology == "yes") {
+            $info->Microbiology = $request->Microbiology;
+        }
+        if ($request->Microbiology_Person) {
+            $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        } else {
+            toastr()->warning('CFT reviewers can not be empty');
+            return back();
+        }
+
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
         if (!empty($request->additional_attachments)) {
@@ -952,7 +954,7 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        
+
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
         $history->activity_type = 'QA Attachments';
@@ -964,7 +966,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        
+
 
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
@@ -1016,7 +1018,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        
+
 
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
@@ -1463,7 +1465,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-       // toastr()->success('Record is created Successfully ');
+        // toastr()->success('Record is created Successfully ');
 
         return redirect('rcms/qms-dashboard');
     }
@@ -1472,6 +1474,7 @@ class CCController extends Controller
     {
 
         $data = CC::find($id);
+
         $cc_lid = $data->id;
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $docdetail = Docdetail::where('cc_id', $id)->first();
@@ -1480,18 +1483,22 @@ class CCController extends Controller
         $evaluation = Evaluation::where('cc_id', $id)->first();
         $info = AdditionalInformation::where('cc_id', $id)->first();
         $comments = GroupComments::where('cc_id', $id)->first();
+        // $impactassement = table_cc_impactassement::where('id', $id)->first();
+
         $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::get();
         $cft = User::get();
         $cft_aff = [];
-        if(!is_null($data->Microbiology_Person)){
+        if (!is_null($data->Microbiology_Person)) {
             $cft_aff = explode(',', $data->Microbiology_Person);
         }
         $pre = CC::all();
+
         $due_date_extension = $data->due_date_extension;
-    
+        $impactassement   =  table_cc_impactassement::where('cc_id', $id)->get();
+        //    dd($impactassement);
         return view('frontend.change-control.CCview', compact(
             'data',
             'docdetail',
@@ -1500,6 +1507,7 @@ class CCController extends Controller
             'info',
             'cc_cfts',
             'comments',
+            'impactassement',
             'assessment',
             'approcomments',
             'closure',
@@ -1510,13 +1518,38 @@ class CCController extends Controller
             "cc_lid",
             "pre"
         ));
+
+
+
+        // print_r('impactassements');
+
+
+
     }
 
     public function update(Request $request, $id)
     {
-   
+
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
+
+        $impactassement   =  table_cc_impactassement::where('cc_id', $id)->find($id);
+
+        $impactassement->cc_id = $openState->id;
+
+        if (!$impactassement) {
+            return response()->json(['error' => 'Record not found'], 404);
+        }
+        $result = $impactassement->update($request->all());
+
+        // if ($result)
+        // {
+        //     return response()->json(['message' => 'Data updated successfully'], 200);
+        // } else {
+
+        //     return response()->json(['error' => 'Failed to update data'], 500);
+        // }
+
         $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
@@ -1534,11 +1567,11 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-       // $openState->related_records = $request->related_records;
+        // $openState->related_records = $request->related_records;
         $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = $request->qa_head;
 
@@ -1548,13 +1581,13 @@ class CCController extends Controller
         $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        
-         if ($request->Microbiology_Person) {
-             $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+
+        if ($request->Microbiology_Person) {
+            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        } else {
+            toastr()->warning('CFT reviewers can not be empty');
+            return back();
+        }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1564,7 +1597,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         $openState->cft_attchament = json_encode($request->cft_attchament);
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -1596,7 +1629,8 @@ class CCController extends Controller
         $openState->effective_check_plan = $request->effective_check_plan;
 
         $openState->due_date_extension = $request->due_date_extension;
-
+        $openState->update();
+        $impactassement->update();
 
         if (!empty($request->in_attachment)) {
             $files = [];
@@ -1980,6 +2014,7 @@ class CCController extends Controller
         $docdetail->supervisor_comment = $request->supervisor_comment;
         $docdetail->update();
 
+
         $lastreview = Qareview::where('cc_id', $id)->first();
         $review = Qareview::where('cc_id', $id)->first();
         $review->cc_id = $openState->id;
@@ -2032,16 +2067,15 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-         if ($request->Microbiology == "yes") {
-             $info->Microbiology = $request->Microbiology;
-           
-         }
-         if ($request->Microbiology_Person) {
-             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        if ($request->Microbiology == "yes") {
+            $info->Microbiology = $request->Microbiology;
+        }
+        if ($request->Microbiology_Person) {
+            $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        } else {
+            toastr()->warning('CFT reviewers can not be empty');
+            return back();
+        }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 
@@ -2206,7 +2240,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->assign_to != $openState->assign_to || !empty($request->document_name_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2879,7 +2913,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastclosure->effective_check_date != $closure->feedbackeffective_check_date || !empty($request->effective_check_date_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2905,9 +2939,9 @@ class CCController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
-           // return $history;
+            // return $history;
         }
-       // toastr()->success('Record is updated Successfully');
+        // toastr()->success('Record is updated Successfully');
         return back();
     }
 
@@ -3734,23 +3768,23 @@ class CCController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                //     $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3766,23 +3800,23 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
-            //     $list = Helpers::getInitiatorUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                //     $list = Helpers::getInitiatorUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      }
+                //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -4323,18 +4357,18 @@ class CCController extends Controller
 
             $changeControl->stage = "7";
             $changeControl->status = "Pending Change Implementation";
-                    $history = new RcmDocHistory;
-                    $history->cc_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = Auth::user()->name;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->stage = 'CFT/SME/QA Review Not required';
-                    $history->save();
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = "";
+            $history->current = Auth::user()->name;
+            $history->comment = $request->comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'CFT/SME/QA Review Not required';
+            $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Change-Control";
@@ -4358,7 +4392,7 @@ class CCController extends Controller
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 
- 
+
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->update();
@@ -4377,7 +4411,8 @@ class CCController extends Controller
             return back();
         }
     }
-    public function child(Request $request,$id){
+    public function child(Request $request, $id)
+    {
         // return "hiii";
         $cc = CC::find($id);
         $parent_name = "CC";
@@ -4387,8 +4422,8 @@ class CCController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
 
-        $parent_data = CC::where('id', $id)->select('record','division_id','initiator_id','short_description')->first();
-        $parent_data1 = CC::select('record','division_id','initiator_id','id')->get();
+        $parent_data = CC::where('id', $id)->select('record', 'division_id', 'initiator_id', 'short_description')->first();
+        $parent_data1 = CC::select('record', 'division_id', 'initiator_id', 'id')->get();
         $parent_record = CC::where('id', $id)->value('record');
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = CC::where('id', $id)->value('division_id');
@@ -4397,20 +4432,18 @@ class CCController extends Controller
         $parent_short_description = CC::where('id', $id)->value('short_description');
         $old_record = CC::select('id', 'division_id', 'record')->get();
 
-        if($request->revision == "Action-Item"){
-            $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record'));
+        if ($request->revision == "Action-Item") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.action-item', compact('parent_record', 'parent_name', 'record_number', 'cc', 'parent_data', 'parent_data1', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'due_date', 'old_record'));
         }
-        if($request->revision == "Extension"){
-            $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.extension',compact('parent_name','record_number','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id', 'parent_record','cc'));
+        if ($request->revision == "Extension") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.extension', compact('parent_name', 'record_number', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'cc'));
         }
-        if($request->revision == "New Document"){
-            $cc->originator = User::where('id',$cc->initiator_id)->value('name');
+        if ($request->revision == "New Document") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return redirect()->route('documents.create');
-            
-        }
-        else{
+        } else {
             toastr()->warning('Not Working');
             return back();
         }
@@ -4733,5 +4766,12 @@ class CCController extends Controller
     {
         $data = CC::find($id);
         return view('frontend.effectivenessCheck.create', compact('data'));
+    }
+
+
+
+
+    public function ImpactUpdate($id)
+    {
     }
 }
