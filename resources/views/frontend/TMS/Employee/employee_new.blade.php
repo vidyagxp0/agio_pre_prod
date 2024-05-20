@@ -39,12 +39,12 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="jobResponsibilites[' + serialNumber +
+                        '<td><input disabled type="text" name="jobResponsibilities[' + serialNumber +
                         '][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="jobResponsibilites[' + serialNumber +
+                        '<td><input type="text" name="jobResponsibilities[' + serialNumber +
                         '][job]"></td>' +
-                        '<td><input type="text" class="Document_Remarks" name="jobResponsibilites[' +
+                        '<td><input type="text" class="Document_Remarks" name="jobResponsibilities[' +
                         serialNumber + '][remarks]"></td>' +
 
 
@@ -376,9 +376,9 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><input disabled type="text" name="jobResponsibilites[0][serial]"></td>
-                                                <td><input type="text" name="jobResponsibilites[0][job]"></td>
-                                                <td><input type="text" name="jobResponsibilites[0][remarks]" ></td>
+                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][remarks]" ></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -447,7 +447,7 @@
                                 </span>
                             </label>
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="onservation-field-table-details"
+                                <table class="table table-bordered" id="external-training-table"
                                     style="width: 100%;">
                                     <thead>
                                         <tr>
@@ -464,13 +464,13 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input disabled type="text" name="serial[]" value="1"></td>
-                                            <td><input type="text" name="topic[]"></td>
-                                            <td><input type="date" name="external_training_date[]"></td>
-                                            <td><input type="text" name="external_trainer[]"></td>
-                                            <td><input type="text" name="external_agency[]"></td>
-                                            <td><input type="file" name="certificate[]"></td>
-                                            <td><input type="file" name="supproting_documents[]"></td>
+                                            <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
+                                            <td><input type="text" name="external_training[0][topic]"></td>
+                                            <td><input type="date" name="external_training[0][external_training_date]"></td>
+                                            <td><input type="text" name="external_training[0][external_trainer]"></td>
+                                            <td><input type="text" name="external_training[0][external_agency]"></td>
+                                            <td><input type="file" name="external_training[0][certificate]"></td>
+                                            <td><input type="file" name="external_training[0][supproting_documents]"></td>
                                         </tr>
 
                                     </tbody>
@@ -498,14 +498,21 @@
 
                                         var html =
                                             '<tr>' +
-                                            '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                                            '<td><input disabled type="text" name="external_training[' + serialNumber +
+                        '][serial]" value="' + serialNumber +
                                             '"></td>' +
-                                            '<td><input type="text" name="topic[]"></td>' +
-                                            '<td><input type="date" name="external_training_date[]"></td>' +
-                                            '<td><input type="text" name="external_trainer[]"></td>' +
-                                            '<td><input type="text" name="external_agency[]"></td>' +
-                                            '<td><input type="file" name="certificate[]"></td>' +
-                                            '<td><input type="file" name="supproting_documents[]"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][topic]"></td>' +
+                                            '<td><input type="date" name="external_training[' + serialNumber +
+                        '][external_training_date]"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][external_trainer]"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][external_agency]"></td>' +
+                                            '<td><input type="file" name="external_training[' + serialNumber +
+                        '][certificate]"></td>' +
+                                            '<td><input type="file" name="external_training[' + serialNumber +
+                        '][supproting_documents]"></td>' +
                                             '</tr>';
 
                                         // for (var i = 0; i < users.length; i++) {
@@ -517,7 +524,7 @@
                                         return html;
                                     }
 
-                                    var tableBody = $('#onservation-field-table-details tbody');
+                                    var tableBody = $('#external-training-table tbody');
                                     var rowCount = tableBody.children('tr').length;
                                     var newRow = generateTableRow(rowCount + 1);
                                     tableBody.append(newRow);

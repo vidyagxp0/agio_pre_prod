@@ -146,11 +146,15 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="trainer_listOfAttachment[' + serialNumber +
+                        '][serial_number]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="title_of document[]"></td>' +
-                        '<td><input type="text" name="supporting_document[]"></td>' +
-                        '<td><input type="text" name="remarks[]"></td>' +
+                        '<td><input type="text" name="trainer_listOfAttachment[' + serialNumber +
+                        '][title_of document]"></td>' +
+                        '<td><input type="text" name="trainer_listOfAttachment[' + serialNumber +
+                        '][supporting_document]"></td>' +
+                        '<td><input type="text" name="trainer_listOfAttachment[' + serialNumber +
+                        '][remarks]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -180,11 +184,14 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="trainer_skill[' + serialNumber +
+                        '][serial_number]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Trainer_skill_set[]"></td>' +
+                        '<td><input type="text" name="trainer_skill[' + serialNumber +
+                        '][Trainer_skill_set]"></td>' +
 
-                        '<td><input type="text" name="remarks[]"></td>' +
+                        '<td><input type="text" name="trainer_skill[' + serialNumber +
+                        '][remarks]"></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -324,7 +331,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
-                                        <input readonly type="text" name="division_code"
+                                        <input readonly type="text" name="site_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
@@ -332,7 +339,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
 
                                     </div>
                                 </div>
@@ -340,7 +347,7 @@
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="date_of_initiation">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -435,7 +442,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)</label>
-                                        <select name="Experience" id="Experience">
+                                        <select name="experience" id="Experience">
                                             <option value="">Select </option>
                                             @for ($i = 1; $i <= 70; $i++)
                                                 <option value="{{ $i }}">{{ $i }}</option>
@@ -523,10 +530,10 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
                                                 </td>
-                                                <td><input type="text" name="Trainer_skill_set[]"></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
+                                                <td><input type="text" name="trainer_skill[0][remarks]"></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -547,12 +554,12 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                <td><input disabled type="text" name="trainer_listOfAttachment[0][serial_number]" value="1">
                                                 </td>
-                                                <td><input type="text" name="title_of document[]"></td>
-                                                <td><input type="text" name="supporting_document[]"></td>
+                                                <td><input type="text" name="trainer_listOfAttachment[0][title_of document]"></td>
+                                                <td><input type="text" name="trainer_listOfAttachment[0][supporting_document]"></td>
 
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <td><input type="text" name="trainer_listOfAttachment[0][remarks]"></td>
                                             </tbody>
                                         </table>
                                     </div>
@@ -561,10 +568,10 @@
                                 <div class="">
                                     <div class="group-input">
                                         <label for="trainingQualificationStatus">Trainer</label>
-                                        <select name="trainingQualificationStatus[]" id="trainingQualificationStatus">
+                                        <select name="trainer" id="trainingQualificationStatus">
                                             <option value="">-- Select --</option>
-                                            <option value="Production">Qualified</option>
-                                            <option value="QC">Not Qualified</option>
+                                            <option value="Qualified">Qualified</option>
+                                            <option value="Not Qualified">Not Qualified</option>
                                         </select>
                                     </div>
                                 </div>
@@ -586,11 +593,11 @@
                                                         <td>1</td>
                                                         <td>Clarity Of Objectives</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_1" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -600,11 +607,11 @@
                                                         <td>2</td>
                                                         <td>Delivery & Knowledge Of Content</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_2" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -616,11 +623,11 @@
                                                         <td>Oral & Written Languagee (Speaking
                                                             Style Was Clear, Easily understood , Pleasant to hear)</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_3" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -631,11 +638,11 @@
                                                         <td>4</td>
                                                         <td>Is Research Up to Date?</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_4" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -646,11 +653,11 @@
                                                         <td>5</td>
                                                         <td>Interactions With Participants</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_5" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -661,11 +668,11 @@
                                                         <td>6</td>
                                                         <td>Response To Participants</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_6" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -676,11 +683,11 @@
                                                         <td>7</td>
                                                         <td>Discussion Techniques</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_7" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -692,11 +699,11 @@
                                                         <td>Managed Pace Of The Training Well /
                                                             Created a Comfortable learning environment</td>
                                                         <td>
-                                                            <select name="rating" id="">
+                                                            <select name="evaluation_criteria_8" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value=""> 1</option>
-                                                                <option value=""> 2</option>
-                                                                <option value=""> 3</option>
+                                                                <option value="1"> 1</option>
+                                                                <option value="2"> 2</option>
+                                                                <option value="3"> 3</option>
 
                                                             </select>
                                                         </td>
@@ -714,7 +721,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Q_comment">Qualification Comments</label>
-                                    <textarea class="" name="Q_comment"></textarea>
+                                    <textarea class="" name="qualification_comments"></textarea>
                                 </div>
                             </div>
 
@@ -790,7 +797,7 @@
                                         <div class="file-attachment-list" id="audit_file_attachment"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="inv_attachment[]"
+                                            <input type="file" id="myfile" name="initial_attachment"
                                                 oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                         </div>
                                     </div>

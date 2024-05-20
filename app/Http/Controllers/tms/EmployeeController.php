@@ -16,6 +16,7 @@ class EmployeeController extends Controller
             'body' => [],
         ];
 
+
         // return $request->all();
         // try {
             $employee = new Employee();
@@ -87,10 +88,10 @@ class EmployeeController extends Controller
 
             $employee_id = $employee->id;
 
-            $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrCreate();
+            $employeeJobGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'jobResponsibilites'])->firstOrNew();
             $employeeJobGrid->employee_id = $employee_id;
             $employeeJobGrid->identifier = 'jobResponsibilites';
-            $employeeJobGrid->data = $request->employee_job_data;
+            $employeeJobGrid->data = $request->jobResponsibilities;
 
             $employeeJobGrid->save();
 
@@ -107,11 +108,10 @@ class EmployeeController extends Controller
 
             // $requestGridData[0]['filename'] = $files;
 
-
-            $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrCreate();
+            $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrNew();
             $employeeExternalGrid->employee_id = $employee_id;
             $employeeExternalGrid->identifier = 'external_training';
-            $employeeExternalGrid->data = $request->employee_external_training_data;
+            $employeeExternalGrid->data = $request->external_training;
             $employeeExternalGrid->save();
 
         // } catch (\Exception $e) {

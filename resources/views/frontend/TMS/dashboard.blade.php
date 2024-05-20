@@ -63,7 +63,7 @@
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
-                                         <th>&nbsp;</th> 
+                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +71,7 @@
                                     @if(!empty($temp->training) && $temp->training->stage >=6)
                                         <tr>
                                             @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
                                                     if ($trainingPlan) {
                                                         $traineesCount = count(explode(',', $trainingPlan->trainees));
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
@@ -85,9 +85,9 @@
                                             <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                             <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
                                             <td>{{ $temp->status }}</td>
-                                           
+
                                             {{-- <td>
-                                                <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                <a href="#"><i class="fa-solid fa-eye"></i></a>
                                             </td> --}}
                                             <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
 
@@ -193,7 +193,7 @@
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            
+
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -419,49 +419,49 @@
                             </div>
                             <div id="chart-tms4"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Deviation Rate (Term)
                             </div>
                             <div id="chart-tms5"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Overdue
                             </div>
                             <div id="chart-tms6"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 SOP For Training
                             </div>
                             <div id="chart-tms7"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Completed Training
                             </div>
                             <div id="chart-tms8"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Department Trainees
                             </div>
                             <div id="chart-tms9"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Question Banks
                             </div>
                             <div id="chart-tms10"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Plan
@@ -476,14 +476,14 @@
                             </div>
                             <div id="chart-tms12"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
                             </div>
                             <div id="chart-tms13"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -545,7 +545,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="inner-block table-block">
                             <div class="head">Change Control Extension Rate (Term)</div>
                             <div class="dash-table">

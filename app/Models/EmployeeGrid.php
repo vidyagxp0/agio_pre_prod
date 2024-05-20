@@ -9,6 +9,8 @@ class EmployeeGrid extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['employee_id', 'identifier', 'data'];
+
     protected $casts = [
         'data' => 'array'
     ];

@@ -44,26 +44,28 @@ class TrainerController extends Controller
 
             if ($request->hasFile('initial_attachment')) {
                 $file = $request->file('initial_attachment');
-                $name = $request->trainer_name . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $name = $request->employee_id . 'initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                 $file->move('upload/', $name);
                 $trainer->initial_attachment = $name; // Store only the file name
             }
 
             $trainer->save();
+            // dd ($trainer->id);
 
-            $trainer_id = $trainer->id;
 
-            $trainerSkillGrid = TrainerGrid::where(['trainer_id' => $trainer_id, 'identifier' => 'trainerSkillSet'])->firstOrCreate();
-            $$trainerSkillGrid->trainer_id = $trainer_id;
-            $$trainerSkillGrid->identifier = 'trainerSkillSet';
-            $$trainerSkillGrid->data = $request->trainer_skill;
-            $$trainerSkillGrid->save();
+            $trainer_qualification_id = $trainer->id;
 
-            $trainerListGrid = TrainerGrid::where(['trainer_id' => $trainer_id, 'identifier' => 'listOfAttachment'])->firstOrCreate();
-            $$trainerListGrid->trainer_id = $trainer_id;
-            $$trainerListGrid->identifier = 'listOfAttachment';
-            $$trainerListGrid->data = $request->trainer_listOfAttachment;
-            $$trainerListGrid->save();
+            $trainerSkillGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'trainerSkillSet'])->firstOrNew();
+            $trainerSkillGrid->trainer_qualification_id = $trainer_qualification_id;
+            $trainerSkillGrid->identifier = 'trainerSkillSet';
+            $trainerSkillGrid->data = $request->trainer_skill;
+            $trainerSkillGrid->save();
+
+            $trainerListGrid = TrainerGrid::where(['trainer_qualification_id' => $trainer_qualification_id, 'identifier' => 'listOfAttachment'])->firstOrNew();
+            $trainerListGrid->trainer_qualification_id = $trainer_qualification_id;
+            $trainerListGrid->identifier = 'listOfAttachment';
+            $trainerListGrid->data = $request->trainer_listOfAttachment;
+            $trainerListGrid->save();
 
         // } catch (\Exception $e) {
         //     $res['status'] = 'error';
