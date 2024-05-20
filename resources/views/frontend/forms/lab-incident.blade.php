@@ -552,42 +552,7 @@
                          </div>
 
 
-                          {{-- selection field --}}
-                
-                           <div class="col-md-6">
-                          <div class="group-input">
-                                <label for="search">
-                            Investigator (QC) <span class="text-danger"></span>
-                          </label>
-                          <select id="select-state" placeholder="Select..." name="investigation_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                         </select>
-                          @error('investigation_to')
-                            <p class="text-danger">{{ $message }}</p>
-                          @enderror
-                                   </div>
-                  </div>
-                <div class="col-md-6">
-                    <div class="group-input">
-                        <label for="search">
-                            QC Review <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('assign_to')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-                
-                {{-- selection field --}}
+                          
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>

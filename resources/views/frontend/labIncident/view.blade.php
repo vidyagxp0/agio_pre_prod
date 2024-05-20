@@ -58,8 +58,8 @@
                     @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                        {{-- <button class="button_theme1"> <a class="text-white"
-                                href="{{ route('audittrialLabincident', $data->id) }}"> Audit Trail </a> </button> --}}
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ route('audittrialLabincident', $data->id) }}"> Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -99,7 +99,7 @@
                         <button class="button_theme1" name="assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             Assignable Cause Identification
                         </button>
-                        <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        <button class="button_theme1" name="no_assignable_cause_identification" data-bs-toggle="modal" data-bs-target="#signature-modal1">
                             No Assignable Cause Identification
                         </button>
                            
@@ -118,14 +118,14 @@
                             </button> --}}
                         @elseif($data->stage == 6 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            All Action Approved
+                            Extended Inv. Complete
                         </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
                         @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Assessment Completed
+                                All Action Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
@@ -134,6 +134,18 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Pending Approval
                             </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Request More Info
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Assessment Completed
+                            </button>
+
+                            @elseif($data->stage == 9 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Closure Completed
+                            </button>
+                       
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
@@ -149,10 +161,7 @@
                             </button>
                             --}}
 
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Closure Completed
-                            </button>
-                       
+                            
                             <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit
                                 </a> </button> -->
@@ -169,7 +178,9 @@
                     @if ($data->stage == 0)
                         <div class="progress-bars">
                             <div class="bg-danger">Closed-Cancelled</div>
+
                         </div>
+                    
                     @else
                         <div class="progress-bars">
                             @if ($data->stage >= 1)
@@ -201,22 +212,27 @@
                                 <div class="">Pending Solution & Sample Test</div>
                             @endif
                             @if ($data->stage >= 6)
+                                <div class="active">Pending Extended Investigation</div>
+                            @else
+                                <div class="">Pending Extended Investigation</div>
+                            @endif
+                            @if ($data->stage >= 7)
                                 <div class="active">CAPA Initiation & Approval</div>
                             @else
                                 <div class="">CAPA Initiation & Approval</div>
                             @endif
-                            @if ($data->stage >= 7)
+                             @if ($data->stage >= 8)
                                 <div class="active">Final QA/Head Assessment</div>
                             @else
-                                <div class="">Final QA/Head Assessment</div>
+                                <div class="">Final QA/Head Assessment</div>    
                             @endif
-                             @if ($data->stage >= 8)
+                            @if ($data->stage >= 9)
                                 <div class="active">Pending Approval</div>
                             @else
                                 <div class="">Pending Approval</div>    
                             @endif
                             
-                            @if ($data->stage >= 9)
+                            @if ($data->stage >= 10)
                                 <div class="bg-danger" >Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -1788,7 +1804,7 @@
                                                                 <div class="group-input" id="Incident_invlvolved_others">
                                                                     <label for="Incident_Involved">Instrument Involved<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <textarea name="involved_ssfi"></textarea>
+                                                                    <textarea name="involved_ssfi">{{$labsuit->involved_ssfi}}</textarea>
                                                                 </div>
                             
                                                             </div>
@@ -1798,7 +1814,7 @@
                                                                 <div class="group-input" id="Incident_stage">
                                                                     <label for="Incident_stage">Stage<span
                                                                             class="text-danger d-none">*</span></label>
-                                                                    <input type="text" name="stage_stage_ssfi">
+                                                                    <input type="text" name="stage_stage_ssfi" value="">
                                                                 </div>
                             
                                                             </div><br>
@@ -2341,7 +2357,6 @@
                             <input type="comment" name="comment">
                         </div>
                     </div>
-
                     <!-- Modal footer -->
                     <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
@@ -2356,6 +2371,52 @@
         </div>
     </div>
 
+    <div class="modal fade" id="signature-modal1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('StageChangeLabtwo', $data->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username  <span
+                                class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password  <span
+                                class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
+                </form>
+            </div>
+        </div>
+    </div>
     
 
     <div class="modal fade" id="cancel-modal">
