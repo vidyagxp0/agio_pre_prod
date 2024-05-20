@@ -63,7 +63,7 @@
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
-                                         <th>&nbsp;</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -102,11 +102,11 @@
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <div class="block-table" style="    padding-top: 100px;">
+                        <div class="block-table" style="    padding-top: 50px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Document Number</th>
+                                        <th style="width:15%;">Document Number</th>
                                         <th>Document Title</th>
                                         <th>Training Status</th>
                                         <th>Content Type</th>
@@ -136,8 +136,72 @@
                             </table>
                         </div>
                     @endif
-                </div>
+{{-- ========================================employee Data================ --}}
+                    <div class="block-table" style="margin-top:50px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">Employee ID</th>
+                                    <th>Department</th>
+                                    <th>Job Title</th>
+                                    <th>Assigned To</th>
+                                    <th>Joining Date</th>
+                                    <th>Status</th>
 
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pending as $temp)
+                                    <tr>
+                                        <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
+                                            000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                        <td>{{ $temp->document_type_name }}</td>
+                                        <td>{{ $temp->division_name }}</td>
+                                        <td>{{ $temp->status }} </td>
+                                        <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+{{-- ================================ --}}
+{{-- ========================================training Data================ --}}
+                    <div class="block-table" style="margin-top:50px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Record No.</th>
+                                    <th>Site/Location Code</th>
+                                    <th>Initiator</th>
+                                    <th>Date Of Initiation</th>
+                                    <th>Due Date</th>
+                                    <th>Short Description</th>
+                                    <th>Trainer Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pending as $temp)
+                                    <tr>
+                                        <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
+                                            000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                        <td>{{ $temp->document_type_name }}</td>
+                                        <td>{{ $temp->division_name }}</td>
+                                        <td>{{ $temp->status }} </td>
+                                        <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+{{-- ================================ --}}
+                </div>
                 <div class="inner-block tms-block" id="tms-due-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
@@ -167,6 +231,7 @@
 
                                 </tbody>
                             </table>
+                            
                         </div>
                     @else
                         <div class="block-table">
@@ -203,6 +268,7 @@
                             </table>
                         </div>
                     @endif
+                    
                 </div>
 
                 <div class="inner-block tms-block" id="tms-pending-block">
