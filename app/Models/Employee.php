@@ -12,4 +12,9 @@ class Employee extends Model
     public function employee_grid() {
         return $this->hasMany(EmployeeGrid::class);
     }
+
+    public function department_record()
+    {
+        return $this->belongsTo(Department::class, 'department', 'id');
+    }
 }

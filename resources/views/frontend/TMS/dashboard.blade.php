@@ -4,7 +4,6 @@
         @include('frontend.TMS.head')
     @endif
 
-
     {{-- ======================================
                     DASHBOARD
     ======================================= --}}
@@ -63,7 +62,7 @@
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
-                                        
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -147,23 +146,19 @@
                                     <th>Assigned To</th>
                                     <th>Joining Date</th>
                                     <th>Status</th>
-
-                                   
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pending as $temp)
+                                @foreach ($employees as $employee)
                                     <tr>
-                                        <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                            000{{ $temp->document_id }}</td>
-                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
-                                        <td>{{ $temp->document_type_name }}</td>
-                                        <td>{{ $temp->division_name }}</td>
-                                        <td>{{ $temp->status }} </td>
-                                        <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td>{{ $employee->id }}</td>
+                                        <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
+                                        <td>{{ $employee->job_title }}</td>
+                                        <td>{{ $employee->assigned_to }}</td>
+                                        <td>{{ $employee->joining_date }}</td>
+                                        <td>{{ $employee->status }}</td>
                                     </tr>
                                 @endforeach
-
                             </tbody>
                         </table>
                     </div>
@@ -231,7 +226,7 @@
 
                                 </tbody>
                             </table>
-                            
+
                         </div>
                     @else
                         <div class="block-table">
@@ -268,7 +263,7 @@
                             </table>
                         </div>
                     @endif
-                    
+
                 </div>
 
                 <div class="inner-block tms-block" id="tms-pending-block">
