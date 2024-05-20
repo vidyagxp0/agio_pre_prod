@@ -66,6 +66,7 @@ Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
 
+
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
 });
@@ -410,7 +411,11 @@ Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.ind
 
 Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
+
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
+Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
+Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
+Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
 
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 

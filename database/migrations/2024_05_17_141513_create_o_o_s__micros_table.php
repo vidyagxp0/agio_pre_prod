@@ -15,12 +15,13 @@ return new class extends Migration
     {
         Schema::create('o_o_s__micros', function (Blueprint $table) {
             $table->id();
-            $table->integer('initiator_id_gi')->nullable();
-            $table->string('record_number_gi')->nullable();
-            $table->string('division_id_gi')->nullable();
-            $table->string('initiator_gi')->nullable();
-            $table->string('intiation_date_gi')->nullable();
-            $table->string('due_date_gi')->nullable();
+            $table->integer('record')->nullable();
+            $table->string('form_type')->nullable();
+            $table->string('division_id')->nullable();
+            $table->integer('initiator_id')->nullable();
+            $table->string('division_code')->nullable();
+            $table->string('intiation_date')->nullable();
+            $table->string('due_date')->nullable();
             $table->string('severity_level_gi')->nullable();
             $table->string('initiator_group_gi')->nullable();
             $table->string('initiator_group_code_gi')->nullable();
@@ -41,7 +42,7 @@ return new class extends Migration
             $table->text('customer_gi')->nullable();
 
             // preliminary lab investigation
-            $table->longText('Comments_pli')->nullable();
+            $table->longText('comments_pli')->nullable();
             $table->string('field_alert_required_pli')->nullable();
             $table->string('field_alert_ref_no_pli')->nullable();
             $table->longText('justify_if_no_field_alert_pli')->nullable();
@@ -61,7 +62,7 @@ return new class extends Migration
             $table->string('oos_category_root_cause_ident_plic')->nullable();
             $table->longText('oos_category_others_plic')->nullable();
             $table->longText('root_cause_details_plic')->nullable();
-            $table->longText('oos_category_root_cause_ident_plic')->nullable();
+            $table->longText('oos_category_root_cause_plic')->nullable();
             $table->string('recommended_actions_required_plic')->nullable();
             $table->longText('recommended_actions_reference_plic')->nullable();
             $table->string('capa_required_plic')->nullable();
@@ -78,19 +79,19 @@ return new class extends Migration
             $table->longtext('attachment_details_cibet')->nullable();
 
             //checklist investigation of sterility
-            $table->longtext('attachment_details_cis');
+            $table->longtext('attachment_details_cis')->nullable();
 
             //checklist investigation of microbial limit bioburden and water test
-            $table->longtext('attachment_details_cimlbwt');
+            $table->longtext('attachment_details_cimlbwt')->nullable();
 
             //checklist investigation of microbial assay
-            $table->longtext('attachment_details_cima');
+            $table->longtext('attachment_details_cima')->nullable();
 
             //checklist investigation of environmental monitoring
-            $table->longtext('attachment_details_ciem');
+            $table->longtext('attachment_details_ciem')->nullable();
 
             //checklist investigation of media suitability test
-            $table->longtext('attachment_details_cimst');
+            $table->longtext('attachment_details_cimst')->nullable();
 
             // phase ii investigation
             $table->longText('qa_approver_comments_piii')->nullable();
@@ -153,7 +154,45 @@ return new class extends Migration
             $table->longtext('risk_assessment_ref_ocr')->nullable();
             $table->longtext('justify_if_no_risk_assessment_ocr')->nullable();
             $table->longtext('conclusion_attachment_ocr')->nullable();
-            $table->string('qa_approver_ocr');
+            $table->string('qa_approver_ocr')->nullable();
+
+
+            //OOS CQ Review
+            $table->string('capa_required_OOS_CQ')->nullable();
+            $table->string('ref_action_plan_OOS_CQ')->nullable();
+            $table->string('reference_of_capa_OOS_CQ')->nullable();
+            $table->longText('cq_review_comments_OOS_CQ')->nullable();
+            $table->longText('action_plan_requirement_OOS_CQ')->nullable();
+            $table->longText('cq_attachment_OOS_CQ')->nullable();
+
+
+
+            //Batch Disposition
+            $table->string('oos_category_BI')->nullable();
+            $table->string('others_BI')->nullable();
+            $table->string('material_batch_release_BI')->nullable();
+            $table->longText('other_action_BI')->nullable();
+            $table->string('field_alert_reference_BI')->nullable();
+            $table->longText('other_parameter_result_BI')->nullable();
+            $table->longText('trend_of_previous_batches_BI')->nullable();
+            $table->longText('stability_data_BI')->nullable();
+            $table->longText('process_validation_data_BI')->nullable();
+            $table->longText('method_validation_BI')->nullable();
+            $table->longText('any_market_complaints_BI')->nullable();
+            $table->longText('statistical_evaluation_BI')->nullable();
+            $table->longText('risk_analysis_for_disposition_BI')->nullable();
+            $table->longText('conclusion_BI')->nullable();
+            $table->string('phase_III_inves_required_BI')->nullable();
+            $table->longText('phase_III_inves_reference_BI')->nullable();
+            $table->longText('justify_for_delay_BI')->nullable();
+            $table->longText('disposition_attachment_BI')->nullable();
+
+
+            //REOpen
+            $table->string('reopen_request')->nullable();
+            $table->longText('reopen_attachment')->nullable();
+            $table->text('status')->nullable();
+            $table->text('stage')->nullable();
             $table->timestamps();
         });
     }

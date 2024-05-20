@@ -28,6 +28,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OOS;
+use App\Models\OOS_micro;
 
 
 class DashboardController extends Controller
@@ -68,6 +69,8 @@ class DashboardController extends Controller
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
+        $datas14 = OOS_micro::orderByDesc('id')->get();
+
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -344,7 +347,28 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                
+
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+         //datas 14
+         foreach ($datas14 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "OOS_MICRO",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->description_gi ? $data->description_gi : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -353,6 +377,7 @@ class DashboardController extends Controller
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         // return $table;
         // $paginatedData = json_encode($table);
+
 
       //  $datag = $this->paginate($table);
       $datag = $this->paginate($table);

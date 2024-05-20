@@ -404,7 +404,8 @@
             </div>
 
             <!-- General Information -->
-
+            <form action="{{ route('oos_micro.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
@@ -414,28 +415,30 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
-                                <input type="number">
+                                <input disabled type="text" name="record"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/MICRO/{{ date('Y') }}">
+
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                                <label for="Division Code">Division Code</label>
                                 <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                <input disabled type="text" name="initiator"
-                                        value="{{ Auth::user()->name }}">
+                                <input disabled type="text" name="initiator_id"
+                                 value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Date Due">Date of Initiation</label>
+                                <label for="intiation_date">Date of Initiation</label>
                                 <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                             </div>
@@ -448,14 +451,14 @@
                                 <small class="text-primary">
                                     Please mention expected date of completion
                                 </small>
-                                <input type="date" id="date" name="date-time">
+                                <input type="date" id="due_date" name="due_date">
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Severity Level</label>
-                                <select name="severity_level_form">
+                                <select name="severity_level_gi">
                                     <option value="0">-- Select --</option>
                                     <option value="minor">Minor</option>
                                     <option value="major">Major</option>
@@ -468,7 +471,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                <select name="initiator_Group" id="initiator_group">
+                                <select name="initiator_group_gi" id="initiator_group">
                                     <option value="">-- Select --</option>
                                     <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                         Corporate Quality Assurance</option>
@@ -515,7 +518,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                     value="">
                             </div>
                         </div>
@@ -523,7 +526,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
-                                <select name="initiated_through"
+                                <select name="initiated_through_gi"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="internal_audit">Internal Audit</option>
@@ -542,13 +545,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others </label>
-                                <textarea name="text"></textarea>
+                                <textarea name="if_others_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Is Repeat ?</label>
-                                <select name="repeat"
+                                <select name="is_repeat_gi"
                                         onchange="otherController(this.value, 'Yes', 'repeat_nature')">
                                         <option value="">Enter Your Selection Here</option>
                                         <option value="Yes">Yes</option>
@@ -564,13 +567,13 @@
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Repeat Nature</label>
-                                <textarea name="text"></textarea>
+                                <textarea name="repeat_nature_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
-                                <select>
+                                <select name="nature_of_change_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <!-- <option>Lab Incident</option>
@@ -588,13 +591,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="date">
+                                <input type="date" name="deviation_occured_on_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Description</label>
-                                <textarea name="text"></textarea>
+                                <textarea name="description_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -605,10 +608,10 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="file-attachment-list"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="addMultipleFiles(this, 'initial_attachment')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -616,14 +619,14 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
-                                <select>
+                                <select name="source_document_type_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option>OOT</option>
-                                    <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option>
+                                    <option value="oot">OOT</option>
+                                    <option value="lab-incident">Lab Incident</option>
+                                    <option value="deviation">Deviation</option>
+                                    <option value="product-non-conformance">Product Non-conformance</option>
+                                    <option value="inspectional-observation">Inspectional Observation</option>
+                                    <option value="other">Others</option>
 
                                 </select>
                             </div>
@@ -631,7 +634,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -641,7 +644,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="reference_document_gi[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -653,7 +656,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
-                                <select>
+                                <select name="sample_type_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option>Raw Material</option>
                                     <option>Packing Material</option>
@@ -668,20 +671,20 @@
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
 
-                                <input type="number">
+                                <input type="number" name="product_material_name_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
 
-                                <input type="number" name="num">
+                                <input type="number" name="market_gi">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select>
+                                <select name="customer_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <option></option>
@@ -870,7 +873,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea class="summernote" name="comments_pli[]" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -879,7 +882,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
-                                <select>
+                                <select name="field_alert_required_pli">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -890,7 +893,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Field Alert Ref.No.
                                 </label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="field_alert_ref_no_pli[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -902,7 +905,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -941,7 +944,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
-                                <select>
+                                <select name="verification_analysis_required_pli">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -951,7 +954,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -962,7 +965,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
-                                <select>
+                                <select name="analyst_interview_req_pli">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -972,7 +975,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -986,7 +989,7 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
                                     </textarea>
 
                             </div>
@@ -994,7 +997,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
-                                <select>
+                                <select name="phase_i_investigation_required_pli">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -1004,7 +1007,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
-                                <select>
+                                <select name="phase_i_investigation_pli">
                                     <option>Enter Your Selection Here</option>
                                     <option>Phase I Micro</option>
                                     <option>Phase I Chemical</option>
@@ -1017,7 +1020,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -1034,8 +1037,8 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="file_attachments_pli[]"
+                                            oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                                     </div>
                                 </div>
 
@@ -1737,7 +1740,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Prelim.Investiga.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1746,7 +1749,7 @@
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>
                                 <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                                <select>
+                                <select name="root_cause_identified_plic">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -1756,7 +1759,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                                <select>
+                                <select name="oos_category_root_cause_ident_plic">
                                     <option>Enter Your Selection Here</option>
                                     <option>Analyst Error</option>
                                     <option>Instrument Error</option>
@@ -1770,7 +1773,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1778,7 +1781,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1786,7 +1789,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_root_cause_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1794,7 +1797,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Recommended Actions Required?</label>
-                                <select>
+                                <select name="recommended_actions_required_plic">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -1805,7 +1808,7 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
                                     <option value="">--Select---</option>
                                     <option value="">1</option>
                                     <option value="">2</option>
@@ -1815,7 +1818,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
-                                <select>
+                                <select name="capa_required_plic">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -1825,7 +1828,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="num" name="num">
+                                <input type="num" name="reference_capa_no_plic">
                             </div>
                         </div>
 
@@ -1833,7 +1836,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1848,8 +1851,8 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="supporting_attachment_plic[]"
+                                            oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1879,7 +1882,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1935,7 +1938,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
-                                <select>
+                                <select name="phase_ii_inv_required_plir">
                                     <option>Enter Your Selection Here</option>
                                     <option>Yes</option>
                                     <option>No</option>
@@ -1953,8 +1956,8 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="supporting_attachments_plir[]"
+                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
                                     </div>
                                 </div>
 
@@ -1984,14 +1987,14 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> Manufact. Invest. Required? </label>
-                            <select>
+                            <select name="manufact_invest_required_piii">
                                 <option>Enter Your Selection Here</option>
                                 <option>Yes</option>
                                 <option>No</option>
@@ -2004,7 +2007,7 @@
 
 
                             <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select multiple name="auditee" placeholder="Select Nature of Deviation"
+                            <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
                                 <option value="">Chemical</option>
                                 <option value="">Microbiology</option>
@@ -2018,7 +2021,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Manufacturing Invst. Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -2028,7 +2031,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Re-sampling Required? </label>
-                            <select>
+                            <select name="re_sampling_required_piii">
                                 <option>Yes</option>
                                 <option>No</option>
 
@@ -2038,14 +2041,14 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Comments"> Audit Comments </label>
-                            <textarea name="text"></textarea>
+                            <textarea name="audit_comments_piii"></textarea>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="re_sampling_ref_no_piii[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -2056,7 +2059,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
-                            <select>
+                            <select name="hypo_exp_required_piii">
                                 <option>Yes</option>
                                 <option>No</option>
 
@@ -2067,7 +2070,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="hypo_exp_reference_piii[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -2085,8 +2088,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="attachment_piii[]"
+                                        oninput="addMultipleFiles(this, 'attachment_piii')" multiple>
                                 </div>
                             </div>
 
@@ -2533,7 +2536,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2541,14 +2544,14 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary Mfg. Investigation</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Cancelled By"> Root Casue Identified. </label>
-                            <select>
+                            <select name="root_casue_identified_piiqcr">
                                 <option>Yes</option>
                                 <option>No</option>
 
@@ -2558,7 +2561,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
-                            <select>
+                            <select name="oos_category_reason_identified_piiqcr">
                                 <option>Enter Your Selection Here</option>
                                 <option>Analyst Error</option>
                                 <option>Instrument Error</option>
@@ -2570,14 +2573,14 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Preparation Completed On">Others (OOS category)</label>
-                            <input type="string">
+                            <input type="string" name="others_oos_category_piiqcr">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2585,14 +2588,14 @@
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
-                            <select>
+                            <select name="recommended_action_required_piiqcr">
                                 <option>Yes</option>
                                 <option>No</option>
                             </select>
@@ -2601,7 +2604,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Recommended Action Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -2611,7 +2614,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Observation Submitted On">Investi. Required</label>
-                            <select>
+                            <select name="investi_required_piiqcr">
                                 <option>Yes</option>
                                 <option>No</option>
                             </select>
@@ -2620,7 +2623,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Invest ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="">1</option>
                                 <option value="">2</option>
@@ -2637,7 +2640,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -2731,8 +2734,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
+                                        oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
                                 </div>
                             </div>
 
@@ -2924,7 +2927,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachments_if_any_oosc[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -3112,8 +3115,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
+                                        oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
                                 </div>
                             </div>
 
@@ -3211,8 +3214,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="cq_attachment_OOS_CQ[]"
+                                        oninput="addMultipleFiles(this, 'cq_attachment_OOS_CQ')" multiple>
                                 </div>
                             </div>
 
@@ -3433,8 +3436,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="disposition_attachment_BI[]"
+                                        oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
                                 </div>
                             </div>
 
@@ -3479,8 +3482,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="reopen_attachment[]"
+                                        oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
                                 </div>
                             </div>
 
@@ -16415,7 +16418,7 @@
                 </div>
             </div>
         </div>
-
+      </form>
     </div>
 </div>
 

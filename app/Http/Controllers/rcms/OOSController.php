@@ -13,9 +13,9 @@ class OOSController extends Controller
     {
         return view('frontend.OOS.oos_form');
     }
-    
+
     public function store(Request $request)
-    { 
+    {
 
         $input = $request->all();
         $input['stage'] ="1";
@@ -26,7 +26,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('initial_attachment_gi')) {
                 foreach ($request->file('initial_attachment_gi') as $file) {
-                    
+
                     $name =  'initial_attachment_gi' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -40,7 +40,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('file_attachments_pli')) {
                 foreach ($request->file('file_attachments_pli') as $file) {
-                    
+
                     $name =  'file_attachments_pli' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -53,7 +53,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('supporting_attachment_plic')) {
                 foreach ($request->file('supporting_attachment_plic') as $file) {
-                    
+
                     $name =  'supporting_attachment_plic' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -66,7 +66,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('supporting_attachments_plir')) {
                 foreach ($request->file('supporting_attachments_plir') as $file) {
-                    
+
                     $name =  'supporting_attachments_plir' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -80,7 +80,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('file_attachments_pli')) {
                 foreach ($request->file('file_attachments_pli') as $file) {
-                    
+
                     $name =  'file_attachments_pli' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -93,7 +93,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('attachments_piiqcr')) {
                 foreach ($request->file('attachments_piiqcr') as $file) {
-                    
+
                     $name =  'attachments_piiqcr' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -106,7 +106,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('additional_testing_attachment_atp')) {
                 foreach ($request->file('additional_testing_attachment_atp') as $file) {
-                    
+
                     $name =  'additional_testing_attachment_atp' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -119,7 +119,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('file_attachments_if_any_ooscattach')) {
                 foreach ($request->file('file_attachments_if_any_ooscattach') as $file) {
-                    
+
                     $name =  'file_attachments_if_any_ooscattach' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -132,7 +132,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('conclusion_attachment_ocr')) {
                 foreach ($request->file('conclusion_attachment_ocr') as $file) {
-                    
+
                     $name =  'conclusion_attachment_ocr' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -146,7 +146,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('cq_attachment_ocqr')) {
                 foreach ($request->file('cq_attachment_ocqr') as $file) {
-                    
+
                     $name =  'cq_attachment_ocqr' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -160,7 +160,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('disposition_attachment_bd')) {
                 foreach ($request->file('disposition_attachment_bd') as $file) {
-                    
+
                     $name =  'disposition_attachment_bd' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -173,7 +173,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('reopen_attachment_ro')) {
                 foreach ($request->file('reopen_attachment_ro') as $file) {
-                    
+
                     $name =  'reopen_attachment_ro' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -186,7 +186,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('addendum_attachment_uaa')) {
                 foreach ($request->file('addendum_attachment_uaa') as $file) {
-                    
+
                     $name =  'addendum_attachment_uaa' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -199,7 +199,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('addendum_attachments_uae')) {
                 foreach ($request->file('addendum_attachments_uae') as $file) {
-                    
+
                     $name =  'addendum_attachments_uae' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -212,7 +212,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('required_attachment_uar')) {
                 foreach ($request->file('required_attachment_uar') as $file) {
-                    
+
                     $name =  'required_attachment_uar' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -225,7 +225,7 @@ class OOSController extends Controller
             $files = [];
             if ($request->hasfile('verification_attachment_uar')) {
                 foreach ($request->file('verification_attachment_uar') as $file) {
-                    
+
                     $name =  'verification_attachment_uar' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -236,7 +236,7 @@ class OOSController extends Controller
         if(!empty ($input)){
             $OosDataRecord = OOS::create($input);
         }
-        
+
 
         // =========== oos grid start =====================
         if(!empty($OosDataRecord)){
@@ -256,9 +256,9 @@ class OOSController extends Controller
                 'info_analyst_name' => $request->info_analyst_name[$i],
                 'info_others_specify' => $request->info_others_specify[$i],
                 'info_process_sample_stage' => $request->info_process_sample_stage[$i]
-                ); 
+                );
                 $ProductDatas = Oosgrids::insert($ProductData);
-                $i++;  
+                $i++;
                 }
             }
            // ========== identifier_details_stability ======
@@ -276,12 +276,12 @@ class OOSController extends Controller
                 'stability_study_pack_details' => $request->stability_study_pack_details[$j],
                 'stability_study_specification_no' => $request->stability_study_specification_no[$j],
                 'stability_study_sample_description' => $request->stability_study_sample_description[$j]
-                ); 
+                );
                 $StabilityDatas = Oosgrids::insert($StabilityData);
-                $j++;  
+                $j++;
                 }
             }
-            // // ===========' identifier_oos_detail[$k]=========
+            // // ===========' identifier_oos_detail[$k] =========
             $oos_arnumber = $request->oos_arnumber;
             if(isset($oos_arnumber) && $oos_arnumber!=''){
                     $k=0;
@@ -295,9 +295,9 @@ class OOSController extends Controller
                     'oos_details_obvious_error' => $request->oos_details_obvious_error[$k],
                     // 'oos_file_attachment' => $request->oos_file_attachment[$k],
                     'oos_submit_on' => $request->oos_submit_on[$k]
-                ); 
+                );
                 $OosDetailDatas = Oosgrids::insert($OosDetailData);
-                $k++;  
+                $k++;
                 }
             }
             // ========== identifier_oos_capa ==========
@@ -316,9 +316,9 @@ class OOSController extends Controller
                 'info_oos_closure_date' => $request->info_oos_closure_date[$n],
                 // 'info_oos_capa_requirement' => $request->info_oos_capa_requirement[$n],
                 'info_oos_capa_reference_number' => $request->info_oos_capa_reference_number[$n]
-                ); 
+                );
                 $genaralGridInfoDatas = Oosgrids::insert($OosCapaData);
-                $n++;  
+                $n++;
                 }
             }
             // // =============== identifier_oos_conclusion ========
@@ -334,9 +334,9 @@ class OOSController extends Controller
                 'summary_results' => $request->summary_results[$l],
                 'summary_results_analyst_name' => $request->summary_results_analyst_name[$l],
                 'summary_results_remarks' => $request->summary_results_remarks[$l]
-                ); 
+                );
                 $OosConclusionDatas = Oosgrids::insert($OosConclusionData);
-                $l++;  
+                $l++;
                 }
             }
             // ============= identifier_oos_conclusion_review ==========
@@ -351,9 +351,9 @@ class OOSController extends Controller
                 'conclusion_review_batch_no'=>$request->conclusion_review_batch_no[$m],
                 'conclusion_review_any_other_information'=>$request->conclusion_review_any_other_information[$m],
                 'conclusion_review_action_affecte_batch'=>$request->conclusion_review_action_affecte_batch[$m],
-                ); 
+                );
                 $ConclusionReviewDatas = OosGrids::insert($ConclusionReviewData);
-                $m++;  
+                $m++;
                 }
             }
              // ============= Phase -1  ==========
@@ -367,12 +367,12 @@ class OOSController extends Controller
             //         'question' => is_array($questions) ? $questions : [],
             //         //  'response'=> is_array($request->response) ? $request->response : [] ,
             //         // 'remark'=> is_array($request->remark) ? $request->remark : []
-            //         ); 
+            //         );
             //         $Phase1Datas = Oosgrids::insert($Phase1Data);
-            //         //  $p++;  
+            //         //  $p++;
             //      }
             //     //  dd($Phase1Data);
-                
+
             //  }
              // ============= Phase -2  ==========
             //  $question = $request->question;
@@ -385,15 +385,15 @@ class OOSController extends Controller
             //      'question' => $request->question[$p],
             //      'response'=>$request->response[$p],
             //      'remark'=>$request->remark[$p]
-            //      ); 
+            //      );
             //      $Phase1Datas = OosGrids::insert($Phase1Data);
-            //      $p++;  
+            //      $p++;
             //      }
             //  }
             toastr()->success("Record is created Successfully");
             return redirect(url('rcms/qms-dashboard'));
         }
-        
+
     }
     public static function show($id)
     {
@@ -418,7 +418,7 @@ class OOSController extends Controller
         //                 }
         //             }
         //             $deviation->CAPA_Closure_attachment = json_encode($files);
-                    
+
         //         }
         //         $deviation->update();
         //         toastr()->success('Document Sent');
@@ -428,5 +428,5 @@ class OOSController extends Controller
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
-    
+
 }

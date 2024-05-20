@@ -37,7 +37,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-       
+
         #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(7){
             border-radius: 0px 20px 20px 0px;
 
@@ -134,12 +134,12 @@
                         '<td><input type="text" name="info_oos_capa[]" value=""></td>' +
                         '<td><input type="date" name="info_oos_closure_date[]" value=""></td>' +
                         '<td><select name="info_oos_capa_requirement[]"><option value="yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' + 
+                        '<td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>' +
                     '</tr>' +;
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -172,7 +172,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -205,7 +205,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -239,7 +239,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -273,7 +273,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -308,7 +308,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -379,7 +379,7 @@
                                 Cancel
                             </button>
                         {{-- @elseif($data->stage == 2  && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                         
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 HOD Review Complete
                             </button>
@@ -387,17 +387,17 @@
                                 More Info-required
                             </button>
                         {{-- @elseif($data->stage == 3  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                           
+
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information required
                             </button> --}}
-                            
+
                         {{-- @elseif($data->stage == 4  && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                           
-                            
+
+
                         {{-- @elseif($data->stage == 6  && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds))) --}}
                             {{-- @if ($evaluation->training_required == 'yes') --}}
-                               
+
                             {{-- @endif --}}
                         {{-- @elseif($data->stage == 7  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -550,13 +550,13 @@
                                 {{-- <div class="active">Pending Change Implementation</div> --}}
                             {{-- @else --}}
                                 <div class="">Under Phase I b
-                                    Investigation 
+                                    Investigation
                                 </div>
-                                <div class="">Under HypothesisExperiment 
+                                <div class="">Under HypothesisExperiment
                                 </div>
                                 <div class=""> Under Repeat Analysis
                                 </div>
-                               
+
 
 
                             {{-- @endif --}}
@@ -609,7 +609,7 @@
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
-                    <div class="sub-head">General Information</div>
+                    <div class="sub-head">General Information </div>
                     <div class="row">
 
                         <div class="col-lg-6">
@@ -619,7 +619,7 @@
                             </div>
                         </div>
 
-                       
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
@@ -644,7 +644,7 @@
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                             </div>
                         </div>
-                        
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Due Date
@@ -766,8 +766,8 @@
                                                             @endforeach
                                                         {{-- @endif --}}
                                                         @endif
-                                    
-                                    
+
+
                                     </div>
 
                                     <div class="add-btn">
@@ -778,13 +778,13 @@
                             </div>
                         </div>
                        <div class="col-lg-6">
-    
+
                 <div class="group-input">
                         <label for="Source Document Type">Source Document Type</label>
                         <select name="source_document_type_gi">
                             <option value="0">Enter Your Selection Here</option>
-                                
-                                 
+
+
                         </select>
                     </div>
                 </div>
@@ -796,7 +796,7 @@
                                    <option value="o">Enter Your Selection Here</option>
                                     <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2</option>
-                              
+
                                 </select>
                             </div>
                         </div>
@@ -807,7 +807,7 @@
                                     <option value="0">--Select---</option>
                                     <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1</option>
                                     <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2</option>
-                              
+
                                 </select>
                             </div>
                         </div>
@@ -847,7 +847,7 @@
                      <option value="0">Enter Your Selection Here</option>
                     <option value="yes" {{ $data->customer_gi == 'yes' ? 'selected' : '' }}>Yes</option>
                     <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No</option>
-                </select> 
+                </select>
 
                             </div>
                         </div>
@@ -883,7 +883,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
                                         <td><input type="text" name="info_product_code[]" value=""></td>
                                         <td><input type="text" name="info_batch_no[]" value=""></td>
@@ -947,7 +947,7 @@
                                         <td><input type="text" name="stability_study_orientation[]"></td>
                                         <td><input type="text" name="stability_study_pack_details[]"></td>
                                         <td><input type="text" name="stability_study_specification_no[]"></td>
-                                        <td><input type="text" name="stability_study_sample_description[]"></td> 
+                                        <td><input type="text" name="stability_study_sample_description[]"></td>
                                     </tbody>
                                 </table>
                             </div>
@@ -1193,9 +1193,9 @@
                             <center>
                                 <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
                             </center>
-                            
+
                             <div class="group-input " >
-                                
+
                                 <div class="why-why-chart mx-auto" style="width: 100%">
 
                                     <table class="table table-bordered ">
@@ -1276,7 +1276,7 @@
                                                 </td>
                                             </tr>
                                             <tr>
-                                               
+
                                                 <td class="flex text-center">4</td>
                                                 <td>Correct test procedure followed e.g. Current Version of standard testing
                                                     procedure has been used in testing.</td>
@@ -1794,7 +1794,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                
+
                             </div>
                         </div>
 
@@ -2003,7 +2003,7 @@
                                                 <option value="yes">Yes</option>
                                                 <option value="No">No</option>
                                             </select></td>
-                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td> 
+                                        <td><input type="text" name="info_oos_capa_reference_number[]" value=""></td>
                                     </tbody>
                                 </table>
                             </div>

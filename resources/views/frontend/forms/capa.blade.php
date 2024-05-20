@@ -39,12 +39,12 @@
                         '"></td>' +
                         '<td><input type="text" name="material_name[]"></td>' +
                         '<td><input type="text" name="material_batch_no[]"></td>' +
-                       
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
-                        
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                        
+
                         '<td><input type="text" name="material_batch_desposition[]"></td>' +
                         '<td><input type="text" name="material_remark[]"></td>' +
                         '<td><select name="material_batch_status[]">' +
@@ -55,8 +55,8 @@
                     }
 
                     html += '</select></td>' +
-                      
-                     
+
+
                         '</tr>';
 
                     return html;
@@ -84,7 +84,7 @@
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
-  
+
     <div id="change-control-fields">
         <div class="container-fluid">
 
@@ -251,7 +251,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -401,10 +401,10 @@
                                         <textarea name="containment_comments" id="containment_comments"></textarea>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments">CAPA Attachment</label>
+                                        <label for="CAPA Attachments">CAPA Attachment </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -501,18 +501,18 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
@@ -595,24 +595,24 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -645,16 +645,16 @@
                                                     <th>Equipment/Instruments Comments</th>
                                                 </tr>
                                             </thead>
-                                            
 
-                                            
+
+
                                          <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
-                                            </tbody> 
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -737,7 +737,7 @@
                                         <label for="General Deviation">General Deviation</label>
                                         <textarea name="general_deviation"></textarea>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -929,7 +929,7 @@
 
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
@@ -950,7 +950,7 @@
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="cft_attchament_new"> </div>
-                                                                                        
+
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
@@ -1364,7 +1364,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');
