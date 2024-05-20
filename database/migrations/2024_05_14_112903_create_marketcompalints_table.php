@@ -81,7 +81,8 @@ return new class extends Migration
 
         $table->longText('closure_comment_c')->nullable();
         $table->longText('initial_attachment_c')->nullable();
-    
+        $table->string('stage')->nullable();
+        $table->string('status')->nullable();
 
             $table->timestamps();
         });

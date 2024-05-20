@@ -6,10 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\MarketComplaint;
 use App\Models\MarketComplaintGrids ;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\App;
 
+use Carbon\Carbon;
+use PDF;
 class MarketComplaintController extends Controller
 {
     public function index()
@@ -23,6 +27,10 @@ class MarketComplaintController extends Controller
 // ============================================by using insta====================================
 
 $marketComplaint = new MarketComplaint();
+
+
+$marketComplaint->status = 'Opened';
+$marketComplaint->stage = 1;
 
 // Manually assigning each field from the request
         $marketComplaint->initiator_id = Auth::user()->id;
@@ -179,9 +187,9 @@ $marketComplaint = new MarketComplaint();
             $marketrproducts->identifier = 'ProductDetails';
             $marketrproducts->data = $request->serial_number_gi;
             $marketrproducts->save();
-// dd($marketrproducts->data);
-//Traceability
-            // $griddata = $marketComplaint->id;
+        // dd($marketrproducts->data);
+        //Traceability 
+                    // $griddata = $marketComplaint->id;
 
             $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
             $marketrproducts->mc_id = $griddata;
@@ -251,16 +259,7 @@ return redirect()->route('marketcomplaint.market_complaint_new')->with('success'
 
     public function show($id)
     {
-    //     $marketComplaint = MarketComplaint::findOrFail($id);
-    // $marketProducts = MarketComplaintGrids::where([
-    //     'mc_id' => $marketComplaint->id,
-    //     'identifier' => 'ProductDetails'
-    // ])->firstOrFail();
-
-    // // Decode the JSON data
-    // $productDetails = json_decode($marketProducts->data, true);
-    // return view('frontend.market_complaint.market_complaint_view', compact('marketComplaint', 'productDetails'));
-    $data = MarketComplaint::find($id);
+            $data = MarketComplaint::find($id);
     $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
     $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Traceability')->first();
     $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Investing_team')->first();
@@ -276,43 +275,7 @@ return redirect()->route('marketcomplaint.market_complaint_new')->with('success'
 
 
 
-
-
-        // =------------------------
-        // $data = MarketComplaint::find($id);
-//         $data = MarketComplaint::where('id', $id)->first();
-//      $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     //  $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     //  $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     //  $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     //  $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     //  $products_gi = MarketComplaintGrids::where(['mc_id' => $id,'identifier' => 'ProductDetails'])->first();
-//     $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-//     $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
-//     $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-    
-
-//     $report = MarketComplaintGrids::where('mc_id', $id)->first();
-//     $productDetails = $products_gi ? json_decode($products_gi->data, true) : [];
-// dd($report);
-//     //  dd($data);
-        // $records = MarketComplaint::all(); 
-        //  dd($records);
-        // return view('frontend.market_complaint.market_complaint_view', compact('data', 'records','id'));
-    }
-    
-
-    // public function LabIncidentShow($id)
-    // {
-
-    //     $data = LabIncident::find($id);
-    //     $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-    //     $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
-    //     $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        
-    //     //return view('frontend.labIncident.view', compact('data'));
-
-    //        }
+        }
 
 
 
@@ -383,25 +346,6 @@ public function update(Request $request,$id){
     $marketComplaint->form_type="Market Complaint";
     //    dd($marketComplaint);
     
-//  dd($marketComplaint);
-    
-
-
-// $marketComplaint->save();
-
-
-    // ====================================intance end
-    // $input = $request->all();
-    // //  dd($request->all());
-
-
-
-
-    //  MarketComplaint::create($input);
-    //  $marketComplaintGrid = new MarketComplaintGrids($input);
-    //  $marketComplaintGrid->save();
-    //  MarketComplaintGrids::create($input);
-
 
         // {{----.File attachemenet   }}
 
@@ -474,7 +418,8 @@ public function update(Request $request,$id){
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'ProductDetails';
         $marketrproducts->data = $request->serial_number_gi;
-        $marketrproducts->save();
+        $marketrproducts->update();
+        // $marketrproducts->save();
 // dd($marketrproducts->data);
 //Traceability
         // $griddata = $marketComplaint->id;
@@ -483,40 +428,40 @@ public function update(Request $request,$id){
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Traceability';
         $marketrproducts->data = $request->trace_ability;
-        $marketrproducts->save();
+        $marketrproducts->update();
 
             // {{-- Investing_team --}}
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Investing_team';
         $marketrproducts->data = $request->Investing_team;
-        $marketrproducts->save();
+        $marketrproducts->update();
             // {{-- Brain stroming Session --}}
 
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Brain_stroming_Session'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Brain_stroming_Session';
         $marketrproducts->data = $request->brain_stroming_details;
-        $marketrproducts->save();
+        $marketrproducts->update();
             // {{ Team Members }}
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Team_Members';
         $marketrproducts->data = $request->Team_Members ;
-        $marketrproducts->save();
+        $marketrproducts->update();
             // {{ Report_Approval }}
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Report_Approval';
         $marketrproducts->data = $request->Report_Approval ;
-        $marketrproducts->save();
+        $marketrproducts->update();
 
         // {{ Product_MaterialDetails }}
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Product_MaterialDetails';
         $marketrproducts->data = $request->Product_MaterialDetails ;
-        $marketrproducts->save();
+        $marketrproducts->update();
 
 
             // {{  g}}
@@ -535,7 +480,7 @@ public function update(Request $request,$id){
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Proposal_to_accomplish_investigation';
         $marketrproducts->data = json_encode($investigationData); // Encode data to JSON
-        $marketrproducts->save();
+        $marketrproducts->update();
     
        
    
@@ -545,6 +490,214 @@ public function update(Request $request,$id){
     // return redirect()->route('marketcomplaint.marketcomplaintupdate' ,['id'=> $marketComplaint->id])->with('success', 'Market Complaint updated successfully.');    
 
 }
+
+
+
+// public function MarketComplaintStateChange(Request $request, $id)
+//     {
+//         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+//             $changeControl = MarketComplaint::find($id);
+            
+//             $lastDocument =  MarketComplaint::find($id);
+//             $data =  MarketComplaint::find($id);
+
+//             if ($changeControl->stage == 1) {
+//                 $changeControl->stage = "2";
+//                 $changeControl->submitted_by = Auth::user()->name;
+//                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
+//                 $changeControl->status = "HOD Review";
+                
+//                 $changeControl->update();
+                
+//                 // $history = new LabIncidentAuditTrial();
+//                 // $history->LabIncident_id = $id;
+//                 // $history->activity_type = 'Activity Log';
+//                 // // $history->previous = $lastDocument->submitted_by;
+//                 // $history->current = $changeControl->submitted_by;
+//                 // $history->comment = $request->comment;
+//                 // $history->user_id = Auth::user()->id;
+//                 // $history->user_name = Auth::user()->name;
+//                 // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+//                 // $history->origin_state = $lastDocument->status;
+//                 // $history->stage='Submited';
+//                 // $history->save();
+                
+//                 // try {
+//                 //     // $list = Helpers::getHodUserList();
+        
+//                 //     // foreach ($list as $u) {
+//                 //     // if ($u->q_m_s_divisions_id == $changeControl->division_id) {
+//                 //     // $email = Helpers::getInitiatorEmail($u->user_id);
+        
+//                 //     // if ($email !== null) {
+//                 //     // try {
+//                 //     //  Mail::send(
+//                 //     //  'mail.view-mail',
+//                 //     //  ['data' => $changeControl],
+//                 //     //  function ($message) use ($email) {
+//                 //     //  $message->to($email)
+//                 //     //  ->subject("Document is Submitted By " . Auth::user()->name);
+//                 //     //  }
+//                 //     //  );
+//                 //     //  } catch (\Exception $e) {
+//                 //     // //  return response()->json(['error' => 'Failed to send Email ' . $e->getMessage()], 500);
+//                 //     //  }
+//                 //     //  }
+//                 //      }
+//                 //         }
+//                 // } catch (\Exception $e) {
+//                 //     // return response()->json(['error' => 'An error Occured: ' . $e->getMessage()], 500);
+//                 // }
+              
+
+                
+//                 // $changeControl->update();
+//                 toastr()->success('Document Sent');
+//                 return back();
+            
+//             }
+//             }
+
+
+//         }
+
+
+public function MarketComplaintStateChange(Request $request,$id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $labstate = MarketComplaint::find($id);
+            $lastDocument =  MarketComplaint::find($id);
+            $data = MarketComplaint::find($id);
+
+
+           if( $labstate->stage == 1){
+            $labstate->stage = "2";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+            $labstate->status = "HOD Review";
+            
+            $labstate->update();
+
+            return redirect()->back();
+           }
+           if( $labstate->stage == 2)
+           {
+            $labstate->stage = "3";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status =" QA Initial Review";
+            // dd($labstate->stage);
+            $labstate->update();
+            return redirect()->back();
+           }
+
+           if( $labstate->stage == 3)
+           {
+            $labstate->stage = "4";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="CFT Review";
+            $labstate->update();
+            return redirect()->back();
+           }
+
+           if( $labstate->stage == 4)
+           {
+            $labstate->stage = "5";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="QA Final Review";
+            $labstate->update();
+            return redirect()->back();
+           }
+           
+           if( $labstate->stage == 5)
+           {
+            $labstate->stage = "6";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="CAPA Initiation & Approval";
+            $labstate->update();
+            return redirect()->back();
+           }
+
+           if( $labstate->stage == 6)
+           {
+            $labstate->stage = "7";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="QA Head/Manager Designee Approval";
+            $labstate->update();
+            return redirect()->back();
+           }
+
+           if( $labstate->stage == 7)
+           {
+            $labstate->stage = "8";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="Pending Initiator Update";
+            $labstate->update();
+            return redirect()->back();
+           }
+           if( $labstate->stage == 8)
+           {
+            $labstate->stage = "9";
+            $labstate->submitted_by = Auth::user()->name;
+            $labstate->submitted_on = Carbon::now()->format('d-M-Y');
+
+            $labstate->status ="Closed - Done";
+            $labstate->update();
+            return redirect()->back();
+           }
+
+
+        }else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
+
+
+  
+
+
+    public function singleReport(Request $request, $id){
+
+        $data = MarketComplaint::find($id);
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.market_complaint.singleReport', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Lab-Incident' . $id . '.pdf');
+        }
+        
+
+        return view('frontend.market_complaint.singleReport');
+
+    }
 
 }
 

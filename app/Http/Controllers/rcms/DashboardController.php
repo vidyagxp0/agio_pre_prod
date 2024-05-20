@@ -787,6 +787,24 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
+        elseif ($type == "Market demo") {
+            $data = MarketComplaint::find($id);
+            $single = "marketComplaintSingleReport/" . $data->id;
+            $audit = "MarketComplaintAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+            
+        }
+
+        elseif ($type == "Market Complaint") {
+            $data = MarketComplaint::find($id);
+            $single = "pdf-report/" . $data->id;
+            $audit = "MarketComplaintAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+            
+        }
+        
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 
