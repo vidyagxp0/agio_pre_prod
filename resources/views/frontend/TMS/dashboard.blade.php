@@ -148,15 +148,19 @@
                                     <th>Status</th>
                                 </tr>
                             </thead>
+                            {{-- @php
+                                $employees = DB::table('employees')->get();
+                                // dd($employees);
+                            @endphp --}}
                             <tbody>
                                 @foreach ($employees as $employee)
                                     <tr>
-                                        <td>{{ $employee->id }}</td>
+                                        <td>{{ $employee->employee_id }}</td>
                                         <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
                                         <td>{{ $employee->job_title }}</td>
-                                        <td>{{ $employee->assigned_to }}</td>
+                                        <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
                                         <td>{{ $employee->joining_date }}</td>
-                                        <td>{{ $employee->status }}</td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -180,15 +184,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($pending as $temp)
+                                @foreach ($trainers as $trainer)
                                     <tr>
-                                        <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                            000{{ $temp->document_id }}</td>
-                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
-                                        <td>{{ $temp->document_type_name }}</td>
-                                        <td>{{ $temp->division_name }}</td>
-                                        <td>{{ $temp->status }} </td>
-                                        <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td>{{ $trainer->record_number }}</td>
+                                        <td>{{ $trainer->site_code }}</td>
+                                        <td>{{ $trainer->initiator }}</td>
+                                        <td>{{ $trainer->date_of_initiation }}</td>
+                                        <td>{{ $trainer->due_date }}</td>
+                                        <td>{{ $trainer->short_description }}</td>
+                                        <td>{{ $trainer->trainer_name }}</td>
+                                        <td>{{ $trainer->department }}</td>
+                                        <td></td>
                                     </tr>
                                 @endforeach
 
