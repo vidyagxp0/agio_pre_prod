@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OOS_Mirco_grid extends Model
 {
     use HasFactory;
+
+    protected $casts = [
+        'data' => 'array'
+    ];
 }

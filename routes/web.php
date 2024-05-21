@@ -419,6 +419,22 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
 
+
+
+//============================================OOS MICRO===================================
+////-------------------------------------------------------------------------------------
+Route::get('oos_micro',[OOSMicroController::class,'index']);
+Route::post('oos_micro_store',[OOSMicroController::class,'store']);
+
+
+
+
+
+/////-------------------------------------------------------------------------------------
+//============================================OOS MICRO===================================
+
+
+
 // =================LOGS=========================================
 
 Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
