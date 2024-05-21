@@ -146,18 +146,18 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Child
                             </button>
-                          
+
                         {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                             
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Retire
                             </button>
-                            
+
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        
-                      
+
+
                         {{-- @endif --}}
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -208,7 +208,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
 
             </div>
-            <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- Tab content -->
             <div id="step-form">
