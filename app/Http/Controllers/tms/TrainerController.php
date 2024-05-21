@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 class TrainerController extends Controller
 {
     public function store(Request $request) {
+        // return $request->all();
 
         $res = [
             'status' => 'ok',

@@ -325,28 +325,39 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="">
+                                        <input disabled type="text" name="record_number" value="PL-01-109">
+                                        <input type="hidden" name="record_number" value="PL-01-109">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="site_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Site/Location Code</b></label>
+                                        <input disabled type="text" name="site_code" value="PLANT">
+                                        <input type="hidden" name="site_code" value="PLANT">
+
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}">
+                                        <input type="hidden" name="initiator" value="{{ Auth::user()->name }}">
 
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="date_of_initiation">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="date_of_initiation">
                                     </div>
                                 </div>
