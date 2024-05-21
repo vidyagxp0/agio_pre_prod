@@ -16,5 +16,5 @@ class Oosgrids extends Model
     ];
     protected $casts = [
         'data' => 'array'
-        ];
+    ];
 }

@@ -4,7 +4,6 @@
         @include('frontend.TMS.head')
     @endif
 
-
     {{-- ======================================
                     DASHBOARD
     ======================================= --}}
@@ -63,7 +62,7 @@
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
-                                         <th>&nbsp;</th> 
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +70,7 @@
                                     @if(!empty($temp->training) && $temp->training->stage >=6)
                                         <tr>
                                             @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
                                                     if ($trainingPlan) {
                                                         $traineesCount = count(explode(',', $trainingPlan->trainees));
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
@@ -85,9 +84,9 @@
                                             <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                             <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
                                             <td>{{ $temp->status }}</td>
-                                           
+
                                             {{-- <td>
-                                                <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                <a href="#"><i class="fa-solid fa-eye"></i></a>
                                             </td> --}}
                                             <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
 
@@ -102,11 +101,11 @@
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <div class="block-table" style="    padding-top: 100px;">
+                        <div class="block-table" style="    padding-top: 50px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Document Number</th>
+                                        <th style="width:15%;">Document Number</th>
                                         <th>Document Title</th>
                                         <th>Training Status</th>
                                         <th>Content Type</th>
@@ -136,8 +135,68 @@
                             </table>
                         </div>
                     @endif
-                </div>
+{{-- ========================================employee Data================ --}}
+                    <div class="block-table" style="margin-top:50px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%;">Employee ID</th>
+                                    <th>Department</th>
+                                    <th>Job Title</th>
+                                    <th>Assigned To</th>
+                                    <th>Joining Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($employees as $employee)
+                                    <tr>
+                                        <td>{{ $employee->id }}</td>
+                                        <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
+                                        <td>{{ $employee->job_title }}</td>
+                                        <td>{{ $employee->assigned_to }}</td>
+                                        <td>{{ $employee->joining_date }}</td>
+                                        <td>{{ $employee->status }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+{{-- ================================ --}}
+{{-- ========================================training Data================ --}}
+                    <div class="block-table" style="margin-top:50px;">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Record No.</th>
+                                    <th>Site/Location Code</th>
+                                    <th>Initiator</th>
+                                    <th>Date Of Initiation</th>
+                                    <th>Due Date</th>
+                                    <th>Short Description</th>
+                                    <th>Trainer Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($pending as $temp)
+                                    <tr>
+                                        <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
+                                            000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                        <td>{{ $temp->document_type_name }}</td>
+                                        <td>{{ $temp->division_name }}</td>
+                                        <td>{{ $temp->status }} </td>
+                                        <td><a href="#"><i class="fa-solid fa-eye"></i></a></td>
+                                    </tr>
+                                @endforeach
 
+                            </tbody>
+                        </table>
+                    </div>
+{{-- ================================ --}}
+                </div>
                 <div class="inner-block tms-block" id="tms-due-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
@@ -167,6 +226,7 @@
 
                                 </tbody>
                             </table>
+
                         </div>
                     @else
                         <div class="block-table">
@@ -193,7 +253,7 @@
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            
+
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -203,6 +263,7 @@
                             </table>
                         </div>
                     @endif
+
                 </div>
 
                 <div class="inner-block tms-block" id="tms-pending-block">
@@ -419,49 +480,49 @@
                             </div>
                             <div id="chart-tms4"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Deviation Rate (Term)
                             </div>
                             <div id="chart-tms5"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Overdue
                             </div>
                             <div id="chart-tms6"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 SOP For Training
                             </div>
                             <div id="chart-tms7"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Completed Training
                             </div>
                             <div id="chart-tms8"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Department Trainees
                             </div>
                             <div id="chart-tms9"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Question Banks
                             </div>
                             <div id="chart-tms10"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Plan
@@ -476,14 +537,14 @@
                             </div>
                             <div id="chart-tms12"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
                             </div>
                             <div id="chart-tms13"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -545,7 +606,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="inner-block table-block">
                             <div class="head">Change Control Extension Rate (Term)</div>
                             <div class="dash-table">

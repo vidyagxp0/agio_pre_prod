@@ -11,6 +11,34 @@ use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
+    public static function getArrayKey(array $array, $key)
+    {
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : ''; 
+    }
+    
+    public static function getDefaultResponse()
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        return $res;
+    }
+
+    public static function getDueDate($days = 30, $formatDate = true)
+    {
+        try {
+
+            $date = Carbon::now()->addDays($days);
+            $formatted_date = $formatDate ? $date->format("d-F-Y") : $date->format('Y-m-d');
+            return $formatted_date;
+
+        } catch (\Exception $e) {
+            return "01-Jan-1999";
+        }
+    }
     // public static function getdateFormat($date)
     // {
     //     $date = Carbon::parse($date);

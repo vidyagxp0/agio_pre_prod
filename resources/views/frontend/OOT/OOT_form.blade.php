@@ -72,6 +72,16 @@
                             General Information
                         </div> <!-- RECORD NUMBER -->
                         <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group">Type </label>
+                                <select id="dynamicSelectType" name="type">
+                                <option value="{{ route('oot.index');  }}">OOT</option>
+                                    <option value="{{ route('oos.index') }}">OOS Chemical</option>
+                                    <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                                </select>
+                            </div>
+                        </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group">Type </label>
@@ -3614,12 +3624,13 @@
         display: block;
     }
 </style>
+<!--set type  -->
 <script>
         document.getElementById("dynamicSelectType").addEventListener("change", function() {
             var selectedRoute = this.value;
             window.location.href = selectedRoute; // Redirect to the selected route
         });
-    </script>
+</script>
 
 <script>
     VirtualSelect.init({

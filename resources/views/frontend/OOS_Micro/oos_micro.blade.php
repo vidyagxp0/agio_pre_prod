@@ -1,5 +1,3 @@
-
-
 @extends('frontend.layout.main')
 @section('container')
     <style>
