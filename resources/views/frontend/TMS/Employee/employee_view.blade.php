@@ -1,0 +1,735 @@
+@extends('frontend.layout.main')
+@section('container')
+    @php
+        $users = DB::table('users')->select('id', 'name')->where('active', 1)->get();
+        $userRoles = DB::table('user_roles')->select('user_id')->where('q_m_s_roles_id', 4)->distinct()->get();
+        $departments = DB::table('departments')->select('id', 'name')->get();
+        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
+
+        $userIds = DB::table('user_roles')
+            ->where('q_m_s_roles_id', 4)
+            ->distinct()
+            ->pluck('user_id');
+
+        // Step 3: Use the plucked user_id values to get the names from the users table
+        $userNames = DB::table('users')
+            ->whereIn('id', $userIds)
+            ->pluck('name');
+
+        // If you need both id and name, use the select method and get
+        $userDetails = DB::table('users')
+            ->whereIn('id', $userIds)
+            ->select('id', 'name')
+            ->get();
+        // dd ($userIds,$userNames, $userDetails);
+    @endphp
+    <style>
+        textarea.note-codable {
+            display: none !important;
+        }
+
+        header {
+            display: none;
+        }
+    </style>
+  <style>
+    .progress-bars div {
+        flex: 1 1 auto;
+        border: 1px solid grey;
+        padding: 5px;
+        text-align: center;
+        position: relative;
+        /* border-right: none; */
+        background: white;
+    }
+
+    .state-block {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .progress-bars div.active {
+        background: green;
+        font-weight: bold;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+        border-radius: 20px 0px 0px 20px;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+        border-radius: 0px 20px 20px 0px;
+
+    }
+</style>
+    <script>
+        $(document).ready(function() {
+            $('#ObservationAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="jobResponsibilities[' + serialNumber +
+                        '][serial]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="jobResponsibilities[' + serialNumber +
+                        '][job]"></td>' +
+                        '<td><input type="text" class="Document_Remarks" name="jobResponsibilities[' +
+                        serialNumber + '][remarks]"></td>' +
+
+
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#job-responsibilty-table tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+    <div class="form-field-head">
+        <div class="pr-id">
+            New Employee Training
+        </div>
+        {{-- <div class="division-bar">
+            <strong>Site Division/Project</strong> :
+            Plant
+        </div> --}}
+        {{-- <div class="button-bar">
+            <button type="button">Save</button>
+            <button type="button">Cancel</button>
+            <button type="button">New</button>
+            <button type="button">Copy</button>
+            <button type="button">Child</button>
+            <button type="button">Check Spelling</button>
+            <button type="button">Change Project</button>
+        </div> --}}
+    </div>
+
+
+
+
+    {{-- ======================================
+                    DATA FIELDS
+    ======================================= --}}
+    <div id="change-control-fields">
+        <div class="container-fluid">
+
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                        {{-- @php --}}
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    {{-- @endphp --}}
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
+                        <button class="button_theme1"> <a class="text-white" href="">
+                                Audit Trail </a> </button>
+
+                        {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Propose Plan
+                            </button> --}}
+                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                               Activate
+                            </button>
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Approve Plan
+                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Child
+                            </button>
+                          
+                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                             
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Retire
+                            </button>
+                            
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                                Child
+                            </button> --}}
+                        
+                      
+                        {{-- @endif --}}
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    {{-- @if ($data->stage == 0) --}}
+                        {{-- <div class="progress-bars ">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div> --}}
+                    {{-- @else --}}
+                        <div class="progress-bars d-flex">
+                            {{-- @if ($data->stage >= 1) --}}
+                                <div class="active">Opened</div>
+                            {{-- @else --}}
+                                {{-- <div class="">Opened</div> --}}
+                            {{-- @endif --}}
+
+                            {{-- @if ($data->stage >= 2) --}}
+                                {{-- <div class="active">Active </div> --}}
+                            {{-- @else --}}
+                                <div class="">Active</div>
+                            {{-- @endif --}}
+
+                            {{-- @if ($data->stage >= 3) --}}
+                                {{-- <div class="bg-danger">Closed - Done</div> --}}
+                            {{-- @else --}}
+                                <div class="">Closed - Retired</div>
+                            {{-- @endif --}}
+                    {{-- @endif --}}
+
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
+        </div>
+            <!-- Tab links -->
+            <div class="cctab">
+
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
+                <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+
+            </div>
+            <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            <!-- Tab content -->
+            <div id="step-form">
+
+                <div id="CCForm1" class="inner-block cctabcontent">
+                    <div class="inner-block-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Site Division/Project">Site Division/Project</label>
+                                    <select name="division_id">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($divisions as $division)
+                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Assigned To">Assigned To</label>
+                                    <select name="assigned_to">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Actual Start Date">Actual Start Date</label>
+                                    <input type="date" name="start_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Joining Date">Joining Date</label>
+                                    <input type="date" name="joining_date">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Employee ID">Employee ID</label>
+                                    <input type="text" name="employee_id">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Gender">Gender</label>
+                                    <select name="gender">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Male">Male</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Department">Department</label>
+                                    <select name="department">
+                                        <option>-- Select --</option>
+                                        @foreach ($departments as $department)
+                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Job Title">Job Title</label>
+                                    <select name="job_title">
+                                        <option>Enter Your Selection Here</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Attached CV">Attached CV</label>
+                                    <input type="file" id="myfile" name="attached_cv">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Certification/Qualification">Certification/Qualification</label>
+                                    <input type="file" id="myfile" name="certification">
+                                </div>
+                            </div>
+                            <div class="col-12 sub-head">
+                                Employee Information
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Zone">Zone</label>
+                                    <select name="zone">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Asia">Asia</option>
+                                        <option value="Europe">Europe</option>
+                                        <option value="Africa">Africa</option>
+                                        <option value="Central America">Central America</option>
+                                        <option value="South America">South America</option>
+                                        <option value="Oceania">Oceania</option>
+                                        <option value="North America">North America</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Country">Country</label>
+                                    <select name="country" class="form-select country" aria-label="Default select example"
+                                        onchange="loadStates()">
+                                        <option value="Country" selected>Select Country</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="City">State</label>
+                                    <select name="state" class="form-select state" aria-label="Default select example"
+                                        onchange="loadCities()">
+                                        <option value="State" selected>Select State/District</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="State/District">City</label>
+                                    <select name="city" class="form-select city" aria-label="Default select example">
+                                        <option value="City" selected>Select City</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                var config = {
+                                    cUrl: 'https://api.countrystatecity.in/v1',
+                                    ckey: 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA=='
+                                };
+
+                                var countrySelect = document.querySelector('.country'),
+                                    stateSelect = document.querySelector('.state'),
+                                    citySelect = document.querySelector('.city');
+
+                                function loadCountries() {
+                                    let apiEndPoint = `${config.cUrl}/countries`;
+
+                                    $.ajax({
+                                        url: apiEndPoint,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(country => {
+                                                const option = document.createElement('option');
+                                                option.value = country.iso2;
+                                                option.textContent = country.name;
+                                                countrySelect.appendChild(option);
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading countries:', error);
+                                        }
+                                    });
+                                }
+
+                                function loadStates() {
+                                    stateSelect.disabled = false;
+                                    stateSelect.innerHTML = '<option value="">Select State</option>';
+
+                                    const selectedCountryCode = countrySelect.value;
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(state => {
+                                                const option = document.createElement('option');
+                                                option.value = state.iso2;
+                                                option.textContent = state.name;
+                                                stateSelect.appendChild(option);
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading states:', error);
+                                        }
+                                    });
+                                }
+
+                                function loadCities() {
+                                    citySelect.disabled = false;
+                                    citySelect.innerHTML = '<option value="">Select City</option>';
+
+                                    const selectedCountryCode = countrySelect.value;
+                                    const selectedStateCode = stateSelect.value;
+
+                                    $.ajax({
+                                        url: `${config.cUrl}/countries/${selectedCountryCode}/states/${selectedStateCode}/cities`,
+                                        headers: {
+                                            "X-CSCAPI-KEY": config.ckey
+                                        },
+                                        success: function(data) {
+                                            data.forEach(city => {
+                                                const option = document.createElement('option');
+                                                option.value = city.id;
+                                                option.textContent = city.name;
+                                                citySelect.appendChild(option);
+                                            });
+                                        },
+                                        error: function(xhr, status, error) {
+                                            console.error('Error loading cities:', error);
+                                        }
+                                    });
+                                }
+                                $(document).ready(function() {
+                                    loadCountries();
+                                });
+                            </script>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Site Name">Site Name</label>
+                                    <select name="site_name">
+                                        <option value="Enter Your Selection Here">Enter Your Selection Here</option>
+                                        <option value="City MFR A">City MFR A</option>
+                                        <option value="City MFR B">City MFR B</option>
+                                        <option value="City MFR C">City MFR C</option>
+                                        <option value="Complex A">Complex A</option>
+                                        <option value="Complex B">Complex B</option>
+                                        <option value="Marketing A">Marketing A</option>
+                                        <option value="Marketing B">Marketing B</option>
+                                        <option value="Marketing C">Marketing C</option>
+                                        <option value="Oceanside">Oceanside</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <div class="group-input">
+                                        <label for="Building">Building</label>
+                                        <input type="text" name="building">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Floor">Floor</label>
+                                    <input type="text" name="floor">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Room">Room</label>
+                                    <input type="text" name="room">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Picture">Picture</label>
+                                    <input type="file" id="myfile" name="picture">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Picture">Speciman Signature </label>
+                                    <input type="file" id="myfile" name="specimen_signature">
+                                </div>
+                            </div>
+                            <div class="group-input">
+                                <label for="audit-agenda-grid">
+                                    Job Responsibilities
+                                    <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered" id="job-responsibilty-table" style="width: 100%;">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 5%;">Sr No.</th>
+                                                <th>Job Responsibilities </th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                                                <td><input type="text" name="jobResponsibilities[0][remarks]" ></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Facility Name">HOD </label>
+                                    <select multiple name="hod[]" placeholder="Select HOD" data-search="false"
+                                        data-silent-initial-value-set="true" id="hod">
+                                        @foreach ($userDetails as $userRole)
+                                            <option value="{{ $userRole->id }}">{{ $userRole->name }}</option>
+                                        @endforeach
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="Facility Name">Designee </label>
+                                    <select multiple name="designee[]" placeholder="Select Designee Name" data-search="false"
+                                        data-silent-initial-value-set="true" id="designee">
+                                        <option value="QA Head">QA Head</option>
+                                        <option value="QC Head">QC Head</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Comments">Comments</label>
+                                    <textarea name="comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="File Attachment">File Attachment</label>
+                                    <input type="file" id="myfile" name="file_attachment">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="button-block">
+                            <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
+                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                    Exit </a> </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab content -->
+            <div id="CCForm2" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="group-input" id="external-details-grid">
+                            <label for="audit-agenda-grid">
+                                External Training Details
+                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#observation-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="external-training-table"
+                                    style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50px;">Sr. No.</th>
+                                            <th>Topic</th>
+
+                                            <th style="width: 200px;">External Training Date</th>
+                                            <th>External Trainer</th>
+
+                                            <th>External Training Agency</th>
+                                            <th style="width: 200px;">Certificate</th>
+                                            <th style="width: 200px;">Supporting Documents</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
+                                            <td><input type="text" name="external_training[0][topic]"></td>
+                                            <td><input type="date" name="external_training[0][external_training_date]"></td>
+                                            <td><input type="text" name="external_training[0][external_trainer]"></td>
+                                            <td><input type="text" name="external_training[0][external_agency]"></td>
+                                            <td><input type="file" name="external_training[0][certificate]"></td>
+                                            <td><input type="file" name="external_training[0][supproting_documents]"></td>
+                                        </tr>
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Comments">External Comments</label>
+                                    <textarea name="external_comment"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="External Attachment">External Attachment</label>
+                                    <input type="file" id="myfile" name="external_attachment">
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            $(document).ready(function() {
+                                $('#details-grid').click(function(e) {
+                                    function generateTableRow(serialNumber) {
+                                        var users = @json($users);
+
+                                        var html =
+                                            '<tr>' +
+                                            '<td><input disabled type="text" name="external_training[' + serialNumber +
+                        '][serial]" value="' + serialNumber +
+                                            '"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][topic]"></td>' +
+                                            '<td><input type="date" name="external_training[' + serialNumber +
+                        '][external_training_date]"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][external_trainer]"></td>' +
+                                            '<td><input type="text" name="external_training[' + serialNumber +
+                        '][external_agency]"></td>' +
+                                            '<td><input type="file" name="external_training[' + serialNumber +
+                        '][certificate]"></td>' +
+                                            '<td><input type="file" name="external_training[' + serialNumber +
+                        '][supproting_documents]"></td>' +
+                                            '</tr>';
+
+                                        // for (var i = 0; i < users.length; i++) {
+                                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                        // }
+
+                                        '</tr>';
+
+                                        return html;
+                                    }
+
+                                    var tableBody = $('#external-training-table tbody');
+                                    var rowCount = tableBody.children('tr').length;
+                                    var newRow = generateTableRow(rowCount + 1);
+                                    tableBody.append(newRow);
+                                });
+                            });
+                        </script>
+
+                    </div>
+                    <div class="button-block">
+                        <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
+                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
+                                Exit </a> </button>
+                    </div>
+                </div>
+            </div>
+             <!-- Activity Log content -->
+             <div id="CCForm6" class="inner-block cctabcontent">
+                <div class="inner-block-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Activated By">Activated By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Activated On">Activated On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for=" Rejected By">Retired By</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Rejected On">Retired On</label>
+                                <div class="static"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                    {{-- <div class="button-block">
+                        <button type="submit" class="saveButton">Save</button>
+                        <a href="/rcms/qms-dashboard">
+                            <button type="button" class="backButton">Back</button>
+                        </a>
+                        <button type="submit">Submit</button>
+                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                                Exit </a> </button>
+                    </div> --}}
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        const saveButtons = document.querySelectorAll('.saveButton1');
+        const form = document.getElementById('step-form');
+    </script>
+    <script>
+        VirtualSelect.init({
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #designee, #hod'
+        });
+    </script>
+@endsection

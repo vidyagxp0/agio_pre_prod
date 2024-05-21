@@ -464,3 +464,7 @@ Route::view('errata_view', 'frontend.errata.errata_view');
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
+Route::view('employee_view', 'frontend.TMS.Employee.employee_view');
+Route::view('trainer_qualification_view', 'frontend.TMS.Trainer_qualification.trainer_qualification_view');
+
+
