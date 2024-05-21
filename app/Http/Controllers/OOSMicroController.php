@@ -158,9 +158,9 @@ class OOSMicroController extends Controller
         $micro->oos_category_reason_identified_piiqcr = $request->oos_category_reason_identified_piiqcr;
         $micro->others_oos_category_piiqcr = $request->others_oos_category_piiqcr;
         $micro->details_of_root_cause_piiqcr = implode(',', $request->details_of_root_cause_piiqcr);
-        $micro->impact_assessment_piiqcr = $request->impact_assessment_piiqc;
+        $micro->impact_assessment_piiqcr = implode(',', $request->impact_assessment_piiqcr);
         $micro->recommended_action_required_piiqcr = $request->recommended_action_required_piiqcr;
-        $micro->recommended_action_reference_piiqcr = $request->recommended_action_reference_piiqcr;
+        $micro->recommended_action_reference_piiqcr = $request->recommended_action_reference_piiqcr ;
         $micro->investi_required_piiqcr = $request->investi_required_piiqcr;
         $micro->invest_ref_piiqcr = $request->invest_ref_piiqcr;
 
@@ -176,12 +176,12 @@ class OOSMicroController extends Controller
             $micro->attachments_piiqcr = $files;
         }
         // Additional testing proposal
+
         $micro->review_comment_atp = $request->review_comment_atp;
         $micro->additional_test_proposal_atp = $request->additional_test_proposal_atp;
         $micro->additional_test_reference_atp = $request->additional_test_reference_atp;
         $micro->any_other_actions_required_atp = $request->any_other_actions_required_atp;
         $micro->action_task_reference_atp = $request->action_task_reference_atp;
-
         if (!empty($request->additional_testing_attachment_atp)) {
             $files = [];
             if ($request->hasfile('additional_testing_attachment_atp')) {
@@ -310,7 +310,7 @@ class OOSMicroController extends Controller
             $micro->reopen_attachment = $files;
         }
         $micro->save();
-
+        //dd($micro);
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
      }
@@ -341,7 +341,7 @@ class OOSMicroController extends Controller
             $micro->nature_of_change_gi = $request->nature_of_change_gi;
             $micro->deviation_occured_on_gi = $request->deviation_occured_on_gi;
             $micro->description_gi = $request->description_gi;
-    
+
             if (!empty($request->initial_attachment_gi)) {
                 $files = [];
                 if ($request->hasfile('initial_attachment_gi')) {
@@ -353,8 +353,8 @@ class OOSMicroController extends Controller
                 }
                 $micro->initial_attachment_gi = $files;
             }
-    
-    
+
+
             $micro->source_document_type_gi = $request->source_document_type_gi;
             $micro->reference_system_document_gi = implode(',', $request->reference_system_document_gi);
             $micro->reference_document_gi = implode(',', $request->reference_document_gi);
@@ -362,11 +362,196 @@ class OOSMicroController extends Controller
             $micro->product_material_name_gi = $request->product_material_name_gi;
             $micro->market_gi = $request->market_gi;
             $micro->customer_gi = $request->customer_gi;
-            $micro->save();
 
-            toastr()->success("Record is updated Successfully");
-            return redirect(url('rcms/qms-dashboard'));
-         }
+             // preliminary lab investigation
+            $micro->comments_pli = implode(',', $request->comments_pli);
+            $micro->field_alert_required_pli = $request->field_alert_required_pli;
+            $micro->field_alert_ref_no_pli = implode(',', $request->field_alert_ref_no_pli);
+            $micro->justify_if_no_field_alert_pli = implode(',', $request->justify_if_no_field_alert_pli);
+            $micro->verification_analysis_required_pli = $request->verification_analysis_required_pli;
+            $micro->verification_analysis_ref_pli = implode(',', $request->verification_analysis_ref_pli);
+            $micro->analyst_interview_req_pli = $request->analyst_interview_req_pli;
+            $micro->analyst_interview_ref_pli = implode(',', $request->analyst_interview_ref_pli);
+            $micro->justify_if_no_analyst_int_pli = implode(',', $request->justify_if_no_analyst_int_pli);
+            $micro->phase_i_investigation_required_pli = $request->phase_i_investigation_required_pli;
+            $micro->phase_i_investigation_pli = $request->phase_i_investigation_pli;
+            $micro->phase_i_investigation_ref_pli = implode(',', $request->phase_i_investigation_ref_pli);
+
+
+
+            if (!empty($request->file_attachments_pli)) {
+                $files = [];
+                if ($request->hasfile('file_attachments_pli')) {
+                    foreach ($request->file('file_attachments_pli') as $file) {
+                        $name = $request->name . '-file_attachments_pli' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->file_attachments_pli = $files;
+            }
+            // preliminary lab inv Conclution
+            $micro->summary_of_prelim_investiga_plic = implode(',', $request->summary_of_prelim_investiga_plic);
+            $micro->root_cause_identified_plic = $request->root_cause_identified_plic;
+            $micro->oos_category_root_cause_ident_plic = $request->oos_category_root_cause_ident_plic;
+            $micro->oos_category_others_plic = implode(',', $request->oos_category_others_plic);
+            $micro->root_cause_details_plic = implode(',', $request->root_cause_details_plic);
+            $micro->oos_category_root_cause_plic = implode(',', $request->oos_category_root_cause_plic);
+            $micro->recommended_actions_required_plic = $request->recommended_actions_required_plic;
+            $micro->recommended_actions_reference_plic = implode(',', $request->recommended_actions_reference_plic);
+            $micro->capa_required_plic = $request->capa_required_plic;
+            $micro->reference_capa_no_plic = $request->reference_capa_no_plic;
+            $micro->delay_justification_for_pi_plic = implode(',', $request->delay_justification_for_pi_plic);
+
+            if (!empty($request->supporting_attachment_plic)) {
+                $files = [];
+                if ($request->hasfile('supporting_attachment_plic')) {
+                    foreach ($request->file('supporting_attachment_plic') as $file) {
+                        $name = $request->name . '-supporting_attachment_plic' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->supporting_attachment_plic = $files;
+            }
+
+             // preliminary lab invst  Review
+            $micro->review_comments_plir = implode(',', $request->review_comments_plir);
+            $micro->phase_ii_inv_required_plir = $request->phase_ii_inv_required_plir;
+
+            if (!empty($request->supporting_attachments_plir)) {
+                $files = [];
+                if ($request->hasfile('supporting_attachments_plir')) {
+                    foreach ($request->file('supporting_attachments_plir') as $file) {
+                        $name = $request->name . '-supporting_attachments_plir' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->supporting_attachments_plir = $files;
+            }
+            // phase ii investigation
+            $micro->qa_approver_comments_piii = implode(',', $request->delay_justification_for_pi_plic);
+            $micro->manufact_invest_required_piii = $request->manufact_invest_required_piii;
+            $micro->manufacturing_invest_type_piii = $request->manufacturing_invest_type_piii;
+            $micro->manufacturing_invst_ref_piii = $request->manufacturing_invst_ref_piii;
+            $micro->re_sampling_required_piii = $request->re_sampling_required_piii;
+            $micro->audit_comments_piii = $request->audit_comments_piii;
+            $micro->re_sampling_ref_no_piii = $request->re_sampling_ref_no_piii;
+            $micro->hypo_exp_required_piii = $request->hypo_exp_required_piii;
+            $micro->hypo_exp_reference_piii = $request->hypo_exp_reference_piii;
+
+            if (!empty($request->attachment_piii)) {
+                $files = [];
+                if ($request->hasfile('attachment_piii')) {
+                    foreach ($request->file('attachment_piii') as $file) {
+                        $name = $request->name . '-attachment_piii' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->attachment_piii = $files;
+            }
+            // Phase ii QC Review
+            $micro->summary_of_exp_hyp_piiqcr = implode(',', $request->summary_of_exp_hyp_piiqcr);
+            $micro->summary_mfg_investigation_piiqcr = implode(',', $request->summary_mfg_investigation_piiqcr);
+            $micro->root_casue_identified_piiqcr = $request->root_casue_identified_piiqcr;
+            $micro->oos_category_reason_identified_piiqcr = $request->oos_category_reason_identified_piiqcr;
+            $micro->others_oos_category_piiqcr = $request->others_oos_category_piiqcr;
+            $micro->details_of_root_cause_piiqcr = implode(',', $request->details_of_root_cause_piiqcr);
+            $micro->impact_assessment_piiqcr = $request->impact_assessment_piiqcr;
+            $micro->recommended_action_required_piiqcr = $request->recommended_action_required_piiqcr;
+            $micro->recommended_action_reference_piiqcr = $request->recommended_action_reference_piiqcr;
+            $micro->investi_required_piiqcr = $request->investi_required_piiqcr;
+            $micro->invest_ref_piiqcr = $request->invest_ref_piiqcr;
+
+            if (!empty($request->attachments_piiqcr)) {
+                $files = [];
+                if ($request->hasfile('attachments_piiqcr')) {
+                    foreach ($request->file('attachments_piiqcr') as $file) {
+                        $name = $request->name . '-attachments_piiqcr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->attachments_piiqcr = $files;
+            }
+            // Additional testing proposal
+
+            $micro->review_comment_atp = $request->review_comment_atp;
+            $micro->additional_test_proposal_atp = $request->additional_test_proposal_atp;
+            $micro->additional_test_reference_atp = $request->additional_test_reference_atp;
+            $micro->any_other_actions_required_atp = $request->any_other_actions_required_atp;
+            $micro->action_task_reference_atp = $request->action_task_reference_atp;
+
+            if (!empty($request->additional_testing_attachment_atp)) {
+                $files = [];
+                if ($request->hasfile('additional_testing_attachment_atp')) {
+                    foreach ($request->file('additional_testing_attachment_atp') as $file) {
+                        $name = $request->name . '-additional_testing_attachment_atp' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->additional_testing_attachment_atp = $files;
+            }
+
+            // oos conclusion
+            $micro->conclusion_comments_oosc = $request->conclusion_comments_oosc;
+            $micro->specification_limit_oosc = $request->specification_limit_oosc;
+            $micro->results_to_be_reported_oosc = $request->results_to_be_reported_oosc;
+            $micro->final_reportable_results_oosc = $request->final_reportable_results_oosc;
+            $micro->justifi_for_averaging_results_oosc = $request->justifi_for_averaging_results_oosc;
+            $micro->oos_stands_oosc = $request->oos_stands_oosc;
+            $micro->capa_req_oosc = $request->capa_req_oosc;
+            $micro->capa_ref_no_oosc = $request->capa_ref_no_oosc;
+            $micro->justify_if_capa_not_required_oosc = $request->justify_if_capa_not_required_oosc;
+            $micro->action_plan_req_oosc = $request->action_plan_req_oosc;
+            $micro->action_plan_ref_oosc = $request->action_plan_ref_oosc;
+            $micro->justification_for_delay_oosc = $request->justification_for_delay_oosc;
+
+            if (!empty($request->attachments_if_any_oosc)) {
+                $files = [];
+                if ($request->hasfile('attachments_if_any_oosc')) {
+                    foreach ($request->file('attachments_if_any_oosc') as $file) {
+                        $name = $request->name . '-attachments_if_any_oosc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->attachments_if_any_oosc = $files;
+            }
+
+            //oos conclusion review
+            $micro->conclusion_review_comments_ocr = $request->conclusion_review_comments_ocr;
+            $micro->action_taken_on_affec_batch_ocr = $request->action_taken_on_affec_batch_ocr;
+            $micro->capa_req_ocr = $request->capa_req_ocr;
+            $micro->capa_refer_ocr = $request->capa_refer_ocr;
+            $micro->required_action_plan_ocr = $request->required_action_plan_ocr;
+            $micro->required_action_task_ocr = $request->required_action_task_ocr;
+            $micro->action_task_reference_ocr = $request->action_task_reference_ocr;
+            $micro->risk_assessment_req_ocr = $request->risk_assessment_req_ocr;
+            $micro->risk_assessment_ref_ocr = $request->risk_assessment_ref_ocr;
+            $micro->justify_if_no_risk_assessment_ocr = $request->justify_if_no_risk_assessment_ocr;
+
+            if (!empty($request->conclusion_attachment_ocr)) {
+                $files = [];
+                if ($request->hasfile('conclusion_attachment_ocr')) {
+                    foreach ($request->file('conclusion_attachment_ocr') as $file) {
+                        $name = $request->name . '-conclusion_attachment_ocr' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $micro->conclusion_attachment_ocr = $files;
+            }
+
+            $micro->qa_approver_ocr = $request->qa_approver_ocr;
+                $micro->save();
+
+                toastr()->success("Record is updated Successfully");
+                return redirect(url('rcms/qms-dashboard'));
+            }
 
 
 }
