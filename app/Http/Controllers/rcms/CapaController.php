@@ -191,7 +191,7 @@ class CapaController extends Controller
             }
             $capa->closure_attachment = json_encode($files);
         }
-
+        
         $capa->status = 'Opened';
         $capa->stage = 1;
         $capa->save();
@@ -760,6 +760,7 @@ class CapaController extends Controller
         
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
+
         $capa->capa_qa_comments= $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         // $capa->details = $request->details;

@@ -175,6 +175,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
             Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
             Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
+            // Route::get('audit_trial/{id}', [OOSController::class, 'store'])->name('audit_trial');
 
             });
 

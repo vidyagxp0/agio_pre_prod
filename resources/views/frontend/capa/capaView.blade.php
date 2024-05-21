@@ -74,7 +74,7 @@
                         @php
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
+                       @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">

@@ -161,9 +161,8 @@
 
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="">
-                            {{-- @if (is_array($data->capa_attachment)) --}}
                             @if ($data->initial_attachment_gi)
-                            @foreach (json_decode($data->initial_attachment_gi) as $file)
+                            @foreach ($data->initial_attachment_gi as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
@@ -175,7 +174,6 @@
                                         style="color:red; font-size:20px;"></i></a>
                             </h6>
                             @endforeach
-                            {{-- @endif --}}
                             @endif
 
 
@@ -423,7 +421,7 @@
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_results_obtained]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_results_obtained') }}"></td>
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_specification_limit]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_specification_limit') }}"></td>
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_details_obvious_error]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_details_obvious_error') }}"></td>
-                                        <td><input type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_file_attachment') }}"></td>
+                                        {{-- <td><input type="file" name="oos_detail[{{ $loop->index }}][oos_file_attachment]" value="{{ Helpers::getArrayKey($oos_detail->oos_file_attachment, 'oos_file_attachment') }}"></td> --}}
                                         <td><input type="text" name="oos_detail[{{ $loop->index }}][oos_submit_by]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_by') }}"></td>
                                         <td><input type="date" name="oos_detail[{{ $loop->index }}][oos_submit_on]" value="{{ Helpers::getArrayKey($oos_detail, 'oos_submit_on') }}"></td>
                                     </tr>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\OOS;
 use App\Models\Oosgrids;
+use App\Models\OosAuditTrial;
 use App\Services\Qms\OOSService;
 use Carbon\Carbon;
 use Error;
@@ -49,7 +50,6 @@ class OOSController extends Controller
     public static function show($id)
     {
         $data = OOS::find($id);
-
         $info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
@@ -67,19 +67,65 @@ class OOSController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = OOS::find($id);
+        $res = Helpers::getDefaultResponse();
 
-        toastr()->success("Record is created Successfully");
-        return redirect(url('rcms/qms-dashboard'));
+        try {
+            
+            $oos_record = OOSService::update_oss($request,$id);
+
+            if ($oos_record['status'] == 'error')
+            {
+                throw new Error($oos_record['message']);
+            } 
+
+        } catch (\Exception $e) {
+            $res['status'] = 'error';
+            $res['message'] = $e->getMessage();
+            info('Error in OOSController@store', [
+                'message' => $e->getMessage()
+            ]);
+        }
+
+        return redirect()->route('qms.dashboard');
+        
+        // toastr()->success("Record is created Successfully");
+        // return redirect(url('rcms/qms-dashboard'));
     }
 
     public function send_stage(Request $request, $id)
     {
         $oos_record = OOS::find($id);
-
+        //dd(Auth::user()->email);
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             
             $oos = OOS::find($id);
+           
+            
+            // if ($oos->stage == 1) {
+            //     $oos->stage = "2";
+            //     $oos->status = "Pending Initial Assessment & Lab Incident";
+            //     $oos->plan_proposed_by = Auth::user()->name;
+            //     $oos->plan_proposed_on = Carbon::now()->format('d-M-Y');
+                   
+            //         $history = new OosAuditTrial();
+            //         $history->oos_id = $id;
+            //         $history->activity_type = 'Activity Log';
+            //         $history->previous = "";
+            //         $history->current = $oos->plan_proposed_by;
+            //         $history->comment = $request->comment;
+            //         $history->user_id = Auth::user()->id;
+            //         $history->user_name = Auth::user()->name;
+            //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //         $history->origin_state = $lastDocument->status;
+            //         $history->stage = 'Plan Proposed';
+            //         dd($history);
+            //         $history->save();
+           
+            //     $capa->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
+
             $oos->stage = $request->stage;
             $oos->status = $request->status;
             $oos->update();
