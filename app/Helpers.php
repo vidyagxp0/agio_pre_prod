@@ -11,12 +11,22 @@ use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
-    // public static function getdateFormat($date)
-    // {
-    //     $date = Carbon::parse($date);
-    //     $formatted_date = $date->format("d-M-Y");
-    //     return $formatted_date;
-    // }
+    public static function getArrayKey(array $array, $key)
+    {
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : ''; 
+    }
+    
+    public static function getDefaultResponse()
+    {
+        $res = [
+            'status' => 'ok',
+            'message' => 'success',
+            'body' => []
+        ];
+
+        return $res;
+    }
+
     public static function getdateFormat($date)
     {
         if(empty($date)) {
