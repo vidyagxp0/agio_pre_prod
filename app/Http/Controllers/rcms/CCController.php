@@ -56,7 +56,7 @@ class CCController extends Controller
                 $record_number = '0001';
             }
         }
-        
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -111,7 +111,7 @@ class CCController extends Controller
         //     'short_description' => 'required|unique:open_stages,short_description',
         //     'due_date' => 'required',
         // ]);
-        
+
         $openState = new CC();
         $openState->form_type = "CC";
         $openState->division_id = $request->division_id;
@@ -136,7 +136,7 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
 
         $openState->type_chnage = $request->type_chnage;
@@ -166,7 +166,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         $openState->cft_attchament = json_encode($request->cft_attchament);
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -210,11 +210,11 @@ class CCController extends Controller
             }
             $openState->in_attachment = json_encode($files);
         }
- 
+
         $openState->status = 'Opened';
         $openState->stage = 1;
         $openState->save();
- 
+
         // Retrieve the current counter value
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -260,7 +260,7 @@ class CCController extends Controller
             $files = [];
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
-                
+
                     $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -301,7 +301,7 @@ class CCController extends Controller
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
          if ($request->Microbiology == "yes") {
              $info->Microbiology = $request->Microbiology;
-            
+
          }
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
@@ -309,7 +309,7 @@ class CCController extends Controller
              toastr()->warning('CFT reviewers can not be empty');
              return back();
          }
-        
+
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
         if (!empty($request->additional_attachments)) {
@@ -603,7 +603,7 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        
+
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
         $history->activity_type = 'QA Attachments';
@@ -615,7 +615,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        
+
 
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
@@ -667,7 +667,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        
+
 
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
@@ -1141,7 +1141,7 @@ class CCController extends Controller
         }
         $pre = CC::all();
         $due_date_extension = $data->due_date_extension;
-    
+
         return view('frontend.change-control.CCview', compact(
             'data',
             'docdetail',
@@ -1163,7 +1163,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
-   
+
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
         $openState->initiator_id = Auth::user()->id;
@@ -1183,7 +1183,7 @@ class CCController extends Controller
         $openState->current_practice = $request->current_practice;
         $openState->proposed_change = $request->proposed_change;
         $openState->reason_change = $request->reason_change;
-        $openState->other_comment = $request->other_comment; 
+        $openState->other_comment = $request->other_comment;
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
@@ -1197,7 +1197,7 @@ class CCController extends Controller
         $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        
+
          if ($request->Microbiology_Person) {
              $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
          } else {
@@ -1213,7 +1213,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments;
         $openState->cft_attchament = json_encode($request->cft_attchament);
         $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -1338,7 +1338,7 @@ class CCController extends Controller
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
          if ($request->Microbiology == "yes") {
              $info->Microbiology = $request->Microbiology;
-           
+
          }
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
@@ -1510,7 +1510,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->assign_to != $openState->assign_to || !empty($request->document_name_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2183,7 +2183,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastclosure->effective_check_date != $closure->feedbackeffective_check_date || !empty($request->effective_check_date_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2229,6 +2229,7 @@ class CCController extends Controller
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "Under Supervisor Review";
+
                             $history = new RcmDocHistory;
                             $history->cc_id = $id;
                             $history->activity_type = 'Activity Log';
@@ -2255,7 +2256,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                     $changeControl->update();
                     $history = new CCStageHistory();
@@ -2266,7 +2267,7 @@ class CCController extends Controller
                     $history->stage_id = $changeControl->stage;
                     $history->status = $changeControl->status;
                     $history->save();
-                    
+
                     $history = new CCStageHistory();
                     $history->type = "Activity-log";
                     $history->doc_id = $id;
@@ -2300,7 +2301,7 @@ class CCController extends Controller
                             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                             //             $email = Helpers::getInitiatorEmail($u->user_id);
                             //              if ($email !== null) {
-                                      
+
                             //               Mail::send(
                             //                   'mail.view-mail',
                             //                    ['data' => $changeControl],
@@ -2310,8 +2311,8 @@ class CCController extends Controller
                             //                 }
                             //               );
                             //             }
-                            //      } 
-                            //   }            
+                            //      }
+                            //   }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2345,7 +2346,7 @@ class CCController extends Controller
                         //             if($u->q_m_s_divisions_id == $changeControl->division_id){
                         //                 $email = Helpers::getInitiatorEmail($u->user_id);
                         //                  if ($email !== null) {
-                                      
+
                         //                   Mail::send(
                         //                       'mail.view-mail',
                         //                        ['data' => $changeControl],
@@ -2355,8 +2356,8 @@ class CCController extends Controller
                         //                     }
                         //                   );
                         //                 }
-                        //          } 
-                        //       }     
+                        //          }
+                        //       }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2379,7 +2380,7 @@ class CCController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -2389,7 +2390,7 @@ class CCController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                     $changeControl->update();
                     $history = new CCStageHistory();
@@ -2525,7 +2526,7 @@ class CCController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -2535,7 +2536,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                     $changeControl->update();
                     $history = new CCStageHistory();
@@ -2569,7 +2570,7 @@ class CCController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -2579,7 +2580,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -2601,7 +2602,7 @@ class CCController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -2611,7 +2612,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -2633,7 +2634,7 @@ class CCController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -2643,7 +2644,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -2665,7 +2666,7 @@ class CCController extends Controller
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $changeControl],
@@ -2675,7 +2676,7 @@ class CCController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -2755,7 +2756,7 @@ class CCController extends Controller
             $changeControl = CC::find($id);
             $openState = CC::find($id);
 
- 
+
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->update();
@@ -2805,7 +2806,7 @@ class CCController extends Controller
         if($request->revision == "New Document"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
             return redirect()->route('documents.create');
-            
+
         }
         else{
             toastr()->warning('Not Working');

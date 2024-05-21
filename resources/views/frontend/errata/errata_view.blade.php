@@ -46,7 +46,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(6) {
             border-radius: 0px 20px 20px 0px;
 
         }
@@ -63,155 +63,54 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        {{-- @php
+                        @php
                             $userRoles = DB::table('user_roles')
-                                ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                                ->where(['user_id' => auth()->id(), 'q_m_s_divisions_id' => $showdata->division_id])
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                            $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('deviationcfts')
-                                ->where(['deviation_id' => $data->id])
-                                ->first();
-
-
-
-
-                            // Define the column names
-                            $columns = [
-                                'Production_person',
-                                'Warehouse_notification',
-                                'Quality_Control_Person',
-                                'QualityAssurance_person',
-                                'Engineering_person',
-                                'Analytical_Development_person',
-                                'Kilo_Lab_person',
-                                'Technology_transfer_person',
-                                'Environment_Health_Safety_person',
-                                'Human_Resource_person',
-                                'Information_Technology_person',
-                                'Project_management_person',
-                            ];
-
-                            // Initialize an array to store the values
-                            $valuesArray = [];
-
-                            // Iterate over the columns and retrieve the values
-                            foreach ($columns as $column) {
-                                $value = $cftUsers->$column;
-                                // Check if the value is not null and not equal to 0
-                                if ($value !== null && $value != 0) {
-                                    $valuesArray[] = $value;
-                                }
-                            }
-                            $cftCompleteUser = DB::table('deviationcfts_response')
-                                ->whereIn('status', ['In-progress', 'Completed'])
-                                ->where('deviation_id', $data->id)
-                                ->where('cft_user_id', Auth::user()->id)
-                                ->whereNull('deleted_at')
-                                ->first();
-                            // dd($cftCompleteUser);
-                        @endphp --}}
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white" href="">
-                                {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
-
-                                {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
+                        @endphp
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $showdata->id) }}">
                                 Audit Trail </a> </button>
 
-                        {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Submit
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button>
-                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            HOD Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button>
-                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Initial Review Complete
-                        </button>
+                        @if ($showdata->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Submit
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
+                        @elseif($showdata->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#reject-modal">
+                                Reject
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-modal">
+                                Review Complete
+                            </button>
+                        @elseif($showdata->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                                More Info Required
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
+                                Correction Completed
+                            </button>
+                        @elseif($showdata->stage == 4 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-inform-required-modal">
+                                More Info Required
+                            </button>
 
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif(
-                            $data->stage == 4 &&
-                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                            @if (!$cftCompleteUser) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-
-                        {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Initiator
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approved
-                        </button> --}}
-                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Initiator Updated Complete
-                        </button> --}}
-                        {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button> --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
-                            Send to Pending Initiator Update
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button> --}}
-                        {{-- @endif --}}
-                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button> --}}
-
-
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-rewieve-modal">
+                                HOD Review Completed
+                            </button>
+                        @elseif($showdata->stage == 5 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#send-to-opened-modal">
+                                Send to Opened State
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qa-head-approval-model">
+                                QA Head Approval Completed
+                            </button>
+                        @endif
+                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
                     </div>
 
                 </div>
@@ -219,68 +118,44 @@
 
                 <div class="status">
                     <div class="head">Current Status</div>
-                    {{-- @if ($data->stage == 0) --}}
-                    {{-- <div class="progress-bars ">
-                        <div class="bg-danger">Closed-Cancelled</div>
-                    </div> --}}
-                    {{-- @else --}}
-                    <div class="progress-bars d-flex" style="font-size: 15px;">
-                        {{-- @if ($data->stage >= 1) --}}
-                        <div class="active">Opened</div>
-                        {{-- @else --}}
-                        {{-- <div class="">Opened</div> --}}
-                        {{-- @endif --}}
-
-                        {{-- @if ($data->stage >= 2) --}}
-                        {{-- <div class="active">HOD Review </div> --}}
-                        {{-- @else --}}
-                        <div class="">HOD Review</div>
-                        {{-- @endif --}}
-
-                        {{-- @if ($data->stage >= 3) --}}
-                        {{-- <div class="active">QA Initial Review</div> --}}
-                        {{-- @else --}}
-                        <div class="">QA Initial Review</div>
-                        {{-- @endif --}}
-
-                        {{-- @if ($data->stage >= 4) --}}
-                        {{-- <div class="active">CFT Review</div> --}}
-                        {{-- @else --}}
-                        <div class="">CFT Review</div>
-                        {{-- @endif --}}
-
-
-                        {{-- @if ($data->stage >= 5) --}}
-                        {{-- <div class="active">QA Final Review</div> --}}
-                        {{-- @else --}}
-                        <div class="">QA Final Review</div>
-                        {{-- @endif --}}
-                        {{-- @if ($data->stage >= 6) --}}
-                        {{-- <div class="active">QA Head/Manager Designee Approval</div> --}}
-                        {{-- @else --}}
-                        <div class="">QA Head/Manager Designee Approval</div>
-                        {{-- @endif --}}
-                        {{-- @if ($data->stage >= 7) --}}
-                        {{-- <div class="active">Pending Initiator Update</div> --}}
-                        {{-- @else --}}
-                        <div class="">Pending Initiator Update</div>
-                        {{-- @endif --}}
-                        {{-- @if ($data->stage >= 8) --}}
-                        {{-- <div class="active">QA Final Approval</div> --}}
-                        {{-- @else --}}
-                        <div class="">QA Final Approval</div>
-                        {{-- @endif --}}
-                        {{-- @if ($data->stage >= 9) --}}
-                        {{-- <div class="bg-danger">Closed - Done</div> --}}
-                        {{-- @else --}}
-                        <div class="">Closed - Done</div>
-                        {{-- @endif --}}
-                        {{-- @endif --}}
-
-
-                    </div>
-                    {{-- @endif --}}
-                    {{-- ---------------------------------------------------------------------------------------- --}}
+                    @if ($showdata->stage == 0)
+                        <div class="progress-bars ">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars d-flex" style="font-size: 15px;">
+                            @if ($showdata->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+                            @if ($showdata->stage >= 2)
+                                <div class="active">Pending Review</div>
+                            @else
+                                <div class="">Pending Review</div>
+                            @endif
+                            @if ($showdata->stage >= 3)
+                                <div class="active">Pending Correction</div>
+                            @else
+                                <div class="">Pending Correction</div>
+                            @endif
+                            @if ($showdata->stage >= 4)
+                                <div class="active">Pending HOD Review</div>
+                            @else
+                                <div class="">Pending HOD Review</div>
+                            @endif
+                            @if ($showdata->stage >= 5)
+                                <div class="active">Pending QA Head Approval</div>
+                            @else
+                                <div class="">Pending QA Head Approval</div>
+                            @endif
+                            @if ($showdata->stage >= 6)
+                                <div class="bg-danger">Closed Done</div>
+                            @else
+                                <div class="">Closed Done</div>
+                            @endif
+                        </div>
+                    @endif
                 </div>
             </div>
             <!-- Tab links -->
@@ -308,46 +183,35 @@
                                 <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Originator"><b>Record No</b></label>
-                                        <input type="text" name="record_no" value="{{ $showdata->record_no }}">
+                                        <label for="RLS Record Number">Record Number</label>
+                                        <input disabled type="text" name="record_number">
+                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Site/Location Code <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="location_code">
-                                            <option value="{{ $showdata->location_code }}">{{ $showdata->location_code }}
-                                            </option>
-                                            <option value="001">001</option>
-                                            <option value="002">002</option>
-                                            <option value="003">003</option>
-                                        </select>
-
+                                        <label for="Division Code">Site/Location Code</label>
+                                        <input readonly type="text" name="division_id"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>ERRATA Date </b></label>
-                                        <input type="date" name="errata_date" value="{{ $showdata->errata_date }}">
-
+                                        <label for="Initiator">Initiator</label>
+                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                        <input disabled type="text" name="initiator_by" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            ERRATA Issued By <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="errata_issued_by">
-                                            <option value="{{ $showdata->errata_issued_by }}">
-                                                {{ $showdata->errata_issued_by }}</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
-                                        </select>
+                                        <label for="Date Due">Date of Initiation</label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
@@ -413,8 +277,11 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Document Title</label>
-                                        <textarea class="summernote" name="document_title" id="summernote-16">{{ $showdata->document_title }}</textarea>
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            value="{{ $showdata->short_description }}" required>
                                     </div>
                                 </div>
                                 <?php
@@ -492,20 +359,24 @@
                                                 @if ($grid_Data && is_array($grid_Data->data))
                                                     @foreach ($grid_Data->data as $grid_Data)
                                                         <tr>
-                                                            <td><input disabled type="text" name="details[0][serial]"
-                                                                    value="1">
+                                                            <td><input disabled type="text"
+                                                                    name="details[{{ $loop->index }}][serial]"
+                                                                    value="{{ $loop->index + 1 }}">
                                                             </td>
                                                             <td><input type="text"
-                                                                    name="details[0][ListOfImpactingDocument]"
+                                                                    name="details[{{ $loop->index }}][ListOfImpactingDocument]"
                                                                     value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="details[0][PreparedBy]"
+                                                            <td><input type="text"
+                                                                    name="details[{{ $loop->index }}][PreparedBy]"
                                                                     value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="details[0][CheckedBy]"
+                                                            <td><input type="text"
+                                                                    name="details[{{ $loop->index }}][CheckedBy]"
                                                                     value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="details[0][ApprovedBy]"
+                                                            <td><input type="text"
+                                                                    name="details[{{ $loop->index }}][ApprovedBy]"
                                                                     value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}">
                                                             </td>
                                                         </tr>
@@ -593,6 +464,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     <!-- -----------Tab-3------------ -->
                     {{-- <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -2039,6 +1912,417 @@
 
         </div>
     </div>
+
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="review-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="correction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="hod-rewieve-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="qa-head-approval-model">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancel-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="reject-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width"  type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width"  type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="more-info-required-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="more-inform-required-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="send-to-opened-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                @csrf
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input class="input_width" type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input class="input_width" type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input class="input_width" type="comment" name="comment">
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <style>
         #step-form>div {
             display: none
@@ -2046,6 +2330,11 @@
 
         #step-form>div:nth-child(1) {
             display: block;
+        }
+        .input_width{
+            width: 100%;
+            border-radius: 5px;
+            margin-bottom: 11px;
         }
     </style>
 
@@ -2137,10 +2426,14 @@
                         '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
 
-                        for (var i = 0; i < data.length; i++) {
-                            html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
-                        }
-                    '</tr>';
+
+                        '</tr>';
+                    for (var i = 0; i < data.length; i++) {
+                        html += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+                        '</tr>';
 
                     return html;
                 }

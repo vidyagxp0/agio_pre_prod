@@ -38,9 +38,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
             </div>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
                 <div id="step-form">
                     @if (!empty($parent_id))
                         <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -53,48 +52,40 @@
                                 <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Originator"><b>Record No</b></label>
-                                        <input type="text" name="record_no" value="">
+                                        <label for="RLS Record Number">Record Number</label>
+                                        <input disabled type="text" name="record_number">
+                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Site/Location Code <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="location_code">
-                                            <option value="">Select a value</option>
-                                            <option value="001">001</option>
-                                            <option value="002">002</option>
-                                            <option value="003">003</option>
-                                        </select>
-
+                                        <label for="Division Code">Site/Location Code</label>
+                                        <input readonly type="text" name="division_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>ERRATA Date </b></label>
-                                        <input type="date" name="errata_date" value="">
-
+                                        <label for="Initiator">Initiator</label>
+                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                        <input disabled type="text" name="initiator_by"
+                                            value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            ERRATA Issued By <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="errata_issued_by">
-                                            <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
-                                        </select>
+                                        <label for="Date Due">Date of Initiation</label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Initiated By <span class="text-danger"></span>
@@ -152,8 +143,11 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Document Title</label>
-                                        <textarea class="summernote" name="document_title" id="summernote-16"></textarea>
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            required>
                                     </div>
                                 </div>
 

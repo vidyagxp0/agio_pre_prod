@@ -1536,7 +1536,7 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                               
+
                                                 <div class="col-lg-6 new-date-data-field">
                                                     <div class="group-input input-date">
                                                         <label for="effective-check-date">Effectiveness Check Creation Date</label>
