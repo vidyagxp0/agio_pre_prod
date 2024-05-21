@@ -2,6 +2,7 @@
 @section('container')
     @php
         $users = DB::table('users')->select('id', 'name')->get();
+        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
     @endphp
     <style>
@@ -324,6 +325,17 @@
                                 @endif
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Site Division/Project">Site Division/Project</label>
+                                        <select name="division_id">
+                                            <option value="">-- Select --</option>
+                                            @foreach ($divisions as $division)
+                                                <option value="{{ $division->id }}" {{ $loop->first ? 'selected' : '' }}>{{ $division->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number" value="PL-01-109">
                                         <input type="hidden" name="record_number" value="PL-01-109">
@@ -338,14 +350,14 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="site_code" value="PLANT">
                                         <input type="hidden" name="site_code" value="PLANT">
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>

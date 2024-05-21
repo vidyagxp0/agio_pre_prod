@@ -4,6 +4,7 @@
         $users = DB::table('users')->select('id', 'name')->where('active', 1)->get();
         $userRoles = DB::table('user_roles')->select('user_id')->where('q_m_s_roles_id', 4)->distinct()->get();
         $departments = DB::table('departments')->select('id', 'name')->get();
+        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
 
         $userIds = DB::table('user_roles')
             ->where('q_m_s_roles_id', 4)
@@ -62,12 +63,12 @@
     </script>
     <div class="form-field-head">
         <div class="pr-id">
-            New Document
+            New Employee Training
         </div>
-        <div class="division-bar">
+        {{-- <div class="division-bar">
             <strong>Site Division/Project</strong> :
             Plant
-        </div>
+        </div> --}}
         {{-- <div class="button-bar">
             <button type="button">Save</button>
             <button type="button">Cancel</button>
@@ -104,6 +105,17 @@
                 <div id="CCForm1" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                         <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Site Division/Project">Site Division/Project</label>
+                                    <select name="division_id">
+                                        <option value="">-- Select --</option>
+                                        @foreach ($divisions as $division)
+                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Assigned To">Assigned To</label>

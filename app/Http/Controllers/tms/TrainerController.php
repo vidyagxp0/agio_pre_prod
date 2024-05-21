@@ -19,6 +19,7 @@ class TrainerController extends Controller
         ];
         // try {
             $trainer = new TrainerQualification();
+            $trainer->division_id = $request->division_id;
             $trainer->record_number = $request->record_number;
             $trainer->site_code = $request->site_code;
             $trainer->initiator = $request->initiator;

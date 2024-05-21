@@ -20,6 +20,7 @@ class EmployeeController extends Controller
         // return $request->all();
         // try {
             $employee = new Employee();
+            $employee->division_id = $request->division_id;
             $employee->assigned_to = $request->assigned_to;
             $employee->start_date = $request->start_date;
             $employee->joining_date = $request->joining_date;
