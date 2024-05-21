@@ -483,7 +483,7 @@
                                                 <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
-                                     </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -536,6 +536,7 @@
                                                 });
                                             });
                                         </script>
+                                        
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Team Members">Team Members</label>

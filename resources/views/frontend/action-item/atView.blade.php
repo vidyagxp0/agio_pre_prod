@@ -66,7 +66,7 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -1023,9 +1023,9 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
-
+                            
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
                                 New Document
