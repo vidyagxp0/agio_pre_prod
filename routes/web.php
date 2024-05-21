@@ -32,9 +32,11 @@ use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
+use App\Http\Controllers\tms\EmployeeController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
+use App\Http\Controllers\tms\TrainerController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
@@ -292,8 +294,8 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
-Route::view('employee_new', 'frontend.TMS.Employee.employee_new');
-Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification');
+Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
 
 //! ============================================
@@ -456,3 +458,9 @@ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->
 // ========================Errata==================================
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
+
+
+// ================EMPLOYEE & TRAINER===================
+
+Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
