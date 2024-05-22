@@ -1736,7 +1736,7 @@ class CapaController extends Controller
         return view('frontend.capa.audit-trial', compact('audit', 'document', 'today'));
     }
 
-    public function auditDetailsCapa($id)
+    public function auditDetails($id)
     {
 
         $detail = CapaAuditTrial::find($id);

@@ -5,9 +5,12 @@ namespace App\Services\Qms;
 use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
+use App\Models\RoleGroup;
 use Helpers;
 use App\Services\FileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class OOSService
 {
@@ -78,12 +81,12 @@ class OOSService
                     $history->oos_id = $oos->id;
                     $history->activity_type = 'Oos Observed';
                     $history->previous = "Null";
-                    $history->current = $deviation->description_gi;
+                    $history->current = $oos->description_gi;
                     $history->comment = "Not Applicable";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $deviation->status;
+                    $history->origin_state = $oos->status;
                     $history->change_to =   "Opened";
                     $history->change_from = "Initiator";
                     $history->action_name = 'Create';
@@ -91,7 +94,7 @@ class OOSService
                 }
 
             }
-            
+
             $res['body'] = $oos;
 
         } catch (\Exception $e) {
