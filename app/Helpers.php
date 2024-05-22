@@ -75,7 +75,7 @@ class Helpers
 
     public static function isRiskAssessment($data)
     {   
-        if($data  >= 7){
+        if($data == 0 || $data  >= 7){
             return 'disabled';
         }else{
             return  '';
