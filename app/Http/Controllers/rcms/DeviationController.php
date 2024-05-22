@@ -2135,7 +2135,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = $history->origin_state;
+            $history->action_name = "Uppdate";
             $history->save();
         }
         if ($lastDeviation->Initiator_Group != $deviation->Initiator_Group || !empty ($request->comment)) {
@@ -3612,15 +3612,8 @@ class DeviationController extends Controller
                     //         }
                     //     }
                     // }
-    
-    
-    
-    
-    
-    
+                    // dd($deviation);
                     $deviation->update();
-                    
-                    
                     return back();
                 }
                 if ($deviation->stage == 2) {
@@ -4131,16 +4124,16 @@ class DeviationController extends Controller
     
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
-                    $deviation->Approved_By = Auth::user()->name;
-                    $deviation->Approved_On = Carbon::now()->format('d-M-Y');
-                    $deviation->Approved_Comments = $request->comment;
+                    $deviation->QA_head_approved_by = Auth::user()->name;
+                    $deviation->QA_head_approved_on = Carbon::now()->format('d-M-Y');
+                    $deviation->QA_head_approved_comment	 = $request->comment;
     
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Approved';
-                    $history->current = $deviation->Approved_By;
+                    $history->current = $deviation->QA_head_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4222,16 +4215,16 @@ class DeviationController extends Controller
     
                     $deviation->stage = "8";
                     $deviation->status = "QA Final Approval";
-                    $deviation->Approved_By = Auth::user()->name;
-                    $deviation->Approved_On = Carbon::now()->format('d-M-Y');
-                    $deviation->Approved_Comments = $request->comment;
+                    $deviation->pending_initiator_approved_by = Auth::user()->name;
+                    $deviation->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
+                    $deviation->pending_initiator_approved_comment = $request->comment;
     
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Initiator Updated Complete';
-                    $history->current = $deviation->Approved_By;
+                    $history->current = $deviation->pending_initiator_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4315,16 +4308,16 @@ class DeviationController extends Controller
     
                     $deviation->stage = "9";
                     $deviation->status = "Closed-Done";
-                    $deviation->Approved_By = Auth::user()->name;
-                    $deviation->Approved_On = Carbon::now()->format('d-M-Y');
-                    $deviation->Approved_Comments = $request->comment;
+                    $deviation->QA_final_approved_by = Auth::user()->name;
+                    $deviation->QA_final_approved_on = Carbon::now()->format('d-M-Y');
+                    $deviation->QA_final_approved_comment = $request->comment;
     
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous = "";
                     $history->action ='Closed-Done';
-                    $history->current = $deviation->Approved_By;
+                    $history->current = $deviation->QA_final_approved_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -4382,16 +4375,17 @@ class DeviationController extends Controller
 
                 $deviation->stage = "5";
                 $deviation->status = "QA Final Review";
-                $deviation->QA_Final_Review_Complete_By = Auth::user()->name;
-                $deviation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
-                $deviation->QA_Final_Review_Comments = $request->comment;
+                $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
+                // dd($deviation->QA_Initial_Review_Complete_By);
+                $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
+                $deviation->QA_Initial_Review_Comments = $request->comment;
 
                 $history = new DeviationAuditTrail();
                 $history->deviation_id = $id;
                 $history->activity_type = 'Activity Log';
                 $history->previous = "";
                 $history->action ='QA Final Review Complete';
-                $history->current = $deviation->QA_Final_Review_Complete_By;
+                $history->current = $deviation->QA_Initial_Review_Complete_By;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -4594,6 +4588,52 @@ class DeviationController extends Controller
     }
 
     public function DeviationAuditTrial($id)
+    {
+        $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(5);
+        $today = Carbon::now()->format('d-m-y');
+        $document = Deviation::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+        
+        return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
+    }
+
+    public function deviationAuditTrailPdf($id)
+    {
+        $doc = Deviation::find($id);
+        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+        $data = DeviationAuditTrail::where('deviation_id', $doc->id)->orderByDesc('id')->get();
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.forms.deviation.deviation_audit_trail_pdf', compact('data', 'doc'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+        $canvas->page_text(
+            $width / 3,
+            $height / 2,
+            $doc->status,
+            null,
+            60,
+            [0, 0, 0],
+            2,
+            6,
+            -20
+        );
+        return $pdf->stream('SOP' . $id . '.pdf');
+    }
+
+    public function DeviationAuditTrialPdf($id)
     {
         $audit = DeviationAuditTrail::where('deviation_id', $id)->orderByDesc('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');

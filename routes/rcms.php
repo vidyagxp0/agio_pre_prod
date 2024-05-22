@@ -169,6 +169,7 @@ Route::group(['prefix' => 'rcms'], function () {
             /********************* Deviation Routes Starts *******************/
 
             Route::get('deviation', [DeviationController::class, 'deviation'])->name('deviation');
+            Route::get('DeviationAuditTrialPdf/{id}', [DeviationController::class, 'deviationAuditTrailPdf']);
             Route::post('deviationstore', [DeviationController::class, 'store'])->name('deviationstore');
             Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
             Route::post('deviationupdate/{id}', [DeviationController::class, 'update'])->name('deviationupdate');

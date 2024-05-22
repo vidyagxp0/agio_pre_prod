@@ -2959,6 +2959,9 @@ class CCController extends Controller
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "HOD Review";
+                    $changeControl->submit_by = Auth::user()->name;
+                    $changeControl->submit_on = Carbon::now()->format('d-M-Y');
+                    $changeControl->submit_comment = $request->comments;
                     $history = new RcmDocHistory;
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -2994,6 +2997,7 @@ class CCController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->stage_id = $changeControl->stage;
+                    $history->comments = $request->comments;
                     $history->status = $changeControl->status;
                     $history->save();
                     
@@ -3003,6 +3007,7 @@ class CCController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->stage_id = $changeControl->stage;
+                    $history->comments = $request->comments;
                     $history->status = $changeControl->status;
                     $history->save();
                     // Helpers::hodMail($changeControl);
@@ -3013,6 +3018,9 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
                     $changeControl->status = "QA Initial Review";
+                    $changeControl->hod_review_by = Auth::user()->name;
+                    $changeControl->hod_review_on = Carbon::now()->format('d-M-Y');
+                    $changeControl->hod_review_comment = $request->comments;
                     $history = new RcmDocHistory;
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3048,6 +3056,7 @@ class CCController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->stage_id = $changeControl->stage;
+                    $history->comments = $request->comments;
                     $history->status = $changeControl->status;
                     $history->save();
                     
@@ -3057,6 +3066,7 @@ class CCController extends Controller
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->stage_id = $changeControl->stage;
+                    $history->comments = $request->comments;
                     $history->status = $changeControl->status;
                     $history->save();
                     // Helpers::hodMail($changeControl);
@@ -3066,6 +3076,9 @@ class CCController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = "Pending RA Review";
+                $changeControl->QA_initial_review_by = Auth::user()->name;
+                $changeControl->QA_initial_review_on = Carbon::now()->format('d-M-Y');
+                $changeControl->QA_initial_review_comment = $request->comments;
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3101,6 +3114,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 
@@ -3110,6 +3124,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
@@ -3119,6 +3134,9 @@ class CCController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "5";
                 $changeControl->status = "CFT Review";
+                $changeControl->pending_RA_review_by = Auth::user()->name;
+                $changeControl->pending_RA_review_on = Carbon::now()->format('d-M-Y');
+                $changeControl->pending_RA_review_comment = $request->comments;
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3154,6 +3172,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 
@@ -3163,6 +3182,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
@@ -3172,6 +3192,9 @@ class CCController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
                 $changeControl->status = "QA Final Review";
+                $changeControl->cft_review_by = Auth::user()->name;
+                $changeControl->cft_review_on = Carbon::now()->format('d-M-Y');
+                $changeControl->cft_review_comment = $request->comments;
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3207,6 +3230,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 
@@ -3216,6 +3240,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
@@ -3225,6 +3250,9 @@ class CCController extends Controller
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "7";
                 $changeControl->status = "QA Head/Manager Designee Approval";
+                $changeControl->QA_final_review_by = Auth::user()->name;
+                $changeControl->QA_final_review_on = Carbon::now()->format('d-M-Y');
+                $changeControl->QA_final_review_comment = $request->comments;
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3260,6 +3288,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 
@@ -3269,6 +3298,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 // Helpers::hodMail($changeControl);
@@ -3278,6 +3308,9 @@ class CCController extends Controller
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "8";
                 $changeControl->status = "Closed Done";
+                $changeControl->QA_head_approval_by = Auth::user()->name;
+                $changeControl->QA_head_approval_on = Carbon::now()->format('d-M-Y');
+                $changeControl->QA_head_approval_comment = $request->comments;
                 $history = new RcmDocHistory;
                 $history->cc_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -3313,6 +3346,7 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
+                $history->comments = $request->comments;
                 $history->status = $changeControl->status;
                 $history->save();
                 
@@ -3321,6 +3355,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = $changeControl->status;
                 $history->save();
@@ -3398,6 +3433,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "Opened";
                 $history->save();
@@ -3430,6 +3466,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "HOD Review";
                 $history->save();
@@ -3462,6 +3499,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "QA Initial Review";
                 $history->save();
@@ -3477,6 +3515,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "Pending RA Review";
                 $history->save();
@@ -3491,6 +3530,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "CFT Review";
                 $history->save();
@@ -3506,6 +3546,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "QA Final Review";
                 $history->save();
@@ -3521,6 +3562,7 @@ class CCController extends Controller
                 $history->doc_id = $id;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
+                $history->comments = $request->comments;
                 $history->stage_id = $changeControl->stage;
                 $history->status = "QA Head/Manager Designee Approval";
                 $history->save();

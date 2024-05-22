@@ -75,8 +75,9 @@ class DashboardController extends Controller
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
-                "parent_record" => $data->parent_record ? $data->parent_record : "-",
+                "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date,
                 "type" => "Change-Control",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -362,7 +363,7 @@ class DashboardController extends Controller
                 "division_id" => $data->division_id,
                 "type" => "Deviation",
                 "parent_id" => $data->parent_id? $data->parent_id : "-",
-                "parent_record" => $data->parent_record? $data->parent_record : "-",
+                "parent" => $data->parent_record? $data->parent_record : "-",
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
@@ -719,7 +720,7 @@ class DashboardController extends Controller
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/" . $data->id;
-            $audit = "rcms/DeviationAuditTrial/" . $data->id;
+            $audit = "DeviationAuditTrialPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Internal-Audit") {

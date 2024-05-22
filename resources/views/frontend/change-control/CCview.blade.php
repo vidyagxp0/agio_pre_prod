@@ -144,7 +144,7 @@
                                 Send to HOD
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#initalQA-review-modal">
-                                QA Final Review Complete
+                                Send to QA Initial Review
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Final Review Complete
@@ -4368,320 +4368,146 @@
                         Electronic Signatures
                     </div>
                     <div class="row">
-                        @if ($data->stage >= 2)
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="submitted">Submitted By</label>
-                                    @php
-                                        $submit = DB::table('c_c_stage_histories')
-                                            ->where('type', 'Change-Control')
-                                            ->where('doc_id', $data->id)
-                                            ->where('stage_id', 2)
-                                            ->get();
-                                    @endphp
-                                    @foreach ($submit as $temp)
-                                        <div class="static">{{ $temp->user_name }}</div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="submitted">Submitted On</label>
-                                    @php
-                                        $submit = DB::table('c_c_stage_histories')
-                                            ->where('type', 'Change-Control')
-                                            ->where('doc_id', $data->id)
-                                            ->where('stage_id', 2)
-                                            ->get();
-                                    @endphp
-                                    @foreach ($submit as $temp)
-                                        <div class="static">{{ $temp->created_at }}</div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                        @if ($data->stage == 0)
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="submitted">Cancelled By</label>
-                                    @php
-                                        $submit = DB::table('c_c_stage_histories')
-                                            ->where('type', 'Change-Control')
-                                            ->where('doc_id', $cc_lid)
-                                            ->where('stage_id', 0)
-                                            ->get();
-                                    @endphp
-                                    @foreach ($submit as $temp)
-                                        <div class="static">{{ $temp->user_name }}</div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="submitted">Cancelled On</label>
-                                    @php
-                                        $submit = DB::table('c_c_stage_histories')
-                                            ->where('type', 'Change-Control')
-                                            ->where('doc_id', $cc_lid)
-                                            ->where('stage_id', 0)
-                                            ->get();
-                                    @endphp
-                                    @foreach ($submit as $temp)
-                                        <div class="static">{{ $temp->created_at }}</div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
-                        {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">More Information Required By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">More Information Required On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-
-                        <div class="col-lg-6">
+                        <div class="sub-head">Submission</div>
+                        <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="submitted">HOD Review Complete By</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 3)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->user_name }}</div>
-                                @endforeach
+                                <label for="submit by">Submit By :-</label>
+                                <div class="static">{{ $data->submit_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="submit on">Submit On :-</label>
+                                <div class="static">{{ $data->submit_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">HOD Review Complete On</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 3)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->created_at }}</div>
-                                @endforeach
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <label for="submit comment">Submit Comments :-</label>
+                                <div class="">{{ $data->submit_comment }}</div>
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
+                        <div class="sub-head">HOD Review Completed</div>
+                        <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="submitted">Send to CFT/SME/QA Review By</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 4)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->user_name }}</div>
-                                @endforeach
+                                <label for="HOD Review Complete By">HOD Review Complete By :-</label>
+                                <div class="static">{{ $data->hod_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="HOD Review Complete On">HOD Review Complete On :-</label>
+                                <div class="static">{{ $data->hod_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">Send to CFT/SME/QA Review On</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 4)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->created_at }}</div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">CFT/SME/QA Review Not required By</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 6)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->user_name }}</div>
-                                @endforeach
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">CFT/SME/QA Review Not required On</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 6)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->created_at }}</div>
-                                @endforeach
+                            <div class="group-input" style=" ">
+                                <label for="HOD Review Comments">HOD Review Comments :-</label>
+                                <div class="">{{ $data->hod_review_comment }}</div>
                             </div>
                         </div>
 
 
-                        <div class="col-lg-6">
+                        <div class="sub-head">QA Initial Review Completed</div>
+                        <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="submitted">Review Completed By</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 7)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->user_name }}</div>
-                                @endforeach
+                                <label for="QA Initial Review Complete By">QA Initial Review Complete By :-</label>
+                                <div class="static">{{ $data->QA_initial_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Initial Review Complete On">QA Initial Review Complete On :-</label>
+                                <div class="static">{{ $data->QA_initial_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">Review Completed On</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 7)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->created_at }}</div>
-                                @endforeach
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px;">
+                                <label for="QA Initial Review Comments">QA Initial Review Comments:-</label>
+                                <div class="">{{ $data->QA_initial_review_comment }}</div>
                             </div>
                         </div>
 
-
-                        {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Change Implemented By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Change Implemented On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-                        <div class="col-lg-6">
+                        <div class="sub-head">Pending RA Review Complete</div>
+                        <div class="col-lg-3">
                             <div class="group-input">
-                                <label for="submitted">Implemented By</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 9)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->user_name }}</div>
-                                @endforeach
+                                <label for="CFT Review Complete By">Pending RA Review Complete By :-</label>
+                                <div class="static">{{ $data->pending_RA_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">Pending RA Review Complete On :-</label>
+                                <div class="static">{{ $data->pending_RA_review_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="submitted">Implemented On</label>
-                                @php
-                                    $submit = DB::table('c_c_stage_histories')
-                                        ->where('type', 'Change-Control')
-                                        ->where('doc_id', $cc_lid)
-                                        ->where('stage_id', 9)
-                                        ->get();
-                                @endphp
-                                @foreach ($submit as $temp)
-                                    <div class="static">{{ $temp->created_at }}</div>
-                                @endforeach
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">Pending RA Review Comments :-</label>
+                                <div class="">{{ $data->pending_RA_review_comment }}</div>
                             </div>
                         </div>
 
+                        <div class="sub-head">CFT Review Complete</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete By">CFT Review Complete By :-</label>
+                                <div class="static">{{ $data->cft_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="CFT Review Complete On">CFT Review Complete On :-</label>
+                                <div class="static">{{ $data->cft_review_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="CFT Review Comments">CFT Review Comments :-</label>
+                                <div class="">{{ $data->cft_review_comment }}</div>
+                            </div>
+                        </div>
+
+                        <div class="sub-head"> QA Final Review Completed</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By"> QA Final Review Complete By :-</label>
+                                <div class="static">{{ $data->QA_final_review_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete On"> QA Final Review Complete On :-</label>
+                                <div class="static">{{ $data->QA_final_review_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="QA Final Review Comments"> QA Final Review Comments :-</label>
+                                <div class="">{{ $data->QA_final_review_comment }}</div>
+                            </div>
+                        </div>
+
+                        <div class="sub-head">QA Head/Manager Designee Approval</div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete By">QA Head/Manager Designee Approval Complete By :-</label>
+                                <div class="static">{{ $data->QA_head_approval_by }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="group-input">
+                                <label for="QA Final Review Complete On">QA Head/Manager Designee Approval Complete On :-</label>
+                                <div class="static">{{ $data->QA_head_approval_on }}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input" style="width:1620px; height:100px; `padding:5px; ">
+                                <label for="QA Final Review Comments">QA Head/Manager Designee Approval Comments :-</label>
+                                <div class="">{{ $data->QA_head_approval_comment }}</div>
+                            </div>
+                        </div>
                     </div>
                     <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -9962,7 +9788,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comments">
                         </div>
                     </div>
 
@@ -10094,7 +9920,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" class="form-control" name="comment" required>
+                            <input type="comment" class="form-control" name="comments" required>
                         </div>
                     </div>
 
@@ -10135,7 +9961,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" class="form-control" name="comment" required>
+                            <input type="comment" class="form-control" name="comments" required>
                         </div>
                     </div>
 
@@ -10176,7 +10002,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" class="form-control" name="comment" required>
+                            <input type="comment" class="form-control" name="comments" required>
                         </div>
                     </div>
 
@@ -10218,7 +10044,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" class="form-control" name="comment" required>
+                            <input type="comment" class="form-control" name="comments" required>
                         </div>
                     </div>
 
@@ -10262,7 +10088,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment" name="comments" required>
                         </div>
                     </div>
 
@@ -10306,7 +10132,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comments">
                         </div>
                     </div>
 
@@ -10349,7 +10175,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comments">
                         </div>
                     </div>
 
