@@ -194,50 +194,128 @@
                             
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             @endphp
-
+                                <button class="button_theme1"> <a class="text-white"
+                                    href="{{ route('marketcomplaint.MarketComplaintAuditReport', $data->id) }}"> Audit Trail </a> </button> 
                             @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                          
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+
+
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button> --}}
+                           
 
                             @elseif($data->stage == 2 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                           
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
-                            </button> --}}
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Review
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                           
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button>
+                            </button> --}}
+
                             @elseif($data->stage == 3 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
+                            <div class="btn-group">
+                                <button type="button" class="button_theme1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Additional Selections
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal1">Selection 1</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal2">Selection 2</a>
+                                    </li>
+                                    <!-- Add more selections as needed -->
+                                </ul>
+                            </div>
+                           
 
                             @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Reject
-                            </button>
+                           
 
+                            <div class="btn-group">
+                                <button type="button" class="button_theme1" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Additional Selections
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal1">Selection 1</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal2">Selection 2</a>
+                                    </li>
+                                    <!-- Add more selections as needed -->
+                                </ul>
+                            </div>
+                           
                             @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Reject
+                            </button>
                             @elseif($data->stage == 6 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
+                                Regulatory
+                                Reporting child
+                                
+                            </button>
+                           
                             @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send Letter
                             </button>
+
+                            <div class="btn-group">
+                                <button type="button" class="button_theme1" data-bs-toggle="dropdown" aria-expanded="false">
+                                   child
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal1">Regulatory Reporting
+                                            </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#selection-modal2">Effectiveness Check</a>
+                                    </li>
+                                    <!-- Add more selections as needed -->
+                                </ul>
+                            </div>
+                           
+                            @endif
+                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                            </a> </button>
+                           
+                    {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        </a> </button> --}}
+
 
 
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -283,7 +361,8 @@
 
 
 
-                        @endif
+                       
+                       
                         {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
                         {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                             More Info Required
@@ -378,7 +457,7 @@
                                 <h4 class="modal-title">E-Signature</h4>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
-                            <form action="{{ url('rcms/marketcomplaint/mar_comp_stagechange', $data->id) }}" method="POST">
+                            <form action="{{ route('marketcomplaint.mar_comp_reject_stateChange', $data->id) }}" method="POST">
                                 @csrf
                                 <!-- Modal body -->
                                 <div class="modal-body">
@@ -703,7 +782,7 @@
                     // JavaScript
                     document.getElementById('initiator_group').addEventListener('change', function() {
                         var selectedValue = this.value;
-                        document.getElementById('initiator_group_code').value = selectedValue;
+                        document.getElementById('initiator_group_code_gi').value = selectedValue;
                     });
                 </script>
                  <script>
@@ -763,49 +842,50 @@
                         @endif
 
                         @if ($data->stage >= 2)
-                        <div class="active">HOD Review </div>
+                        <div class="active">Supervisor Review </div>
                         @else
-                        <div class="">HOD Review</div>
+                        <div class="">Supervisor Review</div>
                         @endif
 
                         @if ($data->stage >= 3)
-                        <div class="active">QA Initial Review</div>
+                        <div class="active">Investigation and Root Cause Analysis</div>
                         @else
-                        <div class="">QA Initial Review</div>
+                        <div class="">Investigation and Root Cause
+                            Analysis</div>
                         @endif
 
                         @if ($data->stage >= 4)
-                        <div class="active">CFT Review</div>
+                        <div class="active">CAPA Plan</div>
                         @else
-                        <div class="">CFT Review</div>
+                        <div class="">CAPA Plan</div>
                         @endif
 
 
                         @if ($data->stage >= 5)
-                        <div class="active">QA Final Review</div>
+                        <div class="active">Pending Approval</div>
                         @else
-                        <div class="">QA Final Review</div>
+                        <div class="">Pending Approval</div>
                         @endif
                         @if ($data->stage >= 6)
-                        <div class="active">QA Head/Manager Designee Approval</div>
+                        <div class="active">Pending Actions Completion</div>
                         @else
-                        <div class="">QA Head/Manager Designee Approval</div>
+                        <div class="">Pending Actions Completion</div>
                         @endif
                         @if ($data->stage >= 7)
-                        <div class="active">Pending Initiator Update</div>
+                        <div class="active">Pending Response Letter</div>
                         @else
-                        <div class="">Pending Initiator Update</div>
+                        <div class="">Pending Response Letter</div>
                         @endif
                         @if ($data->stage >= 8)
-                        <div class="active">QA Final Approval</div>
-                        @else
-                        <div class="">QA Final Approval</div>
-                        @endif
-                        @if ($data->stage >= 9)
                         <div class="bg-danger">Closed - Done</div>
                         @else
                         <div class="">Closed - Done</div>
                         @endif
+                        {{-- @if ($data->stage >= 9)
+                        <div class="bg-danger">Closed - Done</div>
+                        @else
+                        <div class="">Closed - Done</div>
+                        @endif --}}
                         @endif
 
 
@@ -824,7 +904,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
 
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signature</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Activity Log</button>
 
             </div>
 
@@ -847,7 +927,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="">
+                                        <input disabled type="text" name="record_number" value="{{ $data->record_number }}">
 
                                     </div>
                                 </div>
@@ -855,8 +935,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code </b></label>
-                                        <input disabled type="text" name="division_code" value="">
-                                        <input type="hidden" name="division_id" value="">
+                                        <input disabled type="text" name="division_code" value="{{ $data->division_id }}">
+                                        <input type="hidden" name="division_id" value="{{ $data->division_id }}">
 
                                     </div>
                                 </div>
@@ -864,15 +944,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" name="originator_id" value="" />
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}" />
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="" name="intiation_date">
-                                        <input type="hidden" value="" name="intiation_date">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
@@ -883,8 +963,8 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->due_date ?? '' }}"
+                                            <input type="date" name="due_date_gi"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->due_date_gi ?? '' }}"
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -909,8 +989,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                           readonly value="{{ $data->initiator_group_code ?? ''}}">
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi"
+                                           readonly value="{{ $data->initiator_group_code_gi ?? ''}}">
                                     </div>
                                 </div>
 
@@ -943,15 +1023,15 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initiator Group">Is Repeat</label>
-                                        <select name="is_repeat_gi" >
-                                            <option value="o" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your Selection Here</option>
-                                            <option value="sfs"{{ $data->is_repeat_gi == 'sfs' ? 'selected' : ''}}>sfs</option>
-                                            <option value="sfdsvsdvs"{{ $data->is_repeat_gi == 'sfdsvsdvs' ? 'selected' : ''}}>sfdsvsdvs</option>
-
+                                        <label for="is_repeat_gi">Is Repeat</label>
+                                        <select name="is_repeat_gi">
+                                            <option value="" {{ $data->is_repeat_gi == '0' ? 'selected' : '' }}>-- select --</option>
+                                            <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>Yes</option>
+                                            <option value="no" {{ $data->is_repeat_gi == 'no' ? 'selected' : '' }}>No</option>
                                         </select>
                                     </div>
                                 </div>
+                                
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -1028,12 +1108,16 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="OOC Logged On">Complaint Reported On</label>
+                                        <label for="OOC Logged On"> Complaint Reported On </label>
+
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="complaint_reported_on_gi"
-                                                   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  oninput="" />
+                                            <input type="text" id="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  readonly placeholder="DD-MM-YYYY" name="complaint_reported_on_gi" value="{{ $data->complaint_reported_on_gi }}" />
+                                            {{-- <input type="date" name="complaint_reported_on_gi"
+                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                                                oninput=""  /> --}}
                                         </div>
+
+
                                     </div>
                                 </div>
                                 
@@ -1078,7 +1162,7 @@
                                                     @if(!empty($productsgi))
                                                     @foreach ($productsgi->data as  $detail)
                                                     <tr>
-                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value=""></td>
+                                                        <td><input disabled type="text" name="serial_number_gi[]" value=""></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_product_name]" value="{{ $detail['info_product_name'] }}"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_no]" value="{{ $detail['info_batch_no'] }}"></td>
                                                         <td><input type="date" name="serial_number_gi[0][info_mfg_date]" value="{{ $detail['info_mfg_date'] }}"></td>
@@ -1236,7 +1320,7 @@
                                                         value="1">
                                                 </td>
                                                 <td><input type="text" name="Investing_team[0][name_inv_tem]" value="{{ $inves['name_inv_tem'] }}"></td>
-                                                <td><input type="text" name="Investing_team[0][department_inv_tem]"> value="{{ $inves['department_inv_tem'] }}"</td>
+                                                <td><input type="text" name="Investing_team[0][department_inv_tem]" value="{{ $inves['department_inv_tem'] }}"></td>
                                                 <td><input type="text" name="Investing_team[0][remarks_inv_tem]" value="{{ $inves['remarks_inv_tem'] }}"></td>
 
 
@@ -1385,10 +1469,10 @@
                                                         <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="brain_stroming_details[0][possiblity_bssd]" value=""{{ $bra_st_s['possiblity_bssd'] }}></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][possiblity_bssd]" value="{{ $bra_st_s['possiblity_bssd'] }}"></td>
                                                     <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]" value="{{ $bra_st_s['factscontrols_bssd']}}"></td>
-                                                    <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]" value=""{{$bra_st_s['probable_cause_bssd']  }}></td>
-                                                    <td><input type="text" name="brain_stroming_details[0][remarks_bssd]" value=""{{ $bra_st_s['remarks_bssd'] }}></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]" value="{{$bra_st_s['probable_cause_bssd'] }}"></td>
+                                                    <td><input type="text" name="brain_stroming_details[0][remarks_bssd]" value="{{ $bra_st_s['remarks_bssd'] }}"></td>
 
 
                                                     </tr>
@@ -1947,12 +2031,10 @@
                                 </textarea>
                                 </div>
                             </div>
-
                             <div class="sub-head">
                                 Proposal to accomplish investigation:
                             </div>
                             <div class="col-12">
-                                {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                 <div class="group-input">
                                     <div class="why-why-chart">
                                         <table class="table table-bordered">
@@ -1960,8 +2042,7 @@
                                                 <tr>
                                                     <th style="width: 5%;">Sr. No.</th>
                                                     <th style="width: 40%;">Requirements</th>
-                                                    <th style="width: 20%;">Expected date of investigation completion
-                                                    </th>
+                                                    <th style="width: 20%;">Expected date of investigation completion</th>
                                                     <th>Remarks</th>
                                                 </tr>
                                             </thead>
@@ -1970,101 +2051,75 @@
                                                     <td class="flex text-center">1</td>
                                                     <td>Complaint sample Required</td>
                                                     <td>
-
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr1'] ?? '' }}</textarea>
                                                         </div>
-
-
                                                     </td>
-                                                    </td>
-
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Complaint sample Required']['csr2'] ?? '' }}</textarea>
                                                         </div>
                                                     </td>
-
-
-
                                                 </tr>
                                                 <tr>
                                                     <td class="flex text-center">2</td>
                                                     <td>Additional info. From Complainant</td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc1'] ?? '' }}</textarea>
                                                         </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Additional info. From Complainant']['afc2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">3</td>
+                                                    <td>Analysis of complaint Sample</td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Analysis of complaint Sample']['acs2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">4</td>
+                                                    <td>QRM Approach</td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['QRM Approach']['qrm2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="flex text-center">5</td>
+                                                    <td>Others</td>
+                                                    <td>
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth1'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                    <td style="vertical-align: middle;">
+                                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                                            <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;">{{ $proposalData['Others']['oth2'] ?? '' }}</textarea>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
-                                    </td>
-
-                                    <td style="vertical-align: middle;">
-                                        <div style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                        </div>
-                                    </td>
-
-
-
-                                    </tr>
-                                    <tr>
-                                        <td class="flex text-center">3</td>
-                                        <td>Analysis of complaint Sample</td>
-                                        <td>
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-
-
-
-                                    </tr>
-                                    <tr>
-                                        <td class="flex text-center">4</td>
-                                        <td>QRM Approach</td>
-                                        <td>
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-
-
-                                    </tr>
-                                    <tr>
-                                        <td class="flex text-center">5</td>
-                                        <td>Others</td>
-                                        <td>
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-
-
-
-                                    </tr>
-
-                                    </tbody>
-                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -2199,6 +2254,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Initiator Group">Submit By : </label>
+                            <div class="static">{{ $data->submitted_by }}</div>
 
                         </div>
                     </div>
@@ -2206,43 +2262,28 @@
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Submit On : </label>
+                            <div class="Date">{{ $data->submitted_on }}</div>
+
 
 
 
 
                         </div>
                     </div>
+                    
 
 
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Initiator Group">HOD Review Completed By : </label>
+                            <label for="Initiator Group">Complete Review By : </label>
 
                         </div>
                     </div>
 
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="OOC Logged On">HOD Review Completed On :</label>
-
-
-
-
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Initiator Group">QA Initial Review Completed By :</label>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6 new-date-data-field">
-                        <div class="group-input input-date">
-                            <label for="OOC Logged On">QA Initial Review Completed On : </label>
+                            <label for="OOC Logged On">Complete Review On :</label>
 
 
 
@@ -2253,20 +2294,73 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Initiator Group">QA Final Review Completed By : </label>
+                            <label for="Initiator Group">Investigation Completed By :</label>
 
                         </div>
                     </div>
 
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="OOC Logged On">QA Final Review Completed On : </label>
+                            <label for="OOC Logged On">Investigation Completed On : </label>
 
 
 
 
                         </div>
                     </div>
+
+
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group">Investigation Completed By : </label>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="OOC Logged On">Investigation Completed On : </label>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group">Approve Plan By : </label>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="OOC Logged On">Approve Plan On : </label>
+
+
+
+
+                        </div>
+                    </div>
+                    
+                    {{-- <div class="col-lg-6">
+                        <div class="group-input">
+                            <label for="Initiator Group">Pending Response Letter By : </label>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 new-date-data-field">
+                        <div class="group-input input-date">
+                            <label for="OOC Logged On">Pending Actions Completion On : </label>
+
+
+
+
+                        </div>
+                    </div> --}}
+                    
 
 
                     <div class="col-lg-6">
@@ -2291,6 +2385,10 @@
 
 
                 </div>
+
+                
+                
+                
                 <div class="button-block">
                     <button type="submit" class="saveButton">Save</button>
                     <button type="button" class="backButton" onclick="previousStep()">Back</button>

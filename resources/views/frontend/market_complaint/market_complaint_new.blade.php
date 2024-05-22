@@ -325,9 +325,9 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Is Repeat</label>
                                         <select name="is_repeat_gi" onchange="">
-                                            <option value="0">-- select --</option>
-                                            <option value="asdsa">sfs</option>
-                                            <option value="asddvdsdsa">sfdsvsdvs</option>
+                                            <option value="">-- select --</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
 
 
                                         </select>
@@ -393,7 +393,7 @@
                                         <label for="OOC Logged On"> Complaint Reported On </label>
 
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
                                             <input type="date" name="complaint_reported_on_gi"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="" />

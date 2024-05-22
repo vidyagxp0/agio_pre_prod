@@ -187,8 +187,13 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
                 Route::get('/marketcomplaint_view/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
                 Route::put('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');
-                Route::post('mar_comp_stagechange/{id}',[MarketComplaintController::class,'MarketComplaintStateChange'])->name('mar_comp_stagechange');
-                Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('MarketComplaintAuditReport');
+                Route::post('mar_comp_stagechange/{id}',[MarketComplaintController::class,'marketComplaintStateChange'])->name('mar_comp_stagechange');
+                Route::post('mar_comp_reject_stateChange/{id}', [MarketComplaintController::class, 'marketComplaintRejectState'])->name('mar_comp_reject_stateChange');
+               
+                Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
+
+                Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
+                Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
                 
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
