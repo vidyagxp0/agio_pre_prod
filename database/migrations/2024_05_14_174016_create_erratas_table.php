@@ -41,6 +41,18 @@ return new class extends Migration
             $table->string('Closure_Attachments')->nullable();
             $table->string('stage')->nullable();
             $table->string('status')->nullable();
+            $table->string('submitted_by')->nullable();
+            $table->string('submitted_on')->nullable();
+            $table->string('review_completed_by')->nullable();
+            $table->string('review_completed_on')->nullable();
+            $table->string('correction_completed_by')->nullable();
+            $table->string('correction_completed_on')->nullable();
+            $table->string('hod_review_complete_by')->nullable();
+            $table->string('hod_review_complete_on')->nullable();
+            $table->string('qa_head_approval_completed_by')->nullable();
+            $table->string('qa_head_approval_completed_on')->nullable();
+            $table->string('comments')->nullable();
+
             $table->timestamps();
         });
     }

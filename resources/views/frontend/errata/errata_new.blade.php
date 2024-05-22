@@ -31,11 +31,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
             <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
@@ -104,15 +104,73 @@
                                         <label for="search">
                                             Department<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="Department">
-                                            <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                        <select id="selectedOptions" placeholder="Select..." name="Department">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
+                                                Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
+                                                Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
+                                                Central
+                                                Laboratory</option>
+                                            <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
+                                                Business Administration</option>
+
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Department Code</label>
+                                        <input type="text" name="department_code" id="initiator_group_code"
+                                            value="">
+                                    </div>
+                                </div>
+                                <script>
+                                    document.getElementById('selectedOptions').addEventListener('change', function() {
+                                        var selectedValue = this.value;
+                                        document.getElementById('initiator_group_code').value = selectedValue;
+                                    });
 
+                                    function setCurrentDate(item) {
+                                        if (item == 'yes') {
+                                            $('#effect_check_date').val('{{ date('d-M-Y') }}');
+                                        } else {
+                                            $('#effect_check_date').val('');
+                                        }
+                                    }
+                                </script>
+
+{{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -125,7 +183,7 @@
                                             <option value="DC03">DC03</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -157,8 +215,7 @@
                                         <select multiple id="reference_record" name="reference_document[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            <option value="RD01">RD01</option>
-                                            <option value="RD02">RD02</option>
+                                            <option value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1641,13 +1698,13 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Reviewed by">QA Review Completed By</label>
+                                        <label for="Reviewed by">Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Approved on">QA Review Completed On</label>
+                                        <label for="Approved on">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>

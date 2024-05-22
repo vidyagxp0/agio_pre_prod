@@ -453,6 +453,8 @@ Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.st
 Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
 // Route::get('errata/edit/{id}', [ErrataController::class, 'edit'])->name('errata.edit');
 Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('errata.update');
+Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
+Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 
 //----------------------Stages----------------------------------------
 

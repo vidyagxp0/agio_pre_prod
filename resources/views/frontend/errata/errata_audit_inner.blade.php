@@ -90,7 +90,7 @@
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
-                                <div>{{ $temp->previous }}</div>
+                                <div>{!! $temp->previous !!}</div>
                             </div>
                             @else
                             <div class="list-item">
@@ -103,7 +103,7 @@
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
-                                <div>{{ $temp->current }}</div>
+                                <div>{!! $temp->current !!}</div>
                             </div>
                             @endif
                             @endif

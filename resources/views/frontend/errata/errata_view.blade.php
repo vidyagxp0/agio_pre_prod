@@ -69,7 +69,8 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $showdata->id) }}">
+                        <button class="button_theme1"> <a class="text-white"
+                                href="{{ url('errataaudittrail', $showdata->id) }}">
                                 Audit Trail </a> </button>
 
                         @if ($showdata->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -93,8 +94,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
                                 Correction Completed
                             </button>
-                        @elseif($showdata->stage == 4 && (in_array([4,14], $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-inform-required-modal">
+                        @elseif($showdata->stage == 4 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal"
+                                data-bs-target="#more-inform-required-modal">
                                 More Info Required
                             </button>
 
@@ -109,7 +111,7 @@
                                 QA Head Approval Completed
                             </button>
                         @endif
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
                     </div>
 
@@ -161,11 +163,11 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
             <form action="{{ route('errata.update', $showdata->id) }}" method="POST" enctype="multipart/form-data">
@@ -195,7 +197,8 @@
                                         <label for="Division Code">Site/Location Code</label>
                                         <input readonly type="text" name="division_id"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        <input type="hidden" name="division_id"
+                                            value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -203,24 +206,29 @@
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="initiator_by" value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" name="initiator_by"
+                                            value="{{ Auth::user()->name }}"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Initiated By">
                                             Initiated By <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="initiated_by">
+                                        <select id="select-state" placeholder="Select..." name="initiated_by"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->initiated_by }}">
                                                 {{ $showdata->initiated_by }}</option>
                                             <option value="Pankaj Jat">Pankaj Jat</option>
@@ -232,22 +240,92 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Department">
                                             Department<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="Department">
-                                            <option value="{{ $showdata->Department }}">
-                                                {{ $showdata->Department }}</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                        <select name="Department"
+                                            {{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            id="selectedOptions" {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            <option value="CQA" @if ($showdata->Department == 'CQA') selected @endif>
+                                                Corporate
+                                                Quality Assurance</option>
+                                            <option value="QAB" @if ($showdata->Department == 'QAB') selected @endif>
+                                                Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                                Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if ($showdata->Department == 'CQC') selected @endif>
+                                                Manufacturing
+                                            </option>
+                                            <option value="PSG" @if ($showdata->Department == 'PSG') selected @endif>
+                                                Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if ($showdata->Department == 'CS') selected @endif>
+                                                Central
+                                                Stores</option>
+                                            <option value="ITG" @if ($showdata->Department == 'ITG') selected @endif>
+                                                Information
+                                                Technology Group</option>
+                                            <option value="MM" @if ($showdata->Department == 'MM') selected @endif>
+                                                Molecular
+                                                Medicine</option>
+                                            <option value="CL" @if ($showdata->Department == 'CL') selected @endif>
+                                                Central
+                                                Laboratory</option>
+                                            <option value="TT" @if ($showdata->Department == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if ($showdata->Department == 'QA') selected @endif>
+                                                Quality
+                                                Assurance</option>
+                                            <option value="QM" @if ($showdata->Department == 'QM') selected @endif>
+                                                Quality
+                                                Management</option>
+                                            <option value="IA" @if ($showdata->Department == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if ($showdata->Department == 'ACC') selected @endif>
+                                                Accounting
+                                            </option>
+                                            <option value="LOG" @if ($showdata->Department == 'LOG') selected @endif>
+                                                Logistics
+                                            </option>
+                                            <option value="SM" @if ($showdata->Department == 'SM') selected @endif>
+                                                Senior
+                                                Management</option>
+                                            <option value="BA" @if ($showdata->Department == 'BA') selected @endif>
+                                                Business
+                                                Administration</option>
+
                                         </select>
                                     </div>
                                 </div>
-
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input readonly type="text"
+                                            name="department_code"{{ $showdata->stage == 0 || $showdata->stage == 6 ? 'disabled' : '' }}
+                                            value="{{ $showdata->department_code }}" id="initiator_group_code" readonly
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                    </div>
+                                </div>
+
+                                <script>
+                                    document.getElementById('selectedOptions').addEventListener('change', function() {
+                                        var selectedValue = this.value;
+                                        document.getElementById('initiator_group_code').value = selectedValue;
+                                    });
+
+                                    function setCurrentDate(item) {
+                                        if (item == 'yes') {
+                                            $('#effect_check_date').val('{{ date('d-M-Y') }}');
+                                        } else {
+                                            $('#effect_check_date').val('');
+                                        }
+                                    }
+                                </script>
+                                {{-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Department Code">
                                             Department Code<span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="department_code">
@@ -258,14 +336,15 @@
                                             <option value="DC03">DC03</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Document Type">
                                             Document Type<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="document_type">
+                                        <select id="select-state" placeholder="Select..." name="document_type"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->document_type }}">
                                                 {{ $showdata->document_type }}</option>
                                             <option value="D01">D01</option>
@@ -281,7 +360,8 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255"
-                                            value="{{ $showdata->short_description }}" required>
+                                            value="{{ $showdata->short_description }}"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
                                 <?php
@@ -291,10 +371,13 @@
                                 <div class="">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Documents</label>
-                                        <select multiple id="reference_record" name="reference_document[]">
+                                        <select multiple id="reference_record" name="reference_document[]" {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="">--Select--</option>
-                                            <option value="RD01"<?php echo in_array('RD01', $showdata->reference_document) ? ' selected' : ''; ?>>RD01</option>
-                                            <option value="RD02"<?php echo in_array('RD02', $showdata->reference_document) ? ' selected' : ''; ?>>RD02</option>
+                                            <option
+                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}"<?php echo in_array("{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}", $showdata->reference_document) ? ' selected' : ''; ?>>
+                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
+                                            </option>
+                                            {{-- <option value="RD02"<?php echo in_array('RD02', $showdata->reference_document) ? ' selected' : ''; ?>>RD02</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -303,23 +386,26 @@
                                     <div class="group-input">
                                         <label class="mt-4" for="Observation on Page No.">Error Observed on Page
                                             No.</label>
-                                        <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16">{{ $showdata->Observation_on_Page_No }}</textarea>
+                                        <textarea class="summernote" name="Observation_on_Page_No" id="summernote-16"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Observation_on_Page_No }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Brief Description</label>
-                                        <textarea class="summernote" name="brief_description" id="summernote-16">{{ $showdata->brief_description }}</textarea>
+                                        <label class="mt-4" for="Brief Description">Brief Description</label>
+                                        <textarea class="summernote" name="brief_description" id="summernote-16"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->brief_description }}</textarea>
                                     </div>
                                 </div>
 
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Type Of Error">
                                             Type Of Error<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="type_of_error">
+                                        <select id="select-state" placeholder="Select..." name="type_of_error"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->type_of_error }}">
                                                 {{ $showdata->type_of_error }}</option>
                                             <option value="Typographical Error (TE)">Typographical Error (TE)
@@ -343,7 +429,8 @@
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="Details-table">
+                                        <table class="table table-bordered" id="Details-table"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <thead>
                                                 <tr>
                                                     <th style="width: 5%">Row#</th>
@@ -361,23 +448,28 @@
                                                         <tr>
                                                             <td><input disabled type="text"
                                                                     name="details[{{ $loop->index }}][serial]"
-                                                                    value="{{ $loop->index + 1 }}">
+                                                                    value="{{ $loop->index + 1 }}"
+                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ListOfImpactingDocument]"
-                                                                    value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}">
+                                                                    value="{{ isset($grid_Data['ListOfImpactingDocument']) ? $grid_Data['ListOfImpactingDocument'] : '' }}"
+                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][PreparedBy]"
-                                                                    value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}">
+                                                                    value="{{ isset($grid_Data['PreparedBy']) ? $grid_Data['PreparedBy'] : '' }}"
+                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][CheckedBy]"
-                                                                    value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}">
+                                                                    value="{{ isset($grid_Data['CheckedBy']) ? $grid_Data['CheckedBy'] : '' }}"
+                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                             <td><input type="text"
                                                                     name="details[{{ $loop->index }}][ApprovedBy]"
-                                                                    value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}">
+                                                                    value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
+                                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
                                                         </tr>
                                                     @endforeach
@@ -390,9 +482,11 @@
 
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
+                                        <label for="Date And Time of Correction"><b>Date And Time of Correction
+                                            </b></label>
                                         <input type="date" name="Date_and_time_of_correction"
-                                            value="{{ $showdata->Date_and_time_of_correction }}">
+                                            value="{{ $showdata->Date_and_time_of_correction }}"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
 
                                     </div>
                                 </div>
@@ -416,8 +510,9 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">HOD Remarks</label>
-                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16">{{ $showdata->HOD_Remarks }}</textarea>
+                                        <label class="mt-4" for="HOD Remarks">HOD Remarks</label>
+                                        <textarea class="summernote" name="HOD_Remarks" id="summernote-16"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->HOD_Remarks }}</textarea>
                                     </div>
                                 </div>
 
@@ -444,7 +539,8 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="HOD_Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')"
+                                                    {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1691,7 +1787,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="QA Feedbacks">QA Feedbacks</label>
-                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16">{{ $showdata->QA_Feedbacks }}</textarea>
+                                        <textarea class="summernote" name="QA_Feedbacks" id="summernote-16"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->QA_Feedbacks }}</textarea>
                                     </div>
                                 </div>
 
@@ -1719,7 +1816,8 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="QA_Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments')"
+                                                    {{ Helpers::disabledErrataFields($showdata->stage) }} multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1749,17 +1847,19 @@
                                     <div class="group-input">
                                         <label class="" for="Closure Comments">Closure Comments</label>
                                         <input type="text" name="Closure_Comments"
-                                            value="{{ $showdata->Closure_Comments }}" />
+                                            value="{{ $showdata->Closure_Comments }}"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }} />
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="All Impacting Documents Corrected">
                                             All Impacting Documents Corrected <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..."
-                                            name="All_Impacting_Documents_Corrected">
+                                            name="All_Impacting_Documents_Corrected"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->All_Impacting_Documents_Corrected }}">
                                                 {{ $showdata->All_Impacting_Documents_Corrected }}</option>
                                             <option value="Yes">Yes</option>
@@ -1770,8 +1870,9 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments"> Remarks (If Any)</label>
-                                        <textarea class="summernote" name="Remarks" id="summernote-16">{{ $showdata->Remarks }}</textarea>
+                                        <label class="mt-4" for="Remarks"> Remarks (If Any)</label>
+                                        <textarea class="summernote" name="Remarks" id="summernote-16"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>{{ $showdata->Remarks }}</textarea>
                                     </div>
                                 </div>
 
@@ -1798,7 +1899,8 @@
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="Closure_Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')"
+                                                    {{ Helpers::disabledErrataFields($showdata->stage) }}multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1825,74 +1927,105 @@
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted by">Submitted By</label>
-                                        <div class="static"></div>
+                                        <div class="static">{{ $showdata->submitted_by }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Submitted On</label>
-                                        <div class="Date"></div>
+                                        <div class="Date">{{ $showdata->submitted_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->comment }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reviewed by">Review Completed By</label>
+                                        <div class="static">{{ $showdata->review_completed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Approved on">Review Completed On</label>
+                                        <div class="Date">{{ $showdata->review_completed_on }}</div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Reviewed by">QA Review Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Approved on">QA Review Completed On</label>
-                                        <div class="Date"></div>
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->comment }}</div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Correction Completed by">Correction Completed By</label>
-                                        <div class="static"></div>
+                                        <div class="static">{{ $showdata->correction_completed_by }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Correction Completed on">Correction Completed On</label>
-                                        <div class="Date"></div>
+                                        <div class="Date">{{ $showdata->correction_completed_on }}</div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By">HOD Review Complete By</label>
-                                        <div class="static"></div>
+                                        <div class="static">{{ $showdata->hod_review_complete_by }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="HOD Review Complete By on">HOD Review Complete By On</label>
-                                        <div class="Date"></div>
+                                        <div class="Date">{{ $showdata->hod_review_complete_on }}</div>
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->comment }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QA Head Aproval Completed by">QA Head Aproval Completed
                                             By</label>
-                                        <div class="static"></div>
+                                        <div class="static">{{ $showdata->qa_head_approval_completed_by }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="QA Head Aproval Completed on">QA Head Aproval Completed
                                             On</label>
-                                        <div class="Date"></div>
+                                        <div class="Date">{{ $showdata->qa_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
 
-
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->comment }}</div>
+                                    </div>
+                                </div>
 
 
                                 <div class="button-block">
@@ -1916,13 +2049,13 @@
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -1949,7 +2082,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -1957,13 +2090,13 @@
     <div class="modal fade" id="review-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -1990,7 +2123,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -1998,13 +2131,13 @@
     <div class="modal fade" id="correction-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2031,7 +2164,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2039,13 +2172,13 @@
     <div class="modal fade" id="hod-rewieve-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2072,7 +2205,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2080,13 +2213,13 @@
     <div class="modal fade" id="qa-head-approval-model">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stage', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2113,7 +2246,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2121,13 +2254,13 @@
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2154,7 +2287,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2162,13 +2295,13 @@
     <div class="modal fade" id="reject-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2182,11 +2315,11 @@
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input class="input_width"  type="password" name="password" required>
+                            <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input class="input_width"  type="comment" name="comment">
+                            <input class="input_width" type="comment" name="comment">
                         </div>
                     </div>
 
@@ -2195,7 +2328,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2203,13 +2336,13 @@
     <div class="modal fade" id="more-info-required-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2236,7 +2369,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2244,13 +2377,13 @@
     <div class="modal fade" id="more-inform-required-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2277,7 +2410,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2285,13 +2418,13 @@
     <div class="modal fade" id="send-to-opened-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-            <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
-                @csrf
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
+                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                    @csrf
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">E-Signature</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -2318,7 +2451,7 @@
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                     </div>
-                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -2331,7 +2464,8 @@
         #step-form>div:nth-child(1) {
             display: block;
         }
-        .input_width{
+
+        .input_width {
             width: 100%;
             border-radius: 5px;
             margin-bottom: 11px;
