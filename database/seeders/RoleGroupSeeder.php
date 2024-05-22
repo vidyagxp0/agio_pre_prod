@@ -185,7 +185,7 @@ class RoleGroupSeeder extends Seeder
 //         $group->description = "Jordan-Change Control- View Only";
 //         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 //         $group->save();
-    
+
 
 //     $group = new RoleGroup();
 // $group->id = 25;
@@ -1983,6 +1983,7 @@ class RoleGroupSeeder extends Seeder
             'HOD/Designee',
             'QA',
             'CFT/SME',
+            'Trainer',
             'FP',
             'View Only'
         ];
@@ -2006,6 +2007,6 @@ class RoleGroupSeeder extends Seeder
                 }
             }
         }
-        
+
     }
 }

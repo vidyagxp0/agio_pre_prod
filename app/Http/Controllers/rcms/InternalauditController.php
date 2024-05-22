@@ -11,6 +11,7 @@ use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\User;
+use App\Models\IA_checklist_compression;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +33,9 @@ class InternalauditController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
-        
+
         return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
-    
+
     }
     public function create(request $request)
     {
@@ -73,7 +74,7 @@ class InternalauditController extends Controller
         $internalAudit->Others= $request->Others;
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
-        
+
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -91,11 +92,30 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
-        
+
         $internalAudit->audit_end_date = $request->audit_end_date;
         // $internalAudit->external_others=$request->external_others;
-        
-        
+
+//------------------------------------response and remarks input---------------------------------
+//$internalaudit   = new table_cc_impactassement();
+//$internalAudit->cc_id = $internalAudit->id;
+for ($i = 1; $i <= 63; $i++) {
+    $internalAudit->{"response_$i"} = $request->{"response_$i"};
+    $internalAudit->{"remark_$i"} = $request->{"remark_$i"};
+}
+
+$IAchecklist  = new IA_checklist_compression();
+$IAchecklist->cc_id = $IAchecklist->id;
+for ($i = 1; $i <= 59; $i++) {
+   $IAchecklist->{"response_$i"} = $request->{"response_$i"};
+   $IAchecklist->{"remark_$i"} = $request->{"remark_$i"};
+}
+$IAchecklist->save();
+//$internalAudit->save();
+
+
+
+
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -242,7 +262,7 @@ class InternalauditController extends Controller
         // if (!empty($request->severity_level)) {
         //     $data4->severity_level = serialize($request->severity_level);
         // }
-        if (!empty($request->area)) { 
+        if (!empty($request->area)) {
             $data4->area = serialize($request->area);
         }
         // if (!empty($request->observation_category)) {
@@ -1477,7 +1497,7 @@ class InternalauditController extends Controller
                             $history->activity_type = 'Activity Log';
                             $history->current = $changeControl->audit_schedule_by;
                             $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;                   
+                            $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
@@ -1486,9 +1506,9 @@ class InternalauditController extends Controller
                 //        $list = Helpers::getLeadAuditorUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);                           
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                       
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1498,7 +1518,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1534,7 +1554,7 @@ class InternalauditController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1544,7 +1564,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1572,7 +1592,7 @@ class InternalauditController extends Controller
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
 
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changeControl],
@@ -1582,9 +1602,9 @@ class InternalauditController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
-                      
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1635,8 +1655,8 @@ class InternalauditController extends Controller
                 return back();
             }
 
-            
-            
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1685,7 +1705,7 @@ class InternalauditController extends Controller
                         //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changeControl],
@@ -1695,9 +1715,9 @@ class InternalauditController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
-                   
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -1757,7 +1777,7 @@ class InternalauditController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getLeadAuditorUserList($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1767,7 +1787,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();

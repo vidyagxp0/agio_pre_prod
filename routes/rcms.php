@@ -65,7 +65,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-cancel/{id}', [CCController::class, 'stagecancel']);
             Route::post('send-cc/{id}', [CCController::class, 'stageChange']);
             Route::post('child/{id}', [CCController::class, 'child']);
-            Route::get('qms-dashboard', [DashboardController::class, 'index']);
+            Route::get('qms-dashboard', [DashboardController::class, 'index'])->name('qms.dashboard');
             Route::get('qms-dashboard/{id}/{process}', [DashboardController::class, 'dashboard_child']);
             Route::get('qms-dashboard_new/{id}/{process}', [DashboardController::class, 'dashboard_child_new']);
             Route::get('audit-trial/{id}', [CCController::class, 'auditTrial']);

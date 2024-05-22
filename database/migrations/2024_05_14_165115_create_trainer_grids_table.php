@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('oos_grids', function (Blueprint $table) {
+        Schema::create('trainer_grids', function (Blueprint $table) {
             $table->id();
-            $table->integer('oos_id')->nullable();
+            $table->unsignedBigInteger('trainer_qualification_id')->nullable();
             $table->string('identifier')->nullable();
-            $table->longText('data')->nullable();
+            $table->longtext('data')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('trainer_grids');
     }
 };
