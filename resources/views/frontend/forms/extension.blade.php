@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Extention Attachments</label>
+                                        <label for="Inv Attachments">Extension Attachments</label>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="extention_attachment"></div>

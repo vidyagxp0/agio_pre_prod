@@ -374,7 +374,7 @@
                                                 <label for="search">
                                                     Assigned To <span class="text-danger"></span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to"
+                                                <select id="select-state" {{Helpers::isRiskAssessment($data->stage)}} placeholder="Select..." name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $key => $value)
@@ -392,7 +392,7 @@
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text"
+                                                <input {{Helpers::isRiskAssessment($data->stage)}} readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"  
                                                     name="due_date">
 
@@ -401,7 +401,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                <select {{Helpers::isRiskAssessment($data->stage)}} name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
@@ -461,7 +461,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code" 
+                                                <input {{Helpers::isRiskAssessment($data->stage)}} type="text" name="initiator_group_code" 
                                                     value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
@@ -483,7 +483,7 @@
                                                 <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
-                                     </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -536,6 +536,7 @@
                                                 });
                                             });
                                         </script>
+                                        
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Team Members">Team Members</label>
@@ -1241,7 +1242,7 @@
                                                             <th>Item static</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody {{Helpers::isRiskAssessment($data->stage)}} >
                                                         @foreach (unserialize($action_plan->action) as $key => $temps)
                                                             <tr>
                                                                 <td><input disabled type="text" name="serial_number[]"
@@ -1947,9 +1948,9 @@
                                                 </label> --}}
                                                 <label for="mitigation_plan_details">
                                                     Mitigation Plan Details<button type="button" name="ann"
-                                                        id="action_plan2">+</button>
+                                                        id="mitigation_plan_deatails">+</button>
                                                 </label>
-                                                <table class="table table-bordered" id="action_plan_details2">
+                                                <table class="table table-bordered" id="mitigation_plan_deatails_details">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
@@ -1977,8 +1978,7 @@
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
                                                             </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                class="calenderauditee">
+                                                                <div class="input-date "><div class="calenderauditee">
                                                                 <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                 <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
                                                                 oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
@@ -1987,7 +1987,7 @@
                                                             </td> --}}
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                 name="responsible_person[]">
-                                                                <option value="">-Select-</option>
+                                                                <option value="">Select a Value</option>
                                                                 @foreach ($users as $value)
                                                                     <option
                                                                         {{ unserialize($mitigation_plan_details->responsible_person)[$key] ? (unserialize($mitigation_plan_details->responsible_person)[$key] == $value->id ? 'selected' : ' ') : '' }}
@@ -2478,10 +2478,10 @@
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
                     });
-                    $('#action_plan2').click(function(e) {
+                    $('#mitigation_plan_deatails').click(function(e) {
                         function generateTableRow(serialNumber) {
                             var users = @json($users);
-                            console.log(users);
+                            // console.log(users);
                             var html =
                             '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
@@ -2504,7 +2504,7 @@
                             return html;
                         }
 
-                        var tableBody = $('#action_plan_details2 tbody');
+                        var tableBody = $('#mitigation_plan_deatails_details tbody');
                         var rowCount = tableBody.children('tr').length;
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
