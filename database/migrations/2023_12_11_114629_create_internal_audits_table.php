@@ -107,7 +107,7 @@ return new class extends Migration
 
 
                // $table->bigIncrements('id');
-                $table->unsignedBigInteger('cc_id');
+
                 for ($i = 1; $i <= 64; $i++) {
                     $table->text("response_$i")->nullable();
 
