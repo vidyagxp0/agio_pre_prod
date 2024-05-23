@@ -545,7 +545,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others </label>
-                                <textarea name="if_others_gi"></textarea>
+                                <textarea name="if_others_gi">{{ $micro_data->if_others_gi }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -567,7 +567,7 @@
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Repeat Nature</label>
-                                <textarea name="repeat_nature_gi" value="{{ $micro_data->repeat_nature_gi }}"></textarea>
+                                <textarea name="repeat_nature_gi">{{ $micro_data->repeat_nature_gi }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -591,13 +591,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="deviation_occured_on_gi">
+                                <input type="date" name="deviation_occured_on_gi" value="{{ $micro_data->deviation_occured_on_gi }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Description</label>
-                                <textarea name="description_gi"></textarea>
+                                <textarea name="description_gi">{{ $micro_data->description_gi }}</textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -608,10 +608,33 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file-attachment-list"></div>
+                                    <div class="file-attachment-list" id="file_attach">
+
+                                    @if ($micro_data->initial_attachment_gi)
+                                    @foreach ($micro_data->initial_attachment_gi as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                        {{--@if(!empty($micro_data->initial_attachment_gi))
+                                            @foreach($micro_data->initial_attachment_gi as $file)
+                                                <div>{{ $file }}</div>
+                                            @endforeach
+                                        @endif--}}
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="addMultipleFiles(this, 'initial_attachment')" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -636,8 +659,8 @@
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->reference_system_document_gi == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->reference_system_document_gi == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -646,8 +669,8 @@
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document_gi[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->reference_system_document_gi == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->reference_system_document_gi == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -657,12 +680,12 @@
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Raw Material</option>
-                                    <option>Packing Material</option>
-                                    <option>Finished Product</option>
-                                    <option>Satbility Sample</option>
-                                    <option>Others</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="raw-material" @if ($micro_data->reference_system_document_gi == 'raw-material') selected @endif>Raw Material</option>
+                                    <option value="packing-material" @if ($micro_data->reference_system_document_gi == 'packing-material') selected @endif>Packing Material</option>
+                                    <option value="finished-product" @if ($micro_data->reference_system_document_gi == 'finished-product') selected @endif>Finished Product</option>
+                                    <option value="stability-sample" @if ($micro_data->reference_system_document_gi == 'stability-sample') selected @endif>Stability Sample</option>
+                                    <option value="other" @if ($micro_data->reference_system_document_gi == 'other') selected @endif>Others</option>
 
                                 </select>
                             </div>
@@ -671,14 +694,14 @@
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
 
-                                <input type="number" name="product_material_name_gi">
+                                <input type="number" name="product_material_name_gi" value="{{ $micro_data->product_material_name_gi }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
 
-                                <input type="number" name="market_gi">
+                                <input type="number" name="market_gi" value="{{ $micro_data->market_gi }}">
                             </div>
                         </div>
                         <div class="col-12">
@@ -873,7 +896,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="comments_pli[]" id="summernote-1">
+                                        <textarea class="summernote" name="comments_pli[]" id="summernote-1">{{ $micro_data->comments_pli }}
                                     </textarea>
                                     </div>
                                 </div>
@@ -884,8 +907,8 @@
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
                                 <select name="field_alert_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes" @if ($micro_data->field_alert_required_pli == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->field_alert_required_pli == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -893,10 +916,10 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Field Alert Ref.No.
                                 </label>
-                                <select multiple id="reference_record" name="field_alert_ref_no_pli[]" id="">
+                                <select multiple id="reference_record" name="field_alert_ref_no_pli[]">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->field_alert_ref_no_pli == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->field_alert_ref_no_pli == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -905,7 +928,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">{{ $micro_data->justify_if_no_field_alert_pli }}
                                     </textarea>
                             </div>
                         </div>
@@ -946,8 +969,8 @@
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
                                 <select name="verification_analysis_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes" @if ($micro_data->verification_analysis_required_pli == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->verification_analysis_required_pli == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -956,8 +979,8 @@
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
                                 <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->verification_analysis_ref_pli == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->verification_analysis_ref_pli == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -967,18 +990,18 @@
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
                                 <select name="analyst_interview_req_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes" @if ($micro_data->analyst_interview_req_pli == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->analyst_interview_req_pli == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
+                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->analyst_interview_ref_pli == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->analyst_interview_ref_pli == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -989,7 +1012,7 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">{{ $micro_data->justify_if_no_analyst_int_pli }}
                                     </textarea>
 
                             </div>
@@ -999,8 +1022,8 @@
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
                                 <select name="phase_i_investigation_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes" @if ($micro_data->phase_i_investigation_required_pli == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->phase_i_investigation_required_pli == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -1008,12 +1031,12 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
                                 <select name="phase_i_investigation_pli">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Phase I Micro</option>
-                                    <option>Phase I Chemical</option>
-                                    <option>Hypothesis</option>
-                                    <option>Resampling</option>
-                                    <option>Others</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="phase-I-micro" @if ($micro_data->phase_i_investigation_pli == 'phase-I-micro') selected @endif>Phase I Micro</option>
+                                    <option value="phase-I-chemical" @if ($micro_data->phase_i_investigation_pli == 'phase-I-chemical') selected @endif>Phase I Chemical</option>
+                                    <option value="hypothesis" @if ($micro_data->phase_i_investigation_pli == 'hypothesis') selected @endif>Hypothesis</option>
+                                    <option value="resampling" @if ($micro_data->phase_i_investigation_pli == 'resampling') selected @endif>Resampling</option>
+                                    <option value="other" @if ($micro_data->phase_i_investigation_pli == 'other') selected @endif>Others</option>
                                 </select>
                             </div>
                         </div>
@@ -1022,8 +1045,8 @@
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
                                 <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->phase_i_investigation_ref_pli == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->phase_i_investigation_ref_pli == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -1034,11 +1057,28 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if ($micro_data->file_attachments_pli)
+                                        @foreach ($micro_data->file_attachments_pli as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file"
+                                                    data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                        @endforeach
+
+                                        @endif
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attachments_pli[]"
-                                            oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
 
@@ -1740,7 +1780,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Prelim.Investiga.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">{{ $micro_data->summary_of_prelim_investiga_plic }}
                                     </textarea>
                             </div>
                         </div>
@@ -1750,9 +1790,9 @@
                                 <label for="Lead Auditor">Root Cause Identified</label>
                                 <!-- <div class="text-primary">Please Choose the relevent units</div> -->
                                 <select name="root_cause_identified_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes" @if ($micro_data->root_cause_identified_plic == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->root_cause_identified_plic == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -1760,11 +1800,11 @@
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
                                 <select name="oos_category_root_cause_ident_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Analyst Error</option>
-                                    <option>Instrument Error</option>
-                                    <option>Product/Material Related Error</option>
-                                    <option>Other Error</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="analyst-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'analyst-error') selected @endif>Analyst Error</option>
+                                    <option value="instrument-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'instrument-error') selected @endif>Instrument Error</option>
+                                    <option value="product-material-related-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'product-material-related-error') selected @endif>Product/Material Related Error</option>
+                                    <option value="other-error" @if ($micro_data->oos_category_root_cause_ident_plic == 'other-error') selected @endif>Other Error</option>
 
                                 </select>
                             </div>
@@ -1773,7 +1813,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">{{ $micro_data->oos_category_others_plic }}
                                     </textarea>
                             </div>
                         </div>
@@ -1781,7 +1821,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">{{ $micro_data->root_cause_details_plic }}
                                     </textarea>
                             </div>
                         </div>
@@ -1789,7 +1829,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="oos_category_root_cause_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_root_cause_plic[]" id="summernote-1">{{ $micro_data->oos_category_root_cause_plic }}
                                     </textarea>
                             </div>
                         </div>
@@ -1798,9 +1838,9 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">Recommended Actions Required?</label>
                                 <select name="recommended_actions_required_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes" @if ($micro_data->recommended_actions_required_plic == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->recommended_actions_required_plic == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -1810,8 +1850,8 @@
                                 </label>
                                 <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1" @if ($micro_data->recommended_actions_reference_plic == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->recommended_actions_reference_plic == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -1819,16 +1859,16 @@
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
                                 <select name="capa_required_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes" @if ($micro_data->capa_required_plic == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->capa_required_plic == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="num" name="reference_capa_no_plic">
+                                <input type="num" name="reference_capa_no_plic" value="{{ $micro_data->reference_capa_no_plic }}">
                             </div>
                         </div>
 
@@ -1836,7 +1876,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
+                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">{{ $micro_data->delay_justification_for_pi_plic }}
                                     </textarea>
                             </div>
                         </div>
@@ -1848,11 +1888,28 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if ($micro_data->supporting_attachment_plic)
+                                        @foreach ($micro_data->supporting_attachment_plic as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file"
+                                                    data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                        @endforeach
+
+                                        @endif
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                            oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1882,7 +1939,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
+                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">{{ $micro_data->review_comments_plir }}
                                     </textarea>
                             </div>
                         </div>
@@ -1939,9 +1996,9 @@
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
                                 <select name="phase_ii_inv_required_plir">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes" @if ($micro_data->phase_ii_inv_required_plir == 'yes') selected @endif>Yes</option>
+                                    <option value="no" @if ($micro_data->phase_ii_inv_required_plir == 'no') selected @endif>No</option>
                                 </select>
                             </div>
                         </div>
@@ -1953,11 +2010,28 @@
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="file_attach">
+                                        @if ($micro_data->supporting_attachments_plir)
+                                        @foreach ($micro_data->supporting_attachments_plir as $file)
+                                            <h6 type="button" class="file-container text-dark"
+                                                style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}"
+                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file"
+                                                    data-file-name="{{ $file }}"><i
+                                                        class="fa-solid fa-circle-xmark"
+                                                        style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                        @endforeach
+
+                                        @endif
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
 
@@ -1987,7 +2061,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">{{ $micro_data->qa_approver_comments_piii }}
                                     </textarea>
                         </div>
                     </div>
@@ -1995,9 +2069,9 @@
                         <div class="group-input">
                             <label for="Report Attachments"> Manufact. Invest. Required? </label>
                             <select name="manufact_invest_required_piii">
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes" @if ($micro_data->manufact_invest_required_piii == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->manufact_invest_required_piii == 'no') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -2007,10 +2081,10 @@
 
 
                             <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
+                            <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="">Chemical</option>
-                                <option value="">Microbiology</option>
+                                <option value="chemical" @if ($micro_data->manufacturing_invest_type_piii == 'chemical') selected @endif>Chemical</option>
+                                <option value="microbiology" @if ($micro_data->manufacturing_invest_type_piii == 'microbiology') selected @endif>Microbiology</option>
 
                             </select>
                         </div>
@@ -2023,8 +2097,8 @@
                             <label for="Reference Recores">Manufacturing Invst. Ref.</label>
                             <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->manufacturing_invst_ref_piii == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->manufacturing_invst_ref_piii == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2032,8 +2106,8 @@
                         <div class="group-input">
                             <label for="Audit Attachments"> Re-sampling Required? </label>
                             <select name="re_sampling_required_piii">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->re_sampling_required_piii == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->re_sampling_required_piii == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -2041,7 +2115,7 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Comments"> Audit Comments </label>
-                            <textarea name="audit_comments_piii"></textarea>
+                            <textarea name="audit_comments_piii">{{ $micro_data->audit_comments_piii }}</textarea>
                         </div>
                     </div>
 
@@ -2050,8 +2124,8 @@
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
                             <select multiple id="reference_record" name="re_sampling_ref_no_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->re_sampling_required_piii == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->re_sampling_required_piii == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2060,8 +2134,8 @@
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
                             <select name="hypo_exp_required_piii">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->hypo_exp_required_piii == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->hypo_exp_required_piii == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -2072,8 +2146,8 @@
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
                             <select multiple id="reference_record" name="hypo_exp_reference_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->hypo_exp_reference_piii == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->hypo_exp_reference_piii == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2085,11 +2159,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->attachment_piii)
+                                    @foreach ($micro_data->attachment_piii as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="attachment_piii[]"
-                                        oninput="addMultipleFiles(this, 'attachment_piii')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -2536,7 +2627,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">{{ $micro_data->summary_of_exp_hyp_piiqcr }}
                                     </textarea>
                         </div>
                     </div>
@@ -2544,7 +2635,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary Mfg. Investigation</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">{{ $micro_data->summary_mfg_investigation_piiqcr }}
                                     </textarea>
                         </div>
                     </div>
@@ -2552,8 +2643,8 @@
                         <div class="group-input">
                             <label for="Cancelled By"> Root Casue Identified. </label>
                             <select name="root_casue_identified_piiqcr">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->root_casue_identified_piiqcr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->root_casue_identified_piiqcr == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -2562,25 +2653,25 @@
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
                             <select name="oos_category_reason_identified_piiqcr">
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Product/Material Related Error</option>
-                                <option>Other Error</option>
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="analyst-error" @if ($micro_data->root_casue_identified_piiqcr == 'analyst-error') selected @endif>Analyst Error</option>
+                                <option value="instrument-error" @if ($micro_data->root_casue_identified_piiqcr == 'instrument-error') selected @endif>Instrument Error</option>
+                                <option value="product-material-related-error" @if ($micro_data->root_casue_identified_piiqcr == 'product-material-related-error') selected @endif>Product/Material Related Error</option>
+                                <option value="other-error" @if ($micro_data->root_casue_identified_piiqcr == 'other-error') selected @endif>Other Error</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Preparation Completed On">Others (OOS category)</label>
-                            <input type="string" name="others_oos_category_piiqcr">
+                            <input type="string" name="others_oos_category_piiqcr" value="{{ $micro_data->others_oos_category_piiqcr }}">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">{{ $micro_data->details_of_root_cause_piiqcr }}
                                     </textarea>
                         </div>
                     </div>
@@ -2588,7 +2679,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
+                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">{{ $micro_data->impact_assessment_piiqcr }}
                                     </textarea>
                         </div>
                     </div>
@@ -2596,8 +2687,8 @@
                         <div class="group-input">
                             <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
                             <select name="recommended_action_required_piiqcr">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->recommended_action_required_piiqcr == 'yes') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -2606,8 +2697,8 @@
                             <label for="Reference Recores">Recommended Action Reference</label>
                             <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->recommended_action_reference_piiqcr == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->recommended_action_reference_piiqcr == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2615,8 +2706,8 @@
                         <div class="group-input">
                             <label for="Audit Observation Submitted On">Investi. Required</label>
                             <select name="investi_required_piiqcr">
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->investi_required_piiqcr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->investi_required_piiqcr == 'yes') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -2625,8 +2716,8 @@
                             <label for="Reference Recores">Invest ref.</label>
                             <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1"@if ($micro_data->invest_ref_piiqcr == 1) selected @endif>1</option>
+                                <option value="2"@if ($micro_data->invest_ref_piiqcr == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2637,7 +2728,24 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->attachments_piiqcr)
+                                    @foreach ($micro_data->attachments_piiqcr as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="attachments_piiqcr[]"
@@ -2677,17 +2785,17 @@
                         <div class="group-input">
                             <label for="Description Deviation">Review Comment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="review_comment_atp" id="summernote-1">{{ $micro_data->review_comment_atp }}
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> Additional Test Proposal </label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="additional_test_proposal_atp">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes" @if ($micro_data->additional_test_proposal_atp == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->additional_test_proposal_atp == 'no') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -2696,19 +2804,19 @@
                         <div class="group-input">
                             <label for="Reference Recores">Additional Test Reference.
                             </label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->additional_test_reference_atp == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->additional_test_reference_atp == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Any Other Actions Required</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="any_other_actions_required_atp">
+                                <option value="yes" @if ($micro_data->any_other_actions_required_atp == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->any_other_actions_required_atp == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -2716,10 +2824,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Task Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_task_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->action_task_reference_atp == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->action_task_reference_atp == 1) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2731,11 +2839,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->additional_testing_attachment_atp)
+                                    @foreach ($micro_data->additional_testing_attachment_atp as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
-                                        oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -2766,7 +2891,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">{{ $micro_data->conclusion_comments_oosc }}
                                     </textarea>
                         </div>
                     </div>
@@ -2810,7 +2935,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
-                            <input type="string" name="string">
+                            <input type="text" name="specification_limit_oosc" value="{{ $micro_data->specification_limit_oosc }}">
                         </div>
                     </div>
 
@@ -2820,9 +2945,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
-                            <select>
-                                <option value="">Initial</option>
-                                <option value="">Retested Result</option>
+                            <select name="results_to_be_reported_oosc">
+                                <option value="initial" @if ($micro_data->results_to_be_reported_oosc == 'initial') selected @endif>Initial</option>
+                                <option value="retested-result" @if ($micro_data->results_to_be_reported_oosc == 'retested-result') selected @endif>Retested Result</option>
 
                             </select>
                         </div>
@@ -2830,23 +2955,23 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Final Reportable Results</label>
-                            <input type="string" name="string">
+                            <input type="text" name="final_reportable_results_oosc" value="{{ $micro_data->final_reportable_results_oosc }}">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justifi. for Averaging Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">{{ $micro_data->justifi_for_averaging_results_oosc }}
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">OOS Stands </label>
-                            <select>
-                                <option value="">Valid</option>
-                                <option value="">Invalid</option>
+                            <select name="oos_stands_oosc">
+                                <option value="valid" @if ($micro_data->oos_stands_oosc == 'valid') selected @endif>Valid</option>
+                                <option value="invalid" @if ($micro_data->oos_stands_oosc == 'invalid') selected @endif>Invalid</option>
 
 
 
@@ -2860,9 +2985,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="capa_req_oosc">
+                                <option value="yes" @if ($micro_data->capa_req_oosc == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->capa_req_oosc == 'no') selected @endif>No</option>
 
 
                             </select>
@@ -2872,10 +2997,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Ref No.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="capa_ref_no_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->capa_ref_no_oosc == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->capa_ref_no_oosc == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2883,16 +3008,16 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if CAPA not required</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">{{ $micro_data->justify_if_capa_not_required_oosc }}
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Action Plan Req.</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="action_plan_req_oosc">
+                                <option value="yes" @if ($micro_data->action_plan_req_oosc == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->action_plan_req_oosc == 'no') selected @endif>No</option>
 
 
                             </select>
@@ -2902,10 +3027,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Plan Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->action_plan_ref_oosc == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->action_plan_ref_oosc == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2913,7 +3038,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justification for Delay</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">{{ $micro_data->justification_for_delay_oosc }}
                                     </textarea>
                         </div>
                     </div>
@@ -2924,7 +3049,24 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->attachments_if_any_oosc)
+                                    @foreach ($micro_data->attachments_if_any_oosc as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="attachments_if_any_oosc[]"
@@ -2960,7 +3102,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">{{ $micro_data->conclusion_review_comments_ocr }}
                                     </textarea>
                         </div>
                     </div>
@@ -3011,7 +3153,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">{{ $micro_data->action_taken_on_affec_batch_ocr }}
                                     </textarea>
                         </div>
                     </div>
@@ -3024,9 +3166,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="capa_req_ocr">
+                                <option value="yes" @if ($micro_data->capa_req_ocr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->capa_req_ocr == 'no') selected @endif>No</option>
 
 
                             </select>
@@ -3035,19 +3177,19 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Refer.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="capa_refer_ocr" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->capa_refer_ocr == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->capa_refer_ocr == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Required Action Plan? </label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="required_action_plan_ocr">
+                                <option value="yes" @if ($micro_data->required_action_plan_ocr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->required_action_plan_ocr == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -3056,9 +3198,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Required Action Task?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="required_action_task_ocr">
+                                <option value="yes" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->required_action_task_ocr == 'yes') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -3067,10 +3209,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Task Reference.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->action_task_reference_ocr == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->action_task_reference_ocr == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3078,9 +3220,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Risk Assessment Req?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="risk_assessment_req_ocr">
+                                <option value="yes" @if ($micro_data->risk_assessment_req_ocr == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->risk_assessment_req_ocr == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -3089,10 +3231,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Risk Assessment Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->risk_assessment_ref_ocr == 2) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->risk_assessment_ref_ocr == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3101,7 +3243,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">{{ $micro_data->justify_if_no_risk_assessment_ocr }}
                                     </textarea>
                         </div>
                     </div>
@@ -3112,11 +3254,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->conclusion_attachment_ocr)
+                                    @foreach ($micro_data->conclusion_attachment_ocr as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                        oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -3125,7 +3284,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CQ Approver</label>
-                            <input type="text" name="name">
+                            <input type="text" name="qa_approver_ocr" value="{{ $micro_data->qa_approver_ocr }}">
                         </div>
                     </div>
 
@@ -3156,17 +3315,17 @@
                         <div class="group-input">
                             <label for="Description Deviation">CQ Review comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="cq_review_comments_OOS_CQ" id="summernote-1">{{ $micro_data->cq_review_comments_OOS_CQ }}
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> CAPA Required ?</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="capa_required_OOS_CQ">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes" @if ($micro_data->capa_required_OOS_CQ == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->capa_required_OOS_CQ == 'no') selected @endif>No</option>
                             </select>
                         </div>
                     </div>
@@ -3175,7 +3334,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Reference of CAPA </label>
-                            <input type="num" name="num">
+                            <input type="num" name="reference_of_capa_OOS_CQ" value="{{ $micro_data->reference_of_capa_OOS_CQ }}">
                         </div>
                     </div>
 
@@ -3184,11 +3343,11 @@
 
 
                             <label for="Auditee"> Action plan requirement ? </label>
-                            <select multiple name="auditee" placeholder="Select Nature of Deviation"
+                            <select multiple name="action_plan_requirement_OOS_CQ" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes" @if ($micro_data->action_plan_requirement_OOS_CQ == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->action_plan_requirement_OOS_CQ == 'no') selected @endif>No</option>
 
                             </select>
                         </div>
@@ -3200,7 +3359,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
-                            <input type="num" name="num">
+                            <input type="num" name="ref_action_plan_OOS_CQ" value="{{ $micro_data->ref_action_plan_OOS_CQ }}">
                         </div>
                     </div>
 
@@ -3211,11 +3370,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->cq_attachment_OOS_CQ)
+                                    @foreach ($micro_data->cq_attachment_OOS_CQ as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="cq_attachment_OOS_CQ[]"
-                                        oninput="addMultipleFiles(this, 'cq_attachment_OOS_CQ')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -3252,14 +3428,14 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Procedure Error</option>
-                                <option>Product Related Error</option>
-                                <option>Material Related Error</option>
-                                <option>Other Error</option>
+                            <select name="oos_category_BI">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="analyst-error" @if ($micro_data->oos_category_BI == 'analyst-error') selected @endif>Analyst Error</option>
+                                <option value="instrument-error" @if ($micro_data->oos_category_BI == 'instrument-error') selected @endif>Instrument Error</option>
+                                <option value="procedure-error" @if ($micro_data->oos_category_BI == 'procedure-error') selected @endif>Procedure Error</option>
+                                <option value="product-related-error" @if ($micro_data->oos_category_BI == 'product-related-error') selected @endif>Product Related Error</option>
+                                <option value="material-related-error" @if ($micro_data->oos_category_BI == 'material-related-error') selected @endif>Material Related Error</option>
+                                <option value="other-error" @if ($micro_data->oos_category_BI == 'other-error') selected @endif>Other Error</option>
 
                             </select>
                         </div>
@@ -3267,7 +3443,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Other's</label>
-                            <input type="string" name="string">
+                            <input type="string" name="others_BI" value="{{ $micro_data->others_BI }}">
                         </div>
                     </div>
                     <!-- <div class="col-lg-6">
@@ -3280,11 +3456,11 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>To Be Release</option>
-                                <option>To Be Rejected</option>
-                                <option>Other Action (Specify)</option>
+                            <select name="material_batch_release_BI">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="to-be-release" @if ($micro_data->material_batch_release_BI == 'to-be-release') selected @endif>To Be Release</option>
+                                <option value="to-be-rejected" @if ($micro_data->material_batch_release_BI == 'to-be-rejected') selected @endif>To Be Rejected</option>
+                                <option value="other-action" @if ($micro_data->material_batch_release_BI == 'other-action') selected @endif>Other Action (Specify)</option>
 
                             </select>
                         </div>
@@ -3294,7 +3470,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="other_action_BI" id="summernote-1">{{ $micro_data->other_action_BI }}
                                     </textarea>
                         </div>
                     </div>
@@ -3302,10 +3478,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="field_alert_reference_BI" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->field_alert_reference_BI == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->field_alert_reference_BI == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3316,7 +3492,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="other_parameter_result_BI" id="summernote-1">{{ $micro_data->other_parameter_result_BI }}
                                     </textarea>
                         </div>
                     </div>
@@ -3327,7 +3503,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="trend_of_previous_batches_BI" id="summernote-1">{{ $micro_data->trend_of_previous_batches_BI }}
                                     </textarea>
                         </div>
 
@@ -3336,7 +3512,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Stability Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="stability_data_BI" id="summernote-1">{{ $micro_data->other_parameter_result_BI }}
                                     </textarea>
                         </div>
                     </div>
@@ -3344,7 +3520,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Process Validation Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="process_validation_data_BI" id="summernote-1">{{ $micro_data->process_validation_data_BI }}
                                     </textarea>
                         </div>
                     </div>
@@ -3352,7 +3528,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Method Validation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="method_validation_BI" id="summernote-1">{{ $micro_data->method_validation_BI }}
                                     </textarea>
                         </div>
                     </div>
@@ -3360,7 +3536,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="any_market_complaints_BI" id="summernote-1">{{ $micro_data->any_market_complaints_BI }}
                                     </textarea>
                         </div>
 
@@ -3370,8 +3546,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="statistical_evaluation_BI" id="summernote-1">
+                                {{ $micro_data->statistical_evaluation_BI }}</textarea>
                         </div>
 
                     </div>
@@ -3379,8 +3555,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="risk_analysis_for_disposition_BI" id="summernote-1">
+                                {{ $micro_data->risk_analysis_for_disposition_BI }}</textarea>
                         </div>
 
                     </div>
@@ -3388,8 +3564,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="conclusion_BI" id="summernote-1">
+                                {{ $micro_data->conclusion_BI }}</textarea>
                         </div>
 
                     </div>
@@ -3397,10 +3573,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
-                            <select>
+                            <select name="phase_III_inves_required_BI">
                                 <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes" @if ($micro_data->phase_III_inves_required_BI == 'yes') selected @endif>Yes</option>
+                                <option value="no" @if ($micro_data->phase_III_inves_required_BI == 'no') selected @endif>No</option>
 
 
                             </select>
@@ -3409,10 +3585,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1" @if ($micro_data->phase_III_inves_reference_BI == 1) selected @endif>1</option>
+                                <option value="2" @if ($micro_data->phase_III_inves_reference_BI == 2) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3421,8 +3597,8 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
+                            <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
+                                {{ $micro_data->justify_for_delay_BI }}</textarea>
                         </div>
 
                     </div>
@@ -3433,11 +3609,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->disposition_attachment_BI)
+                                    @foreach ($micro_data->disposition_attachment_BI as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="disposition_attachment_BI[]"
-                                        oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -3467,7 +3660,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="reopen_request" id="summernote-1">{{ $micro_data->reopen_request }}
                                     </textarea>
                         </div>
                     </div>
@@ -3479,11 +3672,28 @@
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->reopen_attachment)
+                                    @foreach ($micro_data->reopen_attachment as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="reopen_attachment[]"
-                                        oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
 
@@ -5726,10 +5936,27 @@
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
 
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attach">
+                                @if ($micro_data->attachment_details_cibet)
+                                @foreach ($micro_data->attachment_details_cibet as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file"
+                                            data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                @endforeach
+
+                                @endif
+                            </div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cibet[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -7223,10 +7450,27 @@
                                     If Yes, attach details
                                 </small> --}}
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attach">
+                                @if ($micro_data->attachment_details_cis)
+                                @foreach ($micro_data->attachment_details_cis as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file"
+                                            data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                @endforeach
+
+                                @endif
+                            </div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cis[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -9687,10 +9931,27 @@
                                     If Yes, attach details
                                 </small> --}}
                         <div class="file-attachment-field">
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attach">
+                                @if ($micro_data->attachment_details_cimlbwt)
+                                @foreach ($micro_data->attachment_details_cimlbwt as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file"
+                                            data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                @endforeach
+
+                                @endif
+                            </div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cimlbwt[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -13516,13 +13777,30 @@
 
                         <div class="file-attachment-field">
 
-                            <div class="file-attachment-list" id="file_attach"></div>
+                            <div class="file-attachment-list" id="file_attach">
+                                @if ($micro_data->attachment_details_cima)
+                                @foreach ($micro_data->attachment_details_cima as $file)
+                                    <h6 type="button" class="file-container text-dark"
+                                        style="background-color: rgb(243, 242, 240);">
+                                        <b>{{ $file }}</b>
+                                        <a href="{{ asset('upload/' . $file) }}"
+                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                        <a type="button" class="remove-file"
+                                            data-file-name="{{ $file }}"><i
+                                                class="fa-solid fa-circle-xmark"
+                                                style="color:red; font-size:20px;"></i></a>
+                                    </h6>
+                                @endforeach
+
+                                @endif
+                            </div>
 
                             <div class="add-btn">
 
                                 <div>Add</div>
 
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cima[]"
 
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple/>
 
@@ -15152,13 +15430,30 @@
 
                             <div class="file-attachment-field">
 
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attach">
+                                    @if ($micro_data->attachment_details_ciem)
+                                    @foreach ($micro_data->attachment_details_ciem as $file)
+                                        <h6 type="button" class="file-container text-dark"
+                                            style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><i class="fa fa-eye text-primary"
+                                                    style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a type="button" class="remove-file"
+                                                data-file-name="{{ $file }}"><i
+                                                    class="fa-solid fa-circle-xmark"
+                                                    style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                    @endforeach
+
+                                    @endif
+                                </div>
 
                                 <div class="add-btn">
 
                                     <div>Add</div>
 
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachment_details_ciem[]"
 
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple/>
 
@@ -16384,13 +16679,30 @@
 
                                         <div class="file-attachment-field">
 
-                                            <div class="file-attachment-list" id="file_attach"></div>
+                                            <div class="file-attachment-list" id="file_attach">
+                                                @if ($micro_data->attachment_details_cimst)
+                                                @foreach ($micro_data->attachment_details_cimst as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+
+                                                @endif
+                                            </div>
 
                                             <div class="add-btn">
 
                                                 <div>Add</div>
 
-                                                <input type="file" id="myfile" name="file_attach[]"
+                                                <input type="file" id="myfile" name="attachment_details_cimst[]"
 
                                                     oninput="addMultipleFiles(this, 'file_attach')" multiple/>
 
@@ -16501,5 +16813,23 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
 @endsection

@@ -10,6 +10,9 @@ class OOS_micro extends Model
     use HasFactory;
 
     protected $table = 'o_o_s__micros';
+
+    //protected $fillable = ['reference_document_gi'];
+
     protected $casts = [
     'initial_attachment_gi'=>'array',
     'file_attachments_pli'=>'array',
@@ -23,7 +26,13 @@ class OOS_micro extends Model
     'conclusion_attachment_ocr'=>'array',
     'cq_attachment_OOS_CQ'=>'array',
     'disposition_attachment_BI'=>'array',
-    'reopen_attachment'=>'array'
+    'reopen_attachment'=>'array',
+    'attachment_details_cibet'=>'array',
+    'attachment_details_cis'=>'array',
+    'attachment_details_cimlbwt'=>'array',
+    'attachment_details_cima'=>'array',
+    'attachment_details_ciem'=>'array',
+    'attachment_details_cimst'=>'array'
     ];
 
 }
