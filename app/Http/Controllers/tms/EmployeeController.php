@@ -5,8 +5,11 @@ namespace App\Http\Controllers\tms;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\EmployeeGrid;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Helpers;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class EmployeeController extends Controller
 {
@@ -21,11 +24,13 @@ class EmployeeController extends Controller
         // return $request->all();
         // try {
             $employee = new Employee();
+            $employee->stage = '1';
+            $employee->status = 'Opened';
             $employee->division_id = $request->division_id;
             $employee->assigned_to = $request->assigned_to;
             $employee->start_date = $request->start_date;
             $employee->joining_date = $request->joining_date;
-            $employee->employee_id = $request->employee_id;
+            $employee->employee_id = 'AO-' . $request->employee_id;
             $employee->gender = $request->gender;
             $employee->department = $request->department;
             $employee->job_title = $request->job_title;
@@ -137,6 +142,7 @@ class EmployeeController extends Controller
         // try {
             $employee = Employee::findOrFail($id);
             $employee->division_id = $request->division_id;
+            // dd($request->division_id);
             $employee->assigned_to = $request->assigned_to;
             $employee->start_date = $request->start_date;
             $employee->joining_date = $request->joining_date;
@@ -235,25 +241,6 @@ class EmployeeController extends Controller
             $employeeExternalGrid->data = $externalTrainingData;
             $employeeExternalGrid->save();
 
-            // if ($request->hasFile('cerificate')) {
-            //     $file = $request->file('certificate');
-            //     $name = $request->employee_id . 'certificate' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //     $file->move('upload/', $name);
-            //     $employee->certificate = $name;
-            // }
-            // if ($request->hasFile('suporting_documents')) {
-            //     $file = $request->file('suporting_documents');
-            //     $name = $request->employee_id . 'suporting_documents' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-            //     $file->move('upload/', $name);
-            //     $employee->suporting_documents = $name;
-            // }
-
-            // $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrNew();
-            // $employeeExternalGrid->employee_id = $employee_id;
-            // $employeeExternalGrid->identifier = 'external_training';
-            // $employeeExternalGrid->data = $request->external_training;
-            // $employeeExternalGrid->save();
-
         // } catch (\Exception $e) {
         //     $res['status'] = 'error';
         //     $res['message'] = $e->getMessage();
@@ -266,9 +253,46 @@ class EmployeeController extends Controller
     public function show($id) {
 
         $employee = Employee::find($id);
+        // dd($employee);
         $employee_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
         $external_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'external_training'])->first();
 
         return view('frontend.TMS.Employee.employee_view', compact('employee', 'employee_grid_data', 'external_grid_data'));
+    }
+
+    public function sendStage(Request $request, $id) {
+        try {
+
+            if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+                $employee = Employee::find($id);
+                $lastEmployee = Employee::find($id);
+
+                if ($employee->stage == 1) {
+                    $employee->stage = "2";
+                    $employee->status = "Active";
+                    $employee->activated_by = Auth::user()->name;
+                    $employee->activated_on = Carbon::now()->format('d-m-Y');
+                    $employee->activated_comment = $request->comment;
+                    $employee->update();
+                    return back();
+                }
+
+                if ($employee->stage == 2) {
+                    $employee->stage = "3";
+                    $employee->status = "Closed-Retired";
+                    $employee->retired_by = Auth::user()->name;
+                    $employee->retired_on = Carbon::now()->format('d-m-Y');
+                    $employee->retired_comment = $request->comment;
+                    $employee->update();
+                    return back();
+                }
+            }
+
+        } catch(\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

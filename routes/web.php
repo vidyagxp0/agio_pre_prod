@@ -468,5 +468,6 @@ Route::post('/tms/employee/{id}', [EmployeeController::class, 'update'])->name('
 Route::post('/tms/trainer/{id}', [TrainerController::class, 'update'])->name('trainer.update');
 Route::get('employee_view/{id}', [EmployeeController::class, 'show']);
 Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']);
+Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
 
 

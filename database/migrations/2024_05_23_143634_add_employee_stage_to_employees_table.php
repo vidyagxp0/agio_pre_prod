@@ -14,7 +14,14 @@ return new class extends Migration
     public function up()
     {
         Schema::table('employees', function (Blueprint $table) {
-            $table->string('division_id')->nullable();
+            $table->integer('stage')->nullable();
+            $table->string('status')->nullable();
+            $table->string('activated_by')->nullable();
+            $table->string('activated_on')->nullable();
+            $table->string('activated_comment')->nullable();
+            $table->string('retired_by')->nullable();
+            $table->string('retired_on')->nullable();
+            $table->string('retired_comment')->nullable();
         });
     }
 

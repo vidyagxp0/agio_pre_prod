@@ -160,7 +160,7 @@
                                         <td>{{ $employee->job_title }}</td>
                                         <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
                                         <td>{{ $employee->joining_date }}</td>
-                                        <td></td>
+                                        <td>{{ $employee->status }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

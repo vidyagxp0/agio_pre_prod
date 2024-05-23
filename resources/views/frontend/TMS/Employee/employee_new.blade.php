@@ -107,19 +107,19 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Site Division/Project">Site Division/Project</label>
-                                    <select name="division_id">
+                                    <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
+                                    <select name="division_id" required>
                                         <option value="">-- Select --</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                            <option value="{{ $division->name }}">{{ $division->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Assigned To">Assigned To</label>
-                                    <select name="assigned_to">
+                                    <label for="Assigned To">Assigned To <span class="text-danger">*</span></label>
+                                    <select name="assigned_to" required>
                                         <option value="">-- Select --</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -141,15 +141,15 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Employee ID">Employee ID</label>
-                                    <input type="text" name="employee_id">
+                                    <label for="Employee ID">Employee ID <span class="text-danger">*</span></label>
+                                    <input type="text" name="employee_id" required>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Gender">Gender</label>
                                     <select name="gender">
-                                        <option value="">Enter Your Selection Here</option>
+                                        <option>Enter Your Selection Here</option>
                                         <option value="Female">Female</option>
                                         <option value="Male">Male</option>
                                     </select>
@@ -157,8 +157,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Department">Department</label>
-                                    <select name="department">
+                                    <label for="Department">Department <span class="text-danger">*</span></label>
+                                    <select name="department" required>
                                         <option>-- Select --</option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
@@ -168,8 +168,8 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Job Title">Job Title</label>
-                                    <select name="job_title">
+                                    <label for="Job Title">Job Title <span class="text-danger">*</span></label>
+                                    <select name="job_title" required>
                                         <option>Enter Your Selection Here</option>
                                         <option value="Administrator">Administrator</option>
                                         <option value="Cleaning Technician">Cleaning Technician</option>
@@ -465,7 +465,7 @@
                         <div class="group-input" id="external-details-grid">
                             <label for="audit-agenda-grid">
                                 External Training Details
-                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
+                                <button disabled type="button" name="audit-agenda-grid" id="details-grid">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -491,12 +491,12 @@
                                     <tbody>
                                         <tr>
                                             <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
-                                            <td><input type="text" name="external_training[0][topic]"></td>
-                                            <td><input type="date" name="external_training[0][external_training_date]"></td>
-                                            <td><input type="text" name="external_training[0][external_trainer]"></td>
-                                            <td><input type="text" name="external_training[0][external_agency]"></td>
-                                            <td><input type="file" name="external_training[0][certificate]"></td>
-                                            <td><input type="file" name="external_training[0][supproting_documents]"></td>
+                                            <td><input disabled type="text" name="external_training[0][topic]"></td>
+                                            <td><input disabled type="date" name="external_training[0][external_training_date]"></td>
+                                            <td><input disabled type="text" name="external_training[0][external_trainer]"></td>
+                                            <td><input disabled type="text" name="external_training[0][external_agency]"></td>
+                                            <td><input disabled type="file" name="external_training[0][certificate]"></td>
+                                            <td><input disabled type="file" name="external_training[0][supproting_documents]"></td>
                                         </tr>
 
                                     </tbody>
@@ -506,13 +506,13 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Comments">External Comments</label>
-                                    <textarea name="external_comment"></textarea>
+                                    <textarea disabled name="external_comment"></textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">External Attachment</label>
-                                    <input type="file" id="myfile" name="external_attachment">
+                                    <input disabled type="file" id="myfile" name="external_attachment">
                                 </div>
                             </div>
                         </div>

@@ -123,21 +123,21 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        {{-- @php --}}
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    {{-- @endphp --}}
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white" href="">
-                                Audit Trail </a> </button>
+                        {{-- <button class="button_theme1"> <a class="text-white" href="">
+                                Audit Trail </a> </button> --}}
 
-                        {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        {{-- @if ($employee->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Propose Plan
+                                Activate
                             </button> --}}
                         {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                Activate
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -175,23 +175,23 @@
                         </div> --}}
                     {{-- @else --}}
                         <div class="progress-bars d-flex">
-                            {{-- @if ($data->stage >= 1) --}}
+                            @if ($employee->stage >= 1)
                                 <div class="active">Opened</div>
-                            {{-- @else --}}
-                                {{-- <div class="">Opened</div> --}}
-                            {{-- @endif --}}
+                            @else
+                                <div class="">Opened</div>
+                            @endif
 
-                            {{-- @if ($data->stage >= 2) --}}
-                                {{-- <div class="active">Active </div> --}}
-                            {{-- @else --}}
+                            @if ($employee->stage >= 2)
+                                <div class="active">Active </div>
+                            @else
                                 <div class="">Active</div>
-                            {{-- @endif --}}
+                            @endif
 
-                            {{-- @if ($data->stage >= 3) --}}
-                                {{-- <div class="bg-danger">Closed - Done</div> --}}
-                            {{-- @else --}}
+                            @if ($employee->stage >= 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
                                 <div class="">Closed - Retired</div>
-                            {{-- @endif --}}
+                            @endif
                     {{-- @endif --}}
 
 
@@ -205,7 +205,7 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
             </div>
             <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
@@ -219,12 +219,13 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Site Division/Project">Site Division/Project</label>
-                                    <select name="division_id" disabled>
+                                    <input value="{{ $employee->division_id }}" name="division_id" readonly >
+                                    {{-- <select name="division_id" id="division_id" disabled>
                                         <option value="">-- Select --</option>
                                         @foreach ($divisions as $division)
                                             <option value="{{ $division->id }}" @if ($division->id == $employee->division_id) selected @endif>{{ $division->name }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -305,13 +306,18 @@
                                 <div class="group-input">
                                     <label for="Attached CV">Attached CV</label>
                                     <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
+                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a>
+
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
-                                    <input type="file" id="myfile" name="certification" value="{{ $employee->attached_cv }}">
+                                    <input type="file" id="myfile" name="certification" value="{{ $employee->certification }}">
                                 </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <a href="{{ asset('upload/' . $employee->certification) }}" target="_blank">{{ $employee->certification }}</a>
                             </div>
                             <div class="col-12 sub-head">
                                 Employee Information
@@ -646,33 +652,6 @@
                                             </tr>
                                         @endif
                                     </tbody>
-
-                                    {{-- <tbody>
-                                        @if ($external_grid_data && is_array($external_grid_data->data))
-                                            @foreach ($external_grid_data->data as $index => $external_grid)
-                                            <tr>
-                                                <td><input disabled type="text" name="external_training[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
-                                                <td><input type="text" name="external_training[{{ $loop->index }}][topic]" value="{{ array_key_exists('topic', $external_grid) ? $external_grid['topic'] : '' }}"></td>
-                                                <td><input type="date" name="external_training[{{ $loop->index }}][external_training_date]" value="{{ array_key_exists('external_training_date', $external_grid) ? $external_grid['external_training_date'] : '' }}"></td>
-                                                <td><input type="text" name="external_training[{{ $loop->index }}][external_trainer]" value="{{ array_key_exists('external_trainer', $external_grid) ? $external_grid['external_trainer'] : '' }}"></td>
-                                                <td><input type="text" name="external_training[{{ $loop->index }}][external_agency]" value="{{ array_key_exists('external_agency', $external_grid) ? $external_grid['external_agency'] : '' }}"></td>
-                                                <td><input type="file" name="external_training[{{ $loop->index }}][certificate]" value="{{ array_key_exists('certificate', $external_grid) ? $external_grid['certificate'] : '' }}"></td>
-                                                <td><input type="file" name="external_training[{{ $loop->index }}][supproting_documents]" value="{{ array_key_exists('supproting_documents', $external_grid) ? $external_grid['supproting_documents'] : '' }}"></td>
-                                            </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
-                                                <td><input type="text" name="external_training[0][topic]"></td>
-                                                <td><input type="date" name="external_training[0][external_training_date]"></td>
-                                                <td><input type="text" name="external_training[0][external_trainer]"></td>
-                                                <td><input type="text" name="external_training[0][external_agency]"></td>
-                                                <td><input type="file" name="external_training[0][certificate]"></td>
-                                                <td><input type="file" name="external_training[0][supproting_documents]"></td>
-                                            </tr>
-                                        @endif
-                                    </tbody> --}}
-
                                 </table>
                             </div>
                             <div class="col-12">
@@ -739,34 +718,33 @@
                 </div>
             </div>
              <!-- Activity Log content -->
-             <div id="CCForm6" class="inner-block cctabcontent">
+             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated By">Activated By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->activated_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated On">Activated On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->activated_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Retired By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->retired_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Retired On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->retired_on }}</div>
                             </div>
                         </div>
-
                     </div>
                     {{-- <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -783,6 +761,48 @@
         </div>
     </div>
 
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ url('tms/employee/sendstage', $employee->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
