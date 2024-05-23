@@ -63,7 +63,7 @@
     </script>
     <div class="form-field-head">
         <div class="pr-id">
-            New Employee Training
+            New Employee
         </div>
         {{-- <div class="division-bar">
             <strong>Site Division/Project</strong> :
@@ -171,8 +171,22 @@
                                     <label for="Job Title">Job Title</label>
                                     <select name="job_title">
                                         <option>Enter Your Selection Here</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
+                                        <option value="Administrator">Administrator</option>
+                                        <option value="Cleaning Technician">Cleaning Technician</option>
+                                        <option value="Compliance Training Manager">Compliance Training Manager</option>
+                                        <option value="Doc. Control Officer">Doc. Control Officer</option>
+                                        <option value="GMP Training Administator">GMP Training Administator</option>
+                                        <option value="GMT Trainer">GMT Trainer</option>
+                                        <option value="Manager / Shift Manager">Manager / Shift Manager</option>
+                                        <option value="QA Officer">QA Officer</option>
+                                        <option value="Secretary / Administrator">Secretary / Administrator</option>
+                                        <option value="Senior QA Officer">Senior QA Officer</option>
+                                        <option value="Shift Technician">Shift Technician</option>
+                                        <option value="Project Manager">Project Manager</option>
+                                        <option value="Customer Support">Customer Support</option>
+                                        <option value="HR Manager">HR Manager</option>
+                                        <option value="IT Manager">IT Manager</option>
+                                        <option value="Purchase Manager">Purchase Manager</option>
                                     </select>
                                 </div>
                             </div>
@@ -211,7 +225,7 @@
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country" aria-label="Default select example"
                                         onchange="loadStates()">
-                                        <option value="Country" selected>Select Country</option>
+                                        <option selected>Select Country</option>
                                     </select>
                                 </div>
                             </div>
@@ -220,7 +234,7 @@
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example"
                                         onchange="loadCities()">
-                                        <option value="State" selected>Select State/District</option>
+                                        <option selected>Select State/District</option>
                                     </select>
                                 </div>
                             </div>
@@ -228,7 +242,7 @@
                                 <div class="group-input">
                                     <label for="State/District">City</label>
                                     <select name="city" class="form-select city" aria-label="Default select example">
-                                        <option value="City" selected>Select City</option>
+                                        <option selected>Select City</option>
                                     </select>
                                 </div>
                             </div>
@@ -322,7 +336,7 @@
                                 <div class="group-input">
                                     <label for="Site Name">Site Name</label>
                                     <select name="site_name">
-                                        <option value="Enter Your Selection Here">Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="City MFR A">City MFR A</option>
                                         <option value="City MFR B">City MFR B</option>
                                         <option value="City MFR C">City MFR C</option>

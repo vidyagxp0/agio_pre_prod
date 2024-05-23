@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\EmployeeGrid;
 use Illuminate\Http\Request;
+use Helpers;
 
 class EmployeeController extends Controller
 {
@@ -210,20 +211,48 @@ class EmployeeController extends Controller
             $employeeJobGrid->data = $request->jobResponsibilities;
             $employeeJobGrid->save();
 
-            if (!empty($request->employee_external_training_data) && $request->file('employee_external_training_data')) {
-                $files = [];
-                foreach ($request->file('employee_external_training_data') as $file) {
-                    $name = $request->employee_id . 'employee_external_training_data' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] =  $name;
+            $externalTrainingData = $request->input('external_training', []);
+
+            foreach ($externalTrainingData as $index => $training) {
+                if ($request->hasFile("external_training.$index.certificate")) {
+                    $file = $request->file("external_training.$index.certificate");
+                    $name = $employee_id . '_certificate_' . $index . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/certificates'), $name);
+                    $externalTrainingData[$index]['certificate'] = 'upload/certificates/' . $name;
+                }
+
+                if ($request->hasFile("external_training.$index.supporting_documents")) {
+                    $file = $request->file("external_training.$index.supporting_documents");
+                    $name = $employee_id . '_supporting_documents_' . $index . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('upload/documents'), $name);
+                    $externalTrainingData[$index]['supporting_documents'] = 'upload/documents/' . $name;
                 }
             }
 
             $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrNew();
             $employeeExternalGrid->employee_id = $employee_id;
             $employeeExternalGrid->identifier = 'external_training';
-            $employeeExternalGrid->data = $request->external_training;
+            $employeeExternalGrid->data = $externalTrainingData;
             $employeeExternalGrid->save();
+
+            // if ($request->hasFile('cerificate')) {
+            //     $file = $request->file('certificate');
+            //     $name = $request->employee_id . 'certificate' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //     $file->move('upload/', $name);
+            //     $employee->certificate = $name;
+            // }
+            // if ($request->hasFile('suporting_documents')) {
+            //     $file = $request->file('suporting_documents');
+            //     $name = $request->employee_id . 'suporting_documents' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            //     $file->move('upload/', $name);
+            //     $employee->suporting_documents = $name;
+            // }
+
+            // $employeeExternalGrid = EmployeeGrid::where(['employee_id' => $employee_id, 'identifier' => 'external_training'])->firstOrNew();
+            // $employeeExternalGrid->employee_id = $employee_id;
+            // $employeeExternalGrid->identifier = 'external_training';
+            // $employeeExternalGrid->data = $request->external_training;
+            // $employeeExternalGrid->save();
 
         // } catch (\Exception $e) {
         //     $res['status'] = 'error';
@@ -232,5 +261,14 @@ class EmployeeController extends Controller
 
         toastr()->success("Record is updated Successfully");
         return back();
+    }
+
+    public function show($id) {
+
+        $employee = Employee::find($id);
+        $employee_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'jobResponsibilites'])->first();
+        $external_grid_data = EmployeeGrid::where(['employee_id' => $id, 'identifier' => 'external_training'])->first();
+
+        return view('frontend.TMS.Employee.employee_view', compact('employee', 'employee_grid_data', 'external_grid_data'));
     }
 }

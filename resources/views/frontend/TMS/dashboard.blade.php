@@ -155,7 +155,7 @@
                             <tbody>
                                 @foreach ($employees as $employee)
                                     <tr>
-                                        <td>{{ $employee->employee_id }}</td>
+                                        <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
                                         <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
                                         <td>{{ $employee->job_title }}</td>
                                         <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
@@ -186,7 +186,7 @@
                             <tbody>
                                 @foreach ($trainers as $trainer)
                                     <tr>
-                                        <td>{{ $trainer->record_number }}</td>
+                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
                                         <td>{{ $trainer->site_code }}</td>
                                         <td>{{ $trainer->initiator }}</td>
                                         <td>{{ $trainer->date_of_initiation }}</td>

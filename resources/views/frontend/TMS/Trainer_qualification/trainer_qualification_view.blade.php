@@ -357,19 +357,19 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
                             </button> --}}
-                            
-                          
+
+
                         {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                             
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Qualified
                             </button>
-                            
+
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
                         {{-- @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                           
+
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> -->
@@ -381,7 +381,7 @@
                                Reject
                             </button>
                         {{-- @elseif($data->stage == 6) --}}
-                          
+
                         {{-- @endif --}}
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -410,7 +410,7 @@
                             {{-- @else --}}
                                 <div class="">Pending HOD Review</div>
                             {{-- @endif --}}
-                            
+
                             {{-- @if ($data->stage >= 3) --}}
                                 {{-- <div class="bg-danger">Closed - Done</div> --}}
                             {{-- @else --}}
@@ -432,7 +432,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('trainer.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
