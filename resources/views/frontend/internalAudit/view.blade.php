@@ -404,10 +404,10 @@ function addMultipleFiles(input, block_id) {
                                         
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Assigned to">Assigned to 1
-                                                    @if($data->user)
+                                                <label for="Assigned to">Assigned to
+                                                    {{-- @if($data->user)
                                                         {{ $data->user->name }}
-                                                    @endif
+                                                    @endif --}}
 
                                                 </label>
 

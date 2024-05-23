@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
                     </div>
                 </td>
             </tr>
@@ -195,12 +195,12 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                     </tr>
