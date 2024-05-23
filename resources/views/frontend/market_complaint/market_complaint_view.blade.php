@@ -217,10 +217,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Review
                             </button>
-                           
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
-                            </button> --}}
+                            </button>
+                           
+                          
 
                             @elseif($data->stage == 3 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                            
@@ -563,7 +564,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
             
-                            <form action="{{ route('marketcomplaint.mar_comp_stagechange', $data->id) }}" method="POST">
+                            <form action="{{ route('marketcomplaint.MarketComplaintCancel', $data->id) }}" method="POST">
                                 @csrf
                                 <!-- Modal body -->
                                 <div class="modal-body">
@@ -998,7 +999,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through_gi" id="initiated_through_gi">
+                                        <select name="initiated_through_gi" id="initiated_through_gi" >
                                             <option value="0">-- select --</option>
                                             <option value="recall" {{ $data->initiated_through_gi == 'recall' ? 'selected' : '' }}>Recall</option>
                                             <option value="return" {{ $data->initiated_through_gi == 'return' ? 'selected' : '' }}>Return</option>
@@ -2044,7 +2045,7 @@
                                                     <th style="width: 40%;">Requirements</th>
                                                     <th style="width: 20%;">Expected date of investigation completion</th>
                                                     <th>Remarks</th>
-                                                </tr>
+                                                </tr>   
                                             </thead>
                                             <tbody>
                                                 <tr>
@@ -2251,7 +2252,7 @@
                     </div>
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Submit By : </label>
                             <div class="static">{{ $data->submitted_by }}</div>
@@ -2259,127 +2260,168 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Submit On : </label>
                             <div class="Date">{{ $data->submitted_on }}</div>
 
-
-
-
-
                         </div>
                     </div>
-                    
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->submitted_comment}}</div>
+                        </div>
+                    </div>
 
 
 
-                    <div class="col-lg-6">
+
+                    <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Complete Review By : </label>
+                            <div class="static">{{ $data->complete_review_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Complete Review On :</label>
-
-
-
-
+                            <div class="date">{{ $data->complete_review_on }}</div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->complete_review_comment	}}</div>
                         </div>
                     </div>
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Investigation Completed By :</label>
+                            <div class="static">{{ $data->investigation_completed_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Investigation Completed On : </label>
 
+                            <div class="date">{{ $data->investigation_completed_on }}</div>
 
 
 
                         </div>
                     </div>
-
-
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Initiator Group">Investigation Completed By : </label>
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->investigation_completed_comment}}</div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Initiator Group">Propose Plan By : </label>
+                            <div class="static">{{ $data->propose_plan_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="OOC Logged On">Investigation Completed On : </label>
+                            <label for="OOC Logged On">Propose Plan On : </label>
 
+                            <div class="date">{{ $data->propose_plan_on }}</div>
 
 
 
                         </div>
                     </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->propose_plan_comment}}</div>
+                        </div>
+                    </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Approve Plan By : </label>
+                            <div class="static">{{ $data->approve_plan_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Approve Plan On : </label>
+                            <div class="date">{{ $data->approve_plan_on }}</div>
 
 
 
 
                         </div>
                     </div>
-                    
-                    {{-- <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
-                            <label for="Initiator Group">Pending Response Letter By : </label>
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->approve_plan_comment}}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Initiator Group">All CAPA Closed By : </label>
+                            <div class="static">{{ $data->all_capa_closed_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="OOC Logged On">Pending Actions Completion On : </label>
-
-
-
-
+                            <label for="OOC Logged On">All CAPA Closed On : </label>
+                            <div class="date">{{ $data->all_capa_closed_on }}</div>
                         </div>
-                    </div> --}}
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->all_capa_closed_comment}}</div>
+                        </div>
+                    </div>
                     
 
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <div class="group-input">
                             <label for="Initiator Group">Closure Done By : </label>
+                            <div class="static">{{ $data->closed_done_by }}</div>
 
                         </div>
                     </div>
 
-                    <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-4 new-date-data-field">
                         <div class="group-input input-date">
                             <label for="OOC Logged On">Closure Done On : </label>
+                            <div class="date">{{ $data->closed_done_on }}</div>
 
 
 
 
                         </div>
                     </div>
-
+                    <div class="col-lg-4">
+                        <div class="group-input">
+                            <label for="Comment">Comment</label>
+                            <div class="static" >{{$data->closed_done_comment}}</div>
+                        </div>
+                    </div>
 
 
 

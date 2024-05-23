@@ -445,4 +445,14 @@ class Helpers
     //                 ->subject('Record is for Review');
     //     });
     // }
+
+    public static function disabledMarketComplaintFields($marketcomplaint)
+    {
+        if($marketcomplaint == 0 || $marketcomplaint > 8){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+
+    }
 }

@@ -222,7 +222,7 @@
                                             <option value="">-- select --</option>
                                             <option value="Internal ">Internal Audit</option>
                                             <option value="External">External Audit</option>
-                                            <option value="CAPA<">CAPA</option>
+                                            <option value="CAPA">CAPA</option>
                                             <option value="Audit ">Audit Program</option>
                                             <option value="Lab ">Lab Incident</option>
                                             <option value="Risk">Risk Assessment</option>

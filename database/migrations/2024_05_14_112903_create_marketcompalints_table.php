@@ -83,6 +83,22 @@ return new class extends Migration
         $table->longText('initial_attachment_c')->nullable();
         $table->string('stage')->nullable();
         $table->string('status')->nullable();
+        $table->longText('submitted_by')->nullable();
+        $table->longText('submitted_on')->nullable();
+        $table->longText('complete_review_by')->nullable();
+        $table->longText('complete_review_on')->nullable();
+        $table->longText('investigation_completed_by')->nullable();
+        $table->longText('investigation_completed_on')->nullable();
+        $table->longText('propose_plan_by')->nullable();
+        $table->longText('propose_plan_on')->nullable();
+        $table->longText('approve_plan_by')->nullable();
+        $table->longText('approve_plan_on')->nullable();
+        $table->longText('all_capa_closed_by')->nullable();
+        $table->longText('all_capa_closed_on')->nullable();
+        $table->longText('closed_done_by')->nullable();
+        $table->longText('closed_done_on')->nullable();
+        $table->longText('cancelled_by')->nullable();
+        $table->longText('cancelled_on')->nullable();
 
             $table->timestamps();
         });

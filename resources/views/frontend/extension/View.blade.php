@@ -249,7 +249,7 @@
                                                     <option  selected value="">-- select --</option>
                                                     <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
                                                     <option @if ($data->initiated_through == 'External') selected @endif value="External">External Audit</option>
-                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA<">CAPA</option>
+                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA">CAPA</option>
                                                     <option  @if ($data->initiated_through == 'Audit') selected @endif value="Audit ">Audit Program</option>
                                                     <option @if ($data->initiated_through == 'Lab') selected @endif value="Lab ">Lab Incident</option>
                                                     <option @if ($data->initiated_through == 'Risk') selected @endif value="Risk">Risk Assessment</option>

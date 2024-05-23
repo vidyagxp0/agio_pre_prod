@@ -367,7 +367,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
                 "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through_gi" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 

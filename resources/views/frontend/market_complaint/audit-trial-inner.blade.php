@@ -55,25 +55,25 @@
                             @endif
 
                             @if($temp->activity_type == "Responsibility" ||$temp->activity_type == "Abbreviation" ||$temp->activity_type == "Defination" ||$temp->activity_type == "Materials and Equipments" ||$temp->activity_type == "Reporting" )
-                            @if(!empty($temp->previous))
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                @foreach (unserialize($temp->previous) as $data)
-                                @if($data)
-                                <div>{{ $data }}</div>
-                                @else
-                                <div>NULL</div>
-                                @endif
-                                @endforeach
+                                @if(!empty($temp->previous))
+                                    <div class="list-item">
+                                        <div class="head">Changed From</div>
+                                        <div>:</div>
+                                        @foreach (unserialize($temp->previous) as $data)
+                                        @if($data)
+                                        <div>{{ $data }}</div>
+                                        @else
+                                        <div>NULL</div>
+                                        @endif
+                                        @endforeach
 
-                            </div>
-                            @else
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>NULL</div>
-                            </div>
+                                    </div>
+                                @else
+                                <div class="list-item">
+                                    <div class="head">Changed From</div>
+                                    <div>:</div>
+                                    <div>NULL</div>
+                                </div>
                             @endif
                             @if($temp->current != $temp->previous)
                             <div class="list-item">

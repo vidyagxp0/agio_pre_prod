@@ -458,7 +458,7 @@
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
+                                                {{ ucwords(str_replace("_", " ", $datas->initiated_through_gi)); }}
                                             </td>
                                            
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

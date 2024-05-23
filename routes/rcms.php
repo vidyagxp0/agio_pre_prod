@@ -189,6 +189,7 @@ Route::group(['prefix' => 'rcms'], function () {
                 Route::put('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');
                 Route::post('mar_comp_stagechange/{id}',[MarketComplaintController::class,'marketComplaintStateChange'])->name('mar_comp_stagechange');
                 Route::post('mar_comp_reject_stateChange/{id}', [MarketComplaintController::class, 'marketComplaintRejectState'])->name('mar_comp_reject_stateChange');
+                Route::post('MarketComplaintCancel/{id}', [MarketComplaintController::class, 'MarketComplaintCancel'])->name('MarketComplaintCancel');
                
                 Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
 

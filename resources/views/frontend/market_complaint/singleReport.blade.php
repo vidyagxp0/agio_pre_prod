@@ -531,7 +531,7 @@
                     </tr>
                 </table>
             </div> --}}
-            <div class="block">
+            {{-- <div class="block">
                 <div class="block-head">
                     Attachments
                 </div>
@@ -553,7 +553,7 @@
                         <td class="w-80">{{ $data->CAPA_Attachment ? '<a href="'.asset('upload/document/'.$data->CAPA_Attachment).'">'.$data->CAPA_Attachment.'</a>' : 'Not Applicable' }}</td>
                     </tr>
                 </table>
-            </div>
+            </div> --}}
             <div class="block">
                 <div class="block-head">
                     Activity Log
