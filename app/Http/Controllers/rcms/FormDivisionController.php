@@ -36,7 +36,7 @@ class FormDivisionController extends Controller
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');
         }
-        elseif ($request->process_name == 'OOS') {
+        elseif ($request->process_name == 'OOS Chemical') {
             return redirect()->route('oos.index');
         }
         elseif ($request->process_name == 'OOT') {

@@ -440,8 +440,24 @@
                                             <textarea name="comments" id="comments"></textarea>
                                         </div>
                                     </div>
-
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="CAPA Attachments">Initial Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="capa_attachment"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="capa_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
                                 <div class="button-block">
                                     <button type="submit" id="ChangeSaveButton" class="saveButton">Save</button>
                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -1628,7 +1644,7 @@
 
         <script>
             VirtualSelect.init({
-                ele: '#Facility, #Group, #Audit, #Auditee, #root-cause-methodology,#training_require, #reference_record, #related_record'
+                ele: '#Facility, #Group, #Audit, #Auditee, #root-cause-methodology,#training_require, #reference_record, #related_record, #Initial_attachment'
             });
 
             function openCity(evt, cityName) {
