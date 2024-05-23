@@ -122,6 +122,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
                                 CFT Review Not Required
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 RA Review Required
                             </button>
@@ -139,6 +142,9 @@
                         @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#opened-state-modal">
                                 Send to Initiator
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hod-modal">
                                 Send to HOD
@@ -9862,19 +9868,18 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="group-input">
-                            <label for="major">
-                                <input type="radio" name="revision" id="major" value="Action-Item">
-                                Action Item
+                            <label for="minor">
+                                <input type="radio" name="revision" id="minor" value="Extension">
+                                Extension
                             </label>
-                            @if ($data->stage == 10)
+                            <label for="minor">
+                                <input type="radio" name="revision" id="minor" value="RCA">
+                                RCA
+                            </label>
+                            @if($data->stage == 6)
                                 <label for="minor">
-                                    <input type="radio" name="revision" id="minor" value="Extension">
-                                    Extension
-                                </label>
-                            @elseif($data->stage == 7)
-                                <label for="minor">
-                                    <input type="radio" name="revision" id="minor" value="New Document">
-                                    New Document
+                                    <input type="radio" name="revision" id="minor" value="Capa">
+                                    Capa
                                 </label>
                             @endif
                         </div>

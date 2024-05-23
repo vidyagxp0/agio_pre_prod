@@ -325,8 +325,6 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/extension">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -402,13 +400,13 @@
                                                 
                                                 @endif
                                             </td>
-                                            @if ($datas->parent != '-')
+                                            @if ($datas->parent_id != '-')
                                                         <td>
-                                                            {{ str_pad($datas->parent, 4, '0', STR_PAD_LEFT) }}
+                                                            {{ str_pad($datas->parent_id, 4, '0', STR_PAD_LEFT) }}
                                                         </td>
                                                     @else
                                                         <td>
-                                                            {{ $datas->parent }}
+                                                            {{ $datas->parent_id }}
                                                         </td>
                                             @endif
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

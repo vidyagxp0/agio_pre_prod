@@ -114,6 +114,7 @@ class DashboardController extends Controller
         }
         foreach ($datas2 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            // dd($data);
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
