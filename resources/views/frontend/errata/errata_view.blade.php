@@ -87,12 +87,18 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#review-modal">
                                 Review Complete
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
                         @elseif($showdata->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
                                 More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#correction-modal">
                                 Correction Completed
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
                             </button>
                         @elseif($showdata->stage == 4 && (in_array([4, 14], $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal"
@@ -364,20 +370,40 @@
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                     </div>
                                 </div>
-                                <?php
-                                // Assume $data is the object containing reference_document array
-                                $showdata->reference_document = is_array($showdata->reference_document) ? $showdata->reference_document : explode(',', $showdata->reference_document);
-                                ?>
+                                @php
+                                    // Assume $showdata is the object containing reference_document array
+                                    // $showdata->reference_document = is_array($showdata->reference_document)
+                                    //     ? $showdata->reference_document
+                                    //     : explode(',', $showdata->reference_document);
+                                    // $divisionName = Helpers::getDivisionName(Auth::user()->id);
+                                    // $recordFormat = Helpers::recordFormat(Auth::user()->name);
+                                    // $referenceValue = "{$divisionName}/Errata/" . date('Y') . "/{$recordFormat}";
+
+                                    $old_record = DB::table('erratas')->get();
+                                    $reference_documents = is_array($showdata->reference_document)
+                                        ? $showdata->reference_document
+                                        : explode(',', $showdata->reference_document);
+                                @endphp
+
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="Reference Records">Reference Documents</label>
-                                        <select multiple id="reference_record" name="reference_document[]" {{ Helpers::disabledErrataFields($showdata->stage) }}>
-                                            <option value="">--Select--</option>
-                                            <option
-                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}"<?php echo in_array("{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}", $showdata->reference_document) ? ' selected' : ''; ?>>
-                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
-                                            </option>
-                                            {{-- <option value="RD02"<?php echo in_array('RD02', $showdata->reference_document) ? ' selected' : ''; ?>>RD02</option> --}}
+                                        <label for="reference_record">Reference Documents</label>
+                                        <select multiple id="reference_record" name="reference_document[]"
+                                            {{ Helpers::disabledErrataFields($showdata->stage) }}>
+                                            @foreach ($old_record as $new)
+                                                <option value="{{ $new->id }}"
+                                                    {{ in_array($new->id, $reference_documents) ? 'selected' : '' }}>
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/ERRATA/{{ date('Y') }}/{{ $new->short_description }}
+                                                    {{-- to add record number{{ Helpers::recordFormat($new->record) }}/ --}}
+                                                </option>
+                                            @endforeach
+
+                                            {{-- <option value="{{ $referenceValue }}"
+                                                @if (in_array($referenceValue, $showdata->reference_document)) selected @endif>
+                                                {{ $referenceValue }}
+                                            </option> --}}
+                                            {{-- Uncomment and add more options as needed --}}
+                                            {{-- <option value="RD02" @if (in_array('RD02', $showdata->reference_document)) selected @endif>RD02</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -438,7 +464,7 @@
                                                     <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
                                                     <th style="width: 15%">Approved By</th>
-
+                                                    <th style="width: 15%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -471,6 +497,8 @@
                                                                     value="{{ isset($grid_Data['ApprovedBy']) ? $grid_Data['ApprovedBy'] : '' }}"
                                                                     {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                                             </td>
+                                                            <td><button type="text"
+                                                                    class="removeRowBtn">Remove</button></td>
                                                         </tr>
                                                     @endforeach
                                                 @endif
@@ -2028,6 +2056,71 @@
                                 </div>
 
 
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Sent to Opened State BY">Sent to Opened State By</label>
+                                        <div class="static">{{ $showdata->sent_to_open_state_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="QA Head Aproval Completed on">Sent to Opened State
+                                            On</label>
+                                        <div class="Date">{{ $showdata->sent_to_open_state_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->sent_to_open_state_comment }}</div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reject BY">Reject By</label>
+                                        <div class="static">{{ $showdata->reject_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Reject On">Reject On</label>
+                                        <div class="Date">{{ $showdata->reject_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->reject_comment }}</div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel BY">Cancel By</label>
+                                        <div class="static">{{ $showdata->cancel_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Cancel On">Cancel On</label>
+                                        <div class="Date">{{ $showdata->cancel_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Submitted on">Comment</label>
+                                        <div class="Date">{{ $showdata->cancel_comment }}</div>
+                                    </div>
+                                </div>
+
+
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -2254,7 +2347,7 @@
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="{{ route('errata.stagereject', $errata_id) }}" method="POST">
+                <form action="{{ route('errata.cancel', $errata_id) }}" method="POST">
                     @csrf
                     <!-- Modal Header -->
                     <div class="modal-header">
@@ -2559,7 +2652,7 @@
                         '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                         '</tr>';
                     for (var i = 0; i < data.length; i++) {
@@ -2578,6 +2671,12 @@
                 tableBody.append(newRow);
             });
         });
+    </script>
+
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 
 

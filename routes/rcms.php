@@ -161,6 +161,7 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
             Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
+            Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');
             Route::get('errata_single_pdf/{id}',[ErrataController::class, 'singleReports']);
 
 

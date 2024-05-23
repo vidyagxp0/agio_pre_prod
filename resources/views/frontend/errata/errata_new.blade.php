@@ -72,8 +72,7 @@
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="initiator_by"
-                                            value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" name="initiator_by" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
 
@@ -85,7 +84,7 @@
                                     </div>
                                 </div>
 
-                                 <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Initiated By <span class="text-danger"></span>
@@ -170,7 +169,7 @@
                                     }
                                 </script>
 
-{{--
+                                {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -208,6 +207,13 @@
                                             required>
                                     </div>
                                 </div>
+                            @php
+
+                                $old_record = DB::table('erratas')->get();
+                                    // $reference_documents = is_array($showdata->reference_document)
+                                    //     ? $showdata->reference_document
+                                    //     : explode(',', $showdata->reference_document);
+                            @endphp
 
                                 <div class="">
                                     <div class="group-input">
@@ -215,7 +221,15 @@
                                         <select multiple id="reference_record" name="reference_document[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            <option value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}</option>
+                                            @foreach ($old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                 {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{$new->short_description}}   {{-- {{ Helpers::recordFormat($new->record) }} --}}
+                                                </option>
+                                            @endforeach
+                                            {{-- <option
+                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
+                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
+                                            </option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -269,7 +283,7 @@
                                                     <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
                                                     <th style="width: 15%">Approved By</th>
-
+                                                    <th style="width: 15%">Action</th>
 
                                                 </tr>
                                             </thead>
@@ -280,7 +294,7 @@
                                                 <td><input type="text" name="details[0][PreparedBy]"></td>
                                                 <td><input type="text" name="details[0][CheckedBy]"></td>
                                                 <td><input type="text" name="details[0][ApprovedBy]"></td>
-
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
                                         </table>
@@ -1865,7 +1879,7 @@
                         '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -1885,6 +1899,12 @@
                 tableBody.append(newRow);
             });
         });
+    </script>
+
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 
     <script>

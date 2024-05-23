@@ -57,6 +57,19 @@ return new class extends Migration
             $table->text('hod_review_complete_comment')->nullable();
             $table->text('qa_head_approval_completed_comment')->nullable();
 
+            $table->text('sent_to_open_state_by')->nullable();
+            $table->text('sent_to_open_state_on')->nullable();
+            $table->text('sent_to_open_state_comment')->nullable();
+
+            $table->text('reject_by')->nullable();
+            $table->text('reject_on')->nullable();
+            $table->text('reject_comment')->nullable();
+
+            $table->text('cancel_by')->nullable();
+            $table->text('cancel_on')->nullable();
+            $table->text('cancel_comment')->nullable();
+
+
             $table->timestamps();
         });
     }
