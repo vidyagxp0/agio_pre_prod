@@ -415,21 +415,21 @@ class Helpers
     }
 
     
-    static public function getDueDate($date, $addDays = false, $format = null)
-    {
-        try {
-            if ($date) {
-                $format = $format ? $format : 'd M Y';
-                $dateInstance = Carbon::parse($date);
-                if ($addDays) {
-                    $dateInstance->addDays(30);
-                }
-                return $dateInstance->format($format);
+     public static function getDueDate123($date, $addDays = false, $format = null)
+        {
+            try {
+                if ($date) {
+                    $format = $format ? $format : 'd M Y';
+                    $dateInstance = Carbon::parse($date);
+                    if ($addDays) {
+                        $dateInstance->addDays(30);
+                    }
+                    return $dateInstance->format($format);
+            }
+            } catch (\Exception $e) {
+                return 'NA';
+            }
         }
-        } catch (\Exception $e) {
-            return 'NA';
-        }
-    }
 
     
     public static function getDepartmentWithString($id)

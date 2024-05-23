@@ -409,13 +409,13 @@
                                                 
                                                 @endif
                                             </td>
-                                            @if ($datas->parent_id != '-')
+                                            @if ($datas->parent_id != null)
                                                         <td>
                                                             {{ str_pad($datas->parent_id, 4, '0', STR_PAD_LEFT) }}
                                                         </td>
                                                     @else
                                                         <td>
-                                                            {{ $datas->parent_id }}
+                                                            -
                                                         </td>
                                             @endif
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -449,10 +449,9 @@
                                             {{ Helpers::getInitiatorName($datas->initiator_id) }}
                                                 {{-- {{ $datas->initiator_id }} --}}
                                             </td>
-                                            {{-- <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{-- {{ Helpers::getdateFormat($datas->intiation_date) }} --}}
                                                 @if (property_exists($datas, 'due_date'))
                                                     {{ $datas->type !== 'Extension' ? Helpers::getDueDate($datas->due_date, false) : ''  }}
                                                 @endif

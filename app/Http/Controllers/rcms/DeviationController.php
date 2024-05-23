@@ -2048,6 +2048,7 @@ class DeviationController extends Controller
             $deviation->who_will_not_be = $request->who_will_not_be;
             $deviation->who_rationable = $request->who_rationable;
 
+            // dd($id);
             $newDataGridInvestication = DeviationNewGridData::where(['deviation_id' => $id, 'identifier' => 'investication'])->firstOrCreate();
             $newDataGridInvestication->deviation_id = $id;
             $newDataGridInvestication->identifier = 'investication';

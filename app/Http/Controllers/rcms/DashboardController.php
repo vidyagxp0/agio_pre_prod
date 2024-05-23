@@ -363,7 +363,7 @@ class DashboardController extends Controller
                 "record" => $data->record,
                 "division_id" => $data->division_id,
                 "type" => "Deviation",
-                "parent_id" => $data->parent_id? $data->parent_id : "-",
+                "parent_id" => $data->parent_id,
                 "parent" => $data->parent_record? $data->parent_record : "-",
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
