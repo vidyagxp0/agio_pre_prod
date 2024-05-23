@@ -101,55 +101,8 @@ class OOSController extends Controller
         // return redirect(url('rcms/qms-dashboard'));
     }
 
-    // public function send_stage(Request $request, $id)
-    // {
-    //     $oos_record = OOS::find($id);
-    //     //dd(Auth::user()->email);
-    //     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            
-    //         $oos = OOS::find($id);
-           
-            
-    //         // if ($oos->stage == 1) {
-    //         //     $oos->stage = "2";
-    //         //     $oos->status = "Pending Initial Assessment & Lab Incident";
-    //         //     $oos->plan_proposed_by = Auth::user()->name;
-    //         //     $oos->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                   
-    //         //         $history = new OosAuditTrial();
-    //         //         $history->oos_id = $id;
-    //         //         $history->activity_type = 'Activity Log';
-    //         //         $history->previous = "";
-    //         //         $history->current = $oos->plan_proposed_by;
-    //         //         $history->comment = $request->comment;
-    //         //         $history->user_id = Auth::user()->id;
-    //         //         $history->user_name = Auth::user()->name;
-    //         //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //         //         $history->origin_state = $lastDocument->status;
-    //         //         $history->stage = 'Plan Proposed';
-    //         //         dd($history);
-    //         //         $history->save();
-           
-    //         //     $capa->update();
-    //         //     toastr()->success('Document Sent');
-    //         //     return back();
-    //         // }
-
-    //         $oos->stage = $request->stage;
-    //         $oos->status = $request->status;
-    //         $oos->update();
-    //         toastr()->success('Sent');
-    //         return back();
-
-    //     } else {
-    //         toastr()->error('E-signature Not match');
-    //         return back();
-    //     }
-
-    // }
     public function send_stage(Request $request, $id)
     {
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
@@ -230,23 +183,7 @@ class OOSController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Lab Supervisor";
                             $history->save();
-                        //     $list = Helpers::getLeadAuditeeUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
-                                  
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changestage],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document sent ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      } 
-                        //   }
+                        
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -269,23 +206,6 @@ class OOSController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Final Approval";
                 $history->save();
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changestage],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -297,18 +217,17 @@ class OOSController extends Controller
                 $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
                 $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseII_investigation = $request->comment;
-                
-                $history = new OosAuditTrial();
-                $history->oos_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changestage->completed_by_under_phaseII_investigation;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = "Under Phase II investigation";
-                $history->save();
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Phase II investigation";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -319,18 +238,17 @@ class OOSController extends Controller
                 $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
                 $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
-                
-                $history = new OosAuditTrial();
-                $history->oos_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
-                $history->save();
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -341,18 +259,17 @@ class OOSController extends Controller
                 $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
                 $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
-                
-                $history = new OosAuditTrial();
-                $history->oos_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
-                $history->save();
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -363,18 +280,17 @@ class OOSController extends Controller
                 $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
                 $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
                 $changestage->comment_under_phaseIII_investigation = $request->comment;
-                
-                $history = new OosAuditTrial();
-                $history->oos_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changestage->completed_by_under_phaseIII_investigation;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
-                $history->save();
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -429,22 +345,250 @@ class OOSController extends Controller
             return back();
         }
     }
+    // ========== requestmoreinfo_back_stage ==============
+    public function requestmoreinfo_back_stage(Request $request, $id)
+    {
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changestage = OOS::find($id);
+            $lastDocument = OOS::find($id);
+            if ($changestage->stage == 2) {
+                $changestage->stage = "1";
+                $changestage->status = "Opened";
+                $changestage->completed_by_pending_initial_assessment = Auth::user()->name;
+                $changestage->completed_on_pending_initial_assessment = Carbon::now()->format('d-M-Y');
+                $changestage->comment_pending_initial_assessment = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_pending_initial_assessment;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 3) {
+                $changestage->stage = "2";
+                $changestage->status = "Pending Initial Assessment & Lab Incident";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 4) {
+                $changestage->stage = "3";
+                $changestage->status = "Under Phase I Investigation";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 5) {
+                $changestage->stage = "3";
+                $changestage->status = "Under Phase I b Investigation";
+                $changestage->status = "Under Phase I Investigation";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 6) {
+                $changestage->stage = "5";
+                $changestage->status = "Under Hypothesis Experient";
+                $changestage->completed_by_under_hypothesis = Auth::user()->name;
+                $changestage->completed_on_under_hypothesis = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_hypothesis = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_hypothesis;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Final Approval";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changestage->stage == 8) {
+                $changestage->stage = "6";
+                $changestage->status = "Under Hypothesis Experiment";
+                $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseII_investigation = $request->comment;
+                
+                $history = new OosAuditTrial();
+                $history->oos_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Phase II investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 9) {
+                $changestage->stage = "8";
+                $changestage->status = "under phase II Investigation";
+                $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
+                $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                
+                $history = new OosAuditTrial();
+                $history->oos_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 11) {
+                $changestage->stage = "9";
+                $changestage->status = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
+                
+                $history = new OosAuditTrial();
+                $history->oos_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 13) {
+                $changestage->stage = "11";
+                $changestage->status = "Under phase II b Additional Lab Investigation";
+                $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIII_investigation = $request->comment;
+                
+                $history = new OosAuditTrial();
+                $history->oos_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 14) {
+                $changestage->stage = "13";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
 
     public function assignable_send_stage(Request $request, $id)
     {
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = OOS::find($id);
             $lastDocument = OOS::find($id);
             if ($changestage->stage == 3) {
                 $changestage->stage = "4";
                 $changestage->status = "Under Phase I Correction";
-                $changestage->QA_Approved_By = Auth::user()->name;
-                $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
+                $changestage->completed_by_under_phaseI_correction= Auth::user()->name;
+                $changestage->completed_on_under_phaseI_correction = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_correction = $request->comment;
                             $history = new OosAuditTrial();
                             $history->oos_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changestage->QA_Approved_By;
+                            $history->current = $changestage->completed_by_under_phaseI_correction;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -452,61 +596,154 @@ class OOSController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Lab Supervisor";
                             $history->save();
-                        //     $list = Helpers::getLeadAuditeeUserList();
-                        //     foreach ($list as $u) {
-                        //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                        //             $email = Helpers::getInitiatorEmail($u->user_id);
-                        //              if ($email !== null) {
-                                  
-                        //               Mail::send(
-                        //                   'mail.view-mail',
-                        //                    ['data' => $changestage],
-                        //                 function ($message) use ($email) {
-                        //                     $message->to($email)
-                        //                         ->subject("Document sent ".Auth::user()->name);
-                        //                 }
-                        //               );
-                        //             }
-                        //      } 
-                        //   }
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 4) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 6) {
+                $changestage->stage = "7";
+                $changestage->status = "Under Repeat Analysis";
+                $changestage->completed_by_under_repeat_analysis= Auth::user()->name;
+                $changestage->completed_on_under_repeat_analysis = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_repeat_analysis = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_repeat_analysis;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Repeat Analysis";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 7) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 9) {
+                $changestage->stage = "10";
+                $changestage->status = "Under PhaseIIA Correction";
+                $changestage->completed_by_under_phaseIIA_correction= Auth::user()->name;
+                $changestage->completed_on_under_phaseIIA_correction = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIIA_correction = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIIA_correction;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 10) {
+                $changestage->stage = "12";
+                $changestage->status = "Under Batch Disposition";
+                $changestage->completed_by_under_batch_disposition= Auth::user()->name;
+                $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_batch_disposition = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_batch_disposition;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
             }
 
-            if ($changestage->stage == 6) {
-                $changestage->stage = "7";
-                $changestage->status = "Close done";
-                $changestage->Final_Approval_By = Auth::user()->name;
-                $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
-                $history = new OotAuditTrial();
-                $history->ootcs_id = $id;
-                $history->activity_type = 'Activity Log';
-                $history->current = $changestage->Final_Approval_By;
-                $history->comment = $request->comment;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $history->stage = "Final Approval";
-                $history->save();
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changestage],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+            if ($changestage->stage == 11) {
+                $changestage->stage = "12";
+                $changestage->status = "Under Batch Disposition";
+                $changestage->completed_by_under_batch_disposition= Auth::user()->name;
+                $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_batch_disposition = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_batch_disposition;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 12) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -519,54 +756,27 @@ class OOSController extends Controller
     public function cancel_stage(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $data = Ootc::find($id);
-            $lastDocument = Ootc::find($id);
-
-
+            $data = OOS::find($id);
+            $lastDocument = OOS::find($id);
             $data->stage = "0";
             $data->status = "Closed-Cancelled";
             $data->cancelled_by = Auth::user()->name;
             $data->cancelled_on = Carbon::now()->format('d-M-Y');
-                    $history = new OotAuditTrial();
-                    $history->ootcs_id = $id;
+            $data->comment_cancle = $request->comment;
+
+                    $history = new OosAuditTrial();
+                    $history->oos_id = $id;
                     $history->activity_type = 'Activity Log';
                     $history->previous ="";
-                    $history->current = $capa->cancelled_by;
+                    $history->current = $data->cancelled_by;
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state =  $capa->status;
+                    $history->origin_state =  $data->status;
                     $history->stage = 'Cancelled';
                     $history->save();
             $data->update();
-            $history = new CapaHistory();
-            $history->type = "OOT";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $data->stage;
-            $history->status = $data->status;
-            $history->save();
-
-            // $list = Helpers::getInitiatorUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //       $email = Helpers::getInitiatorEmail($u->user_id);
-            //       if ($email !== null) {
-                    
-            //         Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("Cancelled By ".Auth::user()->name);
-            //             }
-            //          );
-            //       }
-            //     } 
-            // }
-
             toastr()->success('Document Sent');
             return back();
         } else {

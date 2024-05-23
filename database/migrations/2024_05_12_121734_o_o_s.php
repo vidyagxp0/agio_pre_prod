@@ -175,6 +175,9 @@ return new class extends Migration
             $table->text('type')->nullable();
             $table->text('parent_record')->nullable();
             // workflow start stage 
+            $table->text('cancelled_by')->nullable();
+            $table->text('cancelled_on')->nullable();
+            $table->text('comment_cancle')->nullable();
             $table->text('completed_by_pending_initial_assessment')->nullable();
             $table->text('completed_on_pending_initial_assessment')->nullable();
             $table->text('comment_pending_initial_assessment')->nullable();
@@ -184,19 +187,30 @@ return new class extends Migration
             $table->text('completed_by_under_phaseIB_investigation')->nullable();
             $table->text('completed_on_under_phaseIB_investigation')->nullable();
             $table->text('comment_under_phaseIB_investigation')->nullable();
+            $table->text('completed_by_under_phaseI_correction')->nullable();
+            $table->text('completed_on_under_phaseI_correction')->nullable();
+            $table->text('comment_under_phaseI_correction')->nullable();
             $table->text('completed_by_under_hypothesis')->nullable();
             $table->text('completed_on_under_hypothesis')->nullable();
             $table->text('comment_under_hypothesis')->nullable();
+            $table->text('completed_by_under_repeat_analysis')->nullable();
+            $table->text('completed_on_under_repeat_analysis')->nullable();
+            $table->text('comment_under_repeat_analysis')->nullable();
             $table->text('completed_by_under_phaseII_investigation')->nullable();
             $table->text('completed_on_under_phaseII_investigation')->nullable();
             $table->text('comment_under_phaseII_investigation')->nullable();
-
             $table->text('completed_by_under_manufacturing_investigation_phaseIIA')->nullable();
             $table->text('completed_on_under_manufacturing_investigation_phaseIIA')->nullable();
             $table->text('comment_under_manufacturing_investigation_phaseIIA')->nullable();
+            $table->text('completed_by_under_phaseIIA_correction')->nullable();
+            $table->text('completed_on_under_phaseIIA_correction')->nullable();
+            $table->text('comment_under_phaseIIA_correction')->nullable();
             $table->text('completed_by_under_phaseIIB_additional_lab_investigation')->nullable();
             $table->text('completed_on_under_phaseIIB_additional_lab_investigation')->nullable();
             $table->text('comment_under_phaseIIB_additional_lab_investigation')->nullable();
+            $table->text('completed_by_under_batch_disposition')->nullable();
+            $table->text('completed_on_under_batch_disposition')->nullable();
+            $table->text('comment_under_batch_disposition')->nullable();
             $table->text('completed_by_under_phaseIII_investigation')->nullable();
             $table->text('completed_on_under_phaseIII_investigation')->nullable();
             $table->text('comment_under_phaseIII_investigation')->nullable();
@@ -206,7 +220,6 @@ return new class extends Migration
             $table->text('completed_by_close_done')->nullable();
             $table->text('completed_on_close_done')->nullable();
             $table->text('comment_close_done')->nullable();
-            
             $table->softDeletes();
             $table->timestamps();
         });

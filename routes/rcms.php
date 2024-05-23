@@ -177,6 +177,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
 
             Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
+            Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
             Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
 
             Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
