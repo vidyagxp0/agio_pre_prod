@@ -437,9 +437,9 @@ class ErrataController extends Controller
             if ($ErrataControl->stage == 1) {
                 $ErrataControl->stage = "2";
                 $ErrataControl->status = "Pending Review";
+                $ErrataControl->comment = $request->comment;
                 $ErrataControl->submitted_by = Auth::user()->name;
                 $ErrataControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $ErrataControl->
                 $ErrataControl->update();
 
 
@@ -450,6 +450,7 @@ class ErrataController extends Controller
                 $ErrataControl->stage = "3";
                 $ErrataControl->review_completed_by = Auth::user()->name;
                 $ErrataControl->review_completed_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->review_completed_comment = $request->comment;
                 $ErrataControl->status = "Pending Correction";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -459,6 +460,7 @@ class ErrataController extends Controller
                 $ErrataControl->stage = "4";
                 $ErrataControl->correction_completed_by = Auth::user()->name;
                 $ErrataControl->correction_completed_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->correction_completed_comment = $request->comment;
                 $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -469,6 +471,7 @@ class ErrataController extends Controller
                 $ErrataControl->stage = "5";
                 $ErrataControl->hod_review_complete_by = Auth::user()->name;
                 $ErrataControl->hod_review_complete_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->hod_review_complete_comment = $request->comment;
                 $ErrataControl->status = "Pending QA Head Approval";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
@@ -479,6 +482,7 @@ class ErrataController extends Controller
                 $ErrataControl->stage = "6";
                 $ErrataControl->qa_head_approval_completed_by = Auth::user()->name;
                 $ErrataControl->qa_head_approval_completed_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->qa_head_approval_completed_comment = $request->comment;
                 $ErrataControl->status = "Closed-Done";
                 $ErrataControl->update();
                 toastr()->success('Document Sent');

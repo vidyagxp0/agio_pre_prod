@@ -1961,7 +1961,7 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Comment</label>
-                                        <div class="Date">{{ $showdata->comment }}</div>
+                                        <div class="Date">{{ $showdata->review_completed_comment }}</div>
                                     </div>
                                 </div>
 
@@ -1981,7 +1981,7 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Comment</label>
-                                        <div class="Date">{{ $showdata->comment }}</div>
+                                        <div class="Date">{{ $showdata->correction_completed_comment }}</div>
                                     </div>
                                 </div>
 
@@ -2001,7 +2001,7 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Comment</label>
-                                        <div class="Date">{{ $showdata->comment }}</div>
+                                        <div class="Date">{{ $showdata->hod_review_complete_comment }}</div>
                                     </div>
                                 </div>
 
@@ -2023,7 +2023,7 @@
                                 <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted on">Comment</label>
-                                        <div class="Date">{{ $showdata->comment }}</div>
+                                        <div class="Date">{{ $showdata->qa_head_approval_completed_comment }}</div>
                                     </div>
                                 </div>
 

@@ -51,7 +51,11 @@ return new class extends Migration
             $table->string('hod_review_complete_on')->nullable();
             $table->string('qa_head_approval_completed_by')->nullable();
             $table->string('qa_head_approval_completed_on')->nullable();
-            $table->string('comments')->nullable();
+            $table->text('comment')->nullable();
+            $table->text('review_completed_comment')->nullable();
+            $table->text('correction_completed_comment')->nullable();
+            $table->text('hod_review_complete_comment')->nullable();
+            $table->text('qa_head_approval_completed_comment')->nullable();
 
             $table->timestamps();
         });
