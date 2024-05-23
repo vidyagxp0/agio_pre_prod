@@ -14,7 +14,7 @@ use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
 use App\Models\AuditProgram;
-use App\Models\Division;
+use App\Models\{Division,Deviation};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
@@ -68,13 +68,16 @@ class DashboardController extends Controller
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
+        $datas14 = Deviation::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
+                "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date,
                 "type" => "Change-Control",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -111,6 +114,7 @@ class DashboardController extends Controller
         }
         foreach ($datas2 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            // dd($data);
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->cc_id ? $data->cc_id : "-",
@@ -345,6 +349,27 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+
+        foreach ($datas14 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "Deviation",
+                "parent_id" => $data->parent_id? $data->parent_id : "-",
+                "parent" => $data->parent_record? $data->parent_record : "-",
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "due_date" => $data->due_date,
+                "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -691,6 +716,12 @@ class DashboardController extends Controller
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        } elseif ($type == "Deviation") {
+            $data = Deviation::find($id);
+            $single = "deviationSingleReport/" . $data->id;
+            $audit = "DeviationAuditTrialPdf/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Internal-Audit") {

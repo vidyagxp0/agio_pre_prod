@@ -18,6 +18,7 @@ use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
+use App\Http\Controllers\rcms\DeviationController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,12 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::middleware(['rcms'])->group(
         function () {
             Route::resource('CC', CCController::class);
+
+            Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
+            Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);
+            Route::post('send-initialQA/{id}', [CCController::class, 'sendToInitialQA']);
+            Route::post('send-cft-from-QA/{id}', [CCController::class, 'sendToCft']);
+
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
             Route::get('action-item-audittrialshow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('showActionItemAuditTrial');
@@ -158,6 +165,32 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
 
+
+            /********************* Deviation Routes Starts *******************/
+
+            Route::get('deviation', [DeviationController::class, 'deviation'])->name('deviation');
+            Route::get('DeviationAuditTrialPdf/{id}', [DeviationController::class, 'deviationAuditTrailPdf']);
+            Route::post('deviationstore', [DeviationController::class, 'store'])->name('deviationstore');
+            Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
+            Route::post('deviationupdate/{id}', [DeviationController::class, 'update'])->name('deviationupdate');
+            Route::post('deviation/reject/{id}', [DeviationController::class, 'deviation_reject'])->name('deviation_reject');
+            Route::post('deviation/cancel/{id}', [DeviationController::class, 'deviationCancel'])->name('deviationCancel');
+            Route::post('deviation/cftnotrequired/{id}', [DeviationController::class, 'deviationIsCFTRequired'])->name('deviationIsCFTRequired');
+            Route::post('deviation/check/{id}', [DeviationController::class, 'check'])->name('check');
+            Route::post('deviation/check2/{id}', [DeviationController::class, 'check2'])->name('check2');
+            Route::post('deviation/check3/{id}', [DeviationController::class, 'check3'])->name('check3');
+            Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('deviation/stage/{id}', [DeviationController::class, 'deviation_send_stage'])->name('deviation_send_stage');
+            Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
+            Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
+            Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
+
+            Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
+            Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Deviation Routes Ends *******************/
 
             /**
              * OOT
