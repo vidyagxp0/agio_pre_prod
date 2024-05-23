@@ -1613,12 +1613,12 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_1" id="response"
+                                                        <select name="response_1" id="response" 
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_1 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_1 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_1 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1627,7 +1627,7 @@ function addMultipleFiles(input, block_id) {
                                                      <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_1" style="border-radius: 7px; border: 1.5px solid black;">{{$data->remark_1}}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1639,12 +1639,12 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_2" id="response"
+                                                        <select name="response_2" id="response" 
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{$data->response_2 == "Yes" ? 'selected' : ''}}>Yes</option>
+                                                            <option value="No" {{$data->response_2 == "No" ? 'selected' : ''}}>No</option>
+                                                            <option value="N/A" {{$data->response_2 == "N/A" ? 'selected' : ''}}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1652,7 +1652,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_2}}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1664,12 +1664,12 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_3" id="response"
+                                                        <select name="response_3" id="response" 
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_3 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_3 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_3 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1677,7 +1677,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_3" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_3 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1691,10 +1691,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_4" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_4 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_4 == "No" ? 'selected' : '' }}  >No</option>
+                                                            <option value="N/A" {{ $data->response_4 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1702,7 +1703,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_4" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_4" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_4 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1711,7 +1712,7 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">1.5</td>
                                                 <td>
-                                                
+                                              
                                                     Standard operating procedure for dispensing of raw material is
                                                     displayed?
                                                 </td>
@@ -1720,10 +1721,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_5" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_5 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_5 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_5 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1731,7 +1733,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_5" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_5" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_5 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1740,7 +1742,7 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">1.6</td>
                                                 <td>
-                                                    
+                                                 
                                                     All the person involve in dispensing having proper gowning?
                                                 </td>
                                                 <td>
@@ -1748,10 +1750,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_6" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_6 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_6 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_6 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1759,7 +1762,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_6" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_6" style="border-radius: 7px; border: 1.5px solid black;">{{$data->remark_6}}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1773,10 +1776,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_7" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_7 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_7 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_7 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1784,7 +1788,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_7" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_7" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_7 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1798,10 +1802,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_8" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_8 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_8 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_8 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1809,7 +1814,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_8 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1826,10 +1831,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_9" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_9 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_9 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_9 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1837,7 +1843,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_9" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_9" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_9 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1853,10 +1859,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_10" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_10 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_10 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_10 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1864,7 +1871,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_10" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_10" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_10 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1881,10 +1888,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_11" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_11 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_11 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_11 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1892,7 +1900,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_11" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_11" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_11 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1909,10 +1917,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_12" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_12 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_12 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_12 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1920,7 +1929,7 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_12" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_12" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_12 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1937,17 +1946,18 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_13" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_13 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ $data->response_13  == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_13 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_13" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_13" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_13 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -1986,10 +1996,11 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_14" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_14 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_14 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_14 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                        
                                                         </select>
                                                     </div>
 
@@ -2000,7 +2011,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_14" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_14" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_14 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2015,10 +2026,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response-15" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_15 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_15 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_15 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2026,7 +2037,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_15" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_15" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_15 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2041,10 +2052,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_16" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_16 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_16 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_16 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2052,7 +2063,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_16" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_16" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_16 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2071,10 +2082,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_17" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_17 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_17 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_17 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2082,7 +2093,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_17" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_17 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2100,10 +2111,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_18" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_18 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_18 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_18 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2111,7 +2122,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_18 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2129,10 +2140,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_19" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_19 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_19 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_19 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2140,7 +2151,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="remark_19">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_19 }}</textarea>
                                                     </div>
 
 
@@ -2157,10 +2168,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_20" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_20 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_20 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_20 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2168,7 +2179,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_20" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_20" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_20 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2184,10 +2195,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_21" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_21 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_21 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_21 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2195,7 +2206,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_21 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2212,10 +2223,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_22" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_22 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_22 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_22 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2223,7 +2234,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_22" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_22" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_22 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2238,10 +2249,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_23" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_23 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_23 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_23 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2249,7 +2260,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_23" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_23" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_23 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2266,10 +2277,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_24" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_24 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_24 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_24 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2277,7 +2288,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_24" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_24" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_24 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2293,10 +2304,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_25" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_25 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_25 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_25 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2306,7 +2317,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_25" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_25" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_25 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2323,17 +2334,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_26" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_26 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_26 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_26 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_26" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_26" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_26 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -2351,17 +2362,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_27" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_27 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_27 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_27 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_27" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_27" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_27 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2373,17 +2384,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_28" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_28 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_28 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_28 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_28" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_28" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_28 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2396,17 +2407,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_29" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_29 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_29 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_29 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_29" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_29" style="border-radius: 7px; border: 1.5px solid black;">{{$data->remark_29 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2419,17 +2430,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_30" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_30 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_30 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_30 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_30" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_30" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_30 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2442,17 +2453,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_31" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_31 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_31 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_31 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_31" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_31" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_31 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2466,17 +2477,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_32" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_32 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_32 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_32 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_32" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_32" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_32 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2492,17 +2503,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_33" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_33 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_33 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_33 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_33" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_33" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_33 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2515,17 +2526,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_34" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_34 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_34 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_34 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_34" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_34" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_34 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2538,17 +2549,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_35" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_35 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_35 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_35 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_35" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_35" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_35 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2561,17 +2572,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_36" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_36 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_36 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_36 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_36" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_36" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_36 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2584,17 +2595,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_37" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_37 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_37 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_37 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="37" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="37" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_37 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2607,17 +2618,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_38" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_38 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_38 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_38 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_38" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_38" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_38 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2630,17 +2641,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_39" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_39 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_39 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_39 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_39" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_39" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_39 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2653,17 +2664,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_40" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_40 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_40 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_40 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_40" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_40" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_40 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2677,17 +2688,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_41" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_41 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_41 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_41 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_41" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_41" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_41 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2700,17 +2711,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_42" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_42 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_42 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_42 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_42" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_42" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_42 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2723,17 +2734,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_43" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_43 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_43 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_43 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_43" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_43" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_43 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2746,17 +2757,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_44" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_44 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_44 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_44 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_44" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_44" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_44 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2769,17 +2780,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_45" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_45 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_45 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_45 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_45" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_45" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_45 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2791,17 +2802,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_46" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_46 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_46 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_46 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_46" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_46" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_46 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2813,17 +2824,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_47" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_47 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_47 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_47 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_47" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_47" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_47 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2835,17 +2846,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_48" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_48 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_48 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_48 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_48" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_48" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_48 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2857,17 +2868,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_49" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_49 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_49 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_49 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_49" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_49" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_49 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2880,17 +2891,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_50" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_50 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_50 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_50 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_50" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_50" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_50 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2903,17 +2914,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_51" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_51 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_51 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_51 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_51" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_51" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_51 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2926,17 +2937,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_52" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_52 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_52 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_52 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_52" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_52" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_52 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2948,17 +2959,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_53" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_53 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_53 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_53 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_53" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_53" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_53 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2971,17 +2982,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_54" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_54 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_54 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_54 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_54" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_54" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_54 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -2994,17 +3005,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_55" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_55 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_55 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_55 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_55" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_55" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_55 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -3017,17 +3028,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_56" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_56 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_56 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_56 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_56" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_56" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_56 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -3040,17 +3051,17 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_57" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_57 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_57 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_57 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_57" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_57" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_57 }}</textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -3090,10 +3101,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_58" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_58 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_58 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_58 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
 
@@ -3103,7 +3114,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_58" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_58" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_58 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3120,10 +3131,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_59" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_59 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_59 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_59 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -3131,7 +3142,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_59" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_59" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_59 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3147,10 +3158,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_60" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_60 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_60 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_60 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -3158,7 +3169,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_60" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_60" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_60 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3174,10 +3185,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_61" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_61 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_61 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_61 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -3185,7 +3196,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_62" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_61" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_61 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3199,12 +3210,12 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_63" id="response"
+                                                        <select name="response_62" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_62 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_62 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_62 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -3212,7 +3223,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_62" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_62 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3228,10 +3239,10 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response_63" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ $data->response_63 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"  {{ $data->response_63 == "No" ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A" {{ $data->response_63 == "N/A" ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -3239,7 +3250,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td style="vertical-align: middle;">
                                                     <div
                                                         style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black;">{{ $data->remark_63 }}</textarea>
                                                     </div>
                                                 </td>
 
@@ -3257,8 +3268,8 @@ function addMultipleFiles(input, block_id) {
                         <div class="group-input">
                             <label for="Description Deviation">Final Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                </textarea>
+                            <textarea class="summernote" value="{{ $data->Description_Deviation }}" name="Description_Deviation" id="summernote-1">
+                               {{ $data->Description_Deviation }} </textarea>
                         </div>
                     </div>
 
@@ -3290,7 +3301,7 @@ function addMultipleFiles(input, block_id) {
 
         <div id="CCForm8" class="inner-block cctabcontent">
            <div class="inner-block-content">
-        c   <div class="row">
+           <div class="row">
             <div class="sub-head">
                 Checklist for Tablet Compression
             </div>
@@ -3315,12 +3326,12 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_1" id="tablet_compress_response_1"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="" >Select an Option</option>
+                                                <option value="Yes"  {{  $checklistTabletCompressionData->tablet_compress_response_1 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"  {{ $checklistTabletCompressionData->tablet_compress_response_1 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_1 == "N/A" ? 'selected' : '' }}>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3328,7 +3339,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_1" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_1 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3340,12 +3351,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_2" id="tablet_compress_response_2"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" {{ $checklistTabletCompressionData->tablet_compress_response_2 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"  {{ $checklistTabletCompressionData->tablet_compress_response_2 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_2 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                           
                                             </select>
                                         </div>
                                     </td>
@@ -3353,10 +3365,9 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_2" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_2 }}</textarea>
                                         </div>
                                     </td>
-
                                     </td>
                                 </tr>
                                 <tr>
@@ -3365,12 +3376,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_3" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_3 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_3 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_3 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                           
                                             </select>
                                         </div>
                                     </td>
@@ -3378,7 +3390,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_3" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_3 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3390,12 +3402,12 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_4" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_4 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_4 == "No" ? 'selected' : '' }} >No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_4 == "N/A" ? 'selected' : '' }}>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3403,7 +3415,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_4" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_4 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3417,12 +3429,12 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_5" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_5 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_5 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_5 == "N/A" ? 'selected' : '' }}>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3430,7 +3442,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_5" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_5 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3444,12 +3456,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_6" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_6 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_6 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_6 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3457,7 +3470,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="wtablet_compress_remark_6" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_6 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3469,12 +3482,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_7" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_7 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_7 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_7 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3482,7 +3496,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_7" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_7 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3494,12 +3508,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_8" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_8 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_8 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_8 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3507,7 +3522,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_8" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_8 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3521,12 +3536,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_9" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_9 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_9 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_9 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3534,7 +3550,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_9" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_9 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3548,12 +3564,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_10" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_10 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_10 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_10 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3561,7 +3578,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_10" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_10 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3575,12 +3592,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_11" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_11 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_11 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_11 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3588,7 +3606,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_11" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_11 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3601,12 +3619,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_12" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_12 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_12 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_12 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -3614,7 +3633,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_12" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_12 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3629,19 +3648,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_13" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_13 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_13 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_13 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_13" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_13 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3655,19 +3675,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_14" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_14 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_14 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_14 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_14" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_14 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3681,19 +3702,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_15" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_15 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_15 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_15 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_15" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_15 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3707,19 +3729,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_16" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_16 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_16 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_16 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_16" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_16 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3733,19 +3756,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_17" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_17 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_17 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_17 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_17" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_17 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3759,19 +3783,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_18" id="tablet_compress_response_18"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_18 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_18 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_18 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_18" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_18 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3785,19 +3810,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_19" id="tablet_compress_response_19"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_19 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_19 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_19 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_19" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_19 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3813,19 +3839,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_20" id="tablet_compress_response_20"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_20 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_20 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_20 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_20" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_20 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3839,19 +3866,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_21" id="tablet_compress_response_21"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_21 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_21 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_21 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_21" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_21 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3865,19 +3893,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_22" id="tablet_compress_response_22"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_22 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_22 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_22 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_22" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_22 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3891,19 +3920,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_23" id="tablet_compress_response_23"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_23 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_23 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_23 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_23" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_23 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3917,19 +3947,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_24" id="tablet_compress_response_24"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_24 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_24 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_24 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_24" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_24 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3943,19 +3974,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_25" id="tablet_compress_response_25"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_25 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_25 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_25 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_25" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_25 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3969,19 +4001,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_26" id="tablet_compress_response_26"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_26 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_26 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_26 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_26" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_26 }}</textarea>
                                         </div>
                                     </td>
 
@@ -3995,19 +4028,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_27" id="tablet_compress_response_27"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_27 == "Yes" ? 'selected' : '' }}>Yes</option>
+                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_27 == "No" ? 'selected' : '' }}>No</option>
+                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_27 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_27" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_27 }}</textarea>
                                         </div>
                                     </td>
 
@@ -4021,7 +4055,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_28" id="tablet_compress_response_28"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4033,7 +4067,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_28" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4047,7 +4081,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_29" id="tablet_compress_response_29"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4059,7 +4093,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_29" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4073,7 +4107,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_30" id="tablet_compress_response_30"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4085,7 +4119,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_30" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4099,7 +4133,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_31" id="tablet_compress_response_31"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4111,7 +4145,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_31" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4125,7 +4159,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_32" id="tablet_compress_response_32"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4137,7 +4171,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_response_32" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4151,7 +4185,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_33" id="tablet_compress_response_33"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4163,7 +4197,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_33" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4177,7 +4211,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_34" id="tablet_compress_response_34"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4189,7 +4223,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_34" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4203,7 +4237,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_35" id="tablet_compress_response_35"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4215,7 +4249,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_35" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4229,7 +4263,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_36" id="tablet_compress_response_36"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4241,7 +4275,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_36" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4255,7 +4289,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_37" id="tablet_compress_response_37"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4267,7 +4301,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_37" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4281,7 +4315,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_38" id="tablet_compress_response_38"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4293,7 +4327,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_38" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4307,7 +4341,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_39" id="tablet_compress_response_39"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4319,7 +4353,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_39" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4333,7 +4367,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_40" id="tablet_compress_response_40"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4345,7 +4379,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_40" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4359,7 +4393,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_41" id="tablet_compress_response_41"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4371,7 +4405,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_41" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4385,7 +4419,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_42" id="tablet_compress_response_42"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4397,7 +4431,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_42" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4434,7 +4468,7 @@ function addMultipleFiles(input, block_id) {
 
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_43" id="tablet_compress_response_43"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4450,7 +4484,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_43" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4463,7 +4497,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_44" id="tablet_compress_response_44"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4476,7 +4510,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_44" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4489,7 +4523,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_45" id="tablet_compress_response_45"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4502,7 +4536,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_45" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4516,7 +4550,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_46" id="tablet_compress_response_46"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4529,7 +4563,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_46" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4543,7 +4577,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_47" id="tablet_compress_response_47"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4556,7 +4590,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_47" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4570,7 +4604,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_48" id="tablet_compress_response_48"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4583,7 +4617,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_48" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
 
 
@@ -4596,7 +4630,7 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_compress_response_49" id="tablet_compress_response_49"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="Yes">Select an Option</option>
                                                 <option value="Yes">Yes</option>
@@ -4609,7 +4643,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                         style="margin: auto; display: flex; justify-content: center;">
-                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                        <textarea name="tablet_compress_remark_49" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -4636,7 +4670,7 @@ function addMultipleFiles(input, block_id) {
                         <div class="group-input">
                             <label for="Description Deviation">Final Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="tablet_compress_response_final_comment[]" id="summernote-1">
                                 </textarea>
                         </div>
                     </div>
@@ -4647,12 +4681,13 @@ function addMultipleFiles(input, block_id) {
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
+
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="supproting_attachment"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="supproting_attachment[]"
+                                        oninput="addMultipleFiles(this, 'supproting_attachment')" multiple>
                                 </div>
                             </div>
                         </div>
