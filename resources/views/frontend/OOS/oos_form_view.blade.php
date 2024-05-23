@@ -37,7 +37,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-       
+
         #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(7){
             border-radius: 0px 20px 20px 0px;
 
@@ -142,7 +142,7 @@
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -174,7 +174,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -207,7 +207,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -241,7 +241,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
                     return html;
                 }
 
@@ -275,7 +275,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -396,7 +396,7 @@
             @include('frontend.OOS.comps.checklist_phase_two')
 
             <!-- Phase II QC Review -->
-            @include('frontend.OOS.comps.phase_two_qc')    
+            @include('frontend.OOS.comps.phase_two_qc')
 
             <!--Additional Testing Proposal  -->
             @include('frontend.OOS.comps.additional_testing')
@@ -414,10 +414,10 @@
             @include('frontend.OOS.comps.batch_disposition')
 
             <!-- Re-Open -->
-            @include('frontend.OOS.comps.oos_reopen')    
+            @include('frontend.OOS.comps.oos_reopen')
 
             <!-- Under Addendum Approval -->
-            @include('frontend.OOS.comps.under_approval')    
+            @include('frontend.OOS.comps.under_approval')
 
             <!--Under Addendum Execution -->
             @include('frontend.OOS.comps.under_execution')
@@ -426,7 +426,7 @@
             @include('frontend.OOS.comps.under_review')
 
             <!-- Under Addendum Verification -->
-            @include('frontend.OOS.comps.under_verification')    
+            @include('frontend.OOS.comps.under_verification')
 
             <!----- Signature ----->
             @include('frontend.OOS.comps.signature')

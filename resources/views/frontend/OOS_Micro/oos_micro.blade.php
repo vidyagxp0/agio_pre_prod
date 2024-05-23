@@ -90,25 +90,32 @@
     <script>
         $(document).ready(function() {
             $('#Product_Material').click(function(e) {
+                let loopIndex= 0 ;
                 function generateTableRow(serialNumber) {
-
+                    loopIndex++;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '<td><input disabled type="text" name="info_of_product_material['+ loopIndex +'][serial]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Product/ MaterialName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][item_product_code]"></td>' +
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][batch_no]"></td>' +
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][mfg_date]"></td>' +
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][expiry_date]"></td>'+
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][label_claim]"></td>'+
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][pack_size]"></td>'+
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][analyst_name]"></td>'+
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][others_specify]"></td>'+
+                        '<td><input type="text" name="info_of_product_material['+ loopIndex +'][in_process_sample_stage]"></td>'+
+                        '<td><select name="info_of_product_material['+ loopIndex +'][packingMaterialType]"><option value="primary">Primary</option><option value="secondary">Secondary</option><option value="tertiary">Tertiary</option><option value="not_applicable">Not Applicable</option></select></td>'+
+                        '<td><select name="info_of_product_material['+ loopIndex +'][stabilityfor]"><option value="submission">Submission</option><option value="commercial">Commercial</option><option value="pack_evaluation">Pack Evaluation</option><option value="not_applicable">Not Applicable</option></select></td>'+
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -130,17 +137,21 @@
     <script>
         $(document).ready(function() {
             $('#Details_Stability').click(function(e) {
+                let loopIndex = 0 ;
                 function generateTableRow(serialNumber) {
-
+                    loopIndex++;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="Stability_StudyName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
 
+                                        '<td><input disabled type="text" name="stability_study['+ loopIndex +'][serial_no]" value="'+  serialNumber +'"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][ar_number]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][condition_temperature_rh]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][interval]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][orientation]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][pack_details]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][specification_no]"></td>'+
+                                        '<td><input type="text" name="stability_study['+ loopIndex +'][sample_description]"></td>'+
 
                         '</tr>';
 
@@ -148,7 +159,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -166,16 +177,20 @@
     <script>
         $(document).ready(function() {
             $('#OOS_Details').click(function(e) {
+                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-
+                    loopIndex++;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="OOS_DetailsName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
+                       '<td><input disabled type="text" name="oos_details['+ loopIndex +'][serial]" value="' + serialNumber +
+                        '"></td>'+
+                                        '<td><input type="text" name="oos_details['+ loopIndex +'][ar_number]"></td>'+
+                                        '<td><input type="text" name="oos_details['+ loopIndex +'][test_name_of_oos]"></td>'+
+                                        '<td><input type="text" name="oos_details['+ loopIndex +'][results_obtained]"></td>'+
+                                        '<td><input type="text" name="oos_details['+ loopIndex +'][specification_limit]"></td>'+
+                                        '<td><input type="text" name="oos_details['+ loopIndex +'][details_of_obvious_error]"></td>'+
+                                        '<td><input type="file" name="oos_details['+ loopIndex +'][file_attachment_oos_details]"></td>'+
 
 
                         '</tr>';
@@ -184,7 +199,7 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -204,28 +219,31 @@
     <script>
         $(document).ready(function() {
             $('#oos_capa').click(function(e) {
-                function generateTableRow(serialNumber) {
+                let loopIndex = 0
 
+                function generateTableRow(serialNumber) {
+                    loopIndex++;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oos_capaName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input disabled type="text" name="info_product_oos_capa['+loopIndex+'][serial]" value="' + serialNumber +
+                        '"></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_number]"></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][oos_reported_date]"></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][description_of_oos]"></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][previous_oos_root_cause]"></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][capa]"></td>'+
+                                        '<td><input type="text" name="info_product_oos_capa['+loopIndex+'][closure_date_of_capa]"></td>'+
+                                        '<td><select name="info_product_oos_capa['+loopIndex+'][capa_Requirement]"><option  value="yes">Yes</option><option value="no">No</option></select></td>'+
+                                       ' <td><input type="text" name="info_product_oos_capa['+loopIndex+'][reference_capa_number]"></td>'+
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
-
                     return html;
                 }
 
@@ -243,31 +261,29 @@
     <script>
         $(document).ready(function() {
             $('#oos_conclusion').click(function(e) {
+                let loopIndex = 0
                 function generateTableRow(serialNumber) {
-
+                    loopIndex++;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oos_conclusionName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
-
-
+                        '<td><input disabled type="text" name="oos_conclusion['+ loopIndex +'][serial]" value="' + serialNumber +
+                        '"></td>'
+                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analysis_details]"></td>'
+                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][hypo_exp_add_test_pr_no]"></td>'
+                                    '<td><input type="text" name="oos_conclusion['+ loopIndex +'][results]"></td>'
+                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][analyst_name]"></td>'
+                                   '<td><input type="text" name="oos_conclusion['+ loopIndex +'][Remarks]"></td>'
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
-
                     return html;
                 }
-
                 var tableBody = $('#oos_conclusion_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
@@ -282,25 +298,26 @@
     <script>
         $(document).ready(function() {
             $('#oosconclusion_review').click(function(e) {
+                let loopIndex = 0;
                 function generateTableRow(serialNumber) {
-
+                    loopIndex++ ;
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
-                        '<td><input type="text" name="Number[]"></td>' +
-                        '<td><input type="text" name="oosconclusion_reviewName[]"></td>' +
-                        '<td><input type="text" name="Remarks[]"></td>' +
+                      ' <td><input disabled type="text" name="oosConclusion_review['+ loopIndex +'][serial]" value="' + serialNumber +
+                        '"></td>'+
+                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][material_product_no]"></td>'+
+                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][batch_no_ar_no]"></td>'+
+                                   ' <td><input type="text" name="oosConclusion_review['+ loopIndex +'][any_other_information]"></td>'+
+                                    '<td><input type="text" name="oosConclusion_review['+ loopIndex +'][action_taken_on_affecBatch]"></td>'+
 
 
                         '</tr>';
-
                     // for (var i = 0; i < users.length; i++) {
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
 
-                    // html += '</select></td>' + 
+                    // html += '</select></td>' +
 
                     '</tr>';
 
@@ -314,8 +331,6 @@
             });
         });
     </script>
-
-
 
 
 
@@ -372,7 +387,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Investigation of MediaSuitability Test</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
-                
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
@@ -389,7 +404,8 @@
             </div>
 
             <!-- General Information -->
-
+            <form action="{{ route('oos_micro.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
 
@@ -399,33 +415,32 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
-                                <input type="number">
+                                <input disabled type="text" name="record"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/MICRO/{{ date('Y') }}">
+
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group"> Division Code </label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
-                                </select>
+                                <label for="Division Code">Division Code</label>
+                                <input disabled type="text" name="division_code"
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="group-input">
-                                <label for="Initiator Group Code"> Initiator </label>
-
-                                <input type="text">
-
+                                <label for="Short Description">Initiator <span class="text-danger"></span></label>
+                                <input disabled type="text" name="initiator_id"
+                                 value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator"> Date of Initiation </label>
-                                <input type="date" id="date" name="date-time">
-
+                                <label for="intiation_date">Date of Initiation</label>
+                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -436,17 +451,18 @@
                                 <small class="text-primary">
                                     Please mention expected date of completion
                                 </small>
-                                <input type="date" id="date" name="date-time">
+                                <input type="date" id="due_date" name="due_date">
 
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description"> Severity Level</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                <label for="Short Description">Severity Level</label>
+                                <select name="severity_level_gi">
+                                    <option value="0">-- Select --</option>
+                                    <option value="minor">Minor</option>
+                                    <option value="major">Major</option>
+                                    <option value="critical">Critical</option>
                                 </select>
                             </div>
                         </div>
@@ -455,7 +471,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                <select name="initiator_Group" id="initiator_group">
+                                <select name="initiator_group_gi" id="initiator_group">
                                     <option value="">-- Select --</option>
                                     <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                         Corporate Quality Assurance</option>
@@ -502,36 +518,45 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                    value="" readonly>
+                                <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
+                                    value="">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initiated Through ?</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-
+                                <select name="initiated_through_gi"
+                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="internal_audit">Internal Audit</option>
+                                            <option value="external_audit">External Audit</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="return">Return</option>
+                                            <option value="deviation">Deviation</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others </label>
-                                <textarea name="text"></textarea>
+                                <textarea name="if_others_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Is Repeat ?</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
-
+                                <select name="is_repeat_gi"
+                                        onchange="otherController(this.value, 'Yes', 'repeat_nature')">
+                                        <option value="">Enter Your Selection Here</option>
+                                        <option value="Yes">Yes</option>
+                                        <option value="No">No</option>
+                                        <option value="NA">NA</option>
                                 </select>
                             </div>
                         </div>
@@ -542,20 +567,20 @@
                         <div class="col-lg-6 mt-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Repeat Nature</label>
-                                <textarea name="text"></textarea>
+                                <textarea name="repeat_nature_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Nature of Change</label>
-                                <select>
+                                <select name="nature_of_change_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <!-- <option>Lab Incident</option>
-                                                                            <option>Deviation</option>
-                                                                            <option>Product Non-conformance</option>
-                                                                            <option>Inspectional Observation</option>
-                                                                            <option>Others</option> -->
+                                         <option>Deviation</option>
+                                         <option>Product Non-conformance</option>
+                                         <option>Inspectional Observation</option>
+                                         <option>Others</option> -->
 
                                 </select>
 
@@ -566,13 +591,13 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Deviation Occured On</label>
-                                <input type="date" name="date">
+                                <input type="date" name="deviation_occured_on_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Description</label>
-                                <textarea name="text"></textarea>
+                                <textarea name="description_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -583,10 +608,10 @@
                                 </small>
 
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -594,14 +619,14 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
-                                <select>
+                                <select name="source_document_type_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option>OOT</option>
-                                    <option>Lab Incident</option>
-                                    <option>Deviation</option>
-                                    <option>Product Non-conformance</option>
-                                    <option>Inspectional Observation</option>
-                                    <option>Others</option>
+                                    <option value="oot">OOT</option>
+                                    <option value="lab-incident">Lab Incident</option>
+                                    <option value="deviation">Deviation</option>
+                                    <option value="product-non-conformance">Product Non-conformance</option>
+                                    <option value="inspectional-observation">Inspectional Observation</option>
+                                    <option value="other">Others</option>
 
                                 </select>
                             </div>
@@ -609,20 +634,20 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="reference_document_gi[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -631,7 +656,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
-                                <select>
+                                <select name="sample_type_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option>Raw Material</option>
                                     <option>Packing Material</option>
@@ -646,20 +671,20 @@
                             <div class="group-input">
                                 <label for="Short Description ">Product / Material Name</label>
 
-                                <input type="number">
+                                <input type="number" name="product_material_name_gi">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input ">
                                 <label for="Short Description ">Market</label>
 
-                                <input type="number" name="num">
+                                <input type="number" name="market_gi">
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Customer*</label>
-                                <select>
+                                <select name="customer_gi">
                                     <option>Enter Your Selection Here</option>
                                     <option></option>
                                     <option></option>
@@ -691,27 +716,23 @@
                                             <th style="width: 8%"> Label Claim.</th>
                                             <th style="width: 8%">Pack Size</th>
                                             <th style="width: 8%">Analyst Name</th>
-
                                             <th style="width: 10%">Others (Specify)</th>
                                             <th style="width: 10%"> In- Process Sample Stage.</th>
                                             <th style="width: 12% pt-3">Packing Material Type</th>
                                             <th style="width: 16% pt-2"> Stability for</th>
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
+                                        <td><input type="text" name="item_product_code[]"></td>
+                                        <td><input type="text" name="batch_no[]"></td>
+                                        <td><input type="text" name="mfg_date[]"></td>
+                                        <td><input type="text" name="expiry_date[]"></td>
+                                        <td><input type="text" name="label_claim[]"></td>
+                                        <td><input type="text" name="pack_size[]"></td>
+                                        <td><input type="text" name="analyst_name[]"></td>
+                                        <td><input type="text" name="others_specify[]"></td>
+                                        <td><input type="text" name="in_process_sample_stage[]"></td>
                                         <td><select name="packingMaterialType[]">
                                                 <option>Primary</option>
                                                 <option>Secondary</option>
@@ -761,17 +782,14 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-
-
-
+                                        <td><input disabled type="text" name="stability_study[0][serial_no]" value="1"></td>
+                                        <td><input type="text" name="stability_study[0][ar_number]"></td>
+                                        <td><input type="text" name="stability_study[0][condition_temperature_rh]"></td>
+                                        <td><input type="text" name="stability_study[0][interval]"></td>
+                                        <td><input type="text" name="stability_study[0][orientation]"></td>
+                                        <td><input type="text" name="stability_study[0][pack_details]"></td>
+                                        <td><input type="text" name="stability_study[0][specification_no]"></td>
+                                        <td><input type="text" name="stability_study[0][sample_description]"></td>
                                     </tbody>
 
                                 </table>
@@ -809,13 +827,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="text[]"></td>
-                                        <td><input type="file" name="file[]"></td>
+                                        <td><input disabled type="text" name="oos_details[0][serial]" value="1"></td>
+                                        <td><input type="text" name="oos_details[0][ar_number]"></td>
+                                        <td><input type="text" name="oos_details[0][test_name_of_oos]"></td>
+                                        <td><input type="text" name="oos_details[0][results_obtained]"></td>
+                                        <td><input type="text" name="oos_details[0][specification_limit]"></td>
+                                        <td><input type="text" name="oos_details[0][details_of_obvious_error]"></td>
+                                        <td><input type="file" name="oos_details[0][file_attachment_oos_details]"></td>
                                         {{-- <td><input type="text" name="text[]"></td>
                                         <td><input type="date" name="time[]"></td> --}}
 
@@ -855,7 +873,7 @@
                                     <div class="group-input">
                                         <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                         <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                        <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                        <textarea class="summernote" name="comments_pli[]" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -864,10 +882,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Schedule End Date"> Field Alert Required</label>
-                                <select>
+                                <select name="field_alert_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -875,10 +893,10 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Field Alert Ref.No.
                                 </label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="field_alert_ref_no_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -887,7 +905,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Justify if no Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_field_alert_pli[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -926,20 +944,20 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name"> Verification Analysis Required</label>
-                                <select>
+                                <select name="verification_analysis_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -947,20 +965,20 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Analyst Interview Req.</label>
-                                <select>
+                                <select name="analyst_interview_req_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -971,7 +989,7 @@
 
                                 <!-- <label for="Description Deviation">Description of Deviation</label> -->
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="justify_if_no_analyst_int_pli[]" id="summernote-1">
                                     </textarea>
 
                             </div>
@@ -979,33 +997,33 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation Required</label>
-                                <select>
+                                <select name="phase_i_investigation_required_pli">
                                     <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Phase I Micro</option>
-                                    <option>Phase I Chemical</option>
-                                    <option>Hypothesis</option>
-                                    <option>Resampling</option>
-                                    <option>Others</option>
+                                <select name="phase_i_investigation_pli">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="phase-I-micro">Phase I Micro</option>
+                                    <option value="phase-I-chemical">Phase I Chemical</option>
+                                    <option value="hypothesis">Hypothesis</option>
+                                    <option value="resampling">Resampling</option>
+                                    <option value="other">Others</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -1019,8 +1037,7 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="file_attachments_pli[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
 
@@ -1722,7 +1739,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Summary of Prelim.Investiga.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1731,22 +1748,22 @@
                             <div class="group-input">
                                 <label for="Lead Auditor">Root Cause Identified</label>
                                 <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                <select name="root_cause_identified_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Analyst Error</option>
-                                    <option>Instrument Error</option>
-                                    <option>Product/Material Related Error</option>
-                                    <option>Other Error</option>
+                                <select name="oos_category_root_cause_ident_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="analyst-error">Analyst Error</option>
+                                    <option value="instrument-error">Instrument Error</option>
+                                    <option value="product-material-related-error">Product/Material Related Error</option>
+                                    <option value="other-error">Other Error</option>
 
                                 </select>
                             </div>
@@ -1755,7 +1772,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category (Others)</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1763,7 +1780,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Root Cause Details</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1771,7 +1788,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="oos_category_root_cause_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1779,10 +1796,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Recommended Actions Required?</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                <select name="recommended_actions_required_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1790,27 +1807,27 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Recommended Actions Reference
                                 </label>
-                                <select multiple id="reference_record" name="refrence_record[]" id="">
+                                <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="">1</option>
-                                    <option value="">2</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                <select name="capa_required_plic">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="num" name="num">
+                                <input type="num" name="reference_capa_no_plic">
                             </div>
                         </div>
 
@@ -1818,7 +1835,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Delay Justification for P.I.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1833,8 +1850,7 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="supporting_attachment_plic[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1864,7 +1880,7 @@
                             <div class="group-input">
                                 <label for="Description Deviation">Review Comments</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                                <textarea class="summernote" name="review_comments_plir[]" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1894,31 +1910,23 @@
                                             <th style="width: 16%"> CAPA</th>
                                             <th style="width: 16% pt-3">Closure Date of CAPA</th>
                                             <th style="width: 16%">CAPA Requirement</th>
-
                                             <th style="width: 16%">Reference CAPA Number</th>
-
-
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <td><input disabled type="text" name="serial[]" value="1"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><input type="text" name="Number[]"></td>
-                                        <td><input type="text" name="Name[]"></td>
-                                        <td><input type="text" name="Remarks[]"></td>
-                                        <td><select name="CAPARequirement[]">
+                                        <td><input disabled type="text" name="info_product_oos_capa[0][serial]" value="1"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][oos_number]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][oos_reported_date]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][description_of_oos]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][previous_oos_root_cause]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][capa]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][closure_date_of_capa]"></td>
+                                        <td><select name="info_product_oos_capa[0][capa_Requirement]">
                                                 <option>Yes</option>
                                                 <option>No</option>
                                             </select></td>
-                                        <td><input type="text" name="Name[]"></td>
-
-
+                                        <td><input type="text" name="info_product_oos_capa[0][reference_capa_number]"></td>
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
@@ -1928,10 +1936,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Start Date"> Phase II Inv. Required?</label>
-                                <select>
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Yes</option>
-                                    <option>No</option>
+                                <select name="phase_ii_inv_required_plir">
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="yes">Yes</option>
+                                    <option value="no">No</option>
                                 </select>
                             </div>
                         </div>
@@ -1946,7 +1954,7 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attach[]"
+                                        <input type="file" id="myfile" name="supporting_attachments_plir[]"
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
@@ -1977,17 +1985,17 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> Manufact. Invest. Required? </label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="manufact_invest_required_piii">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
@@ -1997,10 +2005,10 @@
 
 
                             <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select multiple name="auditee" placeholder="Select Nature of Deviation"
+                            <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="">Chemical</option>
-                                <option value="">Microbiology</option>
+                                <option value="chemical">Chemical</option>
+                                <option value="microbiology">Microbiology</option>
 
                             </select>
                         </div>
@@ -2011,19 +2019,19 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Manufacturing Invst. Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Re-sampling Required? </label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="re_sampling_required_piii">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -2031,17 +2039,17 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Comments"> Audit Comments </label>
-                            <textarea name="text"></textarea>
+                            <textarea name="audit_comments_piii"></textarea>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="re_sampling_ref_no_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2049,9 +2057,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="hypo_exp_required_piii">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -2060,10 +2068,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="hypo_exp_reference_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2078,7 +2086,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachment_piii[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -2526,7 +2534,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary of Exp./Hyp.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_of_exp_hyp_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2534,16 +2542,16 @@
                         <div class="group-input">
                             <label for="Description Deviation">Summary Mfg. Investigation</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="summary_mfg_investigation_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Cancelled By"> Root Casue Identified. </label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="root_casue_identified_piiqcr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -2551,26 +2559,26 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Cancelled By">OOS Category-Reason identified </label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Product/Material Related Error</option>
-                                <option>Other Error</option>
+                            <select name="oos_category_reason_identified_piiqcr">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="analyst-error">Analyst Error</option>
+                                <option value="instrument-error">Instrument Error</option>
+                                <option value="product-material-related-error">Product/Material Related Error</option>
+                                <option value="other-error">Other Error</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Preparation Completed On">Others (OOS category)</label>
-                            <input type="string">
+                            <input type="string" name="others_oos_category_piiqcr">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Details of Root Cause</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="details_of_root_cause_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2578,45 +2586,45 @@
                         <div class="group-input">
                             <label for="Description Deviation">Impact Assessment.</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="impact_assessment_piiqcr[]" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="recommended_action_required_piiqcr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Recommended Action Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Observation Submitted On">Investi. Required</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="investi_required_piiqcr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Invest ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2630,7 +2638,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachments_piiqcr[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -2667,17 +2675,17 @@
                         <div class="group-input">
                             <label for="Description Deviation">Review Comment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="review_comment_atp" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> Additional Test Proposal </label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="additional_test_proposal_atp">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
@@ -2686,19 +2694,19 @@
                         <div class="group-input">
                             <label for="Reference Recores">Additional Test Reference.
                             </label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Any Other Actions Required</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="any_other_actions_required_atp">
+                                <option value="">Yes</option>
+                                <option value="">No</option>
 
                             </select>
                         </div>
@@ -2706,10 +2714,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Task Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_task_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2724,7 +2732,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -2756,12 +2764,10 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_comments_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
-
-
                     <!-- ---------------------------grid-1 -------------------------------- -->
                     <div class="group-input">
                         <label for="audit-agenda-grid">
@@ -2783,24 +2789,16 @@
                                         <th style="width: 16%">Results</th>
                                         <th style="width: 16%">Analyst Name.</th>
                                         <th style="width: 16%">Remarks</th>
-
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-
-
-
+                                    <td><input disabled type="text" name="summary_of_oos_test_results[0][serial]" value="1"></td>
+                                    <td><input type="text" name="summary_of_oos_test_results[0][analysis_details]"></td>
+                                    <td><input type="text" name="summary_of_oos_test_results[0][hypo_exp_add_test_pr_no]"></td>
+                                    <td><input type="text" name="summary_of_oos_test_results[0][results]"></td>
+                                    <td><input type="text" name="summary_of_oos_test_results[0][analyst_name]"></td>
+                                    <td><input type="text" name="summary_of_oos_test_results[0][Remarks]"></td>
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -2810,7 +2808,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Specification Limit </label>
-                            <input type="string" name="string">
+                            <input type="text" name="specification_limit_oosc">
                         </div>
                     </div>
 
@@ -2820,9 +2818,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Results to be Reported</label>
-                            <select>
-                                <option value="">Initial</option>
-                                <option value="">Retested Result</option>
+                            <select name="results_to_be_reported_oosc">
+                                <option value="initial">Initial</option>
+                                <option value="retested-result">Retested Result</option>
 
                             </select>
                         </div>
@@ -2830,23 +2828,23 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Final Reportable Results</label>
-                            <input type="string" name="string">
+                            <input type="text" name="final_reportable_results_oosc">
                         </div>
                     </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justifi. for Averaging Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justifi_for_averaging_results_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">OOS Stands </label>
-                            <select>
-                                <option value="">Valid</option>
-                                <option value="">Invalid</option>
+                            <select name="oos_stands_oosc">
+                                <option value="valid">Valid</option>
+                                <option value="invalid">Invalid</option>
 
 
 
@@ -2860,9 +2858,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req.</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="capa_req_oosc">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
 
                             </select>
@@ -2872,10 +2870,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Ref No.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="capa_ref_no_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2883,16 +2881,16 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if CAPA not required</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_capa_not_required_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Action Plan Req.</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="action_plan_req_oosc">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
 
                             </select>
@@ -2902,10 +2900,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Plan Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -2913,7 +2911,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justification for Delay</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justification_for_delay_oosc" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2927,7 +2925,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="attachments_if_any_oosc[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -2960,7 +2958,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion Review Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2987,19 +2985,15 @@
                                         <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                         <th style="width: 16%">Any Other Information</th>
                                         <th style="width: 16%">Action Taken on Affec.batch</th>
-
-
-
-
-
                                     </tr>
                                 </thead>
                                 <tbody>
+
                                     <td><input disabled type="text" name="serial[]" value="1"></td>
-                                    <td><input type="text" name="Number[]"></td>
-                                    <td><input type="text" name="Name[]"></td>
-                                    <td><input type="text" name="Remarks[]"></td>
-                                    <td><input type="text" name="Number[]"></td>
+                                    <td><input type="text" name="oosConclusion_review[0][material_product_no]"></td>
+                                    <td><input type="text" name="oosConclusion_review[0][batch_no_ar_no]"></td>
+                                    <td><input type="text" name="oosConclusion_review[0][any_other_information]"></td>
+                                    <td><input type="text" name="oosConclusion_review[0][action_taken_on_affecBatch]"></td>
 
 
 
@@ -3015,7 +3009,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Action Taken on Affec.batch</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3028,9 +3022,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CAPA Req?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="capa_req_ocr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
 
                             </select>
@@ -3039,19 +3033,19 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Refer.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments">Required Action Plan? </label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="required_action_plan_ocr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -3060,9 +3054,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Required Action Task?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="required_action_task_ocr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -3071,10 +3065,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Action Task Reference.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -3082,9 +3076,9 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">Risk Assessment Req?</label>
-                            <select>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="risk_assessment_req_ocr">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -3093,10 +3087,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Risk Assessment Ref.</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -3105,7 +3099,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3119,7 +3113,7 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
+                                    <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                 </div>
                             </div>
@@ -3129,7 +3123,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">CQ Approver</label>
-                            <input type="text" name="name">
+                            <input type="text" name="qa_approver_ocr">
                         </div>
                     </div>
 
@@ -3160,17 +3154,17 @@
                         <div class="group-input">
                             <label for="Description Deviation">CQ Review comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="cq_review_comments_OOS_CQ" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Report Attachments"> CAPA Required ?</label>
-                            <select>
+                            <select name="capa_required_OOS_CQ">
                                 <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
                             </select>
                         </div>
                     </div>
@@ -3179,7 +3173,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Reference of CAPA </label>
-                            <input type="num" name="num">
+                            <input type="num" name="reference_of_capa_OOS_CQ">
                         </div>
                     </div>
 
@@ -3188,11 +3182,11 @@
 
 
                             <label for="Auditee"> Action plan requirement ? </label>
-                            <select multiple name="auditee" placeholder="Select Nature of Deviation"
+                            <select multiple name="action_plan_requirement_OOS_CQ" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                                <option valu="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
                             </select>
                         </div>
@@ -3204,7 +3198,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Ref Action Plan </label>
-                            <input type="num" name="num">
+                            <input type="num" name="ref_action_plan_OOS_CQ">
                         </div>
                     </div>
 
@@ -3218,8 +3212,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="cq_attachment_OOS_CQ[]"
+                                        oninput="addMultipleFiles(this, 'cq_attachment_OOS_CQ')" multiple>
                                 </div>
                             </div>
 
@@ -3256,14 +3250,14 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments">OOS Category</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Analyst Error</option>
-                                <option>Instrument Error</option>
-                                <option>Procedure Error</option>
-                                <option>Product Related Error</option>
-                                <option>Material Related Error</option>
-                                <option>Other Error</option>
+                            <select name="oos_category_BI">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="analyst-error">Analyst Error</option>
+                                <option value="instrument-error">Instrument Error</option>
+                                <option value="procedure-error">Procedure Error</option>
+                                <option value="product-related-error">Product Related Error</option>
+                                <option value="material-related-error">Material Related Error</option>
+                                <option value="other-error">Other Error</option>
 
                             </select>
                         </div>
@@ -3271,7 +3265,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Other's</label>
-                            <input type="string" name="string">
+                            <input type="string" name="others_BI">
                         </div>
                     </div>
                     <!-- <div class="col-lg-6">
@@ -3284,11 +3278,11 @@
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Material/Batch Release</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>To Be Release</option>
-                                <option>To Be Rejected</option>
-                                <option>Other Action (Specify)</option>
+                            <select name="material_batch_release_BI">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="to-be-release">To Be Release</option>
+                                <option value="to-be-rejected">To Be Rejected</option>
+                                <option value="other-action">Other Action (Specify)</option>
 
                             </select>
                         </div>
@@ -3298,7 +3292,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="other_action_BI" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3306,10 +3300,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="field_alert_reference_BI" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -3320,7 +3314,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Parameters Results</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="other_parameter_result_BI" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3331,7 +3325,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Trend of Previous Batches</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="trend_of_previous_batches_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3340,7 +3334,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Stability Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="stability_data_BI" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3348,7 +3342,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Process Validation Data</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="process_validation_data_BI" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3356,7 +3350,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Method Validation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="method_validation_BI" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3364,7 +3358,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Any Market Complaints </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="any_market_complaints_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3374,7 +3368,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Statistical Evaluation </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="statistical_evaluation_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3383,7 +3377,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Risk Analysis for Disposition </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="risk_analysis_for_disposition_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3392,7 +3386,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Conclusion </label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="conclusion_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3401,10 +3395,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Required?</label>
-                            <select>
-                                <option>Enter Your Selection Here</option>
-                                <option>Yes</option>
-                                <option>No</option>
+                            <select name="phase_III_inves_required_BI">
+                                <option value="">Enter Your Selection Here</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
 
 
                             </select>
@@ -3413,10 +3407,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Phase-III Inves. Reference</label>
-                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                            <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
                             </select>
                         </div>
                     </div>
@@ -3425,7 +3419,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="justify_for_delay_BI" id="summernote-1">
                                     </textarea>
                         </div>
 
@@ -3440,8 +3434,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="disposition_attachment_BI[]"
+                                        oninput="addMultipleFiles(this, 'disposition_attachment_BI')" multiple>
                                 </div>
                             </div>
 
@@ -3471,7 +3465,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
+                            <textarea class="summernote" name="reopen_request" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -3486,8 +3480,8 @@
                                 <div class="file-attachment-list" id="file_attach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="myfile" name="reopen_attachment[]"
+                                        oninput="addMultipleFiles(this, 'reopen_attachment')" multiple>
                                 </div>
                             </div>
 
@@ -5723,17 +5717,17 @@
                 </div>
 
 
-                
+
 
                 <div class="col-lg-12">
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                        
+
                         <div class="file-attachment-field">
                             <div class="file-attachment-list" id="file_attach"></div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cibet[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -5758,7 +5752,7 @@
         <div id="CCForm19" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Review of Training records Analyst Involved in Testing  
+                    Checklist for Review of Training records Analyst Involved in Testing
                 </div>
                 <div class="row">
 
@@ -5909,7 +5903,7 @@
                                             </td>
                                         </tr>
 
-                                      
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6119,7 +6113,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="flex text-center">3.1</td>
-                                            <td>Was correct applicable specification and method of analysis used for analysis? 
+                                            <td>Was correct applicable specification and method of analysis used for analysis?
                                             </td>
                                             <td>
 
@@ -6249,7 +6243,7 @@
                                             </td>
 
                                         </tr>
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6534,7 +6528,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -6741,7 +6735,7 @@
                         </div>
                     </div>
                 </div>
-   
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -6905,7 +6899,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">6.1.6</td>
                                             <td>Was area fumigation done as per schedule?</td>
@@ -6958,13 +6952,13 @@
                                         </tr>
 
                                         <tr>
-                                            
+
                                             <td>
                                                  <tr>
                                                 <td class="flex text-center">6.1.8</td>
                                                 <td>Were there any spillages in the area?</td>
                                                 <td>
-    
+
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
@@ -6975,8 +6969,8 @@
                                                             <option value="N/A">N/A</option>
                                                         </select>
                                                     </div>
-    
-    
+
+
                                                 </td>
                                                 <td>
                                                     {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -6986,11 +6980,11 @@
                                                 </td>
                                             </tr>
                                                 </td>
-                                           
-                                           
+
+
                                         </tr>
 
-                                     
+
 
                                     </tbody>
                                 </table>
@@ -7000,11 +6994,11 @@
                 </div>
 
 
-               
-               
 
 
-               
+
+
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -7219,7 +7213,7 @@
                 </div>
 
 
-               
+
                 <div class="col-lg-12">
                     <div class="group-input">
                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
@@ -7230,7 +7224,7 @@
                             <div class="file-attachment-list" id="file_attach"></div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cis[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -7250,13 +7244,13 @@
             </div>
 
 
-        </div>        
-       
+        </div>
+
 
         <div id="CCForm20" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                Checklist for Review of Training records Analyst Involved in Testing  
+                Checklist for Review of Training records Analyst Involved in Testing
                 </div>
                 <div class="row">
 
@@ -7452,7 +7446,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -7824,7 +7818,7 @@
                                             </td>
 
                                         </tr>
-                                     
+
 
 
 
@@ -8145,7 +8139,7 @@
 
                                         </tr>
 
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -8205,7 +8199,7 @@
                                             <td>
 
                                                 <div class="group-input">
-                                                   
+
                                                     <div class="file-attachment-field">
                                                         <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
                                                         id="file_attach "></div>
@@ -8215,7 +8209,7 @@
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                                         </div>
                                                     </div>
-                    
+
                                                 </div>
 
 
@@ -8286,7 +8280,7 @@
                                             <td>
 
                                                 <div class="group-input">
-                                                   
+
                                                     <div class="file-attachment-field">
                                                         <div style="width: 170px; height: 30px; border: 2px solid black; position: relative; top: 17px; left:27px; border-radius: 5px;"
                                                         id="file_attach "></div>
@@ -8296,7 +8290,7 @@
                                                                 oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                                         </div>
                                                     </div>
-                    
+
                                                 </div>
 
 
@@ -8335,7 +8329,7 @@
                                             </td>
 
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
@@ -8370,7 +8364,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="text"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8412,7 +8406,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8432,7 +8426,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8452,7 +8446,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8572,7 +8566,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8716,9 +8710,9 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
-                                            </td> 
-                                           
+                                                </div>
+                                            </td>
+
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -8760,7 +8754,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8780,7 +8774,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8825,7 +8819,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8845,7 +8839,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -8940,7 +8934,7 @@
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
 
                                             </td>
@@ -9001,7 +8995,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
 
                                     </tbody>
                                 </table>
@@ -9010,7 +9004,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
 
 
@@ -9183,7 +9177,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
 
                                     </tbody>
                                 </table>
@@ -9541,8 +9535,8 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                      
-                                       
+
+
 
                                     </tbody>
                                 </table>
@@ -9551,7 +9545,7 @@
                     </div>
                 </div>
 
-               
+
             </div>
             <div class="inner-block-content">
                 <div class="sub-head">
@@ -9672,7 +9666,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    
+
 
                                     </tbody>
                                 </table>
@@ -9682,7 +9676,7 @@
                 </div>
             </div>
 
-               
+
 
                 <div class="col-lg-12">
                     <div class="group-input">
@@ -9694,7 +9688,7 @@
                             <div class="file-attachment-list" id="file_attach"></div>
                             <div class="add-btn">
                                 <div>Add</div>
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cimlbwt[]"
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple>
                             </div>
                         </div>
@@ -9712,9 +9706,9 @@
                             Exit </a> </button>
                 </div>
             </div>
-           
 
-           
+
+
 
 
         </div>
@@ -9726,17 +9720,17 @@
 
                 <div class="sub-head">
 
-                    Checklist for Review of Training records Analyst Involved in Testing 
+                    Checklist for Review of Training records Analyst Involved in Testing
 
                 </div>
 
                 <div class="row">
 
- 
 
- 
 
- 
+
+
+
 
                     <div class="col-12">
 
@@ -9772,7 +9766,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9794,9 +9788,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -9812,7 +9806,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -9824,7 +9818,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9846,9 +9840,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -9864,7 +9858,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -9886,7 +9880,7 @@
 
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"/>
 
- 
+
 
                                                 </div>
 
@@ -9906,7 +9900,7 @@
 
                                         </tr>
 
-                                       
+
 
                                     </tbody>
 
@@ -9922,7 +9916,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -9966,7 +9960,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -9988,9 +9982,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10006,7 +10000,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10018,7 +10012,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10040,9 +10034,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10058,7 +10052,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10072,7 +10066,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10094,9 +10088,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10112,7 +10106,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10126,7 +10120,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10148,9 +10142,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10166,7 +10160,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10180,7 +10174,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10202,9 +10196,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10220,11 +10214,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                     </tbody>
 
@@ -10240,7 +10234,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -10286,7 +10280,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10308,9 +10302,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10326,7 +10320,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10338,7 +10332,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10348,13 +10342,13 @@
 
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;"/>
 
- 
+
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10370,11 +10364,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10384,7 +10378,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10406,9 +10400,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10424,7 +10418,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10438,7 +10432,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10460,9 +10454,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10478,11 +10472,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10494,7 +10488,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10516,9 +10510,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10534,7 +10528,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10548,7 +10542,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10570,9 +10564,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10588,7 +10582,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10600,13 +10594,13 @@
 
                                                 (Applicable for Antibiotics –Microbial Assay)
 
-                                               
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10628,9 +10622,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10646,11 +10640,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -10662,7 +10656,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10684,9 +10678,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10702,11 +10696,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
-                                        
+
 
                                     </tbody>
 
@@ -10722,7 +10716,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -10771,7 +10765,7 @@
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                             </div>
- 
+
 
                                             </td>
 
@@ -10787,7 +10781,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10799,7 +10793,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10821,9 +10815,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10839,7 +10833,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10851,7 +10845,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10863,9 +10857,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10881,7 +10875,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10893,7 +10887,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10905,9 +10899,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10923,7 +10917,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10935,7 +10929,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -10947,9 +10941,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -10965,7 +10959,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -10981,7 +10975,7 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
 
@@ -11003,9 +10997,9 @@
 
                                                     </div>
 
-   
 
-    
+
+
 
                                                 </td>
 
@@ -11021,7 +11015,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11033,7 +11027,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11055,9 +11049,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11073,7 +11067,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11085,7 +11079,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11097,9 +11091,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11115,7 +11109,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11127,7 +11121,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11149,9 +11143,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11167,7 +11161,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11179,7 +11173,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11201,9 +11195,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11219,7 +11213,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11233,7 +11227,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11255,9 +11249,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11273,7 +11267,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11285,7 +11279,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11297,9 +11291,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11315,7 +11309,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11332,7 +11326,7 @@
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                             </div>
- 
+
 
                                                </td>
 
@@ -11348,7 +11342,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11358,13 +11352,13 @@
 
                                             <td>Were the challenged samples stored in appropriate storage condition ?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11386,9 +11380,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11404,7 +11398,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11414,13 +11408,13 @@
 
                                             <td>Was the standard weighty accurately as mentioned in test procedure?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11442,9 +11436,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11460,7 +11454,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11472,7 +11466,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11494,9 +11488,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11512,7 +11506,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11526,7 +11520,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11548,9 +11542,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11566,7 +11560,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11576,13 +11570,13 @@
 
                                             <td>Was the working standard prepared with appropriate dilutions?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11604,9 +11598,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11622,11 +11616,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11641,7 +11635,7 @@
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
                                             </td>
 
@@ -11657,11 +11651,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11669,24 +11663,24 @@
 
                                             <td>Use before date :
 
- 
+
 
                                             </td>
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11702,11 +11696,11 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -11718,7 +11712,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -11740,9 +11734,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11758,7 +11752,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11768,23 +11762,23 @@
 
                                             <td>Lot/Batch No. of petriplates
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11800,7 +11794,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11810,23 +11804,23 @@
 
                                             <td>Size of the petriplates
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11842,7 +11836,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11852,13 +11846,13 @@
 
                                             <td>Size of the petriplates
 
- 
+
 
                                             </td>
 
                                              <td>
 
- 
+
 
                                                 <div
 
@@ -11880,9 +11874,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11898,7 +11892,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11908,22 +11902,22 @@
 
                                             <td>Dilutor prepared on:
 
- 
+
 
                                             </td>
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    </div> 
- 
+                                                    </div>
 
- 
+
+
 
                                             </td>
 
@@ -11939,7 +11933,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11949,23 +11943,23 @@
 
                                             <td>Validity time of the dilutor:
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -11981,7 +11975,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -11995,17 +11989,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="date"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12021,13 +12015,13 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
- 
 
- 
+
+
 
                                     </tbody>
 
@@ -12043,7 +12037,7 @@
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -12087,17 +12081,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="text"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12113,7 +12107,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12125,7 +12119,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12137,9 +12131,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12155,7 +12149,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12167,11 +12161,11 @@
 
                                             </td>
 
- 
+
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12193,9 +12187,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12213,7 +12207,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12223,7 +12217,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12245,9 +12239,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12265,7 +12259,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12277,7 +12271,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12299,9 +12293,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12319,7 +12313,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12331,7 +12325,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12353,9 +12347,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12373,11 +12367,11 @@
 
                                         </tr>
 
- 
 
- 
 
- 
+
+
+
 
                                     </tbody>
 
@@ -12391,11 +12385,11 @@
 
                 </div>
 
- 
+
 
             </div>
 
- 
+
 
             <div class="inner-block-content">
 
@@ -12439,7 +12433,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12461,9 +12455,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12479,7 +12473,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12489,13 +12483,13 @@
 
                                             <td>Was differential pressure of the area within limit:
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12518,9 +12512,9 @@
                                                 </div>
 
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12536,7 +12530,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12550,7 +12544,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12572,9 +12566,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12592,7 +12586,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -12606,9 +12600,9 @@
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
+
 
                                             </td>
 
@@ -12626,9 +12620,9 @@
 
                                         </tr>
 
- 
 
-                                       
+
+
 
                                     </tbody>
 
@@ -12642,9 +12636,9 @@
 
                 </div>
 
- 
 
- 
+
+
 
             </div>
 
@@ -12692,7 +12686,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12714,9 +12708,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12732,7 +12726,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12744,7 +12738,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -12756,9 +12750,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12774,7 +12768,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -12788,17 +12782,17 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
- 
+                                                </div>
 
- 
+
+
 
                                             </td>
 
@@ -12816,7 +12810,7 @@
 
                                         </tr>
 
-                                       
+
 
                                         <tr>
 
@@ -12826,7 +12820,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12848,9 +12842,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12876,18 +12870,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12913,7 +12907,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -12935,9 +12929,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -12963,18 +12957,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13000,18 +12994,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="number"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13037,18 +13031,18 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div> 
+                                                </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13074,7 +13068,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13096,9 +13090,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13116,7 +13110,7 @@
 
                                         </tr>
 
- 
+
 
                                         <tr>
 
@@ -13126,7 +13120,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13148,9 +13142,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13176,17 +13170,17 @@
 
                                             <td>
 
- 
+
 
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                            </div> 
- 
+                                            </div>
 
- 
+
+
 
                                             </td>
 
@@ -13212,16 +13206,16 @@
 
                                                 <td>
 
- 
+
 
                                                     <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>  
+                                                </div>
 
- 
+
 
                                             </td>
 
@@ -13249,7 +13243,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13271,9 +13265,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13291,11 +13285,11 @@
 
                                         </tr>
 
- 
 
- 
 
- 
+
+
+
 
                                     </tbody>
 
@@ -13309,7 +13303,7 @@
 
                 </div>
 
- 
+
 
             </div>
 
@@ -13357,7 +13351,7 @@
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -13379,9 +13373,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13397,7 +13391,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -13407,13 +13401,13 @@
 
                                             <td>Was the disinfectant prepared as per validated concentration?
 
- 
+
 
                                             </td>
 
                                             <td>
 
- 
+
 
                                                 <div
 
@@ -13425,9 +13419,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13443,7 +13437,7 @@
 
                                             </td>
 
- 
+
 
                                         </tr>
 
@@ -13457,7 +13451,7 @@
 
                                                 <td>
 
- 
+
 
                                                 <div
 
@@ -13479,9 +13473,9 @@
 
                                                 </div>
 
- 
 
- 
+
+
 
                                             </td>
 
@@ -13526,7 +13520,7 @@
 
                                 <div>Add</div>
 
-                                <input type="file" id="myfile" name="file_attach[]"
+                                <input type="file" id="myfile" name="attachment_details_cima[]"
 
                                     oninput="addMultipleFiles(this, 'file_attach')" multiple/>
 
@@ -13534,23 +13528,23 @@
 
                         </div>
 
- 
+
 
                     </div>
 
                 </div>
 
- 
 
-               
 
- 
 
-                
 
- 
 
- 
+
+
+
+
+
+
 
                 <div class="button-block">
 
@@ -13613,7 +13607,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.1.1</td>
@@ -13634,7 +13628,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.1.2</td>
@@ -13686,7 +13680,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.4.1</td>
@@ -13707,7 +13701,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">1.4.2</td>
@@ -13748,7 +13742,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -13792,7 +13786,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.2</td>
@@ -13814,7 +13808,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.3</td>
@@ -13835,7 +13829,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.4</td>
@@ -13851,7 +13845,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">2.5</td>
@@ -13872,9 +13866,9 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
-    
+
                                     </tbody>
                                 </table>
                             </div>
@@ -13917,7 +13911,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.2</td>
@@ -13938,7 +13932,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.3</td>
@@ -13959,7 +13953,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-    
+
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">3.4</td>
@@ -14156,7 +14150,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                         <tr>
                                             <td class="flex text-center">4.1.5</td>
                                             <td>Media expiry date</td>
@@ -14208,7 +14202,7 @@
                                             <td>
                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <input type="date" style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-    
+
                                                 </div>
                                             </td>
                                             <td>
@@ -14333,7 +14327,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                     </tbody>
                                 </table>
                             </div>
@@ -14548,7 +14542,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-    
+
                                         <tr>
                                             <td class="flex text-center">8.1.2</td>
                                             <td>Was the fogging agent used for fogging and validated?</td>
@@ -15150,30 +15144,30 @@
                     <div class="col-lg-12">
 
                         <div class="group-input">
-    
+
                             <label for="Audit Attachments">If Yes, Provide attachment details</label>
-    
-    
+
+
                             <div class="file-attachment-field">
-    
+
                                 <div class="file-attachment-list" id="file_attach"></div>
-    
+
                                 <div class="add-btn">
-    
+
                                     <div>Add</div>
-    
-                                    <input type="file" id="myfile" name="file_attach[]"
-    
+
+                                    <input type="file" id="myfile" name="attachment_details_ciem[]"
+
                                         oninput="addMultipleFiles(this, 'file_attach')" multiple/>
-    
+
                                 </div>
-    
+
                             </div>
-    
-     
-    
+
+
+
                         </div>
-    
+
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -15185,12 +15179,12 @@
                 </div>
             </div>
         </div>
-    
+
 
         <div id="CCForm23" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Analyst training & Procedure 
+                    Checklist for Analyst training & Procedure
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -15418,7 +15412,7 @@
                                                 <input type="number"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 </div>
-                                                
+
                                             </td>
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -15431,7 +15425,7 @@
                                             <td class="flex text-center">2.4</td>
                                             <td>Date /Time of Incubation:
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -15439,7 +15433,7 @@
                                                 <input type="date"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 </div>
-                                                
+
                                             </td>
                                             <td>
                                                 {{-- <textarea name="who_will_not_be"></textarea> --}} <div
@@ -15517,7 +15511,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
             </div>
             <div class="inner-block-content">
@@ -15613,7 +15607,7 @@
                                             <td class="flex text-center">3.3.1</td>
                                             <td>Date of culture dilution:
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -15698,12 +15692,12 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div><div class="inner-block-content">
                 <div class="sub-head">
-                    Checklist for Sterilize Accessories : 
+                    Checklist for Sterilize Accessories :
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -15785,7 +15779,7 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                      
+
                                             <td class="flex text-center">2.6</td>
                                             <td>Results of other plates released for GPT is within acceptance?</td>
                                             <td>
@@ -15813,7 +15807,7 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16024,7 +16018,7 @@
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">5.4.1</td>
                                             <td>Refrigerator (2-8̊ C) ID:</td>
@@ -16162,7 +16156,7 @@
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16252,9 +16246,9 @@
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">6.3</td>
-                                            <td>Was the disinfectant prepared as per validated concentration? 
+                                            <td>Was the disinfectant prepared as per validated concentration?
 
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -16275,14 +16269,14 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
+
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
 
-                   
+
 
                 </div>
             </div>
@@ -16375,37 +16369,37 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                       
-                                       
+
+
                                     </tbody>
                                 </table>
                                 <div class="col-lg-12">
 
                                     <div class="group-input">
-                
+
                                         <label for="Audit Attachments">If Yes, Provide attachment details</label>
-                
-                
+
+
                                         <div class="file-attachment-field">
-                
+
                                             <div class="file-attachment-list" id="file_attach"></div>
-                
+
                                             <div class="add-btn">
-                
+
                                                 <div>Add</div>
-                
-                                                <input type="file" id="myfile" name="file_attach[]"
-                
+
+                                                <input type="file" id="myfile" name="attachment_details_cimst[]"
+
                                                     oninput="addMultipleFiles(this, 'file_attach')" multiple/>
-                
+
                                             </div>
-                
+
                                         </div>
-                
-                 
-                
+
+
+
                                     </div>
-                
+
                                 </div>
                             </div>
                         </div>
@@ -16418,11 +16412,11 @@
                         onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">Exit </a> </button>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
-        
+      </form>
     </div>
 </div>
 

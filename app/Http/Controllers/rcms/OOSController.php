@@ -19,20 +19,20 @@ class OOSController extends Controller
     {
         return view('frontend.OOS.oos_form');
     }
-    
+
     public function store(Request $request)
-    { 
+    {
 
         $res = Helpers::getDefaultResponse();
 
         try {
-            
+
             $oos_record = OOSService::create_oss($request);
 
             if ($oos_record['status'] == 'error')
             {
                 throw new Error($oos_record['message']);
-            } 
+            }
 
         } catch (\Exception $e) {
             $res['status'] = 'error';
@@ -58,8 +58,8 @@ class OOSController extends Controller
         $phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
         $oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
         $oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-        
-        return view('frontend.OOS.oos_form_view', 
+
+        return view('frontend.OOS.oos_form_view',
         compact('data', 'info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
 
     }
@@ -78,7 +78,7 @@ class OOSController extends Controller
         $oos_record = OOS::find($id);
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            
+
             $oos = OOS::find($id);
             $oos->stage = $request->stage;
             $oos->status = $request->status;
@@ -98,5 +98,5 @@ class OOSController extends Controller
         $oos_record = OOS::find($id);
 
     }
-    
+
 }

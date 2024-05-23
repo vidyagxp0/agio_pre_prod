@@ -1,0 +1,91 @@
+stonia-Change Control- Initiator
+Egypt-Change Control- Initiator
+Jordan-Change Control- Initiator
+KSA-Extension- Initiator
+KSA-Extension- Approver
+Estonia-Extension- Initiator
+Estonia-Extension- Approver
+Estonia-Extension- Initiator
+Estonia-Extension- Approver
+Jordan-Extension- Initiator
+Jordan-Extension- Approver
+KSA-Action Item- Initiator
+Estonia-Action Item- Initiator
+Egypt-Action Item- Initiator
+Jordan-Action Item- Initiator
+KSA-Observation- Lead Auditor
+Estonia-Observation- Lead Auditor
+Egypt-Observation- Lead Auditor
+Jordan-Observation- Lead Auditor
+KSA-Root Cause Analysis- Initiator
+KSA-Root Cause Analysis- QA
+Estonia-Root Cause Analysis- Initiator
+Estonia-Root Cause Analysis- QA
+Egypt-Root Cause Analysis- Initiator
+Egypt-Root Cause Analysis- QA
+Jordan-Root Cause Analysis- Initiator
+Jordan-Root Cause Analysis- QA
+KSA-Risk Assessment- Initiator
+KSA-Risk Assessment- HOD/Designee
+KSA-Risk Assessment- Work Group
+KSA-Risk Assessment- QA
+Estonia-Risk Assessment- Initiator
+Estonia-Risk Assessment- HOD/Designee
+Estonia-Risk Assessment- Work Group
+Estonia-Risk Assessment- QA
+Egypt-Risk Assessment- Initiator
+Egypt-Risk Assessment- HOD/Designee
+Egypt-Risk Assessment- Work Group
+Egypt-Risk Assessment- QA
+Jordan-Risk Assessment- Initiator
+Jordan-Risk Assessment- HOD/Designee
+Jordan-Risk Assessment- Work Group
+Jordan-Risk Assessment- QA
+KSA-Management Review- Initiator
+KSA-Management Review- Responsible Person
+Estonia-Management Review- Initiator
+Estonia-Management Review- Responsible Person
+Egypt-Management Review- Initiator
+Egypt-Management Review- Responsible Person
+Jordan-Management Review- Initiator
+Jordan-Management Review- Responsible Person
+KSA-External Audit- Audit Manager
+Estonia-External Audit- Audit Manager
+Egypt-External Audit- Audit Manager
+Jordan-External Audit- Audit Manager
+KSA-Internal Audit- Audit Manager
+Estonia-Internal Audit- Audit Manager
+Egypt-Internal Audit- Audit Manager
+Jordan-Internal Audit- Audit Manager
+KSA-Audit Program- Initiator
+Estonia-Audit Program- Initiator
+Egypt-Audit Program- Initiator
+Jordan-Audit Program- Initiator
+KSA-CAPA- Initiator
+Estonia-CAPA- Initiator
+Egypt-CAPA- Initiator
+Jordan-CAPA- Initiator
+KSA-New Document- Initiator
+Estonia-New Document- Initiator
+Egypt-New Document- Initiator
+Jordan-New Document- Initiator
+KSA-Lab Incident- Initiator
+Estonia-Lab Incident- Initiator
+Egypt-Lab Incident- Initiator
+Jordan-Lab Incident- Initiator
+KSA-Effective Check- Initiator
+KSA-Effective Check- Supervisor
+KSA-Effective Check- QA
+Estonia-Effective Check- Initiator
+Estonia-Effective Check- Supervisor
+Estonia-Effective Check- QA
+Egypt-Effective Check- Initiator
+Egypt-Effective Check- Supervisor
+Egypt-Effective Check- QA
+Jordan-Effective Check- Initiator
+Jordan-Effective Check- Supervisor
+Jordan-Effective Check- QA
+KSA-New Document-Trainer
+Estonia-New Document-Trainer
+Egypt-New Document-Trainer
+Jordan-New Document-Trainer

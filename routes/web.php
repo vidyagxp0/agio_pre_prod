@@ -37,8 +37,10 @@ use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -67,6 +69,7 @@ Route::get('/error', function () {
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
+
 
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
@@ -412,7 +415,11 @@ Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.ind
 
 Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
+
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
+Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
+Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
+Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
 
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
@@ -453,6 +460,8 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
  * AJAX ROUTES
  */
 
+//  Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
+ Route::post('/ootstore', [OOTController::class, 'store'])->name('oot.ootstore');
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
