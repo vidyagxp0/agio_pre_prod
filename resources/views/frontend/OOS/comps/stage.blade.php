@@ -63,6 +63,19 @@
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">To Under Hypothesis Experiment State</button> 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">Assignable Cause Found (Menufacturing Defect)</button> 
                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">No Assignable Cause Found (No Menufacturing Defect)</button> 
+                        @elseif($data->stage == 11 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Request More Info</button>  
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">Retesting/resampling</button> 
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase IIB Correction Inconclusive</button> 
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_model">Child</button> 
+                        @elseif($data->stage == 13 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Request More Info</button>  
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Phase II Manufacturing Investigation</button> 
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child_model">Child</button> 
+                         
+                        @elseif($data->stage == 14 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">Request More Info</button>  
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">Approval Completed</button> 
                          @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -246,22 +259,14 @@
                             @if ($data->stage >= 5)
                             <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
                             @else
-                            <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
+                            <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase I b Investigation</div>
                             @endif
 
                             @if ($data->stage >= 6)
                             <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Hypothesis Experiment</div>
-
                             @else
-                            <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Hypothesis Experiment</div>
-
+                            <div class=" d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Hypothesis Experiment</div>
                             @endif
-
-                           {{--  @if ($data->stage >= 7)
-                            <div class=" active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Repeat Analysis</div>
-                            @else 
-                            <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Repeat Analysis</div>
-                            @endif --}}
                             @if ($data->stage >= 8)
                             <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase II Investigation</div>
                             @else
@@ -282,11 +287,6 @@
                             @else
                             <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II  b Additional Lab Investigation</div>
                             @endif
-                            @if ($data->stage >= 12)
-                            <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase II  b Additional Lab Investigation</div>
-                            @else
-                            <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Under Phase II  b Additional Lab Investigation</div>
-                            @endif
                             @if ($data->stage >= 13)
                             <div class="active d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Under Phase III Investigation</div>
                             @else
@@ -297,12 +297,12 @@
                             @else
                             <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0">Pending Final Approval</div>
                             @endif
-
-                            {{-- @if ($data->stage >= 7)
-                                <div class="bg-danger">Closed - Done</div>
+                            @if ($data->stage >= 15)
+                            <div class="bg-danger d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>
                             @else
-                                <div class="">Closed - Done</div>
-                            @endif --}}
+                                <div class="d-flex justify-items-center align-items-center border border-1 border-dark p-2 border-start-0"> Close Done</div>
+                            @endif
+                           
                     @endif
 
 

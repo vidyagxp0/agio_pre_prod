@@ -174,6 +174,39 @@ return new class extends Migration
             $table->text('date_close')->nullable();
             $table->text('type')->nullable();
             $table->text('parent_record')->nullable();
+            // workflow start stage 
+            $table->text('completed_by_pending_initial_assessment')->nullable();
+            $table->text('completed_on_pending_initial_assessment')->nullable();
+            $table->text('comment_pending_initial_assessment')->nullable();
+            $table->text('completed_by_under_phaseI_investigation')->nullable();
+            $table->text('completed_on_under_phaseI_investigation')->nullable();
+            $table->text('comment_under_phaseI_investigation')->nullable();
+            $table->text('completed_by_under_phaseIB_investigation')->nullable();
+            $table->text('completed_on_under_phaseIB_investigation')->nullable();
+            $table->text('comment_under_phaseIB_investigation')->nullable();
+            $table->text('completed_by_under_hypothesis')->nullable();
+            $table->text('completed_on_under_hypothesis')->nullable();
+            $table->text('comment_under_hypothesis')->nullable();
+            $table->text('completed_by_under_phaseII_investigation')->nullable();
+            $table->text('completed_on_under_phaseII_investigation')->nullable();
+            $table->text('comment_under_phaseII_investigation')->nullable();
+
+            $table->text('completed_by_under_manufacturing_investigation_phaseIIA')->nullable();
+            $table->text('completed_on_under_manufacturing_investigation_phaseIIA')->nullable();
+            $table->text('comment_under_manufacturing_investigation_phaseIIA')->nullable();
+            $table->text('completed_by_under_phaseIIB_additional_lab_investigation')->nullable();
+            $table->text('completed_on_under_phaseIIB_additional_lab_investigation')->nullable();
+            $table->text('comment_under_phaseIIB_additional_lab_investigation')->nullable();
+            $table->text('completed_by_under_phaseIII_investigation')->nullable();
+            $table->text('completed_on_under_phaseIII_investigation')->nullable();
+            $table->text('comment_under_phaseIII_investigation')->nullable();
+            $table->text('completed_by_approval_completed')->nullable();
+            $table->text('completed_on_approval_completed')->nullable();
+            $table->text('comment_approval_completed')->nullable();
+            $table->text('completed_by_close_done')->nullable();
+            $table->text('completed_on_close_done')->nullable();
+            $table->text('comment_close_done')->nullable();
+            
             $table->softDeletes();
             $table->timestamps();
         });
