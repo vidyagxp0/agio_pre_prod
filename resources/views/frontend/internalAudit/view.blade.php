@@ -3329,9 +3329,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_1" id="tablet_compress_response_1"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="" >Select an Option</option>
-                                                <option value="Yes"  {{  $checklistTabletCompressionData->tablet_compress_response_1 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"  {{ $checklistTabletCompressionData->tablet_compress_response_1 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_1 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_1)  {{  $checklist1->tablet_compress_response_1 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_1)  {{ $checklist1->tablet_compress_response_1 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_1)  {{ $checklist1->tablet_compress_response_1 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3339,7 +3339,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_1" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_1 }}</textarea>
+                                            <textarea name="tablet_compress_remark_1" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_1) {{ $checklist1->tablet_compress_remark_1 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3354,9 +3354,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_2" id="tablet_compress_response_2"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes" {{ $checklistTabletCompressionData->tablet_compress_response_2 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"  {{ $checklistTabletCompressionData->tablet_compress_response_2 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_2 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                            
                                             </select>
                                         </div>
@@ -3365,7 +3365,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_2" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_2 }}</textarea>
+                                            <textarea name="tablet_compress_remark_2" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_2) {{ $checklist1->tablet_compress_remark_2 }} @endif</textarea>
                                         </div>
                                     </td>
                                     </td>
@@ -3379,9 +3379,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_3" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_3 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_3 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_3 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_3)  {{ $checklist1->tablet_compress_response_3 == "No" ? 'selected' : '' }}  @endif>No</option>
+                                                <option value="N/A" @if($checklist1 &&  $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                            
                                             </select>
                                         </div>
@@ -3390,7 +3390,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_3" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_3 }}</textarea>
+                                            <textarea name="tablet_compress_remark_3" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_3) {{ $checklist1->tablet_compress_remark_3 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3405,9 +3405,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_4" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_4 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_4 == "No" ? 'selected' : '' }} >No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_4 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_4) {{ $checklist1->tablet_compress_response_4 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_4) {{ $checklist1->tablet_compress_response_4 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_4) {{ $checklist1->tablet_compress_response_4 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3415,7 +3415,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_4" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_4 }}</textarea>
+                                            <textarea name="tablet_compress_remark_4" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_4){{ $checklist1->tablet_compress_remark_4 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3432,9 +3432,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_5" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_5 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_5 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_5 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_5) {{ $checklist1->tablet_compress_response_5 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_5) {{ $checklist1->tablet_compress_response_5 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_5) {{ $checklist1->tablet_compress_response_5 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -3442,7 +3442,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_5" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_5 }}</textarea>
+                                            <textarea name="tablet_compress_remark_5" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_5) {{ $checklist1->tablet_compress_remark_5 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3459,9 +3459,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_6" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_6 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_6 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_6 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "Yes" ? 'selected' : '' }}@endif >Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "No" ? 'selected' : '' }} @endif>No </option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3470,7 +3470,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="wtablet_compress_remark_6" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_6 }}</textarea>
+                                            <textarea name="wtablet_compress_remark_6" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_6) {{ $checklist1->tablet_compress_remark_6 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3485,9 +3485,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_7" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_7 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_7 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_7 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if( $checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3496,7 +3496,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_7" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_7 }}</textarea>
+                                            <textarea name="tablet_compress_remark_7" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_7) {{ $checklist1->tablet_compress_remark_7 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3511,9 +3511,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_8" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_8 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_8 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_8 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_8) {{ $checklist1->tablet_compress_response_8 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_8)  {{ $checklist1->tablet_compress_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_8)  {{ $checklist1->tablet_compress_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3522,7 +3522,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_8" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_8 }}</textarea>
+                                            <textarea name="tablet_compress_remark_8" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_8) {{ $checklist1->tablet_compress_remark_8 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3539,9 +3539,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_9" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_9 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_9 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_9 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"  @if($checklist1 && $checklist1->tablet_compress_response_9)  {{ $checklist1->tablet_compress_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"   @if($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == "No" ? 'selected' : '' }}  @endif>No</option>
+                                                <option value="N/A"  @if($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3550,7 +3550,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_9" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_9 }}</textarea>
+                                            <textarea name="tablet_compress_remark_9" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_9){{ $checklist1->tablet_compress_remark_9 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3567,9 +3567,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_10" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_10 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_10 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_10 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if( $checklist1 && $checklist1->tablet_compress_response_10)  {{ $checklist1->tablet_compress_response_10 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3578,7 +3578,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_10" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_10 }}</textarea>
+                                            <textarea name="tablet_compress_remark_10" style="border-radius: 7px; border: 1.5px solid black;"> @if($checklist1 && $checklist1->tablet_compress_remark_10) {{ $checklist1->tablet_compress_remark_10 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3595,9 +3595,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_11" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_11 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_11 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_11 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3606,7 +3606,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_11" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_11 }}</textarea>
+                                            <textarea name="tablet_compress_remark_11" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_11) {{ $checklist1->tablet_compress_remark_11 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3622,9 +3622,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_12" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_12 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_12 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_12 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3633,7 +3633,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_12" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_12 }}</textarea>
+                                            <textarea name="tablet_compress_remark_12" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_12){{ $checklist1->tablet_compress_remark_12 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3651,9 +3651,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_13" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_13 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_13 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_13 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_13) {{ $checklist1->tablet_compress_response_13 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_13)  {{ $checklist1->tablet_compress_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_13){{ $checklist1->tablet_compress_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3661,7 +3661,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_13" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_13 }}</textarea>
+                                            <textarea name="tablet_compress_remark_13" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_13){{ $checklist1->tablet_compress_remark_13 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -3678,9 +3678,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_14" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_14 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_14 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_14 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_14)  {{ $checklist1->tablet_compress_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == "No" ? 'selected' : '' }}  @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3688,7 +3688,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_14" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_14 }}</textarea>
+                                            <textarea name="tablet_compress_remark_14" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_14){{ $checklist1->tablet_compress_remark_14 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3705,9 +3705,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_15" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_15 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_15 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_15 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3715,7 +3715,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_15" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_15 }}</textarea>
+                                            <textarea name="tablet_compress_remark_15" style="border-radius: 7px; border: 1.5px solid black;">@if($checklist1 && $checklist1->tablet_compress_remark_15) {{ $checklist1->tablet_compress_remark_15 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3732,9 +3732,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_16" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_16 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_16 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_16 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3742,7 +3742,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_16" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_16 }}</textarea>
+                                            <textarea name="tablet_compress_remark_16" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_16) {{ $checklist1->tablet_compress_remark_16 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3759,9 +3759,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_17" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_17 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_17 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_17 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3769,7 +3769,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_17" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_17 }}</textarea>
+                                            <textarea name="tablet_compress_remark_17" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_17) {{ $checklist1->tablet_compress_remark_17 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3786,9 +3786,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_18" id="tablet_compress_response_18"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_18 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_18 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_18 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_18)  {{ $checklist1->tablet_compress_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_18)  {{ $checklist1->tablet_compress_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_18) {{ $checklist1->tablet_compress_response_18 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3796,7 +3796,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_18" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_18 }}</textarea>
+                                            <textarea name="tablet_compress_remark_18" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_18) {{ $checklist1->tablet_compress_remark_18 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3813,9 +3813,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_19" id="tablet_compress_response_19"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_19 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_19 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_19 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3823,7 +3823,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_19" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_19 }}</textarea>
+                                            <textarea name="tablet_compress_remark_19" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_19) {{ $checklist1->tablet_compress_remark_19 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3842,9 +3842,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_20" id="tablet_compress_response_20"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_20 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_20 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_20 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3852,7 +3852,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_20" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_20 }}</textarea>
+                                            <textarea name="tablet_compress_remark_20" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_20) {{ $checklist1->tablet_compress_remark_20 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -3869,9 +3869,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_21" id="tablet_compress_response_21"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_21 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_21 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_21 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3879,7 +3879,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_21" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_21 }}</textarea>
+                                            <textarea name="tablet_compress_remark_21" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_21) {{ $checklist1->tablet_compress_remark_21 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -3896,9 +3896,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_22" id="tablet_compress_response_22"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_22 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_22 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_22 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_22)  {{ $checklist1->tablet_compress_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == "No" ? 'selected' : '' }}  @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3906,7 +3906,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_22" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_22 }}</textarea>
+                                            <textarea name="tablet_compress_remark_22" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_22){{ $checklist1->tablet_compress_remark_22 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3923,9 +3923,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_23" id="tablet_compress_response_23"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_23 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_23 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_23 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3933,7 +3933,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_23" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_23 }}</textarea>
+                                            <textarea name="tablet_compress_remark_23" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_23){{ $checklist1->tablet_compress_remark_23 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -3950,9 +3950,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_24" id="tablet_compress_response_24"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_24 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_24 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_24 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3960,7 +3960,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_24" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_24 }}</textarea>
+                                            <textarea name="tablet_compress_remark_24" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_24) {{ $checklist1->tablet_compress_remark_24 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -3977,9 +3977,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_25" id="tablet_compress_response_25"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_25 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_25 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_25 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -3987,7 +3987,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_25" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_25 }}</textarea>
+                                            <textarea name="tablet_compress_remark_25" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_25){{ $checklist1->tablet_compress_remark_25 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -4004,9 +4004,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_26" id="tablet_compress_response_26"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_26 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_26 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_26 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -4014,7 +4014,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_26" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_26 }}</textarea>
+                                            <textarea name="tablet_compress_remark_26" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_26){{ $checklist1->tablet_compress_remark_26 }} @endif</textarea>
                                         </div>
                                     </td>
 
@@ -4031,9 +4031,9 @@ function addMultipleFiles(input, block_id) {
                                             <select name="tablet_compress_response_27" id="tablet_compress_response_27"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes"  {{ $checklistTabletCompressionData->tablet_compress_response_27 == "Yes" ? 'selected' : '' }}>Yes</option>
-                                                <option value="No"   {{ $checklistTabletCompressionData->tablet_compress_response_27 == "No" ? 'selected' : '' }}>No</option>
-                                                <option value="N/A"  {{ $checklistTabletCompressionData->tablet_compress_response_27 == "N/A" ? 'selected' : '' }}>N/A</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             
                                             </select>
                                         </div>
@@ -4041,7 +4041,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_27" style="border-radius: 7px; border: 1.5px solid black;">{{ $checklistTabletCompressionData->tablet_compress_remark_27 }}</textarea>
+                                            <textarea name="tablet_compress_remark_27" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_27){{ $checklist1->tablet_compress_remark_27 }}@endif</textarea>
                                         </div>
                                     </td>
 

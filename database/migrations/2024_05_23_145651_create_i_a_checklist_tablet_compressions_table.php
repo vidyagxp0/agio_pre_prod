@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('i_a_checklist_tablet_compressions', function (Blueprint $table) {
             $table->id();
-            $table->integer('ia_id');
+            $table->unsignedBigInteger('ia_id')->nullable();
             for ($i = 1; $i <= 50; $i++) {
                 $table->text("tablet_compress_response_$i")->nullable();
                  $table->text("tablet_compress_remark_$i")->nullable();

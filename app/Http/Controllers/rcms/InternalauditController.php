@@ -1078,107 +1078,22 @@ class InternalauditController extends Controller
         $internalAudit->Description_Deviation = $request->Description_Deviation;
         
         // =======================new teblet compresion ====
-        $checklistTabletCompression = new IA_checklist_tablet_compression();
+        $checklistTabletCompression = IA_checklist_tablet_compression::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletCompression->ia_id = $id;
-        $checklistTabletCompression->tablet_compress_response_1 = $request->tablet_compress_response_1;
-        $checklistTabletCompression->tablet_compress_response_2 = $request->tablet_compress_response_2;
-        $checklistTabletCompression->tablet_compress_response_3 = $request->tablet_compress_response_3;
-        $checklistTabletCompression->tablet_compress_response_4 = $request->tablet_compress_response_4;
-        $checklistTabletCompression->tablet_compress_response_5 = $request->tablet_compress_response_5;
-        $checklistTabletCompression->tablet_compress_response_6 = $request->tablet_compress_response_6;
-        $checklistTabletCompression->tablet_compress_response_7 = $request->tablet_compress_response_7;
-        $checklistTabletCompression->tablet_compress_response_8 = $request->tablet_compress_response_8;
-        $checklistTabletCompression->tablet_compress_response_9 = $request->tablet_compress_response_9;
-        $checklistTabletCompression->tablet_compress_response_10 = $request->tablet_compress_response_10;
-        $checklistTabletCompression->tablet_compress_response_11 = $request->tablet_compress_response_11;
-        $checklistTabletCompression->tablet_compress_response_12 = $request->tablet_compress_response_12;
-        $checklistTabletCompression->tablet_compress_response_13 = $request->tablet_compress_response_13;
-        $checklistTabletCompression->tablet_compress_response_14 = $request->tablet_compress_response_14;
-        $checklistTabletCompression->tablet_compress_response_15 = $request->tablet_compress_response_15;
-        $checklistTabletCompression->tablet_compress_response_16 = $request->tablet_compress_response_16;
-        $checklistTabletCompression->tablet_compress_response_17 = $request->tablet_compress_response_17;
-        $checklistTabletCompression->tablet_compress_response_18 = $request->tablet_compress_response_18;
-        $checklistTabletCompression->tablet_compress_response_19 = $request->tablet_compress_response_19;
-        $checklistTabletCompression->tablet_compress_response_20 = $request->tablet_compress_response_20;
-        $checklistTabletCompression->tablet_compress_response_21 = $request->tablet_compress_response_21;
-        $checklistTabletCompression->tablet_compress_response_22 = $request->tablet_compress_response_22;
-        $checklistTabletCompression->tablet_compress_response_23 = $request->tablet_compress_response_23;
-        $checklistTabletCompression->tablet_compress_response_24 = $request->tablet_compress_response_24;
-        $checklistTabletCompression->tablet_compress_response_25 = $request->tablet_compress_response_25;
-        $checklistTabletCompression->tablet_compress_response_26 = $request->tablet_compress_response_26;
-        $checklistTabletCompression->tablet_compress_response_27 = $request->tablet_compress_response_27;
-        $checklistTabletCompression->tablet_compress_response_28 = $request->tablet_compress_response_28;
-        $checklistTabletCompression->tablet_compress_response_29 = $request->tablet_compress_response_29;
-        $checklistTabletCompression->tablet_compress_response_30 = $request->tablet_compress_response_30;
-        $checklistTabletCompression->tablet_compress_response_31 = $request->tablet_compress_response_31;
-        $checklistTabletCompression->tablet_compress_response_31 = $request->tablet_compress_response_32;
-        $checklistTabletCompression->tablet_compress_response_33 = $request->tablet_compress_response_33;
-        $checklistTabletCompression->tablet_compress_response_34 = $request->tablet_compress_response_34;
-        $checklistTabletCompression->tablet_compress_response_35 = $request->tablet_compress_response_35;
-        $checklistTabletCompression->tablet_compress_response_36 = $request->tablet_compress_response_36;
-        $checklistTabletCompression->tablet_compress_response_37 = $request->tablet_compress_response_37;
-        $checklistTabletCompression->tablet_compress_response_38 = $request->tablet_compress_response_38;
-        $checklistTabletCompression->tablet_compress_response_39 = $request->tablet_compress_response_39;
-        $checklistTabletCompression->tablet_compress_response_40 = $request->tablet_compress_response_40;
-        $checklistTabletCompression->tablet_compress_response_41 = $request->tablet_compress_response_41;
-        $checklistTabletCompression->tablet_compress_response_42 = $request->tablet_compress_response_42;
-        $checklistTabletCompression->tablet_compress_response_43 = $request->tablet_compress_response_43;
-        $checklistTabletCompression->tablet_compress_response_44 = $request->tablet_compress_response_44;
-        $checklistTabletCompression->tablet_compress_response_45 = $request->tablet_compress_response_45;
-        $checklistTabletCompression->tablet_compress_response_46 = $request->tablet_compress_response_46;
-        $checklistTabletCompression->tablet_compress_response_47 = $request->tablet_compress_response_47;
-        $checklistTabletCompression->tablet_compress_response_48 = $request->tablet_compress_response_48;
-        $checklistTabletCompression->tablet_compress_response_49 = $request->tablet_compress_response_49;
+     
    
-        $checklistTabletCompression->tablet_compress_remark_1 = $request->tablet_compress_remark_1;
-        $checklistTabletCompression->tablet_compress_remark_2 = $request->tablet_compress_remark_2;
-        $checklistTabletCompression->tablet_compress_remark_3 = $request->tablet_compress_remark_3;
-        $checklistTabletCompression->tablet_compress_remark_4 = $request->tablet_compress_remark_4;
-        $checklistTabletCompression->tablet_compress_remark_5 = $request->tablet_compress_remark_5;
-        $checklistTabletCompression->tablet_compress_remark_6 = $request->tablet_compress_remark_6;
-        $checklistTabletCompression->tablet_compress_remark_7 = $request->tablet_compress_remark_7;
-        $checklistTabletCompression->tablet_compress_remark_8 = $request->tablet_compress_remark_8;
-        $checklistTabletCompression->tablet_compress_remark_9 = $request->tablet_compress_remark_9;
-        $checklistTabletCompression->tablet_compress_remark_10 = $request->tablet_compress_remark_10;
-        $checklistTabletCompression->tablet_compress_remark_11 = $request->tablet_compress_remark_11;
-        $checklistTabletCompression->tablet_compress_remark_12 = $request->tablet_compress_remark_12;
-        $checklistTabletCompression->tablet_compress_remark_13 = $request->tablet_compress_remark_13;
-        $checklistTabletCompression->tablet_compress_remark_14 = $request->tablet_compress_remark_14;
-        $checklistTabletCompression->tablet_compress_remark_15 = $request->tablet_compress_remark_15;
-        $checklistTabletCompression->tablet_compress_remark_16 = $request->tablet_compress_remark_16;
-        $checklistTabletCompression->tablet_compress_remark_17 = $request->tablet_compress_remark_17;
-        $checklistTabletCompression->tablet_compress_remark_18 = $request->tablet_compress_remark_18;
-        $checklistTabletCompression->tablet_compress_remark_19 = $request->tablet_compress_remark_19;
-        $checklistTabletCompression->tablet_compress_remark_20 = $request->tablet_compress_remark_20;
-        $checklistTabletCompression->tablet_compress_remark_21 = $request->tablet_compress_remark_21;
-        $checklistTabletCompression->tablet_compress_remark_22 = $request->tablet_compress_remark_22;
-        $checklistTabletCompression->tablet_compress_remark_23 = $request->tablet_compress_remark_23;
-        $checklistTabletCompression->tablet_compress_remark_24 = $request->tablet_compress_remark_24;
-        $checklistTabletCompression->tablet_compress_remark_25 = $request->tablet_compress_remark_25;
-        $checklistTabletCompression->tablet_compress_remark_26 = $request->tablet_compress_remark_26;
-        $checklistTabletCompression->tablet_compress_remark_27 = $request->tablet_compress_remark_27;
-        $checklistTabletCompression->tablet_compress_remark_28 = $request->tablet_compress_remark_28;
-        $checklistTabletCompression->tablet_compress_remark_29 = $request->tablet_compress_remark_29;
-        $checklistTabletCompression->tablet_compress_remark_30 = $request->tablet_compress_remark_30;
-        $checklistTabletCompression->tablet_compress_remark_31 = $request->tablet_compress_remark_31;
-        $checklistTabletCompression->tablet_compress_remark_32 = $request->tablet_compress_remark_32;
-        $checklistTabletCompression->tablet_compress_remark_33 = $request->tablet_compress_remark_33;
-        $checklistTabletCompression->tablet_compress_remark_34 = $request->tablet_compress_remark_34;
-        $checklistTabletCompression->tablet_compress_remark_35 = $request->tablet_compress_remark_35;
-        $checklistTabletCompression->tablet_compress_remark_36 = $request->tablet_compress_remark_36;
-        $checklistTabletCompression->tablet_compress_remark_37 = $request->tablet_compress_remark_37;
-        $checklistTabletCompression->tablet_compress_remark_38 = $request->tablet_compress_remark_38;
-        $checklistTabletCompression->tablet_compress_remark_39 = $request->tablet_compress_remark_39;
-        $checklistTabletCompression->tablet_compress_remark_40 = $request->tablet_compress_remark_40;
-        $checklistTabletCompression->tablet_compress_remark_41 = $request->tablet_compress_remark_41;
-        $checklistTabletCompression->tablet_compress_remark_42 = $request->tablet_compress_remark_42;
-        $checklistTabletCompression->tablet_compress_remark_43 = $request->tablet_compress_remark_43;
-        $checklistTabletCompression->tablet_compress_remark_44 = $request->tablet_compress_remark_44;
-        $checklistTabletCompression->tablet_compress_remark_45 = $request->tablet_compress_remark_45;
-        $checklistTabletCompression->tablet_compress_remark_46 = $request->tablet_compress_remark_46;
-        $checklistTabletCompression->tablet_compress_remark_47 = $request->tablet_compress_remark_47;
-        $checklistTabletCompression->tablet_compress_remark_48 = $request->tablet_compress_remark_48;
-        $checklistTabletCompression->tablet_compress_remark_49 = $request->tablet_compress_remark_49;
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_compress_response_'. $i;
+            $checklistTabletCompression->$string = $request->$string;
+        }
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_compress_remark_'. $i;
+            $checklistTabletCompression->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
         // $checklistTabletCompression->tablet_compress_response_final_comment = $request->tablet_compress_response_final_comment;
         $checklistTabletCompression->save();
 
@@ -1828,15 +1743,16 @@ class InternalauditController extends Controller
     {
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $data = InternalAudit::find($id);
-        $checklistTabletCompressionData = IA_checklist_tablet_compression::where('ia_id', $id)->first();
-        // dd($data);
+        $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+        // dd($checklist1);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
-        return view('frontend.internalAudit.view', compact('data','checklistTabletCompressionData', 'old_record','grid_data','grid_data1'));
+        // return dd($checklist1);
+        return view('frontend.internalAudit.view', compact('data','checklist1', 'old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
