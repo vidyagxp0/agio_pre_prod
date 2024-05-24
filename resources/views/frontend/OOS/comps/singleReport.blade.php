@@ -155,7 +155,6 @@
 </style>
 
 <body>
-
     <header>
         <table>
             <tr>
@@ -169,19 +168,18 @@
                 </td>
             </tr>
         </table>
+    </header>
         <table>
             <tr>
                 <td class="w-30">
                     <strong>OOS No.</strong>{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
-                
                 </td>
-                
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
-    </header>
+   
 
     <div class="inner-block">
         <div class="content-table">
@@ -190,8 +188,7 @@
                     General Information
                 </div>
                 <table>
-
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                       <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>

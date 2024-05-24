@@ -755,8 +755,8 @@ class DashboardController extends Controller
             $division_name = $division->name;
         }elseif ($type == "OOS Cemical") {
             $data = OOS::find($id);
-            $single = "oos/singleReport/" . $data->id;
-            $audit = "AuditReport/" . $data->id;
+            $single = "oos/single_report/" . $data->id;
+            $audit = "oos/audit_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Root-Cause-Analysis") {
