@@ -13,9 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->longText('hod_comments')->nullable();
-            $table->string('hod_attachments')->nullable();
+        Schema::table('ootcs', function (Blueprint $table) {
+            $table->text('is_repeat')->nullable();
         });
     }
 
@@ -26,9 +25,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->dropColumn('hod_comments')->nullable();
-            $table->dropColumn('hod_attachments')->nullable();
+        Schema::table('ootcs', function (Blueprint $table) {
+            $table->dropColumn('is_repeat')->nullable();
+
+            
         });
     }
 };

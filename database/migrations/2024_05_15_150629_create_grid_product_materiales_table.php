@@ -13,9 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->longText('hod_comments')->nullable();
-            $table->string('hod_attachments')->nullable();
+        Schema::create('grid_product_materiales', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('ootcs_id')->nullable();
+            $table->string('identifier')->nullable();
+            $table->longtext('data')->nullable();
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -26,9 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->dropColumn('hod_comments')->nullable();
-            $table->dropColumn('hod_attachments')->nullable();
-        });
+        Schema::dropIfExists('grid_product_materiales');
     }
 };

@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->longText('hod_comments')->nullable();
-            $table->string('hod_attachments')->nullable();
+        Schema::table('ootcs', function (Blueprint $table) {
+            $table->string('grade_typeofwater')->nullable();
+            $table->string('sampleLocation_Point')->nullable();
         });
     }
 
@@ -26,9 +26,11 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->dropColumn('hod_comments')->nullable();
-            $table->dropColumn('hod_attachments')->nullable();
+        Schema::Drop('ootcs', function (Blueprint $table) {
+
+            $table->dropColumn('grade_typeofwater')->nullable();
+            $table->dropColumn('sampleLocation_Point')->nullable();
+            
         });
     }
 };

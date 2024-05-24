@@ -18,6 +18,7 @@ use App\Models\Division;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
+use App\Models\Ootc;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -65,6 +66,8 @@ class DashboardController extends Controller
         $datas10 = AuditProgram::orderByDesc('id')->get();
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
         $datas12 = Observation::orderByDesc('id')->get();
+        $datas13 = Ootc::orderByDesc('id')->get();
+        // dd($datas13);
 
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
@@ -326,9 +329,29 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
+        foreach ($datas13 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record_number,
+                "division_id" => $data->division_id,
+                "type" => "OOT",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         // return $table;
-        // $paginatedData = json_encode($table);
+        // $paginatedData = json_encode($table); 
 
       //  $datag = $this->paginate($table);
       $datag = $this->paginate($table);
@@ -661,6 +684,12 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        } elseif ($type == "OOT") {
+            $data = Ootc::find($id);
+            $single = "ootcSingleReport/" . $data->id;
+            $audit = "audit_pdf/".$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Capa") {
