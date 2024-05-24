@@ -18,6 +18,7 @@ use App\Models\{Division,Deviation};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
+use App\Models\Ootc;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -377,7 +378,7 @@ class DashboardController extends Controller
         // dd($data);
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         // return $table;
-        // $paginatedData = json_encode($table);
+        // $paginatedData = json_encode($table); 
 
         //  $datag = $this->paginate($table);
         $datag = $this->paginate($table);
@@ -710,6 +711,12 @@ class DashboardController extends Controller
             $data = CC::find($id);
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        } elseif ($type == "OOT") {
+            $data = Ootc::find($id);
+            $single = "ootcSingleReport/" . $data->id;
+            $audit = "audit_pdf/".$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Capa") {

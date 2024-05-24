@@ -193,6 +193,31 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Deviation Routes Ends *******************/
 
+
+            //----------------------------------- OOT ----------------------------------//
+
+            Route::get('oot/', [OOTController::class, 'index']);
+            Route::post('oot/create', [OOTController::class, 'store'])->name('oot.store');
+            Route::get('oot_view/{id}', [OOTController::class,'ootShow'])->name('rcms/oot_view');
+            Route::post('oot/update/{id}',[OOTController::class, 'update'])->name('update');
+            // Route::get('oot_audit/{id}',[OOTController::class,'OotAuditTrial']);
+            Route::post('oot/stage/{id}',[OOTController::class,'oot_send_stage'])->name('ootStage');
+            Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
+            Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
+            Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
+            Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
+            Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
+            Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
+            Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+
+
+
+
+
+
+
+
             /**
              * OOT
              */
