@@ -69,7 +69,7 @@ class DashboardController extends Controller
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
-        $datas14 = errata::orderByDesc('id')->get();
+        $datas16 = errata::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -351,7 +351,7 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        foreach ($datas14 as $data) {
+        foreach ($datas16 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
             array_push($table, [
                 "id" => $data->id,

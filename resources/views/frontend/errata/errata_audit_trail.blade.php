@@ -191,7 +191,7 @@
 
                             <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                                :{{ $document->originator ? $document->originator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->short_description }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
@@ -226,11 +226,11 @@
                             </td>
 
                             <td>
-                                <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
+                                <div><strong>Changed From :</strong>{!! $dataDemo->change_from !!}</div>
                             </td>
 
                             <td>
-                                <div><strong>Changed To :</strong>{{ $dataDemo->change_to }}</div>
+                                <div><strong>Changed To :</strong>{!! $dataDemo->change_to !!}</div>
                             </td>
                             <td>
                                 <div>
@@ -239,17 +239,17 @@
                                 </div>
                                 <div style="margin-top: 5px;">
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{!! $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' !!}
                                     @else
-                                        <strong>Change From :</strong>{{ $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' }}
+                                        <strong>Change From :</strong>{!! $dataDemo->previous ? $dataDemo->previous : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <br>
                                 <div>
                                     @if($dataDemo->activity_type == "Activity Log")
-                                        <strong>Change To :</strong>{{ $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' }}
+                                        <strong>Change To :</strong>{!! $dataDemo->change_to ? $dataDemo->change_to : 'Not Applicable' !!}
                                     @else
-                                        <strong>Change To :</strong>{{ $dataDemo->current ? $dataDemo->current : 'Not Applicable' }}
+                                        <strong>Change To :</strong>{!! $dataDemo->current ? $dataDemo->current : 'Not Applicable' !!}
                                     @endif
                                 </div>
                                 <div style="margin-top: 5px;">
