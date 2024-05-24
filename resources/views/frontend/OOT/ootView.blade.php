@@ -1863,7 +1863,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_twenty_five" id="remark_twenty_five"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="">Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_twenty_five == 'yes') selected @endif>
                                                                     Yes</option>
@@ -1881,7 +1881,7 @@
                                                                                  </td> --}} <td style="vertical-align: middle;">
                                                         <div
                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="remark_twenty_five" value="{{ $checkList->responce_twenty_five }}"
+                                                            <textarea name="responce_twenty_five" value="{{ $checkList->responce_twenty_five }}"
                                                                 style="border-radius: 7px; border: 1.5px solid black;">{{ $checkList->responce_twenty_five }}</textarea>
                                                         </div>
                                                     </td>
@@ -1896,7 +1896,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_twenty_six" id="response"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option value="">Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_twenty_six == 'yes') selected @endif>
                                                                     Yes</option>

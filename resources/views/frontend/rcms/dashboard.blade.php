@@ -197,6 +197,7 @@
                                         <th>Parent ID</th>
                                         <th>Division</th>
                                         <th>Process</th>
+                                        <th>Initiated Through</th>
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
