@@ -160,7 +160,7 @@ class OOS extends Model
           'verification_attachment_uar',
           'status',
           'stage',
-          'type',
+          // 'type',
           'date_open',
           'date_close'
       ];

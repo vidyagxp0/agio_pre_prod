@@ -183,14 +183,12 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
             Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
             Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
-           
+            Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+            
             Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
             Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
             Route::get('AuditReport/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
-
-            // Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
-            // Route::post('effectiveness_check/{id}', [CapaController::class, 'effectiveness_check'])->name('capa_effectiveness_check');
-            // Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
+          // Route::get('capaSingleReport/{id}', [CapaController::class, 'singleReport'])->name('capaSingleReport');
 
             
 

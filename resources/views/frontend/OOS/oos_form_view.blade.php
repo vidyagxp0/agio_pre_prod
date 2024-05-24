@@ -37,8 +37,12 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-       
-        #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(7){
+/*        
+        #change-control-fields > div > div.inner-block.state-block > div.status > div.progress-bars.d-flex > div:nth-child(16){
+            border-radius: 0px 20px 20px 0px;
+
+        } */
+        #statusBlock > div.progress-bars.d-flex > div:nth-child(15){
             border-radius: 0px 20px 20px 0px;
 
         }
