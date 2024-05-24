@@ -915,6 +915,43 @@ class OOSController extends Controller
             return $pdf->stream('OOS-Audit' . $id . '.pdf');
         }
     }
+    
+    public static function singleReport($id)
+    {
+        $data = OOS::find($id);
+        if (!empty($data)) {
+            $data->info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
+            $data->details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
+            $data->oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
+            $data->checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
+            $data->oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
+            $data->phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+            $data->oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
+            $data->oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+            
+            // return view('frontend.OOS.oos_form_view', 
+            // compact('data', 'info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
+    
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('OOS Cemical' . $id . '.pdf');
+        }
+    }
     // public function child_change_control(Request $request, $id)
     // {
     //     $cft =[];
@@ -960,35 +997,5 @@ class OOSController extends Controller
     //         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
     //     }
     // }
-
-    
-    public static function singleReport($id)
-    {
-        $data = OOS::find($id);
-        if (!empty($data)) {
-            $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
-            $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-            $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
-            $data->originator = User::where('id', $data->initiator_id)->value('name');
-            $pdf = App::make('dompdf.wrapper');
-            $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.capa.singleReport', compact('data'))
-                ->setOptions([
-                    'defaultFont' => 'sans-serif',
-                    'isHtml5ParserEnabled' => true,
-                    'isRemoteEnabled' => true,
-                    'isPhpEnabled' => true,
-                ]);
-            $pdf->setPaper('A4');
-            $pdf->render();
-            $canvas = $pdf->getDomPDF()->getCanvas();
-            $height = $canvas->get_height();
-            $width = $canvas->get_width();
-            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('CAPA' . $id . '.pdf');
-        }
-    }
-
     
 }

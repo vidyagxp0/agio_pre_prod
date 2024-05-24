@@ -188,7 +188,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
             Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
             Route::get('AuditReport/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
-            Route::get('singleReport/{id}', [OOSController::class, 'singleReport'])->name('single_report');
+            // Route::get('ReviewReport/{id}', [ManagementReviewController::class, 'ReviewReport'])->name('revie_report');
+
+            Route::get('singleReport/{id}', [OOSController::class, 'singleReport'])->name('singleReport');
 
             
 
