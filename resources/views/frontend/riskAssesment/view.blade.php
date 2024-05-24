@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function addFishBone(top, bottom) {
             let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
@@ -480,7 +480,7 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                                      </div>
@@ -505,7 +505,7 @@
                                                 <label for="Department(s)">Department(s)</label>
                                                 <select multiple name="departments[]" placeholder="Select Departments"
                                                     data-search="false" data-silent-initial-value-set="true"
-                                                    id="departments"
+                                                    id="departments" class="new_first_department"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select Department</option>
                                                     <option value="1"
@@ -527,6 +527,15 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#departments').change(function() {
+                                                    var selectedOptions = $(this).val();
+                                                    console.log('selectedOptions', selectedOptions);
+                                                    document.querySelector('#departments2').setValue(selectedOptions);
+                                                });
+                                            });
+                                        </script>
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Team Members">Team Members</label>
@@ -698,7 +707,7 @@
                                                 <label for="Department(s)">Department(s)</label>
                                                 <select multiple name="departments2[]" placeholder="Select Departments"
                                                     data-search="false" data-silent-initial-value-set="true"
-                                                    id="departments"
+                                                    id="departments2" class="new_department"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Select Department</option>
                                                     <option value="1"
@@ -1244,7 +1253,7 @@
                                                                 </td> --}}
                                                                 <td> <select id="select-state" placeholder="Select..."
                                                                     name="responsible[]">
-                                                                    <option value="">-Select-</option>
+                                                                    <option value="">Select a value</option>
                                                                     @foreach ($users as $value)
                                                                         <option
                                                                             {{ unserialize($action_plan->responsible)[$key] ? (unserialize($action_plan->responsible)[$key] == $value->id ? 'selected' : ' ') : '' }}
@@ -1335,7 +1344,7 @@
                                                 <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
-                                                    <option value="0">-- Select --</option>
+                                                    {{-- <option value="0">-- Select --</option> --}}
                                                     <option value="1"
                                                         {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Why-Why Chart</option>
@@ -1519,7 +1528,7 @@
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
                                                                                 name="materials[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
                                                                                 name="methods[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -1537,7 +1546,7 @@
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
                                                                                 name="manpower[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
                                                                                 name="machine[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -2020,7 +2029,7 @@
 
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Department(s)">Mitigation Required</label>
+                                                <label for="mitigation">Mitigation Required</label>
                                                 <select name="mitigation_required" placeholder="Select Departments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} data-search="false"
                                                     data-silent-initial-value-set="true" id="" >
                                                     <option value="">Select Mitigation </option>
@@ -2163,7 +2172,7 @@
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
-                                                    <option value="">--Select---</option>
+                                                    {{-- <option value="">--Select---</option> --}}
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -2600,7 +2609,7 @@
 
             <script>
                 VirtualSelect.init({
-                    ele: '#departments, #team_members, #training-require, #impacted_objects'
+                    ele: '#departments,#departments2, #team_members, #training-require, #impacted_objects'
                 });
             </script>
             <script>

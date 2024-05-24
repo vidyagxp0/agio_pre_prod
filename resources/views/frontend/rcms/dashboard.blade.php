@@ -124,6 +124,15 @@
 
     }
 </script>
+<style>
+    #short_width{
+        display: inline-block;
+    width: 520px !important;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    }
+</style>
 @section('rcms_container')
     <div id="rcms-dashboard">
         <div class="container-fluid">
@@ -186,19 +195,19 @@
   margin-top: 30px;
 }
                         </style>
-                        <div class="main-scope-table table-container" >
+                        <div class="main-scope-table table-container p-2">
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">
                                     <tr>
                                         <th>ID</th>
-                                        {{-- <th>Parent ID</th> --}}
+                                        <th>Parent ID</th>
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Initiated Through</th>
-                                        <th class="td_desc">Short Description</th>
+                                        <th  class="td_c">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
-                                        <th> Initiation Date</th>
+                                        {{-- <th> Initiation Date</th> --}}
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -422,7 +431,7 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            {{-- @if ($datas->parent != '-')
+                                            @if ($datas->parent != '-')
                                                         <td>
                                                             {{ str_pad($datas->parent, 4, '0', STR_PAD_LEFT) }}
                                                         </td>
@@ -430,7 +439,7 @@
                                                         <td>
                                                              {{ $datas->parent }}
                                                         </td>
-                                                    @endif --}}
+                                                    @endif
                                             <td
                                             class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
@@ -453,7 +462,7 @@
                                                 {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
                                             </td>
 
-                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td id="short_width" class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}
@@ -470,12 +479,12 @@
                                             {{ Helpers::getInitiatorName($datas->initiator_id) }}
                                                 {{-- {{ $datas->initiator_id }} --}}
                                             </td>
-                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            {{-- <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ Helpers::getdateFormat($datas->intiation_date) }}
 
-                                            </td>
+                                            </td> --}}
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">

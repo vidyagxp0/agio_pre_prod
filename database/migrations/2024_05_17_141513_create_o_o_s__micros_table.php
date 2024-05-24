@@ -17,15 +17,15 @@ return new class extends Migration
             $table->id();
             $table->integer('record')->nullable();
             $table->string('form_type')->nullable();
-            $table->string('division_id')->nullable();
+            $table->string('division_code')->nullable();
             $table->integer('initiator_id')->nullable();
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('due_date')->nullable();
             $table->string('severity_level_gi')->nullable();
-            $table->string('initiator_group_gi')->nullable();
-            $table->string('initiator_group_code_gi')->nullable();
-            $table->text('initiated_through_gi')->nullable();
+            $table->string('initiator_Group')->nullable();
+            $table->string('initiator_group_code')->nullable();
+            $table->text('initiated_through')->nullable();
             $table->text('if_others_gi')->nullable();
             $table->longText('is_repeat_gi')->nullable();
             $table->longText('repeat_nature_gi')->nullable();
@@ -56,7 +56,7 @@ return new class extends Migration
             $table->longText('phase_i_investigation_ref_pli')->nullable();
             $table->longText('file_attachments_pli')->nullable();
 
-            // preliminary lab inv Conclution
+            // preliminary lab inv Conclusion
             $table->longText('summary_of_prelim_investiga_plic')->nullable();
             $table->string('root_cause_identified_plic')->nullable();
             $table->string('oos_category_root_cause_ident_plic')->nullable();

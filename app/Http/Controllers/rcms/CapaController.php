@@ -1338,7 +1338,6 @@ class CapaController extends Controller
     public function capa_send_stage(Request $request, $id)
     {
 
-
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $capa = Capa::find($id);
             $lastDocument = Capa::find($id);

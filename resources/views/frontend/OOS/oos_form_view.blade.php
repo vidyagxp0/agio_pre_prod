@@ -121,12 +121,24 @@
     <!-- -----------------------------grid-1----------------------------script -->
     <script>
         $(document).ready(function() {
-            $('#Product_Material').click(function(e) {
+            $('#Info_Product_Material').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var html =
-                    '<tr>'+
+                    '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
+                        '<td><input type="hidden" name="identifier_info_product_material[]" value="Info Product Material"><input type="text" id="info_product_code" name="info_product_code[]" value=""></td>' +
+                        '<td><input type="text" name="info_batch_no[]" value=""></td>'+
+                        '<td><input type="date" name="info_mfg_date[]" value=""></td>' +
+                        '<td><input type="date" name="info_expiry_date[]" value=""></td>' +
+                        '<td><input type="text" name="info_label_claim[]" value=""></td>' +
+                        '<td><input type="text" name="info_pack_size[]" value=""></td>' +
+                        '<td><input type="text" name="info_analyst_name[]" value=""></td>' +
+                        '<td><input type="text" name="info_others_specify[]" value=""></td>' +
+                        '<td><input type="text" name="info_process_sample_stage[]" value=""></td>' +
+                        '<td><select name="info_packing_material_type[]"><option value="Primary">Primary</option><option value="Secondary">Secondary</option><option value="Tertiary">Tertiary</option><option value="Not Applicable">Not Applicable</option></select></td>' +
+                        '<td><select name="info_stability_for[]"><option vlaue="Submission">Submission</option><option vlaue="Commercial">Commercial</option><option vlaue="Pack Evaluation">Pack Evaluation</option><option vlaue="Not Applicable">Not Applicable</option></select></td>' +
+                    '</tr>';
                         '<td><input type="hidden" name="identifier_info_product_material[]" value="Info oos Product Material"><input type="text" name="info_oos_number[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_reported_date[]" value=""></td>' +
                         '<td><input type="text" name="info_oos_description[]" value=""></td>' +
@@ -143,14 +155,13 @@
                     return html;
                 }
 
-                var tableBody = $('#Product_Material_details tbody');
+                var tableBody = $('#Info_Product_Material_details tbody');
                 var rowCount = tableBody.children('tr').length;
                 var newRow = generateTableRow(rowCount + 1);
                 tableBody.append(newRow);
             });
         });
     </script>
-
     <!-- --------------------------------grid-2--------------------------->
     <script>
         $(document).ready(function() {
@@ -325,22 +336,10 @@
     <!-- ======GRID END  =============-->
 
     <div class="form-field-head">
-        <!-- <div class="pr-id">
-                        New Document
-                    </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
             QMS-North America / OOS
         </div>
-        <!-- <div class="button-bar">
-            <button type="button">Save</button>
-            <button type="button">Cancel</button>
-            <button type="button">New</button>
-            <button type="button">Copy</button>
-            <button type="button">Child</button>
-            <button type="button">Check Spelling</button>
-            <button type="button">Change Project</button>
-        </div> -->
     </div>
 
 
@@ -578,9 +577,11 @@
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Preliminary Lab. Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm18')">CheckList - Preliminary Lab. Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Preliminary Lab Inv. Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
@@ -605,6 +606,7 @@
             <!-- Tab content -->
             <!-- General Information -->
             <!-- Tab content -->
+
             <!-- General Information -->
             <div id="CCForm1" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -1811,143 +1813,8 @@
 
             </div>
             <!-- Preliminary Lab Inv. Conclusion -->
-            <div id="CCForm3" class="inner-block cctabcontent">
-                <div class="inner-block-content">
-                    <div class="sub-head">Investigation Conclusion</div>
-                    <div class="row">
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Summary of Prelim.Investiga.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="summary_of_prelim_investiga_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
+            @include('frontend.OOS.comps.preliminary_lab_conclusion')
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Lead Auditor">Root Cause Identified</label>
-                                <!-- <div class="text-primary">Please Choose the relevent units</div> -->
-                                <select name="root_cause_identified_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Team"> OOS Category-Root Cause Ident.</label>
-                                <select name="oos_category_root_cause_ident_plic">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Analyst Error</option>
-                                    <option>Instrument Error</option>
-                                    <option>Product/Material Related Error</option>
-                                    <option>Other Error</option>
-
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category (Others)</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="oos_category_others_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Root Cause Details</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="root_cause_details_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Recommended Actions Required?</label>
-                                <select name="recommended_actions_required_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Recommended Actions Reference
-                                </label>
-                                <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
-                                    <option value="1">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">CAPA Required</label>
-                                <select name="capa_required_plic">
-                                <option value="0">--Select---</option>
-                                <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Agenda">Reference CAPA No.</label>
-                                <input type="text" name="reference_capa_no_plic">
-                            </div>
-                        </div>
-
-                        <div class="col-md-12 mb-4">
-                            <div class="group-input">
-                                <label for="Description Deviation">Delay Justification for P.I.</label>
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="delay_justification_for_pi_plic[]" id="summernote-1">
-                                    </textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-12">
-                            <div class="group-input">
-                                <label for="Audit Attachments"> Supporting Attachment </label>
-                                <small class="text-primary">
-                                    Please Attach all relevant or supporting documents
-                                </small>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
-                                    <div class="add-btn">
-                                        <div>Add</div>
-                                        <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="button-block">
-                            <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton"
-                                onclick="nextStep()">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <!-- Preliminary Lab Invst. Review--->
             <div id="CCForm4" class="inner-block cctabcontent">
                 <div class="inner-block-content">
@@ -3800,290 +3667,11 @@
             </div>
         </div>
 
-        <!----- Signature ----->
-        <div id="CCForm17" class="inner-block cctabcontent">
-            <div class="inner-block-content">
-                <div class="sub-head">
-                    Activity Log
-                </div>
-                <div class="row">
+            <!----- Signature ----->
+            @include('frontend.OOS.comps.signature')
 
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Agenda">Preliminary Lab Inves. Done By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Agenda">Preliminary Lab Inves. Done On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Team">Pre. Lab Inv. Conclusion By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Team">Pre. Lab Inv. Conclusion On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-6">
-                        <div class="group-input">
-                            <label for="Audit Comments"> Pre.Lab Invest. Review By </label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Pre.Lab Invest. Review On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Phase II Invest. Proposed By</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Phase II Invest. Proposed On</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Response Completed By"> Phase II QC Review Done By</label>
-                            <div class=" static"></div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Response Completed On">Phase II QC Review Done On</label>
-                            <div class="date"></div>
-
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Additional Test Proposed By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Additional Test Proposed On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Conclusion Complete By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">OOS Conclusion Complete On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done By</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Disposition Decision Done by</label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Disposition Decision Done On</label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete on
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Approval Completed By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reopen Addendum Complete on
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Execution Done By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Execution Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Review Done By
-
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Addendum Review Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Review Done By
-                            </label>
-                            <div class=" static"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Verification Review Done On
-
-                            </label>
-                            <div class="date"></div>
-                        </div>
-                    </div>
-<!-- ====================================================================== -->
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted by">Submitted By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="submitted on">Submitted On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="cancelled by">Cancelled By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="cancelled on">Cancelled On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="More information required By">More information required By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="More information required On">More information required On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="completed by">Completed By :</label>
-                            <div class="static"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="completed on">Completed On :</label>
-                            <div class="Date"></div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="button-block">
-                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                    <button type="button" id="ChangeNextButton" class="nextButton"
-                        onclick="nextStep()">Next</button>
-                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
-                            Exit </a> </button>
-                </div>
-            </div>
         </div>
+
 
     </div>
     </form>
