@@ -190,11 +190,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                        $serialNumber = 1;
+                                    @endphp
                                               {{-- @foreach ($report->data as  $item) --}}
                                                     <tr>
-                                            <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="">
-                                               </td>
-                                           
+                                              <td> {{ $serialNumber++ }} </td>
+
+                                            {{-- <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="">
+                                              </td>
+                                            --}}
                                               <td><input type="text" name="investrecord[0][name_of_product]" value="">
                                                </td>                                           
                                             <td><input type="text" name="investrecord[0][batch_no]" value=""></td>
@@ -254,6 +259,7 @@
     
     <script>
         $(document).ready(function() {
+            let investdetails = 1;
             $('#IncidentAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
@@ -262,9 +268,9 @@
                         '<tr>' +
                         '<td><input  type="text" name="investrecord[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="investrecord[0][name_of_product]" value=""></td/>' +
-                        '<td><input type="text" name="investrecord[0][batch_no]" value=""></td>' +
-                        '<td><input type="text" name="investrecord[0][remarks]" value=""></td>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
                         // '<td><button class="removeRowBtn">Remove</button></td>' +
     
     
@@ -277,6 +283,7 @@
                     html += '</select></td>' +
     
                         '</tr>';
+                        investdetails++;
     
                     return html;
                 }
@@ -1232,11 +1239,15 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $suitabilityNumber = 1;
+                                        @endphp
                                               {{-- @foreach ($report->data as  $item) --}}
                                                     <tr>
-                                            <td style="width: 6%"><input type="text" name="investigation[0][s_no]" value="">
+                                            {{-- <td style="width: 6%"><input type="text" name="investigation[0][s_no]" value="">
                                                </td>
-                                           
+                                            --}}
+                                            <td>{{ $suitabilityNumber++ }}</td>
                                               <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
                                                </td>                                           
                                             <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>
@@ -1444,7 +1455,7 @@
                                                             <div class="group-input" id="Description_incidence">
                                                                 <label for="Description_incidence"> Description Of Incidence<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="description_incidence_ssfi"></textarea>
+                                                                <textarea name="Description_incidence_ssfi"></textarea>
                                                             </div>
                         
                                                         </div>
@@ -1523,10 +1534,10 @@
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
-                                                            <div class="file-attachment-list" id="incident_initial_Attachment"></div>
+                                                            <div class="file-attachment-list" id="system_suitable_attachments"></div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
-                                                                <input type="file" id="myfile" name="system_suitable_attachments[]"
+                                                                <input type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
                                                                     oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
                                                             </div>
                                                         </div>
@@ -1640,13 +1651,13 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted By">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted On">Submitted On</label>
                                         <div class="Date"></div>
@@ -1654,11 +1665,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Incident Review Completed By">Incident Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Incident Review Completed On">Incident Review Completed On</label>
                                         <div class="Date"></div>
@@ -1666,23 +1683,35 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Investigation Completed By">Investigation Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Investigation Completed On">Investigation Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                               <div class="col-lg-6">
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                               <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed On</label>
                                         <div class="Date"></div>
@@ -1690,53 +1719,83 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>  
+                                </div> 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div> 
                                
                               
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="All Activities Completed On">All Activities Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Review Completed By">Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Review Completed On">Review Completed On</label>
-                                        <div class="Date"></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>  
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Coment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Comment">Comment</label>
+                                            <div class="static"></div>
+                                        </div>
                                     </div>                   
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>

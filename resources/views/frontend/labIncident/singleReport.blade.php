@@ -191,13 +191,17 @@
                 <div class="block-head" style="margin: 2%">
                     General Information
                 </div>
-                <table>
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                <table >
+
+
+
+                    <tr class="">  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-40">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
+                        <td class="w-40">{{ $data->originator }}</td>
                         <th class="w-40">Date Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
+                    
                     <tr>
                         <th class="w-40">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
@@ -398,10 +402,10 @@
                         
                         <tr>
                             <th class="w-20">Investigator</th>
-                            <td class="w-80">@if($data->investigator_qc_im){{ $data->investigator_qc_im }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
 
                             <th class="w-20">QC Review</th>
-                            <td class="w-80">@if($data->investigator_qcr_im){{ $data->investigator_qcr_im }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
 
                         </tr>
                         
@@ -469,30 +473,30 @@
                     </div>
 
                     <div class="block">
-                    <div class="block-head">
+                     <div class="block-head">
                         Second Extension
-                    </div>
-                    <table>
-                    <tr>
+                     </div>
+                        <table>
+                        <tr>
                         <th class="w-20">Reason For Extension</th>
                         <td class="w-30">@if($data->reasoon_for_extension_esc){{ $data->reasoon_for_extension_esc }}@else Not Applicable @endif</td>
                         <th class="w-20">Extension Date</th>
                         <td class="w-30">@if($data->reasoon_for_extension_esc){{ $data->reasoon_for_extension_esc }}@else Not Applicable @endif</td>
                         
-                    </tr>
-                    <tr>
-                    <th class="w-20">Extension Initiator Date</th>
+                     </tr>
+                        <tr>
+                        <th class="w-20">Extension Initiator Date</th>
                         <td class="w-80">@if($data->extension_date_idsc){{ $data->extension_date_idsc }}@else Not Applicable @endif</td>
 
                         <th class="w-20">Extension HOD</th>
                         <td class="w-30">@if($data->assign_to){{ $data->assign_to }}@else Not Applicable @endif</td>
-                    </tr>
-                    </div>
-                    <div class="block">
-                    <div class="block-head">
+                     </tr>
+                     </div>
+                     <div class="block">
+                        <div class="block-head">
                         Third Extension
-                    </div>
-                    <table>
+                        </div>
+                        <table>
                         <tr>
                             <th class="w-20">Reason For Extension</th>
                             <td class="w-30">@if($data->reasoon_for_extension_tc){{ $data->reasoon_for_extension_tc }}@else Not Applicable @endif</td>
@@ -517,15 +521,150 @@
                         
                             </tr>
                         
-                    </table>
+                      </table>
                     </div>
+                    {{-- @isset($singlereport) --}}
+                    @foreach ($labtab as $singlereport)     
+                    {{-- @foreach($labtab as $tab) --}}
+                   <div class="block">
+                        <div class="block-head">
+                            System Suitability Failure Incidence
+                        </div>
                     
+                        <table>
+                            <tr>
+                                <th class="w-20">Instrument Involved</th>
+                                <td>
+                                <td class="w-30"> @if($singlereport->involved_ssfi)
+                                    {{ $singlereport->involved_ssfi }}
+                                @else
+                                    Not Applicable
+                                @endif
+                                 </td>
 
+                                 <th class="w-20">Stage</th>
+                                 <td class="w-30">{{$singlereport->stage_stage_ssfi}}</td>
+
+                                
+                            </tr>
+                            <tr>
+                               <th class="w-20">Stability Condition</th>
+                               <td class="w-30">@if($singlereport->Incident_stability_cond_ssfi)@else Not Applicable @endif
+                                {{ $singlereport->Incident_stability_cond_ssfi }}</td>
+
+                                <th class="w-20">Interval</th>
+                                <td class="w-30">@if($singlereport->Incident_interval_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->Incident_interval_ssfi }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Test</th>
+                                <td class="w-30">@if($singlereport->test_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->test_ssfi }}</td>
+
+                                    <th class="w-20">Date Of Analysis</th>
+                                    <td class="w-30">@if($singlereport->Incident_date_analysis_ssfi)@else Not Applicable @endif
+                                        {{ $singlereport->Incident_date_analysis_ssfi }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-20">Specification Number</th>
+                                <td class="w-30">@if($singlereport->Incident_specification_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->Incident_specification_ssfi }}</td>
+
+                                    <th class="w-20">STP Number</th>
+                                    <td class="w-30">@if($singlereport->Incident_stp_ssfi)@else Not Applicable @endif
+                                        {{ $singlereport->Incident_stp_ssfi }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Date Of Incidence</th>
+                                <td class="w-30">@if($singlereport->Incident_date_incidence_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->Incident_date_incidence_ssfi }}</td>
+
+                                    <th class="w-20">Description Of Incidence</th>
+                                    <td class="w-30">
+                                        @if($singlereport->Description_incidence_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->Description_incidence_ssfi }}
+                                    </td>
+                            </tr>
+                                    
+                            <tr>
+                                <th class="w-20">QC Reviewer</th>
+                                <td class="w-30">@if($singlereport->assign_to)@else Not Applicable @endif
+                                    {{ $singlereport->assign_to }}</td>
+
+                                    <th class="w-20">Detail Investigation</th>
+                                    <td class="w-30">@if($singlereport->Detail_investigation_ssfi)@else Not Applicable @endif
+                                        {{ $singlereport->Detail_investigation_ssfi }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-20">Proposed Corrective Action</th>
+                                <td class="w-30">@if($singlereport->proposed_corrective_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->proposed_corrective_ssfi }}</td>
+
+                                    <th class="w-20">Root Cause</th>
+                                    <td class="w-30">@if($singlereport->root_cause_ssfi)@else Not Applicable @endif
+                                        {{ $singlereport->root_cause_ssfi }}</td>
+                            </tr>
+
+                            <tr>
+                                <th class="w-20">Incident Summary</th>
+                                <td class="w-30">@if($singlereport->incident_summary_ssfi)@else Not Applicable @endif
+                                    {{ $singlereport->incident_summary_ssfi }}</td>
+
+                                    <th class="w-20">Investigator(QC)</th>
+                                    <td class="w-30">@if($data->assign_to)@else Not Applicable @endif
+                                        {{ $data->assign_to }}</td>
+                            </tr>
+                            <tr>
+                                <th class="w-20">Reviewed By(QC)</th>
+                                <td class="w-30">@if($data->assign_to)@else Not Applicable @endif
+                                    {{ $data->assign_to }}</td>
+
+                                    <th class="w-30">System Suitability Attachment</th>
+                                    <td class="w-80">@if($singlereport->system_suitable_attachments)<a href="{{ asset('upload/document/',$singlereport->system_suitable_attachments) }}">{{ $singlereport->system_suitable_attachments }}</a>@else Not Applicable @endif</td>
+                            
+                            </tr>
+
+                           
+
+                        </table>
+                    </div>
+                    <div class="block-head">
+                        Closure
+                    </div>
                     <tr>
                        
-                        <th class="w-20">Incident Types</th>
-                        <td class="w-30">@if($data->Incident_Type){{ $data->Incident_Type }}@else Not Applicable @endif</td>
+                        <th class="w-20">Affected Documents Closed</th>
+                        <td class="w-30">@if($singlereport->affected_document_closure)@else Not Applicable @endif
+                            {{ $singlereport->affected_document_closure }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">QC Head Remark</th>
+                        <td class="w-80" colspan="3">@if($singlereport->qc_hear_remark_c)@else Not Applicable @endif{{ $singlereport->qc_hear_remark_c }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QC Head</th>
+                        <td class="w-80" colspan="3">@if($data->assign_to)@else Not Applicable @endif
+                            {{ $data->assign_to }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">QA Head Remark</th>
+                        <td class="w-80" colspan="3">@if($singlereport->qc_hear_remark_c)@else Not Applicable @endif
+                            {{ $singlereport->qc_hear_remark_c }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-30">System Suitability Attachment</th>
+                        <td class="w-80">@if($singlereport->closure_attachment_c)<a href="{{ asset('upload/document/',$singlereport->closure_attachment_c) }}">{{ $singlereport->closure_attachment_c }}</a>@else Not Applicable @endif</td>
+                
+                    </tr>
+                    
+                   @endforeach 
+                     
+                    {{-- @endforeach --}}
+                    {{-- @endisset --}}
+
+                    
                     <tr>
                         <th class="w-20">Conclusion</th>
                         <td class="w-80" colspan="3">@if($data->Conclusion){{ $data->Conclusion }}@else Not Applicable @endif</td>
@@ -623,6 +762,82 @@
 
                 </table>
             </div> 
+            @php
+        $users = DB::table('users')->get();
+    @endphp
+              
+
+
+
+              <!------------------------------------------------------------------------------------------new line------------------------------------------------>
+              <div class="block">
+                <div class="block-head">
+                  Incident Investigation Report
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-25">Sr. No.</th>
+                            <th class="w-25">Name of Product</th>
+                            <th class="w-25">B No./A.R. No.</th>
+                            <th class="w-25">Remarks</th>
+                        </tr>
+                        @php
+                            $investreport =1;
+                        @endphp
+                        {{-- @if ($data->Instruments_Details && $data->Instruments_Details->equipment) --}}
+                            {{-- @foreach (unserialize($data->Instruments_Details->equipment) as $key => $dataDemo) --}}
+                            @foreach ($labgrid->data as  $item)
+                             <tr>
+                                    <td class="w-15">{{ $investreport++ }}</td>
+
+                                    <td class="w-15">{{ $item['name_of_product'] }}</td>
+                                    <td class="w-15">
+                                        {{ $item['batch_no'] }}
+                                    </td>
+                                    <td class="w-15">
+                                        {{ $item['remarks']}}
+                                    </td>
+
+                                </tr>
+                            @endforeach
+                    </table>
+                </div>
+  </div>
+              <!------------------------------------------------------------------------------------------new line------------------------------------------------>
+
+              <div class="block">
+                <div class="block-head">
+                    System Suitability Failure Report 
+                  </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-25">Sr. No.</th>
+                            <th class="w-25">Name of Product</th>
+                            <th class="w-25">B No./A.R. No.</th>
+                            <th class="w-25">Remarks</th>
+                        </tr>
+                        @php
+                            $singlereport = 1;
+                        @endphp
+                        {{-- @if ($data->Instruments_Details && $data->Instruments_Details->equipment) --}}
+                            {{-- @foreach (unserialize($data->Instruments_Details->equipment) as $key => $dataDemo) --}}
+                            @foreach ($labtab_grid->data as  $itm)
+                           
+                             <tr>
+                                    <td class="w-15">{{ $singlereport++ }}</td>
+
+                                    <td class="w-15">{{ $itm['name_of_product_ssfi'] }}</td>
+                                    <td class="w-15">{{ $itm['batch_no_ssfi'] }}</td>
+                                    <td class="w-15">{{ $item['remarks']}}</td>
+
+                                </tr>
+                            @endforeach
+                    </table>
+                </div>
+  </div>
+
         </div>
     </div>
 

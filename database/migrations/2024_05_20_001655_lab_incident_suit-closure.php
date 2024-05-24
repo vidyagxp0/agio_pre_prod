@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('labincident_tab_sec', function (Blueprint $table) {
             $table->id();
             // $table->unsignedBigInteger('lab_incidents_id');
+            $table->integer('lab_incident_id')->nullable();
             $table->longText('involved_ssfi')->nullable();
             $table->string('stage_stage_ssfi')->nullable();
             $table->string('Incident_stability_cond_ssfi')->nullable();
