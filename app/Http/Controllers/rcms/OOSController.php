@@ -73,7 +73,6 @@ class OOSController extends Controller
 
     }
 
-
     public function update(Request $request, $id)
     {
         $res = Helpers::getDefaultResponse();
@@ -112,7 +111,6 @@ class OOSController extends Controller
                 $changestage->completed_by_pending_initial_assessment = Auth::user()->name;
                 $changestage->completed_on_pending_initial_assessment = Carbon::now()->format('d-M-Y');
                 $changestage->comment_pending_initial_assessment = $request->comment;
-                
                                 $history = new OosAuditTrial();
                                 $history->oos_id = $id;
                                 $history->activity_type = 'Activity Log';
@@ -865,208 +863,6 @@ class OOSController extends Controller
         }
     }
 
-    public function stageChange(Request $request, $id){
-
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            $changestage = Ootc::find($id);
-            $lastDocument = Ootc::find($id);
-            if ($changestage->stage == 3) {
-                $changestage->stage = "5";
-                $changestage->status = "Pending Extended Investigation";
-                $changestage->Completed_By = Auth::user()->name;
-                $changestage->completed_on = Carbon::now()->format('d-M-Y');
-                                $history = new OotAuditTrial();
-                                $history->ootcs_id = $id;
-                                $history->activity_type = 'Activity Log';
-                                $history->current = $changestage->Completed_By;
-                                $history->comment = $request->comment;
-                                $history->user_id = Auth::user()->id;
-                                $history->user_name = Auth::user()->name;
-                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                                $history->origin_state = $lastDocument->status;
-                                $history->stage = "Completed";
-                                $history->save();
-                            //     $list = Helpers::getLeadAuditeeUserList();
-                            //     foreach ($list as $u) {
-                            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                            //             $email = Helpers::getInitiatorEmail($u->user_id);
-                            //              if ($email !== null) {
-                                      
-                            //               Mail::send(
-                            //                   'mail.view-mail',
-                            //                    ['data' => $changestage],
-                            //                 function ($message) use ($email) {
-                            //                     $message->to($email)
-                            //                         ->subject("Document sent ".Auth::user()->name);
-                            //                 }
-                            //               );
-                            //             }
-                            //      } 
-                            //   }
-                $changestage->update();
-                toastr()->success('Document Sent');
-                return back();
-            }
-        }
-    }
-    // public function send_stage(Request $request, $id)
-    // {
-
-    //     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-    //         $oos = OOS::find($id);
-    //         $lastDocument = OOS::find($id);
-    //         if ($oos->stage == 1) {
-    //             $oos->stage = "2";
-    //             $oos->status = "Pending CAPA Plan";
-    //             $oos->plan_proposed_by = Auth::user()->name;
-    //             $oos->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                   
-    //                 $history = new OosAuditTrial();
-    //                 $history->oos_id = $id;
-    //                 $history->activity_type = 'Activity Log';
-    //                 $history->previous = "";
-    //                 $history->current = $oos->plan_proposed_by;
-    //                 $history->comment = $request->comment;
-    //                 $history->user_id = Auth::user()->id;
-    //                 $history->user_name = Auth::user()->name;
-    //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //                 $history->origin_state = $lastDocument->status;
-    //                 $history->stage = 'Plan Proposed';
-    //                 $history->save();
-
-    //             //     $list = Helpers::getHodUserList();
-    //             //     foreach ($list as $u) {
-    //             //         if($u->q_m_s_divisions_id == $capa->division_id){
-    //             //             $email = Helpers::getInitiatorEmail($u->user_id);
-    //             //              if ($email !== null) {
-                          
-    //             //               Mail::send(
-    //             //                   'mail.view-mail',
-    //             //                    ['data' => $capa],
-    //             //                 function ($message) use ($email) {
-    //             //                     $message->to($email)
-    //             //                         ->subject("Document is Submitted By ".Auth::user()->name);
-    //             //                 }
-    //             //               );
-    //             //             }
-    //             //      } 
-    //             //   }
-           
-    //             $oos->update();
-    //             toastr()->success('Document Sent');
-    //             return back();
-    //         }
-    //         if ($capa->stage == 2) {
-    //             $capa->stage = "3";
-    //             $capa->status = "CAPA In Progress";
-    //             $capa->plan_approved_by = Auth::user()->name;
-    //             $capa->plan_approved_on = Carbon::now()->format('d-M-Y');
-                  
-    //             $history = new CapaAuditTrial();
-    //             $history->capa_id = $id;
-    //             $history->activity_type = 'Activity Log';
-    //             $history->previous = "";
-    //             $history->current = $capa->plan_approved_by;
-    //             $history->comment = $request->comment;
-    //             $history->user_id = Auth::user()->id;
-    //             $history->user_name = Auth::user()->name;
-    //             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //             $history->origin_state = $lastDocument->status;
-    //             $history->stage = 'Plan Approved';
-    //             $history->save();
-                
-    //             // $list = Helpers::getQAUserList();
-    //             // foreach ($list as $u) {
-    //             //     if($u->q_m_s_divisions_id == $capa->division_id){
-    //             //     $email = Helpers::getInitiatorEmail($u->user_id);
-    //             //     if ($email !== null) {
-    //             //         Mail::send(
-    //             //             'mail.view-mail',
-    //             //             ['data' => $capa],
-    //             //             function ($message) use ($email) {
-    //             //                 $message->to($email)
-    //             //                     ->subject("Plan Approved By ".Auth::user()->name);
-    //             //             }
-    //             //         );
-    //             //     }
-    //             //   } 
-    //             // }
-                
-    //             $capa->update();
-    //             toastr()->success('Document Sent');
-    //             return back();
-    //         }
-    //         if ($capa->stage == 3) {
-    //             $capa->stage = "4";
-    //             $capa->status = "QA Review";
-    //             $capa->completed_by = Auth::user()->name;
-    //             $capa->completed_on = Carbon::now()->format('d-M-Y');
-    //                 $history = new CapaAuditTrial();
-    //                 $history->capa_id = $id;
-    //                 $history->activity_type = 'Activity Log';
-    //                 $history->previous = "";
-    //                 $history->current = $capa->completed_by;
-    //                 $history->comment = $request->comment;
-    //                 $history->user_id = Auth::user()->id;
-    //                 $history->user_name = Auth::user()->name;
-    //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //                 $history->origin_state = $lastDocument->status;
-    //                 $history->stage = 'Completed';
-    //                 $history->save();
-    //             $capa->update();
-    //             toastr()->success('Document Sent');
-    //             return back();
-    //         }
-    //         if ($capa->stage == 4) {
-    //             $capa->stage = "5";
-    //             $capa->status = "Pending Actions Completion";
-    //             $capa->approved_by = Auth::user()->name;
-    //             $capa->approved_on = Carbon::now()->format('d-M-Y');
-    //                     $history = new CapaAuditTrial();
-    //                     $history->capa_id = $id;
-    //                     $history->activity_type = 'Activity Log';
-    //                     $history->previous = "";
-    //                     $history->current = $capa->approved_by;
-    //                     $history->comment = $request->comment;
-    //                     $history->user_id = Auth::user()->id;
-    //                     $history->user_name = Auth::user()->name;
-    //                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //                     $history->origin_state = $lastDocument->status;
-    //                     $history->stage = 'Approved';
-    //                     $history->save();
-    //             $capa->update();
-    //             toastr()->success('Document Sent');
-    //             return back();
-    //         }
-
-    //         if ($capa->stage == 5) {
-    //             $capa->stage = "6";
-    //             $capa->status = "Closed - Done";
-    //             $capa->completed_by = Auth::user()->name;
-    //             $capa->completed_on = Carbon::now()->format('d-M-Y');  
-    //                     $history = new CapaAuditTrial();
-    //                     $history->capa_id = $id;
-    //                     $history->activity_type = 'Activity Log';
-    //                     $history->previous = "";
-    //                     $history->current = $capa->completed_by;
-    //                     $history->comment = $request->comment;
-    //                     $history->user_id = Auth::user()->id;
-    //                     $history->user_name = Auth::user()->name;
-    //                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-    //                     $history->origin_state = $lastDocument->status;
-    //                     $history->stage = 'Completed';
-    //                     $history->save();
-    //             $capa->update();
-    //             toastr()->success('Document Sent');
-    //             return back();
-    //         }
-    //     } else {
-    //         toastr()->error('E-signature Not match');
-    //         return back();
-    //     }
-    // }
-
-
     // public function cancel_record(Request $request, $id)
     // {
     //     $oos_record = OOS::find($id);
@@ -1165,44 +961,34 @@ class OOSController extends Controller
     //     }
     // }
 
-    // public function effectiveness_check(Request $request, $id)
-    // {
-    //     $record_number = ((RecordNumber::first()->value('counter')) + 1);
-    //     $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-    //     $currentDate = Carbon::now();
-    //     $formattedDate = $currentDate->addDays(30);
-    //     $due_date= $formattedDate->format('Y-m-d');
-    //     return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
-    // }
-
-
-    // public static function singleReport($id)
-    // {
-    //     $data = OOS::find($id);
-    //     // if (!empty($data)) {
-    //     //     $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
-    //     //     $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-    //     //     $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
-    //     //     $data->originator = User::where('id', $data->initiator_id)->value('name');
-    //     //     $pdf = App::make('dompdf.wrapper');
-    //     //     $time = Carbon::now();
-    //     //     $pdf = PDF::loadview('frontend.capa.singleReport', compact('data'))
-    //     //         ->setOptions([
-    //     //             'defaultFont' => 'sans-serif',
-    //     //             'isHtml5ParserEnabled' => true,
-    //     //             'isRemoteEnabled' => true,
-    //     //             'isPhpEnabled' => true,
-    //     //         ]);
-    //     //     $pdf->setPaper('A4');
-    //     //     $pdf->render();
-    //     //     $canvas = $pdf->getDomPDF()->getCanvas();
-    //     //     $height = $canvas->get_height();
-    //     //     $width = $canvas->get_width();
-    //     //     $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-    //     //     $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
-    //     //     return $pdf->stream('CAPA' . $id . '.pdf');
-    //     // }
-    // }
+    
+    public static function singleReport($id)
+    {
+        $data = OOS::find($id);
+        if (!empty($data)) {
+            $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
+            $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
+            $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.capa.singleReport', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('CAPA' . $id . '.pdf');
+        }
+    }
 
     
 }

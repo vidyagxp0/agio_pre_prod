@@ -373,7 +373,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'OOS Chemical')
+                                                    @elseif($datas->type == 'OOS Cemical')
                                                     <a href="{{ route('oos.oos_view', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id}}
                                                     </a>
