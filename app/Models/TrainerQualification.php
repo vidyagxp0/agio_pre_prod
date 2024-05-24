@@ -12,4 +12,9 @@ class TrainerQualification extends Model
     public function trainer_grid() {
         return $this->hasMany(TrainerGrid::class);
     }
+
+    public function division_record()
+    {
+        return $this->belongsTo(QMSDivision::class, 'site_code', 'id');
+    }
 }

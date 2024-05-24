@@ -3,6 +3,7 @@
     @php
         $users = DB::table('users')->select('id', 'name')->get();
         $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
+        $departments = DB::table('departments')->select('id', 'name')->get();
 
     @endphp
     <style>
@@ -448,12 +449,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Site Division/Project">Site Division/Project</label>
-                                        <select name="division_id">
+                                        <input value="{{ $trainer->site_code }}" name="site_code" readonly >
+                                        {{-- <select disabled name="division_id">
                                             <option value="">-- Select --</option>
                                             @foreach ($divisions as $division)
                                                 <option value="{{ $division->id }}" {{ $loop->first ? 'selected' : '' }}>{{ $division->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -502,8 +504,8 @@
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assigned_to">
                                             <option value="">Select</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" @if ($user->id == $trainer->assigned_to) selected @endif>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -518,10 +520,10 @@
                                         <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name= "due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" value="{{ $trainer->due_date }}"/>
                                             <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ $trainer->due_date }}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -533,7 +535,7 @@
                                             id="rchars">255</span>
                                         characters remaining
                                         <input id="short_description" type="text" name="short_description"
-                                            maxlength="255">
+                                            maxlength="255" value="{{ $trainer->short_description }}">
                                     </div>
                                 </div>
 
@@ -544,8 +546,8 @@
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
                                         <select name="trainer_name" id="trainer_name">
-                                            <option value="0">Select</option>
-                                            <option value="trainer1">Trainer 1</option>
+                                            <option >Select</option>
+                                            <option value="trainer1" @if ($trainer->trainer_name == "trainer1") selected @endif>Trainer 1</option>
                                         </select>
                                     </div>
                                 </div>
@@ -553,7 +555,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="qualification">Qualification</label>
-                                        <input id="qualification" type="text" name="qualification" maxlength="255">
+                                        <input id="qualification" type="text" name="qualification" maxlength="255" value="{{ $trainer->qualification }}">
                                     </div>
                                 </div>
 
@@ -561,11 +563,11 @@
                                     <div class="group-input">
                                         <label for="Designation">Designation</label>
                                         <select name="designation" id="designation">
-                                            <option value="0">Select</option>
-                                            <option value="lead_trainer">Lead Trainer</option>
-                                            <option value="senior_trainer">Senior Trainer</option>
-                                            <option value="Instructor">Instructor</option>
-                                            <option value="Evaluator">Evaluator</option>
+                                            <option>Select</option>
+                                            <option value="lead_trainer" @if ($trainer->designation == "lead_trainer") selected @endif>Lead Trainer</option>
+                                            <option value="senior_trainer" @if ($trainer->designation == "senior_trainer") selected @endif>Senior Trainer</option>
+                                            <option value="Instructor" @if ($trainer->designation == "Instructor") selected @endif>Instructor</option>
+                                            <option value="Evaluator" @if ($trainer->designation == "Evaluator") selected @endif>Evaluator</option>
                                         </select>
                                     </div>
                                 </div>
@@ -573,13 +575,11 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Department">Department</label>
-                                        <select name="department" id="department">
-                                            <option value="0">Select</option>
-                                            <option value="quality_assurance">Quality Assurance (QA)</option>
-                                            <option value="operations">Operations</option>
-                                            <option value="learning_deve">Learning and Development (L&D)</option>
-                                            <option value="it">Information Technology (IT)</option>
-                                            <option value="Finance">Finance</option>
+                                        <select name="department">
+                                            <option>-- Select --</option>
+                                            @foreach ($departments as $department)
+                                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -587,10 +587,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)</label>
-                                        <select name="experience" id="Experience">
-                                            <option value="">Select </option>
-                                            @for ($i = 1; $i <= 70; $i++)
-                                                <option value="{{ $i }}">{{ $i }}</option>
+                                        <select name="experience" id="experience">
+                                            <option>Select </option>
+                                            @for ($experience = 1; $experience <= 70; $experience++)
+                                                <option value="{{ $experience }}" @if ($experience == $trainer->experience) selected @endif>{{ $experience }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -644,16 +644,16 @@
                                         <label for="external_agencies">External Agencies</label>
                                         <select name="external_agencies"
                                             onchange="otherController(this.value, 'others', 'external_agencies_req')">
-                                            <option value="">-- Select --</option>
-                                            <option value="jordan_fda">Jordan FDA</option>
-                                            <option value="us_fda">USFDA</option>
-                                            <option value="mhra">MHRA</option>
-                                            <option value="anvisa">ANVISA</option>
-                                            <option value="iso">ISO</option>
-                                            <option value="who">WHO</option>
-                                            <option value="local_fda">Local FDA</option>
-                                            <option value="tga">TGA</option>
-                                            <option value="others">Others</option>
+                                            <option>-- Select --</option>
+                                            <option value="jordan_fda" @if ($trainer->external_agencies == "jordan_fda") selected @endif>Jordan FDA</option>
+                                            <option value="us_fda" @if ($trainer->external_agencies == "us_fda") selected @endif>USFDA</option>
+                                            <option value="mhra" @if ($trainer->external_agencies == "mhra") selected @endif>MHRA</option>
+                                            <option value="anvisa" @if ($trainer->external_agencies == "anvisa") selected @endif>ANVISA</option>
+                                            <option value="iso" @if ($trainer->external_agencies == "iso") selected @endif>ISO</option>
+                                            <option value="who" @if ($trainer->external_agencies == "who") selected @endif>WHO</option>
+                                            <option value="local_fda" @if ($trainer->external_agencies == "local_fda") selected @endif>Local FDA</option>
+                                            <option value="tga" @if ($trainer->external_agencies == "tga") selected @endif>TGA</option>
+                                            <option value="others" @if ($trainer->external_agencies == "others") selected @endif>Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -714,9 +714,9 @@
                                     <div class="group-input">
                                         <label for="trainingQualificationStatus">Trainer</label>
                                         <select name="trainer" id="trainingQualificationStatus">
-                                            <option value="">-- Select --</option>
-                                            <option value="Qualified">Qualified</option>
-                                            <option value="Not Qualified">Not Qualified</option>
+                                            <option>-- Select --</option>
+                                            <option value="Qualified" @if ($trainer->trainer == "Qualified") selected @endif>Qualified</option>
+                                            <option value="Not Qualified" @if ($trainer->trainer == "Not Qualified") selected @endif>Not Qualified</option>
                                         </select>
                                     </div>
                                 </div>
@@ -739,10 +739,10 @@
                                                         <td>Clarity Of Objectives</td>
                                                         <td>
                                                             <select name="evaluation_criteria_1" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_1 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_1 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_1 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -753,10 +753,10 @@
                                                         <td>Delivery & Knowledge Of Content</td>
                                                         <td>
                                                             <select name="evaluation_criteria_2" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_2 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_2 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_2 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -769,10 +769,10 @@
                                                             Style Was Clear, Easily understood , Pleasant to hear)</td>
                                                         <td>
                                                             <select name="evaluation_criteria_3" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_3 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_3 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_3 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -784,10 +784,10 @@
                                                         <td>Is Research Up to Date?</td>
                                                         <td>
                                                             <select name="evaluation_criteria_4" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_4 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_4 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_4 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -800,9 +800,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_5" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_5 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_5 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_5 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -815,9 +815,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_6" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_6 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_6 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_6 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -830,9 +830,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_7" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_7 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_7 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_7 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -846,9 +846,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_8" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_8 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_8 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_8 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -866,7 +866,7 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Q_comment">Qualification Comments</label>
-                                    <textarea class="" name="qualification_comments"></textarea>
+                                    <textarea class="" name="qualification_comments">{{ $trainer->qualification_comments }}</textarea>
                                 </div>
                             </div>
 

@@ -129,8 +129,8 @@
                         @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
-                        {{-- <button class="button_theme1"> <a class="text-white" href="">
-                                Audit Trail </a> </button> --}}
+                        <button class="button_theme1"> <a class="text-white" href="">
+                                Audit Trail </a> </button>
 
                         {{-- @if ($employee->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -302,14 +302,14 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Attached CV">Attached CV</label>
                                     <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
                                     <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a>
-
                                 </div>
                             </div>
+                            <div class="col-lg-2"></div>
                             <div class="col-lg-4">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
@@ -577,7 +577,9 @@
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                            <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm2')">Next</button>
+
                             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -627,15 +629,17 @@
                                                 <td><input type="text" name="external_training[{{ $loop->index }}][external_trainer]" value="{{ $external_grid['external_trainer'] ?? '' }}"></td>
                                                 <td><input type="text" name="external_training[{{ $loop->index }}][external_agency]" value="{{ $external_grid['external_agency'] ?? '' }}"></td>
                                                 <td>
-                                                    <input type="file" name="external_training[{{ $loop->index }}][certificate]">
+                                                    <input type="file" name="external_training[{{ $loop->index }}][certificate]" value="{{ $external_grid['certificate'] ?? '' }}">
                                                     @if (isset($external_grid['certificate']))
                                                         <a href="{{ asset($external_grid['certificate']) }}" target="_blank">View Certificate</a>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    <input type="file" name="external_training[{{ $loop->index }}][supporting_documents]">
+                                                    {{-- <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
+                                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a> --}}
+                                                    <input type="file" id="myfile" name="external_training[{{ $loop->index }}][supporting_documents]" value="{{ $external_grid['supporting_documents'] ?? '' }}">
                                                     @if (isset($external_grid['supporting_documents']))
-                                                        <a href="{{ asset($external_grid['supporting_documents']) }}" target="_blank">View Document</a>
+                                                        <a href="{{ asset('upload/' . $external_grid['supporting_documents']) }}" target="_blank">View Document</a>
                                                     @endif
                                                 </td>
                                             </tr>
@@ -663,7 +667,27 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">External Attachment</label>
-                                    <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}">
+                                    {{-- <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}"> --}}
+
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="myfile" >
+                                            @if ($employee->external_attachment && is_array($employee->external_attachment))
+                                            @foreach($employee->external_attachment as $file)
+                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);" >
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                       @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+
+                                            <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}" oninput="addMultipleFiles(this, 'external_attachment')" multiple>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -711,7 +735,9 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
+
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
