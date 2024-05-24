@@ -87,13 +87,13 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Initiated By <span class="text-danger"></span>
+                                            Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by">
                                             <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                            <option value="Manish">Manish</option> --}}
                                         </select>
                                     </div>
                                 </div>

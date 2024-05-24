@@ -188,7 +188,7 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Parent Record Information</div>
+                                <div class="sub-head">Parent Record Information</div>   
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
@@ -231,15 +231,15 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Initiated By">
-                                            Initiated By <span class="text-danger"></span>
+                                            Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by"
                                             {{ Helpers::disabledErrataFields($showdata->stage) }}>
                                             <option value="{{ $showdata->initiated_by }}">
                                                 {{ $showdata->initiated_by }}</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                            <option value="Manish">Manish</option> --}}
                                         </select>
                                     </div>
                                 </div>

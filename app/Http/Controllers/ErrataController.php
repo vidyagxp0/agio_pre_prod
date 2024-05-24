@@ -671,6 +671,29 @@ class ErrataController extends Controller
             if ($ErrataControl->stage == 1) {
                 $ErrataControl->stage = "0";
                 $ErrataControl->status = "Closed-Cancelled";
+                $ErrataControl->cancel_by = Auth::user()->name;
+                $ErrataControl->cancel_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->cancel_comment = $request->comment;
+
+                $ErrataControl->sent_to_open_state_by = Auth::user()->name;
+                $ErrataControl->sent_to_open_state_on = Carbon::now()->format('d-M-Y');
+                $ErrataControl->sent_to_open_state_comment = $request->comment;
+                $history = new ErrataAuditTrail();
+                $history->errata_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = "";
+                $history->current = $ErrataControl->sent_to_open_state_by;
+                $history->comment = $request->comment;
+                $history->action = 'Opened';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->change_to =   "Opened";
+                $history->change_from = $lastDocument->status;
+                $history->stage = 'Opened';
+                $history->save();
+
                 $ErrataControl->update();
                 toastr()->success('Document Sent');
                 return back();
