@@ -67,16 +67,34 @@ return new class extends Migration
             $table->integer('stage')->nullable();
 
             $table->string('submitted_by')->nullable();
-            $table->string('incident_review_completed_by')->nullable();
-            $table->string('investigation_completed_by')->nullable();
+            $table->string('verification_complete_completed_by')->nullable();
+            $table->string('preliminary_completed_by')->nullable();
             $table->string('inv_andCAPA_review_comp_by')->nullable();
             $table->string('qA_review_completed_by')->nullable();
             $table->string('qA_head_approval_completed_by')->nullable();
+            $table->string('assesment_completed_by')->nullable();
+            $table->string('closure_completed_by')->nullable();
+            $table->string('extended_inv_complete_by')->nullable();
+            $table->string('closure_completed_on')->nullable();
+            $table->string('comment')->nullable();
             $table->string('cancelled_by')->nullable();
-
             $table->string('submitted_on')->nullable();
-            $table->string('incident_review_completed_on')->nullable();
-            $table->string('investigation_completed_on')->nullable();
+            $table->string('verification_completed_on')->nullable();
+            $table->string('assesment_completed_on')->nullable();
+            $table->string('extended_inv_complete_on')->nullable();
+            $table->string('verification_complete_comment')->nullable();
+            $table->string('all_activities_completed_comment')->nullable();
+            $table->string('no_assignable_cause_comment')->nullable();
+            $table->string('extended_inv_comment')->nullable();
+            $table->string('solution_validation_comment')->nullable();
+            $table->string('assessment_comment')->nullable();
+            $table->string('all_action_approved_comment')->nullable();
+            $table->string('pending_approval_comment')->nullable();
+            $table->string('closure_comment')->nullable();
+            $table->string('cancell_comment')->nullable();
+            $table->string('all_actiion_approved_by')->nullable();
+            $table->string('all_actiion_approved_on')->nullable();
+            $table->string('preliminary_completed_on')->nullable();
             $table->string('inv_andCAPA_review_comp_on')->nullable();
             $table->string('qA_review_completed_on')->nullable();
             $table->string('qA_head_approval_completed_on')->nullable();
@@ -84,6 +102,60 @@ return new class extends Migration
             $table->string('review_completed_on')->nullable();
             $table->string('all_activities_completed_by')->nullable();
             $table->string('all_activities_completed_on')->nullable();
+          
+            // new added -- General Information
+
+            $table->longtext('incident_involved_others_gi')->nullable();
+            $table->longtext('description_incidence_gi')->nullable();
+            $table->longtext('stage_stage_gi')->nullable();
+            $table->longtext('incident_stability_cond_gi')->nullable();
+            $table->string('incident_interval_others_gi')->nullable();
+            $table->string('test_gi')->nullable();
+            $table->string('date_gi')->nullable();
+            $table->string('incident_date_analysis_gi')->nullable();
+            $table->string('incident_specification_no_gi')->nullable();
+            $table->string('incident_stp_no_gi')->nullable();
+            $table->string('Incident_name_analyst_no_gi')->nullable();
+            $table->string('incident_date_incidence_gi')->nullable();
+            $table->string('analyst_sign_date_gi')->nullable();
+            $table->string('section_sign_date_gi')->nullable();
+            $table->longtext('attachments_gi')->nullable();
+            // $table->longtext('section_sign_date_gi')->nullable();
+
+            //new added --Immediate Actions
+
+            $table->longtext('immediate_action_ia')->nullable();
+            $table->string('immediate_date_ia')->nullable();
+            $table->string('section_date_ia')->nullable();
+            $table->longtext('details_investigation_ia')->nullable();
+            $table->longtext('proposed_correctivei_ia')->nullable();
+            $table->longtext('repeat_analysis_plan_ia')->nullable();
+            $table->longtext('result_of_repeat_analysis_ia')->nullable();
+            $table->longtext('corrective_and_preventive_action_ia')->nullable();
+            $table->string('capa_number_im')->nullable();
+            $table->longtext('investigation_summary_ia')->nullable();
+            $table->string('type_incidence_ia')->nullable();
+            $table->longtext('attachments_ia')->nullable();
+            // Extension
+            $table->longtext('reasoon_for_extension_e')->nullable();
+            $table->longtext('extension_date_e')->nullable();
+            $table->string('extension_date_fe')->nullable();
+            $table->string('extension_date_initiator')->nullable();
+            $table->longtext('reasoon_for_extension_esc')->nullable();
+            $table->string('extension_date_esc')->nullable();
+            $table->string('extension_date_idsc')->nullable();
+            $table->longtext('reasoon_for_extension_tc')->nullable();
+            $table->string('extension_date__tc')->nullable();
+            $table->string('extension_date_idtc')->nullable();
+            $table->longtext('extension_attachments_e')->nullable();
+            
+
+
+            
+
+
+
+
             // $table->string('cancelled_by')->nullable();
             $table->string('cancelled_on')->nullable();
             $table->timestamps();

@@ -718,6 +718,12 @@ class DashboardController extends Controller
             $audit = "capaAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
+        } elseif ($type == "Lab-Incident") {
+            $data = LabIncident::find($id);
+            $single = "LabIncidentSingleReport/" . $data->id;
+            $audit = "LabIncidentAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Deviation") {
             $data = Deviation::find($id);
             $single = "deviationSingleReport/" . $data->id;

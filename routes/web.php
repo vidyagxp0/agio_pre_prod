@@ -37,8 +37,10 @@ use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
