@@ -166,6 +166,7 @@ class OOS extends Model
       ];
 
     protected $casts = [
+      'reference_document' => 'array',
       'Comments_plidata' => 'array',
       'verification_analysis_ref_pli' => 'array',
       'analyst_interview_ref_pli' => 'array',

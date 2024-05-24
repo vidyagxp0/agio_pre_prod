@@ -8,8 +8,6 @@
                     <label for="Audit Schedule Start Date"> Comments </label>
                     <div class="col-md-12 4">
                         <div class="group-input">
-                            <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="Comments_plidata" value=""
                                 id="summernote-1">{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
                             </textarea>
@@ -54,38 +52,6 @@
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
             </div>
-            <!-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Facility Name"> Facility Name </label>
-                                <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Group Name"> Group Name </label>
-                                <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                </select>
-                            </div>
-                        </div> -->
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name"> Verification Analysis Required</label>

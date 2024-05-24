@@ -375,9 +375,7 @@
                 <input type="hidden" name="parent_type" value="{{ $parent_type }}">
                 @endif
             <!-- Tab content -->
-            <!-- General Information -->
-            <!-- Tab content -->
-
+            
             <!-- General Information -->
             @include('frontend.OOS.comps.general_information')
 

@@ -87,7 +87,7 @@
                 <div class="group-input">
                     <label for="Initiator Group Code">Initiated Through </label>
                     <textarea type="text"
-                        name="initiated_through_gi">{{ $data->initiated_through_gi ?? '' }}</textarea>
+                        name="initiated_through_gi">{{ $data->initiated_through_gi ? $data->initiated_through_gi :'' }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -224,7 +224,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="sub-head pt-3">OOS Information</div>
             <div class="col-lg-6">
                 <div class="group-input">
@@ -255,11 +254,10 @@
             <div class="col-lg-6">
                 <div class="group-input ">
                     <label for="Short Description ">Market</label>
-
                     <input type="text" name="market_gi" value="{{$data->market_gi}}">
                 </div>
             </div>
-            <div class="col-12">
+            <div class="col-1g-5">
                 <div class="group-input">
                     <label for="Initiator Group">Customer*</label>
                     <select name="customer_gi">
@@ -269,11 +267,8 @@
                         <option value="no" {{ $data->customer_gi == 'no' ? 'selected' : '' }}>No
                         </option>
                     </select>
-
                 </div>
             </div>
-
-
             <!-- ---------------------------grid-1 -------------------------------- -->
             <div class="group-input">
                 <label for="audit-agenda-grid">

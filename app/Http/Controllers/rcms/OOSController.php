@@ -96,8 +96,7 @@ class OOSController extends Controller
 
         return redirect()->route('qms.dashboard');
         
-        // toastr()->success("Record is created Successfully");
-        // return redirect(url('rcms/qms-dashboard'));
+        
     }
 
     public function send_stage(Request $request, $id)
@@ -928,9 +927,6 @@ class OOSController extends Controller
             $data->phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
             $data->oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
             $data->oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
-            
-            // return view('frontend.OOS.oos_form_view', 
-            // compact('data', 'info_product_materials', 'details_stabilities', 'oos_details', 'checklist_lab_invs', 'oos_capas', 'phase_two_invs', 'oos_conclusions', 'oos_conclusion_reviews'));
     
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
