@@ -4057,17 +4057,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_28" id="tablet_compress_response_28"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_28" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_28" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_28){{ $checklist1->tablet_compress_remark_28 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4083,17 +4084,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_29" id="tablet_compress_response_29"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_29" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_29" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_29){{ $checklist1->tablet_compress_remark_29 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4109,17 +4111,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_30" id="tablet_compress_response_30"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_30" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_30" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_30){{ $checklist1->tablet_compress_remark_30 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4135,17 +4138,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_31" id="tablet_compress_response_31"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_31" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_31" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_31){{ $checklist1->tablet_compress_remark_31 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4161,17 +4165,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_32" id="tablet_compress_response_32"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_response_32" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_response_32" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_32){{ $checklist1->tablet_compress_remark_32 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4187,17 +4192,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_33" id="tablet_compress_response_33"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_33" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_33" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_33){{ $checklist1->tablet_compress_remark_33 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4213,17 +4219,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_34" id="tablet_compress_response_34"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_34" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_34" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_34){{ $checklist1->tablet_compress_remark_34 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4239,10 +4246,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_35" id="tablet_compress_response_35"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4265,17 +4273,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_36" id="tablet_compress_response_36"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_36" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_36" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_36){{ $checklist1->tablet_compress_remark_36 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4291,17 +4300,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_37" id="tablet_compress_response_37"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_37" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_37" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_37){{ $checklist1->tablet_compress_remark_37 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4317,17 +4327,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_38" id="tablet_compress_response_38"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_38" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_38" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_38){{ $checklist1->tablet_compress_remark_38 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4343,17 +4354,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_39" id="tablet_compress_response_39"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_39" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_39" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_39){{ $checklist1->tablet_compress_remark_39 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4369,17 +4381,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_40" id="tablet_compress_response_40"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_40" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_40" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_40){{ $checklist1->tablet_compress_remark_40 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4395,17 +4408,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_41" id="tablet_compress_response_41"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_41" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_41" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_41){{ $checklist1->tablet_compress_remark_41 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4421,17 +4435,18 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_42" id="tablet_compress_response_42"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_42" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_42" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_42){{ $checklist1->tablet_compress_remark_42 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4470,10 +4485,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_43" id="tablet_compress_response_43"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
 
@@ -4484,7 +4500,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_43" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_43" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_43){{ $checklist1->tablet_compress_remark_43 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4499,10 +4515,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_44" id="tablet_compress_response_44"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4510,7 +4527,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_44" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_44" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_44){{ $checklist1->tablet_compress_remark_44 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4525,10 +4542,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_45" id="tablet_compress_response_45"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4536,7 +4554,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_45" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_45" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_45 ){{ $checklist1->tablet_compress_remark_45 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4552,10 +4570,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_46" id="tablet_compress_response_46"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4563,7 +4582,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_46" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_46" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_46){{ $checklist1->tablet_compress_remark_46 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4579,10 +4598,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_47" id="tablet_compress_response_47"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4590,7 +4610,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_47" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_47" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_47){{ $checklist1->tablet_compress_remark_47 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4606,10 +4626,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_48" id="tablet_compress_response_48"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4617,7 +4638,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="tablet_compress_remark_48" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_compress_remark_48" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_48){{ $checklist1->tablet_compress_remark_48 }}@endif</textarea>
                                         </div>
 
 
@@ -4632,10 +4653,11 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="tablet_compress_response_49" id="tablet_compress_response_49"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4643,7 +4665,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                         style="margin: auto; display: flex; justify-content: center;">
-                                        <textarea name="tablet_compress_remark_49" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                        <textarea name="tablet_compress_remark_49" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist1 && $checklist1->tablet_compress_remark_49){{ $checklist1->tablet_compress_remark_49 }}@endif</textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -4670,8 +4692,8 @@ function addMultipleFiles(input, block_id) {
                         <div class="group-input">
                             <label for="Description Deviation">Final Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="tablet_compress_response_final_comment[]" id="summernote-1">
-                                </textarea>
+                            <textarea class="summernote" name="tablet_compress_response_final_comment" id="summernote-1">
+                                @if( $checklist1 && $checklist1->tablet_compress_response_final_comment){{ $checklist1->tablet_compress_response_final_comment }}@endif </textarea>
                         </div>
                     </div>
 
@@ -4729,12 +4751,12 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_1" id="tablet_coating_response_1"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_1) {{ $checklist2->tablet_coating_response_1 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_1) {{ $checklist2->tablet_coating_response_1 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_1) {{ $checklist2->tablet_coating_response_1 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
                                             </select>
                                         </div>
                                     </td>
@@ -4742,7 +4764,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_1" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_1){{ $checklist2->tablet_coating_remark_1 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4754,12 +4776,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_2" id="tablet_coating_response_2"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4767,7 +4790,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_2" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_2){{ $checklist2->tablet_coating_remark_2 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4779,12 +4802,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_3" id="tablet_coating_response_3"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4792,7 +4816,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_3" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_3){{ $checklist2->tablet_coating_remark_3 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4804,12 +4828,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_4" id="tablet_coating_response_4"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4817,7 +4842,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_4" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_4){{ $checklist2->tablet_coating_remark_4 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4831,12 +4856,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_5" id="tablet_coating_response_5"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4844,7 +4870,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_5" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_5){{ $checklist2->tablet_coating_remark_5 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4858,12 +4884,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_6" id="tablet_coating_response_6"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4871,7 +4898,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_6" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -4883,12 +4910,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_7" id="tablet_coating_response_7"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4896,7 +4924,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_7" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_7){{ $checklist2->tablet_coating_remark_7 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4908,12 +4936,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_8" id="tablet_coating_response_8"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4921,7 +4950,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_8" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_8){{ $checklist2->tablet_coating_remark_8 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4935,12 +4964,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_9" id="tablet_coating_response_9"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4948,7 +4978,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_9" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_9){{ $checklist2->tablet_coating_remark_9 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4962,12 +4992,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_10" id="tablet_coating_response_10"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -4975,7 +5006,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_10" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_10){{ $checklist2->tablet_coating_remark_10 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -4989,12 +5020,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_11" id="tablet_coating_response_11"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5002,7 +5034,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_11" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_11){{ $checklist2->tablet_coating_remark_11 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5016,12 +5048,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_12" id="tablet_coating_response_12"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5029,7 +5062,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_12" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_12){{ $checklist2->tablet_coating_remark_12 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5043,19 +5076,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_remark_13" id="tablet_coating_response_13"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_13" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_13){{ $checklist2->tablet_coating_remark_13 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5070,19 +5104,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_14" id="tablet_coating_response_14"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_14" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_14){{ $checklist2->tablet_coating_remark_14 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5097,19 +5132,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_15" id="tablet_coating_response_15"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_15" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_15){{ $checklist2->tablet_coating_remark_15 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5122,19 +5158,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_16" id="tablet_coating_response_16"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_16" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_16){{ $checklist2->tablet_coating_remark_16 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5147,19 +5184,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_17" id="tablet_coating_response_17"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -5172,19 +5210,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_18" id="tablet_coating_response_18"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_18" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_18){{ $checklist2->tablet_coating_remark_18 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5197,19 +5236,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_19" id="tablet_coating_response_19"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_19" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_19){{ $checklist2->tablet_coating_remark_19 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5222,19 +5262,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_20" id="tablet_coating_response_20"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_20" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_20){{ $checklist2->tablet_coating_remark_20 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5247,19 +5288,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_21" id="tablet_coating_response_21"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_21" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_21){{ $checklist2->tablet_coating_remark_21 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5272,19 +5314,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_22" id="tablet_coating_response_22"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_22" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_22){{ $checklist2->tablet_coating_remark_22 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5297,19 +5340,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_23" id="tablet_coating_response_23"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_23" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_23){{ $checklist2->tablet_coating_remark_23 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5322,19 +5366,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_24" id="tablet_coating_response_24"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_24" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_24){{ $checklist2->tablet_coating_remark_24 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5347,19 +5392,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_25" id="tablet_coating_response_25"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_25" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_25){{ $checklist2->tablet_coating_remark_25 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5372,19 +5418,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_26" id="tablet_coating_response_26"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_26" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_26){{ $checklist2->tablet_coating_remark_26 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5397,19 +5444,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_27" id="tablet_coating_response_27"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_27" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_27){{ $checklist2->tablet_coating_remark_27 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5422,19 +5470,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_28" id="tablet_coating_response_28"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_28" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_28){{ $checklist2->tablet_coating_remark_28 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5447,19 +5496,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_29" id="tablet_coating_response_29"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_29" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_29){{ $checklist2->tablet_coating_remark_29 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5472,19 +5522,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_30" id="tablet_coating_remark_30"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_30" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_30){{ $checklist2->tablet_coating_remark_30 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5497,19 +5548,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_31" id="tablet_coating_response_31"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_31" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_31){{ $checklist2->tablet_coating_remark_31 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5522,19 +5574,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_32" id="tablet_coating_response_32"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                               <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_32" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_32){{ $checklist2->tablet_coating_remark_32 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5547,19 +5600,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_33" id="tablet_coating_response_33"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_33" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_33){{ $checklist2->tablet_coating_remark_33 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5572,19 +5626,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_34" id="tablet_coating_response_34"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_34" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_34){{ $checklist2->tablet_coating_remark_34 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5597,19 +5652,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_35" id="tablet_coating_response_35"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_35" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_35){{ $checklist2->tablet_coating_remark_35 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5622,19 +5678,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_36" id="tablet_coating_response_36"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_36" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_36){{ $checklist2->tablet_coating_remark_36 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5647,19 +5704,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_37" id="tablet_coating_response_37"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_37" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_37){{ $checklist2->tablet_coating_remark_37 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5672,19 +5730,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_38" id="tablet_coating_response_38"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_38" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_38){{ $checklist2->tablet_coating_remark_38 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5697,19 +5756,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_39" id="tablet_coating_response_39"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_39" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_39){{ $checklist2->tablet_coating_remark_39 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5722,19 +5782,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_40" id="tablet_coating_response_40"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_40" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_40){{ $checklist2->tablet_coating_remark_40 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5747,19 +5808,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_41" id="tablet_coating_response_41"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_41" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_41){{ $checklist2->tablet_coating_remark_41 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5772,19 +5834,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_42" id="tablet_coating_response_42"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_42" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_42){{ $checklist2->tablet_coating_remark_42 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5797,19 +5860,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_43" id="tablet_coating_response_43"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_43" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_43){{ $checklist2->tablet_coating_remark_43 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5846,12 +5910,13 @@ function addMultipleFiles(input, block_id) {
 
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_44" id="tablet_coating_response_44"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
 
@@ -5862,7 +5927,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_44" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_44){{ $checklist2->tablet_coating_remark_44 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5875,12 +5940,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_45" id="tablet_coating_response_45"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5888,7 +5954,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_45" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_45){{ $checklist2->tablet_coating_remark_45 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5901,12 +5967,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_46" id="tablet_coating_response_46"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5914,7 +5981,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_46" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_46){{ $checklist2->tablet_coating_remark_46 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5928,12 +5995,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_47" id="tablet_coating_response_47"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5941,7 +6009,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_47" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_47){{ $checklist2->tablet_coating_remark_47 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5955,12 +6023,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_48" id="tablet_coating_response_48"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5968,7 +6037,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_48" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_48){{ $checklist2->tablet_coating_remark_48 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -5982,12 +6051,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_coating_response_49" id="tablet_coating_response_49"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+                                            
                                             </select>
                                         </div>
                                     </td>
@@ -5995,7 +6065,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_coating_remark_49" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist2 && $checklist2->tablet_coating_remark_49){{ $checklist2->tablet_coating_remark_49 }}@endif</textarea>
                                         </div>
 
 
@@ -6014,8 +6084,8 @@ function addMultipleFiles(input, block_id) {
                 <div class="group-input">
                     <label for="Description Deviation">Final Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                    <textarea class="summernote" name="Description_Deviation[]" id="summernote-1">
-                        </textarea>
+                    <textarea class="summernote" name="tablet_coating_remark_comment" id="summernote-1">
+                        @if( $checklist2 && $checklist2->tablet_coating_remark_comment){{ $checklist2->tablet_coating_remark_comment }}@endif </textarea>
                 </div>
             </div>
 
@@ -6026,11 +6096,11 @@ function addMultipleFiles(input, block_id) {
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach"></div>
+                        <div class="file-attachment-list" id="tablet_coating_supporting_attachment"></div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="file_attach[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                            <input type="file" id="myfile" name="tablet_coating_supporting_attachment[]"
+                                oninput="addMultipleFiles(this, 'tablet_coating_supporting_attachment')" multiple>
                         </div>
                     </div>
                 </div>
@@ -6075,9 +6145,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_1" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6088,7 +6158,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6100,9 +6170,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_2" id="tablet_capsule_paking_2"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6113,7 +6183,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6125,9 +6195,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_3" id="tablet_capsule_paking_3"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6138,7 +6208,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_3" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6150,9 +6220,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_4" id="tablet_capsule_paking_4"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6163,7 +6233,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_4" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6177,9 +6247,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_5" id="tablet_capsule_paking_5"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6190,7 +6260,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_5" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6204,9 +6274,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_6" id="tablet_capsule_paking_6"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6217,7 +6287,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_6" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6229,9 +6299,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_7" id="tablet_capsule_paking_7"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6242,7 +6312,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_7" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6254,9 +6324,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_8" id="tablet_capsule_paking_8"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6267,7 +6337,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_8" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6281,9 +6351,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_9" id="tablet_capsule_paking_9"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6294,7 +6364,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_9" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6308,9 +6378,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_10" id="tablet_capsule_paking_10"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6321,7 +6391,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_10" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6335,9 +6405,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_11" id="tablet_capsule_paking_11"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6348,7 +6418,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_11" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6362,9 +6432,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_12" id="tablet_capsule_paking_12"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6375,7 +6445,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_12" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6389,9 +6459,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_13" id="tablet_capsule_paking_13"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6401,7 +6471,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_13" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6413,9 +6483,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_14" id="tablet_capsule_paking_14"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6425,7 +6495,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_14" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6437,9 +6507,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_15" id="tablet_capsule_paking_15"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6449,7 +6519,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_15" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6461,9 +6531,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_16" id="tablet_capsule_paking_16"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6473,7 +6543,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_16" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6485,9 +6555,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_17" id="tablet_capsule_paking_17"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6497,7 +6567,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6509,9 +6579,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_18" id="tablet_capsule_paking_18"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6521,7 +6591,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_18" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6533,9 +6603,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_19" id="tablet_capsule_paking_19"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6545,7 +6615,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_19" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6557,9 +6627,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_20" id="tablet_capsule_paking_20"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6569,7 +6639,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_20" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -6603,9 +6673,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_21" id="tablet_capsule_paking_21"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6616,7 +6686,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_21" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6628,9 +6698,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_22" id="tablet_capsule_paking_22"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6641,7 +6711,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_22" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6653,9 +6723,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_23" id="tablet_capsule_paking_23"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6666,10 +6736,9 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_23" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
-                                    </td>
-
+                                      </td>
                                     </td>
                                 </tr>
                                 <tr>
@@ -6678,9 +6747,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_24" id="tablet_capsule_paking_24"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6691,7 +6760,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_24" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6705,9 +6774,9 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="tablet_capsule_paking_25" id="tablet_capsule_paking_25"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6718,7 +6787,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="tablet_capsule_paking_remark_25" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -6734,7 +6803,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6820,7 +6889,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6845,7 +6914,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6870,7 +6939,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6895,7 +6964,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6920,7 +6989,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6947,7 +7016,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6972,7 +7041,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -6997,7 +7066,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7022,7 +7091,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7048,7 +7117,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7073,7 +7142,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7098,7 +7167,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7124,7 +7193,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7148,7 +7217,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7177,7 +7246,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7202,7 +7271,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7224,7 +7293,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7251,7 +7320,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7277,7 +7346,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7304,7 +7373,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7330,7 +7399,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7356,7 +7425,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7382,7 +7451,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7408,7 +7477,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7434,7 +7503,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7462,7 +7531,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7488,7 +7557,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7510,7 +7579,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7532,7 +7601,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7554,7 +7623,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7576,7 +7645,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7598,7 +7667,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7622,7 +7691,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7645,7 +7714,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7667,7 +7736,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7689,7 +7758,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7711,7 +7780,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7733,7 +7802,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7756,7 +7825,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7778,7 +7847,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7800,7 +7869,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7822,7 +7891,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7843,7 +7912,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7865,7 +7934,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7909,7 +7978,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7934,7 +8003,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7961,7 +8030,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -7985,7 +8054,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8009,7 +8078,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8033,7 +8102,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8118,7 +8187,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8143,7 +8212,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8168,7 +8237,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8193,7 +8262,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8221,7 +8290,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8248,7 +8317,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8273,7 +8342,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8298,7 +8367,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8326,7 +8395,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8353,7 +8422,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8381,7 +8450,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8409,7 +8478,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8437,7 +8506,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8461,7 +8530,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8490,7 +8559,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8516,7 +8585,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8543,7 +8612,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8572,7 +8641,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8599,7 +8668,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8627,7 +8696,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8654,7 +8723,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8682,7 +8751,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8708,7 +8777,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8736,7 +8805,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8763,7 +8832,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8793,7 +8862,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8821,7 +8890,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8843,7 +8912,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8866,7 +8935,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8889,7 +8958,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8912,7 +8981,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8936,7 +9005,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8962,7 +9031,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -8985,7 +9054,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9007,7 +9076,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9029,7 +9098,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9051,7 +9120,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9073,7 +9142,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9096,7 +9165,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9118,7 +9187,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9140,7 +9209,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9162,7 +9231,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9184,7 +9253,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9207,7 +9276,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9229,7 +9298,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9251,7 +9320,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9273,7 +9342,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9295,7 +9364,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9317,7 +9386,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9339,7 +9408,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9362,7 +9431,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9385,7 +9454,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9407,7 +9476,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9429,7 +9498,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9451,7 +9520,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9473,7 +9542,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9495,7 +9564,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9518,7 +9587,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9546,7 +9615,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9592,7 +9661,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9618,7 +9687,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9645,7 +9714,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9669,7 +9738,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9693,7 +9762,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9717,7 +9786,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -9803,7 +9872,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9828,7 +9897,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9853,7 +9922,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9878,7 +9947,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9905,7 +9974,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9932,7 +10001,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9957,7 +10026,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -9982,7 +10051,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10009,7 +10078,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10036,7 +10105,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10063,7 +10132,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10090,7 +10159,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10117,7 +10186,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10142,7 +10211,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10167,7 +10236,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10192,7 +10261,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10217,7 +10286,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10242,7 +10311,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10267,7 +10336,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10292,7 +10361,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10317,7 +10386,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10342,7 +10411,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10367,7 +10436,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10392,7 +10461,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10417,7 +10486,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10442,7 +10511,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10467,7 +10536,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10492,7 +10561,7 @@ function addMultipleFiles(input, block_id) {
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                        <option value="Yes">Select an Option</option>
+                                                                        <option value="">Select an Option</option>
                                                                         <option value="Yes">Yes</option>
                                                                         <option value="No">No</option>
                                                                         <option value="N/A">N/A</option>
@@ -10516,7 +10585,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10541,7 +10610,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10566,7 +10635,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10591,7 +10660,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10616,7 +10685,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10641,7 +10710,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10666,7 +10735,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10691,7 +10760,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10716,7 +10785,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10741,7 +10810,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10766,7 +10835,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10791,7 +10860,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10816,7 +10885,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10841,7 +10910,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10866,7 +10935,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10891,7 +10960,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10943,7 +11012,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10972,7 +11041,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -10998,7 +11067,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -11025,7 +11094,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -11052,7 +11121,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -11079,7 +11148,7 @@ function addMultipleFiles(input, block_id) {
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="">Select an Option</option>
                                                                             <option value="Yes">Yes</option>
                                                                             <option value="No">No</option>
                                                                             <option value="N/A">N/A</option>
@@ -11170,7 +11239,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11195,7 +11264,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11220,7 +11289,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11245,7 +11314,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11272,7 +11341,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11299,7 +11368,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11324,7 +11393,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11349,7 +11418,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11376,7 +11445,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11403,7 +11472,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11430,7 +11499,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11457,7 +11526,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11484,7 +11553,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11509,7 +11578,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11534,7 +11603,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11559,7 +11628,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11584,7 +11653,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11609,7 +11678,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11634,7 +11703,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11659,7 +11728,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11684,7 +11753,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11709,7 +11778,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11734,7 +11803,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11759,7 +11828,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11784,7 +11853,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11809,7 +11878,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11834,7 +11903,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11859,7 +11928,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11884,7 +11953,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11909,7 +11978,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11934,7 +12003,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11959,7 +12028,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -11984,7 +12053,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12009,7 +12078,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12034,7 +12103,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12059,7 +12128,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12084,7 +12153,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12109,7 +12178,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12134,7 +12203,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12159,7 +12228,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12184,7 +12253,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12210,7 +12279,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12235,7 +12304,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12260,7 +12329,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12285,7 +12354,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12310,7 +12379,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12335,7 +12404,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12421,7 +12490,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12464,7 +12533,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12491,7 +12560,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12518,7 +12587,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12545,7 +12614,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12571,7 +12640,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12615,7 +12684,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12642,7 +12711,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12669,7 +12738,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12695,7 +12764,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12720,7 +12789,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12747,7 +12816,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12775,7 +12844,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12800,7 +12869,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12825,7 +12894,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12852,7 +12921,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12879,7 +12948,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12908,7 +12977,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12937,7 +13006,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12965,7 +13034,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -12993,7 +13062,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13022,7 +13091,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13055,7 +13124,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13081,7 +13150,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13107,7 +13176,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13133,7 +13202,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13159,7 +13228,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13185,7 +13254,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13211,7 +13280,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13237,7 +13306,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13286,7 +13355,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13315,7 +13384,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13341,7 +13410,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13368,7 +13437,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13395,7 +13464,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13422,7 +13491,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13474,7 +13543,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13503,7 +13572,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13592,7 +13661,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13617,7 +13686,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13642,7 +13711,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13667,7 +13736,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13712,7 +13781,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13741,7 +13810,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13769,7 +13838,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13797,7 +13866,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13824,7 +13893,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13849,7 +13918,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13874,7 +13943,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13901,7 +13970,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13928,7 +13997,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13955,7 +14024,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -13998,7 +14067,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14025,7 +14094,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14071,7 +14140,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14100,7 +14169,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14128,7 +14197,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14156,7 +14225,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14183,7 +14252,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14210,7 +14279,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14237,7 +14306,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14264,7 +14333,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14290,7 +14359,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14317,7 +14386,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14344,7 +14413,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14371,7 +14440,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14398,7 +14467,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14425,7 +14494,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14452,7 +14521,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14479,7 +14548,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14506,7 +14575,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14532,7 +14601,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14559,7 +14628,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14586,7 +14655,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14613,7 +14682,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14640,7 +14709,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14667,7 +14736,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14694,7 +14763,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14721,7 +14790,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14748,7 +14817,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14775,7 +14844,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14802,7 +14871,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14829,7 +14898,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14856,7 +14925,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14883,7 +14952,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14909,7 +14978,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14936,7 +15005,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14963,7 +15032,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -14990,7 +15059,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15017,7 +15086,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15044,7 +15113,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15071,7 +15140,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15098,7 +15167,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15125,7 +15194,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15152,7 +15221,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15179,7 +15248,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15206,7 +15275,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15233,7 +15302,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15262,7 +15331,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15290,7 +15359,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15317,7 +15386,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15344,7 +15413,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15371,7 +15440,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15398,7 +15467,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15425,7 +15494,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15452,7 +15521,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15479,7 +15548,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15506,7 +15575,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15532,7 +15601,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15559,7 +15628,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15586,7 +15655,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15613,7 +15682,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15658,7 +15727,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15687,7 +15756,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15715,7 +15784,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15743,7 +15812,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15771,7 +15840,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15799,7 +15868,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15826,7 +15895,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15853,7 +15922,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15880,7 +15949,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15907,7 +15976,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15934,7 +16003,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15961,7 +16030,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -15988,7 +16057,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16015,7 +16084,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16042,7 +16111,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16069,7 +16138,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16096,7 +16165,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16123,7 +16192,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16150,7 +16219,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16177,7 +16246,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16204,7 +16273,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16231,7 +16300,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16258,7 +16327,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16302,7 +16371,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16330,7 +16399,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16357,7 +16426,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16384,7 +16453,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16411,7 +16480,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16504,7 +16573,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16529,7 +16598,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16554,7 +16623,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16579,7 +16648,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16606,7 +16675,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16633,7 +16702,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16658,7 +16727,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16683,7 +16752,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16710,7 +16779,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16737,7 +16806,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16764,7 +16833,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16791,7 +16860,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16818,7 +16887,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16842,7 +16911,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16866,7 +16935,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16890,7 +16959,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16914,7 +16983,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16938,7 +17007,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16962,7 +17031,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -16986,7 +17055,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17010,7 +17079,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17032,7 +17101,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17054,7 +17123,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17076,7 +17145,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17098,7 +17167,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17120,7 +17189,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17142,7 +17211,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17164,7 +17233,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17186,7 +17255,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17270,7 +17339,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17295,7 +17364,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17320,7 +17389,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17345,7 +17414,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17372,7 +17441,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17399,7 +17468,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17424,7 +17493,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17449,7 +17518,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17476,7 +17545,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17503,7 +17572,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17530,7 +17599,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17557,7 +17626,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17584,7 +17653,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17609,7 +17678,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17634,7 +17703,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17659,7 +17728,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17684,7 +17753,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17709,7 +17778,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17734,7 +17803,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17759,7 +17828,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17784,7 +17853,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17809,7 +17878,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17834,7 +17903,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17859,7 +17928,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17884,7 +17953,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17909,7 +17978,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17934,7 +18003,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17959,7 +18028,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -17984,7 +18053,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18009,7 +18078,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18034,7 +18103,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18059,7 +18128,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18084,7 +18153,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18109,7 +18178,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18200,7 +18269,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18225,7 +18294,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18250,7 +18319,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18275,7 +18344,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18304,7 +18373,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18332,7 +18401,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18357,7 +18426,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18382,7 +18451,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18410,7 +18479,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18437,7 +18506,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18465,7 +18534,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18493,7 +18562,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18521,7 +18590,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18568,7 +18637,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18597,7 +18666,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18623,7 +18692,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18650,7 +18719,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18679,7 +18748,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18708,7 +18777,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18736,7 +18805,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18763,7 +18832,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18791,7 +18860,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18817,7 +18886,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18845,7 +18914,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18872,7 +18941,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18902,7 +18971,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18930,7 +18999,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18952,7 +19021,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18975,7 +19044,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -18998,7 +19067,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19021,7 +19090,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19046,7 +19115,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19071,7 +19140,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19094,7 +19163,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19117,7 +19186,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19140,7 +19209,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19163,7 +19232,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19186,7 +19255,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19209,7 +19278,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19232,7 +19301,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19255,7 +19324,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19278,7 +19347,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19301,7 +19370,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19324,7 +19393,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19347,7 +19416,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19370,7 +19439,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19393,7 +19462,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19416,7 +19485,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19439,7 +19508,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19462,7 +19531,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19485,7 +19554,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19508,7 +19577,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19531,7 +19600,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19554,7 +19623,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19577,7 +19646,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19600,7 +19669,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19623,7 +19692,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19646,7 +19715,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19669,7 +19738,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19692,7 +19761,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19715,7 +19784,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19740,7 +19809,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -19788,7 +19857,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -19814,7 +19883,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -19839,7 +19908,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -19864,7 +19933,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -19889,7 +19958,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -19914,7 +19983,7 @@ function addMultipleFiles(input, block_id) {
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <select name="response" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -20002,7 +20071,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20027,7 +20096,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20052,7 +20121,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20077,7 +20146,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20104,7 +20173,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20131,7 +20200,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20156,7 +20225,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20181,7 +20250,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20208,7 +20277,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20235,7 +20304,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20262,7 +20331,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20289,7 +20358,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20316,7 +20385,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20341,7 +20410,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20366,7 +20435,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20391,7 +20460,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20416,7 +20485,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20441,7 +20510,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20468,7 +20537,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20493,7 +20562,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20518,7 +20587,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20543,7 +20612,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20568,7 +20637,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20593,7 +20662,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20618,7 +20687,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20643,7 +20712,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20668,7 +20737,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20693,7 +20762,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20718,7 +20787,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20743,7 +20812,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20768,7 +20837,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20793,7 +20862,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20818,7 +20887,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20843,7 +20912,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20868,7 +20937,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20893,7 +20962,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20918,7 +20987,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20943,7 +21012,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20968,7 +21037,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -20993,7 +21062,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21018,7 +21087,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21066,7 +21135,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21095,7 +21164,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21121,7 +21190,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21148,7 +21217,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21175,7 +21244,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21202,7 +21271,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21285,7 +21354,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21310,7 +21379,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21335,7 +21404,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21360,7 +21429,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21387,7 +21456,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21414,7 +21483,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21439,7 +21508,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21464,7 +21533,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21491,7 +21560,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21518,7 +21587,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21545,7 +21614,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21572,7 +21641,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21599,7 +21668,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21624,7 +21693,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21649,7 +21718,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21674,7 +21743,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21699,7 +21768,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21724,7 +21793,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21749,7 +21818,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21774,7 +21843,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21799,7 +21868,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21824,7 +21893,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21849,7 +21918,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21874,7 +21943,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21899,7 +21968,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21924,7 +21993,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21949,7 +22018,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -21974,7 +22043,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">
@@ -21999,7 +22068,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22024,7 +22093,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22049,7 +22118,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22074,7 +22143,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22099,7 +22168,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22124,7 +22193,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22149,7 +22218,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22174,7 +22243,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22199,7 +22268,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22224,7 +22293,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22249,7 +22318,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22274,7 +22343,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22299,7 +22368,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22324,7 +22393,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22349,7 +22418,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22374,7 +22443,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22426,7 +22495,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22455,7 +22524,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22554,7 +22623,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22579,7 +22648,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22604,7 +22673,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22629,7 +22698,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22655,7 +22724,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22680,7 +22749,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22705,7 +22774,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22730,7 +22799,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22755,7 +22824,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22780,7 +22849,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22806,7 +22875,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22831,7 +22900,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22868,7 +22937,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22892,7 +22961,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22916,7 +22985,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22938,7 +23007,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22962,7 +23031,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -22986,7 +23055,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23010,7 +23079,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23034,7 +23103,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23058,7 +23127,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23082,7 +23151,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23106,7 +23175,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23130,7 +23199,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23154,7 +23223,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23239,7 +23308,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23264,7 +23333,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23289,7 +23358,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23314,7 +23383,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23341,7 +23410,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23368,7 +23437,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23393,7 +23462,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23418,7 +23487,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23445,7 +23514,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23472,7 +23541,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23499,7 +23568,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23526,7 +23595,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23553,7 +23622,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23578,7 +23647,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23622,7 +23691,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23649,7 +23718,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23676,7 +23745,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23701,7 +23770,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23726,7 +23795,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23751,7 +23820,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23776,7 +23845,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23801,7 +23870,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23937,7 +24006,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23964,7 +24033,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -23993,7 +24062,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24148,7 +24217,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Permanent</option>
                                                 <option value="No">Temporary</option>
                                                 <option value="N/A">Casual</option>
@@ -24173,7 +24242,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24200,7 +24269,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Urban</option>
                                                 <option value="No">Rural</option>
                                                 <option value="N/A">Industrial</option>
@@ -24333,7 +24402,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24360,7 +24429,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24387,7 +24456,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24435,7 +24504,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24464,7 +24533,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24490,7 +24559,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24528,7 +24597,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24555,7 +24624,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24582,7 +24651,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24609,7 +24678,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24636,7 +24705,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24662,7 +24731,7 @@ function addMultipleFiles(input, block_id) {
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                             <select name="response" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                <option value="Yes">Select an Option</option>
+                                                <option value="">Select an Option</option>
                                                 <option value="Yes">Yes</option>
                                                 <option value="No">No</option>
                                                 <option value="N/A">N/A</option>
@@ -24711,7 +24780,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Designed</option>
                                                     <option value="No">Adapted</option>
                                                    
@@ -24760,7 +24829,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24790,7 +24859,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24820,7 +24889,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24850,7 +24919,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24880,7 +24949,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24909,7 +24978,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24957,7 +25026,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -24984,7 +25053,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25010,7 +25079,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25053,7 +25122,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25079,7 +25148,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25104,7 +25173,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25130,7 +25199,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25155,7 +25224,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25181,7 +25250,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25207,7 +25276,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25233,7 +25302,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25259,7 +25328,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25285,7 +25354,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25311,7 +25380,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25337,7 +25406,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25363,7 +25432,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25389,7 +25458,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25415,7 +25484,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25441,7 +25510,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25467,7 +25536,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25493,7 +25562,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25519,7 +25588,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -25572,7 +25641,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Multi</option>
                                                         <option value="No">Single</option>
                                                       
@@ -25604,7 +25673,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25633,7 +25702,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25659,7 +25728,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25685,7 +25754,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25711,7 +25780,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25737,7 +25806,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25763,7 +25832,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25789,7 +25858,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25815,7 +25884,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25841,7 +25910,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25867,7 +25936,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25911,7 +25980,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25937,7 +26006,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25964,7 +26033,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -25990,7 +26059,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -26034,7 +26103,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -26060,7 +26129,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -26086,7 +26155,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -26132,7 +26201,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26164,7 +26233,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26193,7 +26262,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26241,7 +26310,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26267,7 +26336,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26315,7 +26384,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26341,7 +26410,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26367,7 +26436,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26393,7 +26462,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26597,7 +26666,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26623,7 +26692,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26649,7 +26718,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26675,7 +26744,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26701,7 +26770,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26727,7 +26796,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26751,7 +26820,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26775,7 +26844,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26799,7 +26868,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26823,7 +26892,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26847,7 +26916,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26871,7 +26940,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26895,7 +26964,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26919,7 +26988,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26943,7 +27012,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26967,7 +27036,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -26991,7 +27060,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -27015,7 +27084,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -27039,7 +27108,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -27063,7 +27132,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -27110,7 +27179,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27142,7 +27211,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27171,7 +27240,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27219,7 +27288,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27245,7 +27314,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27271,7 +27340,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27297,7 +27366,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27323,7 +27392,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27351,7 +27420,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27580,7 +27649,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Accepted</option>
                                                     <option value="No">Rejected</option>
                                                     <option value="N/A">N/A</option>
@@ -27609,7 +27678,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27634,7 +27703,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27660,7 +27729,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27686,7 +27755,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27712,7 +27781,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27738,7 +27807,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27764,7 +27833,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27790,7 +27859,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27815,7 +27884,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27839,7 +27908,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27863,7 +27932,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -27908,7 +27977,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -27940,7 +28009,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -27969,7 +28038,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -27995,7 +28064,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28021,7 +28090,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28047,7 +28116,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28073,7 +28142,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28099,7 +28168,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28125,7 +28194,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28151,7 +28220,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28197,7 +28266,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28224,7 +28293,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28250,7 +28319,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28278,7 +28347,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28307,7 +28376,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28333,7 +28402,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28359,7 +28428,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28385,7 +28454,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28430,7 +28499,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28457,7 +28526,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28485,7 +28554,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28513,7 +28582,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28539,7 +28608,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28565,7 +28634,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28591,7 +28660,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28636,7 +28705,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28660,7 +28729,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28684,7 +28753,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28708,7 +28777,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28732,7 +28801,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -28781,7 +28850,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28809,7 +28878,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28860,7 +28929,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28886,7 +28955,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28912,7 +28981,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28938,7 +29007,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28964,7 +29033,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -28990,7 +29059,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29016,7 +29085,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29042,7 +29111,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29068,7 +29137,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29094,7 +29163,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29120,7 +29189,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29146,7 +29215,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29172,7 +29241,7 @@ function addMultipleFiles(input, block_id) {
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <select name="response" id="response"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="">Select an Option</option>
                                                     <option value="Yes">Yes</option>
                                                     <option value="No">No</option>
                                                     <option value="N/A">N/A</option>
@@ -29244,7 +29313,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29273,7 +29342,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29304,7 +29373,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29331,7 +29400,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29360,7 +29429,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Supplier-Contractor</option>
                                                         <option value="No">Owned</option>
                                                         
@@ -29386,7 +29455,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29429,7 +29498,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29455,7 +29524,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29481,7 +29550,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29507,7 +29576,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29533,7 +29602,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29578,7 +29647,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29628,7 +29697,7 @@ function addMultipleFiles(input, block_id) {
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                     <select name="response" id="response"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
@@ -29769,7 +29838,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -29816,7 +29885,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -29845,7 +29914,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30100,7 +30169,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30127,7 +30196,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30153,7 +30222,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30179,7 +30248,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30205,7 +30274,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30232,7 +30301,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30258,7 +30327,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
@@ -30283,7 +30352,7 @@ function addMultipleFiles(input, block_id) {
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="response" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
+                                                            <option value="">Select an Option</option>
                                                             <option value="Yes">Yes</option>
                                                             <option value="No">No</option>
                                                             <option value="N/A">N/A</option>
