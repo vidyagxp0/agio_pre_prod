@@ -395,11 +395,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
 
             </div>
 
@@ -416,17 +416,16 @@
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
                                 <input disabled type="text" name="record"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/MICRO/{{ date('Y') }}">
-
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS_MICRO/{{ date('Y') }}/{{ $record_number }}">
                             </div>
                         </div>
 
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code">Division Code</label>
-                                <input disabled type="text" name="division_code"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                <input readonly type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
                         <div class="col-6">
@@ -646,8 +645,13 @@
                                 <label for="Reference Recores">Reference Document</label>
                                 <select multiple id="reference_record" name="reference_document_gi[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
+                                    @foreach ($old_record as $new)
+                                        <option value="{{ $new->id }}">
+                                            {{ Helpers::getDivisionName($new->division_id) }}/OOS_MICRO/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                        </option>
+                                    @endforeach
+                                    {{--<option value="1">1</option>
+                                    <option value="2">2</option>--}}
                                 </select>
                             </div>
                         </div>
@@ -657,12 +661,12 @@
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option>Raw Material</option>
-                                    <option>Packing Material</option>
-                                    <option>Finished Product</option>
-                                    <option>Satbility Sample</option>
-                                    <option>Others</option>
+                                    <option value="">Enter Your Selection Here</option>
+                                    <option value="raw-material">Raw Material</option>
+                                    <option value="packing-material">Packing Material</option>
+                                    <option value="finished-product">Finished Product</option>
+                                    <option value="stability-sample">Stability Sample</option>
+                                    <option value="other">Others</option>
 
                                 </select>
                             </div>
@@ -686,8 +690,8 @@
                                 <label for="Initiator Group">Customer*</label>
                                 <select name="customer_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
                                 </select>
                             </div>
                         </div>
@@ -1973,7 +1977,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -1985,7 +1989,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">
+                            <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -2006,7 +2010,7 @@
 
                             <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
-                                data-search="false" data-silent-initial-value-set="true" id="auditee">
+                                data-search="false" data-silent-initial-value-set="true" id="manufacturing_multi_select">
                                 <option value="chemical">Chemical</option>
                                 <option value="microbiology">Microbiology</option>
 
@@ -2018,8 +2022,7 @@
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Manufacturing Invst. Ref.</label>
-                            <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
+                            <select multiple id="manufacturing_invst" name="manufacturing_invst_ref_piii[]">
                                 <option value="">--Select---</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -3300,7 +3303,7 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="field_alert_reference_BI" id="">
+                            <select multiple id="reference_record" name="field_alert_reference_BI[]" id="">
                                 <option value="">--Select---</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -16428,7 +16431,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#reference_record, #notify_to'
+            ele: '#reference_record, #notify_to, #manufacturing_invst, #manufacturing_multi_select'
         });
 
         $('#summernote').summernote({
