@@ -455,9 +455,9 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "opened";
+                $history->change_to =   "Pending Review";
                 $history->change_from = $lastDocument->status;
-                $history->action_name = 'Update';
+                $history->action_name = 'Submit';
                 $history->stage = 'Plan Approved';
                 $history->save();
 
@@ -467,6 +467,7 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 2) {
                 $ErrataControl->stage = "3";
+                $ErrataControl->status = "Pending Correction";
                 $ErrataControl->review_completed_by = Auth::user()->name;
                 $ErrataControl->review_completed_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->review_completed_comment = $request->comment;
@@ -482,7 +483,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Pending Correction";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'Correction Completed';
                 $history->action_name = 'Update';
@@ -495,6 +496,7 @@ class ErrataController extends Controller
             }
             if ($ErrataControl->stage == 3) {
                 $ErrataControl->stage = "4";
+                $ErrataControl->status = "Pending HOD Review";
                 $ErrataControl->correction_completed_by = Auth::user()->name;
                 $ErrataControl->correction_completed_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->correction_completed_comment = $request->comment;
@@ -510,7 +512,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Pending HOD Review";
                 $history->change_from = $lastDocument->status;
                 $history->stage = 'HOD Review Completed';
                 $history->action_name = 'Update';
@@ -524,6 +526,7 @@ class ErrataController extends Controller
 
             if ($ErrataControl->stage == 4) {
                 $ErrataControl->stage = "5";
+                $ErrataControl->status = "Pending QA Head Approval";
                 $ErrataControl->hod_review_complete_by = Auth::user()->name;
                 $ErrataControl->hod_review_complete_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->hod_review_complete_comment = $request->comment;
@@ -539,7 +542,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Pending QA Head Approval";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                 $history->stage = 'QA Head Approval Completed';
@@ -553,6 +556,7 @@ class ErrataController extends Controller
 
             if ($ErrataControl->stage == 5) {
                 $ErrataControl->stage = "6";
+                $ErrataControl->status = "Closed Done";
                 $ErrataControl->qa_head_approval_completed_by = Auth::user()->name;
                 $ErrataControl->qa_head_approval_completed_on = Carbon::now()->format('d-M-Y');
                 $ErrataControl->qa_head_approval_completed_comment = $request->comment;
@@ -568,7 +572,7 @@ class ErrataController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->change_to =   "Opened";
+                $history->change_to =   "Closed Done";
                 $history->change_from = $lastDocument->status;
                 $history->action_name = 'Update';
                 $history->stage = 'Closed-Done';
@@ -1201,7 +1205,7 @@ class ErrataController extends Controller
 
     public function auditTrial($id)
     {
-        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = ErrataAuditTrail::where('errata_id', $id)->orderByDESC('id')->paginate(5);
         $today = Carbon::now()->format('d-m-y');
         $document = errata::where('id', $id)->first();
         $document->originator = User::where('id', $document->initiator_id)->value('name');

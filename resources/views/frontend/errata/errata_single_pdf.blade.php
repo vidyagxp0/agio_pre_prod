@@ -343,6 +343,36 @@
 
             <div class="block">
                 <div class="block-head">
+                    HOD Review
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">HOD Remarks</th>
+                        <td class="w-80">
+                            @if ($data->HOD_Remarks)
+                                {!! $data->HOD_Remarks !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">HOD Attachments
+                        </th>
+                        <td class="w-80">
+                            @if ($data->HOD_Attachments)
+                                {!! $data->HOD_Attachments !!}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div class="block">
+                <div class="block-head">
                     QA Review
                 </div>
                 <table>
