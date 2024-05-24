@@ -11,6 +11,9 @@
     }
 </style>
 
+@php
+$users = DB::table('users')->get();
+@endphp
 <div class="form-field-head">
     {{-- <div class="pr-id">
             New Child
@@ -136,6 +139,12 @@
         });
     });
 </script>
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+</script>
 
 
 
@@ -175,48 +184,58 @@
                             General Information
                         </div> <!-- RECORD NUMBER -->
                         <div class="row">
-
+                            {{-- @foreach ($record_number as $record) --}}
+                            
+                                
+                            
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" name="record_number" value="">
+                                    <input disabled type="text" name="record_number" >
+                                    {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                  
+                                </div>
+                            </div>
+                            {{-- @endforeach --}}
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Division Code"><b>Site/Location Code</b></label>
+                                    <input readonly type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
 
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Division Code"><b>Division Code </b></label>
-                                    <input disabled type="text" name="division_code" value="">
-                                    <input type="hidden" name="division_id" value="">
-
+                                    <label for="Initiator"><b>Initiator</b></label>
+                                    {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                    <input disabled type="text" name="division_code"
+                                        value="{{ Auth::user()->name }}">
                                 </div>
                             </div>
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="originator">Initiator</label>
-                                    <input disabled type="text" name="originator_id" value="" />
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6">
-                                <div class="group-input ">
                                     <label for="Date Due"><b>Date of Initiation</b></label>
-                                    <input disabled type="text" value="" name="intiation_date">
-                                    <input type="hidden" value="" name="intiation_date">
-                                </div>
+                                    <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                    <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                   </div>
                             </div>
 
                             <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
-
+                                    
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" class="hide-input" oninput="handleDateInput(this, 'due_date')" />
+                                        <input type="text" id="due_date" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
                                     </div>
+                                    
                                 </div>
                             </div>
 
@@ -224,52 +243,75 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
-                                    <select name="initiator_Group" id="initiator_group">
+                                    <select name="Initiator_Group" id="initiator_group">
                                         <option value="">-- Select --</option>
-                                        <option value="CQA">
-                                            Corporate Quality Assurance</option>
-                                        <option value="QAB">Quality
-                                            Assurance Biopharma</option>
-                                        <option value="CQC">Central
-                                            Quality Control</option>
-                                        <option value="MANU">
-                                            Manufacturing</option>
-                                        <option value="PSG">Plasma
-                                            Sourcing Group</option>
-                                        <option value="CS">Central
-                                            Stores</option>
-                                        <option value="ITG">
-                                            Information Technology Group</option>
-                                        <option value="MM">
-                                            Molecular Medicine</option>
-                                        <option value="CL">
-                                            Central Laboratory</option>
-
-                                        <option value="TT">Tech
-                                            team</option>
-                                        <option value="QA">
-                                            Quality Assurance</option>
-                                        <option value="QM">
-                                            Quality Management</option>
-                                        <option value="IA">IT
-                                            Administration</option>
-                                        <option value="ACC">
-                                            Accounting</option>
-                                        <option value="LOG">
-                                            Logistics</option>
-                                        <option value="SM">
-                                            Senior Management</option>
-                                        <option value="BA">
-                                            Business Administration</option>
+                                        <option value="CQA">Corporate Quality Assurance</option>
+                                        <option value="QAB">Quality Assurance Biopharma</option>
+                                        <option value="CQC">Central Quality Control</option>
+                                        <option value="MANU">Manufacturing</option>
+                                        <option value="PSG">Plasma Sourcing Group</option>
+                                        <option value="CS">Central Stores</option>
+                                        <option value="ITG">Information Technology Group</option>
+                                        <option value="MM">Molecular Medicine</option>
+                                        <option value="CL">Central Laboratory</option>
+                                        <option value="TT">Tech team</option>
+                                        <option value="QA">Quality Assurance</option>
+                                        <option value="QM">Quality Management</option>
+                                        <option value="IA">IT Administration</option>
+                                        <option value="ACC">Accounting</option>
+                                        <option value="LOG">Logistics</option>
+                                        <option value="SM">Senior Management</option>
+                                        <option value="BA">Business Administration</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="">
+                                    <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                 </div>
                             </div>
+                        
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedValue = this.value;
+                                    document.getElementById('initiator_group_code').value = selectedValue;
+                                });
+                            </script>
+
+{{-- 
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group"><b>Initiator Group</b></label>
+                                    <select name="Initiator_Group" id="initiator_group">
+                                        <option value="">-- Select --</option>
+                                        <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
+                                        <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
+                                        <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                        <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
+                                        <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
+                                        <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
+                                        <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
+                                        <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
+                                        <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
+
+                                        <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
+                                        <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
+                                        <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
+                                        <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
+                                        <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
+                                        <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
+                                        <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
+                                        <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input type="text" name="initiator_group_code" id="nitiator_group_code" value="" readonly>
+                                    </div>
+                                </div> --}}
 
                             <div class="col-lg-12">
                                 <div class="group-input">
@@ -301,14 +343,16 @@
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Is Repeat</label>
-                                    <select name="is_repeat" onchange="">
-                                        <option value="">-- select --</option>
-                                        <option value=""></option>
+                                    <select name="is_repeat_ooc" onchange="">
+                                        <option value="0">-- select --</option>
+                                        <option value="YES"></option>
+                                        <option value="NO"></option>
 
                                     </select>
                                 </div>
                             </div>
 
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Repeat Nature">Repeat Nature</label>
@@ -325,51 +369,56 @@
                                 <div class="group-input">
                                     <label for="Description">Description</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Description" id="summernote-1">
+                                    <textarea class="summernote" name="description_ooc" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
 
 
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div>
-                                        <small class="text-primary">
-                                            Please Attach all relevant or supporting documents
-                                        </small>
-                                    </div>
+                                    <label for="Initial Attachments">Initial Attachment</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id=""></div>
+                                        <div class="file-attachment-list" id="initial_attachment_ooc"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="" oninput="" multiple>
+                                            <input type="file" id="initial_attachment_ooc" name="initial_attachment_ooc[]"
+                                                oninput="addMultipleFiles(this, 'initial_attachment_ooc')" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
+                            <div class="col-md-6">
                                 <div class="group-input">
-                                    <label for="Initiator Group">OOC Logged by</label>
-                                    <select name="is_repeat" onchange="">
-                                        <option value="">-- select --</option>
-                                        <option value=""></option>
-
+                                    <label for="search">
+                                        OOC Logged by <span class="text-danger"></span>
+                                    </label>
+                                    <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <option value="">Select a value</option>
+                                        @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
                                     </select>
+                                    @error('assign_to')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 new-date-data-field">
+                            <div class="col-md-6 new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="OOC Logged On"> OOC Logged On </label>
-
+                                    <label for="due-date">OOC Logged On <span class="text-danger"></span></label>
+                                    <p class="text-primary"> last date this record should be closed by</p>
+                                    
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="" />
+                                        <input type="text" id="due_date" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
                                     </div>
-
-
+                                    
                                 </div>
                             </div>
 
@@ -449,25 +498,28 @@
                             </div>
 
 
-
-                            <div class="col-12">
+                            <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Inv Attachments">HOD Attachement</label>
+                                    <label for="Initial Attachments">HOD Attachement</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id=""></div>
+                                        <div class="file-attachment-list" id="attachments_hod_ooc"></div>
                                         <div class="add-btn">
                                             <div>Add</div>
-                                            <input type="file" id="myfile" name="" oninput="" multiple>
+                                            <input type="file" id="attachments_hod_ooc" name="attachments_hod_ooc[]"
+                                                oninput="addMultipleFiles(this, 'attachments_hod_ooc')" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Immediate Action">Immediate Action</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Immediate_Action" id="summernote-1">
+                                    <textarea class="summernote" name="Immediate_Action_ooc" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -476,7 +528,7 @@
                                 <div class="group-input">
                                     <label for="Preliminary Investigation">Preliminary Investigation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="Preliminary_Investigation" id="summernote-1">
+                                    <textarea class="summernote" name="Preliminary_Investigation_ooc" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -650,21 +702,21 @@
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Evaluation Remarks</label>
-                                <textarea name="qa_comments"></textarea>
+                                <textarea name="qa_comments_ooc"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="qa_comments">Description of Cause for OOC Results (If Identified)</label>
-                                <textarea name="qa_comments"></textarea>
+                                <textarea name="qa_comments_description_ooc"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_assingable_ooc" onchange="">
+                                    <option value="YES">-- select --</option>
+                                    <option value="NO"></option>
 
                                 </select>
                             </div>
@@ -678,7 +730,7 @@
                             <div class="group-input">
                                 <label for="Protocol Based Study/Hypothesis Study">Protocol Based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Protocol_Based_Study/Hypothesis_Study" id="summernote-1">
+                                <textarea class="summernote" name="protocol_based_study_hypthesis_study_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -689,7 +741,7 @@
                             <div class="group-input">
                                 <label for="Justification for Protocol study/ Hypothesis Study">Justification for Protocol study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Justification_for_Protocol_study/Hypothesis_Study" id="summernote-1">
+                                <textarea class="summernote" name="justification_for_protocol_study_hypothesis_study_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -699,7 +751,7 @@
                             <div class="group-input">
                                 <label for="Plan of Protocol Study/ Hypothesis Study">Plan of Protocol Study/ Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Plan_of_Protocol_Study/Hypothesis_Study" id="summernote-1">
+                                <textarea class="summernote" name="plan_of_protocol_study_hypothesis_study" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -709,7 +761,7 @@
                             <div class="group-input">
                                 <label for="Conclusion of Protocol based Study/Hypothesis Study">Conclusion of Protocol based Study/Hypothesis Study</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Conclusion_of_Protocol_based_Study/Hypothesis_Study" id="summernote-1">
+                                <textarea class="summernote" name="conclusion_of_protocol_based_study_hypothesis_study_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -733,7 +785,7 @@
                             <div class="group-input">
                                 <label for="Analyst Remarks">Analyst Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Analyst_Remarks" id="summernote-1">
+                                <textarea class="summernote" name="analysis_remarks_stage_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -743,14 +795,14 @@
                             <div class="group-input">
                                 <label for="Calibration Results">Calibration Results</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Calibration_Results" id="summernote-1">
+                                <textarea class="summernote" name="calibration_results_stage_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Results Naturey</label>
-                                <select name="is_repeat" onchange="">
+                                <select name="is_repeat_result_naturey_ooc" onchange="">
                                     <option value="">-- select --</option>
                                     <option value=""></option>
 
@@ -765,19 +817,22 @@
                             <div class="group-input">
                                 <label for="Review of Calibration Results of Analyst">Review of Calibration Results of Analyst</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Review_of_Calibration_Results_of_Analyst" id="summernote-1">
+                                <textarea class="summernote" name="review_of_calibration_results_of_analyst_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
 
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Stage I Attachement</label>
+                                <label for="Initial Attachments">Stage I Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="attachments_stage_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="attachments_stage_ooc" name="attachments_stage_ooc[]"
+                                            oninput="addMultipleFiles(this, 'attachments_stage_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -789,7 +844,7 @@
                             <div class="group-input">
                                 <label for="Results Criteria">Results Criteria</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Results_Criteria" id="summernote-1">
+                                <textarea class="summernote" name="results_criteria_stage_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -797,7 +852,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
-                                <select name="is_repeat" onchange="">
+                                <select name="is_repeat_stae_ooc" onchange="">
                                     <option value="">-- select --</option>
                                     <option value=""></option>
 
@@ -809,7 +864,7 @@
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="qa_comments">Additinal Remarks (if any)</label>
-                                <textarea name="qa_comments"></textarea>
+                                <textarea name="qa_comments_stage_ooc"></textarea>
                             </div>
                         </div>
 
@@ -817,7 +872,7 @@
                             <div class="group-input">
                                 <label for="Additinal Remarks (if any)">Additinal Remarks (if any)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="Additinal_Remarks" id="summernote-1">
+                                <textarea class="summernote" name="additional_remarks_stage_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -845,9 +900,11 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Rectification by Service Engineer required</label>
-                                <select name="is_repeat" onchange="">
+                                <select name="is_repeat_stageii_ooc" onchange="">
                                     <option value="">-- select --</option>
-                                    <option value=""></option>
+                                    <option value="YES">Yes</option>
+                                    <option value="No">No</option>
+
 
                                 </select>
                             </div>
@@ -855,10 +912,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Instrument is Out of Order</label>
-                                <select name="is_repeat" onchange="">
+                                <select name="is_repeat_stage_instrument_ooc" onchange="">
                                     <option value="">-- select --</option>
-                                    <option value=""></option>
-
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
                                 </select>
                             </div>
                         </div>
@@ -866,21 +923,26 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Proposed By</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_proposed_stage_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
 
                                 </select>
                             </div>
                         </div>
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Details of Equipment Rectification</label>
+                                <label for="Initial Attachments">Details of Equipment Rectification Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_stageii_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_stageii_ooc" name="initial_attachment_stageii_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_stageii_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -891,9 +953,10 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Compiled by:</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_compiled_stageii_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
 
                                 </select>
                             </div>
@@ -902,9 +965,11 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group">Release of Instrument for usage</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_realease_stageii_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+
 
                                 </select>
                             </div>
@@ -914,7 +979,7 @@
                             <div class="group-input">
                                 <label for="Impact Assessment at Stage II">Impact Assessment at Stage II</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_throug_stageii_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -922,7 +987,7 @@
                             <div class="group-input">
                                 <label for="Details of Impact Evaluation">Details of Impact Evaluation</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_stageii_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -932,9 +997,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">Result of Reanalysis:</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_reanalysis_stageii_ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                    
 
                                 </select>
                             </div>
@@ -944,7 +1011,7 @@
                             <div class="group-input">
                                 <label for="Cause for failure">Cause for failure</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_stageii_cause_failure_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -972,9 +1039,11 @@
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">CAPA Type?</label>
-                                <select name="is_repeat" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                <select name="is_repeat_capa-ooc" onchange="">
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes"></option>
+                                    <option value="No"></option>
+                                    
 
                                 </select>
                             </div>
@@ -984,7 +1053,7 @@
                             <div class="group-input">
                                 <label for="Corrective Action">Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_capas_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -993,7 +1062,7 @@
                             <div class="group-input">
                                 <label for="Preventive Action">Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_capa_prevent_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1002,21 +1071,24 @@
                             <div class="group-input">
                                 <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_capa_corrective_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
 
 
 
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Details of Equipment Rectification</label>
+                                <label for="Initial Attachments">Details of Equipment Rectification Attachment</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_capa_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_capa_ooc" name="initial_attachment_capa_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1031,20 +1103,23 @@
                             <div class="group-input">
                                 <label for="CAPA Post Implementation Comments">CAPA Post Implementation Comments</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_capa_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
 
 
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">CAPA Post Implementation Attachement</label>
+                                <label for="Initial Attachments">CAPA Post Implementation Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_capa_post_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_capa_post_ooc" name="initial_attachment_capa_post_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_capa_post_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1074,18 +1149,21 @@
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Closure Comments
-                                    <input id="docname" type="text" name="short_description">
+                                    <input id="docname" type="text" name="short_description_closure_ooc">
                             </div>
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">Details of Equipment Rectification</label>
+                                <label for="Initial Attachments">Details of Equipment Rectification</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_closure_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1093,14 +1171,14 @@
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code
-                                    <input id="docname" type="text" name="Document_Code">
+                                    <input id="docname" type="text" name="document_code_closure_ooc">
                             </div>
                         </div>
 
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Remarks
-                                    <input id="docname" type="text" name="Remarks">
+                                    <input id="docname" type="text" name="remarks_closure_ooc">
                             </div>
                         </div>
 
@@ -1108,7 +1186,7 @@
                             <div class="group-input">
                                 <label for="Immediate Corrective Action">Immediate Corrective Action</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_closure_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1135,21 +1213,24 @@
                             <div class="group-input">
                                 <label for="HOD Remarks">HOD Remarks</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_hodreview_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
 
 
 
-                        <div class="col-12">
+                        <div class="col-lg-12">
                             <div class="group-input">
-                                <label for="Inv Attachments">HOD Attachement</label>
+                                <label for="Initial Attachments">HOD Attachement</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_hodreview_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_hodreview_ooc" name="initial_attachment_hodreview_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_hodreview_ooc')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1159,7 +1240,7 @@
                             <div class="group-input">
                                 <label for="Root Cause Analysis">Root Cause Analysis</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_rootcause_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1168,7 +1249,7 @@
                             <div class="group-input">
                                 <label for="Impact Assessment">Impact Assessment</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea class="summernote" name="initiated_through" id="summernote-1">
+                                <textarea class="summernote" name="initiated_through_impact_closure_ooc" id="summernote-1">
                                     </textarea>
                             </div>
                         </div>
@@ -1194,40 +1275,65 @@
 
 
 
-                        <div class="sub-head">
+                        <center><div class="sub-head">
                             Activity Log
+                        </div></center>
+
+                        <div class="sub-head col-lg-12">
+                            Submit
                         </div>
-
-
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                           
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
+                                <div class="static"></div>
+
 
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-date-data-field">
+                        <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Submit On : </label>
+                                <div class="static"></div>
+
 
 
 
 
                             </div>
                         </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="comment">Comment : </label>
+                                <div class="static"></div>
+                        </div>
+                        </div>
 
+                        <div class="sub-head col-lg-12">
+                            HOD Review
+                        </div>
 
-
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
+                            
                             <div class="group-input">
                                 <label for="Initiator Group">HOD Review Completed By : </label>
+                                <div class="static"></div>
 
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-date-data-field">
+                        <div class="col-lg-4 new-date-data-field">
+                            
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">HOD Review Completed On :</label>
+                                </div>
+                        </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="hod_review_occ_comment">Comment : </label>
+                                <div class="static"></div>
+
 
 
 
@@ -1235,15 +1341,19 @@
                             </div>
                         </div>
 
-
-                        <div class="col-lg-6">
+                        <div class="sub-head col-lg-12">
+                            QA Intial Review
+                        </div>
+                        <div class="col-lg-4">
+                          
                             <div class="group-input">
+
                                 <label for="Initiator Group">QA Initial Review Completed By :</label>
 
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-date-data-field">
+                        <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">QA Initial Review Completed On : </label>
 
@@ -1252,42 +1362,78 @@
 
                             </div>
                         </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qa_intial_review_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
 
 
-                        <div class="col-lg-6">
+                        <div class="sub-head col-lg-12">
+                            QA Final Review
+                        </div>
+                        <div class="col-lg-4">
+                            
                             <div class="group-input">
                                 <label for="Initiator Group">QA Final Review Completed By : </label>
+                                <div class="static"></div>
+
 
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-date-data-field">
+                        <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">QA Final Review Completed On : </label>
-
+                                <div class="static"></div>
+                                
 
 
 
                             </div>
                         </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="qa_final_review_comment">Comment : </label>
+                                <div class="static"></div>
 
-
-                        <div class="col-lg-6">
+                            </div>
+                        </div>
+                        <div class="sub-head col-lg-12">
+                            Closure
+                        </div>
+                      <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Closure Done By : </label>
+                                <div class="static"></div>
+
 
                             </div>
                         </div>
 
-                        <div class="col-lg-6 new-date-data-field">
+
+                        <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Closure Done On : </label>
+                                <div class="static"></div>
+
 
 
 
 
                             </div>
                         </div>
+                        <div class="col-lg-4 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="closure_ooc_comment">Comment : </label>
+                                <div class="static"></div>
+
+                            </div>
+                        </div>
+
+                        
 
 
 
