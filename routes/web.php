@@ -420,7 +420,7 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 
-Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+// Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
