@@ -31,16 +31,15 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">HOD Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">CFT</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QA Head Designee Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('errata.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
-
                 <div id="step-form">
                     @if (!empty($parent_id))
                         <input type="hidden" name="parent_id" value="{{ $parent_id }}">
@@ -53,57 +52,48 @@
                                 <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Originator"><b>Record No</b></label>
-                                        <input type="text" name="record_no" value="">
+                                        <label for="RLS Record Number">Record Number</label>
+                                        <input disabled type="text" name="record_number">
+                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Site/Location Code <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="location_code">
-                                            <option value="">Select a value</option>
-                                            <option value="001">001</option>
-                                            <option value="002">002</option>
-                                            <option value="003">003</option>
-                                        </select>
-
+                                        <label for="Division Code">Site/Location Code</label>
+                                        <input readonly type="text" name="division_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>ERRATA Date </b></label>
-                                        <input type="date" name="errata_date" value="">
+                                        <label for="Initiator">Initiator</label>
+                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                        <input disabled type="text" name="initiator_by" value="{{ Auth::user()->name }}">
+                                    </div>
+                                </div>
 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date Due">Date of Initiation</label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            ERRATA Issued By <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="errata_issued_by">
-                                            <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Initiated By <span class="text-danger"></span>
+                                            Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by">
                                             <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
+                                            {{-- <option value="Pankaj Jat">Pankaj Jat</option>
                                             <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                            <option value="Manish">Manish</option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -113,15 +103,73 @@
                                         <label for="search">
                                             Department<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="Department">
-                                            <option value="">Select a value</option>
-                                            <option value="Pankaj Jat">Pankaj Jat</option>
-                                            <option value="Gaurav">Gaurav</option>
-                                            <option value="Manish">Manish</option>
+                                        <select id="selectedOptions" placeholder="Select..." name="Department">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('selectedOptions') == 'QAB') selected @endif>
+                                                Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('selectedOptions') == 'CQA') selected @endif>
+                                                Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('selectedOptions') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('selectedOptions') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('selectedOptions') == 'CS') selected @endif>
+                                                Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('selectedOptions') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('selectedOptions') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('selectedOptions') == 'CL') selected @endif>
+                                                Central
+                                                Laboratory</option>
+                                            <option value="TT" @if (old('selectedOptions') == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if (old('selectedOptions') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('selectedOptions') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('selectedOptions') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('selectedOptions') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('selectedOptions') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('selectedOptions') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('selectedOptions') == 'BA') selected @endif>
+                                                Business Administration</option>
+
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Department Code</label>
+                                        <input type="text" name="department_code" id="initiator_group_code"
+                                            value="">
+                                    </div>
+                                </div>
+                                <script>
+                                    document.getElementById('selectedOptions').addEventListener('change', function() {
+                                        var selectedValue = this.value;
+                                        document.getElementById('initiator_group_code').value = selectedValue;
+                                    });
 
+                                    function setCurrentDate(item) {
+                                        if (item == 'yes') {
+                                            $('#effect_check_date').val('{{ date('d-M-Y') }}');
+                                        } else {
+                                            $('#effect_check_date').val('');
+                                        }
+                                    }
+                                </script>
+
+                                {{--
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -134,7 +182,7 @@
                                             <option value="DC03">DC03</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -152,10 +200,20 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label class="mt-4" for="Audit Comments">Document Title</label>
-                                        <textarea class="summernote" name="documenet_title" id="summernote-16"></textarea>
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255"
+                                            required>
                                     </div>
                                 </div>
+                            @php
+
+                                $old_record = DB::table('erratas')->get();
+                                    // $reference_documents = is_array($showdata->reference_document)
+                                    //     ? $showdata->reference_document
+                                    //     : explode(',', $showdata->reference_document);
+                            @endphp
 
                                 <div class="">
                                     <div class="group-input">
@@ -163,8 +221,15 @@
                                         <select multiple id="reference_record" name="reference_document[]"
                                             id="">
                                             <option value="">--Select---</option>
-                                            <option value="RD01">RD01</option>
-                                            <option value="RD02">RD02</option>
+                                            @foreach ($old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                 {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{$new->short_description}}   {{-- {{ Helpers::recordFormat($new->record) }} --}}
+                                                </option>
+                                            @endforeach
+                                            {{-- <option
+                                                value="{{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}">
+                                                {{ Helpers::getDivisionName(Auth::user()->id) }}/Errata/{{ date('Y') }}/{{ Helpers::recordFormat(Auth::user()->name) }}
+                                            </option> --}}
                                         </select>
                                     </div>
                                 </div>
@@ -218,17 +283,18 @@
                                                     <th style="width: 16%"> Prepared By</th>
                                                     <th style="width: 15%">Checked By</th>
                                                     <th style="width: 15%">Approved By</th>
-
+                                                    <th style="width: 15%">Action</th>
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial[]" value="1"></td>
-                                                <td><input type="text" name="ListOfImpactingDocument[]"></td>
-                                                <td><input type="text" name="PreparedBy[]"></td>
-                                                <td><input type="text" name="CheckedBy[]"></td>
-                                                <td><input type="text" name="ApprovedBy[]"></td>
-
+                                                <td><input disabled type="text" name="details[0][serial]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="details[0][ListOfImpactingDocument]"></td>
+                                                <td><input type="text" name="details[0][PreparedBy]"></td>
+                                                <td><input type="text" name="details[0][CheckedBy]"></td>
+                                                <td><input type="text" name="details[0][ApprovedBy]"></td>
+                                                <td><button type="text" class="removeRowBtn">Remove</button></td>
                                             </tbody>
 
                                         </table>
@@ -237,7 +303,7 @@
 
                                 <div class="">
                                     <div class="group-input">
-                                        <label for="dateandtime"><b>Date And Time Of Correction </b></label>
+                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
                                         <input type="date" name="Date_and_time_of_correction" value="">
 
                                     </div>
@@ -269,16 +335,16 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">HOD Attachments </label>
+                                        <label for="HOD attachment">HOD Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="hod_Attachment"></div>
+                                            <div class="file-attachment-list" id="HOD_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="HOD_Attachments" name="HOD_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'HOD_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1530,38 +1596,20 @@
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="closure attachment">QA Attachments </label>
+                                        <label for="QA Attachment">QA Attachments </label>
                                         <div><small class="text-primary">
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
+                                            <div class="file-attachment-list" id="QA_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="QA_Attachments" name="QA_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
-                                <script>
-                                    function showSelectedFiles(input) {
-                                        var files = input.files;
-                                        var fileListContainer = document.getElementById('fileAttachmentList');
-                                        fileListContainer.innerHTML = '';
-
-                                        if (files.length > 0) {
-                                            var fileList = document.createElement('ul');
-                                            for (var i = 0; i < files.length; i++) {
-                                                var listItem = document.createElement('li');
-                                                listItem.textContent = files[i].name;
-                                                fileList.appendChild(listItem);
-                                            }
-                                            fileListContainer.appendChild(fileList);
-                                        }
-                                    }
-                                </script>
 
 
                                 <div class="button-block">
@@ -1618,11 +1666,12 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="File_Attachment"></div>
+                                            <div class="file-attachment-list" id="Closure_Attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                                <input type="file" id="Closure_Attachments"
+                                                    name="Closure_Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Closure_Attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1663,13 +1712,13 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Reviewed by">QA Review Completed By</label>
+                                        <label for="Reviewed by">Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Approved on">QA Review Completed On</label>
+                                        <label for="Approved on">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
@@ -1821,18 +1870,16 @@
         $(document).ready(function() {
             $('#Details-add').click(function(e) {
                 function generateTableRow(serialNumber) {
-
-
-                    var html =
-                        '<tr>' +
+                    var html = '';
+                    html += '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="ListOfImpactingDocument[]"></td>' +
-                        '<td><input type="text" name="PreparedBy[]"></td>' +
-                        '<td><input type="text" name="CheckedBy[]"></td>' +
-                        '<td><input type="text" name="ApprovedBy[]"></td>' +
-
-
+                        '<td><input type="text" name="details[' + serialNumber +
+                        '][ListOfImpactingDocument]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
+                        '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
+                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -1852,6 +1899,12 @@
                 tableBody.append(newRow);
             });
         });
+    </script>
+
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
     </script>
 
     <script>

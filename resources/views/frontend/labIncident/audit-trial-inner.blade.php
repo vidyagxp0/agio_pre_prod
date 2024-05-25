@@ -57,7 +57,9 @@
                             @if($temp->activity_type == "Responsibility" ||$temp->activity_type == "Abbreviation" ||$temp->activity_type == "Defination" ||$temp->activity_type == "Materials and Equipments" ||$temp->activity_type == "Reporting" )
                             @if(!empty($temp->previous))
                             <div class="list-item">
-                                <div class="head">Changed From</div>
+                                {{-- <div class="head">Changed From</div> --}}
+                                <div class="head">Action name-</div>
+
                                 <div>:</div>
                                 @foreach (unserialize($temp->previous) as $data)
                                 @if($data)
@@ -110,18 +112,19 @@
                             @if($temp->current != $temp->previous)
                             @if($temp->activity_type == "Activity Log" )
 
-                          
+
                                      <div class="list-item">
                                       <div class="head">{{$temp->stage}}By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
-                                      </div>  
+                                      </div>
                                       <div class="list-item">
                                       <div class="head">{{$temp->stage}}On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                            @else  
+                                     </div>
+                            @else
+
 
 
                             <div class="list-item">
@@ -136,7 +139,7 @@
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
                         </a> --}}
                     </div>
-            </div>  
+                {{-- </div>   --}}
                 @endforeach
 
             </div>
