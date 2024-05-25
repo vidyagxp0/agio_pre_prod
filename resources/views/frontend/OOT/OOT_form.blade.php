@@ -117,7 +117,7 @@
                                                 class="text-danger"></span></label>
 
                                         <select name="severity_level" id="severity_level">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             <option value="major">Major</option>
                                             <option value="minor">minor </option>
                                             <option value="critical">critical </option>
@@ -132,7 +132,7 @@
                                         <label for="Short Description">Initiator Group <span
                                                 class="text-danger"></span></label>
                                         <select name="initiator_group">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
                                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }} </option>
                                             @endforeach
@@ -153,7 +153,7 @@
                                         <label for="Short Description">Initiated Through<span
                                                 class="text-danger"></span></label>
                                         <select name="initiated_through" id="initiated_through">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             <option value="oos_micro">OOS Micro </option>
                                             <option value="oos_chemical">OOS Chemical </option>
                                             <option value="lab_incident">Lab Incident</option>
@@ -173,7 +173,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Is Repeat<span class="text-danger"></span></label>
                                         <select id="is_repeat" name="is_repeat">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             <option value="yes">Yes </option>
                                             <option value="no">No </option>
                                         </select>
@@ -192,7 +192,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Nature Of Change<span class="text-danger"></span></label>
                                         <select multiple id="natureOfChange" name="nature_of_change">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
                                         </select>
@@ -245,7 +245,7 @@
                                         <label for="Reference Recored">Refrence Record<span
                                                 class="text-danger"></span></label>
                                         <select id="reference" name="reference">
-                                            <option value="">---select---</option>
+                                            <option>---select---</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                         </select>
@@ -333,7 +333,7 @@
                                     <div class="group-input">
                                         <label for="Reference Recores">Sample Type </label>
                                         <select multiple id="reference_record" name="reference_record[]" id="">
-                                            <option value="">--Select---</option>
+                                            <option>--Select---</option>
                                             <option value="pankaj" >Pankaj</option>
                                             <option value="gaurav">Gourav</option>
                                         </select>
@@ -353,7 +353,7 @@
                                         <label for="Reference Recores">Stability For </label>
                                         <select multiple id="stability_for" name="stability_for[]"
                                             id="">
-                                            <option value="">--Select---</option>
+                                            <option>--Select---</option>
                                             <option value="pankaj">Pankaj</option>
                                             <option value="pankaj">Gourav</option>
                                         </select>

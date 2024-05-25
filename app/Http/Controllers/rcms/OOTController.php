@@ -164,7 +164,7 @@ class OOTController extends Controller
 
         $data->status = 'Opened';                 
         $data->stage = 1;
-        // dd($data);
+        //  dd($data);
         $data->save();
 
          $checkList = new OotChecklist();
@@ -250,6 +250,7 @@ class OOTController extends Controller
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
         $productGrid->data = $request->product_materiel;
+        // dd($productGrid);
         $productGrid->save();
 
         $StabilityGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'details_of_stability'])->firstOrCreate();
@@ -262,7 +263,8 @@ class OOTController extends Controller
         $OotResultGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' => 'oot_result'])->firstOrCreate();
         $OotResultGrid->ootcs_id = $data->id;
         $OotResultGrid->identifier = 'oot_result';
-        $OotResultGrid->data = $request->oot_result;        
+        $OotResultGrid->data = $request->oot_result;
+        // dd($OotResultGrid);        
         $OotResultGrid->save();
         
         $InfoProductMat = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'info_product'])->firstOrCreate();
@@ -688,6 +690,7 @@ class OOTController extends Controller
 
        $data = Ootc::where('id',$id)->first();      
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
+    //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
        $InfoProductMat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'info_product'])->first();
@@ -706,7 +709,8 @@ class OOTController extends Controller
         
         $data = Ootc::find($id);
         $data->division_id           = $request->division_id;
-        $data->record_number         = $request->record_number;
+        $data->record_number         = $lastDocument->record_number;
+        // dd($lastDocument->record_number);
         $data->due_date              = $request->due_date;
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;

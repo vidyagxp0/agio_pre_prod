@@ -203,8 +203,8 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" value="{{ $data->record_number }}">
+                                    <label for="record_number"><b>Record Number</b></label>
+                                    <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -284,7 +284,7 @@
                                     <label for="Short Description">Initiated Through<span
                                             class="text-danger"></span></label>
                                     <select name="initiated_through" id="initiated_through">
-                                        <option>---select---</option>
+                                        <option value="">---select---</option>
                                         <option value="oos_micro" @if ($data->initiated_through == 'oos_micro') selected @endif>OOS
                                             Micro</option>
                                         <option value="oos_chemical" @if ($data->initiated_through == 'oos_chemical') selected @endif>OOS
@@ -477,8 +477,8 @@
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
-                                                                name="product_materiel[{{ $loop->index }}][low_batch_no]"
-                                                                value="{{ isset($gridData['low_batch_no']) ? $gridData['low_batch_no'] : '' }}">
+                                                                name="product_materiel[{{ $loop->index }}][lot_batch_no]"
+                                                                value="{{ isset($gridData['lot_batch_no']) ? $gridData['lot_batch_no'] : '' }}">
                                                         </td>
                                                         <td>
                                                             <input type="text" class="numberDetail"
@@ -571,7 +571,7 @@
                                     <label for="Reference Recores">stability For </label>
                                     <select multiple id="stability_for" name="stability_for[]">
 
-                                        <option value="">--Select---</option>
+                                        <option>--Select---</option>
                                         <option value="pankaj" @if ($data->stability_for == 'pankaj') selected @endif>Pankaj
                                         </option>
                                         <option value="gourav" @if ($data->stability_for == 'gourav') selected @endif>Gourav
@@ -1221,7 +1221,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_five" id="responce_five"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="">Select an Option</option>
+                                                                <option>Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_five == 'yes') selected @endif>
                                                                     Yes</option>
@@ -1253,7 +1253,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_six" id="responce_six"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option>Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_six == 'yes') selected @endif>
                                                                     Yes</option>
@@ -1286,7 +1286,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_seven" id="responce_seven"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option>Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_seven == 'yes') selected @endif>
                                                                     Yes</option>
@@ -1318,7 +1318,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_eight" id="responce_eight"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option>Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_eight == 'yes') selected @endif>
                                                                     Yes</option>
@@ -1349,7 +1349,7 @@
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <select name="responce_nine" id="response"
                                                                 style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
-                                                                <option value="Yes">Select an Option</option>
+                                                                <option>Select an Option</option>
                                                                 <option
                                                                     value="yes"@if ($checkList->responce_nine == 'yes') selected @endif>
                                                                     Yes</option>

@@ -11,6 +11,37 @@
     }
 </style>
 
+<style>
+    .progress-bars div {
+        flex: 1 1 auto;
+        border: 1px solid grey;
+        padding: 5px;
+        text-align: center;
+        position: relative;
+        /* border-right: none; */
+        background: white;
+    }
+
+    .state-block {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .progress-bars div.active {
+        background: green;
+        font-weight: bold;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+        border-radius: 20px 0px 0px 20px;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(9) {
+        border-radius: 0px 20px 20px 0px;
+
+    }
+</style>
+
 @php
 $users = DB::table('users')->get();
 @endphp
@@ -47,7 +78,7 @@ $users = DB::table('users')->get();
                 //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 // }
 
-                // html += '</select></td>' + 
+                // html += '</select></td>' +
 
                 //     '</tr>';
 
@@ -85,7 +116,7 @@ $users = DB::table('users')->get();
                 //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 // }
 
-                // html += '</select></td>' + 
+                // html += '</select></td>' +
 
                 //     '</tr>';
 
@@ -125,7 +156,7 @@ $users = DB::table('users')->get();
                 //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 // }
 
-                // html += '</select></td>' + 
+                // html += '</select></td>' +
 
                 //     '</tr>';
 
@@ -154,6 +185,232 @@ $users = DB::table('users')->get();
 {{-- ! ========================================= --}}
 <div id="change-control-fields">
     <div class="container-fluid">
+
+        <div class="inner-block state-block">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="main-head">Record Workflow </div>
+
+                <div class="d-flex" style="gap:20px;">
+                    {{-- @php
+                        $userRoles = DB::table('user_roles')
+                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])
+                            ->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
+                        $cftUsers = DB::table('deviationcfts')
+                            ->where(['deviation_id' => $data->id])
+                            ->first();
+
+
+
+
+                        // Define the column names
+                        $columns = [
+                            'Production_person',
+                            'Warehouse_notification',
+                            'Quality_Control_Person',
+                            'QualityAssurance_person',
+                            'Engineering_person',
+                            'Analytical_Development_person',
+                            'Kilo_Lab_person',
+                            'Technology_transfer_person',
+                            'Environment_Health_Safety_person',
+                            'Human_Resource_person',
+                            'Information_Technology_person',
+                            'Project_management_person',
+                        ];
+
+                        // Initialize an array to store the values
+                        $valuesArray = [];
+
+                        // Iterate over the columns and retrieve the values
+                        foreach ($columns as $column) {
+                            $value = $cftUsers->$column;
+                            // Check if the value is not null and not equal to 0
+                            if ($value !== null && $value != 0) {
+                                $valuesArray[] = $value;
+                            }
+                        }
+                        $cftCompleteUser = DB::table('deviationcfts_response')
+                            ->whereIn('status', ['In-progress', 'Completed'])
+                            ->where('deviation_id', $data->id)
+                            ->where('cft_user_id', Auth::user()->id)
+                            ->whereNull('deleted_at')
+                            ->first();
+                        // dd($cftCompleteUser);
+                    @endphp --}}
+                    {{-- <button class="button_theme1" onclick="window.print();return false;"
+                        class="new-doc-btn">Print</button> --}}
+                    <button class="button_theme1"> <a class="text-white" href="">
+                            {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
+
+                            {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}" --}}
+                            Audit Trail </a> </button>
+
+                    {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        Submit
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                        Cancel
+                    </button>
+                    {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                        More Info Required
+                    </button> --}}
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        HOD Review Complete
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                        Cancel
+                    </button>
+                    {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                        More Info Required
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        QA Initial Review Complete
+                    </button>
+
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                        Child
+                    </button> --}}
+                    {{-- @elseif(
+                        $data->stage == 4 &&
+                            (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
+                        @if (!$cftCompleteUser) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                        More Info Required
+                    </button> --}}
+
+                    {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                        Send to Initiator
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                        Send to HOD
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                        Send to QA Initial Review
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        QA Final Review Complete
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                        Child
+                    </button> --}}
+                    {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
+                        More Info Required
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        Approved
+                    </button> --}}
+                    {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                        Send to Opened
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                        Send to HOD Review
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                        Send to QA Initial Review
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        Initiator Updated Complete
+                    </button> --}}
+                    {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
+                        Send to Opened
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
+                        Send to HOD Review
+                    </button> --}}
+                    {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
+                        Send to QA Initial Review
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
+                        Send to Pending Initiator Update
+                    </button>
+                    <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        QA Final Review Complete
+                    </button> --}}
+                    {{-- @endif --}}
+                    {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        </a> </button> --}}
+
+
+                </div>
+
+            </div>
+
+
+            <div class="status">
+                <div class="head">Current Status</div>
+                {{-- @if ($data->stage == 0) --}}
+                {{-- <div class="progress-bars ">
+                    <div class="bg-danger">Closed-Cancelled</div>
+                </div> --}}
+                {{-- @else --}}
+                <div class="progress-bars d-flex" style="font-size: 15px;">
+                    {{-- @if ($data->stage >= 1) --}}
+                    <div class="active">Opened</div>
+                    {{-- @else --}}
+                    {{-- <div class="">Opened</div> --}}
+                    {{-- @endif --}}
+
+                    {{-- @if ($data->stage >= 2) --}}
+                    {{-- <div class="active">HOD Review </div> --}}
+                    {{-- @else --}}
+                    <div class="">HOD Review</div>
+                    {{-- @endif --}}
+
+                    {{-- @if ($data->stage >= 3) --}}
+                    {{-- <div class="active">QA Initial Review</div> --}}
+                    {{-- @else --}}
+                    <div class="">QA Initial Review</div>
+                    {{-- @endif --}}
+
+                    {{-- @if ($data->stage >= 4) --}}
+                    {{-- <div class="active">CFT Review</div> --}}
+                    {{-- @else --}}
+                    <div class="">CFT Review</div>
+                    {{-- @endif --}}
+
+
+                    {{-- @if ($data->stage >= 5) --}}
+                    {{-- <div class="active">QA Final Review</div> --}}
+                    {{-- @else --}}
+                    <div class="">QA Final Review</div>
+                    {{-- @endif --}}
+                    {{-- @if ($data->stage >= 6) --}}
+                    {{-- <div class="active">QA Head/Manager Designee Approval</div> --}}
+                    {{-- @else --}}
+                    <div class="">QA Head/Manager Designee Approval</div>
+                    {{-- @endif --}}
+                    {{-- @if ($data->stage >= 7) --}}
+                    {{-- <div class="active">Pending Initiator Update</div> --}}
+                    {{-- @else --}}
+                    <div class="">Pending Initiator Update</div>
+                    {{-- @endif --}}
+                    {{-- @if ($data->stage >= 8) --}}
+                    {{-- <div class="active">QA Final Approval</div> --}}
+                    {{-- @else --}}
+                    <div class="">QA Final Approval</div>
+                    {{-- @endif --}}
+                    {{-- @if ($data->stage >= 9) --}}
+                    {{-- <div class="bg-danger">Closed - Done</div> --}}
+                    {{-- @else --}}
+                    <div class="">Closed - Done</div>
+                    {{-- @endif --}}
+                    {{-- @endif --}}
+
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
+        </div>
 
         <!-- Tab links -->
         <div class="cctab">
@@ -185,15 +442,15 @@ $users = DB::table('users')->get();
                         </div> <!-- RECORD NUMBER -->
                         <div class="row">
                             {{-- @foreach ($record_number as $record) --}}
-                            
-                                
-                            
+
+
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" >
                                     {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
-                                  
+
                                 </div>
                             </div>
                             {{-- @endforeach --}}
@@ -229,13 +486,13 @@ $users = DB::table('users')->get();
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
-                                    
+
                                     <div class="calenderauditee">
                                         <input type="text" id="due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
                                         <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -271,7 +528,7 @@ $users = DB::table('users')->get();
                                     <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                 </div>
                             </div>
-                        
+
                             <script>
                                 document.getElementById('initiator_group').addEventListener('change', function() {
                                     var selectedValue = this.value;
@@ -279,7 +536,7 @@ $users = DB::table('users')->get();
                                 });
                             </script>
 
-{{-- 
+{{--
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -352,7 +609,7 @@ $users = DB::table('users')->get();
                                 </div>
                             </div>
 
-                            
+
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Repeat Nature">Repeat Nature</label>
@@ -412,13 +669,13 @@ $users = DB::table('users')->get();
                                 <div class="group-input input-date">
                                     <label for="due-date">OOC Logged On <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
-                                    
+
                                     <div class="calenderauditee">
                                         <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
                                         <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
-                                    
+
                                 </div>
                             </div>
 
@@ -513,7 +770,7 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
                             </div>
-                            
+
 
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
@@ -1003,7 +1260,7 @@ $users = DB::table('users')->get();
                                     <option value="0">-- select --</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
-                                    
+
 
                                 </select>
                             </div>
@@ -1045,7 +1302,7 @@ $users = DB::table('users')->get();
                                     <option value="0">-- select --</option>
                                     <option value="Yes"></option>
                                     <option value="No"></option>
-                                    
+
 
                                 </select>
                             </div>
@@ -1285,7 +1542,7 @@ $users = DB::table('users')->get();
                             Submit
                         </div>
                         <div class="col-lg-4">
-                           
+
                             <div class="group-input">
                                 <label for="Initiator Group">Submit By : </label>
                                 <div class="static"></div>
@@ -1317,7 +1574,7 @@ $users = DB::table('users')->get();
                         </div>
 
                         <div class="col-lg-4">
-                            
+
                             <div class="group-input">
                                 <label for="Initiator Group">HOD Review Completed By : </label>
                                 <div class="static"></div>
@@ -1326,7 +1583,7 @@ $users = DB::table('users')->get();
                         </div>
 
                         <div class="col-lg-4 new-date-data-field">
-                            
+
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">HOD Review Completed On :</label>
                                 </div>
@@ -1347,7 +1604,7 @@ $users = DB::table('users')->get();
                             QA Intial Review
                         </div>
                         <div class="col-lg-4">
-                          
+
                             <div class="group-input">
 
                                 <label for="Initiator Group">QA Initial Review Completed By :</label>
@@ -1377,7 +1634,7 @@ $users = DB::table('users')->get();
                             QA Final Review
                         </div>
                         <div class="col-lg-4">
-                            
+
                             <div class="group-input">
                                 <label for="Initiator Group">QA Final Review Completed By : </label>
                                 <div class="static"></div>
@@ -1390,7 +1647,7 @@ $users = DB::table('users')->get();
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">QA Final Review Completed On : </label>
                                 <div class="static"></div>
-                                
+
 
 
 
@@ -1435,7 +1692,7 @@ $users = DB::table('users')->get();
                             </div>
                         </div>
 
-                        
+
 
 
 

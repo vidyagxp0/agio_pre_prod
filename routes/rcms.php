@@ -17,6 +17,7 @@ use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
@@ -198,6 +199,12 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Deviation Routes Ends *******************/
+
+            /********************* Fallure Investigation Routes Starts *******************/
+
+            Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
+
+            /********************* Fallure Investigation Routes Ends *******************/
 
 
             //----------------------------------- OOT ----------------------------------//

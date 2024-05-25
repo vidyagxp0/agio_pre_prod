@@ -10,6 +10,7 @@ use App\Models\EffectivenessCheck;
 use App\Models\Extension;
 use App\Models\InternalAudit;
 use App\Models\ManagementReview;
+use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
@@ -18,6 +19,7 @@ use App\Models\{Division,Deviation};
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
 use App\Models\QMSDivision;
+use App\Models\FailureInvestigation;
 use App\Models\Ootc;
 use Helpers;
 use App\Models\User;
@@ -71,6 +73,8 @@ class DashboardController extends Controller
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
         $datas14 = Deviation::orderByDesc('id')->get();
+        $ooc = OutOfCalibration::orderByDesc('id')->get();
+        $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
         $datas15 = Ootc::orderByDesc('id')->get();
         $datas16 = errata::orderByDesc('id')->get();
         foreach ($datas as $data) {
@@ -374,6 +378,48 @@ class DashboardController extends Controller
                 "initiator_id" => $data->initiator_id,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
+                "initiated_through" => $data->initiated_through,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($ooc as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "type" => "OOC",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->description_ooc ? $data->description_ooc : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+
+        foreach ($failureInvestigation as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Failure Investigation",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -381,11 +427,10 @@ class DashboardController extends Controller
 
         foreach ($datas15 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record,
+                "record" => $data->record_number,
                 "division_id" => $data->division_id,
                 "type" => "OOT",
                 "parent_id" => $data->parent_id,
@@ -396,7 +441,7 @@ class DashboardController extends Controller
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through? $data->initiated_through : "-",
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -525,45 +570,45 @@ class DashboardController extends Controller
                 foreach ($data as $datas) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Change-Control",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Change-Control",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
 
                 foreach ($datas1 as $data) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Action-Item",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Action-Item",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
 
                 foreach ($datas2 as $data) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Extension",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Extension",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
             }

@@ -188,7 +188,6 @@
 
     <div class="inner-block">
         <div class="content-table">
-
             <div class="inner-block">
                 <div class="content-table">
                     <div class="block">
@@ -237,8 +236,6 @@
                                         Not Applicable
                                     @endif
                                 </td>
-                               
-        
                             </tr>
                             <tr>
                                 <th class="w-20"> Initiated Through</th>
@@ -260,7 +257,6 @@
         
                             </tr>
                            
-        
                             <tr>
                                 <th class="w-20">Is Repeat </th>
                                 <td class="w-30">
@@ -325,8 +321,6 @@
                                         Not Applicable
                                     @endif
                                 </td>
-        
-        
                             </tr>
         
         
@@ -361,11 +355,8 @@
                                     <div class="block-head">
                                         OOT Information
                                     </div>
-
                                     <table>
-        
                                         <tr>
-        
                                             <th class="w-20">Product Material NAme   </th>
                                             <td class="w-30">
                                                 <div>
@@ -423,12 +414,8 @@
                                             </td>
                                         </tr>
                                       
-                                    </table>
-
-
-                                    
-                                </div>
-                                
+                                    </table>                                    
+                                </div> 
                             </div>
                             
                             <div class="block-head"> Product/Material  </div>
@@ -947,9 +934,6 @@
                                     </div>
                                     <table>
                                         <tr>
-
-                                        </tr>
-                                        <tr>
                                             <th class="w-20"> Preliminary Laboratory Investigation Required </th>
                                             <td class="w-30">
                                                 <div>
@@ -961,30 +945,733 @@
                                                 </div>
                                             </td> 
                                         </tr>
-                                        <th class="w-20"> Were the equipment instrument used for analysis was in calibrated state? </th>
-                                        <td class="w-30">
-                                            <div>
+
+                                        <tr>
+                                            <th>Were the equipment instrument used for analysis was in calibrated state?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
                                                 @if ($checkList->responce_one)
                                                     {{ $checkList->responce_one }}
                                                 @else
                                                     Not Applicable
                                                 @endif
-                                            </div>
-                                        </td> 
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_one)
+                                                    {{ $checkList->responce_one }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Did all components/parts of equipment instrument function properly?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce  : 
+                                                @if ($checkList->responce_two)
+                                                    {{ $checkList->responce_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_two)
+                                                    {{ $checkList->remark_two }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was there any evidence that the sample is contaminated?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_three)
+                                                    {{ $checkList->responce_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_three)
+                                                    {{ $checkList->remark_three }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Is the SOP adequate and operation performed as per sop?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_four)
+                                                    {{ $checkList->responce_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_four)
+                                                    {{ $checkList->remark_four }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the glassware used of Class A?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_five)
+                                                    {{ $checkList->responce_five }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_five)
+                                                    {{ $checkList->remark_five }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was there any evidence that the glassware used .may be contaminated?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_six)
+                                                    {{ $checkList->responce_six}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_six)
+                                                    {{ $checkList->remark_six }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Were the instrument problems such as noisy baseline, poor peak resolution, poor injection reproducibility, unidentified peak or contamination that affected peak integration, etc. noticed?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_seven)
+                                                    {{ $checkList->responce_seven}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_seven)
+                                                    {{ $checkList->remark_seven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Any critical parts of equipment/instrument like detector, lamp etc. and needed replacement?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_eight)
+                                                    {{ $checkList->responce_eight}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_eight)
+                                                    {{ $checkList->remark_eight }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the correct testing procedure followed?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_nine)
+                                                    {{ $checkList->responce_nine}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_nine)
+                                                    {{ $checkList->remark_nine }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Was there change in instrument, column, method, integration technique or standard?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_ten)
+                                                    {{ $checkList->responce_ten}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_ten)
+                                                    {{ $checkList->remark_ten }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Were the standards & reagents properly stored?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_eleven)
+                                                    {{ $checkList->responce_eleven}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_eleven)
+                                                    {{ $checkList->remark_eleven }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Were standards, reagents properly labelled?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_twele)
+                                                    {{ $checkList->responce_twele}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twele)
+                                                    {{ $checkList->remark_twele }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Was there any evidence that the standards, reagents have degraded?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_thrteen)
+                                                    {{ $checkList->responce_thrteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thrteen)
+                                                    {{ $checkList->remark_thrteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Were the reagents/chemicals used of recommended grade?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_fourteen)
+                                                    {{ $checkList->responce_fourteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_fourteen)
+                                                    {{ $checkList->remark_fourteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+                                       
+                                        <tr>
+                                            <th>Was the evidence that the reagents, standards or other materials used for test were contaminated.?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_fifteen)
+                                                    {{ $checkList->responce_fifteen	}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_fifteen)
+                                                    {{ $checkList->remark_fifteen }}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Whether correct working /reference standard were used?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Responce : 
+                                                @if ($checkList->responce_sixteen)
+                                                    {{ $checkList->responce_sixteen	}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_sixteen)
+                                                    {{ $checkList->remark_sixteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the testing procedure adequate and followed properly?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_seventeen)
+                                                    {{ $checkList->responce_seventeen	}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_seventeen)
+                                                    {{ $checkList->remark_seventeen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the glassware used properly washed?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_eighteen)
+                                                    {{ $checkList->responce_eighteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_eighteen)
+                                                    {{ $checkList->remark_eighteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Were standards, reagents used within their expiration dates?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_ninteen)
+                                                    {{ $checkList->responce_ninteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_ninteen)
+                                                    {{ $checkList->remark_ninteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>	Were volumetric solutions standardized as per testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty)
+                                                    {{ $checkList->responce_twenty}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_ninteen)
+                                                    {{ $checkList->remark_ninteen}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Were Working standards standardized as per testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_one)
+                                                    {{ $checkList->responce_twenty_one}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_one)
+                                                    {{ $checkList->remark_twenty_one}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Were the dilutions made in sample /standard preparation as per testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_two)
+                                                    {{ $checkList->responce_twenty_two}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_two)
+                                                    {{ $checkList->remark_twenty_two}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Was the analyst trained / certified?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_three)
+                                                    {{ $checkList->responce_twenty_three}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_three)
+                                                    {{ $checkList->remark_twenty_three}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Analyst understood the testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_four)
+                                                    {{ $checkList->responce_twenty_four}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_four)
+                                                    {{ $checkList->remark_twenty_four}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Analyst calculated the results correctly as mentioned in testing procedure?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_five)
+                                                    {{ $checkList->responce_twenty_five}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_five)
+                                                    {{ $checkList->remark_twenty_five}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was there any similar occurrence with the same analyst earlier?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_six)
+                                                    {{ $checkList->responce_twenty_six}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_six)
+                                                    {{ $checkList->remark_twenty_six}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Was there any similar history with the product / material?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_seven)
+                                                    {{ $checkList->responce_twenty_seven}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_seven)
+                                                    {{ $checkList->remark_twenty_seven}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        
+                                        <tr>
+                                            <th>Retention time of concerned peak is comparable with respect to previous station (ln case of OOT in any individual and total impurity)?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_eight)
+                                                    {{ $checkList->responce_twenty_eight}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_eight)
+                                                    {{ $checkList->remark_twenty_eight}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the sample quantity is sufficient?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_twenty_nine)
+                                                    {{ $checkList->responce_twenty_nine}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_twenty_nine)
+                                                    {{ $checkList->remark_twenty_nine}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was Error in labelling details on the sample container?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_thirty)
+                                                    {{ $checkList->responce_thirty}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thirty)
+                                                    {{ $checkList->remark_thirty}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Was the Specified storage condition of product sample maintained?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_thirty_one)
+                                                    {{ $checkList->responce_thirty_one}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thirty_one)
+                                                    {{ $checkList->remark_thirty_one}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Transient equipment /Instrument malfunction is suspected?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_thirty_two)
+                                                    {{ $checkList->responce_thirty_two}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thirty_two)
+                                                    {{ $checkList->remark_thirty_two}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Where any change in the character of the sample observed?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_thirty_three)
+                                                    {{ $checkList->responce_thirty_three}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thirty_three)
+                                                    {{ $checkList->remark_thirty_three}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <th>Any other specific reason?</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        <tr>
+                                            <td> Response: 
+                                                @if ($checkList->responce_thirty_four)
+                                                    {{ $checkList->responce_thirty_four}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if ($checkList->remark_thirty_four)
+                                                    {{ $checkList->remark_thirty_four}}
+                                                @else
+                                                    Not Applicable
+                                                @endif
+                                            </td>
+                                        </tr>
+
                                     </table>
                                     <table>
                                         <tr>
-                                            <th class="w-20"> Did all components/parts of equipment instrument function properly? </th>
-                                            <td class="w-30">
-                                                <div>
-                                                    @if ($checkList->responce_two)
-                                                        {{ $checkList->responce_two }}
-                                                    @else
-                                                        Not Applicable
-                                                    @endif
-                                                </div>
-                                            </td> 
-
                                             <th class="w-20">Information Technology Feedback</th>
                                             <td class="w-30">
                                                 <div>
@@ -995,9 +1682,7 @@
                                                     @endif
                                                 </div>
                                             </td>
-                                        </tr>
 
-                                        <tr>
                                             <th class="w-20">Laboratory error Identified for OOT - Result(s)</th>
                                             <td class="w-30">
                                                 <div>
@@ -1008,6 +1693,10 @@
                                                     @endif
                                                 </div>
                                             </td>
+                                        </tr>
+
+                                        <tr>
+                                            
                                             <th class="w-20">Elaborate The Reason(s) If Yes</th>
                                             <td class="w-30">
                                                 <div>
@@ -1047,7 +1736,7 @@
         
                             <div class="block">
                                 <div class="head">
-                                    <div class="block-">
+                                    <div class="block-head">
                                         ChecList- Part B Applicable If Laboratory Error
                                     </div>
                                     <table>
