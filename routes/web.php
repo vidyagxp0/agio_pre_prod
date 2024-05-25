@@ -472,13 +472,13 @@ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
-=======
+// =======
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
 Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
@@ -488,9 +488,9 @@ Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->na
 Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
 Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
 
-//----------------------Stages----------------------------------------
+// ----------------------Stages----------------------------------------
 
 
 
 //=====================================================================
->>>>>>> B-backup
+// >>>>>>> B-backup

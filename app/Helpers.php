@@ -50,7 +50,7 @@ class Helpers
         if(empty($date)) {
             return ''; // or any default value you prefer
         }
-        else{
+        // else{
         else{
             $date = Carbon::parse($date);
             $formatted_date = $date->format("d-M-Y");
@@ -74,7 +74,7 @@ class Helpers
         }
 
 
-    }
+    }}
     // public static function getHodUserList(){
 
     //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
@@ -214,7 +214,7 @@ class Helpers
             return false;
         }
         }
-    }
+
 
     public static function checkRoles_check_approvers($document)
     {
@@ -501,7 +501,7 @@ class Helpers
         return $resp;
     }
 
-    static function getInitiatorGroups()
+    // static function getInitiatorGroups()
 
     static function getInitiatorGroups()
     {
@@ -591,7 +591,7 @@ class Helpers
                 break;
         }
     }
-// }
+}
 
     static public function userIsQA()
     {
