@@ -179,6 +179,8 @@ return new class extends Migration
             $table->text('date_close')->nullable();
             $table->text('type')->nullable();
             $table->text('parent_record')->nullable();
+            $table->text('Description_Deviation')->nullable();
+
             // workflow start stage 
             $table->text('cancelled_by')->nullable();
             $table->text('cancelled_on')->nullable();
