@@ -454,6 +454,7 @@ $users = DB::table('users')
                                 <textarea  type="text" name="initiated_through_gi"></textarea>
                             </div>
                         </div>
+
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others</label>

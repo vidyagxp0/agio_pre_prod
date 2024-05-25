@@ -367,7 +367,7 @@ Route::get('auditee', [AuditeeController::class, 'external_audit']);
 
 Route::get('meeting', [ManagementReviewController::class, 'meeting']);
 
-Route::view('market-complaint', 'frontend.forms.market-complaint');
+// Route::view('market-complaint', 'frontend.forms.market-complaint');
 
 //Route::view('lab-incident', 'frontend.forms.lab-incident');
 
@@ -431,7 +431,7 @@ Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
-Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
+// Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================

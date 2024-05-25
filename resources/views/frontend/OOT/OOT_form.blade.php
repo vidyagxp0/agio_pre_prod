@@ -387,7 +387,7 @@
                                                 <tr>
                                                     <th style="width: 5%">Row#</th>
                                                     <th style="width: 12%">AR Number</th>
-                                                    <th style="width: 16%"> Condition:Temprature &RH</th>
+                                                    <th style="width: 16%">Condition:Temprature &RH</th>
                                                     <th style="width: 15%">Interval</th>
                                                     <th style="width: 15%">Orientation</th>
                                                     <th style="width: 15%">Pack Details (if any) </th>
@@ -3757,7 +3757,7 @@
                         '<td><input type="text" name="oot_result['+ootIndex+'][result_obtained]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][i_i_details]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][p_i_details]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][p_i_details]"></td>' +
+                        '<td><input type="text" name="oot_result['+ootIndex+'][difference_of_result]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][trend_limit]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';

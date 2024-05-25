@@ -59,6 +59,16 @@ class OOSController extends Controller
     public static function show($id)
     {
         $data = OOS::find($id);
+<<<<<<<<< Temporary merge branch 1
+        $productDatasa = Oosgrids::where('oos_id',$id)->where('identifier','info_product_material')->first();
+        $stabilityData = Oosgrids::where('oos_id',$id)->where('identifier','details_stability')->first();
+        $oosDetailData = Oosgrids::where('oos_id',$id)->where('identifier','oos_detail')->first();
+        $oosCapaData = Oosgrids::where('oos_id',$id)->where('identifier','oos_capa')->first();
+        $oosConclusion = Oosgrids::where('oos_id',$id)->where('identifier','oos_conclusion')->first();
+        $oosConclusionReview = Oosgrids::where('oos_id',$id)->where('identifier','oos_conclusion_review')->first();
+        return view('frontend.OOS.oos_form_view', compact('data','productDatasa','stabilityData','oosDetailData','oosCapaData','oosConclusion','oosConclusionReview'));
+=========
+
         $info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();

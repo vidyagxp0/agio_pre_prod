@@ -377,6 +377,9 @@
             <!-- Tab content -->
             
             <!-- General Information -->
+            <!-- Tab content -->
+
+            <!-- General Information -->
             @include('frontend.OOS.comps.general_information')
 
             <!-- Preliminary Lab. Investigation -->
