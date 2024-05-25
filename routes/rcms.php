@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -115,7 +116,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -152,6 +153,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('riskAuditReport/{id}', [RiskManagementController::class, 'auditReport'])->name('riskAuditReport');
             Route::get('rootSingleReport/{id}', [RootCauseController::class, 'singleReport'])->name('rootSingleReport');
             Route::get('rootAuditReport/{id}', [RootCauseController::class, 'auditReport'])->name('rootAuditReport');
+            Route::get('oos_micro_single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('rootSingleReport');
+            Route::get('oos_micro_audit_single_report/{id}', [OOSMicroController::class, 'auditReport'])->name('rootAuditReport');
             Route::get('managementReview/{id}', [ManagementReviewController::class, 'managementReport'])->name('managementReport');
             Route::get('managementReviewReport/{id}', [ManagementReviewController::class, 'managementReviewReport'])->name('managementReviewReport');
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');

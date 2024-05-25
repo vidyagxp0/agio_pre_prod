@@ -1833,6 +1833,8 @@ class CapaController extends Controller
         }
     }
 
+
+
     public static function auditReport($id)
     {
         $doc = Capa::find($id);

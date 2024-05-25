@@ -783,6 +783,12 @@ class DashboardController extends Controller
             $audit = "rootAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
+        } elseif ($type == "OOS_MICRO") {
+            $data = OOS_micro::find($id);
+            $single = "oos_micro_single_report/" . $data->id;
+            $audit = "oos_micro_audit_single_report/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division ? $division->name : 'NIL';
         }
 
         $type = $type == 'Capa' ? 'CAPA' : $type;

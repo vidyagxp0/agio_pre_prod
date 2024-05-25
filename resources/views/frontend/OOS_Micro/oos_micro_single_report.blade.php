@@ -157,15 +157,18 @@
 
 <body>
 
+
+
+
     <header>
         <table>
             <tr>
                 <td class="w-70 head">
-                   Capa Single Report
+                   OOS Micro Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px;">
                     </div>
                 </td>
             </tr>
@@ -173,7 +176,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Capa No.</strong>
+                    <strong>OOS Microbiology No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
@@ -193,7 +196,7 @@
                 </div>
                 <table>
 
-                    <tr>  {{ $data->created_at }} added by {{ $data->originator }}
+                       <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date of Initiation</th>
@@ -203,74 +206,386 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_group_gi){{ $data->initiator_group_gi }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-80">{{ $data->initiator_group_code }}</td>
+                        <td class="w-80">@if($data->initiator_group_code_gi){{ $data->initiator_group_code_gi }} @else Not Applicable @endif</td>
 
                      </tr>
                      <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                        <th class="w-20">Description</th>
+                        <td class="w-80">@if($data->description_gi){{ $data->description_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Severity Level</th>
-                        <td class="w-80">{{ $data->severity_level_form }}</td>
+                        <td class="w-80">@if($data->severity_level_gi){{ $data->severity_level_gi }}@else Not Applicable @endif</td>
 
 
                     </tr>
                     <tr>
-                    <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                    {{-- <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> --}}
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <th class="w-20">Deviation Occured On</th>
+                        <td class="w-80"> @if($data->deviation_occured_on_gi){{ $data->deviation_occured_on_gi }} @else Not Applicable @endif</td>
 
                     </tr>
 
 
                     <tr>
                         <th class="w-20">Initiated Through</th>
-                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->initiated_through_gi){{ $data->initiated_through_gi }}@else Not Applicable @endif</td>
 
-                        <th class="w-20">Others</th>
-                        <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
+                        <th class="w-20">If Others</th>
+                        <td class="w-80">@if($data->if_others_gi){{ $data->if_others_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
+                        <th class="w-20"> Is Repeat</th>
+                        <td class="w-80">@if($data->is_repeat_gi){{ $data->is_repeat_gi }}@else Not Applicable @endif</td>
                         <th class="w-20">Repeat Nature</th>
-                        <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->repeat_nature_gi){{ $data->repeat_nature_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Problem Description</th>
-                        <td class="w-80">@if($data->problem_description){{ $data->problem_description }}@else Not Applicable @endif</td>
 
+                            <th class="w-20">Nature of Change</th>
+                            <td class="w-30">@if($data->nature_of_change_gi){{ $data->nature_of_change_gi }} @else Not Applicable @endif</td>
                     </tr>
                      <tr>
-                        <th class="w-20">CAPA Team</th>
-                        <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
+                        <th class="w-20">Source Document Type</th>
+                        <td class="w-80">@if($data->source_document_type_gi){{ $data->source_document_type_gi }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                            <th class="w-20">Reference Records</th>
-                            <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
-
+                            <th class="w-20">Reference System Document</th>
+                            <td class="w-80">@if($data->reference_system_document_gi){{ $data->reference_system_document_gi }} @else Not Applicable @endif</td>
+                            <th class="w-20">Reference Document</th>
+                            <td class="w-80">@if($data->reference_document_gi){{ $data->reference_document_gi }} @else Not Applicable @endif</td>
                         </tr>
                     <tr>
-                        <th class="w-20">Initial Observation</th>
-                        <td class="w-80">@if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif</td>
-                        <th class="w-20">Interim Containnment</th>
-                        <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
+                        <th class="w-20">Sample Type</th>
+                        <td class="w-80">@if($data->sample_type_gi){{ $data->sample_type_gi}}@else Not Applicable @endif</td>
+                        <th class="w-20">Product / Material Name</th>
+                        <td class="w-80">@if($data->product_material_name_gi){{ $data->product_material_name_gi }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Containment Comments</th>
-                        <td class="w-80">@if($data->containment_comments){{ $data->containment_comments }}@else Not Applicable @endif</td>
+                        <th class="w-20">Market</th>
+                        <td class="w-80">@if($data->market_gi){{ $data->market_gi }}@else Not Applicable @endif</td>
 
                     </tr>
                     <tr>
-                        <th class="w-20">CAPA QA Comments</th>
-                        <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
+                        <th class="w-20">Customer</th>
+                        <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
+                </table>
+
+
+                    {{-- -------------------------Preliminary Lab Investigation------------------- --}}
+
+                <div class=" block-head">
+                    Preliminary Lab Investigation
+                    </div>
+                <table>
+@php
+
+    $Preliminary_Lab_Investigation = [
+                    'comments_pli' => 'Comments',
+                    'field_alert_required_pli' => 'Field Alert Required',
+                    'field_alert_ref_no_pli' => 'Field Alert Ref.No.',
+                    'justify_if_no_field_alert_pli' => 'Justify if no Field Alert',
+                    'verification_analysis_required_pli' => 'Verification Analysis Required',
+                    'verification_analysis_ref_pli' => 'Verification Analysis Ref.',
+                    'analyst_interview_req_pli' => 'Analyst Interview Req.',
+                    'analyst_interview_ref_pli' => 'Analyst Interview Ref.',
+                    'justify_if_no_analyst_int_pli' => 'Justify if no Analyst Int.',
+                    'phase_i_investigation_required_pli' => 'Phase I Investigation Required',
+                    'phase_i_investigation_pli' => 'Phase I Investigation ',
+                    'phase_i_investigation_ref_pli' => 'Phase I Investigation Ref.',
+];
+
+@endphp
+
+                      @foreach ($Preliminary_Lab_Investigation as $key => $value)
+                        @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                            <th class="w-20">{{$value}}</th>
+                            <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                        @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                    @endforeach
+                </table>
+
+
+{{-- -------------------------Preliminary Lab Investigation------------------- --}}
+
+
+                <div class="block-head">
+                    Preliminary Lab Investigation Conclusion
+                </div>
+                <table>
+@php
+              $Preliminary_Lab_Investigation_Conclusion = [
+                            'summary_of_prelim_investiga_plic' => 'Summary of Prelim.Investigation',
+                            'root_cause_identified_plic' => 'Root Cause Identified',
+                            'oos_category_root_cause_ident_plic' => 'OOS Category-Root Cause Ident.',
+                            'oos_category_others_plic' => 'OOS Category(Others)',
+                            'root_cause_details_plic' => 'Root Cause Details',
+                            'oos_category_root_cause_plic' => 'OOS Category-Root Cause Ident.',
+                            'recommended_actions_required_plic' => 'Recommended Actions Required?',
+                            'recommended_actions_reference_plic' => 'Recommended Actions Reference',
+                            'capa_required_plic' => 'CAPA Required',
+                            'reference_capa_no_plic' => 'Reference CAPA No.',
+                            'delay_justification_for_pi_plic' => 'Delay Justification for P.I.',
+];
+
+@endphp
+
+                            @foreach ($Preliminary_Lab_Investigation_Conclusion as $key => $value)
+                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                <th class="w-20">{{$value}}</th>
+                                <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                            @endforeach
+
+                    </table>
+
+
+
+ {{-- -------------------------Preliminary Lab Investigation review------------------- --}}
+
+                    <div class="block-head">
+                        Preliminary Lab Invst Review
+                    </div>
+                    <table>
+@php
+
+$Preliminary_lab_invst_review = [
+    'review_comments_plir' => 'Review Comments',
+    'phase_ii_inv_required_plir' => 'Phase II Inv. Required?',
+];
+
+@endphp
+
+                            @foreach ($Preliminary_lab_invst_review as $key => $value)
+                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                <th class="w-20">{{$value}}</th>
+                                <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                            @endforeach
+                        </table>
+
+{{-- ----------------------------------------- Phase II INvestigation------------------------------------ --}}
+                        <div class="block-head">
+                            Phase II Investigation
+                        </div>
+                        <table>
+
+
+    @php
+        $Phase_II_Investigation = [
+    'qa_approver_comments_piii' => 'QA Approver Comments',
+    'manufact_invest_required_piii' => 'Manufact. Invest. Required?',
+    'manufacturing_invest_type_piii' => 'Manufacturing Invest. Type',
+    'manufacturing_invst_ref_piii' => 'Manufacturing Invst. Ref.',
+    're_sampling_required_piii' => 'Re-sampling Required?',
+    'audit_comments_piii' => 'Audit Comments',
+    're_sampling_ref_no_piii' => 'Re-sampling Ref. No.',
+    'hypo_exp_required_piii' => 'Hypo/Exp.Required',
+    'hypo_exp_reference_piii' => 'Hypo/Exp. Reference',
+];
+    @endphp
+                 @foreach ($Phase_II_Investigation as $key => $value)
+                 @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                     <th class="w-20">{{$value}}</th>
+                     <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                 @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                 @endforeach
+                </table>
+
+{{-- ----------------------Phase_II_QC_Review--------------------- --}}
+
+                                <div class="block-head w-100">
+                                    Phase II QC Review
+                                </div>
+                            <table>
+
+@php
+                        $Phase_II_QC_Review = [
+                'summary_of_exp_hyp_piiqcr' => 'Summary of Exp./Hyp.',
+                'summary_mfg_investigation_piiqcr' => 'Summary Mfg.Investigation',
+                'root_casue_identified_piiqcr' => 'Root Cause Identified',
+                'oos_category_reason_identified_piiqcr' => 'OOS Category-Reason Identified',
+                'others_oos_category_piiqcr' => 'Others (OOS category)',
+                'details_of_root_cause_piiqcr' => 'Details of Root Cause',
+                'impact_assessment_piiqcr' =>'Impact Assessment',
+                'recommended_action_required_piiqcr' => 'Recommended Action Required?',
+                'recommended_action_reference_piiqcr' => 'Recommended Action Reference',
+                'investi_required_piiqcr' => 'Invest.Required',
+                'invest_ref_piiqcr' => 'Invest ref.',
+            ];
+ @endphp
+                                      @foreach ($Phase_II_QC_Review as $key => $value)
+                                      @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                          <th class="w-20">{{$value}}</th>
+                                          <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                                      @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                                      @endforeach
+
+                    </table>
+
+               {{-- -----------Additional Testing Proposal----------- --}}
+                                        <div class="block-head">
+                                            Additional Testing Proposal
+                                        </div>
+                    <table>
+@php
+    $Additional_Testing_Proposal = [
+    'review_comment_atp' => 'Review Comment',
+    'additional_test_proposal_atp' => 'Additional Test Proposal',
+    'additional_test_reference_atp' => 'Additional Test Reference',
+    'any_other_actions_required_atp' => 'Any Other Actions Required',
+    'action_task_reference_atp' => 'Action Task Reference',
+];
+@endphp
+                            @foreach ($Additional_Testing_Proposal as $key => $value)
+                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                <th class="w-20">{{$value}}</th>
+                                <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
+                            @endforeach
+                </table>
+                            {{-- --------------------------------OOS_Conclusion------------------------------------------------- --}}
+                            <div class="block-head">
+                                OOS Conclusion
+                            </div>
+
+                <table>
+@php
+    $OOS_Conclusion = [
+    "conclusion_comments_oosc" => 'Conclusion Comments',
+    "specification_limit_oosc" => 'Specification Limit',
+    "results_to_be_reported_oosc" => 'Results to be Reported',
+    "final_reportable_results_oosc" => 'Final Reportable Results',
+    "justifi_for_averaging_results_oosc" => 'Justifi. for Averaging Results',
+    "oos_stands_oosc" => 'OOS Stands',
+    "capa_req_oosc" => 'CAPA Req.',
+    "capa_ref_no_oosc" => 'CAPA Ref No.',
+    "justify_if_capa_not_required_oosc" => 'Justify if CAPA not required',
+    "action_plan_req_oosc" => 'Action Plan Req.',
+    "action_plan_ref_oosc" => 'Action Plan Ref.',
+    "justification_for_delay_oosc" => 'Justification for Delay',
+];
+@endphp
+                                @foreach ($OOS_Conclusion as $key => $value)
+                                @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                    <th class="w-20">{{$value}}</th>
+                                    <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                                @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                                @endforeach
+                </table>
+
+{{-- --------------------------------OOS_Conclusion  Review------------------------------------------------ --}}
+                                                <div class="block-head">
+                                                    OOS Conclusion Review
+                                                </div>
+                                                <table>
+@php
+
+$OOS_Conclusion_Review = [
+    "conclusion_review_comments_ocr" => 'Conclusion Review Comments',
+    "action_taken_on_affec_batch_ocr" => 'Action Taken on Affec.batch',
+    "capa_req_ocr" => 'CAPA Req.?',
+    "capa_refer_ocr" => 'CAPA Refer.',
+    "required_action_plan_ocr" => 'Required Action Plan?',
+    "required_action_task_ocr" => 'Required Action Task?',
+    "action_task_reference_ocr" => 'Action Task Reference',
+    "risk_assessment_req_ocr" => 'Risk Assessment Req?',
+    "risk_assessment_ref_ocr" => 'Risk Assessment Ref.',
+    "justify_if_no_risk_assessment_ocr" => 'Justify if no risk Assessment',
+    "qa_approver_ocr" => 'CQ Approver',
+];
+@endphp
+                                    @foreach ($OOS_Conclusion_Review as $key => $value)
+                                    @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                        <th class="w-20">{{$value}}</th>
+                                        <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                                    @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                                    @endforeach
+                                </table>
+
+{{-- --------------------------------OOS CQ Review------------------------------------------------ --}}
+                                            <div class="block-head">
+                                                OOS CQ Review
+                                            </div>
+                                <table>
+@php
+
+$OOS_CQ_Review = [
+    "capa_required_OOS_CQ" => 'CAPA required?',
+    "ref_action_plan_OOS_CQ" => 'Ref Action Plan',
+    "reference_of_capa_OOS_CQ" => 'Reference of CAPA',
+    "cq_review_comments_OOS_CQ" => 'CQ Review Comments',
+    "action_plan_requirement_OOS_CQ" => 'Action plan requirement?',
+];
+@endphp
+                                    @foreach ($OOS_CQ_Review as $key => $value)
+                                    @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                        <th class="w-20">{{$value}}</th>
+                                        <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                                    @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                                    @endforeach
+
+                                </table>
+
+
+{{-- --------------------------------OOS CQ Review------------------------------------------------ --}}
+                            <div class="block-head">
+                                Batch Disposition
+                            </div>
+                            <table>
+@php
+     $batchDisposition = [
+            'others_BI' => 'Others',
+            'oos_category_BI' => 'OOS Category',
+            'material_batch_release_BI' => 'Material/Batch Release',
+            'other_action_BI' => 'Other Action (Specify)',
+            'field_alert_reference_BI' => 'Field Alert Reference',
+            'other_parameter_result_BI' => 'Other Parameters Results',
+            'trend_of_previous_batches_BI' => 'Trend of Previous Batches',
+            'stability_data_BI' => 'Stability Data',
+            'process_validation_data_BI' => 'Process Validation Data',
+            'method_validation_BI' => 'Method Validation',
+            'any_market_complaints_BI' => 'Any Market Complaints',
+            'statistical_evaluation_BI' => 'Statistical Evaluation',
+            'risk_analysis_for_disposition_BI' => 'Risk Analysis for Disposition',
+            'conclusion_BI' => 'Conclusion',
+            'phase_III_inves_required_BI' => 'Phase-III Inves.Required?',
+            'phase_III_inves_reference_BI' => 'Phase-III Inves.Reference',
+            'justify_for_delay_BI' => 'Justify for Delay in Activity',
+            'reopen_request'=> 'Other Action (Specify)',
+        ];
+@endphp
+                            @foreach ($batchDisposition as $key => $value)
+                            @if(bcmod($loop->index, 2) == 0) <tr> @endif
+                                <th class="w-20">{{$value}}</th>
+                                <td class="w-80">@if($data->$key){{ $data->$key}} @else Not Applicable @endif</td>
+                            @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
+                            @endforeach
+
+
+
+                    <tr>
+                        <th class="w-20">Initiator Group</th>
+                        <td class="w-30">@if($data->initiator_group_gi){{ $data->initiator_group_gi }} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-80">@if($data->initiator_group_code_gi){{ $data->initiator_group_code_gi }} @else Not Applicable @endif</td>
+                    </tr>
+                    </table>
+
+                </div>
+
+
+
+
+
                 <div class="block-head">
                        Capa Attachement
                     </div>
@@ -296,7 +611,7 @@
 
                         </table>
                       </div>
-                </table>
+
             </div>
 
             <!-- <div class="block">
@@ -381,33 +696,8 @@
                             <th class="w-15">Date Of Expiry</th>
                             <th class="w-15">Market</th> --}}
                         </tr>
-                        {{-- @if($data->Product_Details->product_name)
-                        @foreach (unserialize($data->Product_Details->product_name) as $key => $dataDemo)
-                        <tr>
-                            <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->batch_no)[$key] ?  unserialize($data->Product_Details->batch_no)[$key] : "Not Applicable" }}</td>
-                            <td class="w-5">{{unserialize($data->Product_Details->mfg_date)[$key] ?  unserialize($data->Product_Details->mfg_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->batch_desposition)[$key] ?  unserialize($data->Product_Details->batch_desposition)[$key] : "Not Applicable" }}</td>
-                            {{-- <td class="w-15">{{unserialize($data->Product_Details->batch_status)[$key] ?  unserialize($data->Product_Details->batch_status)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->expiry_date)[$key] ?  unserialize($data->Product_Details->expiry_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->remark)[$key] ?  unserialize($data->Product_Details->remark)[$key] : "Not Applicable" }}</td> --}}
-                        </tr>
-
-
-                        <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
-
-
                     </table>
                 </div>
-
             </div> -->
             <div class="block">
                 <div class="block-head">
@@ -416,29 +706,29 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                        <th class="w-20">SR no.</th>
-                            <th class="w-20">Material Name</th>
-                            <th class="w-20">Batch Number</th>
-                            <th class="w-20">Date Of Manufacturing</th>
-                            <th class="w-20">Date Of Expiry</th>
-                            <th class="w-20">Batch Disposition</th>
-                            <th class="w-20">Remark</th>
-                            <th class="w-20">Batch Status</th>
+                        <th colspan="1">SR no.</th>
+                            <th class="w-10">Material Name</th>
+                            <th class="w-10">Batch Number</th>
+                            <th class="w-10">Date Of Manufacturing</th>
+                            <th class="w-10">Date Of Expiry</th>
+                            <th class="w-10">Batch Disposition</th>
+                            <th class="w-10">Remark</th>
+                            <th>Batch Status</th>
                         </tr>
                         {{-- @if($data->Material_Details->material_name) --}}
                         {{-- @foreach (unserialize($data->Material_Details->material_name) as $key => $dataDemo) --}}
-                        <tr>
-                            {{-- <td class="w-15">{{ $dataDemo ? $key + 1  : "Not Applicable" }}</td> --}}
-                            {{-- <td class="w-15">{{ unserialize($data->Material_Details->material_name)[$key] ?  unserialize($data->Material_Details->material_name)[$key]: "Not Applicable"}}</td>
+                        {{-- <tr>
+                            <td class="w-15">{{ $dataDemo ? $key + 1  : "Not Applicable" }}</td>
+                            <td class="w-15">{{ unserialize($data->Material_Details->material_name)[$key] ?  unserialize($data->Material_Details->material_name)[$key]: "Not Applicable"}}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_batch_no)[$key] ?  unserialize($data->Material_Details->material_batch_no)[$key] : "Not Applicable" }}</td>
                             <td class="w-5">{{unserialize($data->Material_Details->material_mfg_date)[$key] ?  unserialize($data->Material_Details->material_mfg_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_expiry_date)[$key] ?  unserialize($data->Material_Details->material_expiry_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_batch_desposition)[$key] ?  unserialize($data->Material_Details->material_batch_desposition)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_remark)[$key] ?  unserialize($data->Material_Details->material_remark)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td> --}}
-                        </tr>
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td>
+                        </tr> --}}
                         {{-- @endforeach --}}
-                     {{-- @else --}}
+                        {{-- @else --}}
                         <tr>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -481,9 +771,9 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td> --}}
+                            <td>Not Applicable</td>
 
-                        {{-- @endif --}}
+                        @endif --}}
                     </table>
                 </div>
             </div>
