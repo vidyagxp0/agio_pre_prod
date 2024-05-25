@@ -343,8 +343,8 @@ class DashboardController extends Controller
                 "initiator_id" => $data->initiator_id,
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
+                // "status" => $data->status,
                 "stage" => $data->status,
-                
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
