@@ -18,17 +18,17 @@ class OOCController extends Controller
 
     public function ooc()
     {
-       
-    
+
+
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        
 
-    
-    
+
+
+
 	return view('frontend.OOC.out_of_calibration', compact('due_date', 'record_number'));
     }
 
@@ -143,7 +143,7 @@ class OOCController extends Controller
             }
             $data->attachments_stage_ooc = json_encode($files);
         }
-        
+
         if (!empty($request->initial_attachment_hodreview_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_hodreview_ooc')) {
@@ -155,7 +155,7 @@ class OOCController extends Controller
             }
             $data->initial_attachment_hodreview_ooc = json_encode($files);
         }
-        
+
         if (!empty($request->initial_attachment_closure_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_closure_ooc')) {
@@ -167,7 +167,7 @@ class OOCController extends Controller
             }
             $data->initial_attachment_closure_ooc = json_encode($files);
         }
-        
+
         if (!empty($request->initial_attachment_capa_post_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_capa_post_ooc')) {
@@ -179,7 +179,7 @@ class OOCController extends Controller
             }
             $data->initial_attachment_capa_post_ooc = json_encode($files);
         }
-        
+
         if (!empty($request->initial_attachment_capa_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_capa_ooc')) {
@@ -191,20 +191,24 @@ class OOCController extends Controller
             }
             $data->initial_attachment_capa_ooc = json_encode($files);
         }
-         
-                
+
+
         $data->save();
 
-        
+
 
 
         toastr()->success('Record is created Successfully');
 
         return redirect('rcms/qms-dashboard');
-        
+
 
         // return $data;
 
+    }
+
+    public function edit(){
+        return view('frontend.OOC.ooc_view');
     }
 
 }
