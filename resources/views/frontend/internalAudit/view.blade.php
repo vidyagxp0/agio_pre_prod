@@ -10,7 +10,7 @@ $users = DB::table('users')
         textarea.note-codable {
             display: none !important;
 
-            
+
         }
 
         header {
@@ -87,29 +87,29 @@ function addMultipleFiles(input, block_id) {
 
             var cell5 = newRow.insertCell(4);
             cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
-                        
+
 
             var cell6 = newRow.insertCell(5);
             cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
             var cell7 = newRow.insertCell(6);
-           
+
                 var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
                     for (var i = 0; i < users.length; i++) {
                         userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
                     userHtml +='</select>';
-            
+
                     cell7.innerHTML = userHtml;
 
             var cell8 = newRow.insertCell(7);
-            
+
                 var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
                     for (var i = 0; i < users.length; i++) {
                         userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
                     userHtml +='</select>';
-            
+
                     cell8.innerHTML = userHtml;
 
             var cell9 = newRow.insertCell(8);
@@ -167,7 +167,7 @@ function addMultipleFiles(input, block_id) {
                     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
 
-                html += '</select></td>' + 
+                html += '</select></td>' +
                 //  '<td><input type="text" name="action_taken[]"></td>' +
                    // '<td><input type="date" name="capa_completion_date[]"></td>' +
                 //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
@@ -226,7 +226,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
-                            
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -257,7 +257,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                           
+
                         @elseif($data->stage == 5 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
@@ -349,50 +349,50 @@ function addMultipleFiles(input, block_id) {
                             Granulation</button>
                            <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
                            <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                           <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing 
+                           <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                           </button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule 
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
                           </button>
-                          
-                           <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing 
-                          </button>    
+
+                           <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
+                          </button>
                           <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
-                          </button>  
-                          
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Checklist - Stores
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
-                          </button>    
-                   
-                          <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing) 
-                          </button>    
-                   
-                          <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist - 
+                          </button>
+
+                          <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                          </button>
+
+                          <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -
                               Production (Injection Packing)
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
-                          </button>    
-                   
+                          </button>
+
                           <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
-                          </button>    
-                   
+                          </button>
+
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
 
@@ -439,7 +439,7 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div> -->
-                                        
+
                                   <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -449,7 +449,7 @@ function addMultipleFiles(input, block_id) {
                                     </div>
                                 </div>
 
-                                        
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to 1
@@ -481,7 +481,7 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
-                                        
+
                                 {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Start Date">Due Date<span class="text-danger"></span></label>
@@ -489,21 +489,21 @@ function addMultipleFiles(input, block_id) {
                                         {{-- <input type="date" name="due_date"> --}}
                                         {{-- <div class="calenderauditee">
                                             <input type="text"  id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" 
+                                                placeholder="DD-MMM-YYYY"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
                                             <input type="date" name="due_date" id="due_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" />
                                         </div>
                                     </div>
-                                </div> --}} 
+                                </div> --}}
 
-                                        
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                      id="initiator_group">
-                                                   
+
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -580,7 +580,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
+
                                                 <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                                   {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
@@ -729,7 +729,7 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Inv Attachments">Initial Attachment</label>
@@ -779,13 +779,13 @@ function addMultipleFiles(input, block_id) {
                                                         <div class="group-input input-date">
                                                             <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                             {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
-                                                            
+
                                                             <div class="calenderauditee">
-                                                                <input type="text" 
+                                                                <input type="text"
                                                                     id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_start_date) }}" />
                                                                 <input type="date" id="audit_schedule_start_date_checkdate" value="{{ $data->audit_schedule_start_date }}" name="audit_schedule_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
                                                                     oninput="handleDateInput(this, 'audit_schedule_start_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
-                                                            </div> 
+                                                            </div>
                                                         </div>
                                                     </div>
                                          <div class="col-lg-6 new-date-data-field">
@@ -793,7 +793,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
                                                 <div class="calenderauditee">
-                                                    <input type="text" 
+                                                    <input type="text"
                                                         id="audit_schedule_end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
                                                     <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
@@ -832,24 +832,24 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
-                                                          
+
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
                                                                 <input type="date"  id="scheduled_start_date{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
-                                                                "class="hide-input" 
+                                                                "class="hide-input"
                                                                 oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
-                                                             
+
                                                             <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
                                                             </td>
-                                                           
+
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text"   id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" id="scheduled_end_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
+                                                                <input type="date" id="scheduled_end_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
                                                                <td><input type="time" name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
@@ -987,7 +987,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Lead Auditor">Lead Auditor</label>
                                                 <select name="lead_auditor"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>  
+                                                    <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
                                                         <option value="{{ $value->id }}"
                                                             @if ($data->lead_auditor == $value->id) selected @endif>
@@ -1128,7 +1128,7 @@ function addMultipleFiles(input, block_id) {
                                                     </table>
                                                 </div>
                                             </div> --}}
-                                        </div> 
+                                        </div>
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
@@ -1250,7 +1250,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                                     Site</label>
-                                            
+
                                                 <textarea name="Supplier_Site" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
                                             </div>
                                         </div>
@@ -1281,19 +1281,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
-                                                    <div class="calenderauditee">                                     
+                                                    <div class="calenderauditee">
                                                         <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                         <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
-                                                    </div>    
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
-                                                    <div class="calenderauditee">                                     
+                                                    <div class="calenderauditee">
                                                     <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                     <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
@@ -1302,7 +1302,7 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
@@ -1345,7 +1345,7 @@ function addMultipleFiles(input, block_id) {
                                                         <tbody id="observationDetail">
                                                             @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                            <tr>      
+                                                            <tr>
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
@@ -1353,7 +1353,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data1->date)[$key]) }}"/>
-                                                                        <input type="date" name="date[]" value="{{ $data->date }} "class="hide-input" 
+                                                                        <input type="date" name="date[]" value="{{ $data->date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     {{-- <td> -
                                                                     <select placeholder="Select..." name="auditorG[]">
@@ -1377,7 +1377,7 @@ function addMultipleFiles(input, block_id) {
                                                                         @endforeach
                                                                     </select>
                                                                 </td> --}}
-                                                                 <td><input type="text" name="observation_description[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>  
+                                                                 <td><input type="text" name="observation_description[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
                                                                 {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
@@ -1390,18 +1390,18 @@ function addMultipleFiles(input, block_id) {
                                                                             <option value="no">No</option>
                                                                         </select>
                                                                     </td> --}}
-                                                                      <td><input type="text" name="auditee_response[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td> 
+                                                                      <td><input type="text" name="auditee_response[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
                                                                      {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td> --}} 
+                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td> --}}
                                                                     {{-- <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td> --}}
                                                                     {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_due_date) }}"/>
-                                                                        <input type="date" name="capa_due_date[]" value="{{ $data->capa_due_date }} "class="hide-input" 
+                                                                        <input type="date" name="capa_due_date[]" value="{{ $data->capa_due_date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     <td> --}}
                                                                         {{-- <select placeholder="Select..." name="capa_owner[]">
@@ -1420,7 +1420,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_completion_date) }}"/>
-                                                                        <input type="date" name="capa_completion_date[]"value="{{ $data->capa_completion_date }} "class="hide-input" 
+                                                                        <input type="date" name="capa_completion_date[]"value="{{ $data->capa_completion_date }} "class="hide-input"
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}}
@@ -1613,7 +1613,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_1" id="response" 
+                                                        <select name="response_1" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ $data->response_1 == "Yes" ? 'selected' : '' }}>Yes</option>
@@ -1639,7 +1639,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_2" id="response" 
+                                                        <select name="response_2" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{$data->response_2 == "Yes" ? 'selected' : ''}}>Yes</option>
@@ -1664,7 +1664,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td>
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                        <select name="response_3" id="response" 
+                                                        <select name="response_3" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
                                                             <option value="Yes" {{ $data->response_3 == "Yes" ? 'selected' : '' }}>Yes</option>
@@ -1695,7 +1695,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_4 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_4 == "No" ? 'selected' : '' }}  >No</option>
                                                             <option value="N/A" {{ $data->response_4 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1712,7 +1712,7 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">1.5</td>
                                                 <td>
-                                              
+
                                                     Standard operating procedure for dispensing of raw material is
                                                     displayed?
                                                 </td>
@@ -1725,7 +1725,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_5 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_5 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_5 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1742,7 +1742,7 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">1.6</td>
                                                 <td>
-                                                 
+
                                                     All the person involve in dispensing having proper gowning?
                                                 </td>
                                                 <td>
@@ -1754,7 +1754,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_6 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_6 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_6 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1780,7 +1780,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_7 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_7 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_7 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1806,7 +1806,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_8 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_8 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_8 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1835,7 +1835,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_9 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_9 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_9 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1863,7 +1863,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_10 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_10 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_10 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1892,7 +1892,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_11 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_11 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_11 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1921,7 +1921,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_12 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_12 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_12 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1950,7 +1950,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_13 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No" {{ $data->response_13  == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_13 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
                                                 </td>
@@ -2000,7 +2000,7 @@ function addMultipleFiles(input, block_id) {
                                                             <option value="Yes" {{ $data->response_14 == "Yes" ? 'selected' : '' }}>Yes</option>
                                                             <option value="No"  {{ $data->response_14 == "No" ? 'selected' : '' }}>No</option>
                                                             <option value="N/A" {{ $data->response_14 == "N/A" ? 'selected' : '' }}>N/A</option>
-                                                        
+
                                                         </select>
                                                     </div>
 
@@ -3357,7 +3357,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_2) {{ $checklist1->tablet_compress_response_2 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -3382,7 +3382,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_3)  {{ $checklist1->tablet_compress_response_3 == "No" ? 'selected' : '' }}  @endif>No</option>
                                                 <option value="N/A" @if($checklist1 &&  $checklist1->tablet_compress_response_3) {{ $checklist1->tablet_compress_response_3 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                           
+
                                             </select>
                                         </div>
                                     </td>
@@ -3462,7 +3462,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "Yes" ? 'selected' : '' }}@endif >Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "No" ? 'selected' : '' }} @endif>No </option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_6) {{ $checklist1->tablet_compress_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3488,7 +3488,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if( $checklist1 && $checklist1->tablet_compress_response_7) {{ $checklist1->tablet_compress_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3514,7 +3514,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_8) {{ $checklist1->tablet_compress_response_8 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_8)  {{ $checklist1->tablet_compress_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_8)  {{ $checklist1->tablet_compress_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3542,7 +3542,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"  @if($checklist1 && $checklist1->tablet_compress_response_9)  {{ $checklist1->tablet_compress_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"   @if($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == "No" ? 'selected' : '' }}  @endif>No</option>
                                                 <option value="N/A"  @if($checklist1 && $checklist1->tablet_compress_response_9) {{ $checklist1->tablet_compress_response_9 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3570,7 +3570,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if( $checklist1 && $checklist1->tablet_compress_response_10)  {{ $checklist1->tablet_compress_response_10 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_10) {{ $checklist1->tablet_compress_response_10 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3598,7 +3598,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_11) {{ $checklist1->tablet_compress_response_11 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3625,7 +3625,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 &&  $checklist1->tablet_compress_response_12) {{ $checklist1->tablet_compress_response_12 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3654,7 +3654,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_13) {{ $checklist1->tablet_compress_response_13 == "Yes" ? 'selected' : '' }} @endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_13)  {{ $checklist1->tablet_compress_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_13){{ $checklist1->tablet_compress_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3666,7 +3666,7 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.14</td>
                                     <td>
@@ -3681,7 +3681,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_14)  {{ $checklist1->tablet_compress_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == "No" ? 'selected' : '' }}  @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_14) {{ $checklist1->tablet_compress_response_14 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3708,7 +3708,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_15) {{ $checklist1->tablet_compress_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3735,7 +3735,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_16) {{ $checklist1->tablet_compress_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3762,7 +3762,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_17)  {{ $checklist1->tablet_compress_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3789,7 +3789,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_18)  {{ $checklist1->tablet_compress_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_18)  {{ $checklist1->tablet_compress_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_18) {{ $checklist1->tablet_compress_response_18 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3816,7 +3816,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_19)  {{ $checklist1->tablet_compress_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3833,8 +3833,8 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.20</td>
                                     <td>
                                         Are all weighing and measuring performed by one qualified person and checked by a second person
-                                        Check the weighing balance record 
-                                        
+                                        Check the weighing balance record
+
                                     </td>
                                     <td>
                                         <div
@@ -3845,7 +3845,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes"@if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No" @if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A"@if($checklist1 && $checklist1->tablet_compress_response_20)  {{ $checklist1->tablet_compress_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3872,7 +3872,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_21) {{ $checklist1->tablet_compress_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3899,7 +3899,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_22)  {{ $checklist1->tablet_compress_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == "No" ? 'selected' : '' }}  @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_22) {{ $checklist1->tablet_compress_response_22 == "N/A" ? 'selected' : '' }} @endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3926,7 +3926,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_23) {{ $checklist1->tablet_compress_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3953,7 +3953,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_24) {{ $checklist1->tablet_compress_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -3980,7 +3980,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_25) {{ $checklist1->tablet_compress_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4007,7 +4007,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_26) {{ $checklist1->tablet_compress_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4034,7 +4034,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_27) {{ $checklist1->tablet_compress_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4061,7 +4061,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_28) {{ $checklist1->tablet_compress_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4088,7 +4088,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_29) {{ $checklist1->tablet_compress_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4115,7 +4115,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_30) {{ $checklist1->tablet_compress_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4142,7 +4142,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_31) {{ $checklist1->tablet_compress_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4169,7 +4169,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_32) {{ $checklist1->tablet_compress_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4196,7 +4196,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_33) {{ $checklist1->tablet_compress_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4223,7 +4223,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_34) {{ $checklist1->tablet_compress_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4250,7 +4250,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_35) {{ $checklist1->tablet_compress_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4277,7 +4277,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_36) {{ $checklist1->tablet_compress_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4304,7 +4304,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_37) {{ $checklist1->tablet_compress_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4331,7 +4331,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_38) {{ $checklist1->tablet_compress_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4358,7 +4358,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_39) {{ $checklist1->tablet_compress_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4385,7 +4385,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_40) {{ $checklist1->tablet_compress_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4412,7 +4412,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_41) {{ $checklist1->tablet_compress_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4439,7 +4439,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_42) {{ $checklist1->tablet_compress_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4489,7 +4489,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_43) {{ $checklist1->tablet_compress_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
 
@@ -4519,7 +4519,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_44) {{ $checklist1->tablet_compress_response_44 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4546,7 +4546,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_45) {{ $checklist1->tablet_compress_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4574,7 +4574,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_46) {{ $checklist1->tablet_compress_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4602,7 +4602,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_47) {{ $checklist1->tablet_compress_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4619,7 +4619,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.6</td>
-                                    <td> Is there any area cleaning record available for all individual areas? 
+                                    <td> Is there any area cleaning record available for all individual areas?
                                     </td>
                                     <td>
                                         <div
@@ -4630,7 +4630,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_48) {{ $checklist1->tablet_compress_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4657,11 +4657,11 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist1 && $checklist1->tablet_compress_response_49) {{ $checklist1->tablet_compress_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
-                                    
+
                                     <td style="vertical-align: middle;">
                                         <div
                                         style="margin: auto; display: flex; justify-content: center;">
@@ -4678,9 +4678,9 @@ function addMultipleFiles(input, block_id) {
                             <div class="group-input">
                                 <div class="why-why-chart">
                                     <table class="table table-bordered">
-                                    
+
                                         <tbody>
-                                        
+
 
                                         </tbody>
                                     </table>
@@ -4782,7 +4782,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_2) {{ $checklist2->tablet_coating_response_2 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4808,7 +4808,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_3) {{ $checklist2->tablet_coating_response_3 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4834,7 +4834,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_4) {{ $checklist2->tablet_coating_response_4 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4862,7 +4862,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_5) {{ $checklist2->tablet_coating_response_5 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4890,7 +4890,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_6) {{ $checklist2->tablet_coating_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4916,7 +4916,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_7) {{ $checklist2->tablet_coating_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4942,7 +4942,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_8) {{ $checklist2->tablet_coating_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4970,7 +4970,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_9) {{ $checklist2->tablet_coating_response_9 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -4998,7 +4998,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_10) {{ $checklist2->tablet_coating_response_10 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5026,7 +5026,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_11) {{ $checklist2->tablet_coating_response_11 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5054,7 +5054,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_12) {{ $checklist2->tablet_coating_response_12 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5082,7 +5082,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_13) {{ $checklist2->tablet_coating_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5110,7 +5110,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_14) {{ $checklist2->tablet_coating_response_14 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5123,7 +5123,7 @@ function addMultipleFiles(input, block_id) {
 
                                 </tr>
 
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.15</td>
                                     <td>
@@ -5138,7 +5138,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_15) {{ $checklist2->tablet_coating_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5164,7 +5164,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_16) {{ $checklist2->tablet_coating_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5190,7 +5190,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_17) {{ $checklist2->tablet_coating_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5216,7 +5216,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_18) {{ $checklist2->tablet_coating_response_18 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5242,7 +5242,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_19) {{ $checklist2->tablet_coating_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5268,7 +5268,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_20) {{ $checklist2->tablet_coating_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5294,7 +5294,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_21) {{ $checklist2->tablet_coating_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5320,7 +5320,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_22) {{ $checklist2->tablet_coating_response_22 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5346,7 +5346,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_23) {{ $checklist2->tablet_coating_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5372,7 +5372,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_24) {{ $checklist2->tablet_coating_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5398,7 +5398,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_25) {{ $checklist2->tablet_coating_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5424,7 +5424,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_26) {{ $checklist2->tablet_coating_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5450,7 +5450,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_27) {{ $checklist2->tablet_coating_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5476,7 +5476,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_28) {{ $checklist2->tablet_coating_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5502,7 +5502,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_29) {{ $checklist2->tablet_coating_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5528,7 +5528,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_30) {{ $checklist2->tablet_coating_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5554,7 +5554,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_31) {{ $checklist2->tablet_coating_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5580,7 +5580,7 @@ function addMultipleFiles(input, block_id) {
                                                <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_32) {{ $checklist2->tablet_coating_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5606,7 +5606,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_33) {{ $checklist2->tablet_coating_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5632,7 +5632,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_34) {{ $checklist2->tablet_coating_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5658,7 +5658,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_35) {{ $checklist2->tablet_coating_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5684,7 +5684,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_36) {{ $checklist2->tablet_coating_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5710,7 +5710,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_37) {{ $checklist2->tablet_coating_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5736,7 +5736,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_38) {{ $checklist2->tablet_coating_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5762,7 +5762,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_39) {{ $checklist2->tablet_coating_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5788,7 +5788,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_40) {{ $checklist2->tablet_coating_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5814,7 +5814,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_41) {{ $checklist2->tablet_coating_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5840,7 +5840,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_42) {{ $checklist2->tablet_coating_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5866,7 +5866,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_43) {{ $checklist2->tablet_coating_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5916,7 +5916,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_44) {{ $checklist2->tablet_coating_response_44 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
 
@@ -5946,7 +5946,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_45) {{ $checklist2->tablet_coating_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -5973,7 +5973,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_46) {{ $checklist2->tablet_coating_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -6001,7 +6001,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_47) {{ $checklist2->tablet_coating_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -6029,7 +6029,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_48) {{ $checklist2->tablet_coating_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -6057,7 +6057,7 @@ function addMultipleFiles(input, block_id) {
                                                 <option value="Yes" @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
                                                 <option value="No"  @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
                                                 <option value="N/A" @if($checklist2 && $checklist2->tablet_coating_response_49) {{ $checklist2->tablet_coating_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
-                                            
+
                                             </select>
                                         </div>
                                     </td>
@@ -6072,7 +6072,7 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                               
+
 
 
                             </tbody>
@@ -6106,7 +6106,7 @@ function addMultipleFiles(input, block_id) {
                 </div>
             </div>
 
-           
+
         <div class="button-block">
             <button type="submit" class="saveButton">Save</button>
             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6550,7 +6550,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.17</td>
                                     <td>
-                                    Where you keep the rejected strips / blisters / containers / cartons? 
+                                    Where you keep the rejected strips / blisters / containers / cartons?
                                     </td>
                                     <td>
                                         <div
@@ -6769,7 +6769,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">2.5</td>
                                     <td>
-                                    Is there any area cleaning record available for all individual areas? 
+                                    Is there any area cleaning record available for all individual areas?
                                     </td>
                                     <td>
                                         <div
@@ -6887,12 +6887,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_1" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_1) {{ $checklist4->capsule_response_1 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_1) {{ $checklist4->capsule_response_1 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_1) {{ $checklist4->capsule_response_1 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -6900,7 +6901,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_1" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_1){{ $checklist4->capsule_remark_1 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -6912,12 +6913,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_2" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_2) {{ $checklist4->capsule_response_2 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_2) {{ $checklist4->capsule_response_2 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_2) {{ $checklist4->capsule_response_2 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -6925,7 +6927,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_2" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_2){{ $checklist4->capsule_remark_2 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -6937,12 +6939,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_3" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_3) {{ $checklist4->capsule_response_3 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_3) {{ $checklist4->capsule_response_3 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_3) {{ $checklist4->capsule_response_3 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -6950,7 +6953,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_3" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_3){{ $checklist4->capsule_remark_3 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -6962,12 +6965,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_4" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_4) {{ $checklist4->capsule_response_4 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_4) {{ $checklist4->capsule_response_4 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_4) {{ $checklist4->capsule_response_4 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -6975,7 +6979,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_4" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_4){{ $checklist4->capsule_remark_4 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -6987,12 +6991,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_5" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_5) {{ $checklist4->capsule_response_5 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_5) {{ $checklist4->capsule_response_5 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_5) {{ $checklist4->capsule_response_5 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7000,7 +7005,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_5" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_5){{ $checklist4->capsule_remark_5 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7014,12 +7019,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_6" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_6) {{ $checklist4->capsule_response_6 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_6) {{ $checklist4->capsule_response_6 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_6) {{ $checklist4->capsule_response_6 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7027,7 +7033,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_6" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_6){{ $checklist4->capsule_remark_6 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7039,12 +7045,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_7" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_7) {{ $checklist4->capsule_response_7 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_7) {{ $checklist4->capsule_response_7 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_7) {{ $checklist4->capsule_response_7 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7052,7 +7059,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_7" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_7){{ $checklist4->capsule_remark_7 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7064,12 +7071,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_8" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_8) {{ $checklist4->capsule_response_8 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_8) {{ $checklist4->capsule_response_8 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_8) {{ $checklist4->capsule_response_8 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7077,7 +7085,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_8" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_8){{ $checklist4->capsule_remark_8 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7089,12 +7097,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_9" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_9) {{ $checklist4->capsule_response_9 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_9) {{ $checklist4->capsule_response_9 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_9) {{ $checklist4->capsule_response_9 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7102,7 +7111,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_9" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_9){{ $checklist4->capsule_remark_9 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7115,12 +7124,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_10" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_10) {{ $checklist4->capsule_response_10 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_10) {{ $checklist4->capsule_response_10 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_10) {{ $checklist4->capsule_response_10 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7128,7 +7138,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_10" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_10){{ $checklist4->capsule_remark_10 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7140,12 +7150,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_11" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_11) {{ $checklist4->capsule_response_11 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_11) {{ $checklist4->capsule_response_11 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_11) {{ $checklist4->capsule_response_11 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7153,7 +7164,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_11" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_11){{ $checklist4->capsule_remark_11 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7165,12 +7176,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_12" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_12) {{ $checklist4->capsule_response_12 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_12) {{ $checklist4->capsule_response_12 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_12) {{ $checklist4->capsule_response_12 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7178,7 +7190,7 @@ function addMultipleFiles(input, block_id) {
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_12" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_12){{ $checklist4->capsule_remark_12 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7191,19 +7203,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_13" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_13) {{ $checklist4->capsule_response_13 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_13) {{ $checklist4->capsule_response_13 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_13) {{ $checklist4->capsule_response_13 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_13" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_13){{ $checklist4->capsule_remark_13 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7215,12 +7228,13 @@ function addMultipleFiles(input, block_id) {
 
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_14" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_14) {{ $checklist4->capsule_response_14 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_14) {{ $checklist4->capsule_response_14 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_14) {{ $checklist4->capsule_response_14 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
 
@@ -7231,7 +7245,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_14" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_14){{ $checklist4->capsule_remark_14 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7244,12 +7258,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_15" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_15) {{ $checklist4->capsule_response_15 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_15) {{ $checklist4->capsule_response_15 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_15) {{ $checklist4->capsule_response_15 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7257,7 +7272,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_15" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_15){{ $checklist4->capsule_remark_15 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7269,12 +7284,13 @@ function addMultipleFiles(input, block_id) {
                                     <td> Is there proper storage of cleaned equipment so as to prevent contamination?      <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_16" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_16) {{ $checklist4->capsule_response_16 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_16) {{ $checklist4->capsule_response_16 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_16) {{ $checklist4->capsule_response_16 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7282,7 +7298,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_16" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_16){{ $checklist4->capsule_remark_16 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7291,12 +7307,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>Is there adequate system to assure that unclean equipment and utensils are not used (e.g., labeling with clean status)?    <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_17" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_17) {{ $checklist4->capsule_response_17 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_17) {{ $checklist4->capsule_response_17 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_17) {{ $checklist4->capsule_response_17 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7304,7 +7321,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_17" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_17){{ $checklist4->capsule_remark_17 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7318,12 +7335,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_18" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_18) {{ $checklist4->capsule_response_18 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_18) {{ $checklist4->capsule_response_18 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_18) {{ $checklist4->capsule_response_18 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7331,7 +7349,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_18" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_18){{ $checklist4->capsule_remark_18 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7344,12 +7362,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_19" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_19) {{ $checklist4->capsule_response_19 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_19) {{ $checklist4->capsule_response_19 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_19) {{ $checklist4->capsule_response_19 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7357,7 +7376,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_19" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_19){{ $checklist4->capsule_remark_19 }}@endif</textarea>
                                         </div>
 
 
@@ -7371,12 +7390,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_20" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_20) {{ $checklist4->capsule_response_20 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_20) {{ $checklist4->capsule_response_20 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_20) {{ $checklist4->capsule_response_20 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7384,7 +7404,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_20" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_20){{ $checklist4->capsule_remark_20 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7397,12 +7417,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_21" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_21) {{ $checklist4->capsule_response_21 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_21) {{ $checklist4->capsule_response_21 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_21) {{ $checklist4->capsule_response_21 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7410,7 +7431,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_21" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_21){{ $checklist4->capsule_remark_21 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7423,12 +7444,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_22" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_22) {{ $checklist4->capsule_response_22 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_22) {{ $checklist4->capsule_response_22 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_22) {{ $checklist4->capsule_response_22 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7436,7 +7458,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_22" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_22){{ $checklist4->capsule_remark_22 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7449,12 +7471,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_23" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_23) {{ $checklist4->capsule_response_23 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_23) {{ $checklist4->capsule_response_23 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_23) {{ $checklist4->capsule_response_23 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7462,7 +7485,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_23" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_23){{ $checklist4->capsule_remark_23 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7475,12 +7498,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_24" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_24) {{ $checklist4->capsule_response_24 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_24) {{ $checklist4->capsule_response_24 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_24) {{ $checklist4->capsule_response_24 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7488,7 +7512,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_24" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_24){{ $checklist4->capsule_remark_24 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7501,12 +7525,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_25" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_25) {{ $checklist4->capsule_response_25 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_25) {{ $checklist4->capsule_response_25 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_25) {{ $checklist4->capsule_response_25 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7516,7 +7541,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_25" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_25){{ $checklist4->capsule_remark_25 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7529,19 +7554,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_26" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_26) {{ $checklist4->capsule_response_26 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_26) {{ $checklist4->capsule_response_26 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_26) {{ $checklist4->capsule_response_26 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_26" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_26){{ $checklist4->capsule_remark_26 }}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -7555,19 +7581,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_27" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_27) {{ $checklist4->capsule_response_27 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_27) {{ $checklist4->capsule_response_27 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_27) {{ $checklist4->capsule_response_27 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_27" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_27){{ $checklist4->capsule_remark_27 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7577,19 +7604,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_28" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_28) {{ $checklist4->capsule_response_28 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_28) {{ $checklist4->capsule_response_28 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_28) {{ $checklist4->capsule_response_28 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_28" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_28){{ $checklist4->capsule_remark_28 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7599,19 +7627,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_29" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_29) {{ $checklist4->capsule_response_29 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_29) {{ $checklist4->capsule_response_29 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_29) {{ $checklist4->capsule_response_29 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_29" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_29){{ $checklist4->capsule_remark_29 }}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7621,19 +7650,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_30" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_30) {{ $checklist4->capsule_response_30 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_30) {{ $checklist4->capsule_response_30 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_30) {{ $checklist4->capsule_response_30 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_30" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_30){{ $checklist4->capsule_remark_30}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7643,19 +7673,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_31" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_31) {{ $checklist4->capsule_response_31 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_31) {{ $checklist4->capsule_response_31 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_31) {{ $checklist4->capsule_response_31 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_31" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_31){{ $checklist4->capsule_remark_31}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7665,19 +7696,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_32" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_32) {{ $checklist4->capsule_response_32 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_32) {{ $checklist4->capsule_response_32 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_32) {{ $checklist4->capsule_response_32 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_32" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_32){{ $checklist4->capsule_remark_32}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7689,19 +7721,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_33" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_33) {{ $checklist4->capsule_response_33 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_33) {{ $checklist4->capsule_response_33 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_33) {{ $checklist4->capsule_response_33 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_33" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_33){{ $checklist4->capsule_remark_33}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7712,19 +7745,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_34" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_34) {{ $checklist4->capsule_response_34 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_34) {{ $checklist4->capsule_response_34 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_34) {{ $checklist4->capsule_response_34 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_34" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_34){{ $checklist4->capsule_remark_34}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7734,19 +7768,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_35" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_35) {{ $checklist4->capsule_response_35 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_35) {{ $checklist4->capsule_response_35 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_35) {{ $checklist4->capsule_response_35 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_35" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_35){{ $checklist4->capsule_remark_35}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7756,19 +7791,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_36" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_36) {{ $checklist4->capsule_response_36== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_36) {{ $checklist4->capsule_response_36 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_36) {{ $checklist4->capsule_response_36 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_36" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_36){{ $checklist4->capsule_remark_36}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7778,19 +7814,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_37" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_37) {{ $checklist4->capsule_response_37== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_37) {{ $checklist4->capsule_response_37 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_37) {{ $checklist4->capsule_response_37 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_37" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_37){{ $checklist4->capsule_remark_37}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7800,19 +7837,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_38" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_38) {{ $checklist4->capsule_response_38== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_38) {{ $checklist4->capsule_response_38 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_38) {{ $checklist4->capsule_response_38 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_38" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_38){{ $checklist4->capsule_remark_38}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7823,19 +7861,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_39" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_39) {{ $checklist4->capsule_response_39== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_39) {{ $checklist4->capsule_response_39 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_39) {{ $checklist4->capsule_response_39 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_39" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_39){{ $checklist4->capsule_remark_39}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7845,19 +7884,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_40" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_40) {{ $checklist4->capsule_response_40== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_40) {{ $checklist4->capsule_response_40 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_40) {{ $checklist4->capsule_response_40 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_40" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_40){{ $checklist4->capsule_remark_40}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7867,19 +7907,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_41" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_41) {{ $checklist4->capsule_response_41== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_41) {{ $checklist4->capsule_response_41 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_41) {{ $checklist4->capsule_response_41 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_41" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_41){{ $checklist4->capsule_remark_41}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7889,19 +7930,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_42" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_42) {{ $checklist4->capsule_response_42== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_42) {{ $checklist4->capsule_response_42 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_42) {{ $checklist4->capsule_response_42 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_42" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_42){{ $checklist4->capsule_remark_42}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7910,19 +7952,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>Is this plant free from infestation by rodents, birds, insects and vermin?   <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_43" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_43) {{ $checklist4->capsule_response_43== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_43) {{ $checklist4->capsule_response_43 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_43) {{ $checklist4->capsule_response_43 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_43" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_43){{ $checklist4->capsule_remark_43}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7932,19 +7975,20 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_44" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_44) {{ $checklist4->capsule_response_44== "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_44) {{ $checklist4->capsule_response_44 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_44) {{ $checklist4->capsule_response_44 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_44" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_44){{ $checklist4->capsule_remark_44}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -7976,12 +8020,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record.     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_45" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_45) {{ $checklist4->capsule_response_45 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_45) {{ $checklist4->capsule_response_45 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_45) {{ $checklist4->capsule_response_45 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -7989,7 +8034,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_45" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_45){{ $checklist4->capsule_remark_45}}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -8001,12 +8046,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports. <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_46" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_46) {{ $checklist4->capsule_response_46 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_46) {{ $checklist4->capsule_response_46 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_46) {{ $checklist4->capsule_response_46 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -8014,7 +8060,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_46" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_46){{ $checklist4->capsule_remark_46}}@endif</textarea>
                                         </div>
                                     </td>
 
@@ -8028,12 +8074,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_remark_47" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_47) {{ $checklist4->capsule_response_47 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_47) {{ $checklist4->capsule_response_47 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_47) {{ $checklist4->capsule_response_47 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -8041,7 +8088,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_47" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_47){{ $checklist4->capsule_remark_47}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -8052,12 +8099,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_remark_48" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_48) {{ $checklist4->capsule_response_48 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -8065,23 +8113,24 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_48" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_48){{ $checklist4->capsule_remark_48}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.5</td>
-                                    <td>Is there any area cleaning record available for all individual areas? 
+                                    <td>Is there any area cleaning record available for all individual areas?
                                     </td>
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_49" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_49) {{ $checklist4->capsule_response_49 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_49) {{ $checklist4->capsule_response_49 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_49) {{ $checklist4->capsule_response_49 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -8089,7 +8138,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_49" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_49){{ $checklist4->capsule_remark_49}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -8100,12 +8149,13 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                            <select name="response" id="response"
+                                            <select name="capsule_response_50" id="response"
                                                 style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                 <option value="">Select an Option</option>
-                                                <option value="Yes">Yes</option>
-                                                <option value="No">No</option>
-                                                <option value="N/A">N/A</option>
+                                                <option value="Yes" @if($checklist4 && $checklist4->capsule_response_50) {{ $checklist4->capsule_response_50 == "Yes" ? 'selected' : '' }}@endif>Yes</option>
+                                                <option value="No"  @if($checklist4 && $checklist4->capsule_response_50) {{ $checklist4->capsule_response_50 == "No" ? 'selected' : '' }} @endif>No</option>
+                                                <option value="N/A" @if($checklist4 && $checklist4->capsule_response_50) {{ $checklist4->capsule_response_50 == "N/A" ? 'selected' : '' }}@endif>N/A</option>
+
                                             </select>
                                         </div>
                                     </td>
@@ -8113,7 +8163,7 @@ function addMultipleFiles(input, block_id) {
                                     <td style="vertical-align: middle;">
                                         <div
                                             style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="capsule_remark_50" style="border-radius: 7px; border: 1.5px solid black;">@if( $checklist4 && $checklist4->capsule_remark_50){{ $checklist4->capsule_remark_50}}@endif</textarea>
                                         </div>
                                     </td>
                                 </tr>
@@ -9755,7 +9805,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.5</td>
-                                    <td> Is there any area cleaning record available for all individual areas? 
+                                    <td> Is there any area cleaning record available for all individual areas?
                                     </td>
                                     <td>
                                         <div
@@ -9849,7 +9899,7 @@ function addMultipleFiles(input, block_id) {
                 Checklist for  Liquid/ Ointment Packing
 
             </div>
-    
+
             <div class="col-12">
                 {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                 <div class="group-input">
@@ -9886,7 +9936,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -9911,7 +9961,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -9936,7 +9986,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -9961,7 +10011,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -9988,7 +10038,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10015,7 +10065,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10040,7 +10090,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10065,7 +10115,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10092,7 +10142,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10119,7 +10169,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10146,7 +10196,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10173,7 +10223,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -10199,7 +10249,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.14</td>
@@ -10224,7 +10274,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.15</td>
@@ -10249,7 +10299,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.16</td>
@@ -10274,7 +10324,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.17</td>
@@ -10299,7 +10349,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.18</td>
@@ -10324,7 +10374,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.19</td>
@@ -10349,12 +10399,12 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.20</td>
                                                             <td>
-                                                            Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record 
+                                                            Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
                                                             </td>
                                                             <td>
                                                                 <div
@@ -10374,7 +10424,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.21</td>
@@ -10399,7 +10449,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.22</td>
@@ -10424,7 +10474,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.23</td>
@@ -10449,7 +10499,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.24</td>
@@ -10474,7 +10524,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.25</td>
@@ -10499,7 +10549,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.26</td>
@@ -10524,7 +10574,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.27</td>
@@ -10549,7 +10599,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">1.28</td>
@@ -10573,7 +10623,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.29</td>
@@ -10598,7 +10648,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.30</td>
@@ -10623,7 +10673,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.31</td>
@@ -10648,7 +10698,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.32</td>
@@ -10673,7 +10723,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.33</td>
@@ -10698,7 +10748,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.34</td>
@@ -10723,7 +10773,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.35</td>
@@ -10748,7 +10798,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.36</td>
@@ -10773,7 +10823,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.37</td>
@@ -10798,7 +10848,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.38</td>
@@ -10823,7 +10873,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.39</td>
@@ -10848,7 +10898,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.40</td>
@@ -10873,7 +10923,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.41</td>
@@ -10898,7 +10948,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.42</td>
@@ -10923,7 +10973,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.43</td>
@@ -10948,7 +10998,7 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">1.44</td>
@@ -10973,19 +11023,19 @@ function addMultipleFiles(input, block_id) {
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
-        
-        
-        
-                                                        
+
+
+
+
                                                         </tbody>
                                                     </table>
-        
+
                                                 </div>
                                             </div>
                                         </div>
-        
+
                                         <div class="sub-head">
                                             Checklist for Documentation
                                         </div>
@@ -11007,7 +11057,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <td class="flex text-center">2.1</td>
                                                                 <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record. </td>
                                                                 <td>
-        
+
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
@@ -11018,20 +11068,20 @@ function addMultipleFiles(input, block_id) {
                                                                             <option value="N/A">N/A</option>
                                                                         </select>
                                                                     </div>
-        
-        
+
+
                                                                 </td>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">2.2</td>
@@ -11048,16 +11098,16 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">2.3</td>
@@ -11074,17 +11124,17 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
-        
+
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">2.4</td>
@@ -11101,20 +11151,20 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">2.5</td>
-                                                                <td> Is there any area cleaning record available for all individual areas? 
+                                                                <td> Is there any area cleaning record available for all individual areas?
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -11128,16 +11178,16 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">2.6</td>
@@ -11155,20 +11205,20 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
-        
-        
+
+
                                                                 </td>
-        
+
                                                             </tr>
-                                                           
-        
-        
+
+
+
                             </tbody>
                         </table>
                     </div>
@@ -11671,7 +11721,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">18</td>
                                     <td>
-                                    Check for Change control proposal system 
+                                    Check for Change control proposal system
                                     </td>
                                     <td>
                                         <div
@@ -12510,14 +12560,14 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.2</td>
                                     <td>Are written procedures available for:
-                                        
+
                                         </td>
                                     <td>
-                                       
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                     </td>
@@ -12526,7 +12576,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.2.1</td>
                                     <td>
                                             Set-up of equipment
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12553,7 +12603,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.2.2</td>
                                     <td>
                                             Maintenance of equipment
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12580,7 +12630,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.2.3</td>
                                     <td>
                                             Cleaning of equipment
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12607,7 +12657,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.2.4</td>
                                     <td>
                                             Calibration of manufacturing equipment
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12660,14 +12710,14 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.3</td>
                                     <td> Are records kept for:
-                                        
+
                                         </td>
                                     <td>
-                                       
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                     </td>
@@ -12676,8 +12726,8 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.3.1</td>
                                     <td>
                                             The sequence of products manufactured on particular equipment
-                                        
-                                        
+
+
                                         </td>
                                     <td>
                                         <div
@@ -12704,7 +12754,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.3.2</td>
                                     <td>
                                             Maintenance and cleaning logs
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12731,7 +12781,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.3.3</td>
                                     <td>
                                             Calibration of manufacturing equipment
-                                        
+
                                         </td>
                                     <td>
                                         <div
@@ -12756,7 +12806,7 @@ function addMultipleFiles(input, block_id) {
                                     </td>
                                 </tr> <tr>
                                     <td class="flex text-center">1.3.4</td>
-                                    <td> 
+                                    <td>
                                             Calibration of control instruments
                                         </td>
                                     <td>
@@ -12968,8 +13018,8 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.11</td>
                                     <td>
-                                        Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments? 
-                                        
+                                        Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
+
 
                                     </td>
                                     <td>
@@ -12997,7 +13047,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.11.1</td>
                                     <td>
-                                        
+
                                             Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?
 
                                     </td>
@@ -13077,14 +13127,14 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.14</td>
                                     <td>
                                           Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
 
-                                      
-                                       
+
+
                                     </td>
                                     <td>
                                         <div
@@ -13109,15 +13159,15 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.14.1</td>
                                     <td>
-                                        
 
-                                             Do SOPs assign responsibilities; include 
-                                             schedules; describe methods; equipment, and  
-                                             materials to be used, including calibration over 
-                                             actual range of use and standards traceable to 
-                                             national standards; and include specifications 
+
+                                             Do SOPs assign responsibilities; include
+                                             schedules; describe methods; equipment, and
+                                             materials to be used, including calibration over
+                                             actual range of use and standards traceable to
+                                             national standards; and include specifications
                                              and tolerances?
-                                       
+
                                     </td>
                                     <td>
                                         <div
@@ -13247,7 +13297,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.19</td>
                                     <td>
-                                        Is there any standard procedure for maintenance and calibration operations? 
+                                        Is there any standard procedure for maintenance and calibration operations?
                                     </td>
                                     <td>
                                         <div
@@ -13273,7 +13323,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.20</td>
                                     <td>
-                                        Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly. 
+                                        Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly.
                                     </td>
                                     <td>
                                         <div
@@ -13508,7 +13558,7 @@ function addMultipleFiles(input, block_id) {
 
                                     </td>
 
-                             
+
 
                             </tbody>
                         </table>
@@ -13590,7 +13640,7 @@ function addMultipleFiles(input, block_id) {
 
 
                                 </tr>
-                               
+
 
                             </tbody>
                         </table>
@@ -13756,15 +13806,15 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.5</td>
                                     <td>
-                                        Have the employees undergone training in the following areas? 
+                                        Have the employees undergone training in the following areas?
 
                                     </td>
                                     <td>
-                                       
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                     </td>
@@ -13772,8 +13822,8 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.5.1</td>
                                     <td>
-                                        
-                                      cGLP (Related: SOP for Good Laboratory Practices) 
+
+                                      cGLP (Related: SOP for Good Laboratory Practices)
 
                                     </td>
                                     <td>
@@ -13800,9 +13850,9 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.5.2</td>
                                     <td>
-                                        
-                                          SOPs 
-                                      
+
+                                          SOPs
+
 
                                     </td>
                                     <td>
@@ -13829,7 +13879,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.5.3</td>
                                     <td>
-                                        
+
                                       Analytical Techniques
 
                                     </td>
@@ -13857,7 +13907,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.5.4</td>
                                     <td>
-                                        
+
                                       EU_GMP
 
                                     </td>
@@ -14045,13 +14095,13 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.12</td>
                                     <td>
                                         Are all reagents and solutions
-                                        
+
                                     <td>
-                                       
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                     </td>
@@ -14059,9 +14109,9 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.12.1</td>
                                     <td>
-                                        
+
                                             Clearly, labeled with their proper name?
-                                        
+
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -14086,9 +14136,9 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">1.12.2</td>
                                     <td>
-                                        
+
                                             Labeled with the date of receipt and/or expiration date?
-                                        
+
                                     <td>
                                         <div
                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -14116,24 +14166,24 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.13</td>
                                     <td>
                                         Are prepared solutions labeled with the
-                                        
+
                                     </td>
                                     <td>
-                                       
+
                                     </td>
                                     <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.13.1</td>
                                     <td>
-                                        
+
                                             Name of the person who prepared them?
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -14155,14 +14205,14 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.13.2</td>
                                     <td>
-                                        
+
                                             Date of preparation?
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -14184,13 +14234,13 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">1.13.3</td>
                                     <td>
-                                        
+
                                             Expiration date?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14212,13 +14262,13 @@ function addMultipleFiles(input, block_id) {
                                     </td>
 
                                 </tr>
-                                
-                                
+
+
                                 <tr>
                                     <td class="flex text-center">1.14</td>
                                     <td>
                                             Is there any written procedure available for status labeling?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14245,7 +14295,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.15</td>
                                     <td>
                                         Is the area qualified? Have any modification in the facility in the last 6 months?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14272,7 +14322,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.16</td>
                                     <td>
                                                 Are the entire area log books updated?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14299,7 +14349,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.17</td>
                                     <td>
                                             Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14326,7 +14376,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.18</td>
                                     <td>
                                             Is there an SOP for corrective action if an instrument is found to be out of calibration?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14379,7 +14429,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.20</td>
                                     <td>
                                             Is a specific person responsible for the receipt of samples for testing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14406,7 +14456,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.21</td>
                                     <td>
                                         Is there a written SOP describing sample receipt and recording (logging in)?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14433,7 +14483,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.22</td>
                                     <td>
                                             Where are samples stored before and after testing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14460,7 +14510,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.23</td>
                                     <td>
                                         Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14487,7 +14537,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.24</td>
                                     <td>
                                         Is there a time limit on how long a sample may remain in the laboratory prior to testing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14514,7 +14564,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.25</td>
                                     <td>
                                         Is the approved vendor list for all raw materials and packing materials available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14541,7 +14591,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.26</td>
                                     <td>
                                                 Is there any data backup policy available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14568,7 +14618,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.27</td>
                                     <td>
                                         Is there any written procedure for the Audit trail?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14621,7 +14671,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.29</td>
                                     <td>
                                         Are there approved test procedures available for all tests performed in the laboratory?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14648,7 +14698,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.30</td>
                                     <td>
                                                 Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14675,7 +14725,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.31</td>
                                     <td>
                                             Has the test method been validated for precision and reliability?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14702,7 +14752,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.32</td>
                                     <td>
                                         Examine the work currently being performed on the HPLCs.
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14729,7 +14779,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.33</td>
                                     <td>
                                             Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14756,7 +14806,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.34</td>
                                     <td>
                                         Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14783,7 +14833,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.35</td>
                                     <td>
                                             Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14810,7 +14860,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.36</td>
                                     <td>
                                         Are laboratory records indicating the date of receipt of the sample and expiry date?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14837,7 +14887,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.37</td>
                                     <td>
                                         Are appropriate reference standards used and are they stored in a proper manner to ensure stability?  Are their expiration dates adequately monitored so they are not used beyond the expiration dates?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14864,7 +14914,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.38</td>
                                     <td>
                                             Is reference standard kept under proper storage condition?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14891,7 +14941,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.39</td>
                                     <td>
                                         Are working standards prepared as per the protocol? Check for its storage condition
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -14917,8 +14967,8 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.40</td>
                                     <td>
-                                        Is there a record of the preparation of volumetric solutions? 
-                                        
+                                        Is there a record of the preparation of volumetric solutions?
+
                                     </td>
                                     <td>
                                         <div
@@ -14944,8 +14994,8 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.41</td>
                                     <td>
-                                            Are volumetric solutions freshly prepared? If stored, what expiration date is given? 
-                                        
+                                            Are volumetric solutions freshly prepared? If stored, what expiration date is given?
+
                                     </td>
                                     <td>
                                         <div
@@ -14998,7 +15048,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.43</td>
                                     <td>
                                             Check method validation for any product which is done in between two self-inspections with respect to SOP.
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15025,7 +15075,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.44</td>
                                     <td>
                                             Is a stability study schedule available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15052,7 +15102,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.45</td>
                                     <td>
                                             Are protocols for all stability study samples available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15079,7 +15129,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.46</td>
                                     <td>
                                             Does the procedure for keeping stability samples available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15106,7 +15156,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.47</td>
                                     <td>
                                             Are stability samples kept as per the storage requirement?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15133,7 +15183,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.48</td>
                                     <td>
                                         Is the stability summary available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15160,7 +15210,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.49</td>
                                     <td>
                                         Are records maintained of nonconforming materials, related investigations and corrective actions?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15187,7 +15237,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.50</td>
                                     <td>
                                             For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15214,7 +15264,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.51</td>
                                     <td>
                                         Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list)  maintained and are incoming raw materials checked against it?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15241,7 +15291,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.52</td>
                                     <td>
                                             Are statistical sampling plans used to assure that the samples are representative of the lot?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15268,7 +15318,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.53</td>
                                     <td>
                                             Are sampled containers labeled with sampler’s name and date of sampling?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15295,7 +15345,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.54</td>
                                     <td>
                                             Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15322,9 +15372,9 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.55</td>
                                     <td>
                                                 Are raw materials approved before being used in production?
-                                        
-                                        
-                                        
+
+
+
                                     </td>
                                     <td>
                                         <div
@@ -15349,10 +15399,10 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.55.1</td>
                                     <td>
-                                            
+
                                         Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -15379,7 +15429,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.56</td>
                                     <td>
                                             If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15406,7 +15456,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.57</td>
                                     <td>
                                             Is raw materials identification test performed on every batch and receipt?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15433,7 +15483,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.58</td>
                                     <td>
                                             Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15460,7 +15510,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.59</td>
                                     <td>
                                             In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15487,7 +15537,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.60</td>
                                     <td>
                                                 If operators perform in-process testing, have they been trained and was the training documented?  Does QC periodically verify their results?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15514,7 +15564,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.61</td>
                                     <td>
                                         Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15541,7 +15591,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.62</td>
                                     <td>
                                             When and where is the finished product sampled for release?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15568,7 +15618,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.63</td>
                                     <td>
                                         Is every product batch tested and approved before shipment?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15621,7 +15671,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.65</td>
                                     <td>
                                             If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15648,7 +15698,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.66</td>
                                     <td>
                                             Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15675,7 +15725,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.67</td>
                                     <td>
                                         Is the stability protocol available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15703,24 +15753,24 @@ function addMultipleFiles(input, block_id) {
                                     <td>
                                         Are these stability chambers available to carryout stability of the product at
 
-                                        
+
                                     </td>
                                     <td>
-                                       
+
                                     </td>
                                     <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.68.1</td>
                                     <td>
-                                        
-                                                25°C / 60% Rh
-                                            
 
-                                        
+                                                25°C / 60% Rh
+
+
+
                                     </td>
                                     <td>
                                         <div
@@ -15745,11 +15795,11 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.68.2</td>
                                     <td>
-                                       
-                                                30°C / 75% Rh
-                                            
 
-                                        
+                                                30°C / 75% Rh
+
+
+
                                     </td>
                                     <td>
                                         <div
@@ -15774,10 +15824,10 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.68.3</td>
                                     <td>
-                                        
+
                                                 40°C / 75% Rh
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15802,10 +15852,10 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.68.4</td>
                                     <td>
-                                        
+
                                                 30°C/65% Rh
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15830,10 +15880,10 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.68.5</td>
                                     <td>
-                                       
+
                                                 Stand By Chamber
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15861,7 +15911,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.69</td>
                                     <td>
                                         Do you keep both hard copy and electronic copy of temperature/Rh monitoring?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15888,7 +15938,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.70</td>
                                     <td>
                                                 Are the stability results reviewed by a qualified, experienced person?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15915,7 +15965,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.71</td>
                                     <td>
                                         Is stability study in primary pack done for different products?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15942,7 +15992,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.72</td>
                                     <td>
                                         Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15969,7 +16019,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.73</td>
                                     <td>
                                             Are calibrated instruments labeled with date calibrated and date next calibration is due?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -15996,7 +16046,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.74</td>
                                     <td>
                                             Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16023,7 +16073,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.75</td>
                                     <td>
                                             Are in- process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16050,7 +16100,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.76</td>
                                     <td>
                                         Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16077,7 +16127,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.77</td>
                                     <td>
                                         Are written sampling and testing procedures and acceptance criteria available for each product?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16104,7 +16154,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.78</td>
                                     <td>
                                                 Are specific tests for foreign particles done?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16131,7 +16181,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.79</td>
                                     <td>
                                             Are Packing materials approved before being used in production?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16158,7 +16208,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.80</td>
                                     <td>
                                                 Check for compliance of stability data and its summary
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16185,7 +16235,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.81</td>
                                     <td>
                                         Check for Analytical Data Sheet
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16212,7 +16262,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.82</td>
                                     <td>
                                             Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16266,7 +16316,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.84</td>
                                     <td>
                                             Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms?  Are equipment ID numbers recorded for each analysis?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16293,7 +16343,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.85</td>
                                     <td>
                                             Are data and calculations checked by a second person and countersigned?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16320,7 +16370,7 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.86</td>
                                     <td>
                                             Are Material safety data sheet (MSDS) of chemical which are used is available?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16346,25 +16396,25 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.87</td>
                                     <td>
-                                            Microbiological Laboratories 
+                                            Microbiological Laboratories
 
-                                        
+
                                     </td>
                                     <td>
-                                        
+
                                     </td>
                                     <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.87.1</td>
                                     <td>
-                                            
+
                                           Are positive and negative controls used for testing?  Are their results recorded?
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16388,11 +16438,11 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">1.87.2</td>
                                     <td>
-                                            
-                                              Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
-                                          
 
-                                        
+                                              Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
+
+
+
                                     </td>
                                     <td>
                                         <div
@@ -16416,10 +16466,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">1.87.3</td>
                                     <td>
-                                            
+
                                           Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16443,10 +16493,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">1.87.4</td>
                                     <td>
-                                            
+
                                               Are isolates from microbiological testing identified if appropriate?
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16470,10 +16520,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">1.87.5</td>
                                     <td>
-                                            
+
                                               Is each lot of microbial ID systems checked with positive and negative controls?
 
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -16503,12 +16553,12 @@ function addMultipleFiles(input, block_id) {
                 </div>
             </div>
 
-           
-           
 
-           
 
-           
+
+
+
+
         </div>
         <div class="col-md-12 mb-4">
             <div class="group-input">
@@ -16952,7 +17002,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.16</td>
                                     <td>
-                                    Is cleaning record maintained for store? 
+                                    Is cleaning record maintained for store?
                                     </td>
                                     <td>
                                         <div
@@ -17000,7 +17050,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.18</td>
                                     <td>
-                                    Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF? 
+                                    Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF?
                                     </td>
                                     <td>
                                         <div
@@ -17048,7 +17098,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.20</td>
                                     <td>
-                                    Check the Dispensing and sampling area records. 
+                                    Check the Dispensing and sampling area records.
                                 </td>
                                     <td>
                                         <div
@@ -17461,7 +17511,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.6</td>
                                     <td>
-                                    Check the data for the pest & rodent control for the last 3 months, is it ok? 
+                                    Check the data for the pest & rodent control for the last 3 months, is it ok?
                                     </td>
                                     <td>
                                         <div
@@ -17619,7 +17669,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.12</td>
                                     <td>
-                                    Do you have a written procedure for linen washing? 
+                                    Do you have a written procedure for linen washing?
                                     </td>
                                     <td>
                                         <div
@@ -17646,7 +17696,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.13</td>
                                     <td>
-                                    Is the linen for washing is collected from respective area in polybags? 
+                                    Is the linen for washing is collected from respective area in polybags?
                                     </td>
                                     <td>
                                         <div
@@ -17746,7 +17796,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.17</td>
                                     <td>
-                                    Check the induction training record for one new recruit in the production, store, QA, QC.    
+                                    Check the induction training record for one new recruit in the production, store, QA, QC.
                                     </td>
                                     <td>
                                         <div
@@ -17821,7 +17871,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.20</td>
                                     <td>
-                                    Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections? 
+                                    Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections?
                                     </td>
                                     <td>
                                         <div
@@ -17846,7 +17896,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.21</td>
                                     <td>
-                                    Is there a procedure for issue, storage, washing and collection of used garments? 
+                                    Is there a procedure for issue, storage, washing and collection of used garments?
                                     </td>
                                     <td>
                                         <div
@@ -17871,7 +17921,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.22</td>
                                     <td>
-                                    Is there any color code for garments and foot wear followed? 
+                                    Is there any color code for garments and foot wear followed?
                                     </td>
                                     <td>
                                         <div
@@ -17946,7 +17996,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.25</td>
                                     <td>
-                                    Check the training record for the SOP related changes for two person for production, QA and QC 
+                                    Check the training record for the SOP related changes for two person for production, QA and QC
                                     </td>
                                     <td>
                                         <div
@@ -18021,7 +18071,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.28</td>
                                     <td>
-                                    Is there any emergency evacuation system in factory premises? 
+                                    Is there any emergency evacuation system in factory premises?
                                     </td>
                                     <td>
                                         <div
@@ -18121,7 +18171,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.32</td>
                                     <td>
-                                    Check the scrap record for last 2 months. 
+                                    Check the scrap record for last 2 months.
                                     </td>
                                     <td>
                                         <div
@@ -18200,11 +18250,11 @@ function addMultipleFiles(input, block_id) {
                 </div>
             </div>
 
-            
 
-           
 
-            
+
+
+
         </div>
         <div class="col-md-12 mb-4">
             <div class="group-input">
@@ -18613,8 +18663,8 @@ function addMultipleFiles(input, block_id) {
             </div>
 
             <div class="sub-head">
-                Checklist for - Injection Manufacturing / Filteration / Filling /Visual Inspection 
-            </div>  
+                Checklist for - Injection Manufacturing / Filteration / Filling /Visual Inspection
+            </div>
             <div class="col-12">
                 <div class="group-input">
                     <div class="why-why-chart">
@@ -19104,7 +19154,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                                
+
                                 <tr>
                                     <td class="flex text-center">2.19</td>
                                     <td>Are written records maintained on equipment cleaning, sanitizing
@@ -19129,11 +19179,11 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.20</td>
                                     <td>Are all weighing and measuring performed by one qualified person and checked by a second person
-                                        Check the weighing balance record 
+                                        Check the weighing balance record
                                         </td>
                                     <td>
                                         <div
@@ -19154,7 +19204,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.21</td>
                                     <td>All the person working in manufacturing area having proper gowning?</td>
@@ -19177,7 +19227,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.22</td>
                                     <td>Is the Mfg tank calibrated?</td>
@@ -19200,7 +19250,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.23</td>
                                     <td>Check the CIP-SIP system in place and verify the records.</td>
@@ -19223,7 +19273,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.24</td>
                                     <td>Is the pressure differential of every particular area are within limit?</td>
@@ -19246,7 +19296,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.25</td>
                                     <td>Is there a define procedure for filtration and verify the records.</td>
@@ -19269,7 +19319,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.26</td>
                                     <td>Is there any procedure to carryout integrity test of the filter used in process?</td>
@@ -19292,7 +19342,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.27</td>
                                     <td>Is there any procedure for cleaning of filling machine?</td>
@@ -19315,7 +19365,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.28</td>
                                     <td>Is there any procedure to expose the settle plate during complete filling activity?</td>
@@ -19338,7 +19388,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.29</td>
                                     <td>Have you any SOP regarding Hold time of material during staging?</td>
@@ -19361,7 +19411,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.30</td>
                                     <td>Is there a written procedure specifying the frequency of inspection and replacement for air filters?</td>
@@ -19384,7 +19434,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.31</td>
                                     <td>Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.</td>
@@ -19407,7 +19457,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.32</td>
                                     <td>Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?</td>
@@ -19430,7 +19480,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.33</td>
                                     <td>Does the process control address all issues to ensure identity, strength, quality and purity of product?</td>
@@ -19453,7 +19503,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.34</td>
                                     <td>Check the calibration labels for instrument calibration status</td>
@@ -19476,7 +19526,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.35</td>
                                     <td>Temperature & RH record log book is available for each staging area.</td>
@@ -19499,7 +19549,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.36</td>
                                     <td>Is there any procedure for operation and cleaning of tunnel, verify the records</td>
@@ -19522,7 +19572,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.37</td>
                                     <td>Check is there any sop for operations & cleaning of autoclave verify the records.</td>
@@ -19545,7 +19595,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.38</td>
                                     <td>Is there any procedure for operation and cleaning of washing machine, verify the records.</td>
@@ -19568,7 +19618,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.39</td>
                                     <td>Is there any procedure for operation and cleaning of leak test apparatus, verify the records.</td>
@@ -19591,7 +19641,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.40</td>
                                     <td>Is there any procedure for operation and cleaning of ampoule visual inspection machine, verify the records.</td>
@@ -19614,7 +19664,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.41</td>
                                     <td>Check for area activity record</td>
@@ -19637,7 +19687,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.42</td>
                                     <td>Check for equipment usage record</td>
@@ -19660,7 +19710,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.43</td>
                                     <td>Check for general equipment details and accessory details.</td>
@@ -19683,7 +19733,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.44</td>
                                     <td>Check for man & material movement in the area</td>
@@ -19706,7 +19756,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.45</td>
                                     <td>Air handling system qualification, cleaning details and PAO test reports</td>
@@ -19729,7 +19779,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.46</td>
                                     <td>Check for WFI hose pipe status and water hold up.</td>
@@ -19752,7 +19802,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.47</td>
                                     <td>Check for the status labeling in the area and, material randomly</td>
@@ -19775,7 +19825,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </td>
                                 </tr>
-                              
+
                                 <tr>
                                     <td class="flex text-center">2.48</td>
                                     <td>Check the in-process equipments cleaning status & records.</td>
@@ -19799,8 +19849,8 @@ function addMultipleFiles(input, block_id) {
                                     </td>
                                 </tr>
 
-                                
-                              
+
+
                                 <tr>
                                     <td class="flex text-center">2.49</td>
                                     <td>Have you any SOP regarding Hold time of material during staging?</td>
@@ -19835,7 +19885,7 @@ function addMultipleFiles(input, block_id) {
                 </div>
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
-                                    
+
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
@@ -20007,7 +20057,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12 mb-4">
                                     <div class="group-input">
                                         <label for="Description Deviation">Final Comments</label>
@@ -20016,7 +20066,7 @@ function addMultipleFiles(input, block_id) {
                                             </textarea>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Supporting Attachment </label>
@@ -20045,7 +20095,7 @@ function addMultipleFiles(input, block_id) {
       <div id="CCForm20" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
-            <div class="sub-head">  
+            <div class="sub-head">
             Checklist for Injection Packing
             </div>
 
@@ -20528,8 +20578,8 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.19</td>
                                     <td>
-                                    Are all weighing and measuring performed by one qualified person and checked by a second person 
-                                                                                               
+                                    Are all weighing and measuring performed by one qualified person and checked by a second person
+
 
                                     </td>
                                     <td>
@@ -20930,7 +20980,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.35</td>
                                     <td>
-                                    Where you keep the rejected ampoule / cartons? 
+                                    Where you keep the rejected ampoule / cartons?
                                     </td>
                                     <td>
                                         <div
@@ -21237,7 +21287,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.5</td>
-                                    <td> Is there any area cleaning record available for all individual areas? 
+                                    <td> Is there any area cleaning record available for all individual areas?
                                     </td>
                                     <td>
                                         <div
@@ -21290,7 +21340,7 @@ function addMultipleFiles(input, block_id) {
                         </table>
                     </div>
                 </div>
-            </div>                           
+            </div>
        </div> <div class="col-md-12 mb-4">
         <div class="group-input">
             <label for="Description Deviation">Final Comments</label>
@@ -21325,7 +21375,7 @@ function addMultipleFiles(input, block_id) {
         </div>
     </div>
 </div>
-<div id="CCForm21" class="inner-block cctabcontent">    
+<div id="CCForm21" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
             <div class="sub-head">
@@ -21836,7 +21886,7 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.20</td>
                                     <td>
-                                    Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record 
+                                    Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
                                     </td>
                                     <td>
                                         <div
@@ -22461,7 +22511,7 @@ function addMultipleFiles(input, block_id) {
 
 
 
-                            
+
                             </tbody>
                         </table>
 
@@ -22542,8 +22592,8 @@ function addMultipleFiles(input, block_id) {
 
 
                                 </tr>
-                                
-                               
+
+
 
                             </tbody>
                         </table>
@@ -22598,7 +22648,7 @@ function addMultipleFiles(input, block_id) {
     <div class="inner-block-content">
         <div class="row">
             <div class="sub-head">
-                Checklist for Analytical Research and Development 
+                Checklist for Analytical Research and Development
             </div>
 
             <div class="col-12">
@@ -22717,7 +22767,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.5</td>
-                                    <td>Do you receive working standards along with COA from manufacturer?    
+                                    <td>Do you receive working standards along with COA from manufacturer?
                                     </td>
                                     <td>
                                         <div
@@ -22918,19 +22968,19 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.13</td>
-                                    <td>Are stability study carried out for the product at 
+                                    <td>Are stability study carried out for the product at
                                         </td>
                                     <td>
-                                        
+
                                     </td>
                                     <td style="vertical-align: middle;">
-                                        
+
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.13.1</td>
                                     <td>
-                                    25°C / 60% RH 
+                                    25°C / 60% RH
                                         </td>
                                     <td>
                                         <div
@@ -22953,7 +23003,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.13.2</td>
                                     <td>
-                                         
+
                                           30°C / 70% RH
                                         </td>
                                     <td>
@@ -22977,7 +23027,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.13.3</td>
                                     <td>
-                                         
+
                                          40°C / 75% RH
                                         </td>
                                     <td>
@@ -23278,7 +23328,7 @@ function addMultipleFiles(input, block_id) {
                     Exit </a> </button>
         </div>
     </div>
-</div> 
+</div>
 <div id="CCForm23" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
@@ -23665,24 +23715,24 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.15</td>
                                     <td>
-                                    Are these stability chambers available to carryout stability of the product at - 
+                                    Are these stability chambers available to carryout stability of the product at -
 
 
                                     </td>
                                     <td>
-                                        
+
                                     </td>
                                     <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.15.1</td>
                                     <td>
-                                    
+
                                     25°C / 60% Rh
-                                    
+
 
 
                                     </td>
@@ -23708,7 +23758,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.15.2</td>
                                     <td>
-                                    
+
                                     30°C / 65% Rh
 
 
@@ -23735,7 +23785,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr><tr>
                                     <td class="flex text-center">1.15.3</td>
                                     <td>
-                                    
+
                                     40°C / 75% Rh
 
 
@@ -23892,9 +23942,9 @@ function addMultipleFiles(input, block_id) {
                 </div>
             </div>
 
-           
 
-         
+
+
         </div>
         <div class="col-md-12 mb-4">
             <div class="group-input">
@@ -23934,7 +23984,7 @@ function addMultipleFiles(input, block_id) {
 <div id="CCForm24" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="row">
-            <div class="sub-head">  
+            <div class="sub-head">
             Checklist for Audit Assesment
             </div>
 
@@ -23979,8 +24029,8 @@ function addMultipleFiles(input, block_id) {
                                     <td>Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of certificate) </td>
 
                                     <td>
-                                        
-                                        
+
+
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                         <input type="number"
@@ -24025,7 +24075,7 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">1.4</td>
-                                    <td>Is there an FDA Drug Master File? 
+                                    <td>Is there an FDA Drug Master File?
                                         And is it periodically updated?
                                          </td>
                                     <td>
@@ -24053,9 +24103,9 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.5</td>
                                     <td>
-                                        Is there an Site Master File? 
+                                        Is there an Site Master File?
                                         And is it periodically updated?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -24087,16 +24137,16 @@ function addMultipleFiles(input, block_id) {
                                     </td>
                                     <td>
 
-                                         
+
                                         </td>
-                                           
+
                                     <td style="vertical-align: middle;">
-                                       
+
                                     </td>
 
                                     </td>
                                 </tr>
-                                           
+
                                 <tr>
                                     <td class="flex text-center">1.6.1</td>
                                     <td>
@@ -24113,17 +24163,17 @@ function addMultipleFiles(input, block_id) {
                                 placeholder="Enter  value here"
                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                             </div>
-                                                
-                                              
+
+
                                             </div>
-                                            
+
 
                                         </td>
-                                           
 
-                                            
-                                          
-                                          
+
+
+
+
 
                                     <td style="vertical-align: middle;">
                                         <div
@@ -24143,24 +24193,24 @@ function addMultipleFiles(input, block_id) {
                                           <div
                                             style="display: flex;   margin: 5%; gap:5px">
                                             <div style="display: flex; flex-direction: column; width: 300px;">
-                                              
+
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
                                                 placeholder="Enter  value here"
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                             </div>
-                                                
-                                               
+
+
                                             </div>
-                                            
+
 
                                         </td>
-                                           
 
-                                            
-                                          
-                                          
+
+
+
+
 
                                     <td style="vertical-align: middle;">
                                         <div
@@ -24180,8 +24230,8 @@ function addMultipleFiles(input, block_id) {
                                           <div
                                             style="display: flex;   margin: 5%; gap:5px">
                                             <div style="display: flex; flex-direction: column; width: 300px;">
-                                               
-                                                
+
+
                                                 <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                 <input type="number"
@@ -24189,14 +24239,14 @@ function addMultipleFiles(input, block_id) {
                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                             </div>
                                             </div>
-                                            
+
 
                                         </td>
-                                           
 
-                                            
-                                          
-                                          
+
+
+
+
 
                                     <td style="vertical-align: middle;">
                                         <div
@@ -24290,14 +24340,14 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.10</td>
                                     <td>
                                         Do you make use of the service of sub-contractors?
-                                        If yes, which firm and for which material? 
-                                        
+                                        If yes, which firm and for which material?
+
 
                                     </td>
-                                    
+
                                     <td>
-                                       
-                                        
+
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -24313,11 +24363,11 @@ function addMultipleFiles(input, block_id) {
                                 <tr>
                                     <td class="flex text-center">1.10.1</td>
                                     <td>
-                                       a : 
-                                        
+                                       a :
+
 
                                     </td>
-                                    
+
                                     <td>
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -24325,7 +24375,7 @@ function addMultipleFiles(input, block_id) {
                                             style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                     </div>
-                                        
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -24340,10 +24390,10 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.10.2</td>
                                     <td>
                                         b :
-                                        
+
 
                                     </td>
-                                    
+
                                     <td>
                                         <div
                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -24351,7 +24401,7 @@ function addMultipleFiles(input, block_id) {
                                             style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                     </div>
-                                        
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -24366,10 +24416,10 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">1.10.3</td>
                                     <td>
                                         c :
-                                        
+
 
                                     </td>
-                                    
+
                                     <td>
                                         <div
                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -24377,7 +24427,7 @@ function addMultipleFiles(input, block_id) {
                                     style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                             </div>
-                                        
+
                                     </td>
                                     {{--    <td>
                                         <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -24582,15 +24632,15 @@ function addMultipleFiles(input, block_id) {
                                     <td class="flex text-center">2.4</td>
                                     <td>
                                         Does the Training Program in place have the following elements: <br>
-                                                                                                    
+
                                     </td>
-                                  
+
                                 </tr>
                                 <tr>
                                     <td class="flex text-center">2.4.1</td>
                                     <td>
                                             Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)<br>
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -24614,10 +24664,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">2.4.2</td>
                                     <td>
-                                      
+
                                         Training program for freshly recruited personnel?<br>
-                                      
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -24641,10 +24691,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">2.4.3</td>
                                     <td>
-                                        
+
                                         Periodic refresher training programs for established employees?<br>
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -24668,10 +24718,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">2.4.4</td>
                                     <td>
-                                        
+
                                         At the start of new product manufacturing?<br>
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -24695,10 +24745,10 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">2.4.5</td>
                                     <td>
-                                        
+
                                         When new methods are used?<br>
-                                        
-                                        
+
+
                                     </td>
                                     <td>
                                         <div
@@ -24722,9 +24772,9 @@ function addMultipleFiles(input, block_id) {
                                 </tr>  <tr>
                                     <td class="flex text-center">2.4.6</td>
                                     <td>
-                                        
+
                                         Quality techniques for production people?
-                                        
+
                                     </td>
                                     <td>
                                         <div
@@ -24748,12 +24798,12 @@ function addMultipleFiles(input, block_id) {
                                 </tr>
 
 
-                               
+
                             </tbody>
                         </table>
                     </div>
                 </div>
-            </div>          
+            </div>
             <div class="sub-head">
                 Checklist for Facility and Utilities
                 </div>
@@ -24783,7 +24833,7 @@ function addMultipleFiles(input, block_id) {
                                                     <option value="">Select an Option</option>
                                                     <option value="Yes">Designed</option>
                                                     <option value="No">Adapted</option>
-                                                   
+
                                                 </select>
                                             </div>
 
@@ -24804,25 +24854,25 @@ function addMultipleFiles(input, block_id) {
                                     <tr>
                                         <td class="flex text-center">3.2</td>
                                         <td>
-                                            Are there separate areas for: 
-                                            
-                                            
+                                            Are there separate areas for:
+
+
                                         </td>
                                         <td>
-                                           
+
                                         </td>
 
                                         <td style="vertical-align: middle;">
-                                           
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">3.2.1</td>
                                         <td>
-                                            
+
                                                 Handling of starting materials?<br>
-                                            
-                                            
+
+
                                         </td>
                                         <td>
                                             <div
@@ -24849,10 +24899,10 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.2.2</td>
                                         <td>
-                                            
+
                                                 Manufacturing?
-                                            
-                                            
+
+
                                         </td>
                                         <td>
                                             <div
@@ -24879,10 +24929,10 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.2.3</td>
                                         <td>
-                                            
+
                                                 Quarantined finished products or are other control systems in place?<br>
-                                            
-                                            
+
+
                                         </td>
                                         <td>
                                             <div
@@ -24909,10 +24959,10 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.2.4</td>
                                         <td>
-                                            
+
                                                 Approved finished products?<br>
-                                            
-                                            
+
+
                                         </td>
                                         <td>
                                             <div
@@ -24939,10 +24989,10 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.2.5</td>
                                         <td>
-                                            
+
                                                 Packaging and dispatch?<br>
-                                            
-                                            
+
+
                                         </td>
                                         <td>
                                             <div
@@ -24969,9 +25019,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.2.6</td>
                                         <td>
-                                            
+
                                                 Rest and eating?
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -25002,23 +25052,23 @@ function addMultipleFiles(input, block_id) {
                                         <td class="flex text-center">3.3</td>
                                         <td>
                                             Does the present design prevent:
-                                            
+
 
                                             </td>
                                         <td>
-                                           
+
                                         </td>
 
                                         <td style="vertical-align: middle;">
-                                           
+
                                         </td>
                                     </tr>
                                     <tr>
                                         <td class="flex text-center">3.3.1</td>
                                         <td>
-                                            
+
                                                 Chemical contamination?<br>
-                                            
+
 
                                             </td>
                                         <td>
@@ -25043,9 +25093,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.3.2</td>
                                         <td>
-                                            
+
                                                 Physical contamination?
-                                            
+
 
                                             </td>
                                         <td>
@@ -25070,7 +25120,7 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.3.3</td>
                                         <td>
-                                            
+
                                                 Microbial contamination?
 
                                             </td>
@@ -25098,24 +25148,24 @@ function addMultipleFiles(input, block_id) {
                                     <tr>
                                         <td class="flex text-center">3.4</td>
                                         <td>
-                                            Are your working-rooms: 
-                                            
+                                            Are your working-rooms:
+
                                         </td>
                                         <td>
-                                          
+
                                         </td>
 
                                         <td style="vertical-align: middle;">
-                                            
+
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <td class="flex text-center">3.4.1</td>
                                         <td>
-                                            
+
                                                 Of proper size for the intended functions? <br>
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -25139,9 +25189,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.4.2</td>
                                         <td>
-                                            
+
                                                 Satisfactorily lighted, air-conditioned? <br>
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -25166,7 +25216,7 @@ function addMultipleFiles(input, block_id) {
                                         <td class="flex text-center">3.4.3</td>
                                         <td>
                                                Clean and cleaned-up?<br>
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -25190,9 +25240,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.4.4</td>
                                         <td>
-                                            
+
                                                 Designed to avoid cross-contamination?
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -25216,7 +25266,7 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">3.4.5</td>
                                         <td>
-                                            
+
                                                 Supplied with security and fire protection measurements?
                                         </td>
                                         <td>
@@ -25609,12 +25659,12 @@ function addMultipleFiles(input, block_id) {
 
 
 
-                                   
+
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div class="sub-head">
                     Checklist for Machines and Equipment
                     </div>
@@ -25644,7 +25694,7 @@ function addMultipleFiles(input, block_id) {
                                                         <option value="">Select an Option</option>
                                                         <option value="Yes">Multi</option>
                                                         <option value="No">Single</option>
-                                                      
+
                                                     </select>
                                                 </div>
 
@@ -25666,7 +25716,7 @@ function addMultipleFiles(input, block_id) {
                                             <td class="flex text-center">4.2</td>
                                             <td>
                                                 Is there a maintenance and preventative maintenance program for all pieces of equipment?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -25956,24 +26006,24 @@ function addMultipleFiles(input, block_id) {
                                             <td class="flex text-center">4.13</td>
                                             <td>
                                                 If yes,
-                                                
-                                                
+
+
                                             </td>
                                             <td>
-                                               
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                                
+
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">4.13.1</td>
                                             <td>
-                                                
+
                                                     Is the software validated?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -25997,9 +26047,9 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">4.13.2</td>
                                             <td>
-                                                
+
                                                     Are modifications of software (or its use) implemented by manufacturing personnel?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -26023,10 +26073,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">4.13.3</td>
                                             <td>
-                                                
+
                                                     Is there a procedure concerning change of software and its copying?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -26050,9 +26100,9 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">4.13.4</td>
                                             <td>
-                                                
+
                                                     Is the security of software controlled?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -26079,23 +26129,23 @@ function addMultipleFiles(input, block_id) {
                                             <td class="flex text-center">4.14</td>
                                             <td>
                                                 Do you contract out any of the following services
-                                                
+
 
                                             </td>
                                             <td>
-                                              
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                              
+
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">4.14.1</td>
                                             <td>
-                                                
+
                                                     Instrument Calibration?
-                                                
+
 
                                             </td>
                                             <td>
@@ -26120,7 +26170,7 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">4.14.2</td>
                                             <td>
-                                                
+
                                                     Preventative / Breakdown Maintenance?
 
                                             </td>
@@ -26170,7 +26220,7 @@ function addMultipleFiles(input, block_id) {
                                                 </div>
                                             </td>
                                         </tr>
-                                      
+
                                     </tbody>
                                 </table>
                             </div>
@@ -26226,7 +26276,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td class="flex text-center">5.2</td>
                                                 <td>
                                                     Is your manufacturing process validated?
-                                                    
+
                                                 </td>
                                                 <td>
                                                     <div
@@ -26329,7 +26379,7 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">5.6</td>
                                                 <td>
-                                                    Do have procedure for general housekeeping and environmental control? 
+                                                    Do have procedure for general housekeeping and environmental control?
                                                 </td>
                                                 <td>
                                                     <div
@@ -26481,24 +26531,24 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">5.12</td>
                                                 <td>
-                                                    If yes, do the batch records detail the following: 
-                                                    
+                                                    If yes, do the batch records detail the following:
+
 
                                                 </td>
                                                 <td>
-                                                   
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-                                                   
+
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">5.12.1</td>
                                                 <td>
-                                                    
+
                                                         Description, Lot Number & Quantities of Material used?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -26519,9 +26569,9 @@ function addMultipleFiles(input, block_id) {
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.2</td>
                                                 <td>
-                                                    
+
                                                         Processing Conditions (Temperature, Time etc.)?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -26542,9 +26592,9 @@ function addMultipleFiles(input, block_id) {
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.3</td>
                                                 <td>
-                                                    
+
                                                         The identification of the Person who performed the particular step?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -26565,9 +26615,9 @@ function addMultipleFiles(input, block_id) {
                                             </tr><tr>
                                                 <td class="flex text-center">5.12.4</td>
                                                 <td>
-                                                    
+
                                                         Results of any In-process tests?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -26589,9 +26639,9 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">5.12.5</td>
                                                 <td>
-                                                    
+
                                                         All deviations from standard conditions?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -26613,9 +26663,9 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">5.12.6</td>
                                                 <td>
-                                                    
+
                                                     All cleaning operations carried out before & after batch manufacture?
-                                                    
+
 
                                                 </td>
                                                 <td>
@@ -27152,7 +27202,7 @@ function addMultipleFiles(input, block_id) {
                                     </table>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="sub-head">
                 Checklist for Materials Control
                 </div>
@@ -27204,7 +27254,7 @@ function addMultipleFiles(input, block_id) {
                                         <td class="flex text-center">6.2</td>
                                         <td>
                                             Do you have agreements in place with all your suppliers that require them to notify you of any change in raw material or the manufacturing process of the product supplied?
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -27411,7 +27461,7 @@ function addMultipleFiles(input, block_id) {
                                     <tr>
                                         <td class="flex text-center">6.10</td>
                                         <td>
-                                            Are starting materials visibly controlled and marked with 
+                                            Are starting materials visibly controlled and marked with
                   Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                         </td>
@@ -27436,27 +27486,27 @@ function addMultipleFiles(input, block_id) {
                                         </td>
                                     </tr>
 
-                                    
+
 
                                     <tr>
                                         <td class="flex text-center">6.11</td>
                                         <td>
-                                            Do you maintain information records for raw materials which include the following: 
+                                            Do you maintain information records for raw materials which include the following:
 
                                         </td>
                                         <td>
-                                          
+
                                         </td>
 
                                         <td style="vertical-align: middle;">
-                                           
+
                                         </td>
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.1</td>
                                         <td>
-                                          
+
                                               Your lot Identity?<br>
-                                          
+
 
                                         </td>
                                         <td>
@@ -27477,9 +27527,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.2</td>
                                         <td>
-                                            
+
                                                   Suppliers Lot No?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27500,9 +27550,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.3</td>
                                         <td>
-                                            
+
                                                 Date of Receipt?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27523,9 +27573,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.4</td>
                                         <td>
-                                            
+
                                                     Quantity?
-                                                
+
 
                                         </td>
                                         <td>
@@ -27546,9 +27596,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.5</td>
                                         <td>
-                                            
+
                                                 Suppliers name?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27569,9 +27619,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.6</td>
                                         <td>
-                                            
+
                                                 Shelf Life?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27592,9 +27642,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.7</td>
                                         <td>
-                                            
+
                                                 Test Results?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27615,9 +27665,9 @@ function addMultipleFiles(input, block_id) {
                                     </tr> <tr>
                                         <td class="flex text-center">6.11.8</td>
                                         <td>
-                                            
+
                                                 Specification?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27635,13 +27685,13 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
-                                    </tr> 
+                                    </tr>
                                     <tr>
                                         <td class="flex text-center">6.11.9</td>
                                         <td>
-                                            
+
                                                 Accepted/Rejected?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27668,9 +27718,9 @@ function addMultipleFiles(input, block_id) {
                                     <tr>
                                         <td class="flex text-center">6.11.10</td>
                                         <td>
-                                            
+
                                                 Retained Sample ?
-                                            
+
 
                                         </td>
                                         <td>
@@ -27946,7 +27996,7 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
-                                    </tr>                                                   
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -28002,7 +28052,7 @@ function addMultipleFiles(input, block_id) {
                                             <td class="flex text-center">7.2</td>
                                             <td>
                                                 Are records kept of all samples that are submitted to the laboratories?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -28236,30 +28286,30 @@ function addMultipleFiles(input, block_id) {
                                             </td>
                                         </tr>
 
-                                       
+
 
                                         <tr>
                                             <td class="flex text-center">7.11</td>
                                             <td>
-                                                Are quality standards or written control procedures available for: 
-                                               
-                                                
+                                                Are quality standards or written control procedures available for:
+
+
                                             </td>
                                             <td>
-                                              
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                               
+
                                             </td>
-                                        </tr> 
+                                        </tr>
                                          <tr>
                                             <td class="flex text-center">7.11.1</td>
                                             <td>
-                                                
+
                                                     Starting materials?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28283,10 +28333,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr>  <tr>
                                             <td class="flex text-center">7.11.2</td>
                                             <td>
-                                                
+
                                                     In-process control?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28310,9 +28360,9 @@ function addMultipleFiles(input, block_id) {
                                         </tr>  <tr>
                                             <td class="flex text-center">7.11.3</td>
                                             <td>
-                                                
+
                                                     Physical identification at all stages (e.g. labeling of semi-finished products)?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -28333,14 +28383,14 @@ function addMultipleFiles(input, block_id) {
                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                 </div>
                                             </td>
-                                        </tr>  
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">7.11.4</td>
                                             <td>
-                                                
+
                                                     Finished products?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28366,10 +28416,10 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">7.11.5</td>
                                             <td>
-                                                
+
                                                 Microbiological control?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28470,29 +28520,29 @@ function addMultipleFiles(input, block_id) {
                                             </td>
                                         </tr>
 
-                                      
+
 
                                         <tr>
                                             <td class="flex text-center">7.15</td>
                                             <td>
-                                                If yes: 
-                                               
-                                                
+                                                If yes:
+
+
                                             </td>
                                             <td>
-                                               
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                               
+
                                             </td>
                                         </tr><tr>
                                             <td class="flex text-center">7.15.1</td>
                                             <td>
-                                                
+
                                                     Do you have a calibration scheme?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28516,10 +28566,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr><tr>
                                             <td class="flex text-center">7.15.2</td>
                                             <td>
-                                                
+
                                                     Do you have calibration instructions?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28544,10 +28594,10 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">7.15.3</td>
                                             <td>
-                                                
+
                                                     Do you keep all records of calibration performances?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28572,10 +28622,10 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">7.15.4</td>
                                             <td>
-                                                
+
                                                 Does any laboratory equipment have software control?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -28821,7 +28871,7 @@ function addMultipleFiles(input, block_id) {
                                 </table>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div class="sub-head">
                 Checklist for Quality Assurance
                 </div>
@@ -28843,7 +28893,7 @@ function addMultipleFiles(input, block_id) {
                                         <td class="flex text-center">8.1</td>
                                         <td>
                                             Is there an independent Quality Assurance (QA) department within the company?
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -28871,7 +28921,7 @@ function addMultipleFiles(input, block_id) {
                                         <td class="flex text-center">8.2</td>
                                         <td>
                                             Do you have procedures covering the release or rejection of material?
-                                            
+
                                         </td>
                                         <td>
                                             <div
@@ -29257,8 +29307,8 @@ function addMultipleFiles(input, block_id) {
                                         </td>
                                     </tr>
 
-                                   
-                                    
+
+
                                 </tbody>
                             </table>
                         </div>
@@ -29284,17 +29334,17 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">9.1</td>
                                             <td>
-                                                Are written procedures and specifications are available for 
-                                                
-                                                
-                                                
+                                                Are written procedures and specifications are available for
+
+
+
                                             </td>
                                             <td>
-                                               
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                               
+
                                             </td>
 
                                         </tr>
@@ -29302,11 +29352,11 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">9.1.1</td>
                                             <td>
-                                                
-                                                    Packaging components 
-                                                
-                                                
-                                                
+
+                                                    Packaging components
+
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29331,11 +29381,11 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.1.2</td>
                                             <td>
-                                                
+
                                                     Packing operation
-                                                
-                                                
-                                                
+
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29362,11 +29412,11 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">9.1.3</td>
                                             <td>
-                                                
+
                                                 Labels and labeling
-                                                
-                                                
-                                                
+
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29393,7 +29443,7 @@ function addMultipleFiles(input, block_id) {
                                             <td class="flex text-center">9.2</td>
                                             <td>
                                                 Will each bag/container on a pallet have the lot/batch no. and/or description clearly visible on it?
-                                                
+
                                             </td>
                                             <td>
                                                 <div
@@ -29432,7 +29482,7 @@ function addMultipleFiles(input, block_id) {
                                                         <option value="">Select an Option</option>
                                                         <option value="Yes">Supplier-Contractor</option>
                                                         <option value="No">Owned</option>
-                                                        
+
                                                     </select>
                                                 </div>
                                             </td>
@@ -29478,19 +29528,19 @@ function addMultipleFiles(input, block_id) {
 
                                             </td>
                                             <td>
-                                               
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                                
+
                                             </td>
                                         </tr>
                                         <tr>
                                             <td class="flex text-center">9.5.1</td>
                                             <td>
-                                                
-                                                Packaging operation? 
-                                                
+
+                                                Packaging operation?
+
 
                                             </td>
                                             <td>
@@ -29515,7 +29565,7 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.5.2</td>
                                             <td>
-                                                
+
                                                 Labels and labeling?
 
                                             </td>
@@ -29618,29 +29668,29 @@ function addMultipleFiles(input, block_id) {
                                             </td>
                                         </tr>
 
-                                       
+
 
                                         <tr>
                                             <td class="flex text-center">9.9</td>
                                             <td>
-                                                Does your labeling indicate: 
-                                                
+                                                Does your labeling indicate:
+
                                             </td>
                                             <td>
-                                              
+
                                             </td>
 
                                             <td style="vertical-align: middle;">
-                                               
+
                                             </td>
-                                        </tr> 
+                                        </tr>
                                         <tr>
                                             <td class="flex text-center">9.9.1</td>
                                             <td>
-                                                
+
                                                     Material Name with Pharmacopoeial grade?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29664,10 +29714,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.2</td>
                                             <td>
-                                                
+
                                                     Batch Number?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29687,10 +29737,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.3</td>
                                             <td>
-                                                
+
                                                     Site of manufacturing?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29714,10 +29764,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.4</td>
                                             <td>
-                                                
+
                                                     Batch Number?
-                                                
-                                                
+
+
                                             </td>
                                             <td> <div
                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -29736,10 +29786,10 @@ function addMultipleFiles(input, block_id) {
                                         </tr> <tr>
                                             <td class="flex text-center">9.9.5</td>
                                             <td>
-                                                
+
                                                     Expiry / retest date?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29760,10 +29810,10 @@ function addMultipleFiles(input, block_id) {
                                         <tr>
                                             <td class="flex text-center">9.9.6</td>
                                             <td>
-                                                
+
                                                     Quantity ?
-                                                
-                                                
+
+
                                             </td>
                                             <td>
                                                 <div
@@ -29830,8 +29880,8 @@ function addMultipleFiles(input, block_id) {
                                                 <td class="flex text-center">10.1</td>
                                                 <td>
                                                     Do you have an operational management system(s) for Safety, Health and Environment (SHE)?
-                                                    
-                                                    
+
+
                                                 </td>
                                                 <td>
                                                     <div
@@ -29859,26 +29909,26 @@ function addMultipleFiles(input, block_id) {
                                                 <td class="flex text-center">10.2</td>
                                                 <td>
                                                     If so, are these systems <br>
-                                                    
-                                                    
-                                                    
+
+
+
                                                 </td>
                                                 <td>
-                                                   
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-                                                   
+
                                                 </td>
 
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.2.1</td>
                                                 <td>
-                                                    
+
                                                         based on an international standard (ISO 9001/14001/18001)?
-                                                    
-                                                    
+
+
                                                 </td>
                                                 <td>
                                                     <div
@@ -29904,10 +29954,10 @@ function addMultipleFiles(input, block_id) {
                                             <tr>
                                                 <td class="flex text-center">10.2.2</td>
                                                 <td>
-                                                    
+
                                                     certified by a accredited third party auditing body?
-                                                    
-                                                    
+
+
                                                 </td>
                                                 <td>
                                                     <div
@@ -29935,30 +29985,30 @@ function addMultipleFiles(input, block_id) {
 
                                             <tr>
                                                 <td class="flex text-center">10.3</td>
-                                                
+
                                                 <td>
-                                                    Are the following subjects regulated by law and/or specific standards: 
+                                                    Are the following subjects regulated by law and/or specific standards:
                                                 </td>
 
 
 
                                                     <td>
-                                                       
-                                                        
+
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
-                                                    
+
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.1</td>
-                                                
+
                                                 <td>
-                                                    
+
                                                         discharge of waste water
-                                                    
+
                                                 </td>
 
 
@@ -29971,11 +30021,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -29984,15 +30034,15 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.2</td>
-                                                
+
                                                 <td>
-                                                    
+
                                                         emissions to air
-                                                    
+
                                                 </td>
 
 
@@ -30005,11 +30055,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -30018,15 +30068,15 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.3</td>
-                                                
+
                                                 <td>
-                                                    
+
                                                         disposal of hazardous waste
-                                                    
+
                                                 </td>
 
 
@@ -30039,11 +30089,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -30052,16 +30102,16 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.4</td>
-                                                
+
                                                 <td>
-                                                    
-                                                        protection against/remediation of 
+
+                                                        protection against/remediation of
                                                         soil pollution
-                                                    
+
                                                 </td>
 
 
@@ -30074,11 +30124,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -30087,15 +30137,15 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.5</td>
-                                                
+
                                                 <td>
-                                                    
+
                                                         risk control and reduction
-                                                    
+
                                                 </td>
 
 
@@ -30108,11 +30158,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -30121,13 +30171,13 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td class="flex text-center">10.3.6</td>
-                                                
+
                                                 <td>
-                                                    
+
                                                         nuisance by noise/odour
                                                 </td>
 
@@ -30141,11 +30191,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="No">No</option>
                                                                 <option value="N/A">N/A</option>
                                                             </select>
-                                                           
-                                                           
-                                                           
+
+
+
                                                         </div>
-                                                        
+
                                                 </td>
 
                                                 <td style="vertical-align: middle;">
@@ -30154,7 +30204,7 @@ function addMultipleFiles(input, block_id) {
                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                     </div>
                                                 </td>
-                                                
+
                                             </tr>
 
 
@@ -30294,7 +30344,7 @@ function addMultipleFiles(input, block_id) {
                                                 <td class="flex text-center">10.9</td>
                                                 <td>
                                                     Are extinguisher locations conspicuously marked?
-                                                    
+
                                                 </td>
                                                 <td>
                                                     <div
@@ -30523,7 +30573,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By"> Rejected By
-                                                    </label> 
+                                                    </label>
                                                 <div class="static">{{ $data->rejected_by}}</div>
                                             </div>
                                         </div>
@@ -30671,7 +30721,7 @@ function addMultipleFiles(input, block_id) {
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
-{{-- 
+{{--
                                                          <div class="modal-footer">
 
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>

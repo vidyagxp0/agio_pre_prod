@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
@@ -1076,12 +1076,12 @@ class InternalauditController extends Controller
         $internalAudit->remark_62 = $request->remark_62;
         $internalAudit->remark_63 = $request->remark_63;
         $internalAudit->Description_Deviation = $request->Description_Deviation;
-        
+
         // =======================new teblet compresion ====
         $checklistTabletCompression = IA_checklist_tablet_compression::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletCompression->ia_id = $id;
-     
-   
+
+
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_compress_response_'. $i;
@@ -1101,8 +1101,8 @@ class InternalauditController extends Controller
         // =======================new teblet coating ====
         $checklistTabletCoating = IA_checklist_tablet_coating::where(['ia_id' => $id])->firstOrCreate();
         $checklistTabletCoating->ia_id = $id;
-     
-   
+
+
         for ($i = 1; $i <= 49; $i++)
         {
             $string = 'tablet_coating_response_'. $i;
@@ -1117,6 +1117,32 @@ class InternalauditController extends Controller
         // dd($checklistTabletCompression->tablet_compress_remark_1)
         $checklistTabletCoating->tablet_coating_remark_comment = $request->tablet_coating_remark_comment;
         $checklistTabletCoating->save();
+
+//======================================  Checklist_Capsule==========================================================================================================================================================
+
+$Checklist_Capsule = Checklist_Capsule::where(['ia_id' => $id])->firstOrCreate();
+$Checklist_Capsule->ia_id = $id;
+
+
+for ($i = 1; $i <= 50; $i++)
+{
+    $string = 'capsule_response_'. $i;
+    $Checklist_Capsule->$string = $request->$string;
+}
+
+for ($i = 1; $i <= 50; $i++)
+{
+    $string = 'capsule_remark_'. $i;
+    $Checklist_Capsule->$string = $request->$string;
+}
+// dd($checklistTabletCompression->tablet_compress_remark_1)
+$Checklist_Capsule->Description_Deviation = $request->Description_Deviation;
+$Checklist_Capsule->save();
+
+//=========================================================================================
+
+
+
 
 
         if (!empty($request->inv_attachment)) {
@@ -1766,6 +1792,7 @@ class InternalauditController extends Controller
         $data = InternalAudit::find($id);
         $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
         $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+        $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
 
         // dd($checklist1);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -1775,7 +1802,7 @@ class InternalauditController extends Controller
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2', 'old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2', 'checklist4', 'old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
