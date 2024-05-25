@@ -423,6 +423,10 @@ Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
 Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
 Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
+Route::get('OutofCalibrationShow/{id}', [OOCController::class, 'OutofCalibrationShow'])->name('ShowOutofCalibration');
+Route::post('updateOutOfCalibration/{id}', [OOCController::class, 'updateOutOfCalibration'])->name('OutOfCalibrationUpdate');
+
+
 Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
 

@@ -426,7 +426,7 @@ $users = DB::table('users')->get();
 
         </div>
 
-        <form action="{{ route('oocCreate') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('OutOfCalibrationUpdate' ,$ooc->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div id="step-form">
@@ -449,7 +449,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
                                     <input disabled type="text" name="record_number" >
-                                    {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                    <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $ooc->record }}">
 
                                 </div>
                             </div>
@@ -489,8 +489,9 @@ $users = DB::table('users')->get();
 
                                     <div class="calenderauditee">
                                         <input type="text" id="due_date" readonly
-                                            placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->due_date) }}" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}/>
+                                        <input type="date" name="due_date" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date')" />
                                     </div>
 
                                 </div>
@@ -502,23 +503,23 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group"><b>Initiator Group</b></label>
                                     <select name="Initiator_Group" id="initiator_group">
                                         <option value="">-- Select --</option>
-                                        <option value="CQA">Corporate Quality Assurance</option>
-                                        <option value="QAB">Quality Assurance Biopharma</option>
-                                        <option value="CQC">Central Quality Control</option>
-                                        <option value="MANU">Manufacturing</option>
-                                        <option value="PSG">Plasma Sourcing Group</option>
-                                        <option value="CS">Central Stores</option>
-                                        <option value="ITG">Information Technology Group</option>
-                                        <option value="MM">Molecular Medicine</option>
-                                        <option value="CL">Central Laboratory</option>
-                                        <option value="TT">Tech team</option>
-                                        <option value="QA">Quality Assurance</option>
-                                        <option value="QM">Quality Management</option>
-                                        <option value="IA">IT Administration</option>
-                                        <option value="ACC">Accounting</option>
-                                        <option value="LOG">Logistics</option>
-                                        <option value="SM">Senior Management</option>
-                                        <option value="BA">Business Administration</option>
+                                        <option value="CQA"@if($ooc->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate Quality Assurance</option>
+                                        <option value="QAB"@if($ooc->Initiator_Group== 'Quality Assurance Biopharma') selected @endif>Quality Assurance Biopharma</option>
+                                        <option value="CQC"@if($ooc->Initiator_Group== 'Central Quality Control') selected @endif>Central Quality Control</option>
+                                        <option value="MANU"@if($ooc->Initiator_Group== 'Manufacturing') selected @endif>Manufacturing</option>
+                                        <option value="PSG"@if($ooc->Initiator_Group== 'Plasma Sourcing Group') selected @endif>Plasma Sourcing Group</option>
+                                        <option value="CS"@if($ooc->Initiator_Group== 'Central Stores') selected @endif>Central Stores</option>
+                                        <option value="ITG"@if($ooc->Initiator_Group== 'Information Technology Group') selected @endif>Information Technology Group</option>
+                                        <option value="MM"@if($ooc->Initiator_Group== 'Molecular Medicine') selected @endif>Molecular Medicine</option>
+                                        <option value="CL"@if($ooc->Initiator_Group== 'Central Laboratory') selected @endif>Central Laboratory</option>
+                                        <option value="TT"@if($ooc->Initiator_Group== 'Tech Team') selected @endif>Tech team</option>
+                                        <option value="QA"@if($ooc->Initiator_Group== 'Quality Assurance') selected @endif>Quality Assurance</option>
+                                        <option value="QM"@if($ooc->Initiator_Group== 'Quality Management') selected @endif>Quality Management</option>
+                                        <option value="IA"@if($ooc->Initiator_Group== 'IT Administration') selected @endif>IT Administration</option>
+                                        <option value="ACC"@if($ooc->Initiator_Group== 'Accounting') selected @endif>Accounting</option>
+                                        <option value="LOG"@if($ooc->Initiator_Group== 'Logistics') selected @endif>Logistics</option>
+                                        <option value="SM"@if($ooc->Initiator_Group== 'Senior Management') selected @endif>Senior Management</option>
+                                        <option value="BA"@if($ooc->Initiator_Group== 'Business Admistration') selected @endif>Business Administration</option>
                                     </select>
                                 </div>
                             </div>
