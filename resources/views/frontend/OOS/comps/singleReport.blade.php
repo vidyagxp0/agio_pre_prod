@@ -388,7 +388,6 @@
                             <td class="w-15">{{ $datagridII['stability_study_condition_temprature_rh'] ?  $datagridII['stability_study_condition_temprature_rh']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridII['stability_study_Interval'] ?  $datagridII['stability_study_Interval']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridII['stability_study_orientation'] ?  $datagridII['stability_study_orientation']: "Not Applicable"}}</td>
-                            <td class="w-15">{{ $datagridII['stability_study_pack_details'] ?  $datagridII['stability_study_pack_details']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridII['stability_study_specification_no'] ?  $datagridII['stability_study_specification_no']: "Not Applicable"}}</td>
                             <td class="w-15">{{ $datagridII['stability_study_sample_description'] ?  $datagridII['stability_study_sample_description']: "Not Applicable"}}</td>
                              </tr>
@@ -480,7 +479,7 @@
                         <th class="w-20">Verification Analysis Required</th>
                         <td class="w-30">{{ $data->verification_analysis_required_pli ? $data->verification_analysis_required_pli : 'Not Applicable' }}</td>
                         <th class="w-20">Verification Analysis Ref.</th>
-                        <td class="w-80"></td>
+                        <td class="w-80">{{ $data->verification_analysis_ref_pli ? $data->verification_analysis_ref_pli : 'Not Applicable' }}</td>
                      </tr>
                      <tr>
                         <th class="w-20">Analyst Interview Req.</th>
