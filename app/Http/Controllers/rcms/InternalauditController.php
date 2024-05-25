@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule};
-use App\Models\{IA_checklist_capsule_paking, InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_dispencing_manufacturing, IA_ointment_paking};
+use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
@@ -1164,6 +1164,46 @@ $Checklist_Capsule->save();
         $checklistTabletPaking->tablet_capsule_packing_comment = $request->tablet_capsule_packing_comment;
         $checklistTabletPaking->save();
 
+  // =======================new teblet dispencing_and_manufactuirng ====
+  $dispencing_and_manufactuirng = IA_dispencing_manufacturing::where(['ia_id' => $id])->firstOrCreate();
+  $dispencing_and_manufactuirng->ia_id = $id;
+
+
+  for ($i = 1; $i <= 66; $i++)
+  {
+      $string = 'dispensing_and_manufacturing_'. $i;
+      $dispencing_and_manufactuirng->$string = $request->$string;
+  }
+
+  for ($i = 1; $i <= 66; $i++)
+  {
+      $string = 'dispensing_and_manufacturing_remark_'. $i;
+      $dispencing_and_manufactuirng->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $dispencing_and_manufactuirng->dispensing_and_manufacturing_comment = $request->dispensing_and_manufacturing_comment;
+  $dispencing_and_manufactuirng->save();
+
+  // =======================new tebletointment packing ====
+  $ointment_packing = IA_ointment_paking::where(['ia_id' => $id])->firstOrCreate();
+  $ointment_packing->ia_id = $id;
+
+
+  for ($i = 1; $i <= 51; $i++)
+  {
+      $string = 'ointment_packing_'. $i;
+      $ointment_packing->$string = $request->$string;
+  }
+
+  for ($i = 1; $i <= 51; $i++)
+  {
+      $string = 'ointment_packing_remark_'. $i;
+      $ointment_packing->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $ointment_packing->ointment_packing_comment = $request->ointment_packing_comment;
+  $ointment_packing->save();
+
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -1814,6 +1854,10 @@ $Checklist_Capsule->save();
         $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
         $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
         $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+        $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+
+
 
 
         // dd($checklist1);
@@ -1824,7 +1868,7 @@ $Checklist_Capsule->save();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
