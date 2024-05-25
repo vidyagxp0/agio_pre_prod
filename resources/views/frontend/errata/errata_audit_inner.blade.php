@@ -57,9 +57,7 @@
                             @if($temp->activity_type == "Responsibility" ||$temp->activity_type == "Abbreviation" ||$temp->activity_type == "Defination" ||$temp->activity_type == "Materials and Equipments" ||$temp->activity_type == "Reporting" )
                             @if(!empty($temp->previous))
                             <div class="list-item">
-                                {{-- <div class="head">Changed From</div> --}}
-                                <div class="head">Action name-</div>
-
+                                <div class="head">Changed From</div>
                                 <div>:</div>
                                 @foreach (unserialize($temp->previous) as $data)
                                 @if($data)
@@ -92,7 +90,7 @@
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
-                                <div>{{ $temp->previous }}</div>
+                                <div>{!! $temp->previous !!}</div>
                             </div>
                             @else
                             <div class="list-item">
@@ -105,7 +103,7 @@
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
-                                <div>{{ $temp->current }}</div>
+                                <div>{!! $temp->current !!}</div>
                             </div>
                             @endif
                             @endif
@@ -126,7 +124,6 @@
                             @else
 
 
-
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
@@ -139,7 +136,7 @@
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
                         </a> --}}
                     </div>
-                {{-- </div>   --}}
+            </div>
                 @endforeach
 
             </div>

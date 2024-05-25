@@ -88,7 +88,7 @@
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                         @endphp
 
-                        <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> 
+                        <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button> -->
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/audit-trial', $data->id) }}"> Audit Trail </a> </button>
@@ -2025,7 +2025,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                            
+
                                                                             <option
                                                                                 {{ $item->response_36 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2088,7 +2088,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                         
+
                                                                             <option
                                                                                 {{ $item->response_38 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2119,7 +2119,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_39 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2694,7 +2694,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_57 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2725,7 +2725,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_58 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2756,7 +2756,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                            
+
                                                                             <option
                                                                                 {{ $item->response_59 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2787,7 +2787,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                            
+
                                                                             <option
                                                                                 {{ $item->response_60 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2818,7 +2818,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_61 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2849,7 +2849,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                        
+
                                                                             <option
                                                                                 {{ $item->response_62 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2880,7 +2880,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                        
+
                                                                             <option
                                                                                 {{ $item->response_63 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2911,7 +2911,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_64 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2942,7 +2942,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                   
+
                                                                             <option
                                                                                 {{ $item->response_65 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -2973,7 +2973,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_66 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -3004,7 +3004,7 @@
                                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                             <option value="0">Select Option</option>
 
-                                                                           
+
                                                                             <option
                                                                                 {{ $item->response_67 == 'Yes' ? 'selected' : '' }}
                                                                                 value="Yes">Yes</option>
@@ -4766,7 +4766,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 p_erson">
                                             <div class="group-input">
-                                                <label for="Production feedback">Production Feedback 
+                                                <label for="Production feedback">Production Feedback
                                                     <!-- <span
                                                         id="asteriskInvi22" style="display: none"
                                                         class="text-danger">*</span> -->
@@ -4779,7 +4779,7 @@
                                     @else
                                         <div class="col-md-12 mb-3 p_erson">
                                             <div class="group-input">
-                                                <label for="Production assessment">Impact Assessment (By Production) 
+                                                <label for="Production assessment">Impact Assessment (By Production)
                                                     <!-- <span
                                                         id="asteriskInvi12" style="display: none"
                                                         class="text-danger">*</span> -->
@@ -4791,7 +4791,7 @@
                                         </div>
                                         <div class="col-md-12 mb-3 p_erson">
                                             <div class="group-input">
-                                                <label for="Production feedback">Production Feedback 
+                                                <label for="Production feedback">Production Feedback
                                                     <!-- <span
                                                         id="asteriskInvi22" style="display: none"
                                                         class="text-danger">*</span> -->
@@ -4929,7 +4929,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse) 
+                                            <label for="Impact Assessment1">Impact Assessment (By Warehouse)
                                                 <!-- <spa
                                              -->
                                                 </label>
@@ -4941,7 +4941,7 @@
                                     </div>
                                     <div class="col-md-12 mb-3 warehouse">
                                         <div class="group-input">
-                                            <label for="Warehouse Feedback">Warehouse Feedback 
+                                            <label for="Warehouse Feedback">Warehouse Feedback
                                                 <!-- <span id="asteriskware3"
                                                     style="display: {{ $data1->Warehouse_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                     class="text-danger">*</span> -->
@@ -5203,7 +5203,7 @@
                                 @endphp
                                 <div class="col-lg-6 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Person">Quality Control Person 
+                                        <label for="Quality Control Person">Quality Control Person
                                             <!-- <span id="asteriskQC"
                                                 style="display: {{ $data1->Quality_review == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -5224,7 +5224,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
-                                        <label for="Impact Assessment2">Impact Assessment (By Quality Control) 
+                                        <label for="Impact Assessment2">Impact Assessment (By Quality Control)
                                             <!-- <span
                                                 id="asteriskQC1"
                                                 style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -5238,7 +5238,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 quality_control">
                                     <div class="group-input">
-                                        <label for="Quality Control Feedback">Quality Control Feedback 
+                                        <label for="Quality Control Feedback">Quality Control Feedback
                                             <!-- <span
                                                 id="asteriskQC2"
                                                 style="display: {{ $data1->Quality_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -5557,7 +5557,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 engineering">
                                     <div class="group-input">
-                                        <label for="Impact Assessment4">Impact Assessment (By Engineering) 
+                                        <label for="Impact Assessment4">Impact Assessment (By Engineering)
                                             <!-- <span
                                                 id="asteriskEP1"
                                                 style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -5571,7 +5571,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 engineering">
                                     <div class="group-input">
-                                        <label for="Engineering Feedback">Engineering Feedback 
+                                        <label for="Engineering Feedback">Engineering Feedback
                                             <!-- <span id="asteriskEP2"
                                                 style="display: {{ $data1->Engineering_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -5727,7 +5727,7 @@
                                 <div class="col-md-12 mb-3 analytical_development">
                                     <div class="group-input">
                                         <label for="Impact Assessment5">Impact Assessment (By Analytical Development
-                                            Laboratory) 
+                                            Laboratory)
                                             <!-- <span id="asteriskAD1"
                                                 style="display: {{ $data1->Analytical_Development_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -5740,7 +5740,7 @@
                                 <div class="col-md-12 mb-3 analytical_development">
                                     <div class="group-input">
                                         <label for="Analytical Development Laboratory Feedback"> Analytical Development
-                                            Laboratory Feedback 
+                                            Laboratory Feedback
                                             <!-- <span id="asteriskAD2"
                                                 style="display: {{ $data1->Analytical_Development_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -5895,7 +5895,7 @@
                                 <div class="col-md-12 mb-3 kilo_lab">
                                     <div class="group-input">
                                         <label for="Impact Assessment6">Impact Assessment (By Process Development
-                                            Laboratory / Kilo Lab) 
+                                            Laboratory / Kilo Lab)
                                             <!-- <span id="asteriskPDL1"
                                                 style="display: {{ $data1->Kilo_Lab_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -6061,7 +6061,7 @@
                                 <div class="col-md-12 mb-3 technology_transfer">
                                     <div class="group-input">
                                         <label for="Impact Assessment7">Impact Assessment (By Technology Transfer /
-                                            Design) 
+                                            Design)
                                             <!-- <span id="asteriskTT1"
                                                 style="display: {{ $data1->Technology_transfer_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -6072,7 +6072,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 technology_transfer">
                                     <div class="group-input">
-                                        <label for="Design Feedback"> Technology Transfer / Design Feedback 
+                                        <label for="Design Feedback"> Technology Transfer / Design Feedback
                                             <!-- <span
                                                 id="asteriskTT2"
                                                 style="display: {{ $data1->Technology_transfer_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6231,7 +6231,7 @@
                                 <div class="col-md-12 mb-3 environmental_health">
                                     <div class="group-input">
                                         <label for="Impact Assessment8">Impact Assessment (By Environment, Health &
-                                            Safety) 
+                                            Safety)
                                             <!-- <span id="asteriskEH1"
                                                 style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -6242,7 +6242,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 environmental_health">
                                     <div class="group-input">
-                                        <label for="Safety Feedback">Environment, Health & Safety Feedback 
+                                        <label for="Safety Feedback">Environment, Health & Safety Feedback
                                             <!-- <span
                                                 id="asteriskEH2"
                                                 style="display: {{ $data1->Environment_Health_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6400,7 +6400,7 @@
                                 <div class="col-md-12 mb-3 human_resources">
                                     <div class="group-input">
                                         <label for="productionfeedback">Impact Assessment (By Human Resource &
-                                            Administration ) 
+                                            Administration )
                                             <!-- <span id="asteriskHR1"
                                                 style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -6411,7 +6411,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 human_resources">
                                     <div class="group-input">
-                                        <label for="productionfeedback">Human Resource & Administration Feedback 
+                                        <label for="productionfeedback">Human Resource & Administration Feedback
                                             <!-- <span
                                                 id="asteriskHR2"
                                                 style="display: {{ $data1->Human_Resource_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6579,7 +6579,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 information_technology">
                                     <div class="group-input">
-                                        <label for="Information Technology Feedback">Information Technology Feedback 
+                                        <label for="Information Technology Feedback">Information Technology Feedback
                                             <!-- <span
                                                 id="asteriskITP"
                                                 style="display: {{ $data1->Information_Technology_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6731,7 +6731,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 project_management">
                                     <div class="group-input">
-                                        <label for="Impact Assessment11">Impact Assessment (By Project management ) 
+                                        <label for="Impact Assessment11">Impact Assessment (By Project management )
                                             <!-- <span
                                                 id="asteriskPMP"
                                                 style="display: {{ $data1->Project_management_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6743,7 +6743,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 project_management">
                                     <div class="group-input">
-                                        <label for="Project management Feedback"> Project management Feedback 
+                                        <label for="Project management Feedback"> Project management Feedback
                                             <!-- <span
                                                 id="asteriskPMP"
                                                 style="display: {{ $data1->Project_management_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -6842,7 +6842,7 @@
                                                 No</option>
                                             <option @if ($data1->Quality_review == 'na') selected @endif value="na">
                                                 NA</option>
-                                        </select>                                        
+                                        </select>
                                     </div>
                                 </div>
                                 @php
@@ -8050,7 +8050,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 other1_reviews ">
                                     <div class="group-input">
-                                        <label for="Impact Assessment12">Impact Assessment (By Other's 1) 
+                                        <label for="Impact Assessment12">Impact Assessment (By Other's 1)
                                             <!-- <span
                                                 id=""
                                                 style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -8062,7 +8062,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 other1_reviews ">
                                     <div class="group-input">
-                                        <label for="Feedback1"> Other's 1 Feedback 
+                                        <label for="Feedback1"> Other's 1 Feedback
                                             <!-- <span id=""
                                                 style="display: {{ $data1->Other1_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -8280,7 +8280,7 @@
                                 </script>
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
-                                        <label for="Impact Assessment13">Impact Assessment (By Other's 2) 
+                                        <label for="Impact Assessment13">Impact Assessment (By Other's 2)
                                             <!-- <span
                                                 id=""
                                                 style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -8292,7 +8292,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 Other2_reviews">
                                     <div class="group-input">
-                                        <label for="Feedback2"> Other's 2 Feedback 
+                                        <label for="Feedback2"> Other's 2 Feedback
                                             <!-- <span id=""
                                                 style="display: {{ $data1->Other2_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -8482,7 +8482,7 @@
                                 </script>
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
-                                        <label for="Impact Assessment14">Impact Assessment (By Other's 3) 
+                                        <label for="Impact Assessment14">Impact Assessment (By Other's 3)
                                             <!-- <span
                                                 id=""
                                                 style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -8494,7 +8494,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 Other3_reviews">
                                     <div class="group-input">
-                                        <label for="feedback3"> Other's 3 Feedback 
+                                        <label for="feedback3"> Other's 3 Feedback
                                             <!-- <span id=""
                                                 style="display: {{ $data1->Other3_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -8681,7 +8681,7 @@
                                 </script>
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
-                                        <label for="Impact Assessment15">Impact Assessment (By Other's 4) 
+                                        <label for="Impact Assessment15">Impact Assessment (By Other's 4)
                                             <!-- <span
                                                 id=""
                                                 style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -8693,7 +8693,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 Other4_reviews">
                                     <div class="group-input">
-                                        <label for="feedback4"> Other's 4 Feedback 
+                                        <label for="feedback4"> Other's 4 Feedback
                                             <!-- <span id=""
                                                 style="display: {{ $data1->Other4_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->
@@ -8797,7 +8797,7 @@
                                 @endphp
                                 <div class="col-lg-6 Other5_reviews">
                                     <div class="group-input">
-                                        <label for="Person5">Other's 5 Person 
+                                        <label for="Person5">Other's 5 Person
                                             <span id="asterisko5"
                                                 style="display: {{ $data1->Other5_review == 'yes' ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span>
@@ -8885,7 +8885,7 @@
                                 </script>
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
-                                        <label for="Impact Assessment16">Impact Assessment (By Other's 5) 
+                                        <label for="Impact Assessment16">Impact Assessment (By Other's 5)
                                             <!-- <span
                                                 id=""
                                                 style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
@@ -8897,7 +8897,7 @@
                                 </div>
                                 <div class="col-md-12 mb-3 Other5_reviews">
                                     <div class="group-input">
-                                        <label for="productionfeedback"> Other's 5 Feedback 
+                                        <label for="productionfeedback"> Other's 5 Feedback
                                             <!-- <span id=""
                                                 style="display: {{ $data1->Other5_review == 'yes' && $data->stage == 4 ? 'inline' : 'none' }}"
                                                 class="text-danger">*</span> -->

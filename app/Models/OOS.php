@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Oosgrids;
 
 class OOS extends Model
 {
@@ -53,6 +54,7 @@ class OOS extends Model
           'oos_category_root_cause_ident_plic',
           'oos_category_others_plic',
           'root_cause_details_plic',
+          'Description_Deviation',
           'recommended_actions_required_plic',
           'recommended_actions_reference_plic',
           'capa_required_plic',

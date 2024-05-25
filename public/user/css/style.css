@@ -4459,7 +4459,7 @@ section#pdf-page .watermark {
 #change-control-fields .group-input p {
     margin-bottom: 0;
     font-size: 0.8rem;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 
 #change-control-fields .comment .button {

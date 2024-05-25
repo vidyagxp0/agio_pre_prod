@@ -151,7 +151,6 @@
                                     <option value="Action Item">Action Item</option>
                                     <option value="Effectiveness Check">Effectiveness Check</option>
                                     <option value="Deviation">Deviation</option>
-                                    {{-- <option value="tms">TMS</option>  --}}
                                 </select>
                             </div>
                             <div class="group-input">
@@ -166,7 +165,7 @@
                                     <option value="">Initial Deviation Category= Critical</option>
                                      <option value="">Post Categorization Of Deviation= Minor</option>
                                     <option value="">Post Categorization Of Deviation= Major</option>
-                                    <option value="">Post Categorization Of Deviation= Critical</option> 
+                                    <option value="">Post Categorization Of Deviation= Critical</option>
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
@@ -240,6 +239,27 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                                {{-- market complaint --}}
+
+                                                    @elseif ($datas->type == 'Market Complaint')
+                                                    <a href="{{ route('marketcomplaint.marketcomplaint_view', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id}}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+
+
+
+                                                    
+
                                                 @elseif ($datas->type == 'Risk-Assesment')
                                                     <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -282,7 +302,6 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -358,6 +377,34 @@
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+                                                @elseif($datas->type == 'OOS')
+                                                    <a href="{{ route('oos.oos_view', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+                                                    @elseif($datas->type == 'errata')
+                                                    <a href="{{ route('errata.show', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"
@@ -446,14 +493,14 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
-                                            
-                                            
+
+
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
+                                                {{ ucwords(str_replace('_', ' ', $datas->initiated_through)) }}
                                             </td>
-                                           
+
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
@@ -468,7 +515,7 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{-- {{ $datas->assign_to }} --}}
-                                            {{ Helpers::getInitiatorName($datas->initiator_id) }}
+                                                {{ Helpers::getInitiatorName($datas->initiator_id) }}
                                                 {{-- {{ $datas->initiator_id }} --}}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
