@@ -643,4 +643,14 @@ class Helpers
 
     }
 
+    public static function disabledOotFields($data)
+    {
+        if($data == 0 || $data > 7){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+
+    }
+
 }

@@ -260,15 +260,86 @@
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group <span
                                             class="text-danger"></span></label>
-                                    <select name="initiator_group">
+                                    {{-- <select name="initiator_group">
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            {{-- <option value="{{ $data->initiator_group }}"  @if (old('initiator_group') == $initiator_group) selected @endif>{{ $data-> $initiator_group }} </option> --}}
-                                            <option value="initiator_group" @if ($data->initiator_group == 'initiator_group') selected @endif> {{ $data->$initiator_group }}</option>
+                                            <option value="{{$data->initiator_group}}" @if ($data->initiator_group == 'initiator_group') selected @endif> {{ $data->$initiator_group }}</option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
+
+                                    <select name="Department"
+                                            {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                            id="selectedOptions" {{ Helpers::disabledOotFields($data->stage) }} disabled>
+                                            <option value="CQA" @if ($data->Department == 'CQA') selected @endif>
+                                                Corporate
+                                                Quality Assurance</option>
+                                            <option value="QAB" @if ($data->Department == 'QAB') selected @endif>
+                                                Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
+                                                Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if ($data->Department == 'CQC') selected @endif>
+                                                Manufacturing
+                                            </option>
+                                            <option value="PSG" @if ($data->Department == 'PSG') selected @endif>
+                                                Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if ($data->Department == 'CS') selected @endif>
+                                                Central
+                                                Stores</option>
+                                            <option value="ITG" @if ($data->Department == 'ITG') selected @endif>
+                                                Information
+                                                Technology Group</option>
+                                            <option value="MM" @if ($data->Department == 'MM') selected @endif>
+                                                Molecular
+                                                Medicine</option>
+                                            <option value="CL" @if ($data->Department == 'CL') selected @endif>
+                                                Central
+                                                Laboratory</option>
+                                            <option value="TT" @if ($data->Department == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if ($data->Department == 'QA') selected @endif>
+                                                Quality
+                                                Assurance</option>
+                                            <option value="QM" @if ($data->Department == 'QM') selected @endif>
+                                                Quality
+                                                Management</option>
+                                            <option value="IA" @if ($data->Department == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if ($data->Department == 'ACC') selected @endif>
+                                                Accounting
+                                            </option>
+                                            <option value="LOG" @if ($data->Department == 'LOG') selected @endif>
+                                                Logistics
+                                            </option>
+                                            <option value="SM" @if ($data->Department == 'SM') selected @endif>
+                                                Senior
+                                                Management</option>
+                                            <option value="BA" @if ($data->Department == 'BA') selected @endif>
+                                                Business
+                                                Administration</option>
+
+                                        </select>
                                 </div>
                             </div>
+
+
+                            <script>
+                                document.getElementById('selectedOptions').addEventListener('change', function() {
+                                    var selectedValue = this.value;
+                                    document.getElementById('initiator_group_code').value = selectedValue;
+                                });
+
+                                function setCurrentDate(item) {
+                                    if (item == 'yes') {
+                                        $('#effect_check_date').val('{{ date('d-M-Y') }}');
+                                    } else {
+                                        $('#effect_check_date').val('');
+                                    }
+                                }
+                            </script>
+
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -283,7 +354,7 @@
                                 <div class="group-input">
                                     <label for="Short Description">Initiated Through<span
                                             class="text-danger"></span></label>
-                                    <select name="initiated_through" id="initiated_through">
+                                    <select name="initiated_through" id="initiated_through"  disabled {{ Helpers::disabledOotFields($data->stage) }}>
                                         <option value="">---select---</option>
                                         <option value="oos_micro" @if ($data->initiated_through == 'oos_micro') selected @endif>OOS
                                             Micro</option>

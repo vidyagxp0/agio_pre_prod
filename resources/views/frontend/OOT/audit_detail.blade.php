@@ -126,7 +126,7 @@
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
-                                @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
+                                @if($temp->activity_type == "Assigned To" || $temp->activity_type == "OOT Team" )
                                 @foreach(explode(',',$temp->current) as $curr)
                                 {{ Helpers::getInitiatorName($curr) }} ,
                                 @endforeach

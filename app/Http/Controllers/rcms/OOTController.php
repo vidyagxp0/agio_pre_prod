@@ -688,7 +688,8 @@ class OOTController extends Controller
 
     public function ootShow($id){
 
-       $data = Ootc::where('id',$id)->first();      
+       $data = Ootc::where('id',$id)->first(); 
+    //    dd($data);     
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
@@ -715,6 +716,7 @@ class OOTController extends Controller
         $data->due_date              = $request->due_date;
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
+        //  dd($data->initiator_group);
         $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
         $data->if_others	         = $request->if_others;

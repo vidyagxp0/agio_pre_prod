@@ -74,20 +74,10 @@
                                 General Information
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Initiator Group">Type </label>
-                                    <select id="dynamicSelectType" name="type">
-                                        <option value="{{ route('oot.index');  }}">OOT</option>
-                                        <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
-                                        <option value="{{ route('oos.index') }}">OOS Chemical</option>
-                                    </select>
-                                </div>
-                            </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" type="text">
+                                        <input disabled  type="number" >
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -387,7 +377,7 @@
                                                 <tr>
                                                     <th style="width: 5%">Row#</th>
                                                     <th style="width: 12%">AR Number</th>
-                                                    <th style="width: 16%">Condition:Temprature &RH</th>
+                                                    <th style="width: 16%"> Condition:Temprature &RH</th>
                                                     <th style="width: 15%">Interval</th>
                                                     <th style="width: 15%">Orientation</th>
                                                     <th style="width: 15%">Pack Details (if any) </th>
@@ -3757,7 +3747,7 @@
                         '<td><input type="text" name="oot_result['+ootIndex+'][result_obtained]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][i_i_details]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][p_i_details]"></td>' +
-                        '<td><input type="text" name="oot_result['+ootIndex+'][difference_of_result]"></td>' +
+                        '<td><input type="text" name="oot_result['+ootIndex+'][p_i_details]"></td>' +
                         '<td><input type="text" name="oot_result['+ootIndex+'][trend_limit]"></td>' +
                         '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
                         '</tr>';

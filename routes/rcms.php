@@ -22,6 +22,7 @@ use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
+use App\Http\Controllers\rcms\IncidentController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -201,6 +202,13 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Deviation Routes Ends *******************/
 
+               //---------------Inciden-------------//
+
+            Route::get('incident',[IncidentController::class,'incidentIndex'])->name('incident');
+            Route::post('incidentstor',[IncidentController::class,'store'])->name('incidentstore');
+            Route::get('incidentshow/{id}',[IncidentController::class, 'incidentShow'])->name('incidentShow');
+
+
             /********************* Fallure Investigation Routes Starts *******************/
 
             Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
@@ -224,13 +232,6 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
             Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
-
-
-
-
-
-
-
 
             /**
              * OOT
@@ -260,11 +261,13 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
             Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
             Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
-            Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
-
-            
+            Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');          
 
             });
+
+        
+
+
 
             /**
              * market coplaint
@@ -287,6 +290,8 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
+
 
 
         }

@@ -403,8 +403,6 @@ class DeviationController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-
-
         $deviation->status = 'Opened';
         $deviation->stage = 1;
 
