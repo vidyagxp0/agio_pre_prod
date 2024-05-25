@@ -74,6 +74,16 @@
                                 General Information
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Initiator Group">Type </label>
+                                    <select id="dynamicSelectType" name="type">
+                                        <option value="{{ route('oot.index');  }}">OOT</option>
+                                        <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                                        <option value="{{ route('oos.index') }}">OOS Chemical</option>
+                                    </select>
+                                </div>
+                            </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>

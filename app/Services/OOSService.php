@@ -55,6 +55,7 @@ class OOSService
                 $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
             }
 
+            dd($input);
             $oos = OOS::create($input);
 
             $grid_inputs = [

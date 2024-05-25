@@ -63,7 +63,7 @@
                     <label for="Description Deviation">Details of Root Cause</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                {{$data->impact_assessment_piiqcr ? '$data->impact_assessment_piiqcr' : ''}}
+                {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ''}}
                 </textarea>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->attachments_piiqcr)
-                            @foreach(json_decode($data->attachments_piiqcr) as $file)
+                            @foreach($data->attachments_piiqcr as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

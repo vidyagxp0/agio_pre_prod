@@ -8,8 +8,6 @@
                     <label for="Audit Schedule Start Date"> Comments </label>
                     <div class="col-md-12 4">
                         <div class="group-input">
-                            <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="Comments_plidata" value=""
                                 id="summernote-1">{{ $data->Comments_plidata ? $data->Comments_plidata : '' }}</textarea>
                             </textarea>
@@ -54,38 +52,6 @@
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
             </div>
-            <!-- <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Facility Name"> Facility Name </label>
-                                <select multiple name="facility_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="facility_name">
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Group Name"> Group Name </label>
-                                <select multiple name="group_name" placeholder="Select Nature of Deviation" data-search="false" data-silent-initial-value-set="true" id="group_name">
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                    <option value="Piyush">Piyush Sahu</option>
-                                </select>
-                            </div>
-                        </div> -->
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name"> Verification Analysis Required</label>
@@ -203,37 +169,37 @@
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Attachments">File Attachments</label>
+                    <label for="Initiator Group">File Attachment</label>
                     <small class="text-primary">
                         Please Attach all relevant or supporting documents
                     </small>
-                    <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach"></div>
-                        @if ($data->file_attachments_pli)
-                        @foreach (json_decode($data->file_attachments_pli) as $file)
-                        <h6 type="button" class="file-container text-dark"
-                            style="background-color: rgb(243, 242, 240);">
-                            <b>{{ $file }}</b>
-                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
-                                    class="fa fa-eye text-primary"
-                                    style="font-size:20px; margin-right:-10px;"></i></a>
-                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
-                                    class="fa-solid fa-circle-xmark"
-                                    style="color:red; font-size:20px;"></i></a>
-                        </h6>
-                        @endforeach
-                        {{-- @endif --}}
-                        @endif
 
+                    <div class="file-attachment-field">
+                        <div class="file-attachment-list" id="">
+                            @if ($data->file_attachments_pli)
+                            @foreach ($data->file_attachments_pli as $file)
+                            <h6 type="button" class="file-container text-dark"
+                                style="background-color: rgb(243, 242, 240);">
+                                <b>{{ $file }}</b>
+                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
+                                        class="fa fa-eye text-primary"
+                                        style="font-size:20px; margin-right:-10px;"></i></a>
+                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i
+                                        class="fa-solid fa-circle-xmark"
+                                        style="color:red; font-size:20px;"></i></a>
+                            </h6>
+                            @endforeach
+                            @endif
+                        </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="file_attachments_pli[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                            <input type="file" id="myfile" name="file_attachments_pli[]" oninput=""
+                                multiple>
                         </div>
                     </div>
-
                 </div>
             </div>
+            
             <div class="button-block">
                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
