@@ -155,7 +155,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30" style="margin-left: 60px;">
                     </div>
                 </td>
             </tr>
@@ -166,7 +166,7 @@
                     <strong>CAPA Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/CAPA/{{ Helpers::year($doc->created_at) }}/{{  str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -180,7 +180,7 @@
         <div class="head">Audit Trial Histroy Configuration Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/CAPA/{{ Helpers::year($doc->created_at) }}/{{  str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         <!-- <div class="first-table">

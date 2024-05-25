@@ -247,18 +247,18 @@
                                                 <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} {{$data->initiated_through}}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option  selected value="">-- select --</option>
-                                                    <option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal ">Internal Audit</option>
-                                                    <option @if ($data->initiated_through == 'External Audit') selected @endif value="External">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal Audit">Internal Audit</option>
+                                                    <option @if ($data->initiated_through == 'External Audit') selected @endif value="External Audit">External Audit</option>
                                                     <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA">CAPA</option>
-                                                    <option  @if ($data->initiated_through == 'Audit Program') selected @endif value="Audit ">Audit Program</option>
-                                                    <option @if ($data->initiated_through == 'Lab Incident') selected @endif value="Lab ">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'Risk Assessment') selected @endif value="Risk">Risk Assessment</option>
-                                                    <option @if ($data->initiated_through == 'Root Cause Analysis') selected @endif value="Root Cause">Root Cause Analysis</option>
-                                                    <option @if ($data->initiated_through == 'Change Control') selected @endif value="Change">Change Control</option>
-                                                    <option @if ($data->initiated_through == 'Management Review') selected @endif value="Management">Management Review</option>
+                                                    <option  @if ($data->initiated_through == 'Audit Program') selected @endif value="Audit Program">Audit Program</option>
+                                                    <option @if ($data->initiated_through == 'Lab Incident') selected @endif value="Lab Incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'Risk Assessment') selected @endif value="Risk Assessment">Risk Assessment</option>
+                                                    <option @if ($data->initiated_through == 'Root Cause Analysis') selected @endif value="Root Cause Analysis">Root Cause Analysis</option>
+                                                    <option @if ($data->initiated_through == 'Change Control') selected @endif value="Change Control">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'Management Review') selected @endif value="Management Review">Management Review</option>
                                                     <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
-                                                    <option @if ($data->initiated_through == 'Action Item') selected @endif value="Action ">Action Item</option>
-                                                    <option @if ($data->initiated_through == 'Effectiveness Check') selected @endif value="Effectiveness">Effectivness Check</option>
+                                                    <option @if ($data->initiated_through == 'Action Item') selected @endif value="Action Item">Action Item</option>
+                                                    <option @if ($data->initiated_through == 'Effectiveness Check') selected @endif value="Effectiveness Check">Effectivness Check</option>
                                                 </select>
                                             </div>
                                     </div>
