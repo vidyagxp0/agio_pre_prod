@@ -13,13 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('marketcomplaint_grids', function (Blueprint $table) {
-            $table->id();
-            $table->integer('mc_id');
-            $table->string('identifer')->nullable();
-            $table->text('data');          
-          
-            $table->timestamps();
+        Schema::table('marketcompalints', function (Blueprint $table) {
+            $table->string('submitted_comment')->nullable();
         });
     }
 
@@ -30,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marketcomplaint_grids');
+        Schema::table('marketcompalints', function (Blueprint $table) {
+            //
+        });
     }
 };

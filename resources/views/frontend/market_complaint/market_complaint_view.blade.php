@@ -1970,8 +1970,8 @@
                                                         <td><input disabled type="text" name="Product_MaterialDetails[{{ $index }}][serial]" value="{{ $productmateIndex++ }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][product_name_ca]" value="{{ $Prodmateriyal['product_name_ca'] }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_no_pmd_ca]" value="{{ $Prodmateriyal['batch_no_pmd_ca'] }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]" value="{{ $Prodmateriyal['mfg_date_pmd_ca'] }}"></td>
-                                                        <td><input type="text" name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]" value="{{ $Prodmateriyal['expiry_date_pmd_ca'] }}"></td>
+                                                        <td><input type="date" name="Product_MaterialDetails[{{ $index }}][mfg_date_pmd_ca]" value="{{ $Prodmateriyal['mfg_date_pmd_ca'] }}"></td>
+                                                        <td><input type="date" name="Product_MaterialDetails[{{ $index }}][expiry_date_pmd_ca]" value="{{ $Prodmateriyal['expiry_date_pmd_ca'] }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][batch_size_pmd_ca]" value="{{ $Prodmateriyal['batch_size_pmd_ca'] }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][pack_profile_pmd_ca]" value="{{ $Prodmateriyal['pack_profile_pmd_ca'] }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $index }}][released_quantity_pmd_ca]" value="{{ $Prodmateriyal['released_quantity_pmd_ca'] }}"></td>
@@ -2000,8 +2000,8 @@
                                                 '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +

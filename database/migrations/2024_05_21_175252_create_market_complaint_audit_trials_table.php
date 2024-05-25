@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('market_complaint_audit_trials', function (Blueprint $table) {
             $table->id();
-            $table->string('mc_id');
+            $table->string('market_id');
             $table->string('activity_type');
             $table->longText('previous')->nullable();
             $table->string('stage')->nullable();
@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('user_role');
             $table->longText('change_to');
             $table->longText('change_from');
+            $table->longText('action_name');
             $table->softDeletes();
             $table->timestamps();
         });

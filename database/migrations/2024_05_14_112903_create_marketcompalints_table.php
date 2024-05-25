@@ -21,10 +21,12 @@ return new class extends Migration
             $table->string('division_id')->nullable();
             $table->string('initiator_group')->nullable();
             $table->string('intiation_date')->nullable();
-            $table->date('due_date')->nullable();
+            $table->date('due_date_gi')->nullable();
             $table->string('initiator_group_code_gi')->nullable();
             $table->string('record_number')->nullable();
 
+
+            $table->longText('form_type')->nullable();
             $table->string('initiated_through_gi')->nullable();
             $table->longText('if_other_gi')->nullable();
             $table->string('is_repeat_gi')->nullable(); 
