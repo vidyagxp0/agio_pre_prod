@@ -425,11 +425,10 @@ class DashboardController extends Controller
 
         foreach ($datas15 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-            
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record_number,
+                "record" => $data->record_number_number,
                 "division_id" => $data->division_id,
                 "type" => "OOT",
                 "parent_id" => $data->parent_id,
@@ -440,7 +439,7 @@ class DashboardController extends Controller
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through? $data->initiated_through : "-",
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -548,45 +547,45 @@ class DashboardController extends Controller
                 foreach ($data as $datas) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Change-Control",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Change-Control",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
 
                 foreach ($datas1 as $data) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Action-Item",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Action-Item",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
 
                 foreach ($datas2 as $data) {
                     array_push($table, [
                         "id" => $data->id,
-                        "parent" => $data->cc_id ? $data->cc_id : "-",
-                        "record" => $data->record,
-                        "type" => "Extension",
+                        "parent"            => $data->cc_id ? $data->cc_id : "-",
+                        "record"            => $data->record,
+                        "type"              => "Extension",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "initiator_id" => $data->initiator_id,
-                        "intiation_date" => $data->intiation_date,
-                        "stage" => $data->status,
-                        "date_open" => $data->created_at,
-                        "date_close" => $data->updated_at,
+                        "initiator_id"      => $data->initiator_id,
+                        "intiation_date"    => $data->intiation_date,
+                        "stage"             => $data->status,
+                        "date_open"         => $data->created_at,
+                        "date_close"        => $data->updated_at,
                     ]);
                 }
             }
