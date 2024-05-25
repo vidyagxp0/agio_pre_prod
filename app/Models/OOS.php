@@ -49,6 +49,7 @@ class OOS extends Model
           'phase_i_investigation_pli',
           'phase_i_investigation_ref_pli',
           'file_attachments_pli',
+          'file_attachments_pII',
           'summary_of_prelim_investiga_plic',
           'root_cause_identified_plic',
           'oos_category_root_cause_ident_plic',
@@ -101,6 +102,7 @@ class OOS extends Model
           'capa_req_oosc',
           'capa_ref_no_oosc',
           'justify_if_capa_not_required_oosc',
+          'file_attachments_if_any_ooscattach',
           'action_plan_req_oosc',
           'action_plan_ref_oosc',
           'justification_for_delay_oosc',
@@ -166,6 +168,7 @@ class OOS extends Model
       ];
 
     protected $casts = [
+      'recommended_actions_reference_plic' => 'array',
       'reference_document' => 'array',
       'Comments_plidata' => 'array',
       'verification_analysis_ref_pli' => 'array',
@@ -193,9 +196,9 @@ class OOS extends Model
       'hypo_exp_ref_uae' => 'array',
       'initial_attachment_gi' => 'array',
       'file_attachments_pli' => 'array',
+      'file_attachments_pII' => 'array',
       'supporting_attachment_plic' => 'array',
       'supporting_attachments_plir' => 'array',
-      'file_attachments_pli' => 'array',
       'attachments_piiqcr' => 'array',
       'additional_testing_attachment_atp' => 'array',
       'file_attachments_if_any_ooscattach' => 'array',
@@ -206,6 +209,7 @@ class OOS extends Model
       'addendum_attachment_uaa' => 'array',
       'addendum_attachments_uae' => 'array',
       'required_attachment_uar' => 'array',
+      'file_attachments_if_any_ooscattach' => 'array',
       'verification_attachment_uar' => 'array'
     ];
 

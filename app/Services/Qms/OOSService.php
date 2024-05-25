@@ -37,7 +37,6 @@ class OOSService
                 'file_attachments_pli',
                 'supporting_attachment_plic',
                 'supporting_attachments_plir',
-                'file_attachments_pli',
                 'attachments_piiqcr',
                 'additional_testing_attachment_atp',
                 'file_attachments_if_any_ooscattach',
@@ -56,6 +55,7 @@ class OOSService
                 $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
             }
 
+            dd($input);
             $oos = OOS::create($input);
 
             $grid_inputs = [
@@ -143,9 +143,9 @@ class OOSService
             $file_input_names = [
                 'initial_attachment_gi',
                 'file_attachments_pli',
+                'file_attachments_pII',
                 'supporting_attachment_plic',
                 'supporting_attachments_plir',
-                'file_attachments_pli',
                 'attachments_piiqcr',
                 'additional_testing_attachment_atp',
                 'file_attachments_if_any_ooscattach',

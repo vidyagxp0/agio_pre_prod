@@ -25,7 +25,7 @@
                         <div class="file-attachment-list" id="file_attach">
                             @if (!empty($data->verification_attachment_uar))
                           
-                            <!-- @foreach (json_decode($data->verification_attachment_uar) as $file) -->
+                             @foreach ($data->verification_attachment_uar as $file) 
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b></b>
@@ -35,7 +35,7 @@
                                 <a type="button" class="remove-file" data-file-name=""><i
                                         class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                             </h6>
-                            <!-- @endforeach -->
+                         @endforeach 
                             @else
                             <div class="add-btn">
                             <div>Add</div>

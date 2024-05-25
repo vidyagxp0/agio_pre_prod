@@ -53,6 +53,9 @@ return new class extends Migration
             $table->string('phase_i_investigation_pli')->nullable();
             $table->longText('phase_i_investigation_ref_pli')->nullable();
             $table->longText('file_attachments_pli')->nullable();
+            $table->longText('file_attachments_pII')->nullable();
+
+            
             // preliminary lab inv Conclution
             $table->longText('summary_of_prelim_investiga_plic')->nullable();
             $table->string('root_cause_identified_plic')->nullable();
@@ -106,6 +109,8 @@ return new class extends Migration
              $table->string('results_to_be_reported_oosc')->nullable();
              $table->longText('final_reportable_results_oosc')->nullable();
              $table->longText('justifi_for_averaging_results_oosc')->nullable();
+             $table->longText('file_attachments_if_any_ooscattach')->nullable();
+             
              $table->string('oos_stands_oosc')->nullable();
              $table->string('capa_req_oosc')->nullable();
              $table->longText('capa_ref_no_oosc')->nullable();
