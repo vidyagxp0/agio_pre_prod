@@ -220,18 +220,18 @@
                                         <div><small class="text-primary">Please select related information</small></div>
                                         <select name="initiated_through">
                                             <option value="">-- select --</option>
-                                            <option value="Internal ">Internal Audit</option>
-                                            <option value="External">External Audit</option>
+                                            <option value="Internal Audit">Internal Audit</option>
+                                            <option value="External Audit">External Audit</option>
                                             <option value="CAPA">CAPA</option>
-                                            <option value="Audit ">Audit Program</option>
-                                            <option value="Lab ">Lab Incident</option>
-                                            <option value="Risk">Risk Assessment</option>
-                                            <option value="Root Cause">Root Cause Analysis</option>
-                                            <option value="Change ">Change Control</option>
-                                            <option value="Management">Management Review</option>
-                                            <option value="New Documen">New Document</option>
-                                            <option value="Action ">Action Item</option>
-                                            <option value="Effectivness">Effectivness Check</option>
+                                            <option value="Audit Program">Audit Program</option>
+                                            <option value="Lab Incident">Lab Incident</option>
+                                            <option value="Risk Assessment">Risk Assessment</option>
+                                            <option value="Root Cause Analysis">Root Cause Analysis</option>
+                                            <option value="Change Control">Change Control</option>
+                                            <option value="Management Review">Management Review</option>
+                                            <option value="New Document">New Document</option>
+                                            <option value="Action Item">Action Item</option>
+                                            <option value="Effectiveness Check">Effectiveness Check</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>

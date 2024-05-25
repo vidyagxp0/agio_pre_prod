@@ -80,7 +80,7 @@ return new class extends Migration
              $table->string('hypo_exp_required_piii')->nullable();
              $table->longText('hypo_exp_reference_piii')->nullable();
              $table->longText('attachment_piii')->nullable();
-        // Phase ii QC Review
+            // Phase ii QC Review
              $table->longText('summary_of_exp_hyp_piiqcr')->nullable();
              $table->longText('summary_mfg_investigation_piiqcr')->nullable();
              $table->string('root_casue_identified_piiqcr')->nullable();
@@ -175,8 +175,7 @@ return new class extends Migration
             $table->text('type')->nullable();
             $table->text('parent_record')->nullable();
             $table->softDeletes();
-           $table->timestamps();
-
+            $table->timestamps();
         });
     }
 

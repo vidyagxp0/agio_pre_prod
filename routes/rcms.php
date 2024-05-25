@@ -17,8 +17,10 @@ use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\MarketComplaintController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
+use App\Http\Controllers\rcms\DeviationController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -36,6 +38,12 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::middleware(['rcms'])->group(
         function () {
             Route::resource('CC', CCController::class);
+
+            Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
+            Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);
+            Route::post('send-initialQA/{id}', [CCController::class, 'sendToInitialQA']);
+            Route::post('send-cft-from-QA/{id}', [CCController::class, 'sendToCft']);
+
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
             Route::get('action-item-audittrialshow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('showActionItemAuditTrial');
@@ -66,7 +74,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-cancel/{id}', [CCController::class, 'stagecancel']);
             Route::post('send-cc/{id}', [CCController::class, 'stageChange']);
             Route::post('child/{id}', [CCController::class, 'child']);
-            Route::get('qms-dashboard', [DashboardController::class, 'index']);
+            Route::get('qms-dashboard', [DashboardController::class, 'index'])->name('qms.dashboard');
             Route::get('qms-dashboard/{id}/{process}', [DashboardController::class, 'dashboard_child']);
             Route::get('qms-dashboard_new/{id}/{process}', [DashboardController::class, 'dashboard_child_new']);
             Route::get('audit-trial/{id}', [CCController::class, 'auditTrial']);
@@ -104,6 +112,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('labcreate', [LabIncidentController::class, 'create'])->name('labIncidentCreate');
             Route::get('LabIncidentShow/{id}', [LabIncidentController::class, 'LabIncidentShow'])->name('ShowLabIncident');
             Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
+            Route::post('LabIncidentStateTwo/{id}', [LabIncidentController::class, 'LabIncidentStateTwo'])->name('StageChangeLabtwo');
             Route::post('RejectStateChangeEsign/{id}', [LabIncidentController::class, 'RejectStateChange'])->name('RejectStateChange');
             Route::post('updateLabIncident/{id}', [LabIncidentController::class, 'updateLabIncident'])->name('LabIncidentUpdate');
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
@@ -158,6 +167,63 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+
+
+            /********************* Deviation Routes Starts *******************/
+
+            Route::get('deviation', [DeviationController::class, 'deviation'])->name('deviation');
+            Route::get('DeviationAuditTrialPdf/{id}', [DeviationController::class, 'deviationAuditTrailPdf']);
+            Route::post('deviationstore', [DeviationController::class, 'store'])->name('deviationstore');
+            Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
+            Route::post('deviationupdate/{id}', [DeviationController::class, 'update'])->name('deviationupdate');
+            Route::post('deviation/reject/{id}', [DeviationController::class, 'deviation_reject'])->name('deviation_reject');
+            Route::post('deviation/cancel/{id}', [DeviationController::class, 'deviationCancel'])->name('deviationCancel');
+            Route::post('deviation/cftnotrequired/{id}', [DeviationController::class, 'deviationIsCFTRequired'])->name('deviationIsCFTRequired');
+            Route::post('deviation/check/{id}', [DeviationController::class, 'check'])->name('check');
+            Route::post('deviation/check2/{id}', [DeviationController::class, 'check2'])->name('check2');
+            Route::post('deviation/check3/{id}', [DeviationController::class, 'check3'])->name('check3');
+            Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('deviation/stage/{id}', [DeviationController::class, 'deviation_send_stage'])->name('deviation_send_stage');
+            Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
+            Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
+            Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
+
+            Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
+            Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Deviation Routes Ends *******************/
+
+            /********************* Fallure Investigation Routes Starts *******************/
+
+            Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
+
+            /********************* Fallure Investigation Routes Ends *******************/
+
+
+            //----------------------------------- OOT ----------------------------------//
+
+            Route::get('oot/', [OOTController::class, 'index']);
+            Route::post('oot/create', [OOTController::class, 'store'])->name('oot.store');
+            Route::get('oot_view/{id}', [OOTController::class,'ootShow'])->name('rcms/oot_view');
+            Route::post('oot/update/{id}',[OOTController::class, 'update'])->name('update');
+            // Route::get('oot_audit/{id}',[OOTController::class,'OotAuditTrial']);
+            Route::post('oot/stage/{id}',[OOTController::class,'oot_send_stage'])->name('ootStage');
+            Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
+            Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
+            Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
+            Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
+            Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
+            Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
+            Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+
+
+
+
+
+
 
 
             /**

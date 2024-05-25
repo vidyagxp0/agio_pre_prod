@@ -27,16 +27,17 @@ class FormDivisionController extends Controller
         } elseif ($request->process_name == "Extension") {
             return redirect('extension');
         } elseif ($request->process_name == "Effectiveness Check") {
-            return redirect('effectiveness-check');   
-            
+            return redirect('effectiveness-check');            
         } elseif ($request->process_name == "Root Cause Analysis") {
             return redirect('root-cause-analysis');
+        } elseif ($request->process_name == "Failure Investigation") {
+            return redirect('rcms/failure-investigation');
         } elseif ($request->process_name == "Change Control") {
             return redirect()->route('CC.create');
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');
         }
-        elseif ($request->process_name == 'OOS') {
+        elseif ($request->process_name == 'OOS Chemical') {
             return redirect()->route('oos.index');
         }
         elseif ($request->process_name == 'OOT') {
@@ -55,7 +56,7 @@ class FormDivisionController extends Controller
             return redirect()->route('marketcomplaint.market_complaint_new');
         }
         elseif ($request->process_name == 'Deviation') {
-            return 'deviation';
+            return redirect()->route('deviation');
         }
         elseif ($request->process_name == "New Document") {
 

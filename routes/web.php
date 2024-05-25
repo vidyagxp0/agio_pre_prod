@@ -1,3 +1,5 @@
+
+
 <?php
 
 use App\Http\Controllers\ActionItemController;
@@ -14,7 +16,7 @@ use App\Http\Controllers\rcms\DesktopController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\CCController;
+use App\Http\Controllers\rcms\{CCController,DeviationController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
@@ -30,11 +32,15 @@ use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
+use App\Http\Controllers\tms\EmployeeController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
+use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -163,6 +169,16 @@ Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_mor
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
 
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
+
+Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
+Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+
+/********************************************* Deviation Ends *******************************************/
+
 // ==============================end ==============================
 //! ============================================
 //!                    Risk Management
@@ -290,8 +306,8 @@ Route::get("new-change-control", [CCController::class, "changecontrol"]);
 
 Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 
-Route::view('employee_new', 'frontend.TMS.Employee.employee_new');
-Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification');
+Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
+Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
 
 //! ============================================
@@ -405,6 +421,10 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 //  ===================== OOS OOT OOC Form Route====================================
 Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
+Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
+Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
+Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
+
 
 Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
@@ -418,7 +438,32 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
 
 
-// ==========================================================
+// =================LOGS=========================================
+
+Route::view('change_control_log', 'frontend.forms.Logs.changeControlLog');
+Route::view('market_complaint_log', 'frontend.forms.Logs.Market-Complaint-registerLog');
+Route::view('incident_log', 'frontend.forms.Logs.incidentLog');
+Route::view('risk_management_log', 'frontend.forms.Logs.riskmanagementLog');
+Route::view('errata_log', 'frontend.forms.Logs.errata_log');
+Route::view('laboratory_log', 'frontend.forms.Logs.laboratoryIncidentLog');
+Route::view('capa_log', 'frontend.forms.Logs.capa_log');
+Route::view('non_conformance_log', 'frontend.forms.Logs.non_conformance_log');
+Route::view('deviation_log', 'frontend.forms.Logs.deviation_log');
+Route::view('OOC_log', 'frontend.forms.Logs.OOC_log');
+Route::view('OOS_OOT_log', 'frontend.forms.Logs.OOS_OOT_log');
+Route::view('Failure_invst_log', 'frontend.forms.Logs.Failure_investigation_Log');
+Route::view('internal_audit_log', 'frontend.forms.Logs.Internal_audit_Log');
+
+// =================LOGS=========================================
+
+
+
+
+// ====================OOS/OOT======================================
+Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
+// ====================OOS/OOT======================================
+
+
 
 /**
  * AJAX ROUTES
@@ -429,3 +474,9 @@ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->
 // ========================Errata==================================
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
+
+
+// ================EMPLOYEE & TRAINER===================
+
+Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
+Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');

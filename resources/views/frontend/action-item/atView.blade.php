@@ -63,10 +63,10 @@
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
-
+{{-- {{ dd($data->stage);}} --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -193,11 +193,17 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="group-input">
+                                    <div class="col-md-6 new-date-data-field">
+                                        <div class="group-input input-date">
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                            <input disabled type="text"
-                                                value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                            <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="" name="due_date"> -->
+                                            <div class="calenderauditee">                                     
+                                                <input type="text"  id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, false) }}" />
+                                                <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date_display')"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">

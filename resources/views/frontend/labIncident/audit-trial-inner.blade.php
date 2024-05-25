@@ -123,7 +123,8 @@
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                      </div> 
-                            @else  
+                            @else
+                              
 
 
                             <div class="list-item">
@@ -138,7 +139,7 @@
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
                         </a> --}}
                     </div>
-            </div>  
+                {{-- </div>   --}}
                 @endforeach
 
             </div>

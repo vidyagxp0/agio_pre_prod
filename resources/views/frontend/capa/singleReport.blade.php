@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
                     </div>
                 </td>
             </tr>
@@ -203,7 +203,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -530,7 +530,7 @@
                         </tr> -->
                     </table>
                 </div>
-            
+            <br>
             <div class="block">
                 <div class="block-head">
                   Other type CAPA Details
