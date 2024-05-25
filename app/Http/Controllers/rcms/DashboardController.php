@@ -336,7 +336,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
-                "type" => "OOS Cemical",
+                "type" => "OOS Chemical",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -753,7 +753,7 @@ class DashboardController extends Controller
             $audit = "managementReviewReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        }elseif ($type == "OOS Cemical") {
+        }elseif ($type == "OOS Chemical") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;
