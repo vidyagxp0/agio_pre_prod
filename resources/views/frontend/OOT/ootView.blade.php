@@ -203,8 +203,8 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="text" value="{{ $data->record_number }}">
+                                    <label for="record_number"><b>Record Number</b></label>
+                                    <input disabled type="text" value="{{ Helpers::getDivisionName($data->division_id) }}/OOT/{{ date('Y') }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -284,7 +284,7 @@
                                     <label for="Short Description">Initiated Through<span
                                             class="text-danger"></span></label>
                                     <select name="initiated_through" id="initiated_through">
-                                        <option>---select---</option>
+                                        <option value="">---select---</option>
                                         <option value="oos_micro" @if ($data->initiated_through == 'oos_micro') selected @endif>OOS
                                             Micro</option>
                                         <option value="oos_chemical" @if ($data->initiated_through == 'oos_chemical') selected @endif>OOS

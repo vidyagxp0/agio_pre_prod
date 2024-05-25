@@ -706,7 +706,8 @@ class OOTController extends Controller
         
         $data = Ootc::find($id);
         $data->division_id           = $request->division_id;
-        $data->record_number         = $request->record_number;
+        $data->record_number         = $lastDocument->record_number;
+        // dd($lastDocument->record_number);
         $data->due_date              = $request->due_date;
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;

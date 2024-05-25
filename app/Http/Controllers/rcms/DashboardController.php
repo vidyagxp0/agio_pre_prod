@@ -374,6 +374,7 @@ class DashboardController extends Controller
                 "initiator_id" => $data->initiator_id,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
+                "initiated_through" => $data->initiated_through,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -402,11 +403,11 @@ class DashboardController extends Controller
 
         foreach ($datas15 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
+            
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record,
+                "record" => $data->record_number,
                 "division_id" => $data->division_id,
                 "type" => "OOT",
                 "parent_id" => $data->parent_id,
@@ -421,7 +422,6 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        // dd($data);
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         // return $table;
         // $paginatedData = json_encode($table); 
