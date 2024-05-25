@@ -21,6 +21,7 @@ use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -475,8 +476,25 @@ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
+// <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
+// =======
+Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
+Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
+Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
+// Route::get('errata/edit/{id}', [ErrataController::class, 'edit'])->name('errata.edit');
+Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('errata.update');
+Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
+Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
+Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
+
+// ----------------------Stages----------------------------------------
+
+
+
+//=====================================================================
+// >>>>>>> B-backup
