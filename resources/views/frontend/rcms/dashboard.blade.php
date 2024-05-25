@@ -117,11 +117,29 @@
 <style>
     #short_width{
         display: inline-block;
-    width: 520px !important;
+    width: 320px !important;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
     }
+    .table-container {
+  overflow: auto;
+  max-height: 350px;
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px;
+}
+.td_c{
+    width: 100px !important;
+}
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -166,7 +184,7 @@
                                     <option value="">Initial Deviation Category= Critical</option>
                                      <option value="">Post Categorization Of Deviation= Minor</option>
                                     <option value="">Post Categorization Of Deviation= Major</option>
-                                    <option value="">Post Categorization Of Deviation= Critical</option> 
+                                    <option value="">Post Categorization Of Deviation= Critical</option>
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
@@ -282,7 +300,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    
+
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -446,14 +464,14 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
-                                            
-                                            
+
+
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
                                             </td>
-                                           
+
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">

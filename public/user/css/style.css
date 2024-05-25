@@ -3530,6 +3530,7 @@ section#pdf-page .watermark {
 
 #change-control-view .state-block .progress-bars {
     display: flex;
+    font-size: 13px;
 }
 
 #change-control-view .state-block .progress-bars div {
