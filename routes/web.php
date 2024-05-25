@@ -36,8 +36,8 @@ use App\Http\Controllers\tms\EmployeeController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
-use App\Http\Controllers\tms\TrainerController;
 use App\Http\Controllers\rcms\OOTController;
+use App\Http\Controllers\tms\TrainerController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 
@@ -427,6 +427,21 @@ Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_
 // ====================OOS/OOT======================================
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
+
+
+
+//============================================OOS MICRO===================================
+////-------------------------------------------------------------------------------------
+Route::get('oos_micro',[OOSMicroController::class,'index']);
+Route::post('oos_micro_store',[OOSMicroController::class,'store']);
+
+
+
+
+
+/////-------------------------------------------------------------------------------------
+//============================================OOS MICRO===================================
+
 
 
 // =================LOGS=========================================

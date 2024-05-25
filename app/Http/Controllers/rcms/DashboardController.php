@@ -378,7 +378,8 @@ class DashboardController extends Controller
         // return $table;
         // $paginatedData = json_encode($table);
 
-        //  $datag = $this->paginate($table);
+
+      //  $datag = $this->paginate($table);
         $datag = $this->paginate($table);
         //   $paginatedData = json_encode($datag);
 

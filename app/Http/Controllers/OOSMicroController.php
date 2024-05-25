@@ -3,9 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\OOS_micro;
+use App\Services\OOSMicroService;
+use App\Models\OOS_micro;
+use App\Services\OOSMicroService;
+use App\Models\OOS_micro;
 use App\Models\RoleGroup;
 use App\Models\OOS_Micro_audit_trial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\RecordNumber;
 use App\Models\User;
@@ -21,7 +27,14 @@ class OOSMicroController extends Controller
 {
     public function index()
     {
-        return view('frontend.OOS_Micro.oos_micro');
+
+
+        $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+
+        return view('frontend.OOS_Micro.oos_micro',compact('old_record','record_number','old_record'));
     }
 
      public function store(Request $request){
@@ -221,16 +234,18 @@ class OOSMicroController extends Controller
             }
             $micro->attachment_details_cimst = $files;
         }
+        //$micro->save();
+        //return "test";
         // phase ii investigation
-        $micro->qa_approver_comments_piii = implode(',', $request->delay_justification_for_pi_plic);
+        $micro->qa_approver_comments_piii = $request->qa_approver_comments_piii;
         $micro->manufact_invest_required_piii = $request->manufact_invest_required_piii;
-        $micro->manufacturing_invest_type_piii = $request->manufacturing_invest_type_piii;
-        $micro->manufacturing_invst_ref_piii = $request->manufacturing_invst_ref_piii;
+        $micro->manufacturing_invest_type_piii = implode(',', $request->manufacturing_invest_type_piii);
+        $micro->manufacturing_invst_ref_piii = implode(',', $request->manufacturing_invst_ref_piii);
         $micro->re_sampling_required_piii = $request->re_sampling_required_piii;
         $micro->audit_comments_piii = $request->audit_comments_piii;
-        $micro->re_sampling_ref_no_piii = $request->re_sampling_ref_no_piii;
+        $micro->re_sampling_ref_no_piii = implode(',', $request->re_sampling_ref_no_piii);
         $micro->hypo_exp_required_piii = $request->hypo_exp_required_piii;
-        $micro->hypo_exp_reference_piii = $request->hypo_exp_reference_piii;
+        $micro->hypo_exp_reference_piii = implode(',', $request->hypo_exp_reference_piii);
 
         if (!empty($request->attachment_piii)) {
             $files = [];
@@ -253,9 +268,9 @@ class OOSMicroController extends Controller
         $micro->details_of_root_cause_piiqcr = implode(',', $request->details_of_root_cause_piiqcr);
         $micro->impact_assessment_piiqcr = implode(',', $request->impact_assessment_piiqcr);
         $micro->recommended_action_required_piiqcr = $request->recommended_action_required_piiqcr;
-        $micro->recommended_action_reference_piiqcr = $request->recommended_action_reference_piiqcr ;
+        $micro->recommended_action_reference_piiqcr = implode(',', $request->recommended_action_reference_piiqcr);
         $micro->investi_required_piiqcr = $request->investi_required_piiqcr;
-        $micro->invest_ref_piiqcr = $request->invest_ref_piiqcr;
+        $micro->invest_ref_piiqcr = implode(',', $request->invest_ref_piiqcr);
 
         if (!empty($request->attachments_piiqcr)) {
             $files = [];
@@ -272,9 +287,9 @@ class OOSMicroController extends Controller
 
         $micro->review_comment_atp = $request->review_comment_atp;
         $micro->additional_test_proposal_atp = $request->additional_test_proposal_atp;
-        $micro->additional_test_reference_atp = $request->additional_test_reference_atp;
+        $micro->additional_test_reference_atp = implode(',', $request->additional_test_reference_atp);
         $micro->any_other_actions_required_atp = $request->any_other_actions_required_atp;
-        $micro->action_task_reference_atp = $request->action_task_reference_atp;
+        $micro->action_task_reference_atp = implode(',', $request->action_task_reference_atp);
         if (!empty($request->additional_testing_attachment_atp)) {
             $files = [];
             if ($request->hasfile('additional_testing_attachment_atp')) {
@@ -295,10 +310,10 @@ class OOSMicroController extends Controller
         $micro->justifi_for_averaging_results_oosc = $request->justifi_for_averaging_results_oosc;
         $micro->oos_stands_oosc = $request->oos_stands_oosc;
         $micro->capa_req_oosc = $request->capa_req_oosc;
-        $micro->capa_ref_no_oosc = $request->capa_ref_no_oosc;
+        $micro->capa_ref_no_oosc = implode(',', $request->capa_ref_no_oosc);
         $micro->justify_if_capa_not_required_oosc = $request->justify_if_capa_not_required_oosc;
         $micro->action_plan_req_oosc = $request->action_plan_req_oosc;
-        $micro->action_plan_ref_oosc = $request->action_plan_ref_oosc;
+        $micro->action_plan_ref_oosc = implode(',', $request->action_plan_ref_oosc);
         $micro->justification_for_delay_oosc = $request->justification_for_delay_oosc;
 
         if (!empty($request->attachments_if_any_oosc)) {
@@ -317,12 +332,12 @@ class OOSMicroController extends Controller
         $micro->conclusion_review_comments_ocr = $request->conclusion_review_comments_ocr;
         $micro->action_taken_on_affec_batch_ocr = $request->action_taken_on_affec_batch_ocr;
         $micro->capa_req_ocr = $request->capa_req_ocr;
-        $micro->capa_refer_ocr = $request->capa_refer_ocr;
+        $micro->capa_refer_ocr = implode(',', $request->capa_refer_ocr);
         $micro->required_action_plan_ocr = $request->required_action_plan_ocr;
         $micro->required_action_task_ocr = $request->required_action_task_ocr;
-        $micro->action_task_reference_ocr = $request->action_task_reference_ocr;
+        $micro->action_task_reference_ocr = implode(',', $request->action_task_reference_ocr);
         $micro->risk_assessment_req_ocr = $request->risk_assessment_req_ocr;
-        $micro->risk_assessment_ref_ocr = $request->risk_assessment_ref_ocr;
+        $micro->risk_assessment_ref_ocr = implode(',', $request->risk_assessment_ref_ocr);
         $micro->justify_if_no_risk_assessment_ocr = $request->justify_if_no_risk_assessment_ocr;
 
         if (!empty($request->conclusion_attachment_ocr)) {
@@ -362,7 +377,7 @@ class OOSMicroController extends Controller
         $micro->others_BI = $request->others_BI;
         $micro->material_batch_release_BI = $request->material_batch_release_BI;
         $micro->other_action_BI = $request->other_action_BI;
-        $micro->field_alert_reference_BI = $request->field_alert_reference_BI;
+        $micro->field_alert_reference_BI = implode(',', $request->field_alert_reference_BI);
         $micro->other_parameter_result_BI = $request->other_parameter_result_BI;
         $micro->trend_of_previous_batches_BI = $request->trend_of_previous_batches_BI;
         $micro->stability_data_BI = $request->stability_data_BI;
@@ -373,7 +388,7 @@ class OOSMicroController extends Controller
         $micro->risk_analysis_for_disposition_BI = $request->risk_analysis_for_disposition_BI;
         $micro->conclusion_BI = $request->conclusion_BI;
         $micro->phase_III_inves_required_BI = $request->phase_III_inves_required_BI;
-        $micro->phase_III_inves_reference_BI = $request->phase_III_inves_reference_BI;
+        $micro->phase_III_inves_reference_BI = implode(',', $request->phase_III_inves_reference_BI);
         $micro->justify_for_delay_BI = $request->justify_for_delay_BI;
 
         if (!empty($request->disposition_attachment_BI)) {
@@ -700,7 +715,10 @@ class OOSMicroController extends Controller
 
             $micro_data = OOS_micro::find($id);
             // dd($micro_data);
-            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data'));
+            $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record'));
        }
         public function update(Request $request, $id){
 
@@ -896,15 +914,15 @@ class OOSMicroController extends Controller
                 $micro->attachment_details_cimst = $files;
             }
             // phase ii investigation
-            $micro->qa_approver_comments_piii = implode(',', $request->delay_justification_for_pi_plic);
+            $micro->qa_approver_comments_piii = $request->qa_approver_comments_piii;
             $micro->manufact_invest_required_piii = $request->manufact_invest_required_piii;
-            $micro->manufacturing_invest_type_piii = $request->manufacturing_invest_type_piii;
-            $micro->manufacturing_invst_ref_piii = $request->manufacturing_invst_ref_piii;
+            $micro->manufacturing_invest_type_piii = implode(',', $request->manufacturing_invest_type_piii);
+            $micro->manufacturing_invst_ref_piii = implode(',', $request->manufacturing_invst_ref_piii);
             $micro->re_sampling_required_piii = $request->re_sampling_required_piii;
             $micro->audit_comments_piii = $request->audit_comments_piii;
-            $micro->re_sampling_ref_no_piii = $request->re_sampling_ref_no_piii;
+            $micro->re_sampling_ref_no_piii = implode(',', $request->re_sampling_ref_no_piii);
             $micro->hypo_exp_required_piii = $request->hypo_exp_required_piii;
-            $micro->hypo_exp_reference_piii = $request->hypo_exp_reference_piii;
+            $micro->hypo_exp_reference_piii = implode(',', $request->hypo_exp_reference_piii);
 
             if (!empty($request->attachment_piii)) {
                 $files = [];
@@ -924,11 +942,11 @@ class OOSMicroController extends Controller
             $micro->oos_category_reason_identified_piiqcr = $request->oos_category_reason_identified_piiqcr;
             $micro->others_oos_category_piiqcr = $request->others_oos_category_piiqcr;
             $micro->details_of_root_cause_piiqcr = implode(',', $request->details_of_root_cause_piiqcr);
-            $micro->impact_assessment_piiqcr = $request->impact_assessment_piiqcr;
+            $micro->impact_assessment_piiqcr = implode(',', $request->impact_assessment_piiqcr);
             $micro->recommended_action_required_piiqcr = $request->recommended_action_required_piiqcr;
-            $micro->recommended_action_reference_piiqcr = $request->recommended_action_reference_piiqcr;
+            $micro->recommended_action_reference_piiqcr = implode(',', $request->recommended_action_reference_piiqcr);
             $micro->investi_required_piiqcr = $request->investi_required_piiqcr;
-            $micro->invest_ref_piiqcr = $request->invest_ref_piiqcr;
+            $micro->invest_ref_piiqcr = implode(',', $request->invest_ref_piiqcr);
 
             if (!empty($request->attachments_piiqcr)) {
                 $files = [];
@@ -945,9 +963,9 @@ class OOSMicroController extends Controller
 
             $micro->review_comment_atp = $request->review_comment_atp;
             $micro->additional_test_proposal_atp = $request->additional_test_proposal_atp;
-            $micro->additional_test_reference_atp = $request->additional_test_reference_atp;
+            $micro->additional_test_reference_atp = implode(',', $request->additional_test_reference_atp);
             $micro->any_other_actions_required_atp = $request->any_other_actions_required_atp;
-            $micro->action_task_reference_atp = $request->action_task_reference_atp;
+            $micro->action_task_reference_atp = implode(',', $request->action_task_reference_atp);
 
             if (!empty($request->additional_testing_attachment_atp)) {
                 $files = [];
@@ -969,10 +987,10 @@ class OOSMicroController extends Controller
             $micro->justifi_for_averaging_results_oosc = $request->justifi_for_averaging_results_oosc;
             $micro->oos_stands_oosc = $request->oos_stands_oosc;
             $micro->capa_req_oosc = $request->capa_req_oosc;
-            $micro->capa_ref_no_oosc = $request->capa_ref_no_oosc;
+            $micro->capa_ref_no_oosc = implode(',', $request->capa_ref_no_oosc);
             $micro->justify_if_capa_not_required_oosc = $request->justify_if_capa_not_required_oosc;
             $micro->action_plan_req_oosc = $request->action_plan_req_oosc;
-            $micro->action_plan_ref_oosc = $request->action_plan_ref_oosc;
+            $micro->action_plan_ref_oosc = implode(',', $request->action_plan_ref_oosc);
             $micro->justification_for_delay_oosc = $request->justification_for_delay_oosc;
 
             if (!empty($request->attachments_if_any_oosc)) {
@@ -991,12 +1009,12 @@ class OOSMicroController extends Controller
             $micro->conclusion_review_comments_ocr = $request->conclusion_review_comments_ocr;
             $micro->action_taken_on_affec_batch_ocr = $request->action_taken_on_affec_batch_ocr;
             $micro->capa_req_ocr = $request->capa_req_ocr;
-            $micro->capa_refer_ocr = $request->capa_refer_ocr;
+            $micro->capa_refer_ocr = implode(',', $request->capa_refer_ocr);
             $micro->required_action_plan_ocr = $request->required_action_plan_ocr;
             $micro->required_action_task_ocr = $request->required_action_task_ocr;
-            $micro->action_task_reference_ocr = $request->action_task_reference_ocr;
+            $micro->action_task_reference_ocr = implode(',', $request->action_task_reference_ocr);
             $micro->risk_assessment_req_ocr = $request->risk_assessment_req_ocr;
-            $micro->risk_assessment_ref_ocr = $request->risk_assessment_ref_ocr;
+            $micro->risk_assessment_ref_ocr = implode(',', $request->risk_assessment_ref_ocr);
             $micro->justify_if_no_risk_assessment_ocr = $request->justify_if_no_risk_assessment_ocr;
 
             if (!empty($request->conclusion_attachment_ocr)) {
@@ -1037,7 +1055,7 @@ class OOSMicroController extends Controller
             $micro->others_BI = $request->others_BI;
             $micro->material_batch_release_BI = $request->material_batch_release_BI;
             $micro->other_action_BI = $request->other_action_BI;
-            $micro->field_alert_reference_BI = $request->field_alert_reference_BI;
+            $micro->field_alert_reference_BI = implode(',', $request->field_alert_reference_BI);
             $micro->other_parameter_result_BI = $request->other_parameter_result_BI;
             $micro->trend_of_previous_batches_BI = $request->trend_of_previous_batches_BI;
             $micro->stability_data_BI = $request->stability_data_BI;
@@ -1048,7 +1066,7 @@ class OOSMicroController extends Controller
             $micro->risk_analysis_for_disposition_BI = $request->risk_analysis_for_disposition_BI;
             $micro->conclusion_BI = $request->conclusion_BI;
             $micro->phase_III_inves_required_BI = $request->phase_III_inves_required_BI;
-            $micro->phase_III_inves_reference_BI = $request->phase_III_inves_reference_BI;
+            $micro->phase_III_inves_reference_BI = implode(',', $request->phase_III_inves_reference_BI);
             $micro->justify_for_delay_BI = $request->justify_for_delay_BI;
 
             if (!empty($request->disposition_attachment_BI)) {
@@ -1702,4 +1720,100 @@ foreach($OOS_CQ_Review as $key => $value){
 
 
 
+
+
+
+    public function store(Request $request)
+    {
+
+        // $input = $request->all();
+        // $input['stage'] ="1";
+        // $input['status']="Opened";
+
+
+        $data = new OOS_micro();
+        $data->initiator_id = Auth::user()->id;
+        $data->record = DB::table('record_numbers')->value('counter') + 1;
+        $data->title = $request->title;
+        $data->version = $request->version;
+        $data->short_description = $request->short_description;
+
+        //========== file attechment of all pages ==========
+        if (!empty ($request->initial_attachment_gi)) {
+            $files = [];
+            if ($request->hasfile('initial_attachment_gi')) {
+                foreach ($request->file('initial_attachment_gi') as $file) {
+
+                    $name =  'initial_attachment_gi' . rand(1, 10000) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $input['initial_attachment_gi'] = json_encode($files);
+        }
+
+        $data->save();
+
+        $grid_inputs = [
+            "phase_I_investigation",
+            "analyst_training_proce",
+            "sample_receiving_verification_lab",
+            "method_procedure_used_during_analysis",
+            "Instrument_Equipment_Det",
+            "Results_and_Calculat",
+            "Training_records_Analyst_Involved",
+            "sample_intactness_before_analysis",
+            "test_methods_Procedure",
+            "Review_of_Media_Buffer_Standards_prep",
+            "Checklist_for_Revi_of_Media_Buffer_Stand_prep",
+            "check_for_disinfectant_detail",
+            "Checklist_for_Review_of_instrument_equip",
+            "Checklist_for_Review_of_Training_records_Analyst",
+            "Checklist_for_Review_of_sampling_and_Transport",
+            "Checklist_Review_of_Test_Method_proced",
+            "Checklist_for_Review_Media_prepara_RTU_media",
+            "Checklist_Review_Environment_condition_in_test",
+            "review_of_instrument_bioburden_and_waters",
+            "disinfectant_details_of_bioburden_and_water_test",
+            "training_records_analyst_involvedIn_testing_microbial_asssay",
+            "sample_intactness_before_analysis",
+            "checklist_for_review_of_test_method_IMA",
+            "cr_of_media_buffer_st_IMA",
+            "CR_of_microbial_cultures_inoculation_IMA",
+            "CR_of_Environmental_condition_in_testing_IMA",
+            "CR_of_instru_equipment_IMA",
+            "disinfectant_details_IMA",
+            "CR_of_training_rec_anaylst_in_monitoring_CIEM",
+            "Check_for_Sample_details_CIEM",
+            "Check_for_comparision_of_results_CIEM",
+            "checklist_for_media_dehydrated_CIEM",
+            "checklist_for_media_prepara_sterilization_CIEM",
+            "CR_of_En_condition_in_testing_CIEMs",
+            "check_for_disinfectant_CIEM",
+            "checklist_for_fogging_CIEM",
+            "CR_of_test_method_CIEM",
+            "CR_microbial_isolates_contamination_CIEM",
+            "CR_of_instru_equip_CIEM",
+            "Ch_Trend_analysis_CIEM",
+            "checklist_for_analyst_training_CIMT",
+            "checklist_for_comp_results_CIMT",
+            "checklist_for_Culture_verification_CIMT",
+            "sterilize_accessories_CIMT",
+            "checklist_for_intrument_equip_last_CIMT",
+            "disinfectant_details_last_CIMT",
+            "checklist_for_result_calculation_CIMT",
+            "phase_II_OOS_investigation"
+        ];
+
+        foreach ($grid_inputs as $grid_input)
+        {
+            OOSMicroService::store_grid($data, $request, $grid_input);
+        }
+
+//--------------Grid 1-------------------info on product /material-----------------
+
 }
+
+}
+
+

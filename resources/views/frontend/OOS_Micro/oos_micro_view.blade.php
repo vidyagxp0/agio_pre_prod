@@ -395,11 +395,11 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>--}}
+                {{--<button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>--}}
 
             </div>
 
@@ -416,7 +416,7 @@
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
                                 <input disabled type="text" name="record"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/MICRO/{{ date('Y') }}">
+                                value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS_MICRO/{{ date('Y') }}/{{ $record_number }}">
 
                             </div>
                         </div>
@@ -424,9 +424,9 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Division Code">Division Code</label>
-                                <input disabled type="text" name="division_code"
-                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                <input readonly type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                             </div>
                         </div>
                         <div class="col-6">
@@ -658,19 +658,20 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Reference System Document</label>
                                 <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->reference_system_document_gi == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->reference_system_document_gi == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->reference_system_document_gi))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->reference_system_document_gi))) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="reference_document_gi[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->reference_system_document_gi == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->reference_system_document_gi == 2) selected @endif>2</option>
+                                <select multiple id="reference_record" name="reference_document_gi[]">
+                                    @foreach ($old_record as $new)
+                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $micro_data->reference_document_gi)) ? 'selected' : '' }}>
+                                            {{ Helpers::getDivisionName($new->division_id) }}/OOS_MICRO/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                        </option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -681,11 +682,11 @@
                                 <label for="Tnitiaror Grouo">Sample Type</label>
                                 <select name="sample_type_gi">
                                     <option value="">Enter Your Selection Here</option>
-                                    <option value="raw-material" @if ($micro_data->reference_system_document_gi == 'raw-material') selected @endif>Raw Material</option>
-                                    <option value="packing-material" @if ($micro_data->reference_system_document_gi == 'packing-material') selected @endif>Packing Material</option>
-                                    <option value="finished-product" @if ($micro_data->reference_system_document_gi == 'finished-product') selected @endif>Finished Product</option>
-                                    <option value="stability-sample" @if ($micro_data->reference_system_document_gi == 'stability-sample') selected @endif>Stability Sample</option>
-                                    <option value="other" @if ($micro_data->reference_system_document_gi == 'other') selected @endif>Others</option>
+                                    <option value="raw-material" @if ($micro_data->sample_type_gi == 'raw-material') selected @endif>Raw Material</option>
+                                    <option value="packing-material" @if ($micro_data->sample_type_gi == 'packing-material') selected @endif>Packing Material</option>
+                                    <option value="finished-product" @if ($micro_data->sample_type_gi == 'finished-product') selected @endif>Finished Product</option>
+                                    <option value="stability-sample" @if ($micro_data->sample_type_gi == 'stability-sample') selected @endif>Stability Sample</option>
+                                    <option value="other" @if ($micro_data->sample_type_gi == 'other') selected @endif>Others</option>
 
                                 </select>
                             </div>
@@ -709,8 +710,8 @@
                                 <label for="Initiator Group">Customer*</label>
                                 <select name="customer_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option></option>
-                                    <option></option>
+                                    <option value="1" @if ($micro_data->customer_gi == 1) selected @endif>1</option>
+                                    <option value="2" @if ($micro_data->customer_gi == 2) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -914,13 +915,12 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Reference Recores">Field Alert Ref.No.
-                                </label>
+                                <label for="Reference Records">Field Alert Ref.No.</label>
                                 <select multiple id="reference_record" name="field_alert_ref_no_pli[]">
-                                    <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->field_alert_ref_no_pli == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->field_alert_ref_no_pli == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->field_alert_ref_no_pli))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->field_alert_ref_no_pli))) selected @endif>2</option>
                                 </select>
+
                             </div>
                         </div>
 
@@ -978,9 +978,8 @@
                             <div class="group-input">
                                 <label for="Reference Recores">Verification Analysis Ref.</label>
                                 <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                                    <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->verification_analysis_ref_pli == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->verification_analysis_ref_pli == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->verification_analysis_ref_pli))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->verification_analysis_ref_pli))) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -1000,8 +999,8 @@
                                 <label for="Reference Recores">Analyst Interview Ref.</label>
                                 <select multiple id="reference_record" name="analyst_interview_ref_pli[]">
                                     <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->analyst_interview_ref_pli == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->analyst_interview_ref_pli == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->analyst_interview_ref_pli))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->analyst_interview_ref_pli))) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -1045,8 +1044,8 @@
                                 <label for="Reference Recores">Phase I Investigation Ref.</label>
                                 <select multiple id="reference_record" name="phase_i_investigation_ref_pli[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->phase_i_investigation_ref_pli == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->phase_i_investigation_ref_pli == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->phase_i_investigation_ref_pli))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->phase_i_investigation_ref_pli))) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -1850,8 +1849,8 @@
                                 </label>
                                 <select multiple id="reference_record" name="recommended_actions_reference_plic[]" id="">
                                     <option value="">--Select---</option>
-                                    <option value="1" @if ($micro_data->recommended_actions_reference_plic == 1) selected @endif>1</option>
-                                    <option value="2" @if ($micro_data->recommended_actions_reference_plic == 2) selected @endif>2</option>
+                                    <option value="1" @if (in_array(1, explode(',', $micro_data->recommended_actions_reference_plic))) selected @endif>1</option>
+                                    <option value="2" @if (in_array(2, explode(',', $micro_data->recommended_actions_reference_plic))) selected @endif>2</option>
                                 </select>
                             </div>
                         </div>
@@ -2049,7 +2048,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -2061,7 +2060,7 @@
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
                             <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                            <textarea class="summernote" name="qa_approver_comments_piii[]" id="summernote-1">{{ $micro_data->qa_approver_comments_piii }}
+                            <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">{{ $micro_data->qa_approver_comments_piii }}
                                     </textarea>
                         </div>
                     </div>
@@ -2076,29 +2075,30 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+
+                    <div class="col-lg-6"> 
                         <div class="group-input">
 
-
-                            <label for="Auditee"> Manufacturing Invest. Type </label>
+                        <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select multiple name="manufacturing_invest_type_piii[]" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="chemical" @if ($micro_data->manufacturing_invest_type_piii == 'chemical') selected @endif>Chemical</option>
-                                <option value="microbiology" @if ($micro_data->manufacturing_invest_type_piii == 'microbiology') selected @endif>Microbiology</option>
+                                <option value="">--Select---</option>
+                                <option value="chemical" @if (in_array('chemical', explode(',', $micro_data->manufacturing_invest_type_piii))) selected @endif>Chemical</option>
+                                <option value="microbiology" @if (in_array('microbiology', explode(',', $micro_data->manufacturing_invest_type_piii))) selected @endif>Microbiology</option>
+                                {{--<option value="chemical" @if ($micro_data->manufacturing_invest_type_piii == 'chemical') selected @endif>Chemical</option>
+                                <option value="microbiology" @if ($micro_data->manufacturing_invest_type_piii == 'microbiology') selected @endif>Microbiology</option>--}}
 
                             </select>
                         </div>
                     </div>
-
-
 
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Manufacturing Invst. Ref.</label>
                             <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->manufacturing_invst_ref_piii == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->manufacturing_invst_ref_piii == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->manufacturing_invst_ref_piii))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->manufacturing_invst_ref_piii))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2118,14 +2118,14 @@
                             <textarea name="audit_comments_piii">{{ $micro_data->audit_comments_piii }}</textarea>
                         </div>
                     </div>
-
+                    
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Re-sampling Ref. No.</label>
                             <select multiple id="reference_record" name="re_sampling_ref_no_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->re_sampling_required_piii == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->re_sampling_required_piii == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->re_sampling_ref_no_piii))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->re_sampling_ref_no_piii))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2146,8 +2146,8 @@
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
                             <select multiple id="reference_record" name="hypo_exp_reference_piii[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->hypo_exp_reference_piii == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->hypo_exp_reference_piii == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->hypo_exp_reference_piii))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->hypo_exp_reference_piii))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2697,8 +2697,8 @@
                             <label for="Reference Recores">Recommended Action Reference</label>
                             <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->recommended_action_reference_piiqcr == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->recommended_action_reference_piiqcr == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->recommended_action_reference_piiqcr))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->recommended_action_reference_piiqcr))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2716,8 +2716,8 @@
                             <label for="Reference Recores">Invest ref.</label>
                             <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1"@if ($micro_data->invest_ref_piiqcr == 1) selected @endif>1</option>
-                                <option value="2"@if ($micro_data->invest_ref_piiqcr == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->invest_ref_piiqcr))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->invest_ref_piiqcr))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2806,8 +2806,8 @@
                             </label>
                             <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->additional_test_reference_atp == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->additional_test_reference_atp == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->additional_test_reference_atp))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->additional_test_reference_atp))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2826,8 +2826,8 @@
                             <label for="Reference Recores">Action Task Reference</label>
                             <select multiple id="reference_record" name="action_task_reference_atp[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->action_task_reference_atp == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->action_task_reference_atp == 1) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->action_task_reference_atp))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->action_task_reference_atp))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -2999,8 +2999,8 @@
                             <label for="Reference Recores">CAPA Ref No.</label>
                             <select multiple id="reference_record" name="capa_ref_no_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->capa_ref_no_oosc == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->capa_ref_no_oosc == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->capa_ref_no_oosc))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->capa_ref_no_oosc))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3029,8 +3029,8 @@
                             <label for="Reference Recores">Action Plan Ref.</label>
                             <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->action_plan_ref_oosc == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->action_plan_ref_oosc == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->action_plan_ref_oosc))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->action_plan_ref_oosc))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3169,18 +3169,16 @@
                             <select name="capa_req_ocr">
                                 <option value="yes" @if ($micro_data->capa_req_ocr == 'yes') selected @endif>Yes</option>
                                 <option value="no" @if ($micro_data->capa_req_ocr == 'no') selected @endif>No</option>
-
-
                             </select>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">CAPA Refer.</label>
-                            <select multiple id="reference_record" name="capa_refer_ocr" id="">
+                            <select multiple id="reference_record" name="capa_refer_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->capa_refer_ocr == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->capa_refer_ocr == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->capa_refer_ocr))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->capa_refer_ocr))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3211,8 +3209,8 @@
                             <label for="Reference Recores">Action Task Reference.</label>
                             <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->action_task_reference_ocr == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->action_task_reference_ocr == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->action_task_reference_ocr))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->action_task_reference_ocr))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3233,8 +3231,8 @@
                             <label for="Reference Recores">Risk Assessment Ref.</label>
                             <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->risk_assessment_ref_ocr == 2) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->risk_assessment_ref_ocr == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->risk_assessment_ref_ocr))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->risk_assessment_ref_ocr))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3478,10 +3476,10 @@
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="field_alert_reference_BI" id="">
+                            <select multiple id="reference_record" name="field_alert_reference_BI[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->field_alert_reference_BI == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->field_alert_reference_BI == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->field_alert_reference_BI))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->field_alert_reference_BI))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
@@ -3587,8 +3585,8 @@
                             <label for="Reference Recores">Phase-III Inves. Reference</label>
                             <select multiple id="reference_record" name="phase_III_inves_reference_BI[]" id="">
                                 <option value="">--Select---</option>
-                                <option value="1" @if ($micro_data->phase_III_inves_reference_BI == 1) selected @endif>1</option>
-                                <option value="2" @if ($micro_data->phase_III_inves_reference_BI == 2) selected @endif>2</option>
+                                <option value="1" @if (in_array(1, explode(',', $micro_data->phase_III_inves_reference_BI))) selected @endif>1</option>
+                                <option value="2" @if (in_array(2, explode(',', $micro_data->phase_III_inves_reference_BI))) selected @endif>2</option>
                             </select>
                         </div>
                     </div>
