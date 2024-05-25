@@ -4,8 +4,38 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\{FailureInvestigation,FailureInvestigationAuditTrail,FailureInvestigationCft,
+    FailureInvestigationCftResponse,
+    FailureInvestigationGrid,
+    FailureInvestigationGridData,
+    FailureInvestigationGridFailureMode,
+    FailureInvestigationHistory,
+};
+use App\Models\RootCauseAnalysis;
+use App\Models\{EffectivenessCheck,LaunchExtension};
+use App\Models\CC;
+use App\Models\ActionItem;
+use App\Models\Extension;
+use App\Models\AuditReviewersDetails;
+use App\Models\UserRole;
+use App\Models\Capa;
+use App\Models\Customer;
 use Carbon\Carbon;
-use App\Models\FailureInvestigation;
+use App\Models\RecordNumber;
+use App\Models\RoleGroup;
+use App\Models\User;
+
+use Helpers;
+use Illuminate\Pagination\Paginator;
+use PDF;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class FailureInvestigationController extends Controller
 {
