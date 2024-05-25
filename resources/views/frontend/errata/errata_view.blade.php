@@ -188,7 +188,7 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">Parent Record Information</div>   
+                                <div class="sub-head">Parent Record Information</div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
@@ -557,9 +557,15 @@
                                                         <h6 type="button" class="file-container text-dark"
                                                             style="background-color: rgba(255, 255, 255, 0);">
                                                             <b>{{ $file }}</b>
+
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
+
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -1837,6 +1843,10 @@
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -1920,6 +1930,10 @@
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                     class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file"
+                                                                data-file-name="{{ $file }}"><i
+                                                                    class="fa-solid fa-circle-xmark"
+                                                                    style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
                                                 @endif
@@ -2564,6 +2578,24 @@
             margin-bottom: 11px;
         }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 
     <script>
         VirtualSelect.init({
