@@ -90,7 +90,7 @@
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
-                                <div>{{ $temp->previous }}</div>
+                                <div>{!! $temp->previous !!}</div>
                             </div>
                             @else
                             <div class="list-item">
@@ -103,7 +103,7 @@
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
-                                <div>{{ $temp->current }}</div>
+                                <div>{!! $temp->current !!}</div>
                             </div>
                             @endif
                             @endif
@@ -124,7 +124,6 @@
                             @else
 
 
-
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
@@ -137,7 +136,7 @@
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
                         </a> --}}
                     </div>
-                {{-- </div>   --}}
+            </div>
                 @endforeach
 
             </div>
