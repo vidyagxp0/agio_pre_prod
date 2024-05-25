@@ -32,6 +32,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OOS;
 use App\Models\errata;
+use App\Models\MarketComplaint;
 
 
 class DashboardController extends Controller
@@ -54,8 +55,9 @@ class DashboardController extends Controller
     //     }
     // }
 
-    public function index()
+    public function index(Request $request)
     {
+        
         $table = [];
 
         $datas = CC::orderByDesc('id')->get();
@@ -72,7 +74,9 @@ class DashboardController extends Controller
         $datas11 = RootCauseAnalysis::orderByDesc('id')->get();
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
-        $datas14 = Deviation::orderByDesc('id')->get();
+        $datas14 = MarketComplaint::orderByDesc('id')->get();
+    
+        $deviation = Deviation::orderByDesc('id')->get();
         $ooc = OutOfCalibration::orderByDesc('id')->get();
         $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
         $datas15 = Ootc::orderByDesc('id')->get();
@@ -362,7 +366,8 @@ class DashboardController extends Controller
             ]);
         }
 
-        foreach ($datas14 as $data) {
+
+        foreach ($deviation as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
             array_push($table, [
@@ -372,11 +377,32 @@ class DashboardController extends Controller
                 "division_id" => $data->division_id,
                 "type" => "Deviation",
                 "parent_id" => $data->parent_id,
-                "parent" => $data->parent_record? $data->parent_record : "-",
                 "parent_type" => $data->parent_type,
-                "short_description" => $data->short_description ? $data->short_description : "-",
+                "short_description" => $data->description_gi ? $data->description_gi : "-",
                 "initiator_id" => $data->initiator_id,
-                "due_date" => $data->due_date,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "initiated_through" => $data->initiated_through,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+
+        foreach ($datas14 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "Market Complaint",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->description_gi ? $data->description_gi : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through_gi,
+                "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "initiated_through" => $data->initiated_through,
                 "date_open" => $data->create,
@@ -404,6 +430,7 @@ class DashboardController extends Controller
             ]);
         }
 
+        //   dd($data);
         foreach ($failureInvestigation as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -900,6 +927,24 @@ class DashboardController extends Controller
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         }
+        elseif ($type == "Market demo") {
+            $data = MarketComplaint::find($id);
+            $single = "marketComplaintSingleReport/" . $data->id;
+            $audit = "MarketComplaintAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+            
+        }
+
+        elseif ($type == "Market Complaint") {
+            $data = MarketComplaint::find($id);
+            $audit = "marketcomplaint/marketauditTrailPdf/" . $data->id;
+            $single = "pdf-report/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+            
+        }
+        
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 

@@ -17,6 +17,7 @@ use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
+use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
@@ -249,6 +250,29 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
 
             });
+
+            /**
+             * market coplaint
+             */
+            Route::group(['prefix' => 'marketcomplaint', 'as' => 'marketcomplaint.'], function() {
+                Route::get('/market_complaint_new',[MarketComplaintController::class, 'index'])->name('market_complaint_new');
+                Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
+                Route::get('/marketcomplaint_view/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
+                Route::put('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');
+                Route::post('mar_comp_stagechange/{id}',[MarketComplaintController::class,'marketComplaintStateChange'])->name('mar_comp_stagechange');
+                Route::post('mar_comp_reject_stateChange/{id}', [MarketComplaintController::class, 'marketComplaintRejectState'])->name('mar_comp_reject_stateChange');
+                Route::post('MarketComplaintCancel/{id}', [MarketComplaintController::class, 'MarketComplaintCancel'])->name('MarketComplaintCancel');
+               
+                Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
+
+                Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
+                Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
+                // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+                Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf'); 
+            });
+            // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
 
         }
     );

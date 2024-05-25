@@ -14,6 +14,7 @@ class Helpers
     public static function getArrayKey(array $array, $key)
     {
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
 
     public static function getDefaultResponse()
@@ -631,4 +632,15 @@ class Helpers
         }
 
     }
+
+    public static function disabledMarketComplaintFields($marketcomplaint)
+    {
+        if($marketcomplaint == 0 || $marketcomplaint > 8){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+
+    }
+
 }
