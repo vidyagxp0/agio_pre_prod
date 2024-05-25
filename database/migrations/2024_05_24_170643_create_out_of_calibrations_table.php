@@ -63,7 +63,7 @@ return new class extends Migration
             $table->text('initiated_through_stageii_ooc')->nullable();
             $table->text('is_repeat_reanalysis_stageii_ooc')->nullable();
             $table->text('initiated_through_stageii_cause_failure_ooc')->nullable();
-            $table->text('is_repeat_capa-ooc')->nullable();
+            $table->text('is_repeat_capas_ooc')->nullable();
             $table->longText('initiated_through_capas_ooc')->nullable();
             $table->longText('initiated_through_capa_prevent_ooc')->nullable();
             $table->longText('initiated_through_capa_corrective_ooc')->nullable();
@@ -79,6 +79,18 @@ return new class extends Migration
             $table->longText('initial_attachment_hodreview_ooc')->nullable();
             $table->longText('initiated_through_rootcause_ooc')->nullable();
             $table->longText('initiated_through_impact_closure_ooc')->nullable();
+            $table->text('stage')->nullable();
+            $table->text('status')->nullable();
+            $table->text('submitted_by')->nullable();
+            $table->text('submitted_on')->nullable();
+            $table->text('comment')->nullable();
+            $table->text('change_to')->nullable();
+            $table->text('change_from')->nullable();
+            $table->text('action_name')->nullable();
+            $table->text('action')->nullable();
+            $table->text('initial_phase_i_investigation_comment')->nullable();
+            $table->integer('parent_id')->nullable();
+            $table->text('parent_type')->nullable();
             
 
             $table->timestamps();

@@ -169,7 +169,7 @@ $users = DB::table('users')->get();
 
         </div>
 
-        <form action="{{ route('actionItem.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('oocCreate') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div id="step-form">
@@ -345,8 +345,8 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group">Is Repeat</label>
                                     <select name="is_repeat_ooc" onchange="">
                                         <option value="0">-- select --</option>
-                                        <option value="YES"></option>
-                                        <option value="NO"></option>
+                                        <option value="YES">Yes</option>
+                                        <option value="NO">No</option>
 
                                     </select>
                                 </div>
@@ -414,9 +414,9 @@ $users = DB::table('users')->get();
                                     <p class="text-primary"> last date this record should be closed by</p>
                                     
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly
+                                        <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY"/>
-                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'due_date')"  />
+                                        <input type="date" name="ooc_due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, 'ooc_due_date')"  />
                                     </div>
                                     
                                 </div>
@@ -803,8 +803,9 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Results Naturey</label>
                                 <select name="is_repeat_result_naturey_ooc" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
 
                                 </select>
                             </div>
@@ -853,8 +854,9 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Initial OOC is Invalidated/Validated</label>
                                 <select name="is_repeat_stae_ooc" onchange="">
-                                    <option value="">-- select --</option>
-                                    <option value=""></option>
+                                    <option value="0">-- select --</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
 
                                 </select>
                             </div>
@@ -1039,7 +1041,7 @@ $users = DB::table('users')->get();
                         <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="Initiator Group">CAPA Type?</label>
-                                <select name="is_repeat_capa-ooc" onchange="">
+                                <select name="is_repeat_capas_ooc" onchange="">
                                     <option value="0">-- select --</option>
                                     <option value="Yes"></option>
                                     <option value="No"></option>
