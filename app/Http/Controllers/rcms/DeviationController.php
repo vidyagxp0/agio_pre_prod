@@ -4570,6 +4570,7 @@ class DeviationController extends Controller
             $history = new AuditReviewersDetails;
             $history->deviation_id = $id;
             $history->user_id = Auth::user()->id;
+            $history->type = $request->type;
             $history->reviewer_comment = $request->reviewer_comment;
             $history->reviewer_comment_by = Auth::user()->name;
             $history->reviewer_comment_on = Carbon::now()->toDateString();

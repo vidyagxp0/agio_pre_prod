@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
@@ -123,7 +125,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -166,6 +168,11 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
 
+            Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
+            Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
+            Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');
+            Route::get('errata_single_pdf/{id}',[ErrataController::class, 'singleReports']);
+
 
             /********************* Deviation Routes Starts *******************/
 
@@ -192,6 +199,37 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
 
             /********************* Deviation Routes Ends *******************/
+
+            /********************* Fallure Investigation Routes Starts *******************/
+
+            Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
+
+            /********************* Fallure Investigation Routes Ends *******************/
+
+
+            //----------------------------------- OOT ----------------------------------//
+
+            Route::get('oot/', [OOTController::class, 'index']);
+            Route::post('oot/create', [OOTController::class, 'store'])->name('oot.store');
+            Route::get('oot_view/{id}', [OOTController::class,'ootShow'])->name('rcms/oot_view');
+            Route::post('oot/update/{id}',[OOTController::class, 'update'])->name('update');
+            // Route::get('oot_audit/{id}',[OOTController::class,'OotAuditTrial']);
+            Route::post('oot/stage/{id}',[OOTController::class,'oot_send_stage'])->name('ootStage');
+            Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
+            Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
+            Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
+            Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
+            Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
+            Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
+            Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+
+
+
+
+
+
+
 
             /**
              * OOT

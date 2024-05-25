@@ -173,32 +173,13 @@
                 <header>
                     <table>
                         <tr>
-
-                            {{-- <td class="w-30"> --}}
-                            {{-- <div class="btn-group" style="font-size: 1rem; text-align: center; border-radius: 20px; color: white; margin-left : 5px; padding: 7px 50px; cursor: pointer;">
-                        <button onclick="window.print();return false;" type="button">Print</button>
-                    </div> --}}
                             <div class="logo">
                                 <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt=""
                                     class="w-100">
                             </div>
-                            {{-- + </td> --}}
 
                         </tr>
                     </table>
-                    {{-- <table style="margin-top: 5px;">
-            <tr>
-                <td class="w-30">
-                    <strong>Deviation Audit No.</strong>
-                </td>
-                <td class="w-40">
-                   
-                </td>
-                <td class="w-30">
-                    <strong>Record No. 000{{$document->record}}</strong> 
-                </td>
-            </tr>
-        </table> --}}
                     @php
                         $userRoles = DB::table('user_roles')
                             ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])
@@ -252,13 +233,11 @@
 
                                 @php
                                     $reviewer = DB::table('audit_reviewers_details')
-                                        ->where('deviation_id', $document->id)
+                                        ->where(['deviation_id' => $document->id, 'type' => 'Deviation'])
                                         ->get();
                                 @endphp
                                 <!-- Customer grid view -->
-                                <div class="table-responsive" style="
-            padding: 20px;
-        ">
+                                <div class="table-responsive" style="padding: 20px;">
                                     <table class="table">
                                         <thead>
                                             <tr>
@@ -305,7 +284,7 @@
                                     <h4 class="modal-title">Audit Reviewers</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
-                                <form action="" method="POST">
+                                <!-- <form action="" method="POST"> -->
                                     <form action="{{ route('store_audit_review', $document->id) }}" method="POST">
                                         @csrf
                                         <!-- Modal body -->
@@ -329,6 +308,7 @@
                                                     name="reviewer_completed_on" id="reviewer_completed_on"
                                                     value="{{ $auditCollect ? $auditCollect->reviewer_comment_on : '' }}">
                                             </div>
+                                            <input type="hidden" id="type" name="type" value="Deviation">
                                         </div>
                                         <div class="modal-footer">
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}

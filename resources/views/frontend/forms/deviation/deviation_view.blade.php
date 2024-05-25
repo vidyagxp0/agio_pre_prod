@@ -888,12 +888,12 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="RLS Record Number"><b>Record Number</b></label>
+                                            <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
-                                                <input disabled type="text" name="record_number"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                <input disabled type="text"
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             @else
-                                                <input disabled type="text" name="record_number">
+                                                <input disabled type="text" name="record">
                                             @endif
                                         </div>
                                     </div>
