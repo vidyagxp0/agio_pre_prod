@@ -187,6 +187,10 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                $history->chnage_to = "Opened";
+                $history->chnage_from = "Initiator";
+                $history->action_name = "store";
+
                 $history->save();
             }
             if (!empty($marketComplaint->review_of_equipment_break_down_and_maintainance_record_gi)) {
@@ -200,6 +204,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                $history->chnage_from = "Initiator";
+                $history->action_name = "store";
                 $history->save();
             }
             if (!empty($marketComplaint->rev_eq_inst_qual_calib_record_gi)) {
@@ -213,6 +220,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -227,6 +237,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
             if (!empty($marketComplaint->review_of_analytical_data_gi)) {
@@ -240,6 +253,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
             
@@ -254,6 +270,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
             if (!empty($marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
@@ -267,6 +286,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
             if (!empty($marketComplaint->review_of_Batch_Packing_record_bpr_gi)) {
@@ -280,6 +302,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -295,6 +320,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -309,6 +337,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -326,6 +357,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -340,6 +374,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
     
@@ -354,6 +391,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
     
@@ -368,6 +408,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -382,6 +425,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -396,6 +442,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -410,6 +459,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
     
@@ -425,6 +477,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -439,6 +494,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -453,6 +511,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -467,6 +528,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -481,6 +545,9 @@ $marketComplaint->stage = 1;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                 $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                 $history->save();
             }
 
@@ -501,6 +568,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -515,6 +585,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -529,6 +602,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -543,6 +619,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -557,6 +636,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -571,6 +653,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -585,6 +670,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -599,6 +687,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -613,6 +704,9 @@ $marketComplaint->stage = 1;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $marketComplaint->status;
+                     $history->chnage_to = "Opened";
+                    $history->chnage_from = "Initiator";
+                    $history->action_name = "store";
                     $history->save();
                 }
 
@@ -620,72 +714,62 @@ $marketComplaint->stage = 1;
 
 
 
-
-
-
-
-
-
-        //  $marketComplaint->save();
-            // dd($marketComplaint);
-            // {{-- --produts grid gi  --}}
-
-
-
-
-
+// -----------------------------------------------------grid string data 
 
 
             // For "Product Details"
             $griddata = $marketComplaint->id;
 
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'ProductDetails';
-            $marketrproducts->data = $request->serial_number_gi;
-            $marketrproducts->save();
+            $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
+            $product->mc_id = $griddata;
+            $product->identifier = 'ProductDetails';
+            $product->data = $request->serial_number_gi;
+            $product->save();
         // dd($marketrproducts->data);
         //Traceability 
                     // $griddata = $marketComplaint->id;
 
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Traceability';
-            $marketrproducts->data = $request->trace_ability;
-            $marketrproducts->save();
+            $gitracebilty = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Traceability'])->firstOrNew();
+            $gitracebilty->mc_id = $griddata;
+            $gitracebilty->identifier = 'Traceability';
+            $gitracebilty->data = $request->trace_ability;
+            $gitracebilty->save();
 
                 // {{-- Investing_team --}}
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Investing_team';
-            $marketrproducts->data = $request->Investing_team;
-            $marketrproducts->save();
+            $giinvesting = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Investing_team'])->firstOrNew();
+            $giinvesting->mc_id = $griddata;
+            $giinvesting->identifier = 'Investing_team';
+            $giinvesting->data = $request->Investing_team;
+            // dd($giinvesting);
+            $giinvesting->save();
                 // {{-- Brain stroming Session --}}
 
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Brain_stroming_Session'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Brain_stroming_Session';
-            $marketrproducts->data = $request->brain_stroming_details;
-            $marketrproducts->save();
+            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'brain_stroming_details'])->firstOrNew();
+            $brain->mc_id = $griddata;
+            $brain->identifier = 'brain_stroming_details';
+            $brain->data = $request->brain_stroming_details;
+            $brain->save();
                 // {{ Team Members }}
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Team_Members';
-            $marketrproducts->data = $request->Team_Members ;
-            $marketrproducts->save();
+            $hodteammembers = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
+            $hodteammembers->mc_id = $griddata;
+            $hodteammembers->identifier = 'Team_Members';
+            $hodteammembers->data = $request->Team_Members ;
+            
+            $hodteammembers->save();
                 // {{ Report_Approval }}
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Report_Approval';
-            $marketrproducts->data = $request->Report_Approval ;
-            $marketrproducts->save();
+            $hodreportapproval = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Report_Approval'])->firstOrNew();
+            $hodreportapproval->mc_id = $griddata;
+            $hodreportapproval->identifier = 'Report_Approval';
+            $hodreportapproval->data = $request->Report_Approval ;
+            $hodreportapproval->save();
 
             // {{ Product_MaterialDetails }}
-            $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
-            $marketrproducts->mc_id = $griddata;
-            $marketrproducts->identifier = 'Product_MaterialDetails';
-            $marketrproducts->data = $request->Product_MaterialDetails ;
-            $marketrproducts->save();
+            $caprduct = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product_MaterialDetails'])->firstOrNew();
+            $caprduct->mc_id = $griddata;
+            $caprduct->identifier = 'Product_MaterialDetails';
+            $caprduct->data = $request->Product_MaterialDetails;
+            // dd($caprduct);
+            $caprduct->save();
 
 
                 // {{  g}}
@@ -721,18 +805,21 @@ return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint c
     $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
     $traceability_gi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Traceability')->first();
     $investing_team = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Investing_team')->first();
-    $brain_stroming_session = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Brain_stroming_Session')->first();
+    $brain_stroming_details = MarketComplaintGrids::where('mc_id',$id)->where('identifier','brain_stroming_details')->first();
     $team_members = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Team_Members')->first();
     $report_approval = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Report_Approval')->first();
     $product_materialDetails = MarketComplaintGrids::where('mc_id',$id)->where('identifier','Product_MaterialDetails')->first();
+    // dd($product_materialDetails->data);
+    // dd($product_materialDetails);
     // $productsgi = MarketComplaintGrids::where('mc_id',$id)->where('identifier','ProductDetails')->first();
 
     $proposal_to_accomplish_investigation = MarketComplaintGrids::where('mc_id', $id)->where('identifier', 'Proposal_to_accomplish_investigation')->first();
     $proposalData = $proposal_to_accomplish_investigation ? json_decode($proposal_to_accomplish_investigation->data, true) : [];
+        
 
-
+// dd( $brain_stroming_session);
     return view('frontend.market_complaint.market_complaint_view',compact(
-        'data','productsgi','traceability_gi','investing_team','brain_stroming_session','team_members','report_approval','product_materialDetails','proposalData'));
+        'data','productsgi','traceability_gi','investing_team','brain_stroming_details','team_members','report_approval','product_materialDetails','proposalData'));
 
 
 
@@ -879,6 +966,10 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
+
                 $history->save();
             }
 
@@ -893,6 +984,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
             if ( $marketComplaint->rev_eq_inst_qual_calib_record_gi != $marketComplaint->rev_eq_inst_qual_calib_record_gi || !empty($request->rev_eq_inst_qual_calib_record_gi)) {
@@ -906,6 +1000,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
 
@@ -920,6 +1017,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
             if ( $marketComplaint->review_of_analytical_data_gi != $marketComplaint->review_of_analytical_data_gi || !empty($request->review_of_analytical_data_gi)) {
@@ -933,6 +1033,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
             if ( $marketComplaint->review_of_Batch_Packing_record_bpr_gi != $marketComplaint->review_of_Batch_Packing_record_bpr_gi || !empty($request->review_of_Batch_Packing_record_bpr_gi)) {
@@ -946,6 +1049,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
 
@@ -960,6 +1066,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                  $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
             if ( $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi != $marketComplaint->review_of_raw_materials_used_in_batch_manufacturing_gi || !empty($request->review_of_raw_materials_used_in_batch_manufacturing_gi)) {
@@ -986,6 +1095,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
 
@@ -1001,6 +1113,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
 
@@ -1015,6 +1130,9 @@ public function update(Request $request,$id){
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $marketComplaint->status;
+                $history->change_to = "Not Applicable";
+                $history->change_from = $marketComplaint->status;
+                $history->action_name = "Update";
                 $history->save();
             }
 
@@ -1030,6 +1148,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1046,6 +1167,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1060,6 +1184,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1074,6 +1201,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1088,6 +1218,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1103,6 +1236,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1118,6 +1254,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1132,6 +1271,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1146,6 +1288,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1160,6 +1305,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1174,6 +1322,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         // -------------------------------------------------------hod audit show filds ----------------------------------------------
@@ -1189,6 +1340,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->root_cause_analysis_hodsr != $marketComplaint->root_cause_analysis_hodsr || !empty($request->root_cause_analysis_hodsr)) {
@@ -1202,6 +1356,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->probable_root_causes_complaint_hodsr != $marketComplaint->probable_root_causes_complaint_hodsr || !empty($request->probable_root_causes_complaint_hodsr)) {
@@ -1215,6 +1372,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->impact_assessment_hodsr != $marketComplaint->impact_assessment_hodsr || !empty($request->impact_assessment_hodsr)) {
@@ -1228,6 +1388,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->corrective_action_hodsr != $marketComplaint->corrective_action_hodsr || !empty($request->corrective_action_hodsr)) {
@@ -1241,6 +1404,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1255,6 +1421,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->summary_and_conclusion_hodsr != $marketComplaint->summary_and_conclusion_hodsr || !empty($request->summary_and_conclusion_hodsr)) {
@@ -1268,6 +1437,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
         if ( $marketComplaint->initial_attachment_hodsr != $marketComplaint->initial_attachment_hodsr || !empty($request->initial_attachment_hodsr)) {
@@ -1281,6 +1453,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 
@@ -1295,6 +1470,9 @@ public function update(Request $request,$id){
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $marketComplaint->status;
+            $history->change_to = "Not Applicable";
+            $history->change_from = $marketComplaint->status;
+            $history->action_name = "Update";
             $history->save();
         }
 // ------------------------------------------------c a audit show data---------------------
@@ -1360,13 +1538,21 @@ public function update(Request $request,$id){
         // For "Product Details"
         $griddata = $marketComplaint->id;
 
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
-        $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifier = 'ProductDetails';
-        $marketrproducts->data = $request->serial_number_gi;
-        $marketrproducts->update();
-        // $marketrproducts->save();
-// dd($marketrproducts->data);
+        // $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Product Details'])->firstOrNew();
+        // $marketrproducts->mc_id = $griddata;
+        // $marketrproducts->identifier = 'ProductDetails';
+        // $marketrproducts->data = $request->serial_number_gi;
+        // $marketrproducts->update();
+
+        $product = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'ProductDetails'])->firstOrNew();
+        $product->mc_id = $griddata;
+        $product->identifier = 'ProductDetails';
+        $product->data = $request->serial_number_gi;
+        // dd( $product->data);
+        
+        $product->update();
+
+       
 //Traceability
         // $griddata = $marketComplaint->id;
 
@@ -1374,6 +1560,7 @@ public function update(Request $request,$id){
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Traceability';
         $marketrproducts->data = $request->trace_ability;
+        // dd($marketrproducts);
         $marketrproducts->update();
 
             // {{-- Investing_team --}}
@@ -1384,11 +1571,12 @@ public function update(Request $request,$id){
         $marketrproducts->update();
             // {{-- Brain stroming Session --}}
 
-        $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Brain_stroming_Session'])->firstOrNew();
-        $marketrproducts->mc_id = $griddata;
-        $marketrproducts->identifier = 'Brain_stroming_Session';
-        $marketrproducts->data = $request->brain_stroming_details;
-        $marketrproducts->update();
+            $brain = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'brain_stroming_details'])->firstOrNew();
+            $brain->mc_id = $griddata;
+            $brain->identifier = 'brain_stroming_details';
+            $brain->data = $request->brain_stroming_details;
+            $brain->update();
+                // {{ Team Member
             // {{ Team Members }}
         $marketrproducts = MarketComplaintGrids::where(['mc_id' => $griddata, 'identifier' => 'Team_Members'])->firstOrNew();
         $marketrproducts->mc_id = $griddata;
@@ -1407,6 +1595,7 @@ public function update(Request $request,$id){
         $marketrproducts->mc_id = $griddata;
         $marketrproducts->identifier = 'Product_MaterialDetails';
         $marketrproducts->data = $request->Product_MaterialDetails ;
+        // dd($marketrproducts->data);
         $marketrproducts->update();
 
 
@@ -1468,6 +1657,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Opened";
+            $history->change_from = $lastDocument->status;
             $history->stage='Submited';
             $history->save();
 
@@ -1481,6 +1672,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->complete_review_by = Auth::user()->name;
             $marketstat->complete_review_on = Carbon::now()->format('d-M-Y');
             $marketstat->complete_review_comment = $request->comment;
+           
 
             $marketstat->status ="Supervisor Review";
             $history = new MarketComplaintAuditTrial();
@@ -1492,6 +1684,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Supervisor Review";
+            $history->change_from = $lastDocument->status;
             $history->stage='Complete Review';
             $history->save();
 
@@ -1521,7 +1715,9 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->stage='Investigation Completed';
+            $history->change_to = "Opened";
+            $history->change_from = $lastDocument->status;
+            $history->stage='Investigation and Root Cause Analysis';
             $history->save();
 
 
@@ -1547,6 +1743,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "CAPA Plan";
+            $history->change_from = $lastDocument->status;
             $history->stage='Propose Plan';
             $history->save();
 
@@ -1574,6 +1772,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Pending Approval";
+            $history->change_from = $lastDocument->status;
             $history->stage='Approve Plan';
             $history->save();
 
@@ -1601,6 +1801,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Pending Actions Completion";
+            $history->change_from = $lastDocument->status;
             $history->stage='All CAPA Closed';
             $history->save();
 
@@ -1629,6 +1831,8 @@ public function marketComplaintStateChange(Request $request,$id)
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
+            $history->change_to = "Pending Response Letter";
+            $history->change_from = $lastDocument->status;
             $history->stage='Send Letter';
             $history->save();
 
@@ -1636,30 +1840,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->update();
             return redirect()->back();
            }
-        //    if( $marketstat->stage == 8)
-        //    {
-        //     $marketstat->stage = "9";
-        //     $marketstat->submitted_by = Auth::user()->name;
-        //     $marketstat->submitted_on = Carbon::now()->format('d-M-Y');
-
-        //     $marketstat->status ="Closed - Done";
-        //     $history = new MarketComplaintAuditTrial();
-        //     $history->market_id = $id;
-        //     $history->activity_type = 'Activity Log';
-        //     $history->current = $marketstat->submitted_by;
-        //     $history->comment = $request->comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->stage='Submited';
-        //     $history->save();
-           
-
-
-        //     $marketstat->update();
-        //     return redirect()->back();
-        //    }
+       
 
 
         }else {
@@ -1824,6 +2005,47 @@ return view('frontend.market_complaint.audit-trial',compact('audit', 'document',
             $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Market-AuditTrial' . $id . '.pdf');
         }
+    }
+
+
+
+
+
+
+
+    public function auditTrailPdf($id){
+        $doc = MarketComplaint::find($id);
+        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+        $data = MarketComplaintAuditTrial::where('market_id', $doc->id)->orderByDesc('id')->paginate();
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.market_complaint.marketcomplaint_audit_trail_pdf', compact('data', 'doc'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+
+        $canvas->page_text(
+            $width / 3,
+            $height / 2,
+            $doc->status,
+            null,
+            60,
+            [0, 0, 0],
+            2,
+            6,
+            -20
+        );
+        return $pdf->stream('Market-Audit_Trail' . $id . '.pdf');
     }
 
 

@@ -798,8 +798,8 @@ class DashboardController extends Controller
 
         elseif ($type == "Market Complaint") {
             $data = MarketComplaint::find($id);
+            $audit = "marketcomplaint/marketauditTrailPdf/" . $data->id;
             $single = "pdf-report/" . $data->id;
-            $audit = "MarketComplaintAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
             

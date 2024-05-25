@@ -367,7 +367,24 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="initial_attachment_gi"></div>
+                                            <div class="file-attachment-list" id="initial_attachment_gi">
+
+                                                {{-- @if (initial_attachment_gi)
+                                                @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif --}}
+                                            </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="initial_attachment_gi" name="initial_attachment_gi[]" oninput="addMultipleFiles(this,'initial_attachment_gi')"
@@ -413,17 +430,12 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
-                                            {{-- <button type="button" id="product_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span> --}}
-                                            <button type="button" onclick="add4Input('product_details_details')">+</button>
+                                            <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -431,8 +443,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="product_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="product_details_details" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -444,148 +455,135 @@
                                                         <th>Pack Size</th>
                                                         <th>Dispatch Quantity</th>
                                                         <th>Remarks</th>
-
-
-                                                    </tr>
-                                                </thead>
-                                                <tbody>                                   
-                                                                                         {{-- serial_number          --}}
-                                                    <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
-                                                    <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td>
-                                                    <td><input type="date" name="serial_number_gi[0][info_expiry_date]"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
-                                                    <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-
-                                        $('#product_details_details').click(function(e) {
-                                            serialNumber = 0;
-                                            function generateTableRow(serialNumber) {
-                                                serialNumber++;
-                                                var users = @json($users); 
-                                                var html =
-                                                '<tr>' +
-                                                    '<td><input disabled type="text" name="Info_Product_Material[' + serialNumber + '][serial]" value="' + serialNumber +
-                                                    '"></td>' +
-                                                    '<td><input type="text" id="info_product_code" name="serial_number_gi[' + serialNumber + ']info_product_code[]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]" value=""></td>'+
-                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_batch_no]" value=""></td>' +
-                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]" value=""></td>' +
-                                                   
-                                                '</tr>';
-                                                for (var i = 0; i < users.length; i++) {
-                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                                }
-                                
-                                                html += '</select></td>' +
-                                
-                                                    '</tr>';
-                                
-                                                return html;
-                                            }
-                                
-                                            var tableBody = $('#Info_Product_Material_details tbody');
-                                            var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
-                                            tableBody.append(newRow);
-                                        });
-                                    });
-                                </script>
-                                                                {{-- {{ ---end s code }} --}}
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">
-                                            Traceability
-                                            <button type="button" onclick="add4Input('traceblity')">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceblity" style="width: %;">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 100px;">Row #</th>
-                                                        <th>Product Name</th>
-                                                        <th>Batch No.</th>
-                                                        <th>Manufacturing Location</th>
-
-                                                        <th>Remarks</th>
-
+                                                        <th>Action</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number_gi[0]" value="1"> </td>
-                                                    <td><input type="text" name="trace_ability[0][product_name_tr]"></td>
-                                                    <td><input type="text" name="trace_ability[0][batch_no_tr]"></td>
-                                                    <td><input type="text" name="trace_ability[0][manufacturing_location_tr]"></td>
-                                                    <td><input type="text" name="trace_ability[0][remarks_tr]"></td>
-
-
-
+                                                    <tr>
+                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
+                                                        <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td>
+                                                        <td><input type="date" name="serial_number_gi[0][info_expiry_date]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    })
+                                </script>
+                            
                                 <script>
                                     $(document).ready(function() {
-                                        let tracebilityIndex = 0;
-                                        $('#traceblity ').click(function(e) {
-
+                                        $('#product_details').click(function(e) {
                                             function generateTableRow(serialNumber) {
-                                                tracebilityIndex++;
-                                                var users = @json($users); 
                                                 var html =
-                                                '<tr>' +
-                                                    '<td><input disabled type="text" name="Info_Traceblity[' + tracebilityIndex + '][serial]" value="' + tracebilityIndex +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="serial_number_tr_gi[' + tracebilityIndex + '][product_name_tr]" value=""></td>'+
-                                                    '<td><input type="date" name="serial_number_tr_gi[' + tracebilityIndex + '][batch_no_tr]" value=""></td>' +
-                                                    '<td><input type="date" name="serial_number_tr_gi[' + tracebilityIndex + '][manufacturing_location_tr]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_tr_gi[' + tracebilityIndex + '][remarks_tr]" value=""></td>' +
-                                                                                                     
-                                                '</tr>';
-                                                for (var i = 0; i < users.length; i++) {
-                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                                }
-                                
-                                                html += '</select></td>' +
-                                
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]"></td>' +
+                                                    '<td><input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
                                                     '</tr>';
-                                
                                                 return html;
                                             }
                                 
-                                            var tableBody = $('#Info_Traceblity tbody');
+                                            var tableBody = $('#product_details_details tbody');
                                             var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
+                                            var newRow = generateTableRow(rowCount);
                                             tableBody.append(newRow);
                                         });
                                     });
                                 </script>
+                                
 
+                                                                {{-- {{ ---end s code }} --}}
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Traceability
+                                        <button type="button" id="traceblity_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="traceblity" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Row #</th>
+                                                    <th>Product Name</th>
+                                                    <th>Batch No.</th>
+                                                    <th>Manufacturing Location</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
 
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="trace_ability[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="trace_ability[0][product_name_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][batch_no_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][manufacturing_location_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][remarks_tr]"></td>
+                                                    <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                    
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
+                        
+                        
+                            <script>
+                                $(document).ready(function() {
+                                    $('#traceblity_add').click(function(e) {
+                                        e.preventDefault();
+                                        
+                                        function generateTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="trace_ability[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][product_name_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][batch_no_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][manufacturing_location_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][remarks_tr]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
+                                                '</tr>';
+                                            return html;
+                                        }
+                            
+                                        var tableBody = $('#traceblity tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Categorization of complaint</label>
@@ -622,72 +620,68 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Investingation Team
-                                            <button type="button" onclick="add4Input('Investing_team')">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Investigation Team
+                                            <button type="button" id="investigation_team_add">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
-                                            </span>Product Details
+                                            </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="Investing_team" style="width: %;">
+                                            <table class="table table-bordered" id="Investing_team" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
                                                         <th>Name</th>
                                                         <th>Department</th>
                                                         <th>Remarks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number_gi[0]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Investing_team[0][name_inv_tem]"></td>
-                                                    <td><input type="text" name="Investing_team[0][department_inv_tem]"></td>
-                                                    <td><input type="text" name="Investing_team[0][remarks_inv_tem]"></td>
+                                                    <tr>
+                                                        <td><input disabled type="text" name="Investing_team[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="Investing_team[0][name_inv_tem]"></td>
+                                                        <td><input type="text" name="Investing_team[0][department_inv_tem]"></td>
+                                                        <td><input type="text" name="Investing_team[0][remarks_inv_tem]"></td>
+                                                         <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
                                 <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    })
+                                </script>
+                                <script>
                                     $(document).ready(function() {
-                                        let Investing_team = 0;
-                                        $('#Investing_team ').click(function(e) {
-
+                                        $('#investigation_team_add').click(function(e) {
+                                            e.preventDefault();
+                                
                                             function generateTableRow(serialNumber) {
-                                                Investing_team++;
-                                                var users = @json($users); 
                                                 var html =
-                                                '<tr>' +
-                                                    '<td><input disabled type="text" name="Info_Traceblity[' + Investing_team + '][serial]" value="' + Investing_team +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="serial_number_tr_gi[' + Investing_team + '][product_name_tr]" value=""></td>'+
-                                                    '<td><input type="date" name="serial_number_tr_gi[' + Investing_team + '][batch_no_tr]" value=""></td>' +
-                                                    '<td><input type="date" name="serial_number_tr_gi[' + Investing_team + '][manufacturing_location_tr]" value=""></td>' +
-                                                    '<td><input type="text" name="serial_number_tr_gi[' + Investing_team + '][remarks_tr]" value=""></td>' +
-                                                                                                     
-                                                '</tr>';
-                                                for (var i = 0; i < users.length; i++) {
-                                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                                                }
-                                
-                                                html += '</select></td>' +
-                                
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][name_inv_tem]"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
+                                                    '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
                                                     '</tr>';
-                                
-                                            return html;
+                                                return html;
                                             }
                                 
-                                            var tableBody = $('#Info_Traceblity tbody');
+                                            var tableBody = $('#Investing_team tbody');
                                             var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
+                                            var newRow = generateTableRow(rowCount);
                                             tableBody.append(newRow);
                                         });
                                     });
                                 </script>
+                                
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -795,75 +789,69 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Brain stroming Session/Discussion with Concered Person
-                                            <button type="button" id="brain_stroming_details" onclick="('brain_stroming_details')">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Brain Storming Session/Discussion with Concerned Person
+                                            <button type="button" id="brain_storming_add">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="brain_stroming_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="brain_stroming_details" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
-                                                        <th>Possiblity</th>
+                                                        <th>Possibility</th>
                                                         <th>Facts/Controls</th>
                                                         <th>Probable Cause</th>
                                                         <th>Remarks</th>
-
-
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[0]"
-                                                            value="1">
-                                                    </td>
-                                                    {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="brain_stroming_details[0][possiblity_bssd]"></td>
-                                                    <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]"
-                                                            value=""></td>
-                                                    <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]"></td>
-                                                    <td><input type="text" name="brain_stroming_details[0][remarks_bssd]"></td>
-
-
-
+                                                    <tr>
+                                                        <td><input disabled type="text" name="brain_stroming_details[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][possibility_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][remarks_bssd]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
-
-
-
+                                
                                 <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                
                                     $(document).ready(function() {
-                                       let brain_stroming_details = 0;
-                                        $('#brain_stroming_details').click(function(e) {
+                                        $('#brain_storming_add').click(function(e) {
+                                            e.preventDefault();
+                                
                                             function generateTableRow(serialNumber) {
-                                                brain_stroming_details++;
                                                 var html =
                                                     '<tr>' +
-                                                    '<td><input disabled type="text" name="brain_stroming_details[ '+ brain_stroming_details +']serial[]" value="' + brain_stroming_details +
-                                                    '"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Possiblity]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Facts/Controls]" value="Facts Available"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Probable_Cause]"></td>' +
-                                                    '<td><input type="text" name="brain_stroming_details['+brain_stroming_details+'][Remarks]"></td>' +
+                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][possibility_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][remarks_bssd]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                     '</tr>';
                                                 return html;
                                             }
-
-                                            var tableBody = $('#brain-stroming-details tbody');
+                                
+                                            var tableBody = $('#brain_stroming_details tbody');
                                             var rowCount = tableBody.children('tr').length;
-                                            var newRow = generateTableRow(rowCount + 1);
+                                            var newRow = generateTableRow(rowCount);
                                             tableBody.append(newRow);
                                         });
                                     });
                                 </script>
-
+                                
 
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
@@ -1069,9 +1057,39 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+                                
+                                    $(document).ready(function() {
+                                        $('#Report_Approval').click(function(e) {
+                                            e.preventDefault();
+                                
+                                            function generateTableRow(reportNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Report_Approval[' + reportNumber + '][serial]" value="' + (reportNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][names_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][date_rrv]"></td>' +
+                                                   
+                                                    '</tr>';
+                                                return html;
+                                            }
+                                
+                                            var tableBody = $('#Report_Approval tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
+                                
 
-
-                                <div class="col-12">
+                                                           <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
                                         <div>
@@ -1148,16 +1166,13 @@
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Product/Material Details
-                                        <button type="button" id="product_material">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        <button type="button" id="promate_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="product_material_details"
-                                            style="width: %;">
+                                        <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Row #</th>
@@ -1171,59 +1186,72 @@
                                                     <th>Remarks</th>
 
 
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="Product_MaterialDetails[0]" value="1">
-                                                </td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][product_name_pmd]"></td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd]"></td>
-                                                <td><input type="date" name="Product_MaterialDetails[0][mfg_date_pmd]"></td>
-                                                <td><input type="date" name="Product_MaterialDetails[0][expiry_date_pmd]"></td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd]"></td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd]"></td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd]"></td>
-                                                <td><input type="text" name="Product_MaterialDetails[0][remarks_pmd][]"></td>
+                                                <tr>
+                                                    <td><input disabled type="text" name="Product_MaterialDetails[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][product_name_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][remarks_ca]"></td>
 
 
+
+                                                    <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                    
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
+                        
+                        
                             <script>
                                 $(document).ready(function() {
-                                    $('#product_material').click(function(e) {
-                                        function generateTableRow(serialNumber) {
-
+                                    $('#promate_add').click(function(e) {
+                                        e.preventDefault();
+                                        
+                                        function generateTableRow(productserialno) {
                                             var html =
                                                 '<tr>' +
-                                                '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                                                '"></td>' +
-                                                '<td><input type="text" name="Product_Name[]"></td>' +
-                                                '<td><input type="text" name="Batch_No[]"></td>' +
-                                                '<td><input type="date" name="Mfg_Date[]"></td>' +
-                                                '<td><input type="date" name="Exp_Date[]"></td>' +
-                                                '<td><input type="text" name="Batch_Size[]"></td>' +
-                                                '<td><input type="text" name="pack_profile[]"></td>' +
-                                                '<td><input type="text" name="released_quantity[]"></td>' +
-                                                '<td><input type="text" name="remarks[]"></td>' +
-
+                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
 
                                                 '</tr>';
-
                                             return html;
                                         }
-
-                                        var tableBody = $('#product_material_details tbody');
+                            
+                                        var tableBody = $('#prod_mate_details tbody');
                                         var rowCount = tableBody.children('tr').length;
-                                        var newRow = generateTableRow(rowCount + 1);
+                                        var newRow = generateTableRow(rowCount);
                                         tableBody.append(newRow);
                                     });
                                 });
                             </script>
+                           
 
+
+                            
 
                             <div class="col-lg-12">
                                 <div class="group-input">

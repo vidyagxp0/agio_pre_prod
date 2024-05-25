@@ -25,6 +25,8 @@ return new class extends Migration
             $table->string('user_name');
             $table->string('origin_state');
             $table->string('user_role');
+            $table->longText('change_to');
+            $table->longText('change_from');
             $table->softDeletes();
             $table->timestamps();
         });

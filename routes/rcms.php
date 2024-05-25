@@ -195,7 +195,8 @@ Route::group(['prefix' => 'rcms'], function () {
 
                 Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
                 Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
-                
+                // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+                Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf'); 
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);

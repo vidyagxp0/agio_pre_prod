@@ -299,6 +299,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @if($prductgigrid && $prductgigrid->data)
                                   @foreach ($prductgigrid->data as  $item)
                                   
                                   
@@ -318,6 +319,15 @@
 
                             </tr>
                             @endforeach
+                            @else
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            @endif
                          </tbody>
                     </table>
 
