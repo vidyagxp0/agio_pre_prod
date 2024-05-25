@@ -4,6 +4,7 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\OutOfCalibration;
 use App\Models\RecordNumber;
 use Carbon\Carbon;
@@ -34,7 +35,6 @@ class OOCController extends Controller
 
     public function create(request $request)
     {
-        // return dd($request->all());
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
             return redirect()->back();
@@ -194,6 +194,9 @@ class OOCController extends Controller
 
 
         $data->save();
+        
+
+
 
 
 
@@ -207,8 +210,24 @@ class OOCController extends Controller
 
     }
 
-    public function edit(){
-        return view('frontend.OOC.ooc_view');
+    public function OutofCalibrationShow($id){
+        
+        $ooc = OutOfCalibration::where('id', $id)->first();
+        $ooc->record = str_pad($ooc->record, 4, '0', STR_PAD_LEFT);
+        $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
+        $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
+        // $report = lab_incidents_grid::where('labincident_id', $id)->first();
+
+        // foreach($ooc as $o)
+        // {
+        //     return $ooc;
+        // }
+        return view('frontend.OOC.ooc_view' , compact('ooc'));
     }
 
+    public function updateOutOfCalibration()
+    {
+
+        return back();
+    }
 }
