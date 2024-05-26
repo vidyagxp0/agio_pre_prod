@@ -69,7 +69,12 @@
             querySelect.options.add(new Option('Pending QA Review', '5'));
             querySelect.options.add(new Option('Close - Done', '6'));
 
-        } else if (scopeValue === 'management_review') {
+        }else if (scopeValue === 'Out_Of_Calibration') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('In Progress', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        }else if (scopeValue === 'management_review') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('In Progress', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
@@ -268,13 +273,13 @@
                                                         </a>
                                                     @endif
 
-                                                    @elseif ($datas->type == 'OOC')
+                                                    @elseif ($datas->type == 'Out_Of_Calibration')
                                                     <a href="{{ route('ShowOutofCalibration', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/OOC">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/Out_Of_Calibration">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"
