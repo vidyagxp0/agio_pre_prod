@@ -217,4 +217,8 @@ class OOS extends Model
     {
       return $this->hasMany(Oosgrids::class, 'oos_id');
     }
+    public function record_number()
+    {
+        return $this->morphOne(QmsRecordNumber::class, 'recordable');
+    }
 }

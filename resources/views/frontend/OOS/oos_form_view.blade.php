@@ -353,17 +353,17 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
@@ -441,7 +441,22 @@
 
     </div>
     </div>
-
+    <script>
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+        
+        function setCurrentDate(item){
+            if(item == 'yes'){
+                $('#effect_check_date').val('{{ date('d-M-Y')}}');
+            }
+            else{
+                $('#effect_check_date').val('');
+            }
+        }
+        
+    </script>
 
     <script>
         VirtualSelect.init({

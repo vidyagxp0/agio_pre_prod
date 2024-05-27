@@ -6,6 +6,7 @@ use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Services\FileService;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class OOSService
         try {
 
             $input = $request->all();
-            $input['form_type'] = "OOS Cemical";
+            $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
+            $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
            
@@ -54,7 +56,7 @@ class OOSService
             {
                 $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
             }
-
+            // dd($input);
             $oos = OOS::create($input);
 
             $grid_inputs = [
@@ -135,10 +137,9 @@ class OOSService
         try {
 
             $input = $request->all();
-
-            $input['status'] = 1;
-            $input['stage'] = 'Opened';
-
+            $input['form_type'] = "OOS Chemical";
+            $input['status'] = 'Opened';
+            $input['stage'] = 1;
             $file_input_names = [
                 'initial_attachment_gi',
                 'file_attachments_pli',
