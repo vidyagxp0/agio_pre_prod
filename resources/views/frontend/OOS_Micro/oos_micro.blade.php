@@ -3301,7 +3301,7 @@
                             ['question' => "Were the results of positive, negative, and test controls found satisfactory?", 'input_type' => 'text'],
                             ['question' => "Is the test incubator/heating block kept on a vibration-free surface?", 'input_type' => 'text'],
                             ['question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:", 'input_type' => 'text']
-                            
+
                             ];
                          @endphp
                 <div class="row">
@@ -4129,18 +4129,52 @@
                 Checklist for Review of Test Method & procedure: </div>
                     @php
                         $Checklist_Review_of_Test_Method_proceds = [
-                    "Was correct applicable specification/Test procedure/MOA/SOP used for analysis?",
-                    "Verified specification/Test procedure/MOA No/SOP No.",
-                    "Was the test procedure mentioned in specification/analytical procedure validated w.r.t. product concentration?",
-                    "Was method used during testing evaluated with respect to method validation and historical data and found satisfactory?",
-                    "Was negative control of the test procedure found satisfactory?",
-                    "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
-                    "Were the sample tested transferred and incubated at desired temp. as per approved procedure?",
-                    "Were the test samples results observed within the valid time?",
-                    "Were colonies counted correctly?",
-                    "Was correct formula, dilution factor used for calculation of results?",
-                    "Was the interpretation of test result done correct?"
-                                    ];
+                        [
+                            'question' => "Was correct applicable specification/Test procedure/MOA/SOP used for analysis?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Verified specification/Test procedure/MOA No/SOP No.",
+                            'is_sub_question' => true
+                        ],
+                        [
+                            'question' => "Was the test procedure mentioned in specification/analytical procedure validated w.r.t. product concentration?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Was method used during testing evaluated with respect to method validation and historical data and found satisfactory?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Was negative control of the test procedure found satisfactory?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Were the sample tested transferred and incubated at desired temp. as per approved procedure?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Were the test samples results observed within the valid time?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Were colonies counted correctly?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Was correct formula, dilution factor used for calculation of results?",
+                            'is_sub_question' => false
+                        ],
+                        [
+                            'question' => "Was the interpretation of test result done correct?",
+                            'is_sub_question' => false
+                        ]
+                    ];
+
                     @endphp
                 <div class="row">
                     <div class="col-12">
@@ -4156,11 +4190,22 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @php
+                                            $main_question_index = 1.0;
+                                            $sub_question_index = 0;
+                                        @endphp
                                         @foreach ($Checklist_Review_of_Test_Method_proceds as $Checklist_Review_of_Test_Method_proced)
-
+                                        @php
+                                            if ($Checklist_Review_of_Test_Method_proced['is_sub_question']) {
+                                                $sub_question_index++;
+                                            } else {
+                                                $sub_question_index = 0;
+                                                $main_question_index += 0.1;
+                                            }
+                                        @endphp
                                         <tr>
-                                            <td class="flex text-center">{{$loop->index+1}}</td>
-                                            <td>{{$Checklist_Review_of_Test_Method_proced}}
+                                            <td class="flex text-center">{{ $Checklist_Review_of_Test_Method_proced['is_sub_question'] ? $main_question_index .'.'. $sub_question_index : $main_question_index }}</td>
+                                            <td>{{$Checklist_Review_of_Test_Method_proced['question']}}
                                             </td>
                                             <td>
 
