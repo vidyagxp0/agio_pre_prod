@@ -1389,7 +1389,7 @@
                     </div>
                 </div>
             </div>
-        
+
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3426,7 +3426,7 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Results and Calculation : </div>
-@php
+@php  
     $Results_and_Calculations = [
   "Were results taken properly?",
   "Raw data checked By:",

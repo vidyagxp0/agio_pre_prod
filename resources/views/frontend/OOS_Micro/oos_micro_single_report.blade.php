@@ -278,6 +278,121 @@
                         <td class="w-80">@if($data->customer_gi){{ $data->customer_gi }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
+                {{-- --------------------------  Grid 1  ------------------------------- --}}
+
+                <div class="block"><strong>
+                                Info. On Product/ Material</strong>
+                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                    {{-- <th colspan="1">SR no.</th> --}}
+                                    <th style="width: 4%">Row#</th>
+                                    <th style="width: 10%">Item/Product Code</th>
+                                    <th style="width: 8%"> Batch No*.</th>
+                                    <th style="width: 8%"> Mfg.Date</th>
+                                    <th style="width: 8%">Expiry Date</th>
+                                    <th style="width: 8%"> Label Claim.</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                    </tr>
+                                    {{-- @endif --}}
+                                </table>
+                            </div>
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                {{-- <th colspan="1">SR no.</th> --}}
+                                <th style="width: 8%">Pack Size</th>
+                                <th style="width: 8%">Analyst Name</th>
+                                <th style="width: 10%">Others (Specify)</th>
+                                <th style="width: 10%"> In- Process Sample Stage.</th>
+                                <th style="width: 12% pt-3">Packing Material Type</th>
+                                <th style="width: 16% pt-2"> Stability for</th>
+                                </tr>
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                                {{-- @endif --}}
+                            </table>
+                        </div>
+
+                        <div class="sub-head"><strong> Details of Stability Study </strong></div>
+                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                    {{-- <th colspan="1">SR no.</th> --}}
+                                    <th style="width: 4%">Row#</th>
+                                            <th style="width: 1%">AR Number</th>
+                                            <th style="width: 1%">Condition: Temperature & RH</th>
+                                            <th style="width: 1%">Interval</th>
+                                            <th style="width: 2%">Orientation</th>
+                                            <th style="width: 8%">Pack Details (if any)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                    </tr>
+                                </table>
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                {{-- <th colspan="1">SR no.</th> --}}
+                                        <th style="width: 10%">Specification No.</th>
+                                        <th style="width: 10%">Sample Description</th>
+                                </tr>
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                            </table>
+                    </div>
+                        <div class="sub-head"><strong>OOS Details </strong></div>
+                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                    {{-- <th colspan="1">SR no.</th> --}}
+                                    <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%">AR Number.</th>
+                                            <th style="width: 8%">Test Name of OOS</th>
+                                            <th style="width: 12%">Results Obtained</th>
+                                            <th style="width: 16%">Specification Limit</th>
+                                            <th style="width: 16%">Details of Obvious Error</th>
+                                            <th style="width: 16%">File Attachment</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                    </tr>
+                                    {{-- @endif --}}
+                                </table>
+                        </div>
+
 
 
                     {{-- -------------------------Preliminary Lab Investigation------------------- --}}
@@ -312,6 +427,82 @@
                         @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
                     @endforeach
                 </table>
+
+                <div class="col-12">
+                    <label style="font-weight: bold; for="Audit Attachments" >PHASE- I B INVESTIGATION
+                        REPORT</label>
+
+@php
+$phase_I_investigations = [
+"Aliquot and standard solutions preserved.",
+"Visual examination (solid and solution) reveals normal or abnormal appearance.",
+"The analyst is trained on the method.",
+"Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
+"Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
+"Correct sample(s) tested.",
+"Sample Integrity maintained, correct container is used in testing.",
+"Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
+"All equipment used in the testing is within calibration due period.",
+"Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
+"Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
+"Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
+"Whether test solution / volumetric solution used are properly prepared & standardized.",
+"Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
+"In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
+"Any such type of observation has been observed previously (Assay, Dissolution etc.).",
+"Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
+"System suitability conditions met (those before analysis and during analysis).",
+"Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
+"Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
+"Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
+"Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
+"Media/Reagents prepared according to procedure.",
+"All the materials are within the due period of expiry.",
+"Whether, analysis was performed by any other alternate validated procedure",
+"Whether environmental condition is suitable to perform the test.",
+"Interview with analyst to assess knowledge of the correct procedure."
+
+];
+@endphp
+                    <div class="why-why-chart mx-auto" style="width: 100%">
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($phase_I_investigations as $phase_I_investigation )
+
+                                    <tr>
+                                        <td class="flex text-center">{{$loop->index+1}}</td>
+                                        <td>{{$phase_I_investigation}}</td>
+                                        <td>
+                                            <div
+                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                <select name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
+                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                    <option value="Yes">Select an Option</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                    <option value="N/A">N/A</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                        <td style="vertical-align: middle;">
+                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+
 
 
 {{-- -------------------------Preliminary Lab Investigation------------------- --}}
@@ -371,6 +562,260 @@ $Preliminary_lab_invst_review = [
                             @if(bcmod($loop->index, 2) == 1 || $loop->last)  </tr> @endif
                             @endforeach
                         </table>
+
+                        <div class="sub-head"><strong>OOS Review for Similar Nature </strong></div>
+                        <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+                        <div class="block">
+                                Info. On Product/ Material
+                            <div class="border-table">
+                                <table>
+                                    <tr class="table_bg">
+                                    {{-- <th colspan="1">SR no.</th> --}}
+                                    <th style="width: 2%">Row#</th>
+                                    <th style="width: 8%">OOS Number</th>
+                                    <th style="width: 8%"> OOS Reported Date</th>
+                                    <th style="width: 12%">Description of OOS</th>
+                                    <th style="width: 12%">Previous OOS Root Cause</th>
+                                    <th style="width: 6%"> CAPA</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+                                        <td>Not Applicable</td>
+
+                                    </tr>
+                                    {{-- @endif --}}
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                {{-- <th colspan="1">SR no.</th> --}}
+                                <th style="width: 10% pt-3">Closure Date of CAPA</th>
+                                <th style="width: 8%">CAPA Requirement</th>
+                                <th style="width: 8%">Reference CAPA Number</th>
+                                </tr>
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                                {{-- @endif --}}
+                            </table>
+                        </div>
+
+
+                        <!-- ---------------------------grid-1 ---Preliminary Lab Invst. Review----------------------------- -->
+                        {{-- <div class="group-input">
+                            <label for="audit-agenda-grid">
+                                Info. On Product/ Material
+                                <button type="button" name="audit-agenda-grid" id="oos_capa">+</button>
+                                <span class="text-primary" data-bs-toggle="modal"
+                                    data-bs-target="#document-details-field-instruction-modal"
+                                    style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                    (Launch Instruction)
+                                </span>
+                            </label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="oos_capa_details" style="width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 4%">Row#</th>
+                                            <th style="width: 8%">OOS Number</th>
+                                            <th style="width: 8%"> OOS Reported Date</th>
+                                            <th style="width: 12%">Description of OOS</th>
+                                            <th style="width: 16%">Previous OOS Root Cause</th>
+                                            <th style="width: 16%"> CAPA</th>
+                                            <th style="width: 16% pt-3">Closure Date of CAPA</th>
+                                            <th style="width: 16%">CAPA Requirement</th>
+                                            <th style="width: 16%">Reference CAPA Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td><input disabled type="text" name="info_product_oos_capa[0][serial]" value="1"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][oos_number]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][oos_reported_date]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][description_of_oos]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][previous_oos_root_cause]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][capa]"></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][closure_date_of_capa]"></td>
+                                        <td><select name = "info_product_oos_capa[0][capa_Requirement]" >
+                                                <option>Yes</option>
+                                                <option>No</option>
+                                            </select></td>
+                                        <td><input type="text" name="info_product_oos_capa[0][reference_capa_number]"></td>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div> --}}
+
+{{-- ================  Checklist-Investigation of Bacterial Endotoxin Test  ======================= --}}
+                                    <div class="block-head">
+                                        Checklist-Investigation of Bacterial Endotoxin Test
+                                    </div>
+@php
+$questions = [
+            'check_analyst_training_procedures'=> [
+                'headings' => 'Checklist for Analyst Training and Procedure',
+                'identifier' => '',
+                'questions' => [
+                    "Is the analyst trained/qualified BET test procedure?",
+                    "Reference procedure number :-",
+                    "Effective date",
+                    "Date of qualification:",
+                    "Were appropriate precaution taken by the analyst throughout the test?",
+                    "Analyst interview record",
+                    "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                    "Analyst interview record",
+                    "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+        ]
+    ],
+
+            'sample_receiving_verifications' =>[
+                'headings' => 'Checklist for Sample receiving & verification in lab :',
+                    'identifier' => '',
+                    'questions' => [
+                                        "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+                                        "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                                        "Was the correct quantity of the sample withdrawn?",
+                                        "Was there any discrepancy observed during sampling?",
+                                        "Was the sample container (Physical integrity) checked before testing?",
+
+                ]],
+            'method_procedure_used_during_anas' =>[
+                                    'headings' => 'Checklist for Method/Procedure used during analysis:',
+                                    'identifier' => '',
+                                        'questions' => [
+                                        "Was correct applicable specification/Test procedure/MOA used for analysis?",
+                                        "Verified specification/Test procedure/MOA No.",
+                                        "Was the test procedure followed as per method validation?",
+                                        "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
+                                        "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
+                                        "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
+                                        "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
+                                        "Assay tube/Batch No.",
+                                        "Expiry date:",
+                                        "Tip lot/Batch No.",
+                                        "Expiry date:",
+                                        "Was the test done at correct MVD as per validated method?",
+                                        "Were calculations of MVD/Test dilution done correctly?",
+                                        "Were correct dilutions prepared?",
+                                        "Was labeled claim lysate sensitivity checked before the use of the lot?",
+                                        "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
+                                        "LRW expiry date?",
+                                        "CSE expiry date?",
+                                        "Lysate expiry date?",
+                                        "Buffer expiry date?",
+                                        "Was рН of the test sample/dilution verified?",
+                                        "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
+                                        "Were proper incubation conditions followed?",
+                                        "Was there any spillage that occurred during the vortexing of dilutions?",
+                                        "Were the results of positive, negative, and test controls found satisfactory?",
+                                        "Is the test incubator/heating block kept on a vibration-free surface?",
+                                        "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:"
+             ] ],
+            'Instrument_Equipment_Details' =>[
+                'headings' => 'Checklist for Instrument/Equipment Details:',
+                    'identifier' => '',
+                    'questions' => [ "Was the equipment used, calibrated/qualified and within the specified range?",
+                                        "Dry block /Heating block equipment ID:",
+                                        "Calibration date & Next due date:",
+                                        "Pipettes ID:",
+                                        "Calibration date and Next due date:",
+                                        "Refrigerator (2-8̊ C) ID:",
+                                        "Validation date and next due date:",
+                                        "Dehydrogenation over ID:",
+                                        "Validation date and next due date:",
+                                        "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                                        "Was the depyrogenation done as per the validated load pattern?",
+                                        "Was there any power failure noticed during the incubation of samples in the heating block?",
+                                        "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
+                                        "Were any other samples tested along with this sample?",
+                                        "If yes, were those sample’s results found satisfactory?",
+                                        "Were any other samples analyzed at the same time on the same instruments?",
+                                        "If yes, what were the results of other Batches?"
+
+            ]],
+                'Results_and_Calculations' => [
+                    'headings' => 'Checklist for Results and Calculation :',
+
+                            'identifier' => '',
+                            'questions' => [
+                                            "Were results taken properly?",
+                                            "Raw data checked By:",
+                                            "Was formula dilution factor used for calculating the results correct?"
+],
+]];
+@endphp
+    <div class="row">
+        <div class="col-12">
+            <div class="group-input">
+                <div class="why-why-chart">
+                        @foreach ($questions as $headings => $heading )
+                        {{-- @foreach ($heading['headings'] as  $head ) --}}
+
+                        <div class="inner-block-content">
+                            <div class="sub-head"><strong>
+                                {{$heading['headings'] }}</strong>
+            <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+
+                        </div>
+
+                        @foreach ($heading['questions'] as $single_question)
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="width: 5%;">Sr.No.</th>
+                                    <th style="width: 40%;">Question</th>
+                                    <th style="width: 20%;">Response</th>
+                                    <th>Remarks</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                            <tr>
+                                <td class="flex text-center">{{$loop->index+1}}</td>
+                                <td>{{$single_question}}</td>
+
+                                <td>
+                                    <div
+                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                        <select name="analyst_training_proce[{{$loop->index}}][response]" id="response"
+                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                            <option value="Yes">Select an Option</option>
+                                            <option value="Yes">Yes</option>
+                                            <option value="No">No</option>
+                                            <option value="N/A">N/A</option>
+                                        </select>
+                                            </div>
+                                     </td>
+                                    <td>
+                                       <div style="margin: auto; display: flex; justify-content: center;">
+                                        <p>Not applicable
+
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                    {{-- @endforeach --}}
+
+                </div>
+            </div>
+            @endforeach
+
+        </div>
+    </div>
+
+
+
+
 
 {{-- ----------------------------------------- Phase II INvestigation------------------------------------ --}}
                         <div class="block-head">

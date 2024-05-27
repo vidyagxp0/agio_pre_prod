@@ -432,8 +432,8 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 
 //============================================OOS MICRO===================================
 ////-------------------------------------------------------------------------------------
-Route::get('oos_micro',[OOSMicroController::class,'index']);
-Route::post('oos_micro_store',[OOSMicroController::class,'store']);
+// Route::get('oos_micro',[OOSMicroController::class,'index']);
+// Route::post('oos_micro_store',[OOSMicroController::class,'store']);
 
 
 
