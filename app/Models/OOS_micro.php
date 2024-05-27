@@ -11,6 +11,11 @@ class OOS_micro extends Model
 
     protected $table = 'o_o_s__micros';
 
+    public function grids()
+    {
+        return $this->hasMany(OOS_Mirco_grid::class, 'oos_micro_id', 'id');
+    }
+
     //protected $fillable = ['reference_document_gi'];
 
     protected $casts = [
@@ -60,3 +65,4 @@ class OOS_micro extends Model
     }
 
 }
+

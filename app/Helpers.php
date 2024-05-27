@@ -4,6 +4,7 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -13,6 +14,7 @@ class Helpers
 {
     public static function getArrayKey(array $array, $key)
     {
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
@@ -622,25 +624,4 @@ class Helpers
     //                 ->subject('Record is for Review');
     //     });
     // }
-
-    public static function disabledErrataFields($data)
-    {
-        if($data == 0 || $data > 5){
-            return 'disabled';
-        }else{
-            return  '';
-        }
-
-    }
-
-    public static function disabledMarketComplaintFields($marketcomplaint)
-    {
-        if($marketcomplaint == 0 || $marketcomplaint > 8){
-            return 'disabled';
-        }else{
-            return  '';
-        }
-
-    }
-
 }
