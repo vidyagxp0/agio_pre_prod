@@ -74,7 +74,7 @@ class DocumentDetailsController extends Controller
           $stage->comment = $request->comment;
 
           
-          if ($stage->stage == "In-Review") {
+        if ($stage->stage == "In-Review") {
             $deletePreviousApproval = StageManage::where('document_id', $request->document_id)->get();
             if ($deletePreviousApproval) {
               foreach ($deletePreviousApproval as $updateRecords) {
@@ -197,7 +197,7 @@ class DocumentDetailsController extends Controller
         }
 
         
-        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers))) {
+        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
               $document->stage = 1;
               $document->status = "Draft";
@@ -339,7 +339,8 @@ class DocumentDetailsController extends Controller
           }
 
         }
-        if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers))) {
+        
+        if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers)) && ($document->stage == 6 || $document->stage == 7)) {
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = 1;
@@ -491,7 +492,7 @@ class DocumentDetailsController extends Controller
           }
         }
 
-        if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods))) {
+        if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods)) && ($document->stage == 2 || $document->stage == 3)) {
           if ($request->stage_id == "Cancel-by-HOD") {
             $document->status = "Draft";
             $document->stage = 1;

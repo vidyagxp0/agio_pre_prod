@@ -484,9 +484,9 @@
                                             
                                                 @foreach ($reviewer as $lan)
                                                     @if(Helpers::checkUserRolesreviewer($lan))
-                                                    <option value="{{ $lan->id }}">
-                                                        {{ $lan->name }}
-                                                    </option>
+                                                        <option value="{{ $lan->id }}">
+                                                            {{ $lan->name }}
+                                                        </option>
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -504,9 +504,9 @@
                                             @if (!empty($approvers))
                                                 @foreach ($approvers as $lan)
                                                     @if(Helpers::checkUserRolesApprovers($lan))
-                                                    <option value="{{ $lan->id }}">
-                                                        {{ $lan->name }}
-                                                    </option>
+                                                        <option value="{{ $lan->id }}">
+                                                            {{ $lan->name }}
+                                                        </option>
                                                     @endif
                                                 @endforeach
                                             @endif
@@ -522,11 +522,9 @@
                                         <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                             name="hods[]" placeholder="Select HOD's" multiple required>
                                             @foreach ($hods as $hod)
-                                                {{-- @if(Helpers::checkUserRolesApprovers($hod)) --}}
                                                 <option value="{{ $hod->id }}">
                                                     {{ $hod->name }}
                                                 </option>
-                                                {{-- @endif --}}
                                             @endforeach
                                         </select>
                                     </div>
