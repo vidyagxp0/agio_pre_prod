@@ -33,29 +33,29 @@ class OOSMicroService
         return $res;
     }
 
-    //public static function update_grid(OOS_micro $micro, Request $request, $identifier)
-    //{
-    //    //$id=OOS_mocro::find($id);
-    //    $res = [
-    //        'status' => 'ok',
-    //        'message' => 'success',
-    //        'body' => []
-    //    ];
+    public static function update_grid(OOS_micro $micro, Request $request, $identifier)
+    {
+       //$id=OOS_mocro::find($id);
+       $res = [
+           'status' => 'ok',
+           'message' => 'success',
+           'body' => []
+       ];
 
-    //    try {
+       try {
 
-    //        $micro_grid = OOS_Mirco_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
-    //        $micro_grid->oos_micro_id = $micro->id;
-    //        $micro_grid->identifier = $identifier;
-    //        $micro_grid->data = $request->$identifier;
-    //        $micro_grid->update();
+           $micro_grid = OOS_Mirco_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
+           $micro_grid->oos_micro_id = $micro->id;
+           $micro_grid->identifier = $identifier;
+           $micro_grid->data = $request->$identifier;
+           $micro_grid->update();
 
 
-    //    } catch (\Exception $e) {
-    //        $res['status'] = 'error';
-    //        $res['message'] = $e->getMessage();
-    //    }
+       } catch (\Exception $e) {
+           $res['status'] = 'error';
+           $res['message'] = $e->getMessage();
+       }
 
-    //    return $res;
-    //}
+       return $res;
+    }
 }

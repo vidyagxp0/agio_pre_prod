@@ -1134,21 +1134,20 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             @foreach ($phase_I_investigations as $phase_I_investigation )
                                             <tr>
                                                 <td class="flex text-center">{{$loop->index+1}}</td>
                                                 <td>{{$phase_I_investigation}}</td>
                                                 <td>
-
-
                                                     <div
                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                         <select name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
                                                             style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                            <option value="Yes">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Yes" {{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No" {{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} >No</option>
+                                                            <option value="N/A"  {{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -1156,7 +1155,8 @@
 
                                                 <td style="vertical-align: middle;">
                                                     <div style="margin: auto; display: flex; justify-content: center;">
-                                                        <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                        <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'phase_IB_investigation', true, 'remark', true, $loop->index) }}
+                                                        </textarea>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -4375,9 +4375,12 @@
                                                                 id="response"
                                                                 style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
                                                             <option value="">Select an Option</option>
-                                                            <option value="Yes">Yes</option>
-                                                            <option value="No">No</option>
-                                                            <option value="N/A">N/A</option>
+                                                            <option value="Yes"
+                                                            {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                            <option value="No"
+                                                            {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }}>No</option>
+                                                            <option value="N/A"
+                                                            {{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }}>N/A</option>
                                                         </select>
                                                     @endif
                                                 </div>
@@ -4385,7 +4388,7 @@
                                             <td>
                                                 <div style="margin: auto; display: flex; justify-content: center;">
                                                     <textarea name="analyst_training_proce[{{ $index }}][remark]"
-                                                            style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($micro_data, 'analyst_training_proce', true, 'remark', true, $loop->index) }}</textarea>
                                                 </div>
                                             </td>
                                         </tr>

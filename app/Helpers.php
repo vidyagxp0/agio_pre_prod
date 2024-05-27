@@ -482,14 +482,24 @@ class Helpers
         return $isQA;
     }
 
-    public static function getMicroGridData(OOS_micro $micro, $identifier)
+    // getMicroGridData($micro, $identifier, true, 'response', true, 0)
+    public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {
-        $res = [];
+        $res = $getKey ? '' : [];
             try {
                 $grid = $micro->grids()->where('identifier', $identifier)->first();
 
                 if($grid && is_array($grid->data)){
+
                     $res = $grid->data;
+
+                    if ($getKey && !$byIndex) {
+                        $res = array_key_exists($keyName, $grid->data) ? $grid->data[$keyName] : '';
+                    }
+
+                    if ($getKey && $byIndex && is_array($grid->data[$index])) {
+                        $res = array_key_exists($keyName, $grid->data[$index]) ? $grid->data[$index][$keyName] : '';
+                    }
                 }
 
             } catch(\Exception $e){
