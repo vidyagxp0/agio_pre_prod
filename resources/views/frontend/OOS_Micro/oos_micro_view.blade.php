@@ -5348,112 +5348,6 @@
                                         </tr>
                                     @endforeach
 
-                                        {{--<tr>
-                                            <td class="flex text-center">1.1.1</td>
-                                            <td>Date of training:</td>
-                                            <td>
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">1.2</td>
-                                            <td> Was the analyst qualified for testing? </td>
-                                            <td>
-                                                <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
-                                            </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">1.2.1</td>
-                                            <td>Date of qualification:
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">1.3</td>
-                                            <td>Were the personnel in perfect health without any open injury or infection?</td>
-                                            <td>
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">1.4</td>
-                                            <td>Were the entry and exit procedures to the respective production area followed as per SOP?</td>
-                                            <td>
-                                                <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
-                                            </div>
-                                            </td>
-                                            <td>
-                                                <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-                                        </tr>--}}
-
 
                                     </tbody>
                                 </table>
@@ -5489,9 +5383,7 @@
                                         <th>Remarks</th>
                                     </tr>
                                 </thead>
-                                <>
                                     @foreach ($sample_intactness_before_analysis as $sample_intactness_before_analys )
-
 
                                     <tr>
                                         <td class="flex text-center">{{$loop->index+1}}</td>
@@ -5520,136 +5412,6 @@
                                     </tr>
                                     @endforeach
 
-                                        {{--<tr>
-                                            <td class="flex text-center">2.2</td>
-                                            <td>Was it verified by sample receipt persons at the time of receipt in lab?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                 <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">2.3</td>
-                                            <td>Was the sample collected in desired container and transported as per approved procedure?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                 <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">2.4</td>
-                                            <td>Was there any discrepancy observed during sampling?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                            <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">2.4.1</td>
-                                            <td>Any remark notified in sample request from?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                 <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">2.5</td>
-                                            <td>Were sample stored as per storage requirements specified in specification/SOP?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                 <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>--}}
 
                                     </tbody>
                                 </table>
@@ -5662,152 +5424,78 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Review of test methods & Procedures </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="flex text-center">3.1</td>
-                                            <td>Was correct applicable specification and method of analysis used for analysis?
-                                            </td>
-                                            <td>
 
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
+                    @php
+                    $sample_intactness_before_analysis=[
+                        ['question' => "Was intact samples /sample container received in lab?", 'input_type' => 'text'],
+                        ['question' => "Was it verified by sample receipt persons at the time of receipt in lab?", 'input_type' => 'string'],
+                        ['question' => "Was the sample collected in desired container and transported as per approved procedure?", 'input_type' => 'text'],
+                        ['question' => "Was there any discrepancy observed during sampling?", 'input_type' => 'text'],
+                        ['question' => "Were sample stored as per storage requirements specified in specification/SOP?", 'input_type' => 'text']
+
+                        ];
+                @endphp
+
+            <div class="row">
+
+                <div class="col-12">
+
+                    <div class="group-input">
+
+                        <div class="why-why-chart">
+
+                            <table class="table table-bordered">
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th style="width: 5%;">Sr.No.</th>
+
+                                        <th style="width: 40%;">Question</th>
+
+                                        <th style="width: 20%;">Response</th>
+
+                                        <th>Remarks</th>
+
+                                    </tr>
+
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($sample_intactness_before_analysis as $index => $sample_intactness_before_analysi)
+                                    <tr>
+                                        <td class="flex text-center">{{ $index + 1 }}</td>
+                                        <td>{{ $sample_intactness_before_analysi['question'] }}</td>
+                                        <td>
+                                            <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px;">
+                                                @if ($sample_intactness_before_analysi['input_type'] == 'date')
+                                                    <input type="date" name="sample_intactness_before_analysis[{{ $index }}][response]"
+                                                        style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+
+                                                @elseif($sample_intactness_before_analysi['input_type'] == 'string')
+                                                    <input type="text" name="sample_intactness_before_analysis[{{ $index }}][response]"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
+
+                                                @else
+                                                    <select name="sample_intactness_before_analysis[{{ $index }}][response]"
+                                                            id="response"
+                                                            style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                        <option value="">Select an Option</option>
                                                         <option value="Yes">Yes</option>
                                                         <option value="No">No</option>
                                                         <option value="N/A">N/A</option>
                                                     </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">3.2</td>
-                                            <td>MOA & specification number?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="flex text-center">3.3</td>
-                                            <td>Were the results of the other samples analyzed on the same day/time satisfactory?
-                                            </td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">3.4</td>
-                                            <td>Were the samples tested transferred and incubated at desired temperature as per approved procedure?
-                                            </td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                        <tr>
-                                            <td class="flex text-center">3.5</td>
-                                            <td>Were the tested samples results observed within the valid time?
-                                            </td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
+                                                @endif
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div style="margin: auto; display: flex; justify-content: center;">
+                                                <textarea name="sample_intactness_before_analysis[{{ $index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
 
                                     </tbody>
                                 </table>
@@ -5820,281 +5508,68 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Review of Media, Buffer, Standards preparation & test accessories </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="group-input">
-                            <div class="why-why-chart">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5%;">Sr.No.</th>
-                                            <th style="width: 40%;">Question</th>
-                                            <th style="width: 20%;">Response</th>
-                                            <th>Remarks</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td class="flex text-center">4.1</td>
-                                            <td>Name of the media used in the analysis :
-                                            </td>
-                                            <td>
+                    @php
+                    $Review_of_Media_Buffer_Standards_prepar = [
+                        ['question' => "Name of the media used in the analysis:", 'input_type' => 'text'],
+                        ['question' => "Did the COA of the media review and found satisfactory?", 'input_type' => 'number'],
+                        ['question' => "Date of media preparation:", 'input_type' => 'date'],
+                        ['question' => "Lot No.", 'input_type' => 'number'],
+                        ['question' => "Use before date:", 'input_type' => 'date'],
+                        ['question' => "Was the media sterilization and sanitization cycle found satisfactory?", 'input_type' => 'option'],
+                        ['question' => "Validated load pattern references documents No.", 'input_type' => 'number'],
+                        ['question' => "Was any contamination observed in test media/diluents?", 'input_type' => 'text'],
+                        ['question' => "Was appropriate and cleaned and sterilized glassware used for testing?", 'input_type' => 'text'],
+                        ['question' => "Are the negative controls still confirming?", 'input_type' => 'text'],
+                        ['question' => "Is the growth promotion test for the media confirming?", 'input_type' => 'text'],
+                    ];
+                @endphp
+    <div class="row">
+        <div class="col-12">
+            <div class="group-input">
+                <div class="why-why-chart">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                            @foreach ($Review_of_Media_Buffer_Standards_prepar as $index => $Review_of_Media_Buffer_Standards_prep)
+                            <tr>
+                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                <td>{{ $Review_of_Media_Buffer_Standards_prep['question'] }}</td>
+                                <td>
+                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px;">
+                                        @if ($Review_of_Media_Buffer_Standards_prep['input_type'] == 'date')
+                                            <input type="date" name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][response]"
+                                                style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
 
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="text"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                        @elseif($Review_of_Media_Buffer_Standards_prep['input_type'] == 'number')
+                                            <input type="number" name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][response]"
+                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
 
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.1</td>
-                                            <td>Did the COA of the media review and found satisfactory ?
-                                            </td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.2</td>
-                                            <td>Date of media preparation:</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.3</td>
-                                            <td>Lot No.</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.4</td>
-                                            <td>Use before date :</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="date"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.5</td>
-                                            <td>Was the media sterilization and sanitization cycle found satisfactory?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.6</td>
-                                            <td>Validated load pattern references documents No. </td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <input type="number"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.7</td>
-                                            <td>Was any contamination observed in test media /diluents?</td>
-                                            <td>
-
-                                               <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.8</td>
-                                            <td>Was appropriate and cleaned and sterilized glasswares used for testing?</td>
-                                            <td>
-
-                                                <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="response" id="response"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
-                                            </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.1.9</td>
-                                            <td>Are the negative controls still confirming?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-                                        <tr>
-                                            <td class="flex text-center">4.2</td>
-                                            <td>Is the growth promotion test for the media confirming?</td>
-                                            <td>
-
-                                                <div
-                                                    style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                    <select name="response" id="response"
-                                                        style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                        <option value="Yes">Select an Option</option>
-                                                        <option value="Yes">Yes</option>
-                                                        <option value="No">No</option>
-                                                        <option value="N/A">N/A</option>
-                                                    </select>
-                                                </div>
-
-
-                                            </td>
-                                            <td>
-                                                {{-- <textarea name="who_will_not_be"></textarea> --}} <div
-                                                    style="margin: auto; display: flex; justify-content: center;">
-                                                    <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                </div>
-                                            </td>
-
-                                        </tr>
-
-                                    </tbody>
+                                        @else
+                                            <select name="sample_intactness_before_analysis[{{ $index }}][response]"
+                                                    id="response"
+                                                    style="padding: 2px; width: 90%; border: 1px solid black; background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option value="N/A">N/A</option>
+                                            </select>
+                                        @endif
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                        <textarea name="Review_of_Media_Buffer_Standards_prep[{{ $index }}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
