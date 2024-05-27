@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('form_type')->nullable();
             $table->string('division_code')->nullable();
             $table->integer('initiator_id')->nullable();
-            $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('due_date')->nullable();
             $table->string('severity_level_gi')->nullable();

@@ -4,6 +4,7 @@ use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Models\OOS_micro;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
@@ -13,9 +14,9 @@ class Helpers
 {
     public static function getArrayKey(array $array, $key)
     {
-        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : ''; 
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
-    
+
     public static function getDefaultResponse()
     {
         $res = [
@@ -481,13 +482,19 @@ class Helpers
         return $isQA;
     }
 
+    public static function getMicroGridData(OOS_micro $micro, $identifier)
+    {
+        $res = [];
+            try {
+                $grid = $micro->grids()->where('identifier', $identifier)->first();
 
-    // public static function hodMail($data)
-    // {
-    //     Mail::send('hod-mail',['data' => $data],
-    // function ($message){
-    //         $message->to("shaleen.mishra@mydemosoftware.com")
-    //                 ->subject('Record is for Review');
-    //     });
-    // }
+                if($grid && is_array($grid->data)){
+                    $res = $grid->data;
+                }
+
+            } catch(\Exception $e){
+
+            }
+        return $res;
+    }
 }

@@ -430,8 +430,8 @@
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator <span class="text-danger"></span></label>
-                                <input disabled type="text" name="initiator_gi_id"
-                                 >
+                                <input disabled type="text" name="initiator_id"
+                                            value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -609,7 +609,7 @@
                                     <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_giinitial_attachment_gi[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1049,41 +1049,40 @@
 
 
                         <div class="col-12">
-                                <label style="font-weight: bold; for="Audit Attachments" >PHASE- I B INVESTIGATION
-                                    REPORT</label>
+                                <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
 
-@php
-    $phase_I_investigations = [
-            "Aliquot and standard solutions preserved.",
-            "Visual examination (solid and solution) reveals normal or abnormal appearance.",
-            "The analyst is trained on the method.",
-            "Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
-            "Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
-            "Correct sample(s) tested.",
-            "Sample Integrity maintained, correct container is used in testing.",
-            "Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
-            "All equipment used in the testing is within calibration due period.",
-            "Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
-            "Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
-            "Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
-            "Whether test solution / volumetric solution used are properly prepared & standardized.",
-            "Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
-            "In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
-            "Any such type of observation has been observed previously (Assay, Dissolution etc.).",
-            "Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
-            "System suitability conditions met (those before analysis and during analysis).",
-            "Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
-            "Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
-            "Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
-            "Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
-            "Media/Reagents prepared according to procedure.",
-            "All the materials are within the due period of expiry.",
-            "Whether, analysis was performed by any other alternate validated procedure",
-            "Whether environmental condition is suitable to perform the test.",
-            "Interview with analyst to assess knowledge of the correct procedure."
+                                @php
+                                    $phase_I_investigations = [
+                                            "Aliquot and standard solutions preserved.",
+                                            "Visual examination (solid and solution) reveals normal or abnormal appearance.",
+                                            "The analyst is trained on the method.",
+                                            "Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
+                                            "Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
+                                            "Correct sample(s) tested.",
+                                            "Sample Integrity maintained, correct container is used in testing.",
+                                            "Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
+                                            "All equipment used in the testing is within calibration due period.",
+                                            "Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
+                                            "Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
+                                            "Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
+                                            "Whether test solution / volumetric solution used are properly prepared & standardized.",
+                                            "Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
+                                            "In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
+                                            "Any such type of observation has been observed previously (Assay, Dissolution etc.).",
+                                            "Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
+                                            "System suitability conditions met (those before analysis and during analysis).",
+                                            "Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
+                                            "Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
+                                            "Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
+                                            "Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
+                                            "Media/Reagents prepared according to procedure.",
+                                            "All the materials are within the due period of expiry.",
+                                            "Whether, analysis was performed by any other alternate validated procedure",
+                                            "Whether environmental condition is suitable to perform the test.",
+                                            "Interview with analyst to assess knowledge of the correct procedure."
 
-    ];
-@endphp
+                                    ];
+                                @endphp
 
 
                             <div class="group-input ">
@@ -1389,7 +1388,7 @@
                     </div>
                 </div>
             </div>
-        
+
         <!--Phase II Investigation -->
         <div id="CCForm5" class="inner-block cctabcontent">
             <div class="inner-block-content">
@@ -3214,16 +3213,16 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Sample receiving & verification in lab : </div>
-@php
-    $sample_receiving_verifications = [
-  "Was the sample container (Physical integrity) verified at the time of sample receipt?",
-  "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
-  "Was the correct quantity of the sample withdrawn?",
-  "Was there any discrepancy observed during sampling?",
-  "Was the sample container (Physical integrity) checked before testing?"
-                ];
+                        @php
+                            $sample_receiving_verifications = [
+                        "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+                        "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+                        "Was the correct quantity of the sample withdrawn?",
+                        "Was there any discrepancy observed during sampling?",
+                        "Was the sample container (Physical integrity) checked before testing?"
+                                        ];
 
-@endphp
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -3273,37 +3272,38 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Method/Procedure used during analysis: </div>
-@php
-    $method_procedure_used_during_anas =  [
-  "Was correct applicable specification/Test procedure/MOA used for analysis?",
-  "Verified specification/Test procedure/MOA No.",
-  "Was the test procedure followed as per method validation?",
-  "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
-  "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
-  "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
-  "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
-  "Assay tube/Batch No.",
-  "Expiry date:",
-  "Tip lot/Batch No.",
-  "Expiry date:",
-  "Was the test done at correct MVD as per validated method?",
-  "Were calculations of MVD/Test dilution done correctly?",
-  "Were correct dilutions prepared?",
-  "Was labeled claim lysate sensitivity checked before the use of the lot?",
-  "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
-  "LRW expiry date?",
-  "CSE expiry date?",
-  "Lysate expiry date?",
-  "Buffer expiry date?",
-  "Was рН of the test sample/dilution verified?",
-  "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
-  "Were proper incubation conditions followed?",
-  "Was there any spillage that occurred during the vortexing of dilutions?",
-  "Were the results of positive, negative, and test controls found satisfactory?",
-  "Is the test incubator/heating block kept on a vibration-free surface?",
-  "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:"
-];
-@endphp
+                     @php
+                        $method_procedure_used_during_anas =  [
+                            ['question' => "Was correct applicable specification/Test procedure/MOA used for analysis?", 'input_type' => 'select'],
+                            ['question' => "Verified specification/Test procedure/MOA No.", 'input_type' => 'number'],
+                            ['question' => "Was the test procedure followed as per method validation?", 'input_type' => 'text'],
+                            ['question' => "Was there any change in the validated change method? If yes, was test performed with the new validated method?", 'input_type' => 'text'],
+                            ['question' => "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?", 'input_type' => 'text'],
+                            ['question' => "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:", 'input_type' => 'text'],
+                            ['question' => "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?", 'input_type' => 'text'],
+                            ['question' => "Assay tube/Batch No.", 'input_type' => 'number'],
+                            ['question' => "Expiry date:", 'input_type' => 'date'],
+                            ['question' => "Tip lot/Batch No.", 'input_type' => 'number'],
+                            ['question' => "Expiry date:", 'input_type' => 'date'],
+                            ['question' => "Was the test done at correct MVD as per validated method?", 'input_type' => 'text'],
+                            ['question' => "Were calculations of MVD/Test dilution done correctly?", 'input_type' => 'text'],
+                            ['question' => "Were correct dilutions prepared?", 'input_type' => 'text'],
+                            ['question' => "Was labeled claim lysate sensitivity checked before the use of the lot?", 'input_type' => 'text'],
+                            ['question' => "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?", 'input_type' => 'text'],
+                            ['question' => "LRW expiry date?", 'input_type' => 'date'],
+                            ['question' => "CSE expiry date?", 'input_type' => 'date'],
+                            ['question' => "Lysate expiry date?", 'input_type' => 'date'],
+                            ['question' => "Buffer expiry date?", 'input_type' => 'date'],
+                            ['question' => "Was рН of the test sample/dilution verified?", 'input_type' => 'text'],
+                            ['question' => "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?", 'input_type' => 'text'],
+                            ['question' => "Were proper incubation conditions followed?", 'input_type' => 'text'],
+                            ['question' => "Was there any spillage that occurred during the vortexing of dilutions?", 'input_type' => 'text'],
+                            ['question' => "Were the results of positive, negative, and test controls found satisfactory?", 'input_type' => 'text'],
+                            ['question' => "Is the test incubator/heating block kept on a vibration-free surface?", 'input_type' => 'text'],
+                            ['question' => "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:", 'input_type' => 'text']
+                            
+                            ];
+                         @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -3318,10 +3318,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($method_procedure_used_during_anas as $method_procedure_used_during_ana)
+                                        @foreach ($method_procedure_used_during_anas as $index => $method_procedure_used_during_ana)
                                            <tr>
                                             <td class="flex text-center">{{ $loop->index+1 }}</td>
-                                            <td>{{$method_procedure_used_during_ana}}
+                                            <td>{{$method_procedure_used_during_ana['question']}}
                                             </td>
                                             <td>
                                                 <div
@@ -3355,27 +3355,27 @@
             <div class="inner-block-content">
                 <div class="sub-head">
                     Checklist for Instrument/Equipment Details:</div>
-@php
-$Instrument_Equipment_Details = [
-  "Was the equipment used, calibrated/qualified and within the specified range?",
-  "Dry block /Heating block equipment ID:",
-  "Calibration date & Next due date:",
-  "Pipettes ID:",
-  "Calibration date and Next due date:",
-  "Refrigerator (2-8̊ C) ID:",
-  "Validation date and next due date:",
-  "Dehydrogenation over ID:",
-  "Validation date and next due date:",
-  "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
-  "Was the depyrogenation done as per the validated load pattern?",
-  "Was there any power failure noticed during the incubation of samples in the heating block?",
-  "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
-  "Were any other samples tested along with this sample?",
-  "If yes, were those sample’s results found satisfactory?",
-  "Were any other samples analyzed at the same time on the same instruments?",
-  "If yes, what were the results of other Batches?"
-            ];
-@endphp
+                            @php
+                            $Instrument_Equipment_Details = [
+                            "Was the equipment used, calibrated/qualified and within the specified range?",
+                            "Dry block /Heating block equipment ID:",
+                            "Calibration date & Next due date:",
+                            "Pipettes ID:",
+                            "Calibration date and Next due date:",
+                            "Refrigerator (2-8̊ C) ID:",
+                            "Validation date and next due date:",
+                            "Dehydrogenation over ID:",
+                            "Validation date and next due date:",
+                            "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+                            "Was the depyrogenation done as per the validated load pattern?",
+                            "Was there any power failure noticed during the incubation of samples in the heating block?",
+                            "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
+                            "Were any other samples tested along with this sample?",
+                            "If yes, were those sample’s results found satisfactory?",
+                            "Were any other samples analyzed at the same time on the same instruments?",
+                            "If yes, what were the results of other Batches?"
+                                        ];
+                            @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -3992,18 +3992,18 @@ $Instrument_Equipment_Details = [
                 <div class="sub-head">
                 Checklist for Review of Training records Analyst Involved in Testing
                 </div>
-@php
-    $Checklist_for_Review_of_Training_records_Analysts =[
-  "Is the analyst trained on respective procedures?",
-  "Was the analyst qualified for testing?",
-  "Date of qualification:",
-  "Was the analyst trained on entry exit /procedure?",
-  "SOP No.& Trained On",
-  "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections during analysis?",
-  "Was the analyst followed gowning procedure?",
-  "Was analyst performed colony counting correctly?"
-            ];
-@endphp
+                    @php
+                        $Checklist_for_Review_of_Training_records_Analysts =[
+                    "Is the analyst trained on respective procedures?",
+                    "Was the analyst qualified for testing?",
+                    "Date of qualification:",
+                    "Was the analyst trained on entry exit /procedure?",
+                    "SOP No.& Trained On",
+                    "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections during analysis?",
+                    "Was the analyst followed gowning procedure?",
+                    "Was analyst performed colony counting correctly?"
+                                ];
+                    @endphp
                 <div class="row">
 
 
@@ -4060,24 +4060,24 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of sampling and Transportation procedures </div>
-@php
-    $Checklist_for_Review_of_sampling_and_Transports = [
-  "Name of the sampler:",
-  "Was the sampling followed approved procedure?",
-  "Reference procedure No. & Trained on",
-  "Were clean and sterile sampling accessories used for sampling?",
-  "Used before date:",
-  "Was the sampling area cleaned on day of sampling?",
-  "Name of the disinfectant used for cleaning?",
-  "When was the last cleaning date from date of sampling?",
-  "Was the cleaning operator trained on the cleaning procedure?",
-  "Was the sample collected in desired container and transported as per approved procedure?",
-  "Was there any discrepancy observed during sampling?",
-  "Did the samples transfer to the lab within time?",
-  "Were samples stored as per storage requirements specified in specifications/procedure?",
-  "Was there any maintenance work carried out before or during sampling in sampling area?"
-                ];
-@endphp
+                    @php
+                        $Checklist_for_Review_of_sampling_and_Transports = [
+                    "Name of the sampler:",
+                    "Was the sampling followed approved procedure?",
+                    "Reference procedure No. & Trained on",
+                    "Were clean and sterile sampling accessories used for sampling?",
+                    "Used before date:",
+                    "Was the sampling area cleaned on day of sampling?",
+                    "Name of the disinfectant used for cleaning?",
+                    "When was the last cleaning date from date of sampling?",
+                    "Was the cleaning operator trained on the cleaning procedure?",
+                    "Was the sample collected in desired container and transported as per approved procedure?",
+                    "Was there any discrepancy observed during sampling?",
+                    "Did the samples transfer to the lab within time?",
+                    "Were samples stored as per storage requirements specified in specifications/procedure?",
+                    "Was there any maintenance work carried out before or during sampling in sampling area?"
+                                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4127,21 +4127,21 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of Test Method & procedure: </div>
-@php
-    $Checklist_Review_of_Test_Method_proceds = [
-  "Was correct applicable specification/Test procedure/MOA/SOP used for analysis?",
-  "Verified specification/Test procedure/MOA No/SOP No.",
-  "Was the test procedure mentioned in specification/analytical procedure validated w.r.t. product concentration?",
-  "Was method used during testing evaluated with respect to method validation and historical data and found satisfactory?",
-  "Was negative control of the test procedure found satisfactory?",
-  "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
-  "Were the sample tested transferred and incubated at desired temp. as per approved procedure?",
-  "Were the test samples results observed within the valid time?",
-  "Were colonies counted correctly?",
-  "Was correct formula, dilution factor used for calculation of results?",
-  "Was the interpretation of test result done correct?"
-                ];
-@endphp
+                    @php
+                        $Checklist_Review_of_Test_Method_proceds = [
+                    "Was correct applicable specification/Test procedure/MOA/SOP used for analysis?",
+                    "Verified specification/Test procedure/MOA No/SOP No.",
+                    "Was the test procedure mentioned in specification/analytical procedure validated w.r.t. product concentration?",
+                    "Was method used during testing evaluated with respect to method validation and historical data and found satisfactory?",
+                    "Was negative control of the test procedure found satisfactory?",
+                    "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
+                    "Were the sample tested transferred and incubated at desired temp. as per approved procedure?",
+                    "Were the test samples results observed within the valid time?",
+                    "Were colonies counted correctly?",
+                    "Was correct formula, dilution factor used for calculation of results?",
+                    "Was the interpretation of test result done correct?"
+                                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4387,38 +4387,38 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of Media preparation, RTU media and Test Accessories </div>
-@php
-    $Checklist_for_Review_Media_prepara_RTU_medias = [
-  "Name of the media used in the analysis:",
-  "Review of the media COA",
-  "Date of media preparation",
-  "Lot No.",
-  "Use before date",
-  "Was GPT of the media complied for its acceptance criteria?",
-  "Was valid culture use in GPT of media?",
-  "Any events noticed with the same media used in other tests?",
-  "Was the media sterilized and sterilization cycle found satisfactory?",
-  "Sterilization cycle No?",
-  "Whether gloves used during testing were within the expiry date?",
-  "Did the analyst use clean/sterilized garments during testing?",
-  "Rinsing fluid/diluents used for testing:",
-  "Were rinsing fluid/diluents used for testing:",
-  "Were rinsing fluid/diluents used for testing within the validity?",
-  "Date of preparation or manufacturing:",
-  "Were the diluting or rinsing fluids visually inspected for any contamination before testing?",
-  "Lot number of diluents:",
-  "Use before date:",
-  "Type of filter used in filter testing:",
-  "Use before date of filter:",
-  "Lot number of filter:",
-  "Was sanitization filter assembly performed before execution of the testing?",
-  "Were the filtration assembly and filtration cups sterilized?",
-  "Whether sterilized petri plates used for testing?",
-  "Lot No./Batch No of petri plates:",
-  "Was temp. of media while pouring monitored and found satisfactory?",
-  "Was any microbial cultures handled in BSC/LAF prior to testing?"
-];
-@endphp
+                        @php
+                            $Checklist_for_Review_Media_prepara_RTU_medias = [
+                        "Name of the media used in the analysis:",
+                        "Review of the media COA",
+                        "Date of media preparation",
+                        "Lot No.",
+                        "Use before date",
+                        "Was GPT of the media complied for its acceptance criteria?",
+                        "Was valid culture use in GPT of media?",
+                        "Any events noticed with the same media used in other tests?",
+                        "Was the media sterilized and sterilization cycle found satisfactory?",
+                        "Sterilization cycle No?",
+                        "Whether gloves used during testing were within the expiry date?",
+                        "Did the analyst use clean/sterilized garments during testing?",
+                        "Rinsing fluid/diluents used for testing:",
+                        "Were rinsing fluid/diluents used for testing:",
+                        "Were rinsing fluid/diluents used for testing within the validity?",
+                        "Date of preparation or manufacturing:",
+                        "Were the diluting or rinsing fluids visually inspected for any contamination before testing?",
+                        "Lot number of diluents:",
+                        "Use before date:",
+                        "Type of filter used in filter testing:",
+                        "Use before date of filter:",
+                        "Lot number of filter:",
+                        "Was sanitization filter assembly performed before execution of the testing?",
+                        "Were the filtration assembly and filtration cups sterilized?",
+                        "Whether sterilized petri plates used for testing?",
+                        "Lot No./Batch No of petri plates:",
+                        "Was temp. of media while pouring monitored and found satisfactory?",
+                        "Was any microbial cultures handled in BSC/LAF prior to testing?"
+                        ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4465,16 +4465,16 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of Environmental condition in the testing area :</div>
-@php
-    $Checklist_Review_Environment_condition_in_tests = [
-  "Was temp. of testing area within limit during testing?",
-  "Was differential pressure of the area within the limit?",
-  "Were Environmental monitoring (Microbial) results of the LAF/BSC and its surrounding area within the limit on the day of testing and prior to the testing?",
-  "Was there any maintenance work performed in the testing area prior to the testing?",
-  "Was recovered isolate reviewed for its occurrence in the past, source, frequency and control taken against the isolate?",
-  "Were measures established and implemented to prevent contamination from personnel, material during testing reviewed and found satisfactory?"
-];
-@endphp
+                    @php
+                        $Checklist_Review_Environment_condition_in_tests = [
+                    "Was temp. of testing area within limit during testing?",
+                    "Was differential pressure of the area within the limit?",
+                    "Were Environmental monitoring (Microbial) results of the LAF/BSC and its surrounding area within the limit on the day of testing and prior to the testing?",
+                    "Was there any maintenance work performed in the testing area prior to the testing?",
+                    "Was recovered isolate reviewed for its occurrence in the past, source, frequency and control taken against the isolate?",
+                    "Were measures established and implemented to prevent contamination from personnel, material during testing reviewed and found satisfactory?"
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4529,27 +4529,27 @@ $Instrument_Equipment_Details = [
                 <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Review of Instrument/Equipment:</div>
-@php
-    $review_of_instrument_bioburden_and_waters =[
+                    @php
+                        $review_of_instrument_bioburden_and_waters =[
 
-    "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
-    "Autoclave :ID No",
-    "Qualification date and Next due date:",
-    "BSC/LAF ID:",
-    "Qualification date and Next due date:",
-    "Incubator :ID No.",
-    "Was temp. of incubator with in the limit during incubation period?",
-    "Qualification date and Next due date:",
-    "Was the BSC/LAF cleaned prior to testing?",
-    "Was HVAC system of testing area qualified ?",
-    "Qualification date and Next due date:",
-    "Was there any power failure during analysis ?",
-    "Any events associated with incubators, when the samples under incubation?",
-    "Pipettes ID:",
-    "Calibration date and Next due date:"
+                        "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
+                        "Autoclave :ID No",
+                        "Qualification date and Next due date:",
+                        "BSC/LAF ID:",
+                        "Qualification date and Next due date:",
+                        "Incubator :ID No.",
+                        "Was temp. of incubator with in the limit during incubation period?",
+                        "Qualification date and Next due date:",
+                        "Was the BSC/LAF cleaned prior to testing?",
+                        "Was HVAC system of testing area qualified ?",
+                        "Qualification date and Next due date:",
+                        "Was there any power failure during analysis ?",
+                        "Any events associated with incubators, when the samples under incubation?",
+                        "Pipettes ID:",
+                        "Calibration date and Next due date:"
 
-    ];
-@endphp
+                        ];
+                    @endphp
 
                 <div class="row">
                     <div class="col-12">
@@ -4606,29 +4606,29 @@ $Instrument_Equipment_Details = [
             <div class="inner-block-content">
                 <div class="sub-head">
                 Checklist for Disinfectant Details:</div>
-@php
-    $disinfectant_details_of_bioburden_and_water_tests = [
-    "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
-    "Autoclave :ID No",
-    "Qualification date and Next due date:",
-    "BSC/LAF ID:",
-    "Qualification date and Next due date:",
-    "Incubator :ID No.",
-    "Was temp. of incubator with in the limit during incubation period?",
-    "Qualification date and Next due date:",
-    "Was the BSC/LAF cleaned prior to testing?",
-    "Was HVAC system of testing area qualified?",
-    "Qualification date and Next due date:",
-    "Was there any power failure during analysis?",
-    "Any events associated with incubators, when the samples under incubation?",
-    "Pipettes ID:",
-    "Calibration date and Next due date:",
-    "Name of the disinfectant used for area cleaning",
-    "Was the disinfectant used for cleaning and sanitization validated?",
-    "Concentration:",
-    "Was the disinfectant prepared as per validated concentration?"
-                ];
-@endphp
+                    @php
+                        $disinfectant_details_of_bioburden_and_water_tests = [
+                        "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
+                        "Autoclave :ID No",
+                        "Qualification date and Next due date:",
+                        "BSC/LAF ID:",
+                        "Qualification date and Next due date:",
+                        "Incubator :ID No.",
+                        "Was temp. of incubator with in the limit during incubation period?",
+                        "Qualification date and Next due date:",
+                        "Was the BSC/LAF cleaned prior to testing?",
+                        "Was HVAC system of testing area qualified?",
+                        "Qualification date and Next due date:",
+                        "Was there any power failure during analysis?",
+                        "Any events associated with incubators, when the samples under incubation?",
+                        "Pipettes ID:",
+                        "Calibration date and Next due date:",
+                        "Name of the disinfectant used for area cleaning",
+                        "Was the disinfectant used for cleaning and sanitization validated?",
+                        "Concentration:",
+                        "Was the disinfectant prepared as per validated concentration?"
+                                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4727,13 +4727,13 @@ $Instrument_Equipment_Details = [
                     Checklist for Review of Training records Analyst Involved in Testing
 
                 </div>
-@php
-    $training_records_analyst_involvedIn_testing_microbial_asssays =[
-        "Was analyst trained on testing procedure ?",
-        "Was the analyst qualified for testing?",
-        "Date of qualification:",
-            ];
-@endphp
+                    @php
+                        $training_records_analyst_involvedIn_testing_microbial_asssays =[
+                            "Was analyst trained on testing procedure ?",
+                            "Was the analyst qualified for testing?",
+                            "Date of qualification:",
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -4812,15 +4812,15 @@ $Instrument_Equipment_Details = [
                 <div class="sub-head">
 
                     Checklist for Review of sample intactness before analysis ? </div>
-@php
-    $sample_intactness_before_analysis=[
-    "Was intact samples /sample container received in lab?",
-    "Was it verified by sample receipt persons at the time of receipt in lab?",
-    "Was the sample collected in desired container and transported as per approved procedure?",
-    "Was there any discrepancy observed during sampling?",
-    "Were sample stored as per storage requirements specified in specification/SOP?"
-                ];
-@endphp
+                    @php
+                        $sample_intactness_before_analysis=[
+                        "Was intact samples /sample container received in lab?",
+                        "Was it verified by sample receipt persons at the time of receipt in lab?",
+                        "Was the sample collected in desired container and transported as per approved procedure?",
+                        "Was there any discrepancy observed during sampling?",
+                        "Were sample stored as per storage requirements specified in specification/SOP?"
+                                    ];
+                    @endphp
 
                 <div class="row">
 
@@ -4921,18 +4921,18 @@ $Instrument_Equipment_Details = [
                 <div class="sub-head">
 
                     Checklist for Review of test methods & Procedures</div>
-@php
-$checklist_for_review_of_test_method_IMAs=[
-    "Was correct applicable specification and method of analysis used for analysis?",
-    "MOA & specification number?",
-    "Were the results of the other samples analyzed on the same day/time satisfactory?",
-    "Was the samples pipetted or loaded in appropriate quantity?",
-    "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
-    "Were the tested samples results observed within the valid time?",
-    "Were zones /readings measured correctly? (Applicable for Antibiotics –Microbial Assay)",
-    "Was formula, dilution factors used for calculation of results corrected?"
-                ];
-@endphp
+                        @php
+                        $checklist_for_review_of_test_method_IMAs=[
+                            "Was correct applicable specification and method of analysis used for analysis?",
+                            "MOA & specification number?",
+                            "Were the results of the other samples analyzed on the same day/time satisfactory?",
+                            "Was the samples pipetted or loaded in appropriate quantity?",
+                            "Were the samples tested transferred and incubated at desired temperature as per approved procedure?",
+                            "Were the tested samples results observed within the valid time?",
+                            "Were zones /readings measured correctly? (Applicable for Antibiotics –Microbial Assay)",
+                            "Was formula, dilution factors used for calculation of results corrected?"
+                                        ];
+                        @endphp
 
                     <div class="row">
 
@@ -5021,37 +5021,37 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
 
                     Checklist for Review of Media, Buffer, Standards preparation & test accessories </div>
-@php
-    $cr_of_media_buffer_st_IMAs = [
-    "Name of the media used in the analysis:",
-    "Did the COA of the media review and found satisfactory?",
-    "Date of media preparation:",
-    "Lot No.",
-    "Use before date:",
-    "Did appropriate size wells prepare in the media plates? (Applicable for Antibiotics –Microbial Assay)",
-    "Was the media sterilization and sanitization cycle found satisfactory?",
-    "Validated load pattern references documents No.",
-    "Was any contamination observed in test media /Buffers /Standard solution?",
-    "Was appropriate and cleaned glasswares used for testing?",
-    "Whether the volumetric flask calibrated?",
-    "References standard lot No./Batch No?",
-    "Reference standard expiry date?",
-    "Were the challenged samples stored in appropriate storage condition?",
-    "Was the standard weighty accurately as mentioned in test procedure?",
-    "Was the standard weighty accurately as mentioned in test procedure?",
-    "Any event observed with the references standard of the same batch?",
-    "Was the working standard prepared with appropriate dilutions?",
-    "Date of preparation:",
-    "Use before date:",
-    "Were sterilized petriplates used for testing?",
-    "Lot/Batch No. of petriplates",
-    "Size of the petriplates",
-    "Size of the petriplates",
-    "Dilutor prepared on:",
-    "Validity time of the dilutor:",
-    "Used on:"
-                ];
-@endphp
+                @php
+                    $cr_of_media_buffer_st_IMAs = [
+                    "Name of the media used in the analysis:",
+                    "Did the COA of the media review and found satisfactory?",
+                    "Date of media preparation:",
+                    "Lot No.",
+                    "Use before date:",
+                    "Did appropriate size wells prepare in the media plates? (Applicable for Antibiotics –Microbial Assay)",
+                    "Was the media sterilization and sanitization cycle found satisfactory?",
+                    "Validated load pattern references documents No.",
+                    "Was any contamination observed in test media /Buffers /Standard solution?",
+                    "Was appropriate and cleaned glasswares used for testing?",
+                    "Whether the volumetric flask calibrated?",
+                    "References standard lot No./Batch No?",
+                    "Reference standard expiry date?",
+                    "Were the challenged samples stored in appropriate storage condition?",
+                    "Was the standard weighty accurately as mentioned in test procedure?",
+                    "Was the standard weighty accurately as mentioned in test procedure?",
+                    "Any event observed with the references standard of the same batch?",
+                    "Was the working standard prepared with appropriate dilutions?",
+                    "Date of preparation:",
+                    "Use before date:",
+                    "Were sterilized petriplates used for testing?",
+                    "Lot/Batch No. of petriplates",
+                    "Size of the petriplates",
+                    "Size of the petriplates",
+                    "Dilutor prepared on:",
+                    "Validity time of the dilutor:",
+                    "Used on:"
+                                ];
+                @endphp
                 <div class="row">
 
                     <div class="col-12">
@@ -5131,16 +5131,16 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
 
                     Checklist for Review of Microbial cultures/Inoculation (Test organism) </div>
-@php
-    $CR_of_microbial_cultures_inoculation_IMAs=[
-    "Name of the test organism used:",
-    "Passage No.",
-    "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
-    "Was the culture suspension used within the valid time?",
-    "Was appropriate quantity of the inoculum challenged in the product?",
-    "Was the stock/test culture dilution store as per recommended condition before used"
-                ];
-@endphp
+                    @php
+                        $CR_of_microbial_cultures_inoculation_IMAs=[
+                        "Name of the test organism used:",
+                        "Passage No.",
+                        "Whether the culture suspension was prepared from valid source (Slant/Cryo vails)?",
+                        "Was the culture suspension used within the valid time?",
+                        "Was appropriate quantity of the inoculum challenged in the product?",
+                        "Was the stock/test culture dilution store as per recommended condition before used"
+                                    ];
+                    @endphp
 
                 <div class="row">
 
@@ -5220,14 +5220,14 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
 
                     Checklist for Review of Environmental conditions in the testing area </div>
-@php
-    $CR_of_Environmental_condition_in_testing_IMAs= [
-    "Was observed temp. of the area within limit",
-    "Was differential pressure of the area within limit:",
-    "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
-    "LAF/BSC ID:"
-                ];
-@endphp
+                    @php
+                        $CR_of_Environmental_condition_in_testing_IMAs= [
+                        "Was observed temp. of the area within limit",
+                        "Was differential pressure of the area within limit:",
+                        "Was viable environmental monitoring results of LAF /BSC (used for testing) found within limit?",
+                        "LAF/BSC ID:"
+                                    ];
+                    @endphp
 
                 <div class="row">
 
@@ -5319,24 +5319,24 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
 
                     Checklist for Review of instrument/equipment </div>
-@php
-    $CR_of_instru_equipment_IMAs = [
-    "Was there any malfunctioning of autoclave observed? verify the qualification and requalification of steam sterilizer?",
-    "Autoclave ID No:",
-    "Qualification date and Next due date:",
-    "Was any Microbial cultures handled in BSC/LAF prior testing",
-    "BSC/ULAF ID:",
-    "Did the equipment cleaned prior to testing?",
-    "Qualification date and Next due date:",
-    "Incubators ID:",
-    "Qualification date and Next due date:",
-    "Any events associated with incubators, when the samples under incubation.",
-    "Was there any power supply failure noted during analysis?",
-    "Pipette IDs",
-    "Calibration date & Next due date:",
-    "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause of this failure?"
-                ];
-@endphp
+                            @php
+                                $CR_of_instru_equipment_IMAs = [
+                                "Was there any malfunctioning of autoclave observed? verify the qualification and requalification of steam sterilizer?",
+                                "Autoclave ID No:",
+                                "Qualification date and Next due date:",
+                                "Was any Microbial cultures handled in BSC/LAF prior testing",
+                                "BSC/ULAF ID:",
+                                "Did the equipment cleaned prior to testing?",
+                                "Qualification date and Next due date:",
+                                "Incubators ID:",
+                                "Qualification date and Next due date:",
+                                "Any events associated with incubators, when the samples under incubation.",
+                                "Was there any power supply failure noted during analysis?",
+                                "Pipette IDs",
+                                "Calibration date & Next due date:",
+                                "Was any breakdown/maintenance observed in any instrument/equipment/system, which may cause of this failure?"
+                                            ];
+                            @endphp
 
                 <div class="row">
 
@@ -5427,13 +5427,13 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
 
                     Disinfectant Details: </div>
-@php
-    $disinfectant_details_IMAs = [
-    "Name of the disinfectant used for cleaning of testing area:",
-    "Was the disinfectant prepared as per validated concentration?",
-    "Use before date of the disinfectant used for cleaning:"
-                ];
-@endphp
+                    @php
+                        $disinfectant_details_IMAs = [
+                        "Name of the disinfectant used for cleaning of testing area:",
+                        "Was the disinfectant prepared as per validated concentration?",
+                        "Use before date of the disinfectant used for cleaning:"
+                                    ];
+                    @endphp
 
                 <div class="row">
 
@@ -5598,18 +5598,18 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for review of Training records Analyst Involved in monitoring
                 </div>
-@php
-    $CR_of_training_rec_anaylst_in_monitoring_CIEMs = [
-    "Is the analyst trained for Environmental monitoring?",
-    "Was the analyst qualified for Personnel qualification?",
-    "Date of qualification:",
-    "Was the analyst trained on entry exit /procedure/In production area or any monitoring area?",
-    "SOP No.:",
-    "Was an analyst /sampling persons suffering from any ailment such as cough/cold or open wound or skin infections during analysis?",
-    "Was the analyst followed gowning procedure properly?",
-    "Was analyst performed colony counting correctly?"
-            ];
-@endphp
+                    @php
+                        $CR_of_training_rec_anaylst_in_monitoring_CIEMs = [
+                        "Is the analyst trained for Environmental monitoring?",
+                        "Was the analyst qualified for Personnel qualification?",
+                        "Date of qualification:",
+                        "Was the analyst trained on entry exit /procedure/In production area or any monitoring area?",
+                        "SOP No.:",
+                        "Was an analyst /sampling persons suffering from any ailment such as cough/cold or open wound or skin infections during analysis?",
+                        "Was the analyst followed gowning procedure properly?",
+                        "Was analyst performed colony counting correctly?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5657,15 +5657,15 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for sample details:
                 </div>
-@php
-    $Check_for_Sample_details_CIEMs =[
-    "Was the plate verified at the time of monitoring?",
-    "Was the plate transported as per approved procedure?",
-    "Was the correct location ID & Room Name mentioned on plate exposed?",
-    "What is the grade of plate exposed area?",
-    "Is area crossing Alert limit or action limit?"
-            ];
-@endphp
+                    @php
+                        $Check_for_Sample_details_CIEMs =[
+                        "Was the plate verified at the time of monitoring?",
+                        "Was the plate transported as per approved procedure?",
+                        "Was the correct location ID & Room Name mentioned on plate exposed?",
+                        "What is the grade of plate exposed area?",
+                        "Is area crossing Alert limit or action limit?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5711,18 +5711,18 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for comparison of results with other parameters:
                 </div>
-@php
-    $Check_for_comparision_of_results_CIEMs =  [
-    "Was any Excursions in other settle plate exposure?",
-    "Was any Excursions in other active air plate sampling?",
-    "Was any Excursions in surface monitoring?",
-    "Was any Excursions in personnel monitoring on same day?",
-    "Is results of next day monitoring within the acceptance?",
-    "Was negative control of the test procedure found satisfactory?",
-    "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
-    "Were the plate transferred and incubated at desired temp.as per approved procedure?"
-            ];
-@endphp
+                        @php
+                            $Check_for_comparision_of_results_CIEMs =  [
+                            "Was any Excursions in other settle plate exposure?",
+                            "Was any Excursions in other active air plate sampling?",
+                            "Was any Excursions in surface monitoring?",
+                            "Was any Excursions in personnel monitoring on same day?",
+                            "Is results of next day monitoring within the acceptance?",
+                            "Was negative control of the test procedure found satisfactory?",
+                            "Were the results of the other samples analyzed on the same day/time by using same media, reagents and accessories found satisfactory?",
+                            "Were the plate transferred and incubated at desired temp.as per approved procedure?"
+                                    ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5770,15 +5770,15 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for details of media dehydrated media used:
                 </div>
-@php
-    $checklist_for_media_dehydrated_CIEMs = [
-    "Name of media used for in the analysis:",
-    "Did the COA of the media checked and found satisfactory?",
-    "Media Lot. No.",
-    "Media Qualified date /Qualified By",
-    "Media expiry date"
-            ];
-@endphp
+                        @php
+                            $checklist_for_media_dehydrated_CIEMs = [
+                            "Name of media used for in the analysis:",
+                            "Did the COA of the media checked and found satisfactory?",
+                            "Media Lot. No.",
+                            "Media Qualified date /Qualified By",
+                            "Media expiry date"
+                                    ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5829,18 +5829,18 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for media preparation details and sterilization :
                 </div>
-@php
-    $checklist_for_media_prepara_sterilization_CIEMs=  [
-    "Date of media preparation",
-    "Media Lot. No.",
-    "Media prepared date",
-    "Media expiry date",
-    "Preincubation of media",
-    "Was the media sterilized and sterilization cycle found satisfactory?",
-    "Sterilization cycle No.:",
-    "Were cycle sterilization parameters found satisfactory?"
-            ];
-@endphp
+                        @php
+                            $checklist_for_media_prepara_sterilization_CIEMs=  [
+                            "Date of media preparation",
+                            "Media Lot. No.",
+                            "Media prepared date",
+                            "Media expiry date",
+                            "Preincubation of media",
+                            "Was the media sterilized and sterilization cycle found satisfactory?",
+                            "Sterilization cycle No.:",
+                            "Were cycle sterilization parameters found satisfactory?"
+                                    ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5883,13 +5883,13 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for review of environmental conditions in the testing area
                 </div>
-@php
-    $CR_of_En_condition_in_testing_CIEMs =[
-    "Is temperature of MLT testing area within the acceptance?",
-    "Was the differential pressure of the area within limit?",
-    "While media plate preparation is LAF working satisfactory?"
-            ];
-@endphp
+                    @php
+                        $CR_of_En_condition_in_testing_CIEMs =[
+                        "Is temperature of MLT testing area within the acceptance?",
+                        "Was the differential pressure of the area within limit?",
+                        "While media plate preparation is LAF working satisfactory?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5937,14 +5937,14 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for disinfectant Details:
                 </div>
-@php
-    $check_for_disinfectant_CIEMs =  [
-    "Name of the disinfectant used for area cleaning",
-    "Was the disinfectant used for cleaning and sanitization validated?",
-    "Concentration:",
-    "Was the disinfectant prepared as per validated concentration?"
-            ];
-@endphp
+                    @php
+                        $check_for_disinfectant_CIEMs =  [
+                        "Name of the disinfectant used for area cleaning",
+                        "Was the disinfectant used for cleaning and sanitization validated?",
+                        "Concentration:",
+                        "Was the disinfectant prepared as per validated concentration?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -5988,14 +5988,14 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for fogging details :
                 </div>
-@php
-    $checklist_for_fogging_CIEMs = [
-    "Name of the fogging agents used for area fogging",
-    "Was the fogging agent used for fogging and validated?",
-    "Concentration:",
-    "Was the fogging agent prepared as per validated concentration?"
-            ];
-@endphp
+                        @php
+                            $checklist_for_fogging_CIEMs = [
+                            "Name of the fogging agents used for area fogging",
+                            "Was the fogging agent used for fogging and validated?",
+                            "Concentration:",
+                            "Was the fogging agent prepared as per validated concentration?"
+                                    ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6038,12 +6038,12 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for review of Test Method & procedure:
                 </div>
-@php
-    $CR_of_test_method_CIEMs=[
-    "Was the test method, monitoring SOP followed correctly?",
-    "SOP No.:"
-            ];
-@endphp
+                    @php
+                        $CR_of_test_method_CIEMs=[
+                        "Was the test method, monitoring SOP followed correctly?",
+                        "SOP No.:"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6090,16 +6090,16 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for review of microbial isolates /Contamination (If completed at the time of filling of checklist, if not then this details shall be updated upon completion of identification)
                 </div>
-@php
-    $CR_microbial_isolates_contamination_CIEMs = [
-    "Were the contaminants/ isolates subculture?",
-    "Attach the colony morphology details:",
-    "Was recovered isolates (From sample), Identified Gram nature of the organism(GP/GN)",
-    "Gram nature of the organism (GP/GN)",
-    "(Attach the details, if more than single organism)",
-    "Review the isolates for its occurrence in the past, source, frequency and controls taken against the isolates."
-            ];
-@endphp
+                        @php
+                            $CR_microbial_isolates_contamination_CIEMs = [
+                            "Were the contaminants/ isolates subculture?",
+                            "Attach the colony morphology details:",
+                            "Was recovered isolates (From sample), Identified Gram nature of the organism(GP/GN)",
+                            "Gram nature of the organism (GP/GN)",
+                            "(Attach the details, if more than single organism)",
+                            "Review the isolates for its occurrence in the past, source, frequency and controls taken against the isolates."
+                                    ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6146,26 +6146,26 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for review of Instrument/Equipment:
                 </div>
-@php
-    $CR_of_instru_equip_CIEMs = [
-    "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
-    "Is used incubators are qualified?",
-    "Incubator :ID No.",
-    "Qualification date:",
-    "Next due date:",
-    "Is used Colony counter qualified?",
-    "Colony counter ID:",
-    "Qualification date:",
-    "Next due date:",
-    "Is used Air sampler qualified?",
-    "Air sampler ID",
-    "Validation date:",
-    "Next due date:",
-    "Was temp. of incubator with in the limit during incubation period?",
-    "Was HVAC system of testing area qualified?",
-    "Qualification date and Next due date:"
-            ];
-@endphp
+                    @php
+                        $CR_of_instru_equip_CIEMs = [
+                        "Were there any preventative maintenances/ breakdowns/ changing of equipment parts etc) for the equipment’s used in the testing?",
+                        "Is used incubators are qualified?",
+                        "Incubator :ID No.",
+                        "Qualification date:",
+                        "Next due date:",
+                        "Is used Colony counter qualified?",
+                        "Colony counter ID:",
+                        "Qualification date:",
+                        "Next due date:",
+                        "Is used Air sampler qualified?",
+                        "Air sampler ID",
+                        "Validation date:",
+                        "Next due date:",
+                        "Was temp. of incubator with in the limit during incubation period?",
+                        "Was HVAC system of testing area qualified?",
+                        "Qualification date and Next due date:"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6212,12 +6212,12 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                 Checklist for trend Analysis:
                 </div>
-@php
-    $Ch_Trend_analysis_CIEMs = [
-        "Is trend of current month within acceptance?",
-        "Is trend of previous month within acceptance?",
-    ]
-@endphp
+                        @php
+                            $Ch_Trend_analysis_CIEMs = [
+                                "Is trend of current month within acceptance?",
+                                "Is trend of previous month within acceptance?",
+                            ]
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6307,16 +6307,16 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Analyst training & Procedure
                 </div>
-@php
-    $checklist_for_analyst_training_CIMTs =  [
-    "Is the analyst trained/qualified GPT test procedure?",
-    "Date of qualification:",
-    "Were appropriate precaution taken by the analyst throughout the test?",
-    "Analyst interview record.......",
-    "Was an analyst persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-    "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?"
-            ];
-@endphp
+                    @php
+                        $checklist_for_analyst_training_CIMTs =  [
+                        "Is the analyst trained/qualified GPT test procedure?",
+                        "Date of qualification:",
+                        "Were appropriate precaution taken by the analyst throughout the test?",
+                        "Analyst interview record.......",
+                        "Was an analyst persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+                        "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6372,17 +6372,17 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Comparison of results (With same & Previous Day Media GPT) :
                 </div>
-@php
-    $checklist_for_comp_results_CIMTs=  [
-    "Which media GPT performed at previous day:",
-    "Were dehydrated and ready to use media used for GPT?",
-    "Lot No./Batch No:",
-    "Date /Time of Incubation:",
-    "Date/Time of Release:",
-    "Results of previous day GPT record?",
-    "Results of other plates released for GPT is within acceptance?"
-            ];
-@endphp
+                    @php
+                        $checklist_for_comp_results_CIMTs=  [
+                        "Which media GPT performed at previous day:",
+                        "Were dehydrated and ready to use media used for GPT?",
+                        "Lot No./Batch No:",
+                        "Date /Time of Incubation:",
+                        "Date/Time of Release:",
+                        "Results of previous day GPT record?",
+                        "Results of other plates released for GPT is within acceptance?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6442,17 +6442,17 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Culture verification ?
                 </div>
-@php
-    $checklist_for_Culture_verification_CIMTs = [
-    "Is culture COA checked?",
-    "Was the correct Inoculum used for GPT?",
-    "Was used culture within culture due date?",
-    "Date of culture dilution:",
-    "Due date of culture dilution:",
-    "Was the storage condition of culture is appropriate?",
-    "Was culture strength used within acceptance range?"
-            ];
-@endphp
+                    @php
+                        $checklist_for_Culture_verification_CIMTs = [
+                        "Is culture COA checked?",
+                        "Was the correct Inoculum used for GPT?",
+                        "Was used culture within culture due date?",
+                        "Date of culture dilution:",
+                        "Due date of culture dilution:",
+                        "Was the storage condition of culture is appropriate?",
+                        "Was culture strength used within acceptance range?"
+                                ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6509,14 +6509,14 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Sterilize Accessories :
                 </div>
-@php
-    $sterilize_accessories_CIMTs= [
-    "Was the media sterilized and sterilization cycle found satisfactory?",
-    "Sterilization cycle No.:",
-    "Whether disposable sterilized gloves used during testing were within the expiry date?",
-    "Results of other plates released for GPT is within acceptance?"
-];
-@endphp
+                        @php
+                            $sterilize_accessories_CIMTs= [
+                            "Was the media sterilized and sterilization cycle found satisfactory?",
+                            "Sterilization cycle No.:",
+                            "Whether disposable sterilized gloves used during testing were within the expiry date?",
+                            "Results of other plates released for GPT is within acceptance?"
+                        ];
+                        @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6574,27 +6574,27 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Instrument/Equipment Details:
                 </div>
-@php
-    $checklist_for_intrument_equip_last_CIMTs = [
-    "Was the equipment used, calibrated/qualified and within the specified range?",
-    "Biosafety equipment ID:",
-    "Validation date:",
-    "Next due date:",
-    "Colony counter equipment ID:",
-    "Calibration date:",
-    "Was used pipettes within calibration?",
-    "Pipettes ID:",
-    "Calibration date",
-    "Was the refrigerator used for storage of culture is validated?",
-    "Refrigerator (2-8̊ C) ID:",
-    "Validation date:",
-    "Incubator ID:",
-    "Validation date and next due date:",
-    "Was there any power failure noticed during the incubation of samples in the heating block?",
-    "Were any other media GPT tested along with this sample?",
-    "If yes, whether those media GPT results found satisfactory?"
-];
-@endphp
+                    @php
+                        $checklist_for_intrument_equip_last_CIMTs = [
+                        "Was the equipment used, calibrated/qualified and within the specified range?",
+                        "Biosafety equipment ID:",
+                        "Validation date:",
+                        "Next due date:",
+                        "Colony counter equipment ID:",
+                        "Calibration date:",
+                        "Was used pipettes within calibration?",
+                        "Pipettes ID:",
+                        "Calibration date",
+                        "Was the refrigerator used for storage of culture is validated?",
+                        "Refrigerator (2-8̊ C) ID:",
+                        "Validation date:",
+                        "Incubator ID:",
+                        "Validation date and next due date:",
+                        "Was there any power failure noticed during the incubation of samples in the heating block?",
+                        "Were any other media GPT tested along with this sample?",
+                        "If yes, whether those media GPT results found satisfactory?"
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6653,14 +6653,14 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Disinfectant Details:
                 </div>
-@php
-    $disinfectant_details_last_CIMTs = [
-    "Name of the disinfectant used for area cleaning",
-    "Was the disinfectant used for cleaning and sanitization validated?",
-    "Concentration:",
-    "Was the disinfectant prepared as per validated concentration?"
-];
-@endphp
+                    @php
+                        $disinfectant_details_last_CIMTs = [
+                        "Name of the disinfectant used for area cleaning",
+                        "Was the disinfectant used for cleaning and sanitization validated?",
+                        "Concentration:",
+                        "Was the disinfectant prepared as per validated concentration?"
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">
@@ -6714,13 +6714,13 @@ $checklist_for_review_of_test_method_IMAs=[
                 <div class="sub-head">
                     Checklist for Results and Calculation :
                 </div>
-@php
-    $checklist_for_result_calculation_CIMTs = [
-    "Were results taken properly?",
-    "Raw data checked?",
-    "Was formula dilution factor used for calculating the results corrected?"
-];
-@endphp
+                    @php
+                        $checklist_for_result_calculation_CIMTs = [
+                        "Were results taken properly?",
+                        "Raw data checked?",
+                        "Was formula dilution factor used for calculating the results corrected?"
+                    ];
+                    @endphp
                 <div class="row">
                     <div class="col-12">
                         <div class="group-input">

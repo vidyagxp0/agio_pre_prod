@@ -416,31 +416,18 @@ Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.ind
 Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
+//============================================OOS MICRO===================================
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
 Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
 Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
-
+//============================================ OOS MICRO ROUTE CLOSE ===================================
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================
 Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
 // ====================OOS/OOT======================================
-
-
-
-//============================================OOS MICRO===================================
-////-------------------------------------------------------------------------------------
-Route::get('oos_micro',[OOSMicroController::class,'index']);
-Route::post('oos_micro_store',[OOSMicroController::class,'store']);
-
-
-
-
-
-/////-------------------------------------------------------------------------------------
-//============================================OOS MICRO===================================
 
 
 
