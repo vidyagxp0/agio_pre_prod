@@ -563,14 +563,13 @@
 
                 <button id="CAPA_button" class="cctablinks" style="display: none"
                     onclick="openCity(event, 'CCForm10')">CAPA</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('failureInvestigationStore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
