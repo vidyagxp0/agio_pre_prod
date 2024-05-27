@@ -407,18 +407,34 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="OOC Logged On"> Complaint Reported On </label>
-
+                                        <label for="OOC Logged On">Complaint Reported On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
-                                            <input type="date" name="complaint_reported_on_gi"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="" />
+                                            <input type="text" id="compalint_dat" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" id="complaint_date_picker" name="complaint_reported_on_gi" class="hide-input" style="display: none" />
                                         </div>
-
-
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', (event) => {
+                                        const dateInput = document.getElementById('complaint_date_picker');
+                                        const today = new Date().toISOString().split('T')[0];
+                                        dateInput.setAttribute('max', today);
+                                
+                                        // Show the date picker when clicking on the readonly input
+                                        const readonlyInput = document.getElementById('compalint_dat');
+                                        readonlyInput.addEventListener('click', () => {
+                                            dateInput.style.display = 'block';
+                                            dateInput.focus();
+                                        });
+                                
+                                        // Update the readonly input when a date is selected
+                                        dateInput.addEventListener('change', () => {
+                                            readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                            dateInput.style.display = 'none';
+                                        });
+                                    });
+                                </script>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Details Of Nature Market Complaint">Details Of Nature Market
@@ -967,6 +983,7 @@
                                                         <th>Department</th>
                                                         <th>Sign</th>
                                                         <th>Date</th>
+                                                        <th>Action</th>
 
 
                                                     </tr>
@@ -979,6 +996,7 @@
                                                     <td><input type="text" name="Team_Members[0][department_tm]"></td>
                                                     <td><input type="text" name="Team_Members[0][sign_tm]"></td>
                                                     <td><input type="date" name="Team_Members[0][date_tm]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
 
 
 
@@ -1001,6 +1019,8 @@
                                                     '<td><input type="text" name="Department[]"></td>' +
                                                     '<td><input type="text" name="Sign[]"></td>' +
                                                     '<td><input type="date" name="Date[]"></td>' +
+                                                   '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+
                                                     '</tr>';
 
                                                 return html;
@@ -1037,6 +1057,7 @@
                                                         <th>Department</th>
                                                         <th>Sign</th>
                                                         <th>Date</th>
+                                                        <th>Action</th>
 
 
                                                     </tr>
@@ -1049,6 +1070,7 @@
                                                     <td><input type="text" name="Report_Approval[0][department_rrv]"></td>
                                                     <td><input type="text" name="Report_Approval[0][sign_rrv]"></td>
                                                     <td><input type="date" name="Report_Approval[0][date_rrv]"></td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
 
 
 
@@ -1075,6 +1097,7 @@
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][date_rrv]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                    
                                                     '</tr>';
                                                 return html;
@@ -1184,7 +1207,7 @@
                                                     <th>Pack Profile</th>
                                                     <th>Released Quantity</th>
                                                     <th>Remarks</th>
-
+                                                    <th></th>
 
 
                                                 </tr>
