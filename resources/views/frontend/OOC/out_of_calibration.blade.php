@@ -20,7 +20,7 @@ $users = DB::table('users')->get();
         </div> --}}
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        / Out Of Calibration
+        / OOC_Out Of Calibration
     </div>
 </div>
 
@@ -191,8 +191,8 @@ $users = DB::table('users')->get();
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="RLS Record Number"><b>Record Number</b></label>
-                                    <input disabled type="number" name="record_number" value="" >
-                                    {{-- <input disabled type="number" name="record_number" value=""> --}}
+                                    <input disabled type="text" name="record_number" >
+                                    {{-- <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number }}"> --}}
                                   
                                 </div>
                             </div>
@@ -241,31 +241,28 @@ $users = DB::table('users')->get();
 
 
                             <div class="col-lg-6">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="Initiator_Group" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('Initiator_Group') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('Initiator_Group') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('Initiator_Group') == "CL") selected @endif>Central Laboratory</option>
-
-                                            <option value="TT"  @if(old('Initiator_Group') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('Initiator_Group') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('Initiator_Group') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('Initiator_Group') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('Initiator_Group') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('Initiator_Group') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('Initiator_Group') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('Initiator_Group') == "BA") selected @endif>Business Administration</option>
-                                        </select>
-                                    </div>
+                                <div class="group-input">
+                                    <label for="Initiator Group"><b>Initiator Group</b></label>
+                                    <select name="Initiator_Group" id="initiator_group">
+                                        <option value="">-- Select --</option>
+                                        <option value="CQA">Corporate Quality Assurance</option>
+                                        <option value="QAB">Quality Assurance Biopharma</option>
+                                        <option value="CQC">Central Quality Control</option>
+                                        <option value="MANU">Manufacturing</option>
+                                        <option value="PSG">Plasma Sourcing Group</option>
+                                        <option value="CS">Central Stores</option>
+                                        <option value="ITG">Information Technology Group</option>
+                                        <option value="MM">Molecular Medicine</option>
+                                        <option value="CL">Central Laboratory</option>
+                                        <option value="TT">Tech team</option>
+                                        <option value="QA">Quality Assurance</option>
+                                        <option value="QM">Quality Management</option>
+                                        <option value="IA">IT Administration</option>
+                                        <option value="ACC">Accounting</option>
+                                        <option value="LOG">Logistics</option>
+                                        <option value="SM">Senior Management</option>
+                                        <option value="BA">Business Administration</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -321,7 +318,7 @@ $users = DB::table('users')->get();
                                     <label for="Initiator Group">Initiated Through</label>
                                     <div><small class="text-primary">Please select related information</small></div>
                                     <select name="initiated_through" onchange="">
-                                        <option value="0">-- select --</option>
+                                        <option value="">-- select --</option>
                                         <option value="recall">Recall</option>
                                         <option value="return">Return</option>
                                         <option value="deviation">Deviation</option>
@@ -330,19 +327,6 @@ $users = DB::table('users')->get();
                                         <option value="lab-incident">Lab Incident</option>
                                         <option value="improvement">Improvement</option>
                                         <option value="others">Others</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                    <select name="affected_document_closure" id="affected_document_closure">
-                                        <option value="0">-- Select --</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        <option value="NA">NA</option>
-                                      
                                     </select>
                                 </div>
                             </div>
@@ -358,19 +342,7 @@ $users = DB::table('users')->get();
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Is Repeat"><b>Is Repeat</b></label>
-                                    <select name="is_repeat_ooc" id="is_repeat_ooc">
-                                        <option value="0">-- Select --</option>
-                                        <option value="Yes">Yes</option>
-                                        <option value="No">No</option>
-                                        {{-- <option value="NA">NA</option> --}}
-                                      
-                                    </select>
-                                </div>
-                            </div>
-                            {{-- <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Initiator Group"></label>
+                                    <label for="Initiator Group">Is Repeat</label>
                                     <select name="is_repeat_ooc" onchange="">
                                         <option value="0">-- select --</option>
                                         <option value="YES">Yes</option>
@@ -378,7 +350,7 @@ $users = DB::table('users')->get();
 
                                     </select>
                                 </div>
-                            </div> --}}
+                            </div>
 
                             
                             <div class="col-md-12 mb-3">
@@ -474,15 +446,14 @@ $users = DB::table('users')->get();
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_name]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_id]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][remarks]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][calibration]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][results]"></td>
+                                                <td><input type="text" name="Instrument_Name[]"></td>
+                                                <td><input type="text" name="Instrument_ID[]"></td>
+                                                <td><input type="text" name="Remarks[]"></td>
+                                                <td><input type="text" name="Calibration_Parameter[]"></td>
+                                                <td><input type="text" name="Acceptance_Criteria[]"></td>
+                                                <td><input type="text" name="Results[]"></td>
 
                                             </tbody>
                                         </table>
@@ -527,7 +498,6 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initial Attachments">HOD Attachement</label>
@@ -745,8 +715,8 @@ $users = DB::table('users')->get();
                             <div class="group-input">
                                 <label for="Initiator Group">Assignable root cause found?</label>
                                 <select name="is_repeat_assingable_ooc" onchange="">
-                                    <option value="YES">YES</option>
-                                    <option value="NO">NO</option>
+                                    <option value="YES">-- select --</option>
+                                    <option value="NO"></option>
 
                                 </select>
                             </div>
@@ -1073,8 +1043,8 @@ $users = DB::table('users')->get();
                                 <label for="Initiator Group">CAPA Type?</label>
                                 <select name="is_repeat_capas_ooc" onchange="">
                                     <option value="0">-- select --</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
+                                    <option value="Yes"></option>
+                                    <option value="No"></option>
                                     
 
                                 </select>
@@ -1190,21 +1160,16 @@ $users = DB::table('users')->get();
                                 <label for="Initial Attachments">Details of Equipment Rectification</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                 {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
-                                
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="initial_attachment_closuress_ooc"></div>
+                                    <div class="file-attachment-list" id="initial_attachment_closure_ooc"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="initial_attachment_closuress_ooc" name="initial_attachment_closuress_ooc[]"
-                                            oninput="addMultipleFiles(this, 'initial_attachment_closuress_ooc')" multiple>
+                                        <input type="file" id="initial_attachment_closure_ooc" name="initial_attachment_closure_ooc[]"
+                                            oninput="addMultipleFiles(this, 'initial_attachment_closure_ooc')" multiple>
                                     </div>
                                 </div>
-                                
                             </div>
                         </div>
-                       
-                       
-                        
                         <div class="col-6">
                             <div class="group-input">
                                 <label for="Short Description">Document Code

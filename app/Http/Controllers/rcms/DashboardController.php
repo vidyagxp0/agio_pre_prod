@@ -387,10 +387,9 @@ class DashboardController extends Controller
 
             array_push($table, [
                 "id" => $data->id,
-                "due_date" => $data->due_date,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->id,
-                "type" => "Out_Of_Calibration",
+                "record" => $data->record,
+                "type" => "OOC",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
@@ -934,13 +933,7 @@ class DashboardController extends Controller
             $audit = "riskAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Out_Of_Calibration") {
-            $data = OutOfCalibration::find($id);
-            $single = "OOCSingleReport/" . $data->id;
-            $audit = "ooc_Audit_Report/" . $data->id;
-            $division = QMSDivision::find($data->division_id);
-            $division_name = $division->name;
-        }elseif ($type == "Lab-Incident") {
+        } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
