@@ -207,6 +207,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('incident',[IncidentController::class,'incidentIndex'])->name('incident');
             Route::post('incidentstore',[IncidentController::class,'store'])->name('incidentstore');
             Route::get('incidentshow/{id}',[IncidentController::class, 'incidentShow'])->name('incidentShow');
+            Route::post('incident-update',[IncidentController::class,'update'])->name('incident-update');
 
 
             /********************* Fallure Investigation Routes Starts *******************/

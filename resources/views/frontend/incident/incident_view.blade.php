@@ -529,11 +529,11 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }}/Deviation
+            {{ Helpers::getDivisionName(session()->get('division')) }}/Incident
         </div>
     </div>
 
-    <!-- Deviation Form Starts -->
+    <!-- Incident Form Starts -->
 
     <div id="change-control-view">
         <div class="container-fluid">
@@ -549,8 +549,8 @@
                                 ->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                             $cftRolesAssignUsers = collect($userRoleIds); //->contains(fn ($roleId) => $roleId >= 22 && $roleId <= 33);
-                            $cftUsers = DB::table('deviationcfts')
-                                ->where(['deviation_id' => $data->id])
+                            $cftUsers = DB::table('incident_cfts')
+                                ->where(['incident_id' => $data->id])
                                 ->first();
 
                             // Define the column names
@@ -598,9 +598,9 @@
     }
 }
 
-                            $cftCompleteUser = DB::table('deviationcfts_response')
+                            $cftCompleteUser = DB::table('incident_cft_responses')
                                 ->whereIn('status', ['In-progress', 'Completed'])
-                                ->where('deviation_id', $data->id)
+                                ->where('incident_id', $data->id)
                                 ->where('cft_user_id', Auth::user()->id)
                                 ->whereNull('deleted_at')
                                 ->first();
@@ -608,7 +608,7 @@
                         @endphp
                         <!-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> -->
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('DeviationAuditTrial', $data->id) }}">Audit Trail </a> </button>
+                                href="#">Audit Trail </a> </button>
 
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -888,7 +888,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                 </div>
 
-                <form id="auditForm" action="{{ route('deviationupdate', $data->id) }}" method="post"
+                <form id="auditForm" action="{{ route('incident-update', $data->id) }}" method="post"
                     enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="form_name" id="formNameField" value="">
@@ -1057,7 +1057,7 @@
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="Short Description required">Repeat Deviation? <span
+                                            <label for="Short Description required">Repeat Incident? <span
                                                     class="text-danger">*</span></label>
                                             <select name="short_description_required"
                                                 {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -1134,27 +1134,27 @@
                                     </script>
                                     <div class="col-6">
                                         <div class="group-input">
-                                            <label for="severity-level">Deviation Observed On <span
+                                            <label for="severity-level">Incident Observed On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span> -->
-                                            <input type="date" id="Deviation_date"
+                                            <input type="date" id="incident_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                name="Deviation_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ old('Deviation_date') ? old('Deviation_date') : $data->Deviation_date }}">
-                                            @error('Deviation_date')
+                                                name="incident_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ old('incident_date') ? old('incident_date') : $data->incident_date }}">
+                                            @error('incident_date')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
                                     <div class="col-lg-6 new-time-data-field">
                                         <div class="group-input input-time">
-                                            <label for="deviation_time">Deviation Observed On (Time) <span
+                                            <label for="incident_time">Incident Observed On (Time) <span
                                                     class="text-danger">*</span></label>
                                             <input type="text"
-                                                name="deviation_time"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                id="deviation_time"
-                                                value="{{ old('deviation_time') ? old('deviation_time') : $data->deviation_time }}">
-                                            @error('deviation_time')
+                                                name="incident_time"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                id="incident_time"
+                                                value="{{ old('incident_time') ? old('incident_time') : $data->incident_time }}">
+                                            @error('incident_time')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -1164,7 +1164,7 @@
                                     <div class="col-lg-6 new-time-data-field">
                                         <div
                                             class="group-input input-time @error('Delay_Justification') @else delayJustificationBlock @enderror">
-                                            <label for="deviation_time">Delay Justification <span class="text-danger">*</span></label>
+                                            <label for="incident_time">Delay Justification <span class="text-danger">*</span></label>
                                             <textarea id="Delay_Justification" name="Delay_Justification">{{ $data->Delay_Justification }}</textarea>
                                         </div>
                                         @error('Delay_Justification')
@@ -1175,7 +1175,7 @@
 
 
                                     <script>
-                                        flatpickr("#deviation_time", {
+                                        flatpickr("#incident_time", {
                                             enableTime: true,
                                             noCalendar: true,
                                             dateFormat: "H:i", // 24-hour format without AM/PM
@@ -1190,7 +1190,7 @@
                                                 $users = DB::table('users')->get();
                                             @endphp
 
-                                            <label for="If Other">Deviation Observed By<span
+                                            <label for="If Other">Incident Observed By<span
                                                     class="text-danger">*</span></label>
                                             <input type="text" name="Facility" placeholder="Select Facility Name"
                                                 value="{{ $data->Facility }}">
@@ -1201,15 +1201,15 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator Group">Deviation Reported On <span
+                                            <label for="Initiator Group">Incident Reported On <span
                                                     class="text-danger">*</span></label>
                                             <!-- <div><small class="text-primary">Please select related information</small></div> -->
-                                            <input type="date" id="Deviation_reported_date"
+                                            <input type="date" id="incident_reported_date"
                                                 max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                name="Deviation_reported_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_reported_date }}">
+                                                name="incident_reported_date"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->incident_reported_date }}">
                                         </div>
-                                        @error('Deviation_reported_date')
+                                        @error('incident_reported_date')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -1224,18 +1224,18 @@
                                         });
 
                                         function checkDateDifference() {
-                                            let deviationDate = $('input[name=Deviation_date]').val();
-                                            let reportedDate = $('input[name=Deviation_reported_date]').val();
+                                            let incidentDate = $('input[name=incident_date]').val();
+                                            let reportedDate = $('input[name=incident_reported_date]').val();
 
-                                            if (!deviationDate || !reportedDate) {
-                                                console.error('Deviation date or reported date is missing.');
+                                            if (!incidentDate || !reportedDate) {
+                                                console.error('Incident date or reported date is missing.');
                                                 return;
                                             }
 
-                                            let deviationDateMoment = moment(deviationDate);
+                                            let incidentDateMoment = moment(incidentDate);
                                             let reportedDateMoment = moment(reportedDate);
 
-                                            let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
+                                            let diffInDays = reportedDateMoment.diff(incidentDateMoment, 'days');
 
                                             if (diffInDays > 0) {
                                                 $('.delayJustificationBlock').show();
@@ -1245,14 +1245,14 @@
                                         }
 
                                         // Call checkDateDifference whenever the values are changed
-                                        $('input[name=Deviation_date], input[name=Deviation_reported_date]').on('change', function() {
+                                        $('input[name=incident_date], input[name=incident_reported_date]').on('change', function() {
                                             checkDateDifference();
                                         });
                                         </script>
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="audit type">Deviation Related To <span
+                                            <label for="audit type">Incident Related To <span
                                                     class="text-danger">*</span></label>
                                             <select multiple
                                                 name="audit_type[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -1552,7 +1552,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if ($grid_data1->ReferenceDocumentName)
+                                                    @if ($grid_data1 && $grid_data1->ReferenceDocumentName)
                                                         @foreach (unserialize($grid_data1->ReferenceDocumentName) as $key => $temps)
                                                             <tr>
                                                                 <td><input disabled type="text"
@@ -1680,7 +1680,7 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @if ($grid_data2->product_name)
+                                                            @if ($grid_data2 && $grid_data2->product_name)
                                                                 @foreach (unserialize($grid_data2->product_name) as $key => $temps)
                                                                     <td><input disabled type="text"
                                                                             name="serial[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -1802,14 +1802,14 @@
                                    
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="Description Deviation">Description of Deviation <span
+                                            <label for="Description Incident">Description of Incident <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
                                             <textarea class="tiny"
-                                                name="Description_Deviation"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_Deviation }}</textarea>
+                                                name="Description_incident"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="summernote-1">{{ $data->Description_incident }}</textarea>
                                         </div>
-                                        @error('Description_Deviation')
+                                        @error('Description_incident')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -1830,7 +1830,7 @@
 
                                     <div class="col-md-12">
                                         <div class="group-input">
-                                            <label for="Preliminary Impact">Preliminary Impact of Deviation <span
+                                            <label for="Preliminary Impact">Preliminary Impact of Incident <span
                                                     class="text-danger">*</span></label>
                                             <div><small class="text-primary">Please insert "NA" in the data field if it
                                                     does not require completion</small></div>
@@ -2059,9 +2059,9 @@
 
 
 
-                            // Function to handle the change event of the Initial Deviation Category dropdown
-                            function handleDeviationCategoryChange() {
-                                var selectElement = document.getElementById("Deviation_category");
+                            // Function to handle the change event of the Initial Incident Category dropdown
+                            function handleincidentCategoryChange() {
+                                var selectElement = document.getElementById("incident_category");
                                 var selectedOption = selectElement.options[selectElement.selectedIndex].value;
 
                                 // var investigationSelect = document.getElementById("Investigation_required");
@@ -2118,10 +2118,10 @@
                             // This is a JQuery used for showing the Investigation
 
                             $(document).ready(function() {
-                                $('#Deviation_category, #Investigation_required, #qrm_required, #capa_required').change(
+                                $('#incident_category, #Investigation_required, #qrm_required, #capa_required').change(
                                     function() {
                                         // Get the selected values
-                                        var deviationCategory = $('#Deviation_category').val();
+                                        var incidentCategory = $('#incident_category').val();
                                         var investigationRequired = $('#Investigation_required').val();
                                         var capaRequired = $('#capa_required').val();
                                         var qrmRequired = $('#qrm_required').val();
@@ -2172,7 +2172,7 @@
 
 
                             $(document).ready(function() {
-                                $('#Deviation_category').change(function() {
+                                $('#incident_category').change(function() {
                                     var selectedValues = $(this).val();
 
                                     if (selectedValues === 'major' || selectedValues === 'critical') {
@@ -2192,7 +2192,7 @@
                             $(document).ready(function() {
 
 
-                                $('#Deviation_category').change(function() {
+                                $('#incident_category').change(function() {
                                     if ($(this).val() === 'major') {
                                         $('#Investigation_required').val('yes').prop('disabled', true);
 
@@ -2261,37 +2261,37 @@
                                             <div class="group-input input-date">
 
                                                 @if ($data->stage == 3)
-                                                    <label for="Deviation category">Initial Deviation category <span
+                                                    <label for="Incident category">Initial Incident category <span
                                                             class="text-danger">*</span></label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        value="{{ $data->Deviation_category }}"
-                                                        onchange="handleDeviationCategoryChange()" required>
+                                                    <select id="incident_category"
+                                                        name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        value="{{ $data->incident_category }}"
+                                                        onchange="handleincidentCategoryChange()" required>
                                                         <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                        <option @if ($data->incident_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                        <option @if ($data->incident_category == 'major') selected @endif
                                                             value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                        <option @if ($data->incident_category == 'critical') selected @endif
                                                             value="critical">Critical</option>
                                                     </select>
                                                 @else
-                                                    <label for="Deviation category">Initial Deviation category</label>
-                                                    <select id="Deviation_category"
-                                                        name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        onchange="handleDeviationCategoryChange()"
-                                                        value="{{ $data->Deviation_category }}">
+                                                    <label for="Incident category">Initial Incident category</label>
+                                                    <select id="incident_category"
+                                                        name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        onchange="handleincidentCategoryChange()"
+                                                        value="{{ $data->incident_category }}">
                                                         <option value="0">-- Select --</option>
-                                                        <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                        <option @if ($data->incident_category == 'minor') selected @endif
                                                             value="minor">Minor</option>
-                                                        <option @if ($data->Deviation_category == 'major') selected @endif
+                                                        <option @if ($data->incident_category == 'major') selected @endif
                                                             value="major">Major</option>
-                                                        <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                        <option @if ($data->incident_category == 'critical') selected @endif
                                                             value="critical">Critical</option>
                                                     </select>
                                                 @endif
 
-                                                @error('Deviation_category')
+                                                @error('incident_category')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -2504,36 +2504,36 @@
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
                                         @if ($data->stage == 3)
-                                            <label for="Deviation category">Initial Deviation category <span
+                                            <label for="Incident category">Initial Incident category <span
                                                     class="text-danger">*</span></label>
-                                            <select disabled id="Deviation_category"
-                                                name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                value="{{ $data->Deviation_category }}">
+                                            <select disabled id="incident_category"
+                                                name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                value="{{ $data->incident_category }}">
                                                 <option value="0">-- Select --</option>
-                                                <option @if ($data->Deviation_category == 'minor') selected @endif value="minor">
+                                                <option @if ($data->incident_category == 'minor') selected @endif value="minor">
                                                     Minor</option>
-                                                <option @if ($data->Deviation_category == 'major') selected @endif value="major">
+                                                <option @if ($data->incident_category == 'major') selected @endif value="major">
                                                     Major</option>
-                                                <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                <option @if ($data->incident_category == 'critical') selected @endif
                                                     value="critical">Critical</option>
                                             </select>
                                         @else
                                             <div class="group-input">
-                                                <label for="Deviation category">Initial Deviation category</label>
-                                                <select disabled id="Deviation_category"
-                                                    name="Deviation_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    value="{{ $data->Deviation_category }}">
+                                                <label for="Incident category">Initial Incident category</label>
+                                                <select disabled id="incident_category"
+                                                    name="incident_category"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    value="{{ $data->incident_category }}">
                                                     <option value="0">-- Select --</option>
-                                                    <option @if ($data->Deviation_category == 'minor') selected @endif
+                                                    <option @if ($data->incident_category == 'minor') selected @endif
                                                         value="minor">Minor</option>
-                                                    <option @if ($data->Deviation_category == 'major') selected @endif
+                                                    <option @if ($data->incident_category == 'major') selected @endif
                                                         value="major">Major</option>
-                                                    <option @if ($data->Deviation_category == 'critical') selected @endif
+                                                    <option @if ($data->incident_category == 'critical') selected @endif
                                                         value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         @endif
-                                        @error('Deviation_category')
+                                        @error('incident_category')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -2685,7 +2685,7 @@
                     <script>
                         var checkValue = false;
                         $(document).ready(function() {
-                            $('#Deviation_category').change(function() {
+                            $('#incident_category').change(function() {
                                 if ($(this).val() === 'major' || $(this).val() === 'critical') {
                                     checkValue = true;
                                     $('#Investigation_required').val('yes').prop('disabled', true);
@@ -2742,8 +2742,8 @@
                                     });
                                 </script>
                                 @php
-                                    $data1 = DB::table('deviationcfts')
-                                        ->where('deviation_id', $data->id)
+                                    $data1 = DB::table('incident_cfts')
+                                        ->where('incident_id', $data->id)
                                         ->first();
                                 @endphp
                                 @if ($data->stage == 3 || $data->stage == 4)
@@ -2912,11 +2912,11 @@
                                             <label for="Production Review">Production Review Required ?</label>
                                             <select name="Production_Review" disabled id="Production_Review">
                                                 <option value="">-- Select --</option>
-                                                <option @if ($data1->Production_Review == 'yes') selected @endif value='yes'>
+                                                <option @if ($data1 && $data1->Production_Review == 'yes') selected @endif value='yes'>
                                                     Yes</option>
-                                                <option @if ($data1->Production_Review == 'no') selected @endif value='no'>
+                                                <option @if ($data1 && $data1->Production_Review == 'no') selected @endif value='no'>
                                                     No</option>
-                                                <option @if ($data1->Production_Review == 'na') selected @endif value='na'>
+                                                <option @if ($data1 && $data1->Production_Review == 'na') selected @endif value='na'>
                                                     NA</option>
                                             </select>
 
@@ -2976,7 +2976,11 @@
                                                         class="text-danger">*</span></label>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it
                                                         does not require completion</small></div>
-                                                <textarea disabled class="tiny" name="Production_assessment" id="summernote-17">{{ $data1->Production_assessment }}</textarea>
+                                                @if($data1 && $data1->Production_assessment)
+                                                    <textarea disabled class="tiny" name="Production_assessment" id="summernote-17">{{ $data1->Production_assessment }}</textarea>
+                                                @else
+                                                    <textarea disabled class="tiny" name="Production_assessment" id="summernote-17"></textarea>
+                                                @endif
                                             </div>
                                         </div>
                                         <div class="col-md-12 mb-3 p_erson">
@@ -7865,7 +7869,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Proposed Due Date">Proposed Due Date</label>
-                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Deviation Proposed Due Date"  disabled>
+                                <input name="investigation_proposed_due_date" id="investigation_proposed_due_date" placeholder="Incident Proposed Due Date"  disabled>
                             </div>
                         </div>
                     @endif
@@ -9061,7 +9065,7 @@
             <tr>
 
                 <td><input disabled type="text"name="serial[]"
-                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value=""></td>
                 <td>
                     <input type="text" class="numberDetail" name="failure_mode_qrms[{{ $loop->index }}][risk_factor]"
                         value="{{ isset($grid_data_qrms['risk_factor']) ? $grid_data_qrms['risk_factor'] : '' }}">
@@ -9220,7 +9224,7 @@
     @else
         <!-- <td><input disabled type="text" name="failure_mode_qrms[0][serial]" value=""></td> -->
         <td><input disabled type="text"name="serial[]"
-                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}"></td>
         <td><input type="text" class="numberDetail" name="failure_mode_qrms[0][risk_factor]"></td>
         <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][risk_element]"></td>
         <td><input type="text" class="Document_Remarks" name="failure_mode_qrms[0][probale_of_risk_element]"></td>
@@ -9432,7 +9436,7 @@
 
                 <!-- <td> <input disabled type="text" name="matrix_qrms[{{ $loop->index }}][serial]" value="1">  </td> -->
                 <td><input disabled type="text"name="serial[]"
-                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}">
+                        {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="">
                 </td>
 
                 <td>
@@ -9464,7 +9468,7 @@
         @endforeach
     @else
         <td><input disabled type="text"name="serial[]"
-                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
+                {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value=""></td>
         <!-- <td><input disabled type="text" name="matrix_qrms[0][serial]" value=""></td> -->
 
         <td><input type="text" class="numberDetail" name="matrix_qrms[0][risk_Assesment]"></td>
@@ -9621,12 +9625,12 @@
                 </div>
                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                     <div class="group-input input-date">
-                        <label for="Deviation category">Source of CAPA</label>
-                        <select name="source_of_capa" id="Deviation_category"
-                         @if ($data->stage==4) disabled @endif id="Deviation_category" value="{{ $data->source_of_capa }}">
+                        <label for="Incident category">Source of CAPA</label>
+                        <select name="source_of_capa" id="incident_category"
+                         @if ($data->stage==4) disabled @endif id="incident_category" value="{{ $data->source_of_capa }}">
                             <option value="0">-- Select -- </option>
-                            <option @if ($data->source_of_capa == 'Deviation') selected @endif
-                                                value="Deviation">Deviation</option>
+                            <option @if ($data->source_of_capa == 'Incident') selected @endif
+                                                value="Incident">Incident</option>
                             <option @if ($data->source_of_capa == 'OS/OT') selected @endif
                                                 value="OS/OT">OS/OT</option>
                             <option @if ($data->source_of_capa == 'Audit_Obs') selected @endif
@@ -9940,7 +9944,7 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
+                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident <span style="display: {{ $data->stage == 5 ? 'inline' : 'none' }}" class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
                                         <select name="Post_Categorization"  id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
@@ -10083,7 +10087,7 @@
 
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
+                                        <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
                                         <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
                                         <select name="Post_Categorization" id="Post_Categorization" value="Post_Categorization">
                                         <option value=""> -- Select --</option>
@@ -10276,8 +10280,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="group-input">
-                            <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
-                            <div><small class="text-primary">Please Refer Intial deviation category before
+                            <label for="Post Categorization Of Incident">Post Categorization Of Incident</label>
+                            <div><small class="text-primary">Please Refer Intial Incident category before
                                     updating.</small></div>
                             <select
                                 name="Post_Categorization"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
@@ -10405,22 +10409,22 @@
             <div class="inner-block-content">
                 <div class="row">
                     <div class="sub-head">
-                        Deviation Extension
+                        Incident Extension
                     </div>
 
-                    @if($deviationExtension && $deviationExtension->dev_proposed_due_date)
+                    @if($incidentExtension && $incidentExtension->dev_proposed_due_date)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
+                                <label for="Audit Schedule End Date">Proposed Due Date (Incident)</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($deviationExtension->dev_proposed_due_date)}}" />
+                                    <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly value="{{Helpers::getdateFormat($incidentExtension->dev_proposed_due_date)}}" />
                                 </div>
                             </div>
                         </div>
                     @else
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
+                                <label for="Audit Schedule End Date">Proposed Due Date (Incident)</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="dev_proposed_due_date" id="dev_proposed_due_date" readonly />
                                 </div>
@@ -10429,32 +10433,32 @@
                     @endif
 
 
-                    @if($deviationExtension && $deviationExtension->dev_extension_justification)
+                    @if($incidentExtension && $incidentExtension->dev_extension_justification)
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Extension_Justification_deviation">Extension Justification (Deviation)</label>
+                                <label for="Extension_Justification_incident">Extension Justification (Incident)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Deviation Extension Justification" disabled id="dev_extension_justification" value="{{$deviationExtension->dev_extension_justification}}">{{$deviationExtension->dev_extension_justification}}</textarea>
+                                <textarea name="dev_extension_justification" placeholder="Incident Extension Justification" disabled id="dev_extension_justification" value="{{$incidentExtension->dev_extension_justification}}">{{$incidentExtension->dev_extension_justification}}</textarea>
                             </div>
                         </div>
                     @else
                         <div class="col-md-12 mb-3">
                             <div class="group-input">
-                                <label for="Extension_Justification_deviation">Extension Justification (Deviation)</label>
+                                <label for="Extension_Justification_incident">Extension Justification (Incident)</label>
                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                <textarea name="dev_extension_justification" placeholder="Deviation Extension Justification" id="dev_extension_justification" disabled ></textarea>
+                                <textarea name="dev_extension_justification" placeholder="Incident Extension Justification" id="dev_extension_justification" disabled ></textarea>
                             </div>
                         </div>
                     @endif
 
-                    @if($deviationExtension && $deviationExtension->dev_extension_completed_by)
+                    @if($incidentExtension && $incidentExtension->dev_extension_completed_by)
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" dev_extension_completed_by"> Deviation Extension Completed By </label>
+                                <label for=" dev_extension_completed_by"> Incident Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
-                                        <option value="{{ $user->id }}" @if($user->id == $deviationExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
+                                        <option value="{{ $user->id }}" @if($user->id == $incidentExtension->dev_extension_completed_by) selected @endif >{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -10462,7 +10466,7 @@
                     @else
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" dev_extension_completed_by"> Deviation Extension Completed By </label>
+                                <label for=" dev_extension_completed_by"> Incident Extension Completed By </label>
                                 <select name="dev_extension_completed_by" id="dev_extension_completed_by" disabled>
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
@@ -10473,19 +10477,19 @@
                         </div>
                     @endif
 
-                    @if($deviationExtension && $deviationExtension->dev_completed_on)
+                    @if($incidentExtension && $incidentExtension->dev_completed_on)
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
+                                <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($deviationExtension->dev_completed_on)}}" />
+                                    <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" value="{{Helpers::getdateFormat($incidentExtension->dev_completed_on)}}" />
                                 </div>
                             </div>
                         </div>
                     @else
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
+                                <label for="Audit Schedule End Date">Incident Extension Completed On</label>
                                 <div class="calenderauditee">
                                     <input type="text" id="dev_completed_on" readonly name="dev_completed_on" placeholder="DD-MMM-YYYY" />
                                 </div>
@@ -10779,24 +10783,24 @@
 
 
                     <!-- <div class="sub-head">
-                        Deviation Effectiveness Check
+                        Incident Effectiveness Check
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="Effectiveness_Check_Plan_Deviation">Effectiveness Check Plan(Deviation)</label>
+                            <label for="Effectiveness_Check_Plan_incident">Effectiveness Check Plan(Incident)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="Effectiveness_Check_Plan_Deviation" id="summernote-10"> </textarea>
+                            <textarea class="tiny" name="Effectiveness_Check_Plan_incident" id="summernote-10"> </textarea>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" Deviation_Effectiveness_Check_Plan_Proposed_By">Deviation Effectiveness Check
+                                <label for=" incident_Effectiveness_Check_Plan_Proposed_By">Incident Effectiveness Check
                                     Plan Proposed By </label>
-                                <select name="Deviation_Effectiveness_Check_Plan_Proposed_By"
-                                    id="Deviation_Effectiveness_Check_Plan_Proposed_By">
+                                <select name="incident_Effectiveness_Check_Plan_Proposed_By"
+                                    id="incident_Effectiveness_Check_Plan_Proposed_By">
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
                                         <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -10806,43 +10810,43 @@
                         </div>
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="deviation_EC_Plan_Proposed_On"> Deviation Effectiveness Check Plan Proposed
+                                <label for="incident_EC_Plan_Proposed_On"> Incident Effectiveness Check Plan Proposed
                                     On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="deviation_EC_Plan_Proposed_On" readonly
+                                    <input type="text" id="incident_EC_Plan_Proposed_On" readonly
                                         placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="deviation_EC_Plan_Proposed_On"
+                                    <input type="date" name="incident_EC_Plan_Proposed_On"
                                         max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'deviation_EC_Plan_Proposed_On')" />
+                                        oninput="handleDateInput(this, 'incident_EC_Plan_Proposed_On')" />
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12 mb-3">
                         <div class="group-input">
-                            <label for="EC_Closure_comments_deviation">Effectiveness Check Closure
-                                Comments(Deviation)</label>
+                            <label for="EC_Closure_comments_incident">Effectiveness Check Closure
+                                Comments(Incident)</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not require
                                     completion</small></div>
-                            <textarea class="tiny" name="EC_Closure_comments_deviation" id="summernote-10"> </textarea>
+                            <textarea class="tiny" name="EC_Closure_comments_incident" id="summernote-10"> </textarea>
                         </div>
                     </div>
                     <div class="col-lg-6 new-date-data-field">
                         <div class="group-input input-date">
-                            <label for="Next_review_date_deviation">Next Review Date(Deviation)</label>
+                            <label for="Next_review_date_incident">Next Review Date(Incident)</label>
                             <div class="calenderauditee">
-                                <input type="text" id="Next_review_date_deviation" readonly
+                                <input type="text" id="Next_review_date_incident" readonly
                                     placeholder="DD-MMM-YYYY" />
-                                <input type="date" name="Next_review_date_deviation"
+                                <input type="date" name="Next_review_date_incident"
                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                    oninput="handleDateInput(this, 'Next_review_date_deviation')" />
+                                    oninput="handleDateInput(this, 'Next_review_date_incident')" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for=" deviaiton_EC_Closed_By">Deviation Effectiveness Check Closed By</label>
+                                <label for=" deviaiton_EC_Closed_By">Incident Effectiveness Check Closed By</label>
                                 <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
                                     <option value="">-- Select --</option>
                                     @foreach ($users as $user)
@@ -10854,14 +10858,14 @@
 
                         <div class="col-lg-6 new-date-data-field">
                             <div class="group-input input-date">
-                                <label for="deviation_Effectiveness_Check_Closed_On">Deviation Effectiveness Check Closed
+                                <label for="incident_Effectiveness_Check_Closed_On">Incident Effectiveness Check Closed
                                     On</label>
                                 <div class="calenderauditee">
-                                    <input type="text" id="deviation_Effectiveness_Check_Closed_On" readonly
+                                    <input type="text" id="incident_Effectiveness_Check_Closed_On" readonly
                                         placeholder="DD-MMM-YYYY" />
-                                    <input type="date" name="deviation_Effectiveness_Check_Closed_On"
+                                    <input type="date" name="incident_Effectiveness_Check_Closed_On"
                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'deviation_Effectiveness_Check_Closed_On')" />
+                                        oninput="handleDateInput(this, 'incident_Effectiveness_Check_Closed_On')" />
                                 </div>
                             </div>
                         </div>
@@ -11394,7 +11398,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-titles">Deviation Workflow</h4>
+                        <h4 class="modal-titles">Incident Workflow</h4>
                     </div>
                     <div style="padding:3px;" class="modal-body">
                         <Div class="button-box">
@@ -11539,10 +11543,10 @@
                             </li>
                             <li>
                                 <div>
-                                    @if($deviationExtension && $deviationExtension->counter == 3)
+                                    @if($incidentExtension && $incidentExtension->counter == 3)
                                         <a>-------</a>
                                     @else
-                                        <a href="" data-bs-toggle="modal" data-bs-target="#deviation_extension"> Deviation</a>
+                                        <a href="" data-bs-toggle="modal" data-bs-target="#incident_extension"> Incident</a>
                                     @endif
                                 </div>
                             </li>
@@ -11603,7 +11607,7 @@
                         <input class="extension_modal_signature" type="date"
                             name="qrm_completed_on" id="qrm_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="QRM" hidden >
                 </div>
 
@@ -11666,7 +11670,7 @@
                         <label for="password">Investigation Extension Completed On </label>
                         <input class="extension_modal_signature" type="date" name="investigation_completed_on" id="investigation_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="Investigation" hidden >
                 </div>
 
@@ -11725,7 +11729,7 @@
                                 @endforeach
                         </select>
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden >
                     <input name="extension_identifier" id="extension_identifier" value="Capa" hidden >
                     <div class="group-input">
                         <label for="password">CAPA Extension Completed On </label>
@@ -11747,13 +11751,13 @@
 </div>
 
 
-<div class="modal fade" id="deviation_extension">
+<div class="modal fade" id="incident_extension">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Deviation-Extension</h4>
+                <h4 class="modal-title">Incident-Extension</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -11770,17 +11774,17 @@
                         <input class="extension_modal_signature" type="password" name="password" required>
                     </div> -->
                     <div class="group-input">
-                        <label for="password">Proposed Due Date (Deviation)</label>
+                        <label for="password">Proposed Due Date (Incident)</label>
                         <input class="extension_modal_signature" type="date" name="dev_proposed_due_date" id="dev_proposed_due_date">
                     </div>
                     <div class="group-input">
-                        <label for="password">Extension Justification (Deviation)<span
+                        <label for="password">Extension Justification (Incident)<span
                                 class="text-danger">*</span></label>
                         <input class="extension_modal_signature" type="text"
                             name="dev_extension_justification" id="dev_extension_justification">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Extension Completed By </label>
+                        <label for="password">Incident Extension Completed By </label>
                         <select class="extension_modal_signature" name="dev_extension_completed_by" id="dev_extension_completed_by">
                         <option value="">-- Select --</option>
                                 @foreach($users as $user)
@@ -11789,11 +11793,11 @@
                         </select>
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Extension Completed On </label>
+                        <label for="password">Incident Extension Completed On </label>
                         <input class="extension_modal_signature" type="date" name="dev_completed_on" id="dev_completed_on">
                     </div>
-                    <input name="deviation_id" id="deviation_id" value="{{$data->id}}" hidden  >
-                    <input name="extension_identifier" id="extension_identifier" value="Deviation"  hidden >
+                    <input name="incident_id" id="incident_id" value="{{$data->id}}" hidden  >
+                    <input name="extension_identifier" id="extension_identifier" value="Incident"  hidden >
                 </div>
 
                 <div class="modal-footer">
@@ -11827,7 +11831,7 @@
                         <ul>
                             <li>
                                 <div> <a href="" data-bs-toggle="modal"
-                                        data-bs-target="#deviation_effectiveness"> Deviation Effectiveness
+                                        data-bs-target="#incident_effectiveness"> Incident Effectiveness
                                         Check</a></div>
                             </li>
 
@@ -11857,13 +11861,13 @@
 </div>
 
 
-<div class="modal fade" id="deviation_effectiveness">
+<div class="modal fade" id="incident_effectiveness">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
 
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title">Deviation-Effectiveness</h4>
+                <h4 class="modal-title">Incident-Effectiveness</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
 
@@ -11881,41 +11885,41 @@
                         <input class="extension_modal_signature" type="password" name="password" required>
                     </div>
                     <div class="group-input">
-                        <label for="deviation">Effectiveness Check Plan(Deviation)</label>
+                        <label for="Incident">Effectiveness Check Plan(Incident)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="effectiveness_deviation">
+                            name="effectiveness_incident">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check Plan Proposed By<span
+                        <label for="password">Incident Effectiveness Check Plan Proposed By<span
                                 class="text-danger">*</span></label>
                         <input class="extension_modal_signature" type="text"
-                            name="effectiveness_deviation_proposed_by">
+                            name="effectiveness_incident_proposed_by">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check Plan Proposed On </label>
+                        <label for="password">Incident Effectiveness Check Plan Proposed On </label>
                         <input class="extension_modal_signature" type="text"
-                            name="deviation_effectiveness_by">
+                            name="incident_effectiveness_by">
                     </div>
                     <div class="group-input">
-                        <label for="password">Effectiveness Check Colsure Comments(Deviation)</label>
+                        <label for="password">Effectiveness Check Colsure Comments(Incident)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
                     <div class="group-input">
-                        <label for="password">Next Review Date(Deviation)</label>
-                        <input class="extension_modal_signature" type="date" name="next_review_deviation">
+                        <label for="password">Next Review Date(Incident)</label>
+                        <input class="extension_modal_signature" type="date" name="next_review_incident">
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check closed By </label>
-                        <select class="extension_modal_signature" name="deviation_feectiveness_closed_by"
+                        <label for="password">Incident Effectiveness Check closed By </label>
+                        <select class="extension_modal_signature" name="incident_feectiveness_closed_by"
                             id="">
                             <option value="">-- Select --</option>
                         </select>
                     </div>
                     <div class="group-input">
-                        <label for="password">Deviation Effectiveness Check CLosed On</label>
+                        <label for="password">Incident Effectiveness Check CLosed On</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
 
                 </div>
@@ -11970,12 +11974,12 @@
                     <div class="group-input">
                         <label for="password">CAPA Effectiveness Check Plan Proposed On </label>
                         <input class="extension_modal_signature" type="text"
-                            name="deviation_effectiveness_by">
+                            name="incident_effectiveness_by">
                     </div>
                     <div class="group-input">
                         <label for="password">Effectiveness Check Colsure Comments(CAPA)</label>
                         <input class="extension_modal_signature" type="date"
-                            name="deviation_effectiveness_on">
+                            name="incident_effectiveness_on">
                     </div>
                     <div class="group-input">
                         <label for="password">Next Review Date(CAPA)</label>
@@ -12036,7 +12040,7 @@
                     </div>
                     <div class="group-input">
                         <label for="password">Effectiveness Check Plan(QRM)</label>
-                        <input class="extension_modal_signature" type="date" name="deviation_due_capa">
+                        <input class="extension_modal_signature" type="date" name="incident_due_capa">
                     </div>
                     <div class="group-input">
                         <label for="password">QRM Effectiveness Check Plan Proposed By<span
@@ -12369,7 +12373,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ route('deviation_child_1', $data->id) }}" method="POST">
+                <form action="{{ route('incident_child_1', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12422,7 +12426,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ route('deviation_reject', $data->id) }}" method="POST">
+                <form action="{{ route('incident_reject', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -12746,7 +12750,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('deviation_send_stage', $data->id) }}" method="POST"
+                <form action="{{ route('incident_send_stage', $data->id) }}" method="POST"
                     id="signatureModalForm">
                     @csrf
                     <div class="modal-body">
@@ -12836,7 +12840,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('deviation_qa_more_info', $data->id) }}" method="POST">
+                <form action="{{ route('incident_qa_more_info', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
