@@ -21,6 +21,7 @@ use App\Models\Observation;
 use App\Models\QMSDivision;
 use App\Models\FailureInvestigation;
 use App\Models\Ootc;
+use App\Models\Incident;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -75,7 +76,7 @@ class DashboardController extends Controller
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
         $datas14 = MarketComplaint::orderByDesc('id')->get();
-    
+        $incident = Incident::orderByDesc('id')->get();
         $deviation = Deviation::orderByDesc('id')->get();
         $ooc = OutOfCalibration::orderByDesc('id')->get();
         $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
@@ -532,6 +533,29 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
 
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+
+        
+        foreach ($incident as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "Incident",
+                "parent_id" => $data->parent_id,
+                "parent" => $data->parent_record? $data->parent_record : "-",
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "due_date" => $data->due_date,
+                "stage" => $data->status,
+                "initiated_through" => $data->initiated_through ? $data->initiated_through: "-",
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);

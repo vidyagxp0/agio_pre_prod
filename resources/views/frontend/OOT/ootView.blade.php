@@ -255,7 +255,6 @@
                                 </div>
                             </div>
 
-
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Short Description">Initiator Group <span
@@ -323,7 +322,6 @@
                                         </select>
                                 </div>
                             </div>
-
 
                             <script>
                                 document.getElementById('selectedOptions').addEventListener('change', function() {

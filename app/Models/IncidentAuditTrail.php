@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class IncidentAuditTrail extends Model
 {
     use HasFactory;
+    protected $table = 'table_incident_audit_trails';
 }

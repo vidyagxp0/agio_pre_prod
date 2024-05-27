@@ -264,9 +264,7 @@
                                                         </a>
                                                     @endif
 
-
-
-                                                    
+  
 
                                                 @elseif ($datas->type == 'Risk-Assesment')
                                                     <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue">
@@ -468,7 +466,23 @@
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/root_cause_analysis">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/oot">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+
+                                                    
+                                                    @elseif($datas->type == 'Incident')
+                                                    <a href="{{ url('rcms/incidentshow', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/incident">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"

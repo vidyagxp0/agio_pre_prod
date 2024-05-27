@@ -205,7 +205,7 @@ Route::group(['prefix' => 'rcms'], function () {
                //---------------Inciden-------------//
 
             Route::get('incident',[IncidentController::class,'incidentIndex'])->name('incident');
-            Route::post('incidentstor',[IncidentController::class,'store'])->name('incidentstore');
+            Route::post('incidentstore',[IncidentController::class,'store'])->name('incidentstore');
             Route::get('incidentshow/{id}',[IncidentController::class, 'incidentShow'])->name('incidentShow');
 
 

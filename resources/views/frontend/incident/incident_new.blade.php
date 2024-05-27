@@ -576,7 +576,7 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('incidentstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
