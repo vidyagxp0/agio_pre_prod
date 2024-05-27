@@ -59,7 +59,6 @@ class OOSController extends Controller
     public static function show($id)
     {
         $data = OOS::find($id);
-
         $info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
         $details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
         $oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
