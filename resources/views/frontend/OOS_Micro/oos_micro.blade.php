@@ -410,7 +410,6 @@
 
                     <div class="sub-head">General Information</div>
                     <div class="row">
-
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>

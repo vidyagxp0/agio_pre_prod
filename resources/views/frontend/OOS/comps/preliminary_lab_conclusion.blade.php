@@ -130,7 +130,7 @@
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="delay_justification_for_pi_plic"
                         id="summernote-1" value="">
-                     {{ $data->delay_justification_for_pi_plic ? '' : ''  }}
+                     {{ $data->delay_justification_for_pi_plic ? $data->delay_justification_for_pi_plic : ''  }}
 
                 </textarea>
                 </div>
@@ -146,7 +146,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->supporting_attachment_plic)
-                            @foreach (json_decode($data->supporting_attachment_plic) as $file)
+                            @foreach ($data->supporting_attachment_plic as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

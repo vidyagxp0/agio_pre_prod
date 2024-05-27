@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
                     </div>
                 </td>
             </tr>
@@ -203,7 +203,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -217,6 +217,7 @@
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">{{ $data->severity_level_form }}</td>
+
 
 
                     </tr>
@@ -435,7 +436,7 @@
                             <td class="w-15">{{unserialize($data->Material_Details->material_expiry_date)[$key] ?  unserialize($data->Material_Details->material_expiry_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_batch_desposition)[$key] ?  unserialize($data->Material_Details->material_batch_desposition)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_remark)[$key] ?  unserialize($data->Material_Details->material_remark)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td> --}}
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td>
                         </tr>
                         {{-- @endforeach --}}
                      {{-- @else --}}
@@ -481,9 +482,9 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td> --}}
+                            <td>Not Applicable</td>
 
-                        {{-- @endif --}}
+                        @endif
                     </table>
                 </div>
             </div>

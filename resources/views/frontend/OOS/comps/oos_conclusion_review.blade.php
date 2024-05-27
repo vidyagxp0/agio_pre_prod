@@ -9,8 +9,8 @@
                     <label for="Description Deviation">Conclusion Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
-                        {{ $data->conclusion_review_comments_ocr ?? '' }}
-                        </textarea>
+                        {{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : '' }}
+                    </textarea>
                 </div>
             </div>
 
@@ -35,11 +35,6 @@
                                 <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                 <th style="width: 16%">Any Other Information</th>
                                 <th style="width: 16%">Action Taken on Affec.batch</th>
-
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -64,9 +59,8 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
-                    {{ $data->action_taken_on_affec_batch_ocr ?? 'NA' }}
+                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'NA' }}
                 </textarea>
                 </div>
             </div>
@@ -167,9 +161,8 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
-                            {{ $data->justify_if_no_risk_assessment_ocr ?? 'NA' }}
+                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'NA' }}
                         </textarea>
                 </div>
             </div>
@@ -183,7 +176,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->conclusion_attachment_ocr)
-                            @foreach (json_decode($data->conclusion_attachment_ocr) as $file)
+                            @foreach ($data->conclusion_attachment_ocr as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
@@ -208,7 +201,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CQ Approver</label>
-                    <input type="text" name="cq_approver" value="{{$data->cq_approver}}">
+                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}">
                 </div>
             </div>
 

@@ -16,11 +16,12 @@ use App\Http\Controllers\rcms\DesktopController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\CCController;
+use App\Http\Controllers\rcms\{CCController,DeviationController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -36,8 +37,8 @@ use App\Http\Controllers\tms\EmployeeController;
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
-use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
 
@@ -169,6 +170,16 @@ Route::post('manage/reject/{id}', [ManagementReviewController::class, 'manage_re
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
+
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
+
+Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
+Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+
+/********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================
 //! ============================================
@@ -357,7 +368,7 @@ Route::get('auditee', [AuditeeController::class, 'external_audit']);
 
 Route::get('meeting', [ManagementReviewController::class, 'meeting']);
 
-Route::view('market-complaint', 'frontend.forms.market-complaint');
+// Route::view('market-complaint', 'frontend.forms.market-complaint');
 
 //Route::view('lab-incident', 'frontend.forms.lab-incident');
 
@@ -412,8 +423,12 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 //  ===================== OOS OOT OOC Form Route====================================
 Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
+Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
+Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
+Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
-Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+
+// Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
@@ -421,7 +436,7 @@ Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_
 Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
 Route::post('oos_micro_update/{id}',[OOSMicroController::class, 'update'])->name('oos_micro.update');
 
-Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
+// Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================
@@ -475,16 +490,35 @@ Route::view('oos_oot_form', 'frontend.forms.OOS\OOT.oos_oot');
  * AJAX ROUTES
  */
 
-//  Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
+<<<<<<<<< Temporary merge branch 1
+ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
  Route::post('/ootstore', [OOTController::class, 'store'])->name('oot.ootstore');
+=========
 Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 
 // ========================Errata==================================
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
+// <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
+// =======
+Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
+Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
+Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
+// Route::get('errata/edit/{id}', [ErrataController::class, 'edit'])->name('errata.edit');
+Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('errata.update');
+Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
+Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
+Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
+
+// ----------------------Stages----------------------------------------
+
+
+
+//=====================================================================
+// >>>>>>> B-backup

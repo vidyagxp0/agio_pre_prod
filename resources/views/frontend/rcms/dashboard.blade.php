@@ -36,15 +36,13 @@
             querySelect.options.add(new Option('Pending Actions Completion', '5'));
             querySelect.options.add(new Option('Closed - Done', '6'));
 
-        }
-        else if (scopeValue === 'audit_program') {
+        } else if (scopeValue === 'audit_program') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Approval', '2'));
             querySelect.options.add(new Option('Pending Audit', '3'));
             querySelect.options.add(new Option('Closed - Done', '4'));
 
-        }
-         else if (scopeValue === 'lab_incident') {
+        } else if (scopeValue === 'lab_incident') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Incident Review ', '2'));
             querySelect.options.add(new Option('Pending Investigation', '3'));
@@ -76,48 +74,48 @@
             querySelect.options.add(new Option('In Progress', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
 
+        } else if (scopeValue === 'extension') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending Approval', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'documents') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Close - Cancel', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'observation') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending CAPA Plan', '2'));
+            querySelect.options.add(new Option('Pending Approval', '3'));
+            querySelect.options.add(new Option('Pending Final Approval', '4'));
+            querySelect.options.add(new Option('Close - Done', '5'));
+        } else if (scopeValue === 'action_item') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Work in Progress', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'effectiveness_check') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Check Effectiveness', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'CC') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Under HOD Review', '2'));
+            querySelect.options.add(new Option('Pending QA Review', '3'));
+            querySelect.options.add(new Option('CFT Review', '4'));
+            querySelect.options.add(new Option('Pending Change Implementation', '5'));
+            querySelect.options.add(new Option('Close - Done', '6'));
         }
-        else if (scopeValue === 'extension') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending Approval', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-        else if (scopeValue === 'documents') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-            else if (scopeValue === 'observation') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
-                querySelect.options.add(new Option('Pending Approval', '3'));
-                querySelect.options.add(new Option('Pending Final Approval', '4'));
-                querySelect.options.add(new Option('Close - Done', '5'));
-            }
-
-            else if (scopeValue === 'action_item') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Work in Progress', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-
-            else if (scopeValue === 'effectiveness_check') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Check Effectiveness', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-            else if (scopeValue === 'CC') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Under HOD Review', '2'));
-                querySelect.options.add(new Option('Pending QA Review', '3'));
-                querySelect.options.add(new Option('CFT Review', '4'));
-                querySelect.options.add(new Option('Pending Change Implementation', '5'));
-                querySelect.options.add(new Option('Close - Done', '6'));
-            }
+            // else if (scopeValue === 'OOS Cemical') {
+            //     querySelect.options.add(new Option('Opened', '1'));
+            //     querySelect.options.add(new Option('Under HOD Review', '2'));
+            //     querySelect.options.add(new Option('Pending QA Review', '3'));
+            //     querySelect.options.add(new Option('CFT Review', '4'));
+            //     querySelect.options.add(new Option('Pending Change Implementation', '5'));
+            //     querySelect.options.add(new Option('Close - Done', '6'));
+            // }
 
 
         // Add more conditions based on other scope values
@@ -141,7 +139,7 @@
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
 
-                       <div class="grid-block">
+                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
@@ -160,19 +158,22 @@
                                     <option value="Change Control">Change Control</option>
                                     <option value="Action Item">Action Item</option>
                                     <option value="Effectiveness Check">Effectiveness Check</option>
-                                     {{-- <option value="tms">TMS</option>  --}}
+                                    <option value="Deviation">Deviation</option>
                                 </select>
                             </div>
                             <div class="group-input">
                                 <label for="query">Criteria</label>
-                                <select id="query" name="stage" >
+                                <select id="query" name="stage">
                                     <option value="">All Records</option>
                                     <option value="Closed">Closed Records</option>
                                     <option value="Opened">Opened Records</option>
                                     <option value="Cancelled">Cancelled Records</option>
-                                    {{-- <option value="4">Overdue Records</option>
-                                    <option value="Assigned">Assigned To Me</option>
-                                    <option value="Records">Records Created Today</option> --}}
+                                    <option value="">Initial Deviation Category= Minor</option>
+                                    <option value="">Initial Deviation Category= Major</option>
+                                    <option value="">Initial Deviation Category= Critical</option>
+                                     <option value="">Post Categorization Of Deviation= Minor</option>
+                                    <option value="">Post Categorization Of Deviation= Major</option>
+                                    <option value="">Post Categorization Of Deviation= Critical</option>
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
@@ -195,7 +196,7 @@
   margin-top: 30px;
 }
                         </style>
-                        <div class="main-scope-table table-container p-2">
+                        <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">
                                     <tr>
@@ -204,14 +205,14 @@
                                         <th>Division</th>
                                         <th>Process</th>
                                         <th>Initiated Through</th>
-                                        <th  class="td_c">Short Description</th>
+                                        <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
-                                        {{-- <th> Initiation Date</th> --}}
+                                        <th> Due Date</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="searchTable" class="table-body-new">
+                                <tbody id="searchTable">
                                     @php
                                         $table = json_encode($datag);
                                         $tables = json_decode($table);
@@ -221,7 +222,7 @@
                                         <tr>
                                             <td>
                                                 @if ($datas->type == 'Change-Control')
-                                                    <a href="{{ route('CC.show', $datas->id) }}">
+                                                    <a href="{{ route('CC.show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
@@ -233,7 +234,7 @@
                                                     </a>
                                                     {{-- -----------------------by pankaj-------------------- --}}
                                                 @elseif ($datas->type == 'Internal-Audit')
-                                                    <a href="{{ route('showInternalAudit', $datas->id) }}">
+                                                    <a href="{{ route('showInternalAudit', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -246,8 +247,29 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                                {{-- market complaint --}}
+
+                                                    @elseif ($datas->type == 'Market Complaint')
+                                                    <a href="{{ route('marketcomplaint.marketcomplaint_view', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id}}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+
+
+
+
+
                                                 @elseif ($datas->type == 'Risk-Assesment')
-                                                    <a href="{{ route('showRiskManagement', $datas->id) }}">
+                                                    <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -261,7 +283,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'Lab-Incident')
-                                                    <a href="{{ route('ShowLabIncident', $datas->id) }}">
+                                                    <a href="{{ route('ShowLabIncident', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -275,7 +297,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'External-Audit')
-                                                    <a href="{{ route('showExternalAudit', $datas->id) }}">
+                                                    <a href="{{ route('showExternalAudit', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -290,7 +312,7 @@
                                                     @endif
 
                                                 @elseif ($datas->type == 'Audit-Program')
-                                                    <a href="{{ route('ShowAuditProgram', $datas->id) }}">
+                                                    <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -304,7 +326,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'Observation')
-                                                    <a href="{{ route('showobservation', $datas->id) }}">
+                                                    <a href="{{ route('showobservation', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -319,7 +341,7 @@
                                                     @endif
                                                     {{-- ----------------------------------------------- --}}
                                                 @elseif($datas->type == 'Action-Item')
-                                                    <a href="{{ route('actionItem.show', $datas->id) }}">
+                                                    <a href="{{ route('actionItem.show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -333,7 +355,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Extension')
-                                                    <a href="{{ route('extension.show', $datas->id) }}">
+                                                    <a href="{{ route('extension.show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -341,13 +363,11 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/extension">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Effectiveness-Check')
-                                                    <a href="{{ route('effectiveness.show', $datas->id) }}">
+                                                    <a href="{{ route('effectiveness.show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -361,7 +381,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Capa')
-                                                    <a href="{{ route('capashow', $datas->id) }}">
+                                                    <a href="{{ route('capashow', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -373,9 +393,23 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'OOS')
+                                                    @elseif($datas->type == 'OOS Chemical')
                                                     <a href="{{ route('oos.oos_view', $datas->id) }}">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id}}
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+                                                    @elseif($datas->type == 'errata')
+                                                    <a href="{{ route('errata.show', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
@@ -389,7 +423,7 @@
                                                     @endif
 
                                                 @elseif($datas->type == 'Management-Review')
-                                                    <a href="{{ route('manageshow', $datas->id) }}">
+                                                    <a href="{{ route('manageshow', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -402,8 +436,36 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                    @elseif($datas->type == 'Deviation')
+                                                    <a href="{{ route('devshow', $datas->id) }}" style="color: blue">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
                                                 @elseif($datas->type == 'Root-Cause-Analysis')
-                                                    <a href="{{ route('root_show', $datas->id) }}">
+                                                    <a href="{{ route('root_show', $datas->id) }}" style="color: blue">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/root_cause_analysis">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
+                                                    @elseif($datas->type == 'OOT')
+                                                    <a href="{{ route('rcms/oot_view', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -431,13 +493,13 @@
                                                     @endif
                                                 @endif
                                             </td>
-                                            @if ($datas->parent != '-')
+                                            @if ($datas->parent_id != null)
                                                         <td>
-                                                            {{ str_pad($datas->parent, 4, '0', STR_PAD_LEFT) }}
+                                                            {{ str_pad($datas->parent_id, 4, '0', STR_PAD_LEFT) }}
                                                         </td>
                                                     @else
                                                         <td>
-                                                             {{ $datas->parent }}
+                                                            -
                                                         </td>
                                                     @endif
                                             <td
@@ -459,7 +521,7 @@
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
+                                                {{ ucwords(str_replace('_', ' ', $datas->initiated_through)) }}
                                             </td>
 
                                             <td id="short_width" class="viewdetails" data-id="{{ $datas->id }}"
@@ -476,15 +538,16 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{-- {{ $datas->assign_to }} --}}
-                                            {{ Helpers::getInitiatorName($datas->initiator_id) }}
+                                                {{ Helpers::getInitiatorName($datas->initiator_id) }}
                                                 {{-- {{ $datas->initiator_id }} --}}
                                             </td>
-                                            {{-- <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ Helpers::getdateFormat($datas->intiation_date) }}
-
-                                            </td> --}}
+                                                @if (property_exists($datas, 'due_date'))
+                                                    {{ $datas->type !== 'Extension' ? Helpers::getDueDate($datas->due_date, false) : ''  }}
+                                                @endif
+                                            </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
@@ -496,7 +559,7 @@
                                 </tbody>
                             </table>
                         </div>
-                     {{-- <div class="scope-pagination">
+                        {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
                         </div>  --}}
                     </div>

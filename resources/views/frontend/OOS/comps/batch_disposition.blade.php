@@ -225,7 +225,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->disposition_attachment_bd)
-                            @foreach (json_decode($data->disposition_attachment_bd) as $file)
+                            @foreach ($data->disposition_attachment_bd as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
