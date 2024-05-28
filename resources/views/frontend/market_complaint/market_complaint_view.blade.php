@@ -227,7 +227,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -243,14 +243,14 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
 
 
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -266,7 +266,7 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
@@ -279,8 +279,7 @@
                                 All CAPA Closed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
-                                Regulatory
-                                Reporting child
+                                Regulatory Reporting child
 
                             </button>
                         @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -288,7 +287,7 @@
                                 Send Letter
                             </button>
 
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     child
@@ -305,135 +304,10 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                        </a> </button> --}}
-
-
-
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Verification Complete
-                            </button> --}}
-
-
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancellation Request
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Request More Info
-                            </button> --}}
-
-
-
-                        {{-- <button class="button_theme1"> <a class="text-white" href=""> --}}
-                        {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
-
-                        {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}"
-                                Audit Trail </a> </button> --}}
-
-                        {{--    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Submit
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button> --}}
-                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-
-
-                        {{-- 
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            HOD Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button> --}}
-
-
-
-
-
-                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Initial Review Complete
-                        </button>
-
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif(
-                            $data->stage == 4 &&
-                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                            @if (!$cftCompleteUser) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-
-                        {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Initiator
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approved
-                        </button> --}}
-                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Initiator Updated Complete
-                        </button> --}}
-                        {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button> --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
-                            Send to Pending Initiator Update
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button> --}}
-                        {{-- @endif --}}
-                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button> --}}
 
 
                     </div>
