@@ -946,10 +946,13 @@
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div> 
                     </div>
-                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
+                    @if (Helpers::checkRoles(4) && $document->stage == 2)
+                        <input type="hidden" name="stage_id" value="Cancel-by-HOD" />
+                    @endif
+                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document) && $document->stage == 6)
                         <input type="hidden" name="stage_id" value="Cancel-by-Approver" />
                     @endif
-                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document))
+                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
                     @endif
 

@@ -989,50 +989,6 @@ class OOSController extends Controller
             return $pdf->stream('OOS Cemical' . $id . '.pdf');
         }
     }
-    // public function child_change_control(Request $request, $id)
-    // {
-    //     $cft =[];
-    //     $parent_id = $id;
-    //     $parent_type = "Audit_Program";
-    //     $record_number = ((RecordNumber::first()->value('counter')) + 1);
-    //     $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-    //     $currentDate = Carbon::now();
-    //     $formattedDate = $currentDate->addDays(30);
-    //     $due_date= $formattedDate->format('d-M-Y');
-    //     $parent_record = Capa::where('id', $id)->value('record');
-    //     $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
-    //     $parent_division_id = Capa::where('id', $id)->value('division_id');
-    //     $parent_initiator_id = Capa::where('id', $id)->value('initiator_id');
-    //     $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
-    //     $parent_short_description = Capa::where('id', $id)->value('short_description');
-    //     $hod = User::where('role', 4)->get();
-    //     $pre = CC::all();
-    //     $changeControl = OpenStage::find(1);
-    //     if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-    //     // return $capa_data;
-    //     if ($request->child_type == "Change_control") {
-    //         return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-    //     }
-    //     if ($request->child_type == "extension") {
-    //         $parent_due_date = "";
-    //         $parent_id = $id;
-    //         $parent_name = $request->parent_name;
-    //         if ($request->due_date) {
-    //             $parent_due_date = $request->due_date;
-    //         }
-
-    //         $record_number = ((RecordNumber::first()->value('counter')) + 1);
-    //         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-    //         return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
-    //     }
-    //     $old_record = Capa::select('id', 'division_id', 'record')->get();
-    //     if ($request->child_type == "Action_Item") {
-    //         $parent_name = "CAPA";
-
-    //         return view('frontend.forms.action-item', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_name', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-    //     } else {
-    //         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
-    //     }
-    // }
+    
     
 }

@@ -157,7 +157,7 @@
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
                             <div onclick="
-                            
+
                             window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
                                 data-bs-toggle="tooltip" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
@@ -209,7 +209,7 @@
                             <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                         </div>
                         {{-- <div>
-                                    <a href="/analytics">Analytics</a> 
+                                    <a href="/analytics">Analytics</a>
                                     </div>  --}}
 
                         @if (Auth::user())

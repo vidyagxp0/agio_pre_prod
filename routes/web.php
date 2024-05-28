@@ -24,9 +24,11 @@ use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
 // use App\Http\Controllers\tms\JobTrainingController;
+use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
@@ -183,6 +185,12 @@ Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audi
 
 /********************************************* Deviation Ends *******************************************/
 
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+
+/********************************************* Deviation Ends *******************************************/
+
 // ==============================end ==============================
 //! ============================================
 //!                    Risk Management
@@ -315,7 +323,7 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 
 // ====================induction training =================
 
-// Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+// // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
 // Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
 Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
 Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
@@ -323,6 +331,9 @@ Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name
 
 
 
+
+Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
+Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
 
 
 //! ============================================
@@ -496,6 +507,13 @@ Route::view('errata_view', 'frontend.errata.errata_view');
 
 Route::post('/tms/employee', [EmployeeController::class, 'store'])->name('employee.store');
 Route::post('/tms/trainer', [TrainerController::class, 'store'])->name('trainer.store');
+Route::post('/tms/employee/{id}', [EmployeeController::class, 'update'])->name('employee.update');
+Route::post('/tms/trainer/{id}', [TrainerController::class, 'update'])->name('trainer.update');
+Route::get('employee_view/{id}', [EmployeeController::class, 'show']);
+Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']);
+Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
+Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
+Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
 // =======
 Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
 Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
