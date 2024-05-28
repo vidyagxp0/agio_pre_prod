@@ -338,53 +338,26 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        {{-- @php --}}
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    {{-- @endphp --}}
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white" href="">
-                                Audit Trail </a> </button>
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $trainer->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
 
-                        {{-- @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Propose Plan
-                            </button> --}}
-                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-                            </button> --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approve Plan
-                            </button> --}}
-
-
-                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-
+                        @if ($trainer->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Qualified
-                            </button>
-
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
-                        {{-- @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-
-                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                               Submit
                             </button>
-                        {{-- @elseif($data->stage == 5) --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                        @elseif($trainer->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Qualified
+                        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                Reject
                             </button>
-                        {{-- @elseif($data->stage == 6) --}}
 
-                        {{-- @endif --}}
-                        <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
+                        @endif
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
                             </a> </button>
 
 
@@ -394,30 +367,30 @@
                 <div class="status">
                     <div class="head">Current Status</div>
                     {{-- ------------------------------By Pankaj-------------------------------- --}}
-                    {{-- @if ($data->stage == 0) --}}
-                        {{-- <div class="progress-bars ">
+                    @if ($trainer->stage == 0)
+                         <div class="progress-bars ">
                             <div class="bg-danger">Closed-Cancelled</div>
-                        </div> --}}
-                    {{-- @else --}}
+                        </div>
+                    @else
                         <div class="progress-bars d-flex">
-                            {{-- @if ($data->stage >= 1) --}}
+                            @if ($trainer->stage >= 1)
                                 <div class="active">Opened</div>
-                            {{-- @else --}}
-                                {{-- <div class="">Opened</div> --}}
-                            {{-- @endif --}}
+                            @else
+                                <div class="">Opened</div>
+                            @endif
 
-                            {{-- @if ($data->stage >= 2) --}}
-                                {{-- <div class="active">Pending HOD Review</div> --}}
-                            {{-- @else --}}
+                            @if ($trainer->stage >= 2)
+                                <div class="active">Pending HOD Review</div>
+                            @else
                                 <div class="">Pending HOD Review</div>
-                            {{-- @endif --}}
+                            @endif
 
-                            {{-- @if ($data->stage >= 3) --}}
-                                {{-- <div class="bg-danger">Closed - Done</div> --}}
-                            {{-- @else --}}
+                            @if ($trainer->stage >= 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
                                 <div class="">Closed - Done</div>
-                            {{-- @endif --}}
-                    {{-- @endif --}}
+                            @endif
+                    @endif
 
 
                 </div>
@@ -449,13 +422,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Site Division/Project">Site Division/Project</label>
-                                        <input value="{{ $trainer->site_code }}" name="site_code" readonly >
-                                        {{-- <select disabled name="division_id">
-                                            <option value="">-- Select --</option>
+                                        {{-- <input value="{{ $trainer->site_code }}" name="site_code" readonly > --}}
+                                        <select name="division_id">
+                                            <option>-- Select --</option>
                                             @foreach ($divisions as $division)
-                                                <option value="{{ $division->id }}" {{ $loop->first ? 'selected' : '' }}>{{ $division->name }}</option>
+                                                <option value="{{ $division->id }}" @if ($division->id == $trainer->division_id) selected @endif >{{ $division->name }}</option>
                                             @endforeach
-                                        </select> --}}
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -546,7 +519,7 @@
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
                                         <select name="trainer_name" id="trainer_name">
-                                            <option >Select</option>
+                                            <option value="">Select</option>
                                             <option value="trainer1" @if ($trainer->trainer_name == "trainer1") selected @endif>Trainer 1</option>
                                         </select>
                                     </div>
@@ -675,10 +648,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
-                                                </td>
-                                                <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
-                                                <td><input type="text" name="trainer_skill[0][remarks]"></td>
+                                                @if ($trainer_skill && is_array($trainer_skill->data))
+                                                    @foreach ($trainer_skill->data as $index => $skill)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="trainer_skill[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
+                                                            </td>
+                                                            <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
+                                                        </td>
+                                                        <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
+                                                        <td><input type="text" name="trainer_skill[0][remarks]"></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -699,12 +685,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="trainer_listOfAttachment[0][serial_number]" value="1">
-                                                </td>
-                                                <td><input type="text" name="trainer_listOfAttachment[0][title_of document]"></td>
-                                                <td><input type="text" name="trainer_listOfAttachment[0][supporting_document]"></td>
-
-                                                <td><input type="text" name="trainer_listOfAttachment[0][remarks]"></td>
+                                                @if ($trainer_list && is_array($trainer_list->data))
+                                                    @foreach ($trainer_list->data as $index => $list)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="trainer_listOfAttachment[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
+                                                            </td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][title_of document]" value=" {{ array_key_exists('title_of document', $list) ? $list['title_of document'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][supporting_document]" value=" {{ array_key_exists('supporting_document', $list) ? $list['supporting_document'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $list) ? $list['remarks'] : '' }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="trainer_listOfAttachment[0][serial_number]" value="1">
+                                                        </td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][title_of document]"></td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][supporting_document]"></td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][remarks]"></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -870,8 +869,13 @@
                                 </div>
                             </div>
 
-
-
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">Initial Attachment</label>
+                                    <input type="file" id="myfile" name="initial_attachment" value="{{ $trainer->initial_attachment }}">
+                                    <a href="{{ asset('upload/' . $trainer->initial_attachment) }}" target="_blank">{{ $trainer->initial_attachment }}</a>
+                                </div>
+                            </div>
                             <script>
                                 VirtualSelect.init({
                                     ele: '#reference_record, #notify_to'
@@ -908,15 +912,15 @@
                                     let newReference = document.createElement('div');
                                     newReference.classList.add('row', 'reference-data-' + referenceCount);
                                     newReference.innerHTML = `
-            <div class="col-lg-6">
-                <input type="text" name="reference-text">
-            </div>
-            <div class="col-lg-6">
-                <input type="file" name="references" class="myclassname">
-            </div><div class="col-lg-6">
-                <input type="file" name="references" class="myclassname">
-            </div>
-        `;
+                                        <div class="col-lg-6">
+                                            <input type="text" name="reference-text">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div><div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div>
+                                    `;
                                     let referenceContainer = document.querySelector('.reference-data');
                                     referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
                                 }
@@ -930,30 +934,10 @@
                                 }
                             </script>
 
-
-
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="audit_file_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="initial_attachment"
-                                                oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>
@@ -968,37 +952,37 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Submitted On">Submitted By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->sbmitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Submitted On">Submitted On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->sbmitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Qualified By">Qualified By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->qualified_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Qualified On">Qualified On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->qualified_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for=" Rejected By">Rejected By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->rejected_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejected On">Rejected On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->rejected_on }}</div>
                                 </div>
                             </div>
 
@@ -1021,6 +1005,95 @@
     </div>
     </div>
 
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ url('tms/trainer/sendstage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rejection-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('tms/trainer/rejectStage', $trainer->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                      <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <style>
         #step-form>div {

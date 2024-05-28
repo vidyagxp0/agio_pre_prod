@@ -308,8 +308,9 @@
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification
+            <strong>New Trainer Qualification</strong>
+            {{-- <strong>Site Division/Project</strong> : --}}
+            {{-- {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification --}}
         </div>
     </div>
 
@@ -349,10 +350,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
-                                        <select  name="site_code" required>
+                                        <select  name="division_id" required>
                                             <option value="">-- Select --</option>
                                             @foreach ($divisions as $division)
-                                                <option value="{{ $division->name }}">{{ $division->name }}</option>
+                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -445,7 +446,7 @@
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
                                         <select name="trainer_name" id="trainer_name">
-                                            <option>Select</option>
+                                            <option value="">Select</option>
                                             <option value="trainer1">Trainer 1</option>
                                         </select>
                                     </div>
@@ -462,7 +463,7 @@
                                     <div class="group-input">
                                         <label for="Designation">Designation</label>
                                         <select name="designation" id="designation">
-                                            <option >Select</option>
+                                            <option value="">Select</option>
                                             <option value="lead_trainer">Lead Trainer</option>
                                             <option value="senior_trainer">Senior Trainer</option>
                                             <option value="Instructor">Instructor</option>
@@ -473,9 +474,9 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Department">Department <span class="text-danger">*</span></label>
-                                        <select name="department" required>
-                                            <option>-- Select --</option>
+                                        <label for="Department">Department</label>
+                                        <select name="department">
+                                            <option value="">-- Select --</option>
                                             @foreach ($departments as $department)
                                                 <option value="{{ $department->id }}">{{ $department->name }}</option>
                                             @endforeach
@@ -769,7 +770,12 @@
                                 </div>
                             </div>
 
-
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Inv Attachments">Initial Attachment</label>
+                                    <input type="file" id="myfile" name="initial_attachment">
+                                </div>
+                            </div>
 
                             <script>
                                 VirtualSelect.init({
@@ -831,12 +837,12 @@
 
 
 
-                            <div class="col-12">
+                            {{-- <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Initial Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
-                                    {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
+                                    <input type="file" id="myfile" name="inv_attachment[]" multiple>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="audit_file_attachment"></div>
                                         <div class="add-btn">
@@ -847,7 +853,7 @@
                                     </div>
 
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>

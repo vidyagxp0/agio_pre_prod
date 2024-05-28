@@ -126,39 +126,17 @@
                         @php
                             $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
                             $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            // dd($employee->division_id);
                         @endphp
-                        {{-- <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button> --}}
-                        <button class="button_theme1"> <a class="text-white" href="">
-                                Audit Trail </a> </button>
-
-                        {{-- @if ($employee->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Activate
-                            </button> --}}
-                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
+                        @if ($employee->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                               Activate
+                                Activate
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approve Plan
-                            </button> --}}
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Child
-                            </button>
-
-                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-
+                        @elseif($employee->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Retire
                             </button>
-
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
-
-
-                        {{-- @endif --}}
+                        @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
                             </a> </button>
 
@@ -219,13 +197,13 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Site Division/Project">Site Division/Project</label>
-                                    <input value="{{ $employee->division_id }}" name="division_id" readonly >
-                                    {{-- <select name="division_id" id="division_id" disabled>
-                                        <option value="">-- Select --</option>
+                                    {{-- <input value="{{ $employee->division_id }}" name="division_id" readonly > --}}
+                                    <select name="division_id" id="division_id">
+                                        <option value="{{ $employee->division_id }}">-- Select --</option>
                                         @foreach ($divisions as $division)
                                             <option value="{{ $division->id }}" @if ($division->id == $employee->division_id) selected @endif>{{ $division->name }}</option>
                                         @endforeach
-                                    </select> --}}
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -302,24 +280,21 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Attached CV">Attached CV</label>
                                     <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
                                     <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a>
                                 </div>
                             </div>
-                            <div class="col-lg-2"></div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
                                     <input type="file" id="myfile" name="certification" value="{{ $employee->certification }}">
+                                    <a href="{{ asset('upload/' . $employee->certification) }}" target="_blank">{{ $employee->certification }}</a>
                                 </div>
                             </div>
-                            <div class="col-lg-2">
-                                <a href="{{ asset('upload/' . $employee->certification) }}" target="_blank">{{ $employee->certification }}</a>
-                            </div>
-                            <div class="col-12 sub-head">
+                            <div class="pt-2 col-12 sub-head">
                                 Employee Information
                             </div>
                             <div class="col-lg-6">
@@ -490,15 +465,18 @@
                                 <div class="group-input">
                                     <label for="Picture">Picture</label>
                                     <input type="file" id="myfile" name="picture" value="{{ $employee->picture }}">
+                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}" target="_blank">{{ $employee->external_attachment }}</a>
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Speciman Signature </label>
                                     <input type="file" id="myfile" name="specimen_signature" value="{{ $employee->specimen_signature }}">
+                                    <a href="{{ asset('upload/' . $employee->specimen_signature) }}" target="_blank">{{ $employee->specimen_signature }}</a>
                                 </div>
                             </div>
-                            <div class="group-input">
+                            <div class="pt-2 group-input">
                                 <label for="audit-agenda-grid">
                                     Job Responsibilities
                                     <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
@@ -571,6 +549,7 @@
                                 <div class="group-input">
                                     <label for="File Attachment">File Attachment</label>
                                     <input type="file" id="myfile" name="file_attachment" value="{{ $employee->file_attachment }}">
+                                    <a href="{{ asset('upload/' . $employee->file_attachment) }}" target="_blank">{{ $employee->file_attachment }}</a>
                                 </div>
                             </div>
                         </div>
@@ -667,29 +646,11 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">External Attachment</label>
-                                    {{-- <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}"> --}}
-
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="myfile" >
-                                            @if ($employee->external_attachment && is_array($employee->external_attachment))
-                                            @foreach($employee->external_attachment as $file)
-                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);" >
-                                                <b>{{ $file }}</b>
-                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                            </h6>
-                                       @endforeach
-                                            @endif
-                                        </div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-
-                                            <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}" oninput="addMultipleFiles(this, 'external_attachment')" multiple>
-                                        </div>
-                                    </div>
-
+                                    <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}">
+                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}" target="_blank">{{ $employee->external_attachment }}</a>
                                 </div>
                             </div>
+
                         </div>
                         <script>
                             $(document).ready(function() {

@@ -111,7 +111,7 @@
                                     <select name="division_id" required>
                                         <option value="">-- Select --</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->name }}">{{ $division->name }}</option>
+                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -149,7 +149,7 @@
                                 <div class="group-input">
                                     <label for="Gender">Gender</label>
                                     <select name="gender">
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="Female">Female</option>
                                         <option value="Male">Male</option>
                                     </select>
@@ -159,7 +159,7 @@
                                 <div class="group-input">
                                     <label for="Department">Department <span class="text-danger">*</span></label>
                                     <select name="department" required>
-                                        <option>-- Select --</option>
+                                        <option value="">-- Select --</option>
                                         @foreach ($departments as $department)
                                             <option value="{{ $department->id }}">{{ $department->name }}</option>
                                         @endforeach
@@ -170,7 +170,7 @@
                                 <div class="group-input">
                                     <label for="Job Title">Job Title <span class="text-danger">*</span></label>
                                     <select name="job_title" required>
-                                        <option>Enter Your Selection Here</option>
+                                        <option value="">Enter Your Selection Here</option>
                                         <option value="Administrator">Administrator</option>
                                         <option value="Cleaning Technician">Cleaning Technician</option>
                                         <option value="Compliance Training Manager">Compliance Training Manager</option>

@@ -4,6 +4,10 @@
         @include('frontend.TMS.head')
     @endif
 
+    @php
+        $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
+    @endphp
+
     {{-- ======================================
                     DASHBOARD
     ======================================= --}}
@@ -187,14 +191,15 @@
                                 @foreach ($trainers as $trainer)
                                     <tr>
                                         <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
-                                        <td>{{ $trainer->site_code }}</td>
+                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
                                         <td>{{ $trainer->initiator }}</td>
                                         <td>{{ $trainer->date_of_initiation }}</td>
                                         <td>{{ $trainer->due_date }}</td>
                                         <td>{{ $trainer->short_description }}</td>
                                         <td>{{ $trainer->trainer_name }}</td>
-                                        <td>{{ $trainer->department }}</td>
-                                        <td></td>
+                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+
+                                        <td>{{ $trainer->status }}</td>
                                     </tr>
                                 @endforeach
 
