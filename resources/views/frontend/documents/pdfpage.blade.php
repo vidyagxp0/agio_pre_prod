@@ -9,8 +9,8 @@
     <title>DMS Document</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    {{-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> --}}
+    {{-- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet"> --}}
 
     <style>
         * {
@@ -490,7 +490,9 @@
                     <thead>
                         <tr>
                             <th class="w-5">1.</th>
-                            <th class="text-left">Purpose</th>
+                            <th class="text-left">
+                                <div class="bold">Objective</div>
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -512,7 +514,9 @@
                     <thead>
                         <tr>
                             <th class="w-5">2.</th>
-                            <th class="text-left">Scope</th>
+                            <th class="text-left">
+                                <div class="bold">Scope</div>
+                            </th>
                         </tr>
                     </thead>
                 </table>
@@ -534,7 +538,7 @@
                     <tr>
                         <th class="w-5 vertical-baseline">3.</th>
                         <th class="w-95 text-left">
-                            <div class="">Responsibility</div>
+                            <div class="bold">Responsibility</div>
                         </th>
                     </tr>
                 </tbody>
@@ -575,13 +579,104 @@
                     </div>
                 </div>
             </div>
-
+            
             <table class="mb-20">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">4.</th>
                         <th class="w-95 text-left">
-                            <div class="">Abbreviation</div>
+                            <div class="bold">Accountability</div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if ($data->document_content && !empty($data->document_content->accountability) && is_array(unserialize($data->document_content->accountability)))
+                                    @foreach (unserialize($data->document_content->accountability) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
+                                    @endforeach
+                                @endif    
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- REFERENCES START --}}
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">5.</th>
+                        <th class="w-95 text-left">
+                            <div class="bold"> References</div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php $i = 1; @endphp
+                                @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
+                                    @foreach (unserialize($data->document_content->references) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{-- REFERENCES END --}}
+
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">6.</th>
+                        <th class="w-95 text-left">
+                            <div class="bold">Abbreviation</div>
                         </th>
                     </tr>
                 </tbody>
@@ -602,7 +697,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php
@@ -625,7 +720,7 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">5.</th>
+                            <th class="w-5 vertical-baseline">7.</th>
                             <th class="w-95 text-left">
                                 <div class="bold">Definitions</div>
                             </th>
@@ -649,7 +744,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">7.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -673,9 +768,9 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">6.</th>
+                            <th class="w-5 vertical-baseline">8.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Materials & Equipments</div>
+                                <div class="bold">General Instructions</div>
                             </th>
                         </tr>
                         <tr>
@@ -694,7 +789,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">8.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -714,40 +809,16 @@
                 </div>
             {{-- MATERIALS AND EQUIPMENTS END --}}
 
-            {{-- SAFETY START --}}
-            <div class="other-container ">
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="w-5">7.</th>
-                            <th class="text-left">Safety & Precautions</th>
-                        </tr>
-                    </thead>
-                </table>
-                <div class="procedure-block">
-                    <div class="w-100">
-                        <div class="w-100" style="display:inline-block;">
-                            <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
-                                    @if ($data->document_content)
-                                        {{-- {!! $data->document_content->safety_precautions !!} --}}
-                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {{-- SAFETY END --}}
 
             {{-- PROCEDURE START --}}
                 <div class="other-container ">
                     <table>
                         <thead>
                             <tr>
-                                <th class="w-5">8.</th>
-                                <th class="text-left">Procedure</th>
+                                <th class="w-5">9.</th>
+                                <th class="text-left">
+                                    <div class="bold">Procedure</div>
+                                </th>
                             </tr>
                         </thead>
                     </table>
@@ -771,9 +842,9 @@
                 <table class="mb-20 ">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">9.</th>
+                            <th class="w-5 vertical-baseline">10.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Reporting</div>
+                                <div class="bold">Cross References</div>
                             </th>
                         </tr>
                     </tbody>
@@ -791,7 +862,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                    <span style="position: absolute; left: -3rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -811,49 +882,7 @@
                 </div>
             {{-- REPORTING END --}}
 
-            {{-- REFERENCES START --}}
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <th class="w-5 vertical-baseline">10.</th>
-                            <th class="w-95 text-left">
-                                <div class="bold"> References</div>
-                            </th>
-                        </tr>
-                    </tbody>
-                </table>
-                <div class="procedure-block">
-                    <div class="w-100">
-                        <div class="w-100" style="display:inline-block;">
-                            <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    @php $i = 1; @endphp
-                                    @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
-                                        @foreach (unserialize($data->document_content->references) as $key => $res)
-                                            @php
-                                                $isSub = str_contains($key, 'sub');
-                                            @endphp
-                                            @if (!empty($res))
-                                                <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
-                                                </div>
-                                            @endif
-                                            @php
-                                                if (!$isSub) {
-                                                    $i++;  
-                                                    $sub_index = 1; 
-                                                } else {
-                                                    $sub_index++;
-                                                } 
-                                            @endphp
-                                        @endforeach
-                                    @endif
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{-- REFERENCES END --}}
+            
             
             {{-- ANNEXSURE START --}}
             <table class="mb-20">
@@ -880,7 +909,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                <span style="position: absolute; left: -3rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php

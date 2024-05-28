@@ -312,6 +312,15 @@
             $('#responsibilitydiv').append(html);
 
         });
+        
+        $('#accountabilitybtnadd').click(function(e) {
+
+            var html =
+                '<div class="singleAccountabilityBlock"><div class="resrow row"><div class="col-10"><textarea name="accountability[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subAccountabilityAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+
+            $('#accountabilitydiv').append(html);
+
+        });
 
 
 
@@ -387,6 +396,24 @@
                 nextSubBlocks.last().append(html);
             } else {
                 closestSingleBlock.after('<div class="subSingleMaterialBlock">' + html + '</div>');
+            }
+
+        });
+
+        $(document).on('click', '.subAccountabilityAdd', function(e) {
+            e.preventDefault();
+            subAccountabilityAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><textarea name="accountability[sub_'+ subAccountabilityAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAccountabilityBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAccountabilityBlock', '.subSingleAccountabilityBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleAccountabilityBlock">' + html + '</div>');
             }
 
         });

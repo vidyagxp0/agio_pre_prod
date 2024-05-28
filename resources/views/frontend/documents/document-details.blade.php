@@ -122,13 +122,13 @@
                                     </button>
                                 @endif --}}
                                 @if ($document->training_required == 'yes')
-                                    @if ($document->stage == 5)
+                                    @if ($document->stage == 7)
                                         <input type="hidden" name="stage_id" value="6" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Training<i class="fa-regular fa-paper-plane"></i>
                                         </button>
                                     @endif
-                                    @if ($document->stage == 7)
+                                    @if ($document->stage == 9)
                                         <input type="hidden" name="stage_id" value="8" />
                                         <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                             Send For Effective<i class="fa-regular fa-paper-plane"></i>
@@ -860,11 +860,11 @@
                         <input type="hidden" name="stage_id" value="4" />
                     @endif
                     @if ($document->training_required == 'yes')
-                        @if ($document->stage == 5)
-                            <input type="hidden" name="stage_id" value="6" />
-                        @endif
                         @if ($document->stage == 7)
                             <input type="hidden" name="stage_id" value="8" />
+                        @endif
+                        @if ($document->stage == 8)
+                            <input type="hidden" name="stage_id" value="9" />
                         @endif
                     @else
                         @if ($document->stage == 5)

@@ -16,15 +16,17 @@ use App\Http\Controllers\rcms\DesktopController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\MytaskController;
 use App\Http\Controllers\CabinateController;
-use App\Http\Controllers\rcms\CCController;
+use App\Http\Controllers\rcms\{CCController,DeviationController};
 use App\Http\Controllers\rcms\EffectivenessCheckController;
 use App\Http\Controllers\rcms\ObservationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
@@ -37,8 +39,10 @@ use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
 use App\Http\Controllers\tms\TrainerController;
+use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
+
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -166,6 +170,22 @@ Route::post('manage/reject/{id}', [ManagementReviewController::class, 'manage_re
 Route::post('manage/Qa/{id}', [ManagementReviewController::class, 'manage_qa_more_info'])->name('manage_qa_more_info');
 Route::get('ManagementReviewAuditTrial/{id}', [ManagementReviewController::class, 'ManagementReviewAuditTrial']);
 Route::get('ManagementReviewAuditDetails/{id}', [ManagementReviewController::class, 'ManagementReviewAuditDetails']);
+
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('deviation_child/{id}', [DeviationController::class, 'deviation_child_1'])->name('deviation_child_1');
+
+Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAuditTrial']);
+Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
+
+/********************************************* Deviation Ends *******************************************/
+
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+
+/********************************************* Deviation Ends *******************************************/
 
 // ==============================end ==============================
 //! ============================================
@@ -297,6 +317,9 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
+// ====================induction training =================
+
+Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
 
 //! ============================================
 //!                    RCMS
@@ -354,7 +377,7 @@ Route::get('auditee', [AuditeeController::class, 'external_audit']);
 
 Route::get('meeting', [ManagementReviewController::class, 'meeting']);
 
-Route::view('market-complaint', 'frontend.forms.market-complaint');
+// Route::view('market-complaint', 'frontend.forms.market-complaint');
 
 //Route::view('lab-incident', 'frontend.forms.lab-incident');
 
@@ -409,12 +432,16 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 //  ===================== OOS OOT OOC Form Route====================================
 Route::view('OOT_form', 'frontend.OOT.OOT_form');
 Route::get('out_of_calibration', [OOCController::class, 'index'])->name('ooc.index');
+Route::get('OOC/view', [OOCController::class, 'edit'])->name('ooc.edit');
+Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
+Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
-Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+
+// Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
-Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
+// Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');
 
 
 // ====================OOS/OOT======================================
@@ -459,6 +486,7 @@ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->
 Route::view('errata_new', 'frontend.errata.errata_new')->name('errata_new');
 Route::view('errata_view', 'frontend.errata.errata_view');
 
+// <<<<<<< HEAD
 
 // ================EMPLOYEE & TRAINER===================
 
@@ -471,3 +499,19 @@ Route::get('trainer_qualification_view/{id}', [TrainerController::class, 'show']
 Route::post('/tms/employee/sendstage/{id}', [EmployeeController::class, 'sendStage']);
 Route::post('/tms/trainer/sendstage/{id}', [TrainerController::class, 'sendStage']);
 Route::post('/tms/trainer/rejectStage/{id}', [TrainerController::class, 'rejectStage']);
+// =======
+Route::post('errata/create{id}', [ErrataController::class, 'create'])->name('errata.create');
+Route::post('errata/store', [ErrataController::class, 'store'])->name('errata.store');
+Route::get('errata/show/{id}', [ErrataController::class, 'show'])->name('errata.show');
+// Route::get('errata/edit/{id}', [ErrataController::class, 'edit'])->name('errata.edit');
+Route::put('errata/update/{id}', [Erratacontroller::class, 'update'])->name('errata.update');
+Route::get('errataaudittrail/{id}', [ErrataController::class, 'AuditTrial'])->name('errata.audittrail');
+Route::get('errataAuditInner/{id}', [ErrataController::class, 'auditDetailsErrata'])->name('errataauditdetails');
+Route::post('/errata/cancel/{id}', [ErrataController::class, 'erratacancelstage'])->name('errata.cancel');
+
+// ----------------------Stages----------------------------------------
+
+
+
+//=====================================================================
+// >>>>>>> B-backup

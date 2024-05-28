@@ -1,0 +1,7 @@
+{
+    "name": "your-vendor-name/your-project-name",
+    "require": {
+        "php": "^7.3|^8.1", // Adjust the PHP version according to your needs
+        // Add any dependencies your project requires here
+    }
+}
