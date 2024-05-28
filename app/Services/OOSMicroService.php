@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\OOS_micro;
-use App\Models\OOS_Mirco_grid;
+use App\Models\OOS_Micro_grid;
 use Illuminate\Http\Request;
 
 class OOSMicroService
@@ -18,7 +18,7 @@ class OOSMicroService
 
         try {
 
-            $micro_grid = OOS_Mirco_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
+            $micro_grid = OOS_Micro_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
             $micro_grid->oos_micro_id = $micro->id;
             $micro_grid->identifier = $identifier;
             $micro_grid->data = $request->$identifier;
@@ -28,6 +28,9 @@ class OOSMicroService
         } catch (\Exception $e) {
             $res['status'] = 'error';
             $res['message'] = $e->getMessage();
+            info('Error in oos service', [
+                'res' => $res
+            ]);
         }
 
         return $res;
@@ -44,7 +47,7 @@ class OOSMicroService
 
        try {
 
-           $micro_grid = OOS_Mirco_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
+           $micro_grid = OOS_Micro_grid::where(['oos_micro_id' => $micro->id, 'identifier' => $identifier])->firstOrNew();
            $micro_grid->oos_micro_id = $micro->id;
            $micro_grid->identifier = $identifier;
            $micro_grid->data = $request->$identifier;

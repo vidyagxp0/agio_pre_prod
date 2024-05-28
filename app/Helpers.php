@@ -482,7 +482,7 @@ class Helpers
         return $isQA;
     }
 
-    // getMicroGridData($micro, $identifier, true, 'response', true, 0)
+    // Helpers::getMicroGridData($micro, 'analyst_training', true, 'response', true, 0)
     public static function getMicroGridData(OOS_micro $micro, $identifier, $getKey = false, $keyName = null, $byIndex = false, $index = 0)
     {
         $res = $getKey ? '' : [];

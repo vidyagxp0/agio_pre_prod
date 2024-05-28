@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\OOS_micro;
 use App\Services\OOSMicroService;
+
+use App\Models\OOS_Micro_grid;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +15,12 @@ class OOSMicroController extends Controller
 {
     public function index()
     {
-        $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        // $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
+        // $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        // $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
 
-        return view('frontend.OOS_Micro.oos_micro',compact('old_record','record_number','old_record'));
+        return view('frontend.OOS_Micro.oos_micro');
     }
 
      public function store(Request $request){
@@ -92,7 +94,7 @@ class OOSMicroController extends Controller
             $micro->file_attachments_pli = $files;
         }
         // preliminary lab inv Conclution
-        $micro->summary_of_prelim_investiga_plic = implode(',', $request->summary_of_prelim_investiga_plic);
+        $micro->summary_of_prelim_investiga_plic = is_array($request->summary_of_prelim_investiga_plic) ? implode(',', $request->summary_of_prelim_investiga_plic) : '';
         $micro->root_cause_identified_plic = $request->root_cause_identified_plic;
         $micro->oos_category_root_cause_ident_plic = $request->oos_category_root_cause_ident_plic;
         $micro->oos_category_others_plic = implode(',', $request->oos_category_others_plic);
@@ -398,11 +400,64 @@ class OOSMicroController extends Controller
             $micro->reopen_attachment = $files;
         }
         $micro->save();
-        //dd($micro);
+// -------------------------------------------GRID 1 --------------------------------------------------------------
+        $oosMicroGrid=$micro->id;
+        $infoProductMat = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Info on Product/Mater'])->firstOrNew();
+        $infoProductMat->oos_micro_id = $oosMicroGrid;
+        $infoProductMat->identifier = 'Info on Product/Mater';
+        $infoProductMat->data = $request->productMaterial;
+        $infoProductMat->save();
+
+//------------------------------------------GRID 2----------------------------------------------------------
+        $stabilityStudy=$micro->id;
+        $stabilityStudy = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Stability Study'])->firstOrNew();
+        $stabilityStudy->oos_micro_id = $oosMicroGrid;
+        $stabilityStudy->identifier = 'Stability Study';
+        $stabilityStudy->data = $request->stability_study;
+        $stabilityStudy->save();
+
+//-------------------------------------------GRID 3------------------------------------------------------------------
+
+        $oos_detail=$micro->id;
+        $oos_detail = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'OOS Details'])->firstOrNew();
+        $oos_detail->oos_micro_id = $oosMicroGrid;
+        $oos_detail->identifier = 'OOS Details';
+        $oos_detail->data = $request->oos_details;
+        $oos_detail->save();
+// --------------------------------------------GRID 4-----------------------------------------------------
+
+
+        $oos_similarNature=$micro->id;
+        $oos_similarNature = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'OOS SimilarNature'])->firstOrNew();
+        $oos_similarNature->oos_micro_id = $oosMicroGrid;
+        $oos_similarNature->identifier = 'OOS SimilarNature';
+        $oos_similarNature->data = $request->info_product_oos_capa;
+        $oos_similarNature->save();
+
+// --------------------------------------------GRID 5-------------------------------------------------------------
+
+        $summary_oos_testResult=$micro->id;
+        $summary_oos_testResult = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Summary of OOS testRes'])->firstOrNew();
+        $summary_oos_testResult->oos_micro_id = $oosMicroGrid;
+        $summary_oos_testResult->identifier = 'Summary of OOS testRes';
+        $summary_oos_testResult->data = $request->summary_of_oos_test_results;
+        $summary_oos_testResult->save();
+
+//------------------------------------------------GRID 6-------------------------------------------------------------
+//dd($micro);
+
+        $summary_oos_ConclusionR=$micro->id;
+        $summary_oos_ConclusionR = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Summary of OOS ConclusionRev'])->firstOrNew();
+        $summary_oos_ConclusionR->oos_micro_id = $oosMicroGrid;
+        $summary_oos_ConclusionR->identifier = 'Summary of OOS ConclusionRev';
+        $summary_oos_ConclusionR->data = $request->oosConclusion_review;
+        $summary_oos_ConclusionR->save();
+
 
 
         $grid_inputs = [
             "phase_I_investigation",
+            "phase_IB_investigation",
             "analyst_training_proce",
             "sample_receiving_verification_lab",
             "method_procedure_used_during_analysis",
@@ -469,7 +524,15 @@ class OOSMicroController extends Controller
             $old_record = OOS_micro::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record'));
+
+            $oosMgrid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Info on Product/Mater'])->first();
+            $oosM2grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Stability Study'])->first();
+            $oosM3grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'OOS Details'])->first();
+            $oosM4grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'OOS SimilarNature'])->first();
+            $oosM5grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Summary of OOS testRes'])->first();
+            $oosM6grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Summary of OOS ConclusionRev'])->first();
+
+            return view('frontend.OOS_Micro.oos_micro_view',compact('micro_data','record_number','old_record', 'oosMgrid','oosM2grid','oosM3grid','oosM4grid','oosM5grid','oosM6grid'));
        }
         public function update(Request $request, $id){
 
@@ -845,6 +908,100 @@ class OOSMicroController extends Controller
             }
                 $micro->save();
 
+
+
+
+                    // $ooc = OutOfCalibration::where('id', $id)->first();
+                    // $ooc->record = str_pad($ooc->record, 4, '0', STR_PAD_LEFT);
+                    // $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
+                    // $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
+
+                    // $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+                    // $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+                    // foreach ($oocgrid->data as $oogrid)
+                    // {
+                    //     return $oogrid;
+                    // }
+
+
+
+            // -------------------------------------------GRID 1 --------------------------------------------------------------
+            $oosMicroGrid=$micro->id;
+            $infoProductMat = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Info on Product/Mater'])->firstOrNew();
+            $infoProductMat->oos_micro_id = $oosMicroGrid;
+            $infoProductMat->identifier = 'Info on Product/Mater';
+            $infoProductMat->data = $request->productMaterial;
+            $infoProductMat->save();
+
+                        // $oosMgrid= OOS_Micro_grid::where('oos_micro_id',$id)->first();
+                        $oosMgrid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Info on Product/Mater'])->first();
+
+                        // $oosMicgrid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Info on Product/Mater'])->first();
+                        // foreach ($oosMgrid->data as $oosm)
+                    // {
+                    //     return $oosm;
+                    // }
+
+            //------------------------------------------GRID 2----------------------------------------------------------
+            $stabilityStudy=$micro->id;
+            $stabilityStudy = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Stability Study'])->firstOrNew();
+            $stabilityStudy->oos_micro_id = $oosMicroGrid;
+            $stabilityStudy->identifier = 'Stability Study';
+            $stabilityStudy->data = $request->stability_study;
+            $stabilityStudy->save();
+
+
+            $oosM2grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Stability Study'])->first();
+
+            //------------------------------------------GRID 3------------------------------------------------------------------
+
+            $oos_detail=$micro->id;
+            $oos_detail = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'OOS Details'])->firstOrNew();
+            $oos_detail->oos_micro_id = $oosMicroGrid;
+            $oos_detail->identifier = 'OOS Details';
+            $oos_detail->data = $request->oos_details;
+            $oos_detail->save();
+
+            $oosM3grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'OOS Details'])->first();
+
+            // ------------------------------------------GRID 4-----------------------------------------------------
+
+
+            $oos_similarNature=$micro->id;
+            $oos_similarNature = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'OOS SimilarNature'])->firstOrNew();
+            $oos_similarNature->oos_micro_id = $oosMicroGrid;
+            $oos_similarNature->identifier = 'OOS SimilarNature';
+            $oos_similarNature->data = $request->info_product_oos_capa;
+            $oos_similarNature->save();
+
+            $oosM4grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'OOS SimilarNature'])->first();
+
+
+            // --------------------------------------------GRID 5-------------------------------------------------------------
+
+            $summary_oos_testResult=$micro->id;
+            $summary_oos_testResult = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Summary of OOS testRes'])->firstOrNew();
+            $summary_oos_testResult->oos_micro_id = $oosMicroGrid;
+            $summary_oos_testResult->identifier = 'Summary of OOS testRes';
+            $summary_oos_testResult->data = $request->summary_of_oos_test_results;
+            $summary_oos_testResult->save();
+
+            $oosM5grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Summary of OOS testRes'])->first();
+
+
+            //------------------------------------------------GRID 6-------------------------------------------------------------
+            //dd($micro);
+
+            $summary_oos_ConclusionR=$micro->id;
+            $summary_oos_ConclusionR = OOS_Micro_grid::Where(['oos_micro_id'=>$oosMicroGrid,'identifier'=>'Summary of OOS ConclusionRev'])->firstOrNew();
+            $summary_oos_ConclusionR->oos_micro_id = $oosMicroGrid;
+            $summary_oos_ConclusionR->identifier = 'Summary of OOS ConclusionRev';
+            $summary_oos_ConclusionR->data = $request->oosConclusion_review;
+            $summary_oos_ConclusionR->save();
+
+            $oosM6grid = OOS_Micro_grid::where(['oos_micro_id'=>$id, 'identifier'=>'Summary of OOS ConclusionRev'])->first();
+
+
              $grid_inputs = [
                     "phase_I_investigation",
                     "analyst_training_proce",
@@ -893,7 +1050,8 @@ class OOSMicroController extends Controller
                     "checklist_for_intrument_equip_last_CIMT",
                     "disinfectant_details_last_CIMT",
                     "checklist_for_result_calculation_CIMT",
-                    "phase_II_OOS_investigation"
+                    "phase_II_OOS_investigation",
+                    "microbial_isolates_bioburden"
                 ];
 
                 foreach ($grid_inputs as $grid_input)
@@ -901,12 +1059,13 @@ class OOSMicroController extends Controller
                     OOSMicroService::update_grid($micro, $request, $grid_input);
                 }
                 toastr()->success("Record is updated Successfully");
-                return redirect(url('rcms/qms-dashboard'));
+                // return redirect(url('rcms/qms-dashboard'));
+
+
+                return view('rcms/qms-dashboard' , compact('oosMgrid','oosM2grid','oosM3grid','oosM4grid','oosM5grid','oosM6grid'));
+
+
             }
-
-
-
-
 
 
 
