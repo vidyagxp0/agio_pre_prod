@@ -2136,7 +2136,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Uppdate";
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastDeviation->Initiator_Group != $deviation->Initiator_Group || !empty ($request->comment)) {
