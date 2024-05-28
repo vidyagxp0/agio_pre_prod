@@ -310,6 +310,9 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
+// ====================induction training =================
+
+Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
 
 //! ============================================
 //!                    RCMS
