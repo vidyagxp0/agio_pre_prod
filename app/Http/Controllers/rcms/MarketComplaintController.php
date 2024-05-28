@@ -840,6 +840,8 @@ public function update(Request $request,$id){
     $marketComplaint->initiator_group_code_gi = $request->initiator_group_code_gi;
     $marketComplaint->record_number =((RecordNumber::first()->value('counter')) + 1);
     $marketComplaint->initiated_through_gi = $request->initiated_through_gi;
+    $marketComplaint->due_date_gi = $request->due_date_gi;
+
     $marketComplaint->if_other_gi = $request->if_other_gi;
     $marketComplaint->is_repeat_gi = $request->is_repeat_gi;
     $marketComplaint->repeat_nature_gi = $request->repeat_nature_gi;
@@ -1821,7 +1823,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->closed_done_comment = $request->comment;
 
 
-            $marketstat->status ="Pending Response Letter";
+            $marketstat->status ="Closed Done";
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $id;
             $history->activity_type = 'Activity Log';

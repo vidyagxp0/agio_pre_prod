@@ -18,7 +18,7 @@
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            / Market Complaint
+            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
         </div>
     </div>
 
@@ -227,7 +227,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -243,14 +243,14 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @elseif($data->stage == 4 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
 
 
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     Additional Selections
@@ -266,7 +266,7 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @elseif($data->stage == 5 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
@@ -279,8 +279,7 @@
                                 All CAPA Closed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#">
-                                Regulatory
-                                Reporting child
+                                Regulatory Reporting child
 
                             </button>
                         @elseif($data->stage == 7 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
@@ -288,7 +287,7 @@
                                 Send Letter
                             </button>
 
-                            <div class="btn-group">
+                            {{-- <div class="btn-group">
                                 <button type="button" class="button_theme1" data-bs-toggle="dropdown"
                                     aria-expanded="false">
                                     child
@@ -305,135 +304,10 @@
                                     </li>
                                     <!-- Add more selections as needed -->
                                 </ul>
-                            </div>
+                            </div> --}}
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
-
-                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                        </a> </button> --}}
-
-
-
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Verification Complete
-                            </button> --}}
-
-
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                Cancellation Request
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Request More Info
-                            </button> --}}
-
-
-
-                        {{-- <button class="button_theme1"> <a class="text-white" href=""> --}}
-                        {{-- {{ url('DeviationAuditTrial', $data->id) }} --}}
-
-                        {{-- add here url for auditTrail i.e. href="{{ url('CapaAuditTrial', $data->id) }}"
-                                Audit Trail </a> </button> --}}
-
-                        {{--    @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Submit
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button> --}}
-                        {{-- @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-
-
-                        {{-- 
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            HOD Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                            Cancel
-                        </button> --}}
-
-
-
-
-
-                        {{-- @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Initial Review Complete
-                        </button>
-
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif(
-                            $data->stage == 4 &&
-                                (in_array(5, $userRoleIds) || in_array(18, $userRoleIds) || in_array(Auth::user()->id, $valuesArray)))
-                            @if (!$cftCompleteUser) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button> --}}
-
-                        {{-- @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Initiator
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
-                            Child
-                        </button> --}}
-                        {{-- @elseif($data->stage == 6 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#more-info-required-modal">
-                            More Info Required
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Approved
-                        </button> --}}
-                        {{-- @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            Initiator Updated Complete
-                        </button> --}}
-                        {{-- @elseif($data->stage == 8 && (in_array(39, $userRoleIds) || in_array(18, $userRoleIds))) --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#sendToInitiator">
-                            Send to Opened
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#hodsend">
-                            Send to HOD Review
-                        </button> --}}
-                        {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#qasend">
-                            Send to QA Initial Review
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#pending-initiator-update">
-                            Send to Pending Initiator Update
-                        </button>
-                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                            QA Final Review Complete
-                        </button> --}}
-                        {{-- @endif --}}
-                        {{-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button> --}}
 
 
                     </div>
@@ -768,13 +642,7 @@
                         }
                     }
                 </script>
-                <script>
-                    // JavaScript
-                    document.getElementById('initiator_group').addEventListener('change', function() {
-                        var selectedValue = this.value;
-                        document.getElementById('initiator_group_code_gi').value = selectedValue;
-                    });
-                </script>
+               
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const removeButtons = document.querySelectorAll('.remove-file');
@@ -953,9 +821,9 @@
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
-
+                            
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi ? \Carbon\Carbon::parse($data->due_date_gi)->format('d-M-Y') : '' }}" />
                                         <input type="date" name="due_date_gi"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->due_date_gi ?? '' }}" class="hide-input"
@@ -963,34 +831,55 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <script>
+                            function handleDateInput(input, targetId) {
+                                const target = document.getElementById(targetId);
+                                const date = new Date(input.value);
+                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
+                                target.value = formattedDate;
+                            }
+                            </script>
+                            
 
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span
-                                            class="text-danger"></span></label>
-                                    <select name="initiator_group">
+                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                    <select name="initiator_group" id="initiator_group">
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code }}"
-                                                @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}
+                                            <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
+                                                {{ $initiator_group }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
-
-
-
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi"
-                                        readonly value="{{ $data->initiator_group_code_gi ?? '' }}">
+                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}">
                                 </div>
                             </div>
-
+                            
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedValue = this.value;
+                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
+                                });
+                            
+                                // Set the group code on page load if a value is already selected
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var initiatorGroupElement = document.getElementById('initiator_group');
+                                    if (initiatorGroupElement.value) {
+                                        document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
+                                    }
+                                });
+                            </script>
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
@@ -1123,7 +1012,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6 new-date-data-field">
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On"> Complaint Reported On </label>
 
@@ -1132,15 +1021,48 @@
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
                                             placeholder="DD-MM-YYYY" name="complaint_reported_on_gi"
                                             value="{{ $data->complaint_reported_on_gi }}" />
-                                        {{-- <input type="date" name="complaint_reported_on_gi"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                                                oninput=""  /> --}}
+                                       
                                     </div>
 
 
                                 </div>
+                            </div> --}}
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="OOC Logged On">Complaint Reported On</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-m-Y') : '' }}" />
+                                        <input type="date" id="complaint_date_picker" value="{{ $data->complaint_reported_on_gi }}" name="complaint_reported_on_gi" class="hide-input" style="display: none" />
+                                    </div>
+                                </div>
                             </div>
-
+                            
+                            <script>
+                                document.addEventListener('DOMContentLoaded', (event) => {
+                                    const dateInput = document.getElementById('complaint_date_picker');
+                                    const today = new Date().toISOString().split('T')[0];
+                                    dateInput.setAttribute('max', today);
+                            
+                                    // Show the date picker when clicking on the readonly input
+                                    const readonlyInput = document.getElementById('compalint_dat');
+                                    readonlyInput.addEventListener('click', () => {
+                                        dateInput.style.display = 'block';
+                                        dateInput.focus();
+                                    });
+                            
+                                    // Update the readonly input when a date is selected
+                                    dateInput.addEventListener('change', () => {
+                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                        dateInput.style.display = 'none';
+                                    });
+                            
+                                    // If there is an existing date, set the readonly input's value
+                                    if (dateInput.value) {
+                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                    }
+                                });
+                            </script>
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Details Of Nature Market Complaint">Details Of Nature Market
@@ -1176,6 +1098,8 @@
                                                 <th>Pack Size</th>
                                                 <th>Dispatch Quantity</th>
                                                 <th>Remarks</th>
+                                                <th>Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1197,6 +1121,8 @@
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_pack_size]" value="{{ $detail['info_pack_size'] }}"></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_dispatch_quantity]" value="{{ $detail['info_dispatch_quantity'] }}"></td>
                                                         <td><input type="text" name="serial_number_gi[{{ $index }}][info_remarks]" value="{{ $detail['info_remarks'] }}"></td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                    
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -1229,6 +1155,7 @@
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_pack_size]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_dispatch_quantity]"></td>' +
                                                 '<td><input type="text" name="serial_number_gi[' + indexDetail + '][info_remarks]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
                                                 '</tr>';
                                                 indexDetail++;
                                             return html;
@@ -1260,6 +1187,7 @@
                                                     <th>Batch No.</th>
                                                     <th>Manufacturing Location</th>
                                                     <th>Remarks</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1274,12 +1202,14 @@
                                                             <td><input type="text" name="trace_ability[{{ $index }}][batch_no_tr]" value="{{ $tracebil['batch_no_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][manufacturing_location_tr]" value="{{ $tracebil['manufacturing_location_tr'] }}"></td>
                                                             <td><input type="text" name="trace_ability[{{ $index }}][remarks_tr]" value="{{ $tracebil['remarks_tr'] }}"></td>
+                                                           <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                        
                                                         </tr>
                                                     @endforeach
                                                 @else
                                                     <tr>
                                                         <td colspan="5">No found</td>
-                                                    </tr>
+                                                     </tr>
                                                 @endif
                                             </tbody>
                                         </table>
@@ -1300,6 +1230,8 @@
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][batch_no_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][manufacturing_location_tr]"></td>' +
                                                 '<td><input type="text" name="trace_ability[' + serialNumber + '][remarks_tr]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                                
                                                 '</tr>';
                                             return html;
                                         }
@@ -1369,6 +1301,8 @@
                                                     <th>Name</th>
                                                     <th>Department</th>
                                                     <th>Remarks</th>
+                                                    <th>Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1382,6 +1316,8 @@
                                                             <td><input type="text" name="Investing_team[{{ $index }}][name_inv_tem]" value="{{ $inves['name_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][department_inv_tem]" value="{{ $inves['department_inv_tem'] }}"></td>
                                                             <td><input type="text" name="Investing_team[{{ $index }}][remarks_inv_tem]" value="{{ $inves['remarks_inv_tem'] }}"></td>
+                                                             <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1407,6 +1343,8 @@
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][name_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
                                                 '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+                                               
                                                 '</tr>';
                                             return html;
                                         }
@@ -1540,6 +1478,8 @@
                                                     <th>Facts/Controls</th>
                                                     <th>Probable Cause</th>
                                                     <th>Remarks</th>
+                                                    <th>Action</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1554,6 +1494,8 @@
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][factscontrols_bssd]" value="{{ $bra_st_s['factscontrols_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][probable_cause_bssd]" value="{{ $bra_st_s['probable_cause_bssd'] }}"></td>
                                                             <td><input type="text" name="brain_stroming_details[{{ $index }}][remarks_bssd]" value="{{ $bra_st_s['remarks_bssd'] }}"></td>
+                                                              <td><button type="button" class="removeRowBtn">Remove</button></td>
+
                                                         </tr>
                                                     @endforeach
                                                 @else
@@ -1580,6 +1522,8 @@
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]"></td>' +
                                                 '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][remarks_bssd]"></td>' +
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+
                                                 '</tr>';
                                             return html;
                                         }
@@ -1752,7 +1696,7 @@
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][names_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][department_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][sign_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + teamserialNumber + '][date_tm]"></td>' +
+                                                '<td><input type="date" name="Team_Members[' + teamserialNumber + '][date_tm]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }
@@ -1828,7 +1772,7 @@
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][date_rrv]"></td>' +
+                                                '<td><input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }

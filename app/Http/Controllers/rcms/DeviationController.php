@@ -4568,7 +4568,7 @@ class DeviationController extends Controller
     public function store_audit_review(Request $request, $id)
     {
             $history = new AuditReviewersDetails;
-            $history->deviation_id = $id;
+            $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->type = $request->type;
             $history->reviewer_comment = $request->reviewer_comment;

@@ -26,6 +26,7 @@ use App\Http\Controllers\ImportController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\LabIncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
@@ -180,6 +181,12 @@ Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audi
 
 /********************************************* Deviation Ends *******************************************/
 
+/********************************************* Deviation Starts *******************************************/
+
+Route::post('failure_investigation_child_1/{id}', [FailureInvestigationController::class, 'failure_investigation_child_1'])->name('failure_investigation_child_1');
+
+/********************************************* Deviation Ends *******************************************/
+
 // ==============================end ==============================
 //! ============================================
 //!                    Risk Management
@@ -310,6 +317,9 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 Route::view('employee_new', 'frontend.TMS.Employee.employee_new')->name('employee_new');
 Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer_qualification')->name('trainer_qualification');
 
+// ====================induction training =================
+
+Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
 
 //! ============================================
 //!                    RCMS

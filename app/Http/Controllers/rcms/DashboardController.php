@@ -423,13 +423,14 @@ class DashboardController extends Controller
                 "type" => "Deviation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
-                "short_description" => $data->description_gi ? $data->description_gi : "-",
+                "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "initiated_through" => $data->initiated_through,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
             ]);
         }
 
@@ -440,6 +441,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date_gi,
                 "division_id" => $data->division_id,
                 "type" => "Market Complaint",
                 "parent_id" => $data->parent_id,
@@ -449,7 +451,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through_gi,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -493,6 +495,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }
@@ -879,6 +882,12 @@ class DashboardController extends Controller
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        } elseif ($type == "Failure Investigation") {
+            $data = FailureInvestigation::find($id);
+            $single = "failure-investigation-single-report/" . $data->id;
+            $audit = "failure-investigation-audit-pdf/".$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "errata") {
