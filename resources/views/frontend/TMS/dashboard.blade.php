@@ -8,6 +8,62 @@
         $divisions = DB::table('q_m_s_divisions')->select('id', 'name')->get();
     @endphp
 
+    <style>
+        .cctab {
+            display: flex;
+            justify-content: left;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+
+        .cctablinks {
+            background-color: #ffffff;
+            border-radius: 5px;
+            padding: 6px 12px;
+            margin: 0 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            border: none;
+        }
+
+        .cctablinks:hover {
+            background-color: #ddd;
+            color: #000;
+        }
+
+        .cctablinks.active {
+            background-color: #3a424b;
+            /* background-color: #007bff; */
+            color: white;
+        }
+
+        .cctabcontent {
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+    </style>
+    <script>
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+
+        const saveButtons = document.querySelectorAll('.saveButton1');
+        const form = document.getElementById('step-form');
+    </script>
+
     {{-- ======================================
                     DASHBOARD
     ======================================= --}}
@@ -35,37 +91,48 @@
                         </div>
                     </div>
                 </div>
+                <div class="cctab">
 
-                <div class="tms-dashboard-tabs">
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+
+                </div>
+
+                {{-- <div class="tms-dashboard-tabs">
                     <div class="inner-block tab-btn active">
                         <input type="radio" name="dash-tabs" data-target="tms-all-block" checked>
                         <div><i class="fa-solid fa-bars-progress"></i>&nbsp;All</div>
                     </div>
-                    {{-- <div class="inner-block tab-btn">
-                        <input type="radio" name="dash-tabs" data-target="tms-due-block">
-                        <div><i class="fa-solid fa-clock-rotate-left fa-flip-horizontal"></i>&nbsp;Past Due</div>
+                    <div class="inner-block tab-btn">
+                        <input type="radio" name="dash-tabs" data-target="tms-assigned-block">
+                        <div><i class="fa-solid fa-clock-rotate-left fa-flip-horizontal"></i>&nbsp;Assigned</div>
                     </div>
                     <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-pending-block">
-                        <div><i class="fa-solid fa-hourglass-half"></i>&nbsp;Pending</div>
+                        <div><i class="fa-solid fa-bars-progress"></i>&nbsp;Employee</div>
                     </div>
                     <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-completed-block">
-                        <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
-                    </div> --}}
-                </div>
+                        <div><i class="fa-solid fa-bars-progress"></i>&nbsp;Training Qualification</div>
+                    </div>
+                </div> --}}
 
-                <div class="inner-block tms-block" id="tms-all-block">
+                {{-- ================CC Form1================ --}}
+
+                <div id="CCForm1" class="inner-block tms-block cctabcontent" style="margin-top:50px; display:block;">
                     @if (Helpers::checkRoles(6))
-                        <div class="block-table">
+                        <div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
                                         <th>Training Plan</th>
-                                        <th>Number of SOPs</th>
+                                        <th>Number of Documents</th>
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
+                                        <th></th>
 
                                     </tr>
                                 </thead>
@@ -80,20 +147,20 @@
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
                                                     }
                                             @endphp
-
+                                        @if($trainingPlan)
                                             <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
                                             {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
                                             <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
                                             <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                             <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
-                                            <td>{{ $temp->status }}</td>
+                                            <td>{{ $temp->status == "Assigned" ? "Pending" : $temp->status }}</td>
 
                                             {{-- <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>
                                             </td> --}}
                                             <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
-
+                                        @endif
                                         </tr>
                                         @endif
                                     @endforeach
@@ -102,10 +169,13 @@
                                 </tbody>
                             </table>
                         </div>
-                        @endif
+                    @endif
+                </div>
+                {{-- ================CC Form2================ --}}
 
-                       @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <div class="block-table" style="    padding-top: 50px;">
+                <div id="CCForm2" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+                        <div>
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -126,7 +196,20 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
+                                            <td>
+                                                @php
+                                                    $trainingStatusCheck = DB::table('training_statuses')
+                                                        ->where([
+                                                            'user_id' => Auth::user()->id,
+                                                            'sop_id' => $temp->id,
+                                                            'training_id' => $temp->traningstatus->training_plan,
+                                                            'status' => 'Complete'
+                                                        ])
+                                                        ->first();
+                                                @endphp
+
+                                                {{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}
+                                            </td>
                                             @if($temp->traningstatus->status == 'Complete')
                                             <th>{{$temp->traningstatus->status}}</th>
                                             @else
@@ -139,40 +222,43 @@
                             </table>
                         </div>
                     @endif
-{{-- ========================================employee Data================ --}}
-                    <div class="block-table" style="margin-top:50px;">
-                        <table class="table table-bordered">
-                            <thead>
+                </div>
+                {{-- ================employee Data================ --}}
+
+                <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th style="width:10%;">Employee ID</th>
+                                <th>Department</th>
+                                <th>Job Title</th>
+                                <th>Assigned To</th>
+                                <th>Joining Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        {{-- @php
+                            $employees = DB::table('employees')->get();
+                            // dd($employees);
+                        @endphp --}}
+                        <tbody>
+                            @foreach ($employees as $employee)
                                 <tr>
-                                    <th style="width:10%;">Employee ID</th>
-                                    <th>Department</th>
-                                    <th>Job Title</th>
-                                    <th>Assigned To</th>
-                                    <th>Joining Date</th>
-                                    <th>Status</th>
+                                    <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
+                                    <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
+                                    <td>{{ $employee->job_title }}</td>
+                                    <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
+                                    <td>{{ $employee->joining_date }}</td>
+                                    <td>{{ $employee->status }}</td>
                                 </tr>
-                            </thead>
-                            {{-- @php
-                                $employees = DB::table('employees')->get();
-                                // dd($employees);
-                            @endphp --}}
-                            <tbody>
-                                @foreach ($employees as $employee)
-                                    <tr>
-                                        <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
-                                        <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
-                                        <td>{{ $employee->job_title }}</td>
-                                        <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
-                                        <td>{{ $employee->joining_date }}</td>
-                                        <td>{{ $employee->status }}</td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-{{-- ================================ --}}
-{{-- ========================================training Data================ --}}
-                    <div class="block-table" style="margin-top:50px;">
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                {{-- ===============training Data================ --}}
+
+                <div id="CCForm4" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
@@ -206,9 +292,10 @@
                             </tbody>
                         </table>
                     </div>
-{{-- ================================ --}}
                 </div>
-                <div class="inner-block tms-block" id="tms-due-block">
+                {{-- ========================================== --}}
+
+                {{-- <div class="inner-block tms-block cctabcontent" id="CCForm2">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -275,9 +362,9 @@
                         </div>
                     @endif
 
-                </div>
+                </div> --}}
 
-                <div class="inner-block tms-block" id="tms-pending-block">
+                {{-- <div class="inner-block tms-block" id="tms-pending-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -341,9 +428,9 @@
                             </table>
                         </div>
                     @endif
-                </div>
+                </div> --}}
 
-                <div class="inner-block tms-block" id="tms-completed-block">
+                {{-- <div class="inner-block tms-block" id="tms-completed-block">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -408,271 +495,7 @@
                             </table>
                         </div>
                     @endif
-                </div>
-
-                {{-- <div class="row">
-                    <div class="col-lg-4">
-                        <div class="inner-block progress-block">
-                            <div class="head">
-                                Training Past Due11111
-                            </div>
-                            <div id="chart-tms1"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="inner-block speedometer-block">
-                            <div class="head">
-                                Training Completed
-                            </div>
-                            <div id="chart-tms2"></div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="inner-block progress-block">
-                            <div class="head">
-                                Training Pending
-                            </div>
-                            <div id="chart-tms3"></div>
-                        </div>
-                    </div>
                 </div> --}}
-
-                {{-- <div class="number-grid">
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-1">
-                                <i class="fa-regular fa-circle-question"></i>
-                            </div>
-                            <div>100</div>
-                        </div>
-                        <div class="title">
-                            Questions
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-2">
-                                <i class="fa-solid fa-person-chalkboard"></i>
-                            </div>
-                            <div>10</div>
-                        </div>
-                        <div class="title">
-                            Question Banks
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-3">
-                                <i class="fa-solid fa-gears"></i>
-                            </div>
-                            <div>20</div>
-                        </div>
-                        <div class="title">
-                            Quizzes
-                        </div>
-                    </div>
-                    <div class="number-block">
-                        <div class="top">
-                            <div class="icon color-4">
-                                <i class="fa-solid fa-code-pull-request"></i>
-                            </div>
-                            <div>5</div>
-                        </div>
-                        <div class="title">
-                            Completed Trainigs
-                        </div>
-                    </div>
-                </div> --}}
-
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms4"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Deviation Rate (Term)
-                            </div>
-                            <div id="chart-tms5"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Training Overdue
-                            </div>
-                            <div id="chart-tms6"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                SOP For Training
-                            </div>
-                            <div id="chart-tms7"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Completed Training
-                            </div>
-                            <div id="chart-tms8"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Department Trainees
-                            </div>
-                            <div id="chart-tms9"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Question Banks
-                            </div>
-                            <div id="chart-tms10"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                Training Plan
-                            </div>
-                            <div id="chart-tms11"></div>
-                        </div>
-                </div> --}}
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms12"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms13"></div>
-                        </div>
-
-                        <div class="inner-block chart-block">
-                            <div class="head">
-                                CAPA Extension Rate (Term)
-                            </div>
-                            <div id="chart-tms14"></div>
-                        </div>
-                </div> --}}
-                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
-                        <div class="inner-block table-block">
-                            <div class="head">CAPA Extension Rate (Term)</div>
-                            <div class="dash-table">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Month</th>
-                                            <th>Number of Extension PR's</th>
-                                            <th>Number of CAPA PR's</th>
-                                            <th>Extension Rate</th>
-                                            <th>On Time Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        <div class="inner-block table-block">
-                            <div class="head">Change Control Extension Rate (Term)</div>
-                            <div class="dash-table">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th>Month</th>
-                                            <th>Number of Extension PR's</th>
-                                            <th>Number of Change Control PR's</th>
-                                            <th>Extension Rate</th>
-                                            <th>On Time Rate</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2022.01</td>
-                                            <td>15</td>
-                                            <td>10</td>
-                                            <td>33.33%</td>
-                                            <td>25%</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                </div> --}}
-
             </div>
         </div>
     </div>
