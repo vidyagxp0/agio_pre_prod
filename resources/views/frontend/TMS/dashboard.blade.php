@@ -94,6 +94,8 @@
                 <div class="cctab">
 
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
@@ -258,6 +260,83 @@
                 {{-- ===============training Data================ --}}
 
                 <div id="CCForm4" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Record No.</th>
+                                    <th>Site/Location Code</th>
+                                    <th>Initiator</th>
+                                    <th>Date Of Initiation</th>
+                                    <th>Due Date</th>
+                                    <th>Short Description</th>
+                                    <th>Trainer Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($trainers as $trainer)
+                                    <tr>
+                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
+                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
+                                        <td>{{ $trainer->initiator }}</td>
+                                        <td>{{ $trainer->date_of_initiation }}</td>
+                                        <td>{{ $trainer->due_date }}</td>
+                                        <td>{{ $trainer->short_description }}</td>
+                                        <td>{{ $trainer->trainer_name }}</td>
+                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+
+                                        <td>{{ $trainer->status }}</td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                {{-- ===============On the job================ --}}
+
+                <div id="CCForm5" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Record No.</th>
+                                    <th>Site/Location Code</th>
+                                    <th>Initiator</th>
+                                    <th>Date Of Initiation</th>
+                                    <th>Due Date</th>
+                                    <th>Short Description</th>
+                                    <th>Trainer Name</th>
+                                    <th>Department</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($trainers as $trainer)
+                                    <tr>
+                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
+                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
+                                        <td>{{ $trainer->initiator }}</td>
+                                        <td>{{ $trainer->date_of_initiation }}</td>
+                                        <td>{{ $trainer->due_date }}</td>
+                                        <td>{{ $trainer->short_description }}</td>
+                                        <td>{{ $trainer->trainer_name }}</td>
+                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+
+                                        <td>{{ $trainer->status }}</td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                {{-- ===============Induction training================ --}}
+
+                <div id="CCForm6" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
                     <div>
                         <table class="table table-bordered">
                             <thead>
