@@ -453,8 +453,6 @@ class FailureInvestigationController extends Controller
         }
         $data5->save();
 
-
-
         $Cft = new FailureInvestigationCft();
         $Cft->failure_investigation_id = $failureInvestigation->id;
         $Cft->Production_Review = $request->Production_Review;

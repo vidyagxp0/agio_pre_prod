@@ -247,6 +247,7 @@ class OOTController extends Controller
 
         //  dd($checkList);
         $checkList->save();
+        
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';

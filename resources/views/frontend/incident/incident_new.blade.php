@@ -775,7 +775,7 @@
 
                                     <div class="group-input" id="nature_of_repeat">
                                         <label for="nature_of_repeat">Repeat Nature </label>
-                                        <textarea name="nature_of_repeat" class="nature_of_repeat">{{ isset($data) ? $data->short_description_required : '' }}</textarea>
+                                        <textarea name="nature_of_repeat" class="nature_of_repeat"></textarea>
                                     </div>
                                 </div>
 
@@ -1372,7 +1372,7 @@
                                         <label for="Description Incident">Description of Incident</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Description_incident[]" id="summernote-1" required>
+                                        <textarea class="tiny" name="Description_incident" id="summernote-1" required>
                                     </textarea>
                                     </div>
                                     @error('Description_incident[]')
@@ -1594,8 +1594,6 @@
 
                                     }
                                 </script>
-
-
 
 
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
