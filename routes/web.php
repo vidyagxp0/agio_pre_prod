@@ -27,6 +27,7 @@ use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\LabIncidentController;
+use App\Http\Controllers\rcms\IncidentController;
 use App\Http\Controllers\rcms\AuditProgramController;
 use App\Http\Controllers\rcms\ExtensionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
@@ -179,6 +180,8 @@ Route::get('DeviationAuditTrial/{id}', [DeviationController::class, 'DeviationAu
 Route::post('DeviationAuditTrial/{id}', [DeviationController::class, 'store_audit_review'])->name('store_audit_review');
 
 /********************************************* Deviation Ends *******************************************/
+
+Route::post('incident_child_1/{id}', [IncidentController::class, 'incident_child_1'])->name('incident_child_1');
 
 // ==============================end ==============================
 //! ============================================

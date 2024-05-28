@@ -13,6 +13,7 @@ use App\Models\ManagementReview;
 use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
+use App\Models\Incident;
 use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\{Division,Deviation};
@@ -81,6 +82,7 @@ class DashboardController extends Controller
         $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
         $datas15 = Ootc::orderByDesc('id')->get();
         $datas16 = errata::orderByDesc('id')->get();
+        $incident = Incident::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -537,6 +539,28 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
+
+        foreach ($incident as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Incident",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+                "due_date" => $data->due_date,
+            ]);
+        }
         // dd($data);
         $table  = collect($table)->sortBy('record')->reverse()->toArray();
         // return $table;
@@ -879,6 +903,12 @@ class DashboardController extends Controller
             $data = Ootc::find($id);
             $single = "ootcSingleReport/" . $data->id;
             $audit = "audit_pdf/".$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        } elseif ($type == "Incident") {
+            $data = Incident::find($id);
+            $single = "incident-single-report/" . $data->id;
+            $audit = "incident-audit-pdf/".$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "errata") {
