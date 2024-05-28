@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist_engineering, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist_engineering, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
 use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
@@ -1244,6 +1244,27 @@ $Checklist_Capsule->save();
     $quality_control_checklist->quality_control_response_comment = $request->quality_control_response_comment;
     $quality_control_checklist->save();
 
+ // =======================new checklist stores ====
+ $checklist_stores = IA_checklist_stores::where(['ia_id' => $id])->firstOrCreate();
+ $checklist_stores->ia_id = $id;
+
+
+ for ($i = 1; $i <= 31; $i++)
+ {
+     $string = 'checklist_stores_response_'. $i;
+     $checklist_stores->$string = $request->$string;
+ }
+
+ for ($i = 1; $i <= 31; $i++)
+ {
+     $string = 'checklist_stores_remark_'. $i;
+     $checklist_stores->$string = $request->$string;
+ }
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+ $checklist_stores->checklist_stores_response_comment = $request->checklist_stores_response_comment;
+ $checklist_stores->save();
+
+
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -1898,6 +1919,8 @@ $Checklist_Capsule->save();
         $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
         $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
         $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+        $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+
 
 
         // dd($checklist1);
@@ -1908,7 +1931,7 @@ $Checklist_Capsule->save();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
