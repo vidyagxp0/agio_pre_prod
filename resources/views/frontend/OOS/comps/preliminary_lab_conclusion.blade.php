@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Summary of Prelim.Investiga.</label>
+                    <label for="Description Deviation">Summary of Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="summary_of_prelim_investiga_plic"
                         id="summernote-1">
@@ -67,7 +67,7 @@
             </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">OOS Category-Root Cause Ident.sdsdsdsdsfs</label>
+                    <label for="Description Deviation">OOS Category-Root Cause Ident.</label>
                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                             require completion </small></div>
                     <textarea class="summernote" name="Description_Deviation" id="summernote-1"
@@ -76,33 +76,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Product/Material Name">Recommended Actions Required?</label>
-                    <select name="recommended_actions_required_plic">
-                        <option value="0" {{ $data->recommended_actions_required_plic == '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->recommended_actions_required_plic == 'yes' ?
-                            'selected' : '' }}>Yes</option>
-                        <option value="no" {{ $data->recommended_actions_required_plic == 'no' ?
-                            'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Recommended Actions Reference
-                    </label>
-                    <select multiple id="reference_record" name="recommended_actions_reference_plic[]">
-                        <option value="0" {{ $data->recommended_actions_reference_plic == '0' ?
-                            'selected' : '' }}>--Select---</option>
-                        <option value="1" {{ $data->recommended_actions_reference_plic == '1' ?
-                            'selected' : '' }}>1</option>
-                        <option value="2" {{ $data->recommended_actions_reference_plic == '2' ?
-                            'selected' : '' }}>2</option>
-                    </select>
-                </div>
-            </div>
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">CAPA Required</label>
@@ -126,7 +100,7 @@
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Delay Justification for P.I.</label>
+                    <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="delay_justification_for_pi_plic"
                         id="summernote-1" value="">

@@ -445,6 +445,7 @@ $users = DB::table('users')
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
                                 
                                 <select name="initiator_Group" id="initiator_group">
+                                <option>Enter Your Selection Here</option>
                                 @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
                                 <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
                                 @endforeach 
