@@ -365,6 +365,7 @@
                         @endphp
 
                         @foreach ($audit as $audits => $dataDemo)
+                                    
                             <td>{{ $dataDemo ? ($audit->currentPage() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
                             </td>
 
