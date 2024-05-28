@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
+use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CapaController;
@@ -319,7 +320,10 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 
 // ====================induction training =================
 
-Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+// Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
+Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
+
 
 //! ============================================
 //!                    RCMS
