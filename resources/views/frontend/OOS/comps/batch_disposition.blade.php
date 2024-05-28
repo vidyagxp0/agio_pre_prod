@@ -4,9 +4,6 @@
             Batch Disposition
         </div>
         <div class="row">
-
-
-
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">OOS Category</label>
@@ -36,17 +33,6 @@
                     <input type="text" name="others_bd" value="{{ $data->others_bd ?? '' }}">
                 </div>
             </div>
-
-            <!-- Textarea for Justification -->
-            <div class="col-md-12 mb-4">
-                <div class="group-input">
-                    <label for="Description Deviation">Justify if No Risk Assessment</label>
-                    <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
-        {{ $data->justify_if_no_risk_assessment_ocr ?? 'NA' }}
-    </textarea>
-                </div>
-            </div>
-
             <!-- Material/Batch Release Selection -->
             <div class="col-12">
                 <div class="group-input">
@@ -72,22 +58,6 @@
                                 </textarea>
                 </div>
             </div>
-
-            <!-- Field Alert Reference -->
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Field alert reference</label>
-                    <select multiple id="reference_record" name="field_alert_reference_bd[]">
-                        <option value="0" {{ in_array('0', $data->field_alert_reference_bd ?? []) ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ in_array('yes', $data->field_alert_reference_bd ?? []) ? 'selected' :
-                            '' }}>Yes</option>
-                        <option value="No" {{ in_array('No', $data->field_alert_reference_bd ?? []) ? 'selected' :
-                            '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
             <!-- Other Parameters Results -->
             <div class="col-md-12 mb-4">
                 <div class="group-input">
@@ -177,34 +147,6 @@
                 </div>
 
             </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Phase-III Inves. Required?</label>
-                    <select name="phase_inves_required_bd">
-                        <option value="0" {{ $data->phase_inves_required_bd == '0' ? 'selected' : '' }}>Enter Your
-                            Selection Here</option>
-                        <option value="yes" {{ $data->phase_inves_required_bd == 'yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->phase_inves_required_bd == 'No' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Phase-III Inves. Reference</label>
-                    <select multiple id="reference_record" name="phase_inves_reference_bd[]">
-                        <option value="0" {{ in_array('0', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ in_array('2', $data->phase_inves_reference_bd ?? []) ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -225,7 +167,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->disposition_attachment_bd)
-                            @foreach (json_decode($data->disposition_attachment_bd) as $file)
+                            @foreach ($data->disposition_attachment_bd as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

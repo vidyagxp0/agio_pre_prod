@@ -264,7 +264,7 @@ class OOTController extends Controller
         $OotResultGrid->ootcs_id = $data->id;
         $OotResultGrid->identifier = 'oot_result';
         $OotResultGrid->data = $request->oot_result;
-        // dd($OotResultGrid);        
+        //  dd($OotResultGrid);        
         $OotResultGrid->save();
         
         $InfoProductMat = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'info_product'])->firstOrCreate();
@@ -693,6 +693,7 @@ class OOTController extends Controller
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
+    // dd($GridOotRes);
        $InfoProductMat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'info_product'])->first();
 
 

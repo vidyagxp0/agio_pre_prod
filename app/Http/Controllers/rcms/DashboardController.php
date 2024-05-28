@@ -352,15 +352,60 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
-                "type" => "OOS",
+                "type" => "OOS Chemical",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
                 "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
+                // "status" => $data->status,
                 "stage" => $data->status,
+                
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
 
+        foreach ($datas14 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "division_id" => $data->division_id,
+                "type" => "Deviation",
+                "parent_id" => $data->parent_id,
+                "parent" => $data->parent_record? $data->parent_record : "-",
+                "parent_type" => $data->parent_type,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "due_date" => $data->due_date,
+                "stage" => $data->status,
+                "initiated_through" => $data->initiated_through,
+                "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($ooc as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->parent_record ? $data->parent_record : "-",
+                "record" => $data->record,
+                "type" => "OOC",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->description_ooc ? $data->description_ooc : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through_gi,
+                "intiation_date" => $data->intiation_date,
+                // "status" => $data->status,
+                "stage" => $data->status,
+                
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -919,6 +964,12 @@ class DashboardController extends Controller
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
             $audit = "managementReviewReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }elseif ($type == "OOS Chemical") {
+            $data = OOS::find($id);
+            $single = "oos/single_report/" . $data->id;
+            $audit = "oos/audit_report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
         } elseif ($type == "Root-Cause-Analysis") {

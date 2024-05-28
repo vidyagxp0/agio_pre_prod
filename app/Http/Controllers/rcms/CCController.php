@@ -5029,7 +5029,6 @@ class CCController extends Controller
 
         }
         else{
-        } else {
             toastr()->warning('Not Working');
             return back();
         }

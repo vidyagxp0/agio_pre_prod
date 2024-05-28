@@ -14,6 +14,7 @@ class Helpers
     public static function getArrayKey(array $array, $key)
     {
         return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
+        return $array && is_array($array) && array_key_exists($key, $array) ? $array[$key] : '';
     }
 
     public static function getDefaultResponse()
@@ -255,44 +256,20 @@ class Helpers
 
     public static function checkUserRolesApprovers($data)
     {
-        if ($data->role) {
-            $datauser = explode(',', $data->role);
-            for ($i = 0; $i < count($datauser); $i++) {
-                if ($datauser[$i] == 1) {
-                    return true;
-                }
-            }
-        } else {
-            return false;
-        }
+        $user = User::find($data->id);
+        return $user->userRoles()->where('q_m_s_roles_id', 1)->exists();
     }
 
     public static function checkUserRolesreviewer($data)
     {
-        if ($data->role) {
-            $datauser = explode(',', $data->role);
-            for ($i = 0; $i < count($datauser); $i++) {
-                if ($datauser[$i] == 2) {
-                    return true;
-                }
-            }
-        } else {
-            return false;
-        }
+        $user = User::find($data->id);
+        return $user->userRoles()->where('q_m_s_roles_id', 2)->exists();
     }
 
     public static function checkUserRolestrainer($data)
     {
-        if ($data->role) {
-            $datauser = explode(',', $data->role);
-            for ($i = 0; $i < count($datauser); $i++) {
-                if ($datauser[$i] == 6) {
-                    return true;
-                }
-            }
-        } else {
-            return false;
-        }
+        $user = User::find($data->id);
+        return $user->userRoles()->where('q_m_s_roles_id', 6)->exists();
     }
 
     public static function checkUserRolesassign_to($data)
@@ -641,4 +618,5 @@ class Helpers
         }
 
     }
+
 }

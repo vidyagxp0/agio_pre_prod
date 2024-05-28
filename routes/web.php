@@ -427,7 +427,7 @@ Route::post('ooccreate', [OOCController::class, 'create'])->name('oocCreate');
 Route::get('out_of_calibration_ooc', [OOCController::class, 'ooc']);
 
 
-Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
+// Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 

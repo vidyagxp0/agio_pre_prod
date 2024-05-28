@@ -144,7 +144,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Audit Attachments">Action Plan Req.</label>
+                    <label for="Audit Attachments">Action Item Req.</label>
                     <select name="action_plan_req_oosc">
                         <option value="Yes" {{ $data->action_plan_req_oosc == 'Yes' ? 'selected' : '' }}>Yes
                         </option>
@@ -155,7 +155,7 @@
 
             <div class="col-lg-6">
                 <div class="group-input">
-                    <label for="Reference Records">Action Plan Ref.</label>
+                    <label for="Reference Records">Action Item Ref.</label>
                     <select multiple id="reference_record" name="action_plan_ref_oosc[]">
                         <option value="0" {{ in_array('0', $data->action_plan_ref_oosc ?? []) ? 'selected' : ''
                             }}>--Select---</option>
@@ -185,7 +185,7 @@
                     <div class="file-attachment-field">
                         <div class="file-attachment-list" id="file_attach">
                             @if ($data->file_attachments_if_any_ooscattach)
-                            @foreach(json_decode($data->file_attachments_if_any_ooscattach) as $file)
+                            @foreach($data->file_attachments_if_any_ooscattach as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

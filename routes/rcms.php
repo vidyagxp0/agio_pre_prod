@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -125,7 +126,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -167,6 +168,11 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('child_management_Review/{id}', [ManagementReviewController::class, 'child_management_Review'])->name('childmanagementReview');
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
+
+            Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
+            Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
+            Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');
+            Route::get('errata_single_pdf/{id}',[ErrataController::class, 'singleReports']);
 
 
             /********************* Deviation Routes Starts *******************/
@@ -242,6 +248,21 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
             Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
             Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
+
+            Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
+            Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
+            Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
+            Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
+            Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
+            Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
+            Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+            
+            Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
+            Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
+            Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
+            Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
+
+            
 
             });
 

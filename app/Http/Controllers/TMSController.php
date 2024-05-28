@@ -495,7 +495,7 @@ class TMSController extends Controller
                 $TrainingHistory->origin_state = "Assigned";
                 $TrainingHistory->save();
                 $document->doc = Document::find($id);
-                $document->doc->stage = 8;
+                $document->doc->stage = 10;
                 $document->doc->status = "Effective";
                 $document->doc->update();
                 $user_data = User::find($document->doc->originator_id);
