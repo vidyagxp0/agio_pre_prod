@@ -617,6 +617,9 @@ class DocumentController extends Controller
             if (! empty($request->responsibility)) {
                 $content->responsibility = serialize($request->responsibility);
             }
+            if (! empty($request->accountability)) {
+                $content->accountability = serialize($request->accountability);
+            }
             if (! empty($request->abbreviation)) {
                 $content->abbreviation = serialize($request->abbreviation);
             }
@@ -1328,6 +1331,7 @@ class DocumentController extends Controller
             $documentcontet->safety_precautions = $request->safety_precautions;
             
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
+            $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);

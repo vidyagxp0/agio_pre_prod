@@ -725,7 +725,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="purpose">Purpose</label>
+                                        <label for="purpose">Objective</label>
                                         <textarea name="purpose"></textarea>
                                     </div>
                                 </div>
@@ -735,6 +735,7 @@
                                         <textarea name="scope"></textarea>
                                     </div>
                                 </div>
+                                
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         
@@ -760,6 +761,58 @@
                                             </div>
                                         </div>
 
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        
+                                        <label for="accountability" id="accountability">
+                                            Accountability<button type="button" id="accountabilitybtnadd"
+                                                name="button">+</button>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        </label>
+                                        
+                                        <div id="accountabilitydiv">
+                                            <div class="singleAccountabilityBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="accountability[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAccountabilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="references" id="references">
+                                            References<button type="button" id="referencesbtadd" >+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div id="referencesdiv">
+                                            <div class="singleReferencesBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -826,7 +879,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Materials and Equipments<button type="button" id="materialsbtadd"
+                                            General Instructions<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
@@ -850,16 +903,6 @@
                                     </div>
                                 </div>
 
-                                {{-- SAFETY & PRECATIONS START --}}
-                                    <div class="col-md-12">
-                                        <div class="group-input">
-                                            <label for="procedure">Safety & Precautions</label>
-                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                            <textarea name="safety_precautions" class="summernote"></textarea>
-                                        </div>
-                                    </div>
-                                {{-- SAFETY & PRECATIONS END --}}
-
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
@@ -874,7 +917,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button> 
+                                            Cross References<button type="button" id="reportingbtadd" name="button">+</button> 
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         
@@ -897,29 +940,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="references" id="references">
-                                            References<button type="button" id="referencesbtadd" >+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <div id="referencesdiv">
-                                            <div class="singleReferencesBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="references[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReferencesAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="ann" id="ann">
