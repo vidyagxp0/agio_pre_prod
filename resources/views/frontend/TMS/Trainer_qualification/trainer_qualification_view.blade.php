@@ -6,28 +6,6 @@
         $departments = DB::table('departments')->select('id', 'name')->get();
 
     @endphp
-
-    <style>
-        label.error {
-            color: red;
-        }
-    </style>
-
-    <script>
-        $(document).ready(function() {
-            let auditForm = $('form#auditform')
-
-            $('#ChangesaveButton').on('click', function(e) {
-                console.log('submit test')
-                let isValid = auditForm.validate();
-
-                if (!isValid) {
-                    e.preventDefault();
-                }
-            })
-
-        });
-    </script>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -36,6 +14,7 @@
         header {
             display: none;
         }
+
     </style>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -305,12 +284,41 @@
             width: 100%;
         }
     </style>
+    <style>
+        .progress-bars div {
+            flex: 1 1 auto;
+            border: 1px solid grey;
+            padding: 5px;
+            text-align: center;
+            position: relative;
+            /* border-right: none; */
+            background: white;
+        }
+
+        .state-block {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bars div.active {
+            background: green;
+            font-weight: bold;
+        }
+
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+            border-radius: 20px 0px 0px 20px;
+        }
+
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+            border-radius: 0px 20px 20px 0px;
+
+        }
+    </style>
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>New Trainer Qualification</strong>
-            {{-- <strong>Site Division/Project</strong> : --}}
-            {{-- {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification --}}
+            <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} Trainer Qualification
         </div>
     </div>
 
@@ -326,6 +334,71 @@
     <div id="change-control-fields">
         <div class="container-fluid">
 
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $trainer->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
+
+                        @if ($trainer->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                              Submit
+                            </button>
+                        @elseif($trainer->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+
+                        <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            Qualified
+                        </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                               Reject
+                            </button>
+
+                        @endif
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    @if ($trainer->stage == 0)
+                         <div class="progress-bars ">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div>
+                    @else
+                        <div class="progress-bars d-flex">
+                            @if ($trainer->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+
+                            @if ($trainer->stage >= 2)
+                                <div class="active">Pending HOD Review</div>
+                            @else
+                                <div class="">Pending HOD Review</div>
+                            @endif
+
+                            @if ($trainer->stage >= 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Done</div>
+                            @endif
+                    @endif
+
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
+        </div>
 
             <!-- Tab links -->
             <div class="cctab">
@@ -334,7 +407,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
-            <form id="auditform" action="{{ route('trainer.store') }}" method="POST" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -349,11 +422,12 @@
                                 @endif
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
-                                        <select  name="division_id" required>
-                                            <option value="">-- Select --</option>
+                                        <label for="Site Division/Project">Site Division/Project</label>
+                                        {{-- <input value="{{ $trainer->site_code }}" name="site_code" readonly > --}}
+                                        <select name="division_id">
+                                            <option>-- Select --</option>
                                             @foreach ($divisions as $division)
-                                                <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                                <option value="{{ $division->id }}" @if ($division->id == $trainer->division_id) selected @endif >{{ $division->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -400,12 +474,12 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Assigned To <span class="text-danger">*</span>
+                                            Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigned_to" required>
+                                        <select id="select-state" placeholder="Select..." name="assigned_to">
                                             <option value="">Select</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @foreach ($users as $user)
+                                                <option value="{{ $user->id }}" @if ($user->id == $trainer->assigned_to) selected @endif>{{ $user->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -417,13 +491,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Due Date <span class="text-danger">*</span></label>
+                                        <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name= "due_date" id="due_date" readonly
-                                                placeholder="DD-MM-YYYY" />
-                                            <input required type="date" name="due_date"
+                                                placeholder="DD-MM-YYYY" value="{{ $trainer->due_date }}"/>
+                                            <input type="date" name="due_date"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ $trainer->due_date }}"/>
                                         </div>
                                     </div>
                                 </div>
@@ -431,11 +505,11 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description <span class="text-danger">*</span></label><span
+                                        <label for="Short Description">Short Description</label><span
                                             id="rchars">255</span>
                                         characters remaining
                                         <input id="short_description" type="text" name="short_description"
-                                            maxlength="255" required>
+                                            maxlength="255" value="{{ $trainer->short_description }}">
                                     </div>
                                 </div>
 
@@ -447,7 +521,7 @@
                                         <label for="trainer">Trainer Name</label>
                                         <select name="trainer_name" id="trainer_name">
                                             <option value="">Select</option>
-                                            <option value="trainer1">Trainer 1</option>
+                                            <option value="trainer1" @if ($trainer->trainer_name == "trainer1") selected @endif>Trainer 1</option>
                                         </select>
                                     </div>
                                 </div>
@@ -455,7 +529,7 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="qualification">Qualification</label>
-                                        <input id="qualification" type="text" name="qualification" maxlength="255">
+                                        <input id="qualification" type="text" name="qualification" maxlength="255" value="{{ $trainer->qualification }}">
                                     </div>
                                 </div>
 
@@ -463,11 +537,11 @@
                                     <div class="group-input">
                                         <label for="Designation">Designation</label>
                                         <select name="designation" id="designation">
-                                            <option value="">Select</option>
-                                            <option value="lead_trainer">Lead Trainer</option>
-                                            <option value="senior_trainer">Senior Trainer</option>
-                                            <option value="Instructor">Instructor</option>
-                                            <option value="Evaluator">Evaluator</option>
+                                            <option>Select</option>
+                                            <option value="lead_trainer" @if ($trainer->designation == "lead_trainer") selected @endif>Lead Trainer</option>
+                                            <option value="senior_trainer" @if ($trainer->designation == "senior_trainer") selected @endif>Senior Trainer</option>
+                                            <option value="Instructor" @if ($trainer->designation == "Instructor") selected @endif>Instructor</option>
+                                            <option value="Evaluator" @if ($trainer->designation == "Evaluator") selected @endif>Evaluator</option>
                                         </select>
                                     </div>
                                 </div>
@@ -476,9 +550,9 @@
                                     <div class="group-input">
                                         <label for="Department">Department</label>
                                         <select name="department">
-                                            <option value="">-- Select --</option>
+                                            <option>-- Select --</option>
                                             @foreach ($departments as $department)
-                                                <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                                <option value="{{ $department->id }}" @if ($department->id == $trainer->department) selected @endif>{{ $department->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -487,10 +561,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Experience">Experience (No. of Years)</label>
-                                        <select name="experience" id="Experience">
-                                            <option value="">Select </option>
-                                            @for ($i = 1; $i <= 70; $i++)
-                                                <option value="{{ $i }}">{{ $i }}</option>
+                                        <select name="experience" id="experience">
+                                            <option>Select </option>
+                                            @for ($experience = 1; $experience <= 70; $experience++)
+                                                <option value="{{ $experience }}" @if ($experience == $trainer->experience) selected @endif>{{ $experience }}</option>
                                             @endfor
                                         </select>
                                     </div>
@@ -544,16 +618,16 @@
                                         <label for="external_agencies">External Agencies</label>
                                         <select name="external_agencies"
                                             onchange="otherController(this.value, 'others', 'external_agencies_req')">
-                                            <option value="">-- Select --</option>
-                                            <option value="jordan_fda">Jordan FDA</option>
-                                            <option value="us_fda">USFDA</option>
-                                            <option value="mhra">MHRA</option>
-                                            <option value="anvisa">ANVISA</option>
-                                            <option value="iso">ISO</option>
-                                            <option value="who">WHO</option>
-                                            <option value="local_fda">Local FDA</option>
-                                            <option value="tga">TGA</option>
-                                            <option value="others">Others</option>
+                                            <option>-- Select --</option>
+                                            <option value="jordan_fda" @if ($trainer->external_agencies == "jordan_fda") selected @endif>Jordan FDA</option>
+                                            <option value="us_fda" @if ($trainer->external_agencies == "us_fda") selected @endif>USFDA</option>
+                                            <option value="mhra" @if ($trainer->external_agencies == "mhra") selected @endif>MHRA</option>
+                                            <option value="anvisa" @if ($trainer->external_agencies == "anvisa") selected @endif>ANVISA</option>
+                                            <option value="iso" @if ($trainer->external_agencies == "iso") selected @endif>ISO</option>
+                                            <option value="who" @if ($trainer->external_agencies == "who") selected @endif>WHO</option>
+                                            <option value="local_fda" @if ($trainer->external_agencies == "local_fda") selected @endif>Local FDA</option>
+                                            <option value="tga" @if ($trainer->external_agencies == "tga") selected @endif>TGA</option>
+                                            <option value="others" @if ($trainer->external_agencies == "others") selected @endif>Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -575,10 +649,23 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
-                                                </td>
-                                                <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
-                                                <td><input type="text" name="trainer_skill[0][remarks]"></td>
+                                                @if ($trainer_skill && is_array($trainer_skill->data))
+                                                    @foreach ($trainer_skill->data as $index => $skill)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="trainer_skill[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
+                                                            </td>
+                                                            <td><input type="text" name="trainer_skill[{{ $loop->index }}][Trainer_skill_set]" value=" {{ array_key_exists('Trainer_skill_set', $skill) ? $skill['Trainer_skill_set'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_skill[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $skill) ? $skill['remarks'] : '' }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="trainer_skill[0][serial_number]" value="1">
+                                                        </td>
+                                                        <td><input type="text" name="trainer_skill[0][Trainer_skill_set]"></td>
+                                                        <td><input type="text" name="trainer_skill[0][remarks]"></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -599,12 +686,25 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="trainer_listOfAttachment[0][serial_number]" value="1">
-                                                </td>
-                                                <td><input type="text" name="trainer_listOfAttachment[0][title_of document]"></td>
-                                                <td><input type="text" name="trainer_listOfAttachment[0][supporting_document]"></td>
-
-                                                <td><input type="text" name="trainer_listOfAttachment[0][remarks]"></td>
+                                                @if ($trainer_list && is_array($trainer_list->data))
+                                                    @foreach ($trainer_list->data as $index => $list)
+                                                        <tr>
+                                                            <td><input disabled type="text" name="trainer_listOfAttachment[{{ $loop->index }}][serial_number]" value="{{ $loop->index+1 }}">
+                                                            </td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][title_of document]" value=" {{ array_key_exists('title_of document', $list) ? $list['title_of document'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][supporting_document]" value=" {{ array_key_exists('supporting_document', $list) ? $list['supporting_document'] : '' }}"></td>
+                                                            <td><input type="text" name="trainer_listOfAttachment[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $list) ? $list['remarks'] : '' }}"></td>
+                                                        </tr>
+                                                    @endforeach
+                                                @else
+                                                    <tr>
+                                                        <td><input disabled type="text" name="trainer_listOfAttachment[0][serial_number]" value="1">
+                                                        </td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][title_of document]"></td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][supporting_document]"></td>
+                                                        <td><input type="text" name="trainer_listOfAttachment[0][remarks]"></td>
+                                                    </tr>
+                                                @endif
                                             </tbody>
                                         </table>
                                     </div>
@@ -614,9 +714,9 @@
                                     <div class="group-input">
                                         <label for="trainingQualificationStatus">Trainer</label>
                                         <select name="trainer" id="trainingQualificationStatus">
-                                            <option value="">-- Select --</option>
-                                            <option value="Qualified">Qualified</option>
-                                            <option value="Not Qualified">Not Qualified</option>
+                                            <option>-- Select --</option>
+                                            <option value="Qualified" @if ($trainer->trainer == "Qualified") selected @endif>Qualified</option>
+                                            <option value="Not Qualified" @if ($trainer->trainer == "Not Qualified") selected @endif>Not Qualified</option>
                                         </select>
                                     </div>
                                 </div>
@@ -639,10 +739,10 @@
                                                         <td>Clarity Of Objectives</td>
                                                         <td>
                                                             <select name="evaluation_criteria_1" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_1 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_1 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_1 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -653,10 +753,10 @@
                                                         <td>Delivery & Knowledge Of Content</td>
                                                         <td>
                                                             <select name="evaluation_criteria_2" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_2 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_2 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_2 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -669,10 +769,10 @@
                                                             Style Was Clear, Easily understood , Pleasant to hear)</td>
                                                         <td>
                                                             <select name="evaluation_criteria_3" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_3 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_3 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_3 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -684,10 +784,10 @@
                                                         <td>Is Research Up to Date?</td>
                                                         <td>
                                                             <select name="evaluation_criteria_4" id="">
-                                                                <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option> -- Select --</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_4 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_4 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_4 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -700,9 +800,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_5" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_5 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_5 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_5 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -715,9 +815,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_6" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_6 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_6 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_6 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -730,9 +830,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_7" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_7 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_7 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_7 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -746,9 +846,9 @@
                                                         <td>
                                                             <select name="evaluation_criteria_8" id="">
                                                                 <option value=""> -- Select --</option>
-                                                                <option value="1"> 1</option>
-                                                                <option value="2"> 2</option>
-                                                                <option value="3"> 3</option>
+                                                                <option value="1" @if ($trainer->evaluation_criteria_8 == "1") selected @endif> 1</option>
+                                                                <option value="2" @if ($trainer->evaluation_criteria_8 == "2") selected @endif> 2</option>
+                                                                <option value="3" @if ($trainer->evaluation_criteria_8 == "3") selected @endif> 3</option>
 
                                                             </select>
                                                         </td>
@@ -766,17 +866,17 @@
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Q_comment">Qualification Comments</label>
-                                    <textarea class="" name="qualification_comments"></textarea>
+                                    <textarea class="" name="qualification_comments">{{ $trainer->qualification_comments }}</textarea>
                                 </div>
                             </div>
 
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Inv Attachments">Initial Attachment</label>
-                                    <input type="file" id="myfile" name="initial_attachment">
+                                    <input type="file" id="myfile" name="initial_attachment" value="{{ $trainer->initial_attachment }}">
+                                    <a href="{{ asset('upload/' . $trainer->initial_attachment) }}" target="_blank">{{ $trainer->initial_attachment }}</a>
                                 </div>
                             </div>
-
                             <script>
                                 VirtualSelect.init({
                                     ele: '#reference_record, #notify_to'
@@ -813,15 +913,15 @@
                                     let newReference = document.createElement('div');
                                     newReference.classList.add('row', 'reference-data-' + referenceCount);
                                     newReference.innerHTML = `
-            <div class="col-lg-6">
-                <input type="text" name="reference-text">
-            </div>
-            <div class="col-lg-6">
-                <input type="file" name="references" class="myclassname">
-            </div><div class="col-lg-6">
-                <input type="file" name="references" class="myclassname">
-            </div>
-        `;
+                                        <div class="col-lg-6">
+                                            <input type="text" name="reference-text">
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div><div class="col-lg-6">
+                                            <input type="file" name="references" class="myclassname">
+                                        </div>
+                                    `;
                                     let referenceContainer = document.querySelector('.reference-data');
                                     referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
                                 }
@@ -835,30 +935,10 @@
                                 }
                             </script>
 
-
-
-                            {{-- <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Inv Attachments">Initial Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <input type="file" id="myfile" name="inv_attachment[]" multiple>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="audit_file_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="initial_attachment"
-                                                oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div> --}}
-                        </div>
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                             <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white">
+                            <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
                     </div>
@@ -873,37 +953,37 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Submitted On">Submitted By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->sbmitted_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Submitted On">Submitted On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->sbmitted_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Qualified By">Qualified By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->qualified_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Qualified On">Qualified On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->qualified_on }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for=" Rejected By">Rejected By</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->rejected_by }}</div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Rejected On">Rejected On</label>
-                                    <div class="static"></div>
+                                    <div class="static">{{ $trainer->rejected_on }}</div>
                                 </div>
                             </div>
 
@@ -926,6 +1006,95 @@
     </div>
     </div>
 
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ url('tms/trainer/sendstage', $trainer->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rejection-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <form action="{{ url('tms/trainer/rejectStage', $trainer->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment <span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <!-- <div class="modal-footer">
+                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button>Close</button>
+                    </div> -->
+                    <div class="modal-footer">
+                      <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <style>
         #step-form>div {
@@ -1053,10 +1222,4 @@
             $('#rchars').text(textlen);
         });
     </script>
-@endsection
-
-
-@section('footer_cdn')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/jquery.validate.min.js" integrity="sha512-WMEKGZ7L5LWgaPeJtw9MBM4i5w5OSBlSjTjCtSnvFJGSVD26gE5+Td12qN5pvWXhuWaWcVwF++F7aqu9cvqP0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.20.0/additional-methods.min.js" integrity="sha512-TiQST7x/0aMjgVTcep29gi+q5Lk5gVTUPE9XgN0g96rwtjEjLpod4mlBRKWHeBcvGBAEvJBmfDqh2hfMMmg+5A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 @endsection
