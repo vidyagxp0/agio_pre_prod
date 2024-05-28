@@ -183,7 +183,7 @@ class OOS extends Model
       'details_of_root_cause_piiqcr' => 'array',
       'recommended_action_reference_piiqcr' => 'array',
       'invest_ref_piiqcr' => 'array',
-      'additional_test_reference_atp' => 'array',
+      // 'additional_test_reference_atp' => 'array',
       'action_plan_ref_oosc' => 'array',
       'capa_refer_ocr' => 'array',
       'action_task_reference_ocr' => 'array',
@@ -216,5 +216,9 @@ class OOS extends Model
     public function grids()
     {
       return $this->hasMany(Oosgrids::class, 'oos_id');
+    }
+    public function record_number()
+    {
+        return $this->morphOne(QmsRecordNumber::class, 'recordable');
     }
 }

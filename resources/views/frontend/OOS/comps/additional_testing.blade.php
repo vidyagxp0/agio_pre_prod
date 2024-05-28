@@ -9,7 +9,7 @@
                     <label for="Description Deviation">Review Comment</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comment_atp" id="summernote-1">
-                {{ $data->review_comment_atp ?? '' }}
+                {{ $data->review_comment_atp ? $data->review_comment_atp : ''}}
             </textarea>
                 </div>
             </div>
@@ -27,17 +27,13 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
-                    <label for="Reference Records">Additional Test Reference</label>
-                    <select multiple id="reference_record" name="additional_test_reference_atp[]">
-                        <option value="0" {{ in_array('0', $data->additional_test_reference_atp ?? []) ?
-                            'selected' : '' }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->additional_test_reference_atp ?? []) ?
-                            'selected' : '' }}>1</option>
-                        <option value="2" {{ in_array('2', $data->additional_test_reference_atp ?? []) ?
-                            'selected' : '' }}>2</option>
-                    </select>
+                    <label for="Reference Records">Additional Test Comment.</label>
+                    
+                    <textarea class="summernote" name="additional_test_reference_atp" id="summernote-1">
+                        {{ $data->additional_test_reference_atp ? $data->additional_test_reference_atp : '' }}
+                    </textarea>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -48,19 +44,6 @@
                             '' }}>Yes</option>
                         <option value="No" {{ $data->any_other_actions_required_atp == 'No' ? 'selected' :
                             '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Action Task Reference</label>
-                    <select multiple id="reference_record" name="action_task_reference_atp">
-                        <option value="0" {{ in_array('0', $data->action_task_reference_atp ?? []) ?
-                            'selected' : '' }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->action_task_reference_atp ?? []) ?
-                            'selected' : '' }}>1</option>
-                        <option value="2" {{ in_array('2', $data->action_task_reference_atp ?? []) ?
-                            'selected' : '' }}>2</option>
                     </select>
                 </div>
             </div>

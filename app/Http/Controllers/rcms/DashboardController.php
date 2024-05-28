@@ -965,7 +965,7 @@ class DashboardController extends Controller
             $audit = "managementReviewReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        }elseif ($type == "OOS Cemical") {
+        }elseif ($type == "OOS Chemical") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;
