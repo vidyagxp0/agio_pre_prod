@@ -15,33 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Schedule End Date"> Field Alert Required</label>
-                    <select name="field_alert_required">
-                        <option value="0" {{ $data->field_alert_required == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->field_alert_required == 'yes' ? 'selected' : ''
-                            }}>Yes</option>
-                        <option value="no" {{ $data->field_alert_required == 'no' ? 'selected' : ''
-                            }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Field Alert Ref.No.
-                    </label>
-                    <select multiple id="reference_record" name="field_alert_ref_no_pli" id="">
-                        <option value="0" {{ $data->field_alert_ref_no_pli == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="1" {{ $data->field_alert_ref_no_pli == 'yes' ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ $data->field_alert_ref_no_pli == 'no' ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
+          
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
@@ -52,64 +26,6 @@
               {{ $data->justify_if_no_field_alert_pli ? $data->justify_if_no_field_alert_pli : '' }} </textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Product/Material Name"> Verification Analysis Required</label>
-                    <select name="verification_analysis_required_pli">
-                        <option value="0" {{ $data->verification_analysis_required_pli == '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->verification_analysis_required_pli == 'yes' ?
-                            'selected' : '' }}>yes</option>
-                        <option value="no" {{ $data->verification_analysis_required_pli == 'no' ?
-                            'selected' : '' }}>no</option>
-
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Verification Analysis Ref.</label>
-                    <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                        <option value="0" {{ $data->verification_analysis_ref_pli == '0' ? 'selected' :
-                            '' }}>Enter Your Selection Here</option>
-                        <option value="1" {{ $data->verification_analysis_ref_pli == '1' ? 'selected' :
-                            '' }}>1</option>
-                        <option value="2" {{ $data->verification_analysis_ref_pli == '2' ? 'selected' :
-                            '' }}>2</option>
-
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Product/Material Name">Analyst Interview Req.</label>
-                    <select name="analyst_interview_req_pli">
-                        <option value="0" {{ $data->analyst_interview_req_pli == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->analyst_interview_req_pli == 'yes' ? 'selected' :
-                            '' }}>yes</option>
-                        <option value="no" {{ $data->analyst_interview_req_pli == 'no' ? 'selected' : ''
-                            }}>no</option>
-
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Analyst Interview Ref.</label>
-                    <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
-                        <option value="0" {{ $data->analyst_interview_ref_pli == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="1" {{ $data->analyst_interview_ref_pli == '1' ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ $data->analyst_interview_ref_pli == '2' ? 'selected' : ''
-                            }}>2</option>
-
-                    </select>
-                </div>
-            </div>
-
             <div class="col-lg-12 mb-4">
                 <div class="group-input">
                     <label for="Audit Schedule Start Date">Justify if no Analyst Int. </label>
@@ -122,20 +38,7 @@
 
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Product/Material Name">Phase I Investigation Required</label>
-                    <select name="phase_i_investigation_required_pli">
-                        <option value="0" {{ $data->phase_i_investigation_required_pli == '0' ?
-                            'selected' : '' }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->phase_i_investigation_required_pli == 'yes' ?
-                            'selected' : '' }}>yes</option>
-                        <option value="no" {{ $data->phase_i_investigation_required_pli == 'no' ?
-                            'selected' : '' }}>no</option>
-
-                    </select>
-                </div>
-            </div>
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Product/Material Name">Phase I Investigation</label>

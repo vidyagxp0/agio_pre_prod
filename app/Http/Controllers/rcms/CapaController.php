@@ -737,7 +737,7 @@ class CapaController extends Controller
         $capa->cft_comments_form= $request->cft_comments_form;
         $capa->qa_comments_new = $request->qa_comments_new;
         $capa->designee_comments_new= $request->designee_comments_new;
-       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
         $capa->Engineering_comments_new = $request->Engineering_comments_new;
        $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
        $capa->Validation_comments_new = $request->Validation_comments_new;

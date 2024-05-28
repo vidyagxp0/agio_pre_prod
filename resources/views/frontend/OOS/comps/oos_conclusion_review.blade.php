@@ -88,76 +88,6 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Report Attachments">Required Action Plan?</label>
-                    <select name="req_action_plan_ocr">
-                        <option value="Yes" {{ $data->req_action_plan_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
-                        <option value="No" {{ $data->req_action_plan_ocr == 'No' ? 'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Required Action Task?</label>
-                    <select name="req_action_task_ocr">
-                        <option value="Yes" {{ $data->req_action_task_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
-                        <option value="No" {{ $data->req_action_task_ocr == 'No' ? 'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Action Task Reference</label>
-                    <select multiple id="reference_record" name="action_task_reference_ocr[]">
-                        <option value="0" {{ in_array('0', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ in_array('2', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">Risk Assessment Req?</label>
-                    <select name="risk_assessment_req_ocr">
-                        <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">Risk Assessment Req?</label>
-                    <select name="risk_assessment_req_ocr">
-                        <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Risk Assessment Ref.</label>
-                    <select multiple id="reference_record" name="risk_assessment_ref_ocr[]">
-                        <option value="0" {{ in_array('0', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ in_array('2', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
@@ -166,7 +96,7 @@
                         </textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Reference Recores">Conclusion Attachment</label>
                     <small class="text-primary">

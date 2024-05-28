@@ -440,6 +440,7 @@ class DashboardController extends Controller
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
+                "due_date" => $data->due_date_gi,
                 "division_id" => $data->division_id,
                 "type" => "Market Complaint",
                 "parent_id" => $data->parent_id,
@@ -449,7 +450,7 @@ class DashboardController extends Controller
                 "initiated_through" => $data->initiated_through_gi,
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through_gi,
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -965,7 +966,7 @@ class DashboardController extends Controller
             $audit = "managementReviewReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        }elseif ($type == "OOS Cemical") {
+        }elseif ($type == "OOS Chemical") {
             $data = OOS::find($id);
             $single = "oos/single_report/" . $data->id;
             $audit = "oos/audit_report/" . $data->id;
