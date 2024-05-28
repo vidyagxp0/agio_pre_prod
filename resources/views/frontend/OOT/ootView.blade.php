@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+$users = DB::table('users')->get();
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -268,7 +271,7 @@
 
                                     <select name="Department"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                            id="selectedOptions" {{ Helpers::disabledOotFields($data->stage) }} disabled>
+                                            id="selectedOptions" >
                                             <option value="CQA" @if ($data->Department == 'CQA') selected @endif>
                                                 Corporate
                                                 Quality Assurance</option>
@@ -352,7 +355,7 @@
                                 <div class="group-input">
                                     <label for="Short Description">Initiated Through<span
                                             class="text-danger"></span></label>
-                                    <select name="initiated_through" id="initiated_through"  disabled {{ Helpers::disabledOotFields($data->stage) }}>
+                                    <select name="initiated_through" id="initiated_through" >
                                         <option value="">---select---</option>
                                         <option value="oos_micro" @if ($data->initiated_through == 'oos_micro') selected @endif>OOS
                                             Micro</option>
@@ -399,7 +402,7 @@
                                 <div class="group-input">
                                     <label for="Short Description">Nature Of Change<span
                                             class="text-danger"></span></label>
-                                    <select multiple id="natureOfChange" name="nature_of_change">
+                                    <select  id="natureOfChange" name="nature_of_change">
                                         <option>---select---</option>
                                         <option value="temporary" @if ($data->nature_of_change == 'temporary') selected @endif>
                                             Temporary</option>
@@ -454,7 +457,7 @@
                             </div>
 
 
-                            <div class="col-lg-6">
+                            {{-- <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Reference Recored">Refrence Record<span
                                             class="text-danger"></span></label>
@@ -468,7 +471,7 @@
 
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="sub-head">OOT Information</div>
                             <div class="col-lg-6">
@@ -637,8 +640,8 @@
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Reference Recores">stability For </label>
-                                    <select multiple id="stability_for" name="stability_for[]">
+                                    <label for="Reference Recores">Stability For </label>
+                                    <select id="stability_for" name="stability_for">
 
                                         <option>--Select---</option>
                                         <option value="pankaj" @if ($data->stability_for == 'pankaj') selected @endif>Pankaj
@@ -946,8 +949,12 @@
                                     </label>
                                     <select name="inv_head_designee" id="">
                                         <option value="">Person Name</option>
-                                        <option value="test" @if ($data->inv_head_designee == 'test') selected @endif>Test
-                                        </option>
+                                        {{-- <option value="test" @if ($data->inv_head_designee == 'test') selected @endif>Test
+                                        </option> --}}
+                                        @foreach ($users as $value)
+                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
 
                                     </select>
                                 </div>
@@ -1093,8 +1100,13 @@
                                     </label>
                                     <select name="sta_bat_analyst_name" id="">
                                         <option value="">Person Name</option>
-                                        <option value="test"@if ($data->sta_bat_analyst_name == 'test') selected @endif>test
-                                        </option>
+                                        {{-- <option value="test"@if ($data->sta_bat_analyst_name == 'test') selected @endif>test
+                                        </option> --}}
+
+                                        @foreach ($users as $value)
+                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
 
 
                                     </select>
@@ -1107,8 +1119,12 @@
                                     </label>
                                     <select name="qa_head_designee" id="">
                                         <option value="">Person Name</option>
-                                        <option value="test"@if ($data->qa_head_designee == 'test') selected @endif>test
-                                        </option>
+                                        {{-- <option value="test"@if ($data->qa_head_designee == 'test') selected @endif>test
+                                        </option> --}}
+                                        @foreach ($users as $value)
+                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -2259,6 +2275,8 @@
                                         Result(s)<span class="text-danger"></span></label>
                                     <select name="l_e_i_oot">
                                         <option>Enter Your Selection Here</option>
+                                        <option value="yes"@if ($checkList->l_e_i_oot == 'yes') selected @endif>Yes
+                                        </option>
                                         <option value="no"@if ($checkList->l_e_i_oot == 'no') selected @endif>No
                                         </option>
                                         <option value="n/a"@if ($checkList->l_e_i_oot == 'n/a') selected @endif>N/A
@@ -2277,10 +2295,15 @@
                                 <div class="group-input">
                                     <label for="search"> In-Charge <span class="text-danger"></span> </label>
                                     <select name="in_charge" id="">
-                                        <option value="test"@if ($checkList->in_charge == 'test') selected @endif>test
+                                        {{-- <option value="test"@if ($checkList->in_charge == 'test') selected @endif>test
                                         </option>
                                         <option value="test"@if ($checkList->in_charge == 'test') selected @endif>test
-                                        </option>
+                                        </option> --}}
+
+                                        @foreach ($users as $value)
+                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -2290,10 +2313,15 @@
                                     <label for="search"> QC Head/Designee <span class="text-danger"></span>
                                     </label>
                                     <select name="pli_head_designee" id="">
-                                        <option value="test"@if ($checkList->pli_head_designee == 'test') selected @endif>test
+                                        {{-- <option value="test"@if ($checkList->pli_head_designee == 'test') selected @endif>test
                                         </option>
                                         <option value="test"@if ($checkList->pli_head_designee == 'test') selected @endif>test
-                                        </option>
+                                        </option> --}}
+
+                                        @foreach ($users as $value)
+                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                    @endforeach
 
                                     </select>
                                 </div>

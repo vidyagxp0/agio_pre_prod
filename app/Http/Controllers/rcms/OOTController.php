@@ -40,6 +40,7 @@ class OOTController extends Controller
         $data->due_date       = $request->due_date;
         $data->division_id        = $request->division_id;  
         $data->severity_level        = $request->severity_level;
+        $data->assign_to             = $request->assign_to;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
@@ -692,6 +693,9 @@ class OOTController extends Controller
     //    dd($data);     
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
     //    dd($grid_product_mat);
+      $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+    //   dd($data);
+
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
        $GridOotRes = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'oot_result'])->first();
     // dd($GridOotRes);

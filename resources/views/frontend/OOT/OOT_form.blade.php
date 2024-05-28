@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+$users = DB::table('users')->get();
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -191,7 +194,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Short Description">Nature Of Change<span class="text-danger"></span></label>
-                                        <select multiple id="natureOfChange" name="nature_of_change">
+                                        <select id="natureOfChange" name="nature_of_change">
                                             <option>---select---</option>
                                             <option value="temporary">Temporary </option>
                                             <option value="permanent">Permanent </option>
@@ -573,10 +576,14 @@
                                             Head QA/Designee <span class="text-danger"></span>
                                         </label>
                                         <select name="inv_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
-
-                                        </select>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                         <p class="text-danger">{{$message}}</p>
+                                             
+                                         @enderror
                                     </div>
                                 </div>
                             </div>
@@ -666,7 +673,14 @@
                                     <div class="group-input">
                                         <label for="search"> Analyst Name <span class="text-danger"></span> </label>
                                         <select name="sta_bat_analyst_name" id="">
-                                            <option value="">Person Name</option>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                         <p class="text-danger">{{$message}}</p>
+                                             
+                                         @enderror
                                         </select>
                                     </div>
                                 </div>
@@ -674,8 +688,13 @@
                                     <div class="group-input">
                                         <label for="search"> QC/QA Head/Designee <span class="text-danger"></span> </label>
                                         <select name="qa_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                         <p class="text-danger">{{$message}}</p>    
+                                         @enderror
                                         </select>
                                     </div>
                                 </div>
@@ -1590,6 +1609,7 @@
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
+                                            <option value="na">NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1604,8 +1624,13 @@
                                         <label for="search">
                                             In-Charge <span class="text-danger"></span>   </label>
                                         <select name="in_charge" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                         <p class="text-danger">{{$message}}</p>    
+                                         @enderror
 
                                         </select>
                                     </div>
@@ -1615,8 +1640,13 @@
                                     <div class="group-input">
                                         <label for="search"> QC Head/Designee <span class="text-danger"></span>  </label>
                                         <select name="pli_head_designee" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
+                                            @foreach ($users as $data)
+                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                        @endforeach
+                                         </select>
+                                         @error('assign_to')
+                                         <p class="text-danger">{{$message}}</p>    
+                                         @enderror
 
                                         </select>
                                     </div>
