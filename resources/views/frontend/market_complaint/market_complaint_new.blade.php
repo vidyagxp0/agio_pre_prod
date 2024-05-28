@@ -1097,7 +1097,7 @@
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][names_rrv]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
                                                     '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
-                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][date_rrv]"></td>' +
+                                                    '<td><input type="date" name="Report_Approval[' + reportNumber + '][date_rrv]"></td>' +
                                                 '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
                                                    
                                                     '</tr>';
@@ -1218,8 +1218,8 @@
                                                     <td><input disabled type="text" name="Product_MaterialDetails[0][serial]" value="1"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][product_name_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"></td>
-                                                    <td><input type="text" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"></td>
+                                                    <td><input type="date" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"></td>
+                                                    <td><input type="date" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
                                                     <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd_ca]"></td>
@@ -1253,8 +1253,8 @@
                                                 '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
-                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]"></td>' +
+                                                '<td><input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
                                                 '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +

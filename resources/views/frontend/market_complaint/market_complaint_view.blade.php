@@ -642,13 +642,7 @@
                         }
                     }
                 </script>
-                <script>
-                    // JavaScript
-                    document.getElementById('initiator_group').addEventListener('change', function() {
-                        var selectedValue = this.value;
-                        document.getElementById('initiator_group_code_gi').value = selectedValue;
-                    });
-                </script>
+               
                 <script>
                     document.addEventListener('DOMContentLoaded', function() {
                         const removeButtons = document.querySelectorAll('.remove-file');
@@ -827,9 +821,9 @@
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
                                     <p class="text-primary"> last date this record should be closed by</p>
-
+                            
                                     <div class="calenderauditee">
-                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" value="{{ $data->due_date_gi ? \Carbon\Carbon::parse($data->due_date_gi)->format('d-M-Y') : '' }}" />
                                         <input type="date" name="due_date_gi"
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="{{ $data->due_date_gi ?? '' }}" class="hide-input"
@@ -837,34 +831,55 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <script>
+                            function handleDateInput(input, targetId) {
+                                const target = document.getElementById(targetId);
+                                const date = new Date(input.value);
+                                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                                const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
+                                target.value = formattedDate;
+                            }
+                            </script>
+                            
 
 
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Short Description">Initiator Group <span
-                                            class="text-danger"></span></label>
-                                    <select name="initiator_group">
+                                    <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
+                                    <select name="initiator_group" id="initiator_group">
                                         <option selected disabled>---select---</option>
                                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                            <option value="{{ $code }}"
-                                                @if ($data->initiator_group == $code) selected @endif>{{ $initiator_group }}
+                                            <option value="{{ $code }}" @if ($data->initiator_group == $code) selected @endif>
+                                                {{ $initiator_group }}
                                             </option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
-
-
-
-
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group Code">Initiator Group Code</label>
-                                    <input type="text" name="initiator_group_code_gi" id="initiator_group_code_gi"
-                                        readonly value="{{ $data->initiator_group_code_gi ?? '' }}">
+                                    <input readonly type="text" name="initiator_group_code_gi" id="initiator_group_code_gi" value="{{ $data->initiator_group_code_gi ?? '' }}">
                                 </div>
                             </div>
-
+                            
+                            <script>
+                                document.getElementById('initiator_group').addEventListener('change', function() {
+                                    var selectedValue = this.value;
+                                    document.getElementById('initiator_group_code_gi').value = selectedValue;
+                                });
+                            
+                                // Set the group code on page load if a value is already selected
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    var initiatorGroupElement = document.getElementById('initiator_group');
+                                    if (initiatorGroupElement.value) {
+                                        document.getElementById('initiator_group_code_gi').value = initiatorGroupElement.value;
+                                    }
+                                });
+                            </script>
+                            
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Initiator Group">Initiated Through</label>
@@ -1016,12 +1031,12 @@
                                 <div class="group-input input-date">
                                     <label for="OOC Logged On">Complaint Reported On</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MM-YYYY" />
+                                        <input type="text" id="compalint_dat" readonly placeholder="DD-MM-YYYY" value="{{ $data->complaint_reported_on_gi ? \Carbon\Carbon::parse($data->complaint_reported_on_gi)->format('d-m-Y') : '' }}" />
                                         <input type="date" id="complaint_date_picker" value="{{ $data->complaint_reported_on_gi }}" name="complaint_reported_on_gi" class="hide-input" style="display: none" />
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <script>
                                 document.addEventListener('DOMContentLoaded', (event) => {
                                     const dateInput = document.getElementById('complaint_date_picker');
@@ -1040,9 +1055,14 @@
                                         readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
                                         dateInput.style.display = 'none';
                                     });
+                            
+                                    // If there is an existing date, set the readonly input's value
+                                    if (dateInput.value) {
+                                        readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                    }
                                 });
                             </script>
-
+                            
                             <div class="col-md-12 mb-3">
                                 <div class="group-input">
                                     <label for="Details Of Nature Market Complaint">Details Of Nature Market
@@ -1676,7 +1696,7 @@
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][names_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][department_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][sign_tm]"></td>' +
-                                                '<td><input type="text" name="Team_Members[' + teamserialNumber + '][date_tm]"></td>' +
+                                                '<td><input type="date" name="Team_Members[' + teamserialNumber + '][date_tm]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }
@@ -1752,7 +1772,7 @@
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][names_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
-                                                '<td><input type="text" name="Report_Approval[' + serialNumber + '][date_rrv]"></td>' +
+                                                '<td><input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]"></td>' +
                                                 '</tr>';
                                             return html;
                                         }
