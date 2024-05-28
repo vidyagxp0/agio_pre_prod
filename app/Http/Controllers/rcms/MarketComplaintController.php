@@ -1823,7 +1823,7 @@ public function marketComplaintStateChange(Request $request,$id)
             $marketstat->closed_done_comment = $request->comment;
 
 
-            $marketstat->status ="Pending Response Letter";
+            $marketstat->status ="Closed Done";
             $history = new MarketComplaintAuditTrial();
             $history->market_id = $id;
             $history->activity_type = 'Activity Log';
