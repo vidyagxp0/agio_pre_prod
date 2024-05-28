@@ -213,7 +213,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('failureInvestigationCheck/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck'])->name('failureInvestigationCheck');
             Route::post('failureInvestigationCheck2/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck2'])->name('failureInvestigationCheck2');
             Route::post('failureInvestigationCheck3/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck3'])->name('failureInvestigationCheck3');
-            Route::post('pending_initiator_update/{id}', [FailureInvestigationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            // Route::post('pending_initiator_update/{id}', [FailureInvestigationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
             Route::post('failureInvestigationStageChange/{id}', [FailureInvestigationController::class, 'failure_investigation_send_stage'])->name('failureInvestigationStageChange');
             Route::post('failureInvestigationCftnotreqired/{id}', [FailureInvestigationController::class, 'cftnotreqired'])->name('failureInvestigationCftnotreqired');
             Route::post('failureInvestigationQaMoreInfo/{id}', [FailureInvestigationController::class, 'failure_inv_qa_more_info'])->name('failureInvestigationQaMoreInfo');
