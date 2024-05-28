@@ -332,15 +332,25 @@ class OOCController extends Controller
         }
 
         $oocGrid = $data->id;
+        // if($request->has('instrumentDetail')){
+        if (!empty($request->instrumentdetails)) {
         $instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
         $instrumentDetail->ooc_id = $oocGrid;
         $instrumentDetail->identifier = 'Instrument Details';
         $instrumentDetail->data = $request->instrumentdetails;
         $instrumentDetail->save();
-
-
-
-
+        }
+       
+    //    if($request->has('oocevoluation')){
+        if (!empty($request->instrumentdetails)) {
+       
+        $oocevaluation = OOC_Grid::where(['ooc_id'=>$oocGrid,'identifier'=>'OOC Evaluation'])->firstOrNew();
+        $oocevaluation->ooc_id = $oocGrid;
+        $oocevaluation->identifier = 'OOC Evaluation';
+        $oocevaluation->data = $request->oocevoluation;
+        $oocevaluation->save();
+        }
+       
 
 
         toastr()->success('Record is created Successfully');
@@ -360,12 +370,13 @@ class OOCController extends Controller
         $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
         
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+        $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
         // foreach ($oocgrid->data as $oogrid)
         // {
         //     return $oogrid;
         // }
 
-        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid'));
+        return view('frontend.OOC.ooc_view' , compact('ooc','oocgrid','oocEvolution'));
     }
 
     public function updateOutOfCalibration(Request $request,$id )
@@ -655,7 +666,31 @@ if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justifica
 
 
 
+// =============================================Update Grid ================================//
+$oocGrid = $ooc->id;
+// if($request->has('instrumentDetail')){
+if (!empty($request->instrumentdetails)) {
+$instrumentDetail = OOC_Grid::where(['ooc_id' => $oocGrid, 'identifier' => 'Instrument Details'])->firstOrNew();
+$instrumentDetail->ooc_id = $oocGrid;
+$instrumentDetail->identifier = 'Instrument Details';
+$instrumentDetail->data = $request->instrumentdetails;
+$instrumentDetail->save();
+}
 
+//    if($request->has('oocevoluation')){
+if (!empty($request->instrumentdetails)) {
+
+$oocevaluation = OOC_Grid::where(['ooc_id'=>$oocGrid,'identifier'=>'OOC Evaluation'])->firstOrNew();
+$oocevaluation->ooc_id = $oocGrid;
+$oocevaluation->identifier = 'OOC Evaluation';
+$oocevaluation->data = $request->oocevoluation;
+$oocevaluation->save();
+}
+
+
+
+
+//==============================================Update Grid ================================//
 
 
 
@@ -683,9 +718,25 @@ if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justifica
 
         
 
+        //=====================Second Grid ===========================//
+
+    
+        
+
+
+        
+        //=====================Second Grid ===========================//
+
 
         return back();
 
+    }
+    private function generateResponseKey($question) {
+        return str_replace(' ', '_', strtolower($question)) . '_response';
+    }
+
+    private function generateRemarkKey($question) {
+        return str_replace(' ', '_', strtolower($question)) . '_remark';
     }
    
     public function OOCStateChange(Request $request,$id)
@@ -1174,7 +1225,7 @@ public function OOCAuditTrial($id){
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
                $oocOpen = OpenStage::find(1);
-               if (!empty($changeControl->cft)) $cft = explode(',', $oocOpen->cft);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
 
                
                if ($request->revision == "capa-child") {
@@ -1211,7 +1262,7 @@ public function OOCAuditTrial($id){
                $formattedDate = $currentDate->addDays(30);
                $due_date = $formattedDate->format('d-M-Y');
                $oocOpen = OpenStage::find(1);
-               if (!empty($changeControl->cft)) $cft = explode(',', $oocOpen->cft);
+               if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
 
                
                if ($request->revision == "extension-child") {

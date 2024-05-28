@@ -9,6 +9,7 @@
     header {
         display: none;
     }
+
 </style>
 
 <style>
@@ -21,6 +22,11 @@
         /* border-right: none; */
         background: white;
     }
+    .input_full_width{
+            width: 100%;
+    border-radius: 5px;
+    margin-bottom: 10px;
+        }
 
     .state-block {
         padding: 20px;
@@ -55,6 +61,44 @@ $users = DB::table('users')->get();
     </div>
 </div>
 
+<script>
+    $(document).ready(function() {
+        let instrumentDetails = 1;
+        $('#instrumentdetails').click(function(e) {
+            function generateTableRow(serialNumber) {
+
+
+                var html =
+                    '<tr>' +
+                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][instrument_name]"></td>' +
+                    ' <td><input type="text" name="instrumentdetails['+ instrumentDetails +'][instrument_id]"></td>' +
+                    '<td><input type="text" name="instrumentdetails['+ instrumentDetails +'][remarks]"></td>' +
+                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][calibration]"></td>' +
+                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][acceptancecriteria]"></td>' +
+                    '<td><input type="text" name="instrumentdetails['+ instrumentDetails +'][results]"></td>' +
+
+
+                    '</tr>';
+
+                for (var i = 0; i < users.length; i++) {
+                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                }
+
+                html += '</select></td>' +
+
+                    '</tr>';
+                instrumentDetails++;
+                return html;
+            }
+
+            var tableBody = $('#instrumentdetails_details tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         // let instrumentDetails = 1;
@@ -132,44 +176,6 @@ $users = DB::table('users')->get();
     });
 </script>
 
-<script>
-    $(document).ready(function() {
-        let instrumentDetails = 1;
-        $('#instrumentdetails').click(function(e) {
-            function generateTableRow(serialNumber) {
-
-
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
-                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][instrument_name]"></td>' +
-                    ' <td><input type="text" name="instrumentdetails['+ instrumentDetails +'][instrument_id]"></td>' +
-                    '<td><input type="text" name="instrumentdetails['+ instrumentDetails +'][remarks]"></td>' +
-                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][calibration]"></td>' +
-                    '<td><input type="date" name="instrumentdetails['+ instrumentDetails +'][acceptancecriteria]"></td>' +
-                    '<td><input type="text" name="instrumentdetails['+ instrumentDetails +'][results]"></td>' +
-
-
-                    '</tr>';
-
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                }
-
-                html += '</select></td>' +
-
-                    '</tr>';
-                instrumentDetails++;
-                return html;
-            }
-
-            var tableBody = $('#instrumentdetails_details tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-        });
-    });
-</script>
 
 <script>
     $(document).ready(function() {
@@ -186,7 +192,7 @@ $users = DB::table('users')->get();
                     '<td><input type="date" name="ManufacturedDate[]"></td>' +
                     '<td><input type="number" name="NumberOfItemsNeeded[]"></td>' +
                     '<td><input type="text" name="Exist[]"></td>' +
-                    // '<td><input type="text" name="Comment[]"></td>' +
+                    '<td><input type="text" name="Comment[]"></td>' +
 
 
                     '</tr>';
@@ -1095,53 +1101,127 @@ $users = DB::table('users')->get();
                             </div>
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Instrument Details
-                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="root-cause-first-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>Instrument Name</th>
-                                                    <th>Instrument ID</th>
-                                                    <th>Remarks</th>
-                                                    <th>Calibration Parameter</th>
-                                                    <th>Acceptance Criteria</th>
-                                                    <th>Results</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @php
-                                                    $gridNumber = 1;
-                                                @endphp
-                                                {{-- @if (is_array($oocgrid) && !empty($oocgrid)) --}}
-                                                @foreach ($oocgrid->data as $oogrid )
-                                                    
-                                               
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
-                                                <td><input type="text" name="instrumentdetails[0][remarks]" value="{{$oogrid['remarks']}}"></td>
-                                                <td><input type="text" name="instrumentdetails[0][calibration]" value="{{$oogrid['calibration']}}"></td>
-                                                <td><input type="text" name="instrumentdetails[0][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
-                                                <td><input type="text" name="instrumentdetails[0][results]" value="{{$oogrid['results']}}"></td>
-                                                @endforeach
-                                                {{-- @else
-                                                <p>No data available.</p>
-                                                @endif --}}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+
+                            {{-- grid added new --}}
+
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Instrument Details
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        
+            <table class="table table-bordered" id="onservation-incident-table">
+                <thead>
+                    <tr>
+                        <th>Row #</th>
+                        <th>Instrument Name</th>
+                        <th>Instrument ID</th>
+                        <th>Remarks</th>
+                        <th>Calibration Parameter</th>
+                        <th>Acceptance Criteria</th>
+                        <th>Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $serialNumber =1;
+                    @endphp
+                    @foreach ($oocgrid->data as $oogrid )
+
+                    <tr>
+                    <td disabled >{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_name]" value="{{$oogrid['instrument_name']}}"></td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_id]" value="{{$oogrid['instrument_id']}}"></td>
+                    <td><input type="text" name="instrumentdetails[0][remarks]" value="{{$oogrid['remarks']}}"></td>
+                    <td><input type="text" name="instrumentdetails[0][calibration]" value="{{$oogrid['calibration']}}"></td>
+                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]" value="{{$oogrid['acceptancecriteria']}}"></td>
+                    <td><input type="text" name="instrumentdetails[0][results]" value="{{$oogrid['results']}}"></td>
+                    @endforeach   
+                </tr>
+                </tbody>
+            </table>
+        
+    </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
+
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvi');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+       </script>
+
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1;
+    $('#IncidentAdd').click(function(e) {
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-table tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+});
+
+    </script>
+
+{{-- grid added new --}}
+
+
 
                             <div class="sub-head"> Delay Justfication for Reporting</div>
 
@@ -1265,6 +1345,22 @@ $users = DB::table('users')->get();
                     </div>
                 </div>
             </div>
+
+
+            @php
+            $oocevaluations = array(
+"Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
+"Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
+"Verification of dilution, calculation, weighing, Titer values and readings",
+"Verification of glassware used",
+"Verification of chromatograms/spectrums/other instrument",
+"Adequacy of system suitability checks",
+"Instrument Malfunction",
+"Check for adherence to the calibration method",
+"Previous History of instrument",
+"Others"
+            )
+        @endphp
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -1285,116 +1381,20 @@ $users = DB::table('users')->get();
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
-                                                <td>
-                                                    <textarea name="what_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="what_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of calibration standards used Primary Standard: Physical apperance, validity, certificate. Secondary standard: Physical appearance, validity</td>
-                                                <td>
-                                                    <textarea name="where_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="where_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of dilution, calculation, weighing, Titer values and readings</td>
-                                                <td>
-                                                    <textarea name="when_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="when_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of glassware used</td>
-                                                <td>
-                                                    <textarea name="coverage_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="coverage_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Verification of chromatograms/spectrums/other instrument</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Adequacy of system suitability checks</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Instrument Malfunction</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Check for adherence to the calibration method</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Previous History of instrument</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Others</td>
-                                                <td>
-                                                    <textarea name="who_will_be"></textarea>
-                                                </td>
-                                                <td>
-                                                    <textarea name="who_will_not_be"></textarea>
-                                                </td>
-
-                                            </tr>
+                                            @foreach ($oocevaluations as $index => $item)
+        @if(isset($oocEvolution->data[$index]))
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td style="background: #DCD8D8">{{ $item }}</td>
+                <td>
+                    <textarea name="oocevoluation[{{ $index }}][response]">{{ $oocEvolution->data[$index]['response'] }}</textarea>
+                </td>
+                <td>
+                    <textarea name="oocevoluation[{{ $index }}][remarks]">{{ $oocEvolution->data[$index]['remarks'] }}</textarea>
+                </td>
+            </tr>
+        @endif
+    @endforeach
                                         </tbody>
                                     </table>
                                 </div>

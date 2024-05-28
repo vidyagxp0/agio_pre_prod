@@ -449,46 +449,124 @@ $users = DB::table('users')->get();
                                     
                                 </div>
                             </div>
+{{-- grid added new --}}
+
+<div class="col-12">
+    <div class="group-input" id="IncidentRow">
+        <label for="root_cause">
+            Instrument Details
+            <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                (Launch Instruction)
+            </span>
+        </label>
+        
+            <table class="table table-bordered" id="onservation-incident-table">
+                <thead>
+                    <tr>
+                        <th>Row #</th>
+                        <th>Instrument Name</th>
+                        <th>Instrument ID</th>
+                        <th>Remarks</th>
+                        <th>Calibration Parameter</th>
+                        <th>Acceptance Criteria</th>
+                        <th>Results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @php
+                        $serialNumber =1;
+                    @endphp
+                    <tr>
+                    <td disabled >{{ $serialNumber++ }}</td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_name]"></td>
+                    <td><input type="text" name="instrumentdetails[0][instrument_id]"></td>
+                    <td><input type="text" name="instrumentdetails[0][remarks]"></td>
+                    <td><input type="text" name="instrumentdetails[0][calibration]"></td>
+                    <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
+                    <td><input type="text" name="instrumentdetails[0][results]"></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+    </div>
+</div>
 
 
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="root_cause">
-                                        Instrument Details
-                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                            (Launch Instruction)
-                                        </span>
-                                    </label>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="root-cause-first-table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>Instrument Name</th>
-                                                    <th>Instrument ID</th>
-                                                    <th>Remarks</th>
-                                                    <th>Calibration Parameter</th>
-                                                    <th>Acceptance Criteria</th>
-                                                    <th>Results</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_name]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][instrument_id]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][remarks]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][calibration]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][acceptancecriteria]"></td>
-                                                <td><input type="text" name="instrumentdetails[0][results]"></td>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var selectField = document.getElementById('Facility_Equipment');
+        var inputsToToggle = [];
 
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+        // Add elements with class 'facility-name' to inputsToToggle
+        var facilityNameInputs = document.getElementsByClassName('facility-name');
+        for (var i = 0; i < facilityNameInputs.length; i++) {
+            inputsToToggle.push(facilityNameInputs[i]);
+        }
+
+        // Add elements with class 'id-number' to inputsToToggle
+        var idNumberInputs = document.getElementsByClassName('id-number');
+        for (var j = 0; j < idNumberInputs.length; j++) {
+            inputsToToggle.push(idNumberInputs[j]);
+        }
+
+        // Add elements with class 'remarks' to inputsToToggle
+        var remarksInputs = document.getElementsByClassName('remarks');
+        for (var k = 0; k < remarksInputs.length; k++) {
+            inputsToToggle.push(remarksInputs[k]);
+        }
+
+
+        selectField.addEventListener('change', function() {
+            var isRequired = this.value === 'yes';
+            console.log(this.value, isRequired, 'value');
+
+            inputsToToggle.forEach(function(input) {
+                input.required = isRequired;
+                console.log(input.required, isRequired, 'input req');
+            });
+
+            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+            // Show or hide the asterisk icon based on the selected value
+            var asteriskIcon = document.getElementById('asteriskInvi');
+            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+        });
+    });
+       </script>
+
+
+<script>
+$(document).ready(function() {
+    let investdetails = 1;
+    $('#IncidentAdd').click(function(e) {
+        function generateTableRow(serialNumber) {
+            var html =
+                '<tr>' +
+                '<td><input disabled type="text" value="' + serialNumber + '"></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_name]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][instrument_id]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][remarks]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][calibration]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][acceptancecriteria]" value=""></td>' +
+                '<td><input type="text" name="instrumentdetails[' + investdetails + '][results]" value=""></td>' +
+                '</tr>';
+            investdetails++; // Increment the row number here
+            return html;
+        }
+
+        var tableBody = $('#onservation-incident-table tbody');
+        var rowCount = tableBody.children('tr').length;
+        var newRow = generateTableRow(rowCount + 1);
+        tableBody.append(newRow);
+    });
+});
+
+    </script>
+
+{{-- grid added new --}}
+
+
+
 
                             <div class="sub-head"> Delay Justfication for Reporting</div>
 
@@ -594,6 +672,24 @@ $users = DB::table('users')->get();
                     </div>
                 </div>
             </div>
+
+
+
+
+            @php
+                $oocevaluations = array(
+    "Status of calibration for other instrument(s) used for performing calibration of the referred instrument",
+    "Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity",
+    "Verification of dilution, calculation, weighing, Titer values and readings",
+    "Verification of glassware used",
+    "Verification of chromatograms/spectrums/other instrument",
+    "Adequacy of system suitability checks",
+    "Instrument Malfunction",
+    "Check for adherence to the calibration method",
+    "Previous History of instrument",
+    "Others"
+                )
+            @endphp
             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
@@ -614,36 +710,45 @@ $users = DB::table('users')->get();
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @foreach ($oocevaluations as $item)
+                                                
                                             <tr>
-                                                <td></td>
-                                                <td style="background: #DCD8D8">Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
+                                                <td>{{$loop->index+1}}</td>
+                                                {{-- <td >Status of calibration for other instrument(s) used for performing calibration of the referred instrument</td>
+                                                 --}}
+                                                 <td style="background: #DCD8D8">{{$item}}</td>
                                                 <td>
-                                                    <textarea name="what_will_be"></textarea>
+                                                    <textarea name="oocevoluation[{{$loop->index}}][response]"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="what_will_not_be"></textarea>
+                                                    <textarea name="oocevoluation[{{$loop->index}}][remarks]"></textarea>
                                                 </td>
 
                                             </tr>
-                                            <tr>
+                                            @endforeach
+                                            {{-- @foreach ($oocevaluations as $item) --}}
+
+                                            {{-- <tr>
                                                 <td></td>
-                                                <td style="background: #DCD8D8">Verification of calibration standards used Primary Standard: Physical apperance, validity, certificate. Secondary standard: Physical appearance, validity</td>
-                                                <td>
-                                                    <textarea name="where_will_be"></textarea>
+                                                    <td style="background: #DCD8D8"></td>
+                                                    <td>
+                                                    <textarea name="where_will_be_qII"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="where_will_not_be"></textarea>
+                                                    <textarea name="where_will_not_be_qII"></textarea>
                                                 </td>
 
-                                            </tr>
-                                            <tr>
+                                            </tr> --}}
+                                            {{-- @endforeach --}}
+
+                                            {{-- <tr>
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of dilution, calculation, weighing, Titer values and readings</td>
                                                 <td>
-                                                    <textarea name="when_will_be"></textarea>
+                                                    <textarea name="when_will_be_qIII"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="when_will_not_be"></textarea>
+                                                    <textarea name="when_will_not_be_qIII"></textarea>
                                                 </td>
 
                                             </tr>
@@ -651,10 +756,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of glassware used</td>
                                                 <td>
-                                                    <textarea name="coverage_will_be"></textarea>
+                                                    <textarea name="coverage_will_be_qIv"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="coverage_will_not_be"></textarea>
+                                                    <textarea name="coverage_will_not_be_qIv"></textarea>
                                                 </td>
 
                                             </tr>
@@ -662,10 +767,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Verification of chromatograms/spectrums/other instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_qv"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_qv"></textarea>
                                                 </td>
 
                                             </tr>
@@ -673,10 +778,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Adequacy of system suitability checks</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_vi"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_vi"></textarea>
                                                 </td>
 
                                             </tr>
@@ -684,10 +789,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Instrument Malfunction</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_vii"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_vii"></textarea>
                                                 </td>
 
                                             </tr>
@@ -695,10 +800,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Check for adherence to the calibration method</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_viii"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_viii"></textarea>
                                                 </td>
 
                                             </tr>
@@ -706,10 +811,10 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Previous History of instrument</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_ix"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_ix"></textarea>
                                                 </td>
 
                                             </tr>
@@ -717,13 +822,14 @@ $users = DB::table('users')->get();
                                                 <td></td>
                                                 <td style="background: #DCD8D8">Others</td>
                                                 <td>
-                                                    <textarea name="who_will_be"></textarea>
+                                                    <textarea name="who_will_be_x"></textarea>
                                                 </td>
                                                 <td>
-                                                    <textarea name="who_will_not_be"></textarea>
+                                                    <textarea name="who_will_not_be_x"></textarea>
                                                 </td>
 
-                                            </tr>
+                                            </tr> --}}
+
                                         </tbody>
                                     </table>
                                 </div>
