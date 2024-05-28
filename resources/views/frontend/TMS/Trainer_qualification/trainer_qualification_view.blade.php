@@ -14,6 +14,7 @@
         header {
             display: none;
         }
+
     </style>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="/resources/demos/style.css">
@@ -308,7 +309,7 @@
             border-radius: 20px 0px 0px 20px;
         }
 
-        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(6) {
+        #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
             border-radius: 0px 20px 20px 0px;
 
         }
