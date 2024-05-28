@@ -28,7 +28,7 @@
                     <a href="{{ route('TMS.create') }}">Create Training Plan</a>
                     <a href="{{ url('TMS/show') }}">Manage Training Plan</a>
                     <a href="{{ url('induction_training') }}">Induction Training</a>
-                    <a href="">On The Job</a>
+                    <a href="{{ url('job_training') }}">On The Job</a>
 
                 </div>
             </div>

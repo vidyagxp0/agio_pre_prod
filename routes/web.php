@@ -23,6 +23,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentContentController;
 use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\ImportController;
+// use App\Http\Controllers\tms\JobTrainingController;
 use App\Http\Controllers\InductionTrainingController;
 use App\Http\Controllers\OOSMicroController;
 use App\Http\Controllers\rcms\AuditeeController;
@@ -36,6 +37,8 @@ use App\Http\Controllers\rcms\OOCController;
 use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\RcmsDashboardController;
 use App\Http\Controllers\tms\EmployeeController;
+// use App\Http\Controllers\tms\JobTrainingController;
+
 use App\Http\Controllers\tms\QuestionBankController;
 use App\Http\Controllers\tms\QuestionController;
 use App\Http\Controllers\tms\QuizeController;
@@ -43,7 +46,7 @@ use App\Http\Controllers\tms\TrainerController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Imports\DocumentsImport;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\tms\JobTrainingController;
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -320,7 +323,15 @@ Route::view('trainer_qualification', 'frontend.TMS.Trainer_qualification.trainer
 
 // ====================induction training =================
 
-// Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+// // Route::view('induction_training', 'frontend.TMS.Induction_training.induction_training')->name('induction_training');
+// Route::view('job_training', 'frontend.TMS.Job_Training.job_training')->name('job_training');
+Route::get('job_training',[JobTrainingController::class ,'index'])->name('job_training');
+Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name('job_trainingcreate');
+
+
+
+
+
 Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
 Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
 
