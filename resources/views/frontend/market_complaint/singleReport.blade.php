@@ -281,7 +281,7 @@
 
 
 
-                   <tr>
+                   {{-- <tr>
                     <table class="table table-bordered" id="onservation-incident-table">
                         <thead>
                             <tr>
@@ -306,7 +306,7 @@
                                  
                                         <tr>
                                 {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-                               
+{{--                                
                                   <td>{{ $item['info_product_name'] }}</td>
                                   <td>{{ $item['info_batch_no'] }}</td>
                                   <td>{{ $item['info_mfg_date'] }}</td>
@@ -332,7 +332,7 @@
                     </table>
 
 
-                   </tr>
+                   </tr> --}} 
 
                 </table>
             </div>
