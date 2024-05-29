@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule};
-use App\Models\{IA_checklist_capsule_paking, InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating};
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule,IA_liquid_ointment,IA_QualityControl};
+use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
@@ -1164,6 +1164,56 @@ $Checklist_Capsule->save();
         $checklistTabletPaking->tablet_capsule_packing_comment = $request->tablet_capsule_packing_comment;
         $checklistTabletPaking->save();
 
+//============================================ Liquide_Ointment========================================================================================================
+
+$liquid_ointments = IA_liquid_ointment::where(['ia_id' => $id])->firstOrCreate();
+$liquid_ointments->ia_id = $id;
+
+
+ for ($i = 1; $i <= 48; $i++)
+ {
+     $string = 'liquid_ointments_response_'. $i;
+    $liquid_ointments->$string = $request->$string;
+ }
+
+ for ($i = 1; $i <= 48; $i++)
+ {
+    $string = 'liquid_ointments_remark_'. $i;
+     $liquid_ointments->$string = $request->$string;
+ }
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+ $liquid_ointments->Description_Deviation = $request->Description_Deviation;
+$liquid_ointments->save();
+//==================================================================Quality Control==========================================
+
+
+
+
+
+// $qualitycontrols = IA_QualityControl::where(['ia_id' => $id])->firstOrCreate();
+// $qualitycontrols->ia_id = $id;
+
+
+//  for ($i = 1; $i <= 92; $i++)
+//  {
+//      $string = 'liquid_ointments_response_'. $i;
+//     $liquid_ointments->$string = $request->$string;
+//  }
+
+//  for ($i = 1; $i <= 92; $i++)
+//  {
+//     $string = 'qualitycontrols_remark_'. $i;
+//      $liquid_ointments->$string = $request->$string;
+//  }
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+//  $qualitycontrols->Description_Deviation = $request->Description_Deviation;
+// $qualitycontrols->save();
+
+
+
+
+
+
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -1814,8 +1864,9 @@ $Checklist_Capsule->save();
         $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
         $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
         $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
-
-
+        $checklist5 = IA_liquid_ointment::where('ia_id', $id)->first();
+        $checklist6 = IA_QualityControl::where('ia_id', $id)->first();
+      // $checklist8 = IA_QualityControl::where('ia_id', $id)->first();
         // dd($checklist1);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -1824,7 +1875,7 @@ $Checklist_Capsule->save();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         // return dd($checklist1);
-        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist5','checklist6', 'old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
