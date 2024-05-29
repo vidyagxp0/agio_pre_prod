@@ -2901,12 +2901,9 @@ class DeviationController extends Controller
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            // return $request;
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
-
-
             if ($deviation->stage == 2) {
 
                 $deviation->stage = "1";
