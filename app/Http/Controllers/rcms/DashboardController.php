@@ -57,7 +57,7 @@ class DashboardController extends Controller
 
     public function index(Request $request)
     {
-        
+
         $table = [];
 
         $datas = CC::orderByDesc('id')->get();
@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $datas12 = Observation::orderByDesc('id')->get();
         $datas13 = OOS::orderByDesc('id')->get();
         $datas14 = MarketComplaint::orderByDesc('id')->get();
-    
+
         $deviation = Deviation::orderByDesc('id')->get();
         $ooc = OutOfCalibration::orderByDesc('id')->get();
         $failureInvestigation = FailureInvestigation::orderByDesc('id')->get();
@@ -361,33 +361,33 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 // "status" => $data->status,
                 "stage" => $data->status,
-                
+
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
         }
 
-        foreach ($datas14 as $data) {
-            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+        // foreach ($datas14 as $data) {
+        //     $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
-            array_push($table, [
-                "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record,
-                "division_id" => $data->division_id,
-                "type" => "Deviation",
-                "parent_id" => $data->parent_id,
-                "parent" => $data->parent_record? $data->parent_record : "-",
-                "parent_type" => $data->parent_type,
-                "short_description" => $data->short_description ? $data->short_description : "-",
-                "initiator_id" => $data->initiator_id,
-                "due_date" => $data->due_date,
-                "stage" => $data->status,
-                "initiated_through" => $data->initiated_through,
-                "date_open" => $data->create,
-                "date_close" => $data->updated_at,
-            ]);
-        }
+        //     array_push($table, [
+        //         "id" => $data->id,
+        //         "parent" => $data->parent_record ? $data->parent_record : "-",
+        //         "record" => $data->record,
+        //         "division_id" => $data->division_id,
+        //         "type" => "Deviation",
+        //         "parent_id" => $data->parent_id,
+        //         "parent" => $data->parent_record? $data->parent_record : "-",
+        //         "parent_type" => $data->parent_type,
+        //         "short_description" => $data->short_description ? $data->short_description : "-",
+        //         "initiator_id" => $data->initiator_id,
+        //         "due_date" => $data->due_date,
+        //         "stage" => $data->status,
+        //         "initiated_through" => $data->initiated_through,
+        //         "date_open" => $data->create,
+        //         "date_close" => $data->updated_at,
+        //     ]);
+        // }
         foreach ($ooc as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -405,7 +405,7 @@ class DashboardController extends Controller
                 "intiation_date" => $data->intiation_date,
                 // "status" => $data->status,
                 "stage" => $data->status,
-                
+
                 "date_open" => $data->create,
                 "date_close" => $data->updated_at,
             ]);
@@ -993,7 +993,7 @@ class DashboardController extends Controller
             $audit = "MarketComplaintAuditReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-            
+
         }
 
         elseif ($type == "Market Complaint") {
@@ -1002,9 +1002,9 @@ class DashboardController extends Controller
             $single = "pdf-report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-            
+
         }
-        
+
 
         $type = $type == 'Capa' ? 'CAPA' : $type;
 
