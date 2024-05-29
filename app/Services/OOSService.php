@@ -6,6 +6,8 @@ use App\Models\OOS;
 use App\Models\Oosgrids;
 use App\Models\OosAuditTrial;
 use App\Models\RoleGroup;
+use App\Models\RecordNumber;
+
 use Helpers;
 use App\Services\FileService;
 use Illuminate\Http\Request;
@@ -28,9 +30,11 @@ class OOSService
         try {
 
             $input = $request->all();
-            $input['form_type'] = "OOS Cemical";
+            $input['record_number'] = ((RecordNumber::first()->value('counter')) + 1);
+            $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
+           
            
             
             $file_input_names = [
