@@ -339,17 +339,17 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Preliminary Lab Invst. Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Phase II Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm19')">CheckList - Phase II Investigation </button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QC Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Phase II QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Under Addendum Approval</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
+                <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Under Addendum Execution</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Under Addendum Review</button> -->
+                <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Under Addendum Verification</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Signature</button>
 
             </div>
@@ -380,8 +380,9 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator"> Record Number </label>
-                                <input type="number">
-                            </div>
+                                <input disabled type="text" name="record_number"
+                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/OOS Chemical/{{ date('Y') }}/{{ $record_number }}">
+                        </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -395,6 +396,7 @@ $users = DB::table('users')
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator <span class="text-danger"></span></label>
+                                <input type="hidden" name="initiator_id" value="{{ Auth::user()->id }}">
                                 <input disabled type="text" name="initiator"
                                         value="{{ Auth::user()->name }}">
                             </div>
@@ -402,9 +404,10 @@ $users = DB::table('users')
 
                         <div class="col-md-6 ">
                             <div class="group-input ">
-                                <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
-                                <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                <label for="intiation-date"> Date Of Initiation<span class="text-danger"></span></label>
                                 <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                    
                             </div>
                         </div>
                         
@@ -416,8 +419,8 @@ $users = DB::table('users')
                                 <small class="text-primary">
                                     Please mention expected date of completion
                                 </small>
-                                <input type="date" id="date" name="due_date">
-
+                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -425,50 +428,52 @@ $users = DB::table('users')
                                 <label for="Short Description"> Severity Level</label>
                                 <select name="severity_level_gi" >
                                     <option>Enter Your Selection Here</option>
-                                    <option >1</option>
-                                    <option>2</option>
+                                    <option  value="Major">Major</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Critical">Critical</option>
                                 </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Initiator Group"> Short Description</label>
+                                <textarea  name="description_gi" value="" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Short Description">Initiator Group <span class="text-danger"></span></label>
-                                <select name="initiator_group">
-                                    <option selected disabled>---select---</option>
-                                    @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
-                                        <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option>
-                                    @endforeach
+                                
+                                <select name="initiator_Group" id="initiator_group">
+                                <option>Enter Your Selection Here</option>
+                                @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group) 
+                                <option value="{{ $code }}" @if (old('initiator_group') == $code) selected @endif>{{ $initiator_group }}</option> 
+                                @endforeach 
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Short Description">Initiator Group Code <span class="text-danger"></span></label>
-                                <input type="text" name="initiator_group_code" readonly>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group Code">Initiated Through </label>
-                                <textarea  type="text" name="initiated_through_gi"></textarea>
+                                <label for="Initiator Group Code">Initiator Group Code <span class="text-danger"></span></label>
+                                <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                     value="">
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">If Others</label>
-
-
-                                <select name="if_others_gi">
-                                    <option>Enter Your Selection Here</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
+                                <textarea  type="text" name="if_others_gi"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Initiator Group Code">Is Repeat?</label>
-                                <textarea  type="is_repeat_gi" name="is_repeat_gi"></textarea>
+                                <select name="is_repeat_gi">
+                                    <option>Enter Your Selection Here</option>
+                                    <option value="yes">yes</option>
+                                    <option value="No">No</option>
+                                </select>
+
                             </div>
                         </div>
 
@@ -483,17 +488,9 @@ $users = DB::table('users')
                                 <label for="Initiator Group">Nature of Change</label>
                                 <select name="nature_of_change_gi">
                                     <option>Enter Your Selection Here</option>
-                                    <option value="abc">abc</option>
-                                    <option value="abcd">abcd</option>
-                                    <!-- <option>Lab Incident</option>
-                                                <option>Deviation</option>
-                                                <option>Product Non-conformance</option>
-                                                <option>Inspectional Observation</option>
-                                                <option>Others</option> -->
-
+                                    <option value="temporary">Temporary</option>
+                                    <option value="permanent">Permanent</option>
                                 </select>
-
-
                             </div>
                         </div>
 
@@ -501,12 +498,6 @@ $users = DB::table('users')
                             <div class="group-input">
                                 <label for="Initiator Group">Deviation Occured On</label>
                                 <input type="date" name="deviation_occured_on_gi">
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Initiator Group"> Short Description</label>
-                                <textarea  name="description_gi" value="" required></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -779,30 +770,9 @@ $users = DB::table('users')
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Audit Schedule End Date"> Field Alert Required</label>
-                                <select name="field_alert_required">
-                                    <option name="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Field Alert Ref.No.
-                                </label>
-                                <select multiple id="reference_record" name="field_alert_ref_no_pli" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Justify if no Field Alert</label>
+                                <label for="Description Deviation">Justify Field Alert</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="justify_if_no_field_alert_pli" id="summernote-1">
                                     </textarea>
@@ -840,69 +810,17 @@ $users = DB::table('users')
                                                 </select>
                                             </div>
                                         </div> -->
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name"> Verification Analysis Required</label>
-                                <select name="verification_analysis_required_pli">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Verification Analysis Ref.</label>
-                                <select multiple id="reference_record" name="verification_analysis_ref_pli[]" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Analyst Interview Req.</label>
-                                <select name="analyst_interview_req_pli">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Analyst Interview Ref.</label>
-                                <select multiple id="reference_record" name="analyst_interview_ref_pli[]" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
+                        
 
                         <div class="col-lg-12 mb-4">
                             <div class="group-input">
-                                <label for="Audit Schedule Start Date">Justify if no Analyst Int. </label>
-
-                                <!-- <label for="Description Deviation">Description of Deviation</label> -->
-                                <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
-                                <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
+                                <label for="Audit Schedule Start Date">Justify Analyst Int. </label>
+                                    <textarea class="summernote" name="justify_if_no_analyst_int_pli" id="summernote-1">
                                     </textarea>
 
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Phase I Investigation Required</label>
-                                <select name="phase_i_investigation_required_pli">
-                                     <option value="0">Enter Your Selection Here</option>
-                                    <option name="yes">Yes</option>
-                                    <option name="no">No</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">Phase I Investigation</label>
@@ -1055,7 +973,7 @@ $users = DB::table('users')
                     <div class="row">
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Summary of Prelim.Investiga.</label>
+                                <label for="Description Deviation">Summary of Preliminary Investigation.</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="summary_of_prelim_investiga_plic" id="summernote-1">
                                     </textarea>
@@ -1111,27 +1029,7 @@ $users = DB::table('users')
                             </div>
                         </div>
 
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Product/Material Name">Recommended Actions Required?</label>
-                                <select name="recommended_actions_required_plic">
-                                    <option value="0">Enter Your Selection Here</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Recommended Actions Reference
-                                </label>
-                                <select multiple id="reference_record" name="recommended_actions_reference_plic" id="">
-                                    <option value="1">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
+                      
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Product/Material Name">CAPA Required</label>
@@ -1151,7 +1049,7 @@ $users = DB::table('users')
 
                         <div class="col-md-12 mb-4">
                             <div class="group-input">
-                                <label for="Description Deviation">Delay Justification for P.I.</label>
+                                <label for="Description Deviation">Delay Justification for Preliminary Investigation</label>
                                 <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                                 <textarea class="summernote" name="delay_justification_for_pi_plic" id="summernote-1">
                                     </textarea>
@@ -1299,7 +1197,6 @@ $users = DB::table('users')
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">QA Approver Comments</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="qa_approver_comments_piii" id="summernote-1">
                                     </textarea>
                         </div>
@@ -1317,8 +1214,6 @@ $users = DB::table('users')
 
                     <div class="col-lg-6">
                         <div class="group-input">
-
-
                             <label for="Auditee"> Manufacturing Invest. Type </label>
                             <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
@@ -1328,46 +1223,15 @@ $users = DB::table('users')
                             </select>
                         </div>
                     </div>
-
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Manufacturing Invst. Ref.</label>
-                            <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Re-sampling Required? </label>
-                            <select name="re_sampling_required_piii">
-                                  <option value="yes">Yes</option>
-                                <option value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
+                   
+                    
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Comments"> Audit Comments </label>
-                            <textarea  input type="audit_comments_piii" name="audit_comments_piii"></textarea>
+                            <textarea class="summernote" name="audit_comments_piii" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Re-sampling Ref. No.</label>
-                            <select multiple id="reference_record" name="re_sampling_ref_no_piii" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Hypo/Exp. Required</label>
@@ -1380,14 +1244,11 @@ $users = DB::table('users')
                         </div>
                     </div>
 
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input">
                             <label for="Reference Recores">Hypo/Exp. Reference</label>
-                            <select multiple id="reference_record" name="hypo_exp_reference_piii" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
+                            <textarea class="summernote" name="hypo_exp_reference_piii" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
 
@@ -1565,44 +1426,6 @@ $users = DB::table('users')
                                     </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
-                          <select name="recommended_action_required_piiqcr">
-                                <option value="yes">Yes</option>
-                                <option  value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Recommended Action Reference</label>
-                            <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Observation Submitted On">Investi. Required</label>
-                            <select name="investi_required_piiqcr">
-                                <option value="yes">Yes</option>
-                                <option  value="no">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Invest ref.</label>
-                            <select multiple id="reference_record" name="invest_ref_piiqcr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Lead More Info Reqd On">Attachments </label>
@@ -1662,18 +1485,15 @@ $users = DB::table('users')
                             </select>
                         </div>
                     </div>
-
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input">
-                            <label for="Reference Recores">Additional Test Reference.
+                            <label for="Reference Recores">Additional Test Comment.
                             </label>
-                            <select multiple id="reference_record" name="additional_test_reference_atp[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
+                            <textarea class="summernote" name="additional_test_reference_atp" id="summernote-1">
+                            </textarea>
                         </div>
                     </div>
+                   
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Audit Attachments"> Any Other Actions Required</label>
@@ -1684,17 +1504,6 @@ $users = DB::table('users')
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Reference</label>
-                            <select multiple id="reference_record" name="action_task_reference_atp" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Reference Recores">Additional Testing Attachment </label>
@@ -1843,7 +1652,7 @@ $users = DB::table('users')
                     </div>
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">Action Plan Req.</label>
+                            <label for="Audit Attachments">Action Item Req.</label>
                             <select name="action_plan_req_oosc">
                                  <option value="Yes">Yes</option>
                                 <option value="No">No</option>
@@ -1853,7 +1662,7 @@ $users = DB::table('users')
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Reference Recores">Action Plan Ref.</label>
+                            <label for="Reference Recores">Action Item Ref.</label>
                             <select multiple id="reference_record" name="action_plan_ref_oosc[]" id="">
                                 <option value="0">--Select---</option>
                                 <option value="1">1</option>
@@ -1976,61 +1785,6 @@ $users = DB::table('users')
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments">Required Action Plan? </label>
-                            <select name="req_action_plan_ocr">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Required Action Task?</label>
-                            <select name="req_action_task_ocr">
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Action Task Reference.</label>
-                            <select multiple id="reference_record" name="action_task_reference_ocr[]" id="">
-                                <option value="">--Select---</option>
-                                <option value="">1</option>
-                                <option value="">2</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments">Risk Assessment Req?</label>
-                            <select name="risk_assessment_req_ocr">
-                                <option name="Yes">Yes</option>
-                                <option name="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Risk Assessment Ref.</label>
-                            <select multiple id="reference_record" name="risk_assessment_ref_ocr[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify if No Risk Assessment</label>
@@ -2039,7 +1793,7 @@ $users = DB::table('users')
                                     </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                         <div class="group-input">
                             <label for="Reference Recores">Conclusion Attachment</label>
                             <small class="text-primary">
@@ -2201,16 +1955,7 @@ $users = DB::table('users')
                             </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Field alert reference</label>
-                            <select multiple id="reference_record" name="field_alert_reference_bd[]" id="">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
+                    
                     <div class="sub-head">Assessment for batch disposition</div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
@@ -2286,26 +2031,6 @@ $users = DB::table('users')
                             </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Phase-III Inves. Required?</label>
-                            <select name="phase_inves_required_bd">
-                              <option value="0">Enter Your Selection Here</option>
-                                <option value="yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Phase-III Inves. Reference</label>
-                            <select multiple id="reference_record" name="phase_inves_reference_bd[]" id="">
-                                <option value="0">--Select---</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                            </select>
-                        </div>
-                    </div>
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Justify for Delay in Activity</label>
@@ -2354,7 +2079,6 @@ $users = DB::table('users')
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
                             <label for="Description Deviation">Other Action (Specify)</label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                             <textarea class="summernote" name="other_action_specify_ro" id="summernote-1">
                             </textarea>
                         </div>
@@ -2388,24 +2112,23 @@ $users = DB::table('users')
             </div>
 
         </div>
-        <!-- Under Addendum Approval -->
+        <!--QA Head/Designee Approval -->
         <div id="CCForm13" class="inner-block cctabcontent">
             <div class="inner-block-content">
                 <div class="sub-head">
-                    Addendum Approval Comment
+                QA Head/Designee Approval
                 </div>
                 <div class="row">
                     <div class="col-md-12 mb-4">
                         <div class="group-input">
-                            <label for="Description Deviation">Reopen Approval Comments </label>
-                            <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
+                            <label for="Description Deviation"> Approval Comments </label>
                             <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
                             </textarea>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="group-input">
-                            <label for="Reference Recores">Addendum Attachment</label>
+                            <label for="Reference Recores">Approval Attachment</label>
                             <small class="text-primary">
                                 Please Attach all relevant or supporting documents
                             </small>
@@ -2950,6 +2673,19 @@ $users = DB::table('users')
     </div>
     </div>
     <script>
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+        
+        function setCurrentDate(item){
+            if(item == 'yes'){
+                $('#effect_check_date').val('{{ date('d-M-Y')}}');
+            }
+            else{
+                $('#effect_check_date').val('');
+            }
+        }
         document.getElementById("dynamicSelectType").addEventListener("change", function() {
             var selectedRoute = this.value;
             window.location.href = selectedRoute; // Redirect to the selected route

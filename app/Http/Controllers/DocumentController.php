@@ -27,6 +27,7 @@ use App\Models\OpenStage;
 use App\Models\PrintControl;
 use App\Models\PrintHistory;
 use App\Models\Process;
+use App\Models\QMSProcess;
 use App\Models\RoleGroup;
 use App\Models\SetDivision;
 use App\Models\Stage;
@@ -255,6 +256,7 @@ class DocumentController extends Controller
                 ->get();
         $trainer = User::get();
 
+
         // $approvers = DB::table('user_roles')
         // ->join('users', 'user_roles.user_id', '=', 'users.id')
         // ->where('user_roles.q_m_s_processes_id', 89)
@@ -322,8 +324,14 @@ class DocumentController extends Controller
         if(!empty( $division)){
             $division->dname = Division::where('id', $division->division_id)->value('name');
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
+            $process = QMSProcess::where([
+                'process_name' => 'New Document',
+                'division_id' => $division->id
+            ])->first();
+        } else {
+            return "Division not found";
         }
-         
+
       
         $users = User::all();
         if (! empty($users)) {
@@ -350,16 +358,17 @@ class DocumentController extends Controller
         $reviewer = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_processes_id', $process->id)
                 ->where('user_roles.q_m_s_roles_id', 2)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
+
 
         //sdd($temp->division_id);
         $approvers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_processes_id', $process->id)
                 ->where('user_roles.q_m_s_roles_id', 1)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
@@ -367,11 +376,10 @@ class DocumentController extends Controller
         $hods = DB::table('user_roles')
             ->join('users', 'user_roles.user_id', '=', 'users.id')
             ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-            ->where('user_roles.q_m_s_processes_id', 89)
+            ->where('user_roles.q_m_s_processes_id', $process->id)
             ->where('user_roles.q_m_s_roles_id', 4)
             ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
             ->get();
-
 
 
         $trainer = User::get();
@@ -608,6 +616,9 @@ class DocumentController extends Controller
             }
             if (! empty($request->responsibility)) {
                 $content->responsibility = serialize($request->responsibility);
+            }
+            if (! empty($request->accountability)) {
+                $content->accountability = serialize($request->accountability);
             }
             if (! empty($request->abbreviation)) {
                 $content->abbreviation = serialize($request->abbreviation);
@@ -1320,6 +1331,7 @@ class DocumentController extends Controller
             $documentcontet->safety_precautions = $request->safety_precautions;
             
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
+            $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);

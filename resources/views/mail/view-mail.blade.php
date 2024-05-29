@@ -235,25 +235,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>{{ Helpers::record($data->record) }}</td>
+                                    <!-- <td>{{ Helpers::record($data->record) }}</td>
                                     <td>{{ Helpers::getDivisionName($data->division_id) }}</td>
                                     <td>{{ $data->short_description }}</td>
                                     <td>{{ Helpers::getDateFormat($data->created_at) }}</td>
                                     <td>{{ Helpers::getDateFormat($data->due_date) }}</td>
-                                    <td>{{ $data->status }}</td>
+                                    <td>{{ $data->status }}</td> -->
                                 </tr>
                             <tbody>
                         </table>
                     </div>
-
-
-
-
-
-
                 </div>
-
-
                 <h4>vidyaGxP QMS</h4>
             </div>
         </div>

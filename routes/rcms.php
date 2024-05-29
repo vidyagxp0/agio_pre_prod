@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ErrataController;
 use App\Http\Controllers\rcms\ActionItemController;
 use App\Http\Controllers\rcms\AuditeeController;
 use App\Http\Controllers\rcms\CCController;
@@ -16,8 +17,11 @@ use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\OOTController;
 use App\Http\Controllers\rcms\OOSController;
+use App\Http\Controllers\rcms\MarketComplaintController;
+use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
+use App\Http\Controllers\rcms\DeviationController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +39,12 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::middleware(['rcms'])->group(
         function () {
             Route::resource('CC', CCController::class);
+
+            Route::post('send-initiator/{id}', [CCController::class, 'sendToInitiator']);
+            Route::post('send-hod/{id}', [CCController::class, 'sendToHod']);
+            Route::post('send-initialQA/{id}', [CCController::class, 'sendToInitialQA']);
+            Route::post('send-cft-from-QA/{id}', [CCController::class, 'sendToCft']);
+
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
             Route::get('action-item-audittrialshow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('showActionItemAuditTrial');
@@ -103,6 +113,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('labcreate', [LabIncidentController::class, 'create'])->name('labIncidentCreate');
             Route::get('LabIncidentShow/{id}', [LabIncidentController::class, 'LabIncidentShow'])->name('ShowLabIncident');
             Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
+            Route::post('LabIncidentStateTwo/{id}', [LabIncidentController::class, 'LabIncidentStateTwo'])->name('StageChangeLabtwo');
             Route::post('RejectStateChangeEsign/{id}', [LabIncidentController::class, 'RejectStateChange'])->name('RejectStateChange');
             Route::post('updateLabIncident/{id}', [LabIncidentController::class, 'updateLabIncident'])->name('LabIncidentUpdate');
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
@@ -115,7 +126,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -158,6 +169,90 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('internalSingleReport/{id}', [InternalauditController::class, 'singleReport'])->name('internalSingleReport');
             Route::get('internalauditReport/{id}', [InternalauditController::class, 'auditReport'])->name('internalauditReport');
 
+            Route::post('errata/stages/{id}',[ErrataController::class, 'stageChange'])->name('errata.stage');
+            Route::post('errata/stagesreject/{id}',[ErrataController::class, 'stageReject'])->name('errata.stagereject');
+            Route::get('errata_audit/{id}', [ErrataController::class, 'auditTrailPdf'])->name('errataaudit.pdf');
+            Route::get('errata_single_pdf/{id}',[ErrataController::class, 'singleReports']);
+
+
+            /********************* Deviation Routes Starts *******************/
+
+            Route::get('deviation', [DeviationController::class, 'deviation'])->name('deviation');
+            Route::get('DeviationAuditTrialPdf/{id}', [DeviationController::class, 'deviationAuditTrailPdf']);
+            Route::post('deviationstore', [DeviationController::class, 'store'])->name('deviationstore');
+            Route::get('devshow/{id}', [DeviationController::class, 'devshow'])->name('devshow');
+            Route::post('deviationupdate/{id}', [DeviationController::class, 'update'])->name('deviationupdate');
+            Route::post('deviation/reject/{id}', [DeviationController::class, 'deviation_reject'])->name('deviation_reject');
+            Route::post('deviation/cancel/{id}', [DeviationController::class, 'deviationCancel'])->name('deviationCancel');
+            Route::post('deviation/cftnotrequired/{id}', [DeviationController::class, 'deviationIsCFTRequired'])->name('deviationIsCFTRequired');
+            Route::post('deviation/check/{id}', [DeviationController::class, 'check'])->name('check');
+            Route::post('deviation/check2/{id}', [DeviationController::class, 'check2'])->name('check2');
+            Route::post('deviation/check3/{id}', [DeviationController::class, 'check3'])->name('check3');
+            Route::post('deviation/pending_initiator_update/{id}', [DeviationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('deviation/stage/{id}', [DeviationController::class, 'deviation_send_stage'])->name('deviation_send_stage');
+            Route::post('deviation/cftnotreqired/{id}', [DeviationController::class, 'cftnotreqired'])->name('cftnotreqired');
+            Route::post('deviation/Qa/{id}', [DeviationController::class, 'deviation_qa_more_info'])->name('deviation_qa_more_info');
+            Route::get('deviationSingleReport/{id}', [DeviationController::class, 'singleReport'])->name('deviationSingleReport');
+
+            Route::post('launch-extension-deviation/{id}', [DeviationController::class, 'launchExtensionDeviation'])->name('launch-extension-deviation');
+            Route::post('launch-extension-capa/{id}', [DeviationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [DeviationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [DeviationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Deviation Routes Ends *******************/
+
+            /********************* Fallure Investigation Routes Starts *******************/
+
+            Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
+            Route::post('failureInvestigationStore', [FailureInvestigationController::class, 'store'])->name('failureInvestigationStore');
+            Route::get('failure-investigation-show/{id}', [FailureInvestigationController::class, 'show'])->name('failure-investigation-show');
+            Route::post('failure-investigation-update/{id}', [FailureInvestigationController::class, 'update'])->name('failure-investigation-update');
+            Route::post('failure_investigation_reject/{id}', [FailureInvestigationController::class, 'failureInvestigationReject'])->name('failure_investigation_reject');
+            Route::post('failureInvestigationCancel/{id}', [FailureInvestigationController::class, 'failureInvestigationCancel'])->name('failureInvestigationCancel');
+            Route::post('failureInvestigationIsCFTRequired/{id}', [FailureInvestigationController::class, 'failureInvestigationCftNotrequired'])->name('failureInvestigationIsCFTRequired');
+            Route::post('failureInvestigationCheck/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck'])->name('failureInvestigationCheck');
+            Route::post('failureInvestigationCheck2/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck2'])->name('failureInvestigationCheck2');
+            Route::post('failureInvestigationCheck3/{id}', [FailureInvestigationController::class, 'failureInvestigationCheck3'])->name('failureInvestigationCheck3');
+            // Route::post('pending_initiator_update/{id}', [FailureInvestigationController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('failureInvestigationStageChange/{id}', [FailureInvestigationController::class, 'failure_investigation_send_stage'])->name('failureInvestigationStageChange');
+            Route::post('failureInvestigationCftnotreqired/{id}', [FailureInvestigationController::class, 'cftnotreqired'])->name('failureInvestigationCftnotreqired');
+            Route::post('failureInvestigationQaMoreInfo/{id}', [FailureInvestigationController::class, 'failure_inv_qa_more_info'])->name('failureInvestigationQaMoreInfo');
+
+            Route::get('failure-investigation-audit-trail/{id}', [FailureInvestigationController::class, 'failureInvestigationAuditTrail'])->name('failure-investigation-audit-trail');
+            Route::get('failure-investigation-audit-pdf/{id}', [FailureInvestigationController::class, 'failureInvestigationAuditTrailPdf'])->name('failure-investigation-audit-pdf');
+            Route::get('failure-investigation-single-report/{id}', [FailureInvestigationController::class, 'singleReport'])->name('failure-investigation-single-report');
+
+            Route::post('launch-extension-failure-investigation/{id}', [FailureInvestigationController::class, 'launchExtensionDeviation'])->name('launch-extension-failure-investigation');
+            Route::post('launch-extension-capa/{id}', [FailureInvestigationController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [FailureInvestigationController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [FailureInvestigationController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Fallure Investigation Routes Ends *******************/
+
+
+            //----------------------------------- OOT ----------------------------------//
+
+            Route::get('oot/', [OOTController::class, 'index']);
+            Route::post('oot/create', [OOTController::class, 'store'])->name('oot.store');
+            Route::get('oot_view/{id}', [OOTController::class,'ootShow'])->name('rcms/oot_view');
+            Route::post('oot/update/{id}',[OOTController::class, 'update'])->name('update');
+            // Route::get('oot_audit/{id}',[OOTController::class,'OotAuditTrial']);
+            Route::post('oot/stage/{id}',[OOTController::class,'oot_send_stage'])->name('ootStage');
+            Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
+            Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
+            Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
+            Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
+            Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
+            Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
+            Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
+            Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+
+
+
+
+
+
+
 
             /**
              * OOT
@@ -176,7 +271,45 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
             Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
 
+            Route::post('sendstage/{id}',[OOSController::class,'send_stage'])->name('send_stage');
+            Route::post('requestmoreinfo_back_stage/{id}',[OOSController::class,'requestmoreinfo_back_stage'])->name('requestmoreinfo_back_stage');
+            Route::post('assignable_send_stage/{id}',[OOSController::class,'assignable_send_stage'])->name('assignable_send_stage');
+            Route::post('cancel_stage/{id}', [OOSController::class, 'cancel_stage'])->name('cancel_stage');;
+            Route::post('thirdStage/{id}', [OOSController::class, 'stageChange'])->name('thirdStage');
+            Route::post('reject_stage/{id}', [OOSController::class, 'reject_stage'])->name('reject_stage');
+            Route::post('capa_child/{id}', [CapaController::class, 'child_change_control'])->name('capa_child_changecontrol');
+            
+            Route::get('AuditTrial/{id}', [OOSController::class, 'AuditTrial'])->name('audit_trial');
+            Route::get('auditDetails/{id}', [OOSController::class, 'auditDetails'])->name('audit_details');
+            Route::get('audit_report/{id}', [OOSController::class, 'auditReport'])->name('audit_report');
+            Route::get('single_report/{id}', [OOSController::class, 'singleReport'])->name('single_report');
+
+            
+
             });
+
+            /**
+             * market coplaint
+             */
+            Route::group(['prefix' => 'marketcomplaint', 'as' => 'marketcomplaint.'], function() {
+                Route::get('/market_complaint_new',[MarketComplaintController::class, 'index'])->name('market_complaint_new');
+                Route::post('/marketcomplaint/store', [MarketComplaintController::class, 'store'])->name('mcstore');
+                Route::get('/marketcomplaint_view/{id}', [MarketComplaintController::class, 'show'])->name('marketcomplaint_view');
+                Route::put('/marketcomplaintupdate/{id}', [MarketComplaintController::class, 'update'])->name('marketcomplaintupdate');
+                Route::post('mar_comp_stagechange/{id}',[MarketComplaintController::class,'marketComplaintStateChange'])->name('mar_comp_stagechange');
+                Route::post('mar_comp_reject_stateChange/{id}', [MarketComplaintController::class, 'marketComplaintRejectState'])->name('mar_comp_reject_stateChange');
+                Route::post('MarketComplaintCancel/{id}', [MarketComplaintController::class, 'MarketComplaintCancel'])->name('MarketComplaintCancel');
+               
+                Route::get('auditDetailsMarket/{id}', [MarketComplaintController::class, 'auditDetailsMarket'])->name('marketauditDetails');
+
+                Route::get('MarketComplaintAuditReport/{id}', [MarketComplaintController::class, 'MarketAuditTrial'])->name('MarketComplaintAuditReport');
+                Route::get('MarketAuditReport/{id}', [MarketComplaintController::class, 'auditReport'])->name('marketAuditReport');
+                // Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf');
+                Route::get('marketauditTrailPdf/{id}', [MarketComplaintController::class, 'auditTrailPdf'])->name('marketauditTrailPdf'); 
+            });
+            // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
+            Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
 
         }
     );

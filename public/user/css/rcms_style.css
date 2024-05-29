@@ -1357,7 +1357,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 
 #audit-inner .info-list .head {
     font-weight: bold;
-    min-width: 200px;
+    min-width: 300px;
 }
 
 #audit-inner .info-list div:nth-child(3) {
