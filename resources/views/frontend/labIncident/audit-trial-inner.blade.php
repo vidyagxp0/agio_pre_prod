@@ -57,7 +57,9 @@
                             @if($temp->activity_type == "Responsibility" ||$temp->activity_type == "Abbreviation" ||$temp->activity_type == "Defination" ||$temp->activity_type == "Materials and Equipments" ||$temp->activity_type == "Reporting" )
                             @if(!empty($temp->previous))
                             <div class="list-item">
-                                <div class="head">Changed From</div>
+                                {{-- <div class="head">Changed From</div> --}}
+                                <div class="head">Action name-</div>
+
                                 <div>:</div>
                                 @foreach (unserialize($temp->previous) as $data)
                                 @if($data)

@@ -323,11 +323,11 @@
                     <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
-                                Selecting SOP's
+                                Selecting Document's
                             </div>
                             <div class="inner-block-content">
                                 <div class="search-bar">
-                                    <input type="text" name="search" placeholder="Search SOP's">
+                                    <input type="text" name="search" placeholder="Search Document's">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                                 </div>
                                 <div class="selection-table">
@@ -366,9 +366,9 @@
                                                             <td>
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
-                                                            <td>{{ $temp->due_dateDoc }}</td>
-                                                            <td>{{ $temp->status }}</td>
-                                                            <td>{{ $temp->effective_date }}</td>
+                                                            <td>{{ $temp->training->due_dateDoc }}</td>
+                                                            <td>{{ $temp->training->status }}</td>
+                                                            <td>{{ $temp->training->effective_date ? $temp->training->effective_date : "-" }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
                                                     @elseif($temp->root_document->status == 'Effective')
@@ -402,7 +402,7 @@
                                         </tbody>
                                     </table>
                                     <p id="SOPType" style="color: red">
-                                        ** Please Select atliest one SOP...
+                                        ** Please Select atliest one Document...
                                     </p>
                                 </div>
                             </div>
