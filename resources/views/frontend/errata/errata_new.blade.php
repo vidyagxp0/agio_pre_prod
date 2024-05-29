@@ -317,15 +317,45 @@
                                     </div>
                                 </div>
 
-                                <div class="">
-                                    <div class="group-input">
-                                        <label for="dateandtime"><b>Date And Time of Correction </b></label>
-                                        <input type="datetime-local" name="Date_and_time_of_correction" value="">
+                                <div class="new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Errata_date">Date And Time of Correction</label>
+                                        <div class="calenderauditee">
 
+                                            <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" />
+
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" required />
+                                        </div>
                                     </div>
+                                    @error('Errata_date')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <script>
+                                    function updateDisplayDateTime(input) {
+                                        const selectedDateTime = new Date(input.value);
+                                        const formattedDateTime = formatDate(selectedDateTime);
+                                        document.getElementById('displayErrataDate').value = formattedDateTime;
+                                    }
 
+                                    function formatDate(date) {
+                                        const day = String(date.getDate()).padStart(2, '0');
+                                        const monthIndex = date.getMonth();
+                                        const monthNames = ["Jan", "Feb", "March", "April", "May", "June",
+                                                            "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                                        const month = monthNames[monthIndex];
+                                        const year = date.getFullYear();
+                                        let hours = date.getHours();
+                                        let minutes = date.getMinutes();
+
+                                        minutes = String(minutes).padStart(2, '0');
+
+                                        const formattedDateTime = `${day}-${month}-${year} ${hours}:${minutes}`;
+
+                                        return formattedDateTime;
+                                    }
+                                </script>
 
 
 
