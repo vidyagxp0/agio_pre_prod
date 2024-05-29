@@ -448,6 +448,14 @@
                                         
                                         {{-- {{ $document->division_name }} --}}
                                 </div>
+
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="legacy_number">Legacy Document Number</label>
+                                    <input type="text" id="legacy_number" name="legacy_number" value="{{ $document->legacy_number }}" maxlength="255" {{ Helpers::isRevised($document->stage) }}>
+                                </div>
                             </div>
 
                             <div class="col-md-12">
@@ -2658,90 +2666,13 @@
                                 <textarea class="summernote" name="annexuredata[]">{{ $data }}</textarea>
                             @endforeach
                         @else
-                            <div class="group-input">
-                                <label for="annexure-1">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-1"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-2">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-2"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-3">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-3"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-4">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-4"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-5">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-5"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-6">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-6"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-7">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-7"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-8">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-8"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-9">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-9"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-10">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-10"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-11">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-11"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-12">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-12"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-13">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-13"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-14">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-14"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-15">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-15"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-16">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-16"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-17">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-17"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-18">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-18"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-19">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-19"></textarea>
-                            </div>
-                            <div class="group-input">
-                                <label for="annexure-20">Annexure</label>
-                                <textarea class="summernote" name="annexuredata[]" id="annexure-20"></textarea>
-                            </div>
-
+                            @for ($i = 1; $i <= 30; $i++)
+                                <div class="group-input">
+                                    <label for="annexure-{{ $i }}">Annexure</label>
+                                    <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
+                                </div>
+                            @endfor
                         @endif
-
-
                     </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>

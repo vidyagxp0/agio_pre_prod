@@ -485,6 +485,18 @@
 
     <section  class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
+            <div class="other-container" style="margin-bottom: 15px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="text-right">
+                                <div> <span class="bold">Legacy Document Number:</span> {{ !empty($document->legacy_number) ? $document->legacy_number : 'NA' }}</div>
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
             <div class="other-container">
                 <table>
                     <thead>
@@ -1090,6 +1102,139 @@
                 </div>
                 <div class="block mb-40">
                     <div class="block-head">
+                        HOD
+                    </div>
+                    <div class="block-content">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left w-25">HOD</th>
+                                    <th class="text-left w-25">Department</th>
+                                    <th class="text-left w-25">Status</th>
+                                    <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($data->hods)
+                                    @php
+                                        $hod = explode(',', $data->hods);
+                                        $i = 0;
+                                    @endphp
+                                    @for ($i = 0; $i < count($hod); $i++)
+                                        @php
+                                            $user = DB::table('users')
+                                                ->where('id', $hod[$i])
+                                                ->first();
+                                            $dept = DB::table('departments')
+                                                ->where('id', $user->departmentid)
+                                                ->value('name');
+                                            $date = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $hod[$i])
+                                                ->where('stage', 'HOD Review Complete')
+                                                ->where('deleted_at', null)
+                                                ->latest()
+                                                ->first();
+                                                $comment = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $hod[$i])
+                                                ->where('stage', 'HOD Review Complete')
+                                                ->latest()
+                                                ->first();
+                                            $reject = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $hod[$i])
+                                                ->where('stage', 'Cancel-by-HOD')
+                                                ->where('deleted_at', null)
+                                                ->latest()
+                                                ->first();
+                                                
+                                        @endphp
+                                        <tr>
+                                            <td class="text-left w-25">{{ $user->name }}</td>
+                                            <td class="text-left w-25">{{ $dept }}</td>
+                                            @if ($date)
+                                                <td class="text-left w-25">HOD Review Complete</td>
+                                            @elseif(!empty($reject))
+                                                <td>HOD Rejected</td>
+                                            @else
+                                                <td class="text-left w-25">HOD Review Pending</td>
+                                            @endif
+
+                                            <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">
+                                                @if($comment)
+                                                {{ $comment->comment }}
+                                            @endif
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                @endif
+                                @if ($data->approver_group)
+                                    @php
+                                        $group = explode(',', $data->approver_group);
+                                        $i = 0;
+
+                                    @endphp
+                                    @for ($i = 0; $i < count($group); $i++)
+                                        @php
+
+                                            $users_id = DB::table('group_permissions')
+                                                ->where('id', $group[$i])
+                                                ->value('user_ids');
+                                            $reviewer = explode(',', $users_id);
+                                            $i = 0;
+                                        @endphp
+                                        @if ($users_id)
+                                            @for ($i = 0; $i < count($reviewer); $i++)
+                                                @php
+                                                    $user = DB::table('users')
+                                                        ->where('id', $reviewer[$i])
+                                                        ->first();
+                                                    $dept = DB::table('departments')
+                                                        ->where('id', $user->departmentid)
+                                                        ->value('name');
+                                                    $date = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Approval-Submit')
+                                                        ->latest()
+                                                        ->first();
+                                                    $reject = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Cancel-by-Approver')
+                                                        ->latest()
+                                                        ->first();
+
+                                                @endphp
+                                                <tr>
+                                                    <td class="text-left w-25">{{ $user->name }}</td>
+                                                    <td class="text-left w-25">{{ $dept }}</td>
+                                                    @if ($date)
+                                                        <td class="text-left w-25">Approval Completed</td>
+                                                    @elseif(!empty($reject))
+                                                        <td class="text-left w-25">Approval Rejected </td>
+                                                    @else
+                                                        <td class="text-left w-25">Approval Pending</td>
+                                                    @endif
+
+                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
+                                                </tr>
+                                            @endfor
+                                        @endif
+                                    @endfor
+
+
+                                @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="block mb-40">
+                    <div class="block-head">
                         Reviews
                     </div>
                     <div class="block-content">
@@ -1129,6 +1274,7 @@
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Reviewed')
                                                 ->latest()
                                                 ->first();
 
@@ -1274,6 +1420,7 @@
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Approved')
                                                 ->latest()
                                                 ->first();
                                             $reject = DB::table('stage_manages')

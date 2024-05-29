@@ -26,6 +26,20 @@
                                                     $showEdit = true;
                                                 @endphp
                                             @endif
+                                        @elseif($document->stage == 4)
+                                            @php
+                                                $showEdit = true;
+                                            @endphp
+                                        @endif
+                                    @endif
+                                    
+                                    @if (Helpers::checkRoles(4))
+                                        @if (empty($hod_reject))
+                                            @if (empty($stagehod_submit))
+                                                @php
+                                                    $showEdit = true;
+                                                @endphp
+                                            @endif
                                         @elseif($document->stage == 2)
                                             @php
                                                 $showEdit = true;
@@ -40,7 +54,7 @@
                                                     $showEdit = true;
                                                 @endphp
                                             @endif
-                                        @elseif($document->stage == 4)
+                                        @elseif($document->stage == 6)
                                             @php
                                                 $showEdit = true;
                                             @endphp    
@@ -99,7 +113,7 @@
                         </div>
                     </div>
 
-                    @if (Helpers::checkRoles(4) && $document->stage == 2)
+                    @if (Helpers::checkRoles(4) && ($document->stage >= 2))
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -121,13 +135,16 @@
                                             </button>
                                         @endif
 
-                                        @if (empty($stagehod))
+                                        @if (empty($stagehod) && $document->stage == 2)
                                             @if (empty($review_reject))
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                     Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#cancel-record">
+                                                    Cancel&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
                                             @elseif($document->stage == 2)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
@@ -141,33 +158,27 @@
                                 <div class="status">
                                     <div class="head">Current Status</div>
                                     <div class="progress-bars">
-                                        @if ($document->stage >= 2)
-                                            <div class="active">Draft</div>
-                                        @else
-                                            <div>Draft</div>
-                                        @endif
-                                        {{-- @if ($review_reject)
-                                            <div class="active">Rejected </div>
-                                        @endif --}}
-                                        @if ($stagehod)
-                                            @if ($stagehod->stage == 'HOD Review Complete' AND $document->stage >= 2)
-                                                <div class="active">Reviewed</div>
+                                        
+                                        @if ($document->stage < 13)
+                                            @if ($document->stage >= 2)
+                                                <div class="active">Draft</div>
+                                            @else
+                                                <div>Draft</div>
+                                            @endif
+                                            
+                                            @if ($stagehod)
+                                                @if ($stagehod->stage == 'HOD Review Complete' AND $document->stage >= 2)
+                                                    <div class="active">Reviewed</div>
+                                                @else
+                                                    <div>Reviewed</div>
+                                                @endif
                                             @else
                                                 <div>Reviewed</div>
                                             @endif
-                                        @else
-                                            <div>Reviewed</div>
+                                        @else 
+                                            <div class="bg-danger rounded-pill text-white">{{ Helpers::getDocStatusByStage($document->stage) }}</div>
                                         @endif
 
-                                        @if ($stagereview_submit)
-                                            @if ($stagereview_submit->stage == 'Review-Submit')
-                                                {{-- <div class="active">Submitted</div> --}}
-                                            @else
-                                                {{-- <div>Submitted</div> --}}
-                                            @endif
-                                        @else
-                                            {{-- <div>Submitted</div> --}}
-                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -954,6 +965,62 @@
                     @endif
                     @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) && $document->stage == 4)
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
+                    @endif
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancel-record">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <form action="{{ url('sendforstagechanage') }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="document_id" value="{{ $document->id }}">
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username</label>
+                            <input type="text" value="{{ old('username') }}" name="username" class="form-control" required>
+                            @if ($errors->has('username'))
+                                <p class="text-danger">User name not matched</p>
+                            @endif
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password</label>
+                            <input type="password" value="{{ old('password') }}" name="password" class="form-control" required>
+                            @if ($errors->has('username'))
+                                <p class="text-danger">E-signature not matched</p>
+                            @endif
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <textarea required name="comment" value="{{ old('comment') }}" class="form-control"></textarea>
+                        </div> 
+                    </div>
+                    @if (Helpers::checkRoles(4))
+                        <input type="hidden" name="stage_id" value="Close-by-HOD" />
                     @endif
 
                     <!-- Modal footer -->
