@@ -222,8 +222,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">a.	GMP</td>
+                                                        <td>6 . a</td>
+                                                        <td style="background: #DCD8D8">	GMP</td>
                                                         <td>
                                                             <textarea name="document_number_6" value="" >{{ $inductionTraining->{"document_number_6"} }}</textarea>
                                                         </td>
@@ -237,8 +237,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">b.	Documentation</td>
+                                                        <td>6 . b</td>
+                                                        <td style="background: #DCD8D8">	Documentation</td>
                                                         <td>
                                                             <textarea name="document_number_7" value="" >{{ $inductionTraining->{"document_number_7"} }}</textarea>
                                                         </td>
@@ -252,8 +252,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">c.	Process Control</td>
+                                                        <td>6 . c</td>
+                                                        <td style="background: #DCD8D8">	Process Control</td>
                                                         <td>
                                                             <textarea name="document_number_8" value="" >{{ $inductionTraining->{"document_number_8"} }}</textarea>
                                                         </td>
@@ -267,8 +267,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">d.	Cross Contamination</td>
+                                                        <td>6 . d</td>
+                                                        <td style="background: #DCD8D8">	Cross Contamination</td>
                                                         <td>
                                                             <textarea name="document_number_9" value="" >{{ $inductionTraining->{"document_number_9"} }}</textarea>
                                                         </td>
@@ -282,8 +282,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">e.	Sanitization and Hygiene</td>
+                                                        <td>6 . e</td>
+                                                        <td style="background: #DCD8D8">	Sanitization and Hygiene</td>
                                                         <td>
                                                             <textarea name="document_number_10" value="" >{{ $inductionTraining->{"document_number_10"} }}</textarea>
                                                         </td>
@@ -297,8 +297,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">f.	Warehousing</td>
+                                                        <td>6 . f</td>
+                                                        <td style="background: #DCD8D8">	Warehousing</td>
                                                         <td>
                                                             <textarea name="document_number_11" value="" >{{ $inductionTraining->{"document_number_11"} }}</textarea>
                                                         </td>
@@ -312,8 +312,8 @@
         
                                                     </tr>
                                                     <tr>
-                                                        <td></td>
-                                                        <td style="background: #DCD8D8">g.	Complaint and Recall</td>
+                                                        <td>6 . g</td>
+                                                        <td style="background: #DCD8D8">	Complaint and Recall</td>
                                                         <td>
                                                             <textarea name="document_number_12" value="" >{{ $inductionTraining->{"document_number_12"} }}</textarea>
                                                         </td>
@@ -325,8 +325,8 @@
                                                             <textarea name="remark_12">{{ $inductionTraining->{"remark_12"} }}</textarea>
                                                         </td>
                                                         <tr>
-                                                            <td></td>
-                                                            <td style="background: #DCD8D8">h.	Utilities</td>
+                                                            <td>6 . h</td>
+                                                            <td style="background: #DCD8D8">	Utilities</td>
                                                             <td>
                                                                 <textarea name="document_number_13" value="" >{{ $inductionTraining->{"document_number_13"} }}</textarea>
                                                             </td>
@@ -340,8 +340,8 @@
             
                                                         </tr>
                                                         <tr>
-                                                            <td></td>
-                                                            <td style="background: #DCD8D8">i.	Water</td>
+                                                            <td>6 . i</td>
+                                                            <td style="background: #DCD8D8">	Water</td>
                                                             <td>
                                                                 <textarea name="document_number_14" value="" >{{ $inductionTraining->{"document_number_14"} }}</textarea>
                                                             </td>
@@ -355,8 +355,8 @@
             
                                                         </tr>
                                                         <tr>
-                                                            <td></td>
-                                                            <td style="background: #DCD8D8">j.	Safety Module</td>
+                                                            <td>6 . j</td>
+                                                            <td style="background: #DCD8D8">	Safety Module</td>
                                                             <td>
                                                                 <textarea name="document_number_15" value="" >{{ $inductionTraining->{"document_number_15"} }}</textarea>
                                                             </td>
