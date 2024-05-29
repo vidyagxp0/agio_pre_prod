@@ -989,8 +989,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="If Other">If Other</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">
-                                    {{$ooc->initiated_if_other}}</textarea>
+                                    <textarea class="summernote" name="initiated_if_other" id="summernote-1">{{$ooc->initiated_if_other}}</textarea>
                                 </div>
                             </div>
 
@@ -1086,7 +1085,7 @@ $users = DB::table('users')->get();
 
                            
 
-                            <div class="col-lg-6 new-date-data-field">
+                            {{-- <div class="col-lg-6 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="Date Due"> OOC Logged On </label>
                                     <div><small class="text-primary">Please mention expected date of completion</small>
@@ -1095,6 +1094,18 @@ $users = DB::table('users')->get();
                                         <input type="text" id="ooc_due_date" readonly
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}/>
                                         <input type="date" name="ooc_due_date" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'ooc_due_date')" />
+                                    </div>
+                                </div>
+                            </div> --}}
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="Date Due"> OOC Logged On </label>
+                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="ooc_due_date" readonly
+                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($ooc->ooc_due_date) }}" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}}/>
+                                        <input type="date" name="ooc_due_date" {{ $ooc->stage == 0 || $ooc->stage == 8 ? 'disabled' : ''}} class="hide-input"
                                             oninput="handleDateInput(this, 'ooc_due_date')" />
                                     </div>
                                 </div>
@@ -2241,7 +2252,7 @@ $(document).ready(function() {
                       <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="Initiator Group">Correction Complete By : </label>
-                                <div class="static">{{$ooc->correction_r_completed_by}}</div>
+                                <div class="static">{{$ooc->correction_ooc_completed_by}}</div>
 
 
                             </div>
@@ -2251,7 +2262,7 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="OOC Logged On">Correction Complete On : </label>
-                                <div class="static">{{$ooc->correction_r_completed_on}}</div>
+                                <div class="static">{{$ooc->correction_ooc_completed_on}}</div>
 
 
 
@@ -2262,7 +2273,7 @@ $(document).ready(function() {
                         <div class="col-lg-4 new-date-data-field">
                             <div class="group-input input-date">
                                 <label for="closure_ooc_comment">Comment : </label>
-                                <div class="static">{{$ooc->correction_r_ncompleted_comment}}</div>
+                                <div class="static">{{$ooc->correction_ooc_comment}}</div>
 
                             </div>
                         </div>

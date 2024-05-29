@@ -331,6 +331,10 @@ class OOCController extends Controller
             $history->save();
         }
 
+        
+
+     
+
         $oocGrid = $data->id;
         // if($request->has('instrumentDetail')){
         if (!empty($request->instrumentdetails)) {
@@ -381,17 +385,18 @@ class OOCController extends Controller
 
     public function updateOutOfCalibration(Request $request,$id )
     {
-
+        
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
         }
-
         $lastDocumentOoc = OutOfCalibration::find($id);
         $ooc = OutOfCalibration::find($id);
+        $lastDocumentOocs = $ooc->replicate();
         $ooc->initiator_id = Auth::user()->id;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
+        $ooc->description_ooc = $request->description_ooc;
         $ooc->Initiator_Group= $request->Initiator_Group;
         $ooc->initiator_group_code= $request->initiator_group_code;
         $ooc->initiated_through = $request->initiated_through;
@@ -442,6 +447,8 @@ class OOCController extends Controller
         $ooc->initiated_through_rootcause_ooc = $request->initiated_through_rootcause_ooc;
         $ooc->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
 
+
+        
         if (!empty($request->initial_attachment_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_ooc')) {
@@ -538,10 +545,10 @@ class OOCController extends Controller
 
 
 //=======================================================Audit Trail======================================================//
-if ($lastDocumentOoc->initiated_if_other != $ooc->initiated_if_other || !empty($request->initiated_if_other)) {
+if ($lastDocumentOoc->initiated_if_other != $ooc->initiated_if_other) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'If Other';
     $history->previous = $lastDocumentOoc->initiated_if_other;
     $history->current = $ooc->initiated_if_other;
     $history->comment = $request->initiated_if_other_comment;
@@ -553,13 +560,14 @@ if ($lastDocumentOoc->initiated_if_other != $ooc->initiated_if_other || !empty($
     $history->change_from = $lastDocumentOoc->status;
     $history->action_name = "Update";
     $history->save();
+    // dd($history);
 }
 
 
-if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc || !empty($request->is_repeat_ooc)) {
+if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc ) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Is Repeat';
     $history->previous = $lastDocumentOoc->is_repeat_ooc;
     $history->current = $ooc->is_repeat_ooc;
     $history->comment = $request->is_repeat_ooc_comment;
@@ -571,13 +579,14 @@ if ($lastDocumentOoc->is_repeat_ooc != $ooc->is_repeat_ooc || !empty($request->i
     $history->change_from = $lastDocumentOoc->status;
     $history->action_name = "Update";
     $history->save();
+
 }
 
 
-if ($lastDocumentOoc->Repeat_Nature != $ooc->Repeat_Nature || !empty($request->Repeat_Nature)) {
+if ($lastDocumentOoc->Repeat_Nature != $ooc->Repeat_Nature) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Repeat Nature';
     $history->previous = $lastDocumentOoc->Repeat_Nature;
     $history->current = $ooc->Repeat_Nature;
     $history->comment = $request->Repeat_Nature_comment;
@@ -592,10 +601,10 @@ if ($lastDocumentOoc->Repeat_Nature != $ooc->Repeat_Nature || !empty($request->R
 }
 
 
-if ($lastDocumentOoc->description_ooc != $ooc->description_ooc || !empty($request->description_ooc)) {
+if ($lastDocumentOoc->description_ooc != $ooc->description_ooc) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Description';
     $history->previous = $lastDocumentOoc->description_ooc;
     $history->current = $ooc->description_ooc;
     $history->comment = $request->description_ooc_comment;
@@ -611,10 +620,10 @@ if ($lastDocumentOoc->description_ooc != $ooc->description_ooc || !empty($reques
 
 
 
-if ($lastDocumentOoc->due_date != $ooc->due_date || !empty($request->due_date)) {
+if ($lastDocumentOoc->due_date != $ooc->due_date) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Due Date';
     $history->previous = $lastDocumentOoc->due_date;
     $history->current = $ooc->due_date;
     $history->comment = $request->due_date_comment;
@@ -629,10 +638,10 @@ if ($lastDocumentOoc->due_date != $ooc->due_date || !empty($request->due_date)) 
 }
 
 
-if ($lastDocumentOoc->Initiator_Group != $ooc->Initiator_Group || !empty($request->Initiator_Group)) {
+if ($lastDocumentOoc->Initiator_Group != $ooc->Initiator_Group) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Initiator Group';
     $history->previous = $lastDocumentOoc->Initiator_Group;
     $history->current = $ooc->Initiator_Group;
     $history->comment = $request->Initiator_Group_comment;
@@ -645,12 +654,10 @@ if ($lastDocumentOoc->Initiator_Group != $ooc->Initiator_Group || !empty($reques
     $history->action_name = "Update";
     $history->save();
 }
-
-
-if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justification_for_Reporting || !empty($request->Delay_Justification_for_Reporting)) {
+if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justification_for_Reporting ) {
     $history = new OOCAuditTrail();
-    $history->ooc_id = $ooc->id;
-    $history->activity_type = 'Interval';
+    $history->ooc_id = $id;
+    $history->activity_type = 'Delay Justfication for Reporting';
     $history->previous = $lastDocumentOoc->Delay_Justification_for_Reporting;
     $history->current = $ooc->Delay_Justification_for_Reporting;
     $history->comment = $request->Delay_Justification_for_Reporting_comment;
@@ -663,6 +670,8 @@ if ($lastDocumentOoc->Delay_Justification_for_Reporting != $ooc->Delay_Justifica
     $history->action_name = "Update";
     $history->save();
 }
+
+
 
 
 
@@ -731,6 +740,8 @@ $oocevaluation->save();
         return back();
 
     }
+
+  
     private function generateResponseKey($question) {
         return str_replace(' ', '_', strtolower($question)) . '_response';
     }
@@ -1281,7 +1292,8 @@ public function OOCAuditTrial($id){
                
                if ($request->revision == "risk-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-                   return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+                   
                }
     }
 
