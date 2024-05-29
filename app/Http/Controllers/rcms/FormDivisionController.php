@@ -27,8 +27,8 @@ class FormDivisionController extends Controller
         } elseif ($request->process_name == "Extension") {
             return redirect('extension');
         } elseif ($request->process_name == "Effectiveness Check") {
-            return redirect('effectiveness-check');   
-            
+            return redirect('effectiveness-check');
+
         } elseif ($request->process_name == "Root Cause Analysis") {
             return redirect('root-cause-analysis');
         } elseif ($request->process_name == "Change Control") {
@@ -45,7 +45,7 @@ class FormDivisionController extends Controller
         elseif ($request->process_name == 'OOC') {
             return redirect()->route('ooc.index');
         }
-        elseif ($request->process_name == 'OOS-Microbiology') {
+        elseif ($request->process_name == 'OOS Microbiology') {
             return redirect()->route('oos_micro.index');
         }
         elseif ($request->process_name == 'ERRATA') {

@@ -335,22 +335,11 @@
 
 
     <div class="form-field-head">
-        <!-- <div class="pr-id">
-                                                    New Document
-                                                </div> -->
+
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
             QMS-North America / OOS_Micro
         </div>
-        <!-- <div class="button-bar">
-                                                        <button type="button">Save</button>
-                                                        <button type="button">Cancel</button>
-                                                        <button type="button">New</button>
-                                                        <button type="button">Copy</button>
-                                                        <button type="button">Child</button>
-                                                        <button type="button">Check Spelling</button>
-                                                        <button type="button">Change Project</button>
-                                                    </div> -->
     </div>
 
 
@@ -360,6 +349,10 @@
     ======================================= --}}
     <div id="change-control-fields">
         <div class="container-fluid">
+            <div id="change-control-fields">
+                <div class="container-fluid">
+
+                    @include('frontend.OOS_Micro.comps_micro.stage')
 
             <!-- Tab links -->
             <div class="cctab">

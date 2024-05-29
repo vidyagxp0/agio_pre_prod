@@ -6,10 +6,22 @@ use App\Models\OOS_micro;
 use App\Services\OOSMicroService;
 
 use App\Models\OOS_Micro_grid;
+use App\Models\OOSmicroAuditTrail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\RecordNumber;
+use App\Models\User;
+use App\Models\RoleGroup;
+use App\Models\Division;
+use App\Models\QMSDivision;
+use App\Models\Extension;
+use Carbon\Carbon;
+use Error;
+use Helpers;
+use PDF;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\App;
 
 class OOSMicroController extends Controller
 {
@@ -24,7 +36,7 @@ class OOSMicroController extends Controller
     }
 
      public function store(Request $request){
-        //dd($request->all());
+        // dd($request->all());
 
         $micro = new OOS_micro();
         $micro->form_type = "OOS_Micro";
@@ -399,6 +411,9 @@ class OOSMicroController extends Controller
             }
             $micro->reopen_attachment = $files;
         }
+        $micro->form_type = "OOS Cemical";
+        $micro->status = "Opened";
+        $micro->stage = 1;
         $micro->save();
 // -------------------------------------------GRID 1 --------------------------------------------------------------
         $oosMicroGrid=$micro->id;
@@ -909,6 +924,13 @@ class OOSMicroController extends Controller
                 $micro->save();
 
 
+                $micro->form_type = "OOS Cemical";
+                $micro->status = "Opened";
+                $micro->stage = 1;
+
+                $micro->update();
+
+
 
 
                     // $ooc = OutOfCalibration::where('id', $id)->first();
@@ -1059,21 +1081,782 @@ class OOSMicroController extends Controller
                     OOSMicroService::update_grid($micro, $request, $grid_input);
                 }
                 toastr()->success("Record is updated Successfully");
-                // return redirect(url('rcms/qms-dashboard'));
+                return redirect(url('rcms/qms-dashboard'));
 
+}
 
-                return view('rcms/qms-dashboard' , compact('oosMgrid','oosM2grid','oosM3grid','oosM4grid','oosM5grid','oosM6grid'));
+// ============= stage change =========
 
+public function send_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changestage = OOS_micro::find($id);
+            $lastDocument = OOS_micro::find($id);
+            if ($changestage->stage == 1) {
+                $changestage->stage = "2";
+                $changestage->status = "Pending Initial Assessment & LabIncident";
+                $changestage->completed_by_pending_initial_assessment = Auth::user()->name;
+                $changestage->completed_on_pending_initial_assessment = Carbon::now()->format('d-M-Y');
+                $changestage->comment_pending_initial_assessment = $request->comment;
+                                $history = new OOSmicroAuditTrail();
+                                $history->oos_micro_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->current = $changestage->completed_by_pending_initial_assessment;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = "Completed";
+                                $history->save();
+                            //     $list = Helpers::getLeadAuditeeUserList();
+                            //     foreach ($list as $u) {
+                            //         if($u->q_m_s_divisions_id == $changestage->division_id){
+                            //             $email = Helpers::getInitiatorEmail($u->user_id);
+                            //              if ($email !== null) {
 
+                            //               Mail::send(
+                            //                   'mail.view-mail',
+                            //                    ['data' => $changestage],
+                            //                 function ($message) use ($email) {
+                            //                     $message->to($email)
+                            //                         ->subject("Document sent ".Auth::user()->name);
+                            //                 }
+                            //               );
+                            //             }
+                            //      }
+                            //   }
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 2) {
+                $changestage->stage = "3";
+                $changestage->status = "Under Phase I investigation";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 3) {
+                $changestage->stage = "5";
+                $changestage->status = "Under Phase I b Investigation";
+                $changestage->completed_by_under_phaseIB_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseIB_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIB_investigation = $request->comment;
+                            $history = new OOSmicroAuditTrail();
+                            $history->oos_micro_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Lab Supervisor";
+                            $history->save();
+
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 5) {
+                $changestage->stage = "6";
+                $changestage->status = "Under Hypothesis Experient";
+                $changestage->completed_by_under_hypothesis = Auth::user()->name;
+                $changestage->completed_on_under_hypothesis = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_hypothesis = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_hypothesis;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Final Approval";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
             }
 
+            if ($changestage->stage == 6) {
+                $changestage->stage = "8";
+                $changestage->status = "under phase II Investigation";
+                $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseII_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Phase II investigation";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 8) {
+                $changestage->stage = "9";
+                $changestage->status = "under Manufacturing Investigation phase II a";
+                $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
+                $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 9) {
+                $changestage->stage = "11";
+                $changestage->status = "Under phase II b Additional Lab Investigation";
+                $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 11) {
+                $changestage->stage = "13";
+                $changestage->status = "Under phase III Investigation";
+                $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIII_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 13) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
 
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Approval Completed";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changestage->stage == 14) {
+                $changestage->stage = "15";
+                $changestage->status = "Close-Done";
+                $changestage->completed_by_close_done= Auth::user()->name;
+                $changestage->completed_on_close_done = Carbon::now()->format('d-M-Y');
+                $changestage->comment_close_done = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Close-Done";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+    // ========== requestmoreinfo_back_stage ==============
+    public function requestmoreinfo_back_stage(Request $request, $id)
+    {
+
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            if ($changestage->stage == 2) {
+                $changestage->stage = "1";
+                $changestage->status = "Opened";
+                $changestage->completed_by_pending_initial_assessment = Auth::user()->name;
+                $changestage->completed_on_pending_initial_assessment = Carbon::now()->format('d-M-Y');
+                $changestage->comment_pending_initial_assessment = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_pending_initial_assessment;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 3) {
+                $changestage->stage = "2";
+                $changestage->status = "Pending Initial Assessment & Lab Incident";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 4) {
+                $changestage->stage = "3";
+                $changestage->status = "Under Phase I Investigation";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 5) {
+                $changestage->stage = "3";
+                $changestage->status = "Under Phase I b Investigation";
+                $changestage->status = "Under Phase I Investigation";
+                $changestage->completed_by_under_phaseI_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseI_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_investigation = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIB_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Lab Supervisor";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 6) {
+                $changestage->stage = "5";
+                $changestage->status = "Under Hypothesis Experient";
+                $changestage->completed_by_under_hypothesis = Auth::user()->name;
+                $changestage->completed_on_under_hypothesis = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_hypothesis = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_hypothesis;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Final Approval";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changestage->stage == 8) {
+                $changestage->stage = "6";
+                $changestage->status = "Under Hypothesis Experiment";
+                $changestage->completed_by_under_phaseII_investigation = Auth::user()->name;
+                $changestage->completed_on_under_phaseII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseII_investigation = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Phase II investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 9) {
+                $changestage->stage = "8";
+                $changestage->status = "under phase II Investigation";
+                $changestage->completed_by_under_manufacturing_investigation_phaseIIA = Auth::user()->name;
+                $changestage->completed_on_under_manufacturing_investigation_phaseIIA = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_manufacturing_investigation_phaseIIA = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 11) {
+                $changestage->stage = "9";
+                $changestage->status = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $changestage->completed_by_under_phaseIIB_additional_lab_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIIB_additional_lab_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIIB_additional_lab_investigation = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_manufacturing_investigation_phaseIIA;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 13) {
+                $changestage->stage = "11";
+                $changestage->status = "Under phase II b Additional Lab Investigation";
+                $changestage->completed_by_under_phaseIII_investigation= Auth::user()->name;
+                $changestage->completed_on_under_phaseIII_investigation = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIII_investigation = $request->comment;
+
+                $history = new OOSmicroAuditTrail();
+                $history->oos_micro_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Under Manufacturing Phase II b Additional Lab Investigation";
+                $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 14) {
+                $changestage->stage = "13";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+    public function assignable_send_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $changestage = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            if ($changestage->stage == 3) {
+                $changestage->stage = "4";
+                $changestage->status = "Under Phase I Correction";
+                $changestage->completed_by_under_phaseI_correction= Auth::user()->name;
+                $changestage->completed_on_under_phaseI_correction = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseI_correction = $request->comment;
+                            $history = new OOSmicroAuditTrail();
+                            $history->oos_micro_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changestage->completed_by_under_phaseI_correction;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Lab Supervisor";
+                            $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 4) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 6) {
+                $changestage->stage = "7";
+                $changestage->status = "Under Repeat Analysis";
+                $changestage->completed_by_under_repeat_analysis= Auth::user()->name;
+                $changestage->completed_on_under_repeat_analysis = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_repeat_analysis = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_repeat_analysis;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Under Repeat Analysis";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 7) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 9) {
+                $changestage->stage = "10";
+                $changestage->status = "Under PhaseIIA Correction";
+                $changestage->completed_by_under_phaseIIA_correction= Auth::user()->name;
+                $changestage->completed_on_under_phaseIIA_correction = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_phaseIIA_correction = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIIA_correction;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 10) {
+                $changestage->stage = "12";
+                $changestage->status = "Under Batch Disposition";
+                $changestage->completed_by_under_batch_disposition= Auth::user()->name;
+                $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_batch_disposition = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_batch_disposition;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
+            if ($changestage->stage == 11) {
+                $changestage->stage = "12";
+                $changestage->status = "Under Batch Disposition";
+                $changestage->completed_by_under_batch_disposition= Auth::user()->name;
+                $changestage->completed_on_under_batch_disposition = Carbon::now()->format('d-M-Y');
+                $changestage->comment_under_batch_disposition = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_batch_disposition;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changestage->stage == 12) {
+                $changestage->stage = "14";
+                $changestage->status = "Pending Final Approval Completed";
+                $changestage->completed_by_approval_completed= Auth::user()->name;
+                $changestage->completed_on_approval_completed = Carbon::now()->format('d-M-Y');
+                $changestage->comment_approval_completed = $request->comment;
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->current = $changestage->completed_by_under_phaseIII_investigation;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Approval Completed";
+                    $history->save();
+                $changestage->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+    public function cancel_stage(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $data = OOS_MICRO::find($id);
+            $lastDocument = OOS_MICRO::find($id);
+            $data->stage = "0";
+            $data->status = "Closed-Cancelled";
+            $data->cancelled_by = Auth::user()->name;
+            $data->cancelled_on = Carbon::now()->format('d-M-Y');
+            $data->comment_cancle = $request->comment;
+
+                    $history = new OOSmicroAuditTrail();
+                    $history->oos_micro_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous ="";
+                    $history->current = $data->cancelled_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state =  $data->status;
+                    $history->stage = 'Cancelled';
+                    $history->save();
+            $data->update();
+            toastr()->success('Document Sent');
+            return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
+
+
+    public function AuditTrial($id)
+    {
+        $audit = OOSmicroAuditTrail::where('oos_micro_id', $id)->orderByDesc('id')->paginate(5);
+
+        $today = Carbon::now()->format('d-m-y');
+        $document = OOS_MICRO::where('id', $id)->first();
+        $document->initiator = User::where('id', $document->initiator_id)->value('name');
+
+        return view('frontend.OOS_Micro.comps_micro.audit-trial', compact('audit', 'document', 'today'));
+    }
+
+    public function auditDetails($id)
+    {
+
+        $detail = OOSmicroAuditTrail::find($id);
+
+        $detail_data = OOSmicroAuditTrail::where('activity_type', $detail->activity_type)->where('oos_micro_id', $detail->id)->latest()->get();
+
+        $doc = OOS_MICRO::where('id', $detail->oos_micro_id)->first();
+
+
+        $doc->origiator_name = User::find($doc->initiator_id);
+
+        return view('frontend.OOS_Micro.comps_micro.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
+    }
+    // public static function auditReport($id)
+    // {
+    //     $doc = OOS_MICRO::find($id);
+    //     if (!empty($doc)) {
+    //         $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+    //         $data = OOSmicroAuditTrail::where('oos_micro_id', $id)->get();
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+    //         $pdf = PDF::loadview('frontend.oos.comps.auditReport', compact('data', 'doc'))
+    //             ->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //         $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //         return $pdf->stream('OOS-Audit' . $id . '.pdf');
+    //     }
+    // }
+
+    // public static function singleReport($id)
+    // {
+    //     $data = OOS_MICRO::find($id);
+    //     if (!empty($data)) {
+    //         $data->info_product_materials = $data->grids()->where('identifier', 'info_product_material')->first();
+    //         $data->details_stabilities = $data->grids()->where('identifier', 'details_stability')->first();
+    //         $data->oos_details = $data->grids()->where('identifier', 'oos_detail')->first();
+    //         $data->checklist_lab_invs = $data->grids()->where('identifier', 'checklist_lab_inv')->first();
+    //         $data->oos_capas = $data->grids()->where('identifier', 'oos_capa')->first();
+    //         $data->phase_two_invs = $data->grids()->where('identifier', 'phase_two_inv')->first();
+    //         $data->oos_conclusions = $data->grids()->where('identifier', 'oos_conclusion')->first();
+    //         $data->oos_conclusion_reviews = $data->grids()->where('identifier', 'oos_conclusion_review')->first();
+
+    //         $data->originator = User::where('id', $data->initiator_id)->value('name');
+    //         $pdf = App::make('dompdf.wrapper');
+    //         $time = Carbon::now();
+    //         $pdf = PDF::loadview('frontend.OOS.comps.singleReport', compact('data'))
+    //             ->setOptions([
+    //                 'defaultFont' => 'sans-serif',
+    //                 'isHtml5ParserEnabled' => true,
+    //                 'isRemoteEnabled' => true,
+    //                 'isPhpEnabled' => true,
+    //             ]);
+    //         $pdf->setPaper('A4');
+    //         $pdf->render();
+    //         $canvas = $pdf->getDomPDF()->getCanvas();
+    //         $height = $canvas->get_height();
+    //         $width = $canvas->get_width();
+    //         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+    //         $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+    //         return $pdf->stream('OOS Cemical' . $id . '.pdf');
+    //     }
+    // }
 
 
 
 
 }
-
-
-
-
