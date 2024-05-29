@@ -205,8 +205,8 @@
 
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
-                            @if ($data->division_id)
-                                {{ $data->division_id }}
+                            @if ( Helpers::getDivisionName(session()->get('division')) )
+                            {{ Helpers::getDivisionName(session()->get('division')) }}
                             @else
                                 Not Applicable
                             @endif
