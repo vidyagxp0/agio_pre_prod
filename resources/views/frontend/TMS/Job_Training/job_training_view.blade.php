@@ -52,8 +52,9 @@
                 
             </div>
 
-            <form action="{{ route('job_trainingcreate') }}" method="post" enctype="multipart/form-data">
-                @csrf
+            <form action="{{ route('job_trainingupdate', ['id' => $jobTraining->id]) }}" method="post" enctype="multipart/form-data">
+                 @csrf
+                @method('put')
                 <div id="step-form">
 
                     @if (!empty($parent_id))
@@ -76,14 +77,14 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number">Name </label>
                                         <input  type="text" name="name" id="name_employee"
-                                            value="">
+                                            value="{{ $jobTraining->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Department & Location</label>
-                                        {{--    value="{{ Helpers::getDivisionName(session()->get('division')) }}" --}}
-                                        <input type="text" name="department_location">
+                                        <input  type="text" name="department_location" value="{{ $jobTraining->department_location }}">
+                                            {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}"> --}}
                                         {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
@@ -94,14 +95,14 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Start Date of Training </label>
                                         <input type="date" name="startdate" 
-                                            value="">
+                                            value="{{ $jobTraining->startdate }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">End Date of Training </label>
                                         <input type="date" name="enddate" 
-                                            value="">
+                                            value="{{ $jobTraining->enddate }}">
                                     </div>
                                 </div>
                    
@@ -133,46 +134,51 @@
                                                        
                                                         
                                                         <td>
-                                                           <input type="text" name="subject_1">
+                                                           <input type="text" name="subject_1" value="{{ $jobTraining->subject_1}}">
                                                         </td>
                                                         <td>
-                                                          <input type="text" name="type_of_training_1">
+                                                          <input type="text" name="type_of_training_1" value="{{ $jobTraining->type_of_training_1}}">
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="reference_document_no_1">
+                                                           <input type="text" name="reference_document_no_1" value="{{ $jobTraining->reference_document_no_1}}">
                                                          </td>
                                                          <td>
-                                                            <select name="trainee_name_1" id="">
-                                                                <option value="sdf">dsfds</option>
+                                                            <select name="trainee_name_1" id="" >
+                                                                <option value="{{ $jobTraining->trainee_name_1}}">person1</option>
+                                                                <option value="{{ $jobTraining->trainee_name_1}}">person2</option>
+
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_1" id="">
-                                                                <option value="dsfds">dsfds</option>
+                                                                <option value="{{ $jobTraining->trainer_1}}">person1</option>
+                                                                <option value="{{ $jobTraining->trainer_1}}">person2</option>
+
                                                             </select>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
                                                         <td>
-                                                           <input type="text" name="subject_2">
+                                                           <input type="text" name="subject_2" value="{{ $jobTraining->subject_2}}">
                                                         </td>
                                                         <td>
-                                                          <input type="text" name="type_of_training_2">
+                                                          <input type="text" name="type_of_training_2" value="{{ $jobTraining->type_of_training_2}}">
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="reference_document_no_2">
+                                                           <input type="text" name="reference_document_no_2" value="{{ $jobTraining->reference_document_no_2}}">
                                                          </td>
                                                          <td>
-                                                            <select name="trainee_name_2" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                            <select name="trainee_name_2" id="" >
+                                                                <option value="{{ $jobTraining->trainee_name_2}}">Person1</option>
+                                                                <option value="{{ $jobTraining->trainee_name_2}}">Person2</option>
+
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_2" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="{{ $jobTraining->trainer_2}}">Person1</option>
+                                                                <option value="{{ $jobTraining->trainer_2}}">Person2</option>
 
                                                             </select>
                                                         </td>
@@ -181,24 +187,26 @@
                                                     <tr>
                                                         <td>3</td>
                                                         <td>
-                                                            <input type="text" name="subject_3">
+                                                            <input type="text" name="subject_3" value="{{ $jobTraining->subject_3}}">
                                                          </td>
                                                          <td>
-                                                           <input type="text" name="type_of_training_3">
+                                                           <input type="text" name="type_of_training_3" value="{{ $jobTraining->type_of_training_3}}">
                                                          </td>
                                                          <td>
-                                                            <input type="text" name="reference_document_no_3">
+                                                            <input type="text" name="reference_document_no_3" value="{{ $jobTraining->reference_document_no_3}}">
                                                           </td>
                                                           <td>
-                                                             <select name="trainee_name_3" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                             <select name="trainee_name_3" id="" >
+                                                                 <option value="{{ $jobTraining->trainee_name_3}}">Person1</option>
+                                                                 <option value="{{ $jobTraining->trainee_name_3}}">Person2</option>
+
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_3" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                 <option value="{{ $jobTraining->trainer_3}}">Person1</option>
+                                                                 <option value="{{ $jobTraining->trainer_3}}">Person2</option>
+
                                                              </select>
                                                          </td>
         
@@ -206,24 +214,26 @@
                                                     <tr>
                                                         <td>4</td>
                                                         <td>
-                                                            <input type="text" name="subject_4">
+                                                            <input type="text" name="subject_4" value="{{ $jobTraining->subject_4}}">
                                                          </td>
                                                          <td>
-                                                           <input type="text" name="type_of_training_4">
+                                                           <input type="text" name="type_of_training_4" value="{{ $jobTraining->type_of_training_4}}">
                                                          </td>
                                                          <td>
-                                                            <input type="text" name="reference_document_no_4">
+                                                            <input type="text" name="reference_document_no_4" value="{{ $jobTraining->reference_document_no_4}}">
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_4" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">person1</option>
+                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">Person2</option>
+
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_4" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                 <option  value="{{ $jobTraining->trainer_4}}">Perosn1</option>
+                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">Person2</option>
+
                                                              </select>
                                                          </td>
         
@@ -231,24 +241,25 @@
                                                     <tr>
                                                         <td>5</td>
                                                         <td>
-                                                           <input type="text" name="subject_5">
+                                                           <input type="text" name="subject_5" value="{{ $jobTraining->subject_5}}">
                                                         </td>
                                                         <td>
-                                                          <input type="text" name="type_of_training_5">
+                                                          <input type="text" name="type_of_training_5" value="{{ $jobTraining->type_of_training_5}}">
                                                         </td>
                                                         <td>
-                                                           <input type="text" name="reference_document_no_5">
+                                                           <input type="text" name="reference_document_no_5" value="{{ $jobTraining->reference_document_no_5}}">
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_5" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option  value="{{ $jobTraining->trainee_name_5}}">Person1</option>
+                                                                <option  value="{{ $jobTraining->trainee_name_5}}">Person2</option>
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_5" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option  value="{{ $jobTraining->trainer_5}}">Perosn1</option>
+                                                                <option  value="{{ $jobTraining->trainer_5}}">Person2</option>
+
                                                             </select>
                                                         </td>
                                                     </tr>
