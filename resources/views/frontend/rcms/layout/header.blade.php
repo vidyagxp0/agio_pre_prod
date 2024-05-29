@@ -192,7 +192,7 @@
                             <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                         </div>
                         {{-- <div>
-                                    <a href="/analytics">Analytics</a> 
+                                    <a href="/analytics">Analytics</a>
                                     </div>  --}}
 
                         @if (Auth::user())

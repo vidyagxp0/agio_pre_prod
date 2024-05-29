@@ -32,7 +32,36 @@
             display: none;
         }
     </style>
+  <style>
+    .progress-bars div {
+        flex: 1 1 auto;
+        border: 1px solid grey;
+        padding: 5px;
+        text-align: center;
+        position: relative;
+        /* border-right: none; */
+        background: white;
+    }
 
+    .state-block {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .progress-bars div.active {
+        background: green;
+        font-weight: bold;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(1) {
+        border-radius: 20px 0px 0px 20px;
+    }
+
+    #change-control-fields>div>div.inner-block.state-block>div.status>div.progress-bars.d-flex>div:nth-child(3) {
+        border-radius: 0px 20px 20px 0px;
+
+    }
+</style>
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -63,7 +92,7 @@
     </script>
     <div class="form-field-head">
         <div class="pr-id">
-            New Employee
+            Manage Employee
         </div>
         {{-- <div class="division-bar">
             <strong>Site Division/Project</strong> :
@@ -89,15 +118,75 @@
     <div id="change-control-fields">
         <div class="container-fluid">
 
+            <div class="inner-block state-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="main-head">Record Workflow </div>
+
+                    <div class="d-flex" style="gap:20px;">
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $employee->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                            // dd($employee->division_id);
+                        @endphp
+                        @if ($employee->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Activate
+                            </button>
+                        @elseif($employee->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Retire
+                            </button>
+                        @endif
+                        <button class="button_theme1"> <a class="text-white" href="{{ url('TMS') }}"> Exit
+                            </a> </button>
+
+
+                    </div>
+
+                </div>
+                <div class="status">
+                    <div class="head">Current Status</div>
+                    {{-- ------------------------------By Pankaj-------------------------------- --}}
+                    {{-- @if ($data->stage == 0) --}}
+                        {{-- <div class="progress-bars ">
+                            <div class="bg-danger">Closed-Cancelled</div>
+                        </div> --}}
+                    {{-- @else --}}
+                        <div class="progress-bars d-flex">
+                            @if ($employee->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+
+                            @if ($employee->stage >= 2)
+                                <div class="active">Active </div>
+                            @else
+                                <div class="">Active</div>
+                            @endif
+
+                            @if ($employee->stage >= 3)
+                                <div class="bg-danger">Closed - Done</div>
+                            @else
+                                <div class="">Closed - Retired</div>
+                            @endif
+                    {{-- @endif --}}
+
+
+                </div>
+                {{-- @endif --}}
+                {{-- ---------------------------------------------------------------------------------------- --}}
+            </div>
+        </div>
             <!-- Tab links -->
             <div class="cctab">
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Employee</button>
                 <button class="cctablinks " onclick="openCity(event, 'CCForm2')">External Training</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
             </div>
-            <form action="{{ route('employee.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- Tab content -->
             <div id="step-form">
@@ -107,22 +196,23 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Site Division/Project">Site Division/Project <span class="text-danger">*</span></label>
-                                    <select name="division_id" required>
-                                        <option value="">-- Select --</option>
+                                    <label for="Site Division/Project">Site Division/Project</label>
+                                    {{-- <input value="{{ $employee->division_id }}" name="division_id" readonly > --}}
+                                    <select name="division_id" id="division_id">
+                                        <option value="{{ $employee->division_id }}">-- Select --</option>
                                         @foreach ($divisions as $division)
-                                            <option value="{{ $division->id }}">{{ $division->name }}</option>
+                                            <option value="{{ $division->id }}" @if ($division->id == $employee->division_id) selected @endif>{{ $division->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Assigned To">Assigned To <span class="text-danger">*</span></label>
-                                    <select name="assigned_to" required>
+                                    <label for="Assigned To">Assigned To</label>
+                                    <select name="assigned_to">
                                         <option value="">-- Select --</option>
                                         @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            <option value="{{ $user->id }}" @if ($user->id == $employee->assigned_to) selected @endif>{{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -130,19 +220,19 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Actual Start Date">Actual Start Date</label>
-                                    <input type="date" name="start_date">
+                                    <input type="date" name="start_date" value="{{ $employee->start_date }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Joining Date">Joining Date</label>
-                                    <input type="date" name="joining_date">
+                                    <input type="date" name="joining_date" value="{{ $employee->joining_date }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Employee ID">Employee ID <span class="text-danger">*</span></label>
-                                    <input type="text" name="employee_id" required>
+                                    <label for="Employee ID">Employee ID</label>
+                                    <input type="text" name="employee_id" value="{{ $employee->employee_id }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -150,59 +240,61 @@
                                     <label for="Gender">Gender</label>
                                     <select name="gender">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Female">Female</option>
-                                        <option value="Male">Male</option>
+                                        <option value="Female" @if ($employee->gender == "Female") selected @endif>Female</option>
+                                        <option value="Male" @if ($employee->gender == "Male") selected @endif>Male</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Department">Department <span class="text-danger">*</span></label>
-                                    <select name="department" required>
-                                        <option value="">-- Select --</option>
+                                    <label for="Department">Department</label>
+                                    <select name="department">
+                                        <option>-- Select --</option>
                                         @foreach ($departments as $department)
-                                            <option value="{{ $department->id }}">{{ $department->name }}</option>
+                                            <option value="{{ $department->id }}" @if ($department->id == $employee->department) selected @endif>{{ $department->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="Job Title">Job Title <span class="text-danger">*</span></label>
-                                    <select name="job_title" required>
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="Administrator">Administrator</option>
-                                        <option value="Cleaning Technician">Cleaning Technician</option>
-                                        <option value="Compliance Training Manager">Compliance Training Manager</option>
-                                        <option value="Doc. Control Officer">Doc. Control Officer</option>
-                                        <option value="GMP Training Administator">GMP Training Administator</option>
-                                        <option value="GMT Trainer">GMT Trainer</option>
-                                        <option value="Manager / Shift Manager">Manager / Shift Manager</option>
-                                        <option value="QA Officer">QA Officer</option>
-                                        <option value="Secretary / Administrator">Secretary / Administrator</option>
-                                        <option value="Senior QA Officer">Senior QA Officer</option>
-                                        <option value="Shift Technician">Shift Technician</option>
-                                        <option value="Project Manager">Project Manager</option>
-                                        <option value="Customer Support">Customer Support</option>
-                                        <option value="HR Manager">HR Manager</option>
-                                        <option value="IT Manager">IT Manager</option>
-                                        <option value="Purchase Manager">Purchase Manager</option>
+                                    <label for="Job Title">Job Title</label>
+                                    <select name="job_title">
+                                        <option>Enter Your Selection Here</option>
+                                        <option value="Administrator" @if ($employee->job_title == "Administrator") selected @endif>Administrator</option>
+                                        <option value="Cleaning Technician" @if ($employee->job_title == "Cleaning Technician") selected @endif>Cleaning Technician</option>
+                                        <option value="Compliance Training Manager" @if ($employee->job_title == "Compliance Training Manager") selected @endif>Compliance Training Manager</option>
+                                        <option value="Doc. Control Officer" @if ($employee->job_title == "Doc. Control Officer") selected @endif>Doc. Control Officer</option>
+                                        <option value="GMP Training Administator" @if ($employee->job_title == "GMP Training Administator") selected @endif>GMP Training Administator</option>
+                                        <option value="GMT Trainer" @if ($employee->job_title == "GMT Trainer") selected @endif>GMT Trainer</option>
+                                        <option value="Manager / Shift Manager" @if ($employee->job_title == "Manager / Shift Manager") selected @endif>Manager / Shift Manager</option>
+                                        <option value="QA Officer" @if ($employee->job_title == "QA Officer") selected @endif>QA Officer</option>
+                                        <option value="Secretary / Administrator" @if ($employee->job_title == "Secretary / Administrator") selected @endif>Secretary / Administrator</option>
+                                        <option value="Senior QA Officer" @if ($employee->job_title == "Senior QA Officer") selected @endif>Senior QA Officer</option>
+                                        <option value="Shift Technician" @if ($employee->job_title == "Shift Technician") selected @endif>Shift Technician</option>
+                                        <option value="Project Manager" @if ($employee->job_title == "Project Manager") selected @endif>Project Manager</option>
+                                        <option value="Customer Support" @if ($employee->job_title == "Customer Support") selected @endif>Customer Support</option>
+                                        <option value="HR Manager" @if ($employee->job_title == "HR Manager") selected @endif>HR Manager</option>
+                                        <option value="IT Manager" @if ($employee->job_title == "IT Manager") selected @endif>IT Manager</option>
+                                        <option value="Purchase Manager" @if ($employee->job_title == "Purchase Manager") selected @endif>Purchase Manager</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Attached CV">Attached CV</label>
-                                    <input type="file" id="myfile" name="attached_cv">
+                                    <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
+                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Certification/Qualification">Certification/Qualification</label>
-                                    <input type="file" id="myfile" name="certification">
+                                    <input type="file" id="myfile" name="certification" value="{{ $employee->certification }}">
+                                    <a href="{{ asset('upload/' . $employee->certification) }}" target="_blank">{{ $employee->certification }}</a>
                                 </div>
                             </div>
-                            <div class="col-12 sub-head">
+                            <div class="pt-2 col-12 sub-head">
                                 Employee Information
                             </div>
                             <div class="col-lg-6">
@@ -210,13 +302,13 @@
                                     <label for="Zone">Zone</label>
                                     <select name="zone">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="Asia">Asia</option>
-                                        <option value="Europe">Europe</option>
-                                        <option value="Africa">Africa</option>
-                                        <option value="Central America">Central America</option>
-                                        <option value="South America">South America</option>
-                                        <option value="Oceania">Oceania</option>
-                                        <option value="North America">North America</option>
+                                        <option value="Asia" @if ($employee->zone == "Asia") selected @endif>Asia</option>
+                                        <option value="Europe" @if ($employee->zone == "Europe") selected @endif>Europe</option>
+                                        <option value="Africa" @if ($employee->zone == "Africa") selected @endif>Africa</option>
+                                        <option value="Central America" @if ($employee->zone == "Central America") selected @endif>Central America</option>
+                                        <option value="South America" @if ($employee->zone == "South America") selected @endif>South America</option>
+                                        <option value="Oceania" @if ($employee->zone == "Oceania") selected @endif>Oceania</option>
+                                        <option value="North America" @if ($employee->zone == "North America") selected @endif>North America</option>
                                     </select>
                                 </div>
                             </div>
@@ -225,7 +317,7 @@
                                     <label for="Country">Country</label>
                                     <select name="country" class="form-select country" aria-label="Default select example"
                                         onchange="loadStates()">
-                                        <option selected>Select Country</option>
+                                        <option value="{{ $employee->country }}" selected>{{ $employee->country }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,7 +326,7 @@
                                     <label for="City">State</label>
                                     <select name="state" class="form-select state" aria-label="Default select example"
                                         onchange="loadCities()">
-                                        <option selected>Select State/District</option>
+                                        <option value="{{ $employee->state }}" selected>{{ $employee->state }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -242,7 +334,7 @@
                                 <div class="group-input">
                                     <label for="State/District">City</label>
                                     <select name="city" class="form-select city" aria-label="Default select example">
-                                        <option selected>Select City</option>
+                                        <option value="{{ $employee->city }}" selected>{{ $employee->city }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -337,15 +429,15 @@
                                     <label for="Site Name">Site Name</label>
                                     <select name="site_name">
                                         <option value="">Enter Your Selection Here</option>
-                                        <option value="City MFR A">City MFR A</option>
-                                        <option value="City MFR B">City MFR B</option>
-                                        <option value="City MFR C">City MFR C</option>
-                                        <option value="Complex A">Complex A</option>
-                                        <option value="Complex B">Complex B</option>
-                                        <option value="Marketing A">Marketing A</option>
-                                        <option value="Marketing B">Marketing B</option>
-                                        <option value="Marketing C">Marketing C</option>
-                                        <option value="Oceanside">Oceanside</option>
+                                        <option value="City MFR A" @if ($employee->site_name == "City MFR A") selected @endif>City MFR A</option>
+                                        <option value="City MFR B" @if ($employee->site_name == "City MFR B") selected @endif>City MFR B</option>
+                                        <option value="City MFR C" @if ($employee->site_name == "City MFR C") selected @endif>City MFR C</option>
+                                        <option value="Complex A" @if ($employee->site_name == "Complex A") selected @endif>Complex A</option>
+                                        <option value="Complex B" @if ($employee->site_name == "Complex B") selected @endif>Complex B</option>
+                                        <option value="Marketing A" @if ($employee->site_name == "Marketing A") selected @endif>Marketing A</option>
+                                        <option value="Marketing B" @if ($employee->site_name == "Marketing B") selected @endif>Marketing B</option>
+                                        <option value="Marketing C" @if ($employee->site_name == "Marketing C") selected @endif>Marketing C</option>
+                                        <option value="Oceanside" @if ($employee->site_name == "Oceanside") selected @endif>Oceanside</option>
                                     </select>
                                 </div>
                             </div>
@@ -353,35 +445,38 @@
                                 <div class="group-input">
                                     <div class="group-input">
                                         <label for="Building">Building</label>
-                                        <input type="text" name="building">
+                                        <input type="text" name="building" value="{{ $employee->building }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Floor">Floor</label>
-                                    <input type="text" name="floor">
+                                    <input type="text" name="floor" value="{{ $employee->floor }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Room">Room</label>
-                                    <input type="text" name="room">
+                                    <input type="text" name="room" value="{{ $employee->room }}">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Picture</label>
-                                    <input type="file" id="myfile" name="picture">
+                                    <input type="file" id="myfile" name="picture" value="{{ $employee->picture }}">
+                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}" target="_blank">{{ $employee->external_attachment }}</a>
                                 </div>
                             </div>
+
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Picture">Speciman Signature </label>
-                                    <input type="file" id="myfile" name="specimen_signature">
+                                    <input type="file" id="myfile" name="specimen_signature" value="{{ $employee->specimen_signature }}">
+                                    <a href="{{ asset('upload/' . $employee->specimen_signature) }}" target="_blank">{{ $employee->specimen_signature }}</a>
                                 </div>
                             </div>
-                            <div class="group-input">
+                            <div class="pt-2 group-input">
                                 <label for="audit-agenda-grid">
                                     Job Responsibilities
                                     <button type="button" name="audit-agenda-grid" id="ObservationAdd">+</button>
@@ -401,11 +496,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
-                                                <td><input type="text" name="jobResponsibilities[0][job]"></td>
-                                                <td><input type="text" name="jobResponsibilities[0][remarks]" ></td>
-                                            </tr>
+                                            @if ($employee_grid_data && is_array($employee_grid_data->data))
+                                                @foreach ($employee_grid_data->data as $index => $employee_grid)
+                                                    <tr>
+                                                        <td><input disabled type="text" name="jobResponsibilities[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
+                                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][job]" value=" {{ array_key_exists('job', $employee_grid) ? $employee_grid['job'] : '' }}"></td>
+                                                        <td><input type="text" name="jobResponsibilities[{{ $loop->index }}][remarks]" value=" {{ array_key_exists('remarks', $employee_grid) ? $employee_grid['remarks'] : '' }}"></td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td><input disabled type="text" name="jobResponsibilities[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="jobResponsibilities[0][job]"></td>
+                                                    <td><input type="text" name="jobResponsibilities[0][remarks]" ></td>
+                                                </tr>
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -416,19 +521,20 @@
                                     <select multiple name="hod[]" placeholder="Select HOD" data-search="false"
                                         data-silent-initial-value-set="true" id="hod">
                                         @foreach ($userDetails as $userRole)
-                                            <option value="{{ $userRole->id }}">{{ $userRole->name }}</option>
-                                        @endforeach
+                                            <option value="{{ $userRole->id }}" @if ($userRole->id == $employee->hod) selected @endif>{{ $userRole->name }}</option>
+                                            @endforeach
 
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+                                {{-- <option value="{{ $userRole->id }}" {{ strpos($employee->designee, $userRole->id) !== false ? 'selected' : '' }}>{{ $userRole->name }}</option> --}}
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="Facility Name">Designee </label>
                                     <select multiple name="designee[]" placeholder="Select Designee Name" data-search="false"
                                         data-silent-initial-value-set="true" id="designee">
-                                        <option value="QA Head">QA Head</option>
-                                        <option value="QC Head">QC Head</option>
+                                        <option value="QA Head" {{ strpos($employee->designee, 'QA Head') !== false ? 'selected' : '' }}>QA Head</option>
+                                        <option value="QC Head" {{ strpos($employee->designee, "QC Head") !== false ? 'selected' : '' }}>QC Head</option>
 
                                     </select>
                                 </div>
@@ -436,20 +542,23 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Comments">Comments</label>
-                                    <textarea name="comment"></textarea>
+                                    <textarea name="comment">{{ $employee->comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="File Attachment">File Attachment</label>
-                                    <input type="file" id="myfile" name="file_attachment">
+                                    <input type="file" id="myfile" name="file_attachment" value="{{ $employee->file_attachment }}">
+                                    <a href="{{ asset('upload/' . $employee->file_attachment) }}" target="_blank">{{ $employee->file_attachment }}</a>
                                 </div>
                             </div>
                         </div>
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton01" class="saveButton">Save</button>
-                            <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                            {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                            <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm2')">Next</button>
+
                             <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                     Exit </a> </button>
                         </div>
@@ -465,7 +574,7 @@
                         <div class="group-input" id="external-details-grid">
                             <label for="audit-agenda-grid">
                                 External Training Details
-                                <button disabled type="button" name="audit-agenda-grid" id="details-grid">+</button>
+                                <button type="button" name="audit-agenda-grid" id="details-grid">+</button>
                                 <span class="text-primary" data-bs-toggle="modal"
                                     data-bs-target="#observation-field-instruction-modal"
                                     style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -488,33 +597,60 @@
                                             <th style="width: 200px;">Supporting Documents</th>
                                         </tr>
                                     </thead>
+
                                     <tbody>
-                                        <tr>
-                                            <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
-                                            <td><input disabled type="text" name="external_training[0][topic]"></td>
-                                            <td><input disabled type="date" name="external_training[0][external_training_date]"></td>
-                                            <td><input disabled type="text" name="external_training[0][external_trainer]"></td>
-                                            <td><input disabled type="text" name="external_training[0][external_agency]"></td>
-                                            <td><input disabled type="file" name="external_training[0][certificate]"></td>
-                                            <td><input disabled type="file" name="external_training[0][supproting_documents]"></td>
-                                        </tr>
-
+                                        @if ($external_grid_data && is_array($external_grid_data->data))
+                                            @foreach ($external_grid_data->data as $index => $external_grid)
+                                            <tr>
+                                                <td><input disabled type="text" name="external_training[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
+                                                <td><input type="text" name="external_training[{{ $loop->index }}][topic]" value="{{ $external_grid['topic'] ?? '' }}"></td>
+                                                <td><input type="date" name="external_training[{{ $loop->index }}][external_training_date]" value="{{ $external_grid['external_training_date'] ?? '' }}"></td>
+                                                <td><input type="text" name="external_training[{{ $loop->index }}][external_trainer]" value="{{ $external_grid['external_trainer'] ?? '' }}"></td>
+                                                <td><input type="text" name="external_training[{{ $loop->index }}][external_agency]" value="{{ $external_grid['external_agency'] ?? '' }}"></td>
+                                                <td>
+                                                    <input type="file" name="external_training[{{ $loop->index }}][certificate]" value="{{ $external_grid['certificate'] ?? '' }}">
+                                                    @if (isset($external_grid['certificate']))
+                                                        <a href="{{ asset($external_grid['certificate']) }}" target="_blank">View Certificate</a>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    {{-- <input type="file" id="myfile" name="attached_cv" value="{{ $employee->attached_cv }}">
+                                                    <a href="{{ asset('upload/' . $employee->attached_cv) }}" target="_blank">{{ $employee->attached_cv }}</a> --}}
+                                                    <input type="file" id="myfile" name="external_training[{{ $loop->index }}][supporting_documents]" value="{{ $external_grid['supporting_documents'] ?? '' }}">
+                                                    @if (isset($external_grid['supporting_documents']))
+                                                        <a href="{{ asset('upload/' . $external_grid['supporting_documents']) }}" target="_blank">View Document</a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        @else
+                                            <tr>
+                                                <td><input disabled type="text" name="external_training[0][serial]" value="1"></td>
+                                                <td><input type="text" name="external_training[0][topic]"></td>
+                                                <td><input type="date" name="external_training[0][external_training_date]"></td>
+                                                <td><input type="text" name="external_training[0][external_trainer]"></td>
+                                                <td><input type="text" name="external_training[0][external_agency]"></td>
+                                                <td><input type="file" name="external_training[0][certificate]"></td>
+                                                <td><input type="file" name="external_training[0][supporting_documents]"></td>
+                                            </tr>
+                                        @endif
                                     </tbody>
-
                                 </table>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Comments">External Comments</label>
-                                    <textarea disabled name="external_comment"></textarea>
+                                    <textarea name="external_comment">{{ $employee->external_comment }}</textarea>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="External Attachment">External Attachment</label>
-                                    <input disabled type="file" id="myfile" name="external_attachment">
+                                    <input type="file" id="myfile" name="external_attachment" value="{{ $employee->external_attachment }}">
+                                    <a href="{{ asset('upload/' . $employee->external_attachment) }}" target="_blank">{{ $employee->external_attachment }}</a>
                                 </div>
                             </div>
+
                         </div>
                         <script>
                             $(document).ready(function() {
@@ -524,8 +660,7 @@
 
                                         var html =
                                             '<tr>' +
-                                            '<td><input disabled type="text" name="external_training[' + serialNumber +
-                        '][serial]" value="' + serialNumber +
+                                            '<td><input disabled type="text" name="external_training[' + serialNumber + '][serial]" value="' + serialNumber +
                                             '"></td>' +
                                             '<td><input type="text" name="external_training[' + serialNumber +
                         '][topic]"></td>' +
@@ -561,41 +696,42 @@
                     </div>
                     <div class="button-block">
                         <button type="submit" id="ChangesaveButton02" class="saveButton">Save</button>
-                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                        <button type="button" class="cctablinks " onclick="openCity(event, 'CCForm3')">Next</button>
+
                         <button type="button"> <a href="{{ url('TMS') }}" class="text-white">
                                 Exit </a> </button>
                     </div>
                 </div>
             </div>
              <!-- Activity Log content -->
-             <div id="CCForm6" class="inner-block cctabcontent">
+             <div id="CCForm3" class="inner-block cctabcontent">
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated By">Activated By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->activated_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Activated On">Activated On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->activated_on }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for=" Rejected By">Retired By</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->retired_by }}</div>
                             </div>
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Rejected On">Retired On</label>
-                                <div class="static"></div>
+                                <div class="static">{{ $employee->retired_on }}</div>
                             </div>
                         </div>
-
                     </div>
                     {{-- <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
@@ -612,6 +748,48 @@
         </div>
     </div>
 
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ url('tms/employee/sendstage', $employee->id) }}" method="POST" id="signatureModalForm">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and a outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is legally binding equivalent of a hand written signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="signatureModalButton">
+                            <div class="spinner-border spinner-border-sm signatureModalSpinner" style="display: none"
+                                role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            Submit
+                        </button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
