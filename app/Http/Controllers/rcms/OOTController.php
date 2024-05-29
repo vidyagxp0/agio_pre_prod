@@ -82,6 +82,8 @@ class OOTController extends Controller
             $data->Attachment = json_encode($files);
         }   
 
+        $data->pli_finaly_validity_check          = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check              = $request->finaly_validity_check;  
         $data->corrective_action                  = $request->corrective_action;
         $data->preventive_action                  = $request->preventive_action;
         $data->inv_comments                       = $request->inv_comments;
@@ -241,11 +243,12 @@ class OOTController extends Controller
          $checkList->remark_thirty_four          = $request->remark_thirty_four;
          $checkList->l_e_i_oot                   = $request->l_e_i_oot;
          $checkList->elaborate_the_reson         = $request->elaborate_the_reson;
-         $checkList->in_charge = $request->in_charge;
-         $checkList->pli_head_designee = $request->pli_head_designee;	 
-
-        //  dd($checkList);
+         $checkList->in_charge                   = $request->in_charge;
+         $checkList->pli_head_designee           = $request->pli_head_designee;	
+         $checkList->data                        = $request->data;
+        //   dd($checkList->data);
         $checkList->save();
+
         $productGrid = ProductGridOot::where(['ootcs_id' => $data->id, 'identifier' =>'product_materiel'])->firstOrCreate();
         $productGrid->ootcs_id = $data->id;
         $productGrid->identifier = 'product_materiel';
@@ -753,6 +756,9 @@ class OOTController extends Controller
             // Save the file paths in the database
             $data->Attachment = json_encode($files);
         }  
+        
+        $data->pli_finaly_validity_check             = $request->pli_finaly_validity_check;
+        $data->finaly_validity_check                 = $request->finaly_validity_check; 
         $data->corrective_action                     = $request->corrective_action;
         $data->preventive_action                     = $request->preventive_action;
         $data->inv_comments                          = $request->inv_comments;
@@ -946,6 +952,7 @@ class OOTController extends Controller
          $checkList->elaborate_the_reson    = $request->elaborate_the_reson;
          $checkList->in_charge              = $request->in_charge;
          $checkList->pli_head_designee      = $request->pli_head_designee;
+         $checkList->data                        = $request->data;
         $checkList->update();
 
 

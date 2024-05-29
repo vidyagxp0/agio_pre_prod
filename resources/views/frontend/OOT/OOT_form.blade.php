@@ -1,5 +1,10 @@
 @extends('frontend.layout.main')
 @section('container')
+
+@php
+$users = DB::table('users')->get();
+@endphp
+
     <style>
         textarea.note-codable {
             display: none !important;
@@ -250,7 +255,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Recored">Refrence Record<span
                                                 class="text-danger"></span></label>
@@ -260,7 +265,7 @@
                                             <option value="2">2</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
 
 
 
@@ -455,7 +460,6 @@
                                                 <td><input type="text" name="oot_result[0][difference_of_result]"></td>
                                                 <td><input type="text" name="oot_result[0][trend_limit]"></td>
 
-
                                             </tbody>
                                         </table>
                                     </div>
@@ -541,6 +545,19 @@
                         <div class="inner-block-content">
                             <div class="row">
 
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description"> Validity Check After Preliminary Lab Investigation <span class="text-danger"></span></label>
+                                        <select name="pli_finaly_validity_check">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid </option>
+                                            <option value="na">N/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+                               
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label class="mt-4" for="Audit Comments">Corrective Action</label>
@@ -579,16 +596,20 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            Head QA/Designee <span class="text-danger"></span>
-                                        </label>
-                                        <select name="inv_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
-
+                                        <label for="search"> Head QA/Designee <span class="text-danger"></span> </label>
+                                        <select id="select-state" placeholder="Select..." name="inv_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('inv_head_designee')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                       
                                     </div>
                                 </div>
+
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -675,18 +696,30 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> Analyst Name <span class="text-danger"></span> </label>
-                                        <select name="sta_bat_analyst_name" id="">
-                                            <option value="">Person Name</option>
+                                        <select id="select-state" placeholder="Select..." name="sta_bat_analyst_name">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('sta_bat_analyst_name')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
+                                        
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> QC/QA Head/Designee <span class="text-danger"></span> </label>
-                                        <select name="qa_head_designee" id="">
-                                            <option value="">Person Name</option>
-                                            <option value="test">test</option>
+                                        <select id="select-state" placeholder="Select..." name="qa_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('qa_head_designee')
+                                         <p class="text-danger">{{ $message }}</p>
+                                         @enderror
                                     </div>
                                 </div>
 
@@ -718,20 +751,27 @@
                                 </div>
                                 {{-- Table --}}
                                 <div class="col-12">
-                                    <center>
-                                        <label style="font-weight: bold; for="Audit Attachments">Preliminary Laboratory Investigation</label>
-                                    </center>
+                                        {{-- <label style="font-weight: bold; for=Audit Attachments">Preliminary Laboratory Investigation</label> --}}
+
+                                        <label for="audit-agenda-grid">  Preliminary Laboratory Investigation <button type="button" name="audit-agenda-grid" id="pliAdd">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#observation-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;"> </span>
+                                        </label>
+                                  
                                     <div class="group-input">
                                         <div class="why-why-chart">
-                                            <table class="table table-bordered">
+                                            <table class="table table-bordered" id="pliAdddetails">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 5%;">Sr.No.</th>
                                                         <th style="width: 40%;">Question</th>
                                                         <th style="width: 20%;">Response</th>
                                                         <th>Remarks</th>
+                                                        <th style="width: 4%;">Remove</th>
+
                                                     </tr>
                                                 </thead>
+
+                                                
                                                 <tbody>
                                                     <tr>
                                                         <td class="flex text-center">1</td>
@@ -755,9 +795,6 @@
                                                                 <textarea name="remark_one" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-
-
-
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2</td>
@@ -1586,8 +1623,7 @@
                                                                 <textarea name="remark_thirty_four" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
-
-                                                    </tr>
+                                                    </tr>                                                   
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1611,12 +1647,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">
-                                            In-Charge <span class="text-danger"></span>   </label>
-                                        <select name="in_charge" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
-
+                                        <label for="search">Lab-Charge <span class="text-danger"></span>   </label>
+                   
+                                        <select id="select-state" placeholder="Select..." name="in_charge">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -1624,11 +1661,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="search"> QC Head/Designee <span class="text-danger"></span>  </label>
-                                        <select name="pli_head_designee" id="">
-                                            <option value="">Select</option>
-                                            <option value="test">test</option>
-
+                                        <select id="select-state" placeholder="Select..." name="pli_head_designee">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                    
                                     </div>
                                 </div>
 
@@ -1860,10 +1899,6 @@
                                     </div>
                                 </div>
 
-
-
-
-
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1882,6 +1917,18 @@
                         <div class="inner-block-content">
                             <div class="row">
 
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Short Description"> Finaly Validity Check <span class="text-danger"></span></label>
+                                        <select name="finaly_validity_check">
+                                            <option>Enter Your Selection Here</option>
+                                            <option value="valid">Valid</option>
+                                            <option value="invalid">Invalid </option>
+                                            <option value="na">N/A</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            
 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -3707,8 +3754,6 @@
             });
         });
     </script>
-    
-
 
     <script>
         $(document).ready(function() {
@@ -3862,6 +3907,33 @@
             });
         });
     </script>
+ <script>
+    $(document).ready(function() {
+        let indexDetail = 1;
+        $('#pliAdd').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var html =
+                    '<tr>' +
+                    '<td style=""><input style="margin-left: 25px;" disabled type="text" name="serial[]" value="' + serialNumber +
+                    '"></td>' +
+                    '<td><input type="text" name="data['+ indexDetail +'][questions]"></td>' +
+                    '<td><select name="data['+ indexDetail +'][response]" id="" style="margin-top: 10px;margin-left: 28px; padding: 3px; width: 81%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;"> <option value="">Select an Option</option> <option value="yes">Yes</option> <option value="no">No</option><option value="n/a">N/A</option></select></td>' +
+                    ' <td> <textarea name="data['+ indexDetail +'][remarks]" style="border-radius: 7px; border: 1.5px solid black;"></textarea></td>' +
+                    '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+                '</tr>';
+                indexDetail++;
+                return html;
+            }
+
+            var tableBody = $('#pliAdddetails tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+    });
+</script>
+
     <script>
         var maxLength = 255;
         $('#docname').keyup(function() {
