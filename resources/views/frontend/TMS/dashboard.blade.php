@@ -341,30 +341,28 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Record No.</th>
-                                    <th>Site/Location Code</th>
-                                    <th>Initiator</th>
-                                    <th>Date Of Initiation</th>
-                                    <th>Due Date</th>
-                                    <th>Short Description</th>
-                                    <th>Trainer Name</th>
-                                    <th>Department</th>
+                                    <th>Employee ID</th>
+                                    <th>Name Of Employee</th>
+                                    <th>Department/Location</th>
+
+                                    <th>Qualification</th>
+                                    <th>Date Of Joining</th>
+                                  
+                                    
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($trainers as $trainer)
+                                @foreach ($inductionTraining->sortbyDesc('id') as $induction)
                                     <tr>
-                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
-                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
-                                        <td>{{ $trainer->initiator }}</td>
-                                        <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ $trainer->due_date }}</td>
-                                        <td>{{ $trainer->short_description }}</td>
-                                        <td>{{ $trainer->trainer_name }}</td>
-                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+                                        <td>{{ $induction->employee_id }}</td>
+                                        <td>{{ $induction->name_employee }}</td>
+                                        <td>{{ $induction->department_location }}</td>
+                                        <td>{{ $induction->qualification }}</td>
+                                        <td>{{ $induction->date_joining }}</td>
 
-                                        <td>{{ $trainer->status }}</td>
+                                        <td> <a href="{{ route('induction_training_view', $induction->id) }}">
+                                            <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i></td>
                                     </tr>
                                 @endforeach
 

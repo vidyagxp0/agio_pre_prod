@@ -333,7 +333,9 @@ Route::post('job_trainingcreate', [JobTrainingController::class, 'store'])->name
 
 
 Route::get('induction_training', [InductionTrainingController::class, 'index'])->name('induction_training.index');
+Route::get('induction_training/show/{id}', [InductionTrainingController::class, 'edit'])->name('induction_training_view');
 Route::post('induction_training', [InductionTrainingController::class, 'store'])->name('induction_training.store');
+Route::put('induction_training/{id}', [InductionTrainingController::class, 'update'])->name('induction_training.update');
 
 
 //! ============================================
