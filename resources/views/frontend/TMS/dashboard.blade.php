@@ -294,7 +294,7 @@
                                         <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
                                         <td>{{ $trainer->initiator }}</td>
                                         <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ $trainer->due_date }}</td>
+                                        <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
                                         <td>{{ $trainer->short_description }}</td>
                                         <td>{{ $trainer->trainer_name }}</td>
                                         <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
@@ -330,8 +330,8 @@
                                 <tr>
                                     <td>{{ $job_training->name }}</td>
                                     <td>{{ $job_training->department_location }}</td>
-                                    <td>{{ $job_training->startdate }}</td>
-                                    <td>{{ $job_training->enddate }}</td>
+                                    <td>{{ Helpers::getdateFormat($job_training->startdate) }}</td>
+                                    <td>{{ Helpers::getdateFormat($job_training->enddate )}}</td>
                                     <td>
                                         <a href="{{ route('job_training_view', $job_training->id) }}">
                                         <i class="fa-solid fa-pencil"></i>
