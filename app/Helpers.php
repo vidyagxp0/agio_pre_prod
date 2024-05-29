@@ -657,7 +657,9 @@ class Helpers
             case '11':
                 $status = 'Obsolete';
                 break;
-            
+            case '13':
+                $status = 'Closed/Cancel';
+                break;
             default:
                 # code...
                 break;
