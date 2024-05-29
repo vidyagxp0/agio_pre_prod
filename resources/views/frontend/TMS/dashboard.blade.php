@@ -94,9 +94,9 @@
                 <div class="cctab">
 
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
+                    <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
                     <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
 
@@ -181,42 +181,54 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="width:15%;">Document Number</th>
+                                        {{-- <th style="width:15%;">Document Number</th> --}}
+                                        <th>Training Plan</th>
                                         <th>Document Title</th>
-                                        <th>Training Status</th>
-                                        <th>Content Type</th>
+                                        <th>Trainer Name</th>
+                                        <th>Overall Training Status</th>
                                         <th>Due Date</th>
-                                        <th>Completed Date</th>
-                                        <th>Status</th>
+                                        <th>My Training Completion date</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
                                     @foreach ($documents2 as $temp)
+                                        @php
+                                            $trainingStatusCheck = DB::table('training_statuses')
+                                                ->where([
+                                                'user_id' => Auth::user()->id,
+                                                'sop_id' => $temp->id,
+                                                'training_id' => $temp->traningstatus->training_plan,
+                                                'status' => 'Complete'
+                                            ])->first();
+                                            $trainingPlanName = DB::table('trainings')
+                                                ->where('id', $temp->traningstatus->training_plan)
+                                                ->first();
+                                            $traininerName = DB::table('users')
+                                                ->where('id', $trainingPlanName->trainner_id)
+                                                ->first();
+                                        @endphp
                                         <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
+                                            <td>{{ $trainingPlanName ? $trainingPlanName->traning_plan_name : ''}}</td>
                                             <td>{{ $temp->document_name }}</td>
+                                            <td>{{ $traininerName ? $traininerName->name : ''}}</td>
                                             <td>{{ $temp->traningstatus->status }}</td>
-                                            <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
                                             <td>
-                                                @php
-                                                    $trainingStatusCheck = DB::table('training_statuses')
-                                                        ->where([
-                                                            'user_id' => Auth::user()->id,
-                                                            'sop_id' => $temp->id,
-                                                            'training_id' => $temp->traningstatus->training_plan,
-                                                            'status' => 'Complete'
-                                                        ])
-                                                        ->first();
-                                                @endphp
-
                                                 {{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}
                                             </td>
-                                            @if($temp->traningstatus->status == 'Complete')
-                                            <th>{{$temp->traningstatus->status}}</th>
+                                            @if($trainingStatusCheck)
+                                            <th>Completed</th>
                                             @else
-                                            <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                class="fa-solid fa-eye"></i></a></td>
+                                                @if($temp->traningstatus->status == "Complete")
+                                                    <th>Training Criteria Met</th>
+                                                @elseif( $temp->due_dateDoc < now())
+                                                    <th>Training Date Passed</th>
+                                                    
+                                                @else
+                                                    <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                        class="fa-solid fa-eye"></i></a></td>
+                                                @endif
                                             @endif
                                         </tr>
                                     @endforeach
@@ -302,32 +314,30 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Record No.</th>
-                                    <th>Site/Location Code</th>
-                                    <th>Initiator</th>
-                                    <th>Date Of Initiation</th>
-                                    <th>Due Date</th>
-                                    <th>Short Description</th>
-                                    <th>Trainer Name</th>
-                                    <th>Department</th>
-                                    <th>Status</th>
+                                    <th>Name</th>
+                                    <th>Department & Location</th>
+                                    <th>Start Date of Training</th>
+                                    <th>End Date of Training</th>
+                                    
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($trainers as $trainer)
-                                    <tr>
-                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
-                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
-                                        <td>{{ $trainer->initiator }}</td>
-                                        <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ $trainer->due_date }}</td>
-                                        <td>{{ $trainer->short_description }}</td>
-                                        <td>{{ $trainer->trainer_name }}</td>
-                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+                               
 
-                                        <td>{{ $trainer->status }}</td>
-                                    </tr>
-                                @endforeach
+
+                                @foreach ($jobTrainings as $job_training)
+                                <tr>
+                                    <td>{{ $job_training->name }}</td>
+                                    <td>{{ $job_training->department_location }}</td>
+                                    <td>{{ $job_training->startdate }}</td>
+                                    <td>{{ $job_training->enddate }}</td>
+                                    <td>
+                                        <a href="{{ route('job_training_view', $job_training->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>
+                                     </td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
                         </table>
@@ -341,30 +351,28 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Record No.</th>
-                                    <th>Site/Location Code</th>
-                                    <th>Initiator</th>
-                                    <th>Date Of Initiation</th>
-                                    <th>Due Date</th>
-                                    <th>Short Description</th>
-                                    <th>Trainer Name</th>
-                                    <th>Department</th>
+                                    <th>Employee ID</th>
+                                    <th>Name Of Employee</th>
+                                    <th>Department/Location</th>
+
+                                    <th>Qualification</th>
+                                    <th>Date Of Joining</th>
+                                  
+                                    
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($trainers as $trainer)
+                                @foreach ($inductionTraining->sortbyDesc('id') as $induction)
                                     <tr>
-                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
-                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
-                                        <td>{{ $trainer->initiator }}</td>
-                                        <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ $trainer->due_date }}</td>
-                                        <td>{{ $trainer->short_description }}</td>
-                                        <td>{{ $trainer->trainer_name }}</td>
-                                        <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+                                        <td>{{ $induction->employee_id }}</td>
+                                        <td>{{ $induction->name_employee }}</td>
+                                        <td>{{ $induction->department_location }}</td>
+                                        <td>{{ $induction->qualification }}</td>
+                                        <td>{{ $induction->date_joining }}</td>
 
-                                        <td>{{ $trainer->status }}</td>
+                                        <td> <a href="{{ route('induction_training_view', $induction->id) }}">
+                                            <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i></td>
                                     </tr>
                                 @endforeach
 

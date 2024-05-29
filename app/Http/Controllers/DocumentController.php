@@ -452,6 +452,7 @@ class DocumentController extends Controller
        
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
+            $document->legacy_number = $request->legacy_number;
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
@@ -807,6 +808,7 @@ class DocumentController extends Controller
                 $document->description = $request->description;
 
 
+                $document->legacy_number = $request->legacy_number;
                 $document->due_dateDoc = $request->due_dateDoc;
                 $document->sop_type = $request->sop_type;
                 $document->department_id = $request->department_id;
@@ -1768,7 +1770,7 @@ class DocumentController extends Controller
         $canvas->page_text(
             $width / 4,
             $height / 2,
-            $data->status,
+            Helpers::getDocStatusByStage($data->stage),
             null,
             25,
             [0, 0, 0],

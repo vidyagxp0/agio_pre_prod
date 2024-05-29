@@ -13,6 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::table('documents', function (Blueprint $table) {
+            $table->string('legacy_number')->nullable();
+        });
+
         Schema::table('document_contents', function (Blueprint $table) {
             $table->longText('accountability')->nullable();
         });

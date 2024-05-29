@@ -22,6 +22,7 @@ use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
+use App\Http\Controllers\rcms\LogController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,9 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::view('rcms_dashboard', 'frontend.rcms.dashboard');
     Route::view('form-division', 'frontend.forms.form-division');
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
+    
+    Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
+
 
     Route::middleware(['rcms'])->group(
         function () {
