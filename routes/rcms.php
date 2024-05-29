@@ -21,6 +21,7 @@ use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
+use App\Http\Controllers\rcms\OOCController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
 
@@ -223,6 +224,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
             Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
             Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+
+
+            Route::get('OOCSingleReport/{id}',[OOCController::class, 'singleReports']);
 
 
 
