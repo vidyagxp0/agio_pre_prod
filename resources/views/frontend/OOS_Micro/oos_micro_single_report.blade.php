@@ -427,44 +427,47 @@
                         @if(bcmod($loop->index, 2) == 1 || $loop->last) </tr> @endif
                     @endforeach
                 </table>
-
                 <div class="col-12">
-                    <label style="font-weight: bold; for="Audit Attachments" >PHASE- I B INVESTIGATION
-                        REPORT</label>
 
-@php
-$phase_I_investigations = [
-"Aliquot and standard solutions preserved.",
-"Visual examination (solid and solution) reveals normal or abnormal appearance.",
-"The analyst is trained on the method.",
-"Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
-"Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
-"Correct sample(s) tested.",
-"Sample Integrity maintained, correct container is used in testing.",
-"Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
-"All equipment used in the testing is within calibration due period.",
-"Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
-"Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
-"Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
-"Whether test solution / volumetric solution used are properly prepared & standardized.",
-"Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
-"In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
-"Any such type of observation has been observed previously (Assay, Dissolution etc.).",
-"Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
-"System suitability conditions met (those before analysis and during analysis).",
-"Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
-"Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
-"Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
-"Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
-"Media/Reagents prepared according to procedure.",
-"All the materials are within the due period of expiry.",
-"Whether, analysis was performed by any other alternate validated procedure",
-"Whether environmental condition is suitable to perform the test.",
-"Interview with analyst to assess knowledge of the correct procedure."
+                    <label style="font-weight: bold; for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label>
 
-];
-@endphp
+
+                    @php
+                    $phase_I_investigations = [
+                            "Aliquot and standard solutions preserved.",
+                            "Visual examination (solid and solution) reveals normal or abnormal appearance.",
+                            "The analyst is trained on the method.",
+                            "Correct test procedure followed e.g. Current Version of standard testing procedure has been used in testing.",
+                            "Current Validated analytical Method has been used and the data of analytical method validation has been reviewed and found satisfactory.",
+                            "Correct sample(s) tested.",
+                            "Sample Integrity maintained, correct container is used in testing.",
+                            "Assessment of the possibility that the sample contamination (sample left open to air or unattended) has occurred during the testing/ re-testing procedure.",
+                            "All equipment used in the testing is within calibration due period.",
+                            "Equipment log book has been reviewed and no any failure or malfunction has been reviewed.",
+                            "Any malfunctioning and / or out of calibration analytical instruments (including glassware) is used.",
+                            "Whether reference standard / working standard is correct (in terms of appearance, purity, LOD/water content & its storage) and assay values are determined correctly.",
+                            "Whether test solution / volumetric solution used are properly prepared & standardized.",
+                            "Review RSD, resolution factor and other parameters required for the suitability of the test system. Check if any out of limit parameters is included in the chromatographic analysis, correctness of the column used previous use of the column.",
+                            "In the raw data, including chromatograms and spectra; any anomalous or suspect peaks or data has been observed.",
+                            "Any such type of observation has been observed previously (Assay, Dissolution etc.).",
+                            "Any unusual or unexpected response observed with standard or test preparations (e.g. whether contamination of equipment by previous sample observed).",
+                            "System suitability conditions met (those before analysis and during analysis).",
+                            "Correct and clean pipette / volumetric flasks volumes, glassware used as per recommendation.",
+                            "Other potentially interfering testing/activities occurring at the time of the test which might lead to OOS.",
+                            "Review of other data for other batches performed within the same analysis set and any nonconformance observed.",
+                            "Consideration of any other OOS results obtained on the batch of material under test and any non-conformance observed.",
+                            "Media/Reagents prepared according to procedure.",
+                            "All the materials are within the due period of expiry.",
+                            "Whether, analysis was performed by any other alternate validated procedure",
+                            "Whether environmental condition is suitable to perform the test.",
+                            "Interview with analyst to assess knowledge of the correct procedure."
+
+                    ];
+                @endphp
+                <div class="group-input ">
+
                     <div class="why-why-chart mx-auto" style="width: 100%">
+
                         <table class="table table-bordered ">
                             <thead>
                                 <tr>
@@ -475,30 +478,34 @@ $phase_I_investigations = [
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($phase_I_investigations as $phase_I_investigation )
 
-                                    <tr>
-                                        <td class="flex text-center">{{$loop->index+1}}</td>
-                                        <td>{{$phase_I_investigation}}</td>
-                                        <td>
-                                            <div
-                                                style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                <select name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
-                                                    style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                    <option value="Yes">Select an Option</option>
-                                                    <option value="Yes">Yes</option>
-                                                    <option value="No">No</option>
-                                                    <option value="N/A">N/A</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td style="vertical-align: middle;">
-                                            <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                            </div>
-                                        </td>
-                                    </tr>
+                                @foreach ($phase_I_investigations as $phase_I_investigation )
+                                <tr>
+                                    <td class="flex text-center">{{$loop->index+1}}</td>
+                                    <td>{{$phase_I_investigation}}</td>
+                                    <td>
+                                        <div
+                                            style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                            <select  type="text"  name="phase_IB_investigation[{{$loop->index}}][response]" id="response"
+                                                style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                <option value="">Select an Option</option>
+                                                <option value="Yes" {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'Yes' ? 'selected' : '' }}>Yes</option>
+                                                <option value="No" {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'No' ? 'selected' : '' }} >No</option>
+                                                <option value="N/A"  {{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'response', true, $loop->index) == 'N/A' ? 'selected' : '' }}>N/A</option>
+                                            </select>
+                                        </div>
+                                    </td>
+
+
+                                    <td style="vertical-align: middle;">
+                                        <div style="margin: auto; display: flex; justify-content: center;">
+                                            <textarea name="phase_IB_investigation[{{$loop->index}}][remark]" style="border-radius: 7px; border: 1.5px solid black;">{{ Helpers::getMicroGridData($data, 'phase_IB_investigation', true, 'remark', true, $loop->index) }}
+                                            </textarea>
+                                        </div>
+                                    </td>
+                                </tr>
                                 @endforeach
+
                             </tbody>
                         </table>
                     </div>
@@ -655,163 +662,152 @@ $Preliminary_lab_invst_review = [
                         </div> --}}
 
 {{-- ================  Checklist-Investigation of Bacterial Endotoxin Test  ======================= --}}
-                                    <div class="block-head">
-                                        Checklist-Investigation of Bacterial Endotoxin Test
-                                    </div>
+<div class="block-head">
+    Checklist-Investigation of Bacterial Endotoxin Test
+</div>
 @php
 $questions = [
-            'check_analyst_training_procedures'=> [
-                'headings' => 'Checklist for Analyst Training and Procedure',
-                'identifier' => '',
-                'questions' => [
-                    "Is the analyst trained/qualified BET test procedure?",
-                    "Reference procedure number :-",
-                    "Effective date",
-                    "Date of qualification:",
-                    "Were appropriate precaution taken by the analyst throughout the test?",
-                    "Analyst interview record",
-                    "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
-                    "Analyst interview record",
-                    "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
+    'check_analyst_training_procedures' => [
+        'headings' => 'Checklist for Analyst Training and Procedure',
+        'identifier' => '',
+        'questions' => [
+            "Is the analyst trained/qualified BET test procedure?",
+            "Reference procedure number :-",
+            "Effective date",
+            "Date of qualification:",
+            "Were appropriate precaution taken by the analyst throughout the test?",
+            "Analyst interview record",
+            "Was an analyst/sampling persons suffering from any ailment such as cough/cold or open wound or skin infections?",
+            "Analyst interview record",
+            "Was the correct procedure for the transfer of samples and accessories to sampling testing areas followed?",
         ]
     ],
-
-            'sample_receiving_verifications' =>[
-                'headings' => 'Checklist for Sample receiving & verification in lab :',
-                    'identifier' => '',
-                    'questions' => [
-                                        "Was the sample container (Physical integrity) verified at the time of sample receipt?",
-                                        "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
-                                        "Was the correct quantity of the sample withdrawn?",
-                                        "Was there any discrepancy observed during sampling?",
-                                        "Was the sample container (Physical integrity) checked before testing?",
-
-                ]],
-            'method_procedure_used_during_anas' =>[
-                                    'headings' => 'Checklist for Method/Procedure used during analysis:',
-                                    'identifier' => '',
-                                        'questions' => [
-                                        "Was correct applicable specification/Test procedure/MOA used for analysis?",
-                                        "Verified specification/Test procedure/MOA No.",
-                                        "Was the test procedure followed as per method validation?",
-                                        "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
-                                        "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
-                                        "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
-                                        "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
-                                        "Assay tube/Batch No.",
-                                        "Expiry date:",
-                                        "Tip lot/Batch No.",
-                                        "Expiry date:",
-                                        "Was the test done at correct MVD as per validated method?",
-                                        "Were calculations of MVD/Test dilution done correctly?",
-                                        "Were correct dilutions prepared?",
-                                        "Was labeled claim lysate sensitivity checked before the use of the lot?",
-                                        "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
-                                        "LRW expiry date?",
-                                        "CSE expiry date?",
-                                        "Lysate expiry date?",
-                                        "Buffer expiry date?",
-                                        "Was рН of the test sample/dilution verified?",
-                                        "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
-                                        "Were proper incubation conditions followed?",
-                                        "Was there any spillage that occurred during the vortexing of dilutions?",
-                                        "Were the results of positive, negative, and test controls found satisfactory?",
-                                        "Is the test incubator/heating block kept on a vibration-free surface?",
-                                        "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:"
-             ] ],
-            'Instrument_Equipment_Details' =>[
-                'headings' => 'Checklist for Instrument/Equipment Details:',
-                    'identifier' => '',
-                    'questions' => [ "Was the equipment used, calibrated/qualified and within the specified range?",
-                                        "Dry block /Heating block equipment ID:",
-                                        "Calibration date & Next due date:",
-                                        "Pipettes ID:",
-                                        "Calibration date and Next due date:",
-                                        "Refrigerator (2-8̊ C) ID:",
-                                        "Validation date and next due date:",
-                                        "Dehydrogenation over ID:",
-                                        "Validation date and next due date:",
-                                        "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
-                                        "Was the depyrogenation done as per the validated load pattern?",
-                                        "Was there any power failure noticed during the incubation of samples in the heating block?",
-                                        "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
-                                        "Were any other samples tested along with this sample?",
-                                        "If yes, were those sample’s results found satisfactory?",
-                                        "Were any other samples analyzed at the same time on the same instruments?",
-                                        "If yes, what were the results of other Batches?"
-
-            ]],
-                'Results_and_Calculations' => [
-                    'headings' => 'Checklist for Results and Calculation :',
-
-                            'identifier' => '',
-                            'questions' => [
-                                            "Were results taken properly?",
-                                            "Raw data checked By:",
-                                            "Was formula dilution factor used for calculating the results correct?"
-],
-]];
+    'sample_receiving_verifications' => [
+        'headings' => 'Checklist for Sample receiving & verification in lab :',
+        'identifier' => '',
+        'questions' => [
+            "Was the sample container (Physical integrity) verified at the time of sample receipt?",
+            "Were clean and dehydrogenated sampling accessories and glassware used for sampling?",
+            "Was the correct quantity of the sample withdrawn?",
+            "Was there any discrepancy observed during sampling?",
+            "Was the sample container (Physical integrity) checked before testing?",
+        ]
+    ],
+    'method_procedure_used_during_anas' => [
+        'headings' => 'Checklist for Method/Procedure used during analysis:',
+        'identifier' => '',
+        'questions' => [
+            "Was correct applicable specification/Test procedure/MOA used for analysis?",
+            "Verified specification/Test procedure/MOA No.",
+            "Was the test procedure followed as per method validation?",
+            "Was there any change in the validated change method? If yes, was test performed with the new validated method?",
+            "Was BET reagents (Lysate, CSE, LRW and Buffer) procured from the approved vendor?",
+            "Was lysate and CSE stored at the recommended temperature and duration? Storage condition:",
+            "Were all product/reagents contact parts of BET testing (Tips/Accessories/Sample Container) depyrogenated?",
+            "Assay tube/Batch No.",
+            "Expiry date:",
+            "Tip lot/Batch No.",
+            "Expiry date:",
+            "Was the test done at correct MVD as per validated method?",
+            "Were calculations of MVD/Test dilution done correctly?",
+            "Were correct dilutions prepared?",
+            "Was labeled claim lysate sensitivity checked before the use of the lot?",
+            "Were all reagents (LRW/CSE and Lysate) used in the test within the expiry?",
+            "LRW expiry date?",
+            "CSE expiry date?",
+            "Lysate expiry date?",
+            "Buffer expiry date?",
+            "Was рН of the test sample/dilution verified?",
+            "Were appropriate рН strip/measuring device used, which provides the least count measurement of test sample/dilution wherever applicable?",
+            "Were proper incubation conditions followed?",
+            "Was there any spillage that occurred during the vortexing of dilutions?",
+            "Were the results of positive, negative, and test controls found satisfactory?",
+            "Is the test incubator/heating block kept on a vibration-free surface?",
+            "Were measures established and implemented to prevent contamination from personal material, material during testing reviewed and found satisfactory? List the measures:"
+        ]
+    ],
+    'Instrument_Equipment_Details' => [
+        'headings' => 'Checklist for Instrument/Equipment Details:',
+        'identifier' => '',
+        'questions' => [
+            "Was the equipment used, calibrated/qualified and within the specified range?",
+            "Dry block /Heating block equipment ID:",
+            "Calibration date & Next due date:",
+            "Pipettes ID:",
+            "Calibration date and Next due date:",
+            "Refrigerator (2-8̊ C) ID:",
+            "Validation date and next due date:",
+            "Dehydrogenation over ID:",
+            "Validation date and next due date:",
+            "Did the dehydrogenation cycle challenge with endotoxin and found satisfactory during validation?",
+            "Was the depyrogenation done as per the validated load pattern?",
+            "Was there any power failure noticed during the incubation of samples in the heating block?",
+            "Was assay tubes incubated in the dry block (time and temp) as specified in the procedure?",
+            "Were any other samples tested along with this sample?",
+            "If yes, were those sample’s results found satisfactory?",
+            "Were any other samples analyzed at the same time on the same instruments?",
+            "If yes, what were the results of other Batches?"
+        ]
+    ],
+    'Results_and_Calculations' => [
+        'headings' => 'Checklist for Results and Calculation :',
+        'identifier' => '',
+        'questions' => [
+            "Were results taken properly?",
+            "Raw data checked By:",
+            "Was formula dilution factor used for calculating the results correct?"
+        ]
+    ]
+];
 @endphp
-    <div class="row">
-        <div class="col-12">
-            <div class="group-input">
-                <div class="why-why-chart">
-                        @foreach ($questions as $headings => $heading )
-                        {{-- @foreach ($heading['headings'] as  $head ) --}}
-
-                        <div class="inner-block-content">
-                            <div class="sub-head"><strong>
-                                {{$heading['headings'] }}</strong>
-            <hr style="width: 100%; height: 3px; background-color: black; border: none;">
-
-                        </div>
-
-                        @foreach ($heading['questions'] as $single_question)
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th style="width: 5%;">Sr.No.</th>
-                                    <th style="width: 40%;">Question</th>
-                                    <th style="width: 20%;">Response</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                        <tbody>
+<div class="row">
+    <div class="col-12">
+        <div class="group-input">
+            <div class="why-why-chart">
+                @foreach ($questions as $headings => $heading)
+                <div class="inner-block-content">
+                    <div class="sub-head"><strong>{{ $heading['headings'] }}</strong></div>
+                    <hr style="width: 100%; height: 3px; background-color: black; border: none;">
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td class="flex text-center">{{$loop->index+1}}</td>
-                                <td>{{$single_question}}</td>
-
+                                <th style="width: 5%;">Sr.No.</th>
+                                <th style="width: 40%;">Question</th>
+                                <th style="width: 20%;">Response</th>
+                                <th>Remarks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($heading['questions'] as $index => $single_question)
+                            <tr>
+                                <td class="flex text-center">{{ $index + 1 }}</td>
+                                <td>{{ $single_question }}</td>
                                 <td>
-                                    <div
-                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                        <select name="analyst_training_proce[{{$loop->index}}][response]" id="response"
-                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                            <option value="Yes">Select an Option</option>
+                                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap:5px">
+                                        <select name="{{ $headings }}[{{ $index }}][response]" id="response" style="padding: 2px; width:90%; border: 1px solid black; background-color: #f0f0f0;">
+                                            <option value="">Select an Option</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
                                             <option value="N/A">N/A</option>
                                         </select>
-                                            </div>
-                                     </td>
-                                    <td>
-                                       <div style="margin: auto; display: flex; justify-content: center;">
-                                        <p>Not applicable
-
-                                        </p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="margin: auto; display: flex; justify-content: center;">
+                                        <p>Not applicable</p>
                                     </div>
                                 </td>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                    {{-- @endforeach --}}
-
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+                @endforeach
             </div>
-            @endforeach
-
         </div>
     </div>
+</div>
+
 
 
 

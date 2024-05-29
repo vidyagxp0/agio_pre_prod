@@ -221,6 +221,8 @@
                     <th>Person Responsible</th>
                     <th>Change Type</th>
                 </tr>
+
+{{--
                 @foreach ($doc as $datas)
                     <tr>
                         <td>
@@ -269,7 +271,7 @@
                     </tr>
                 @endforeach
             </table>
-        </div>
+        </div> --}}
 
     </div>
 

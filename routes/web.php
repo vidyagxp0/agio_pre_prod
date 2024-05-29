@@ -417,6 +417,7 @@ Route::get('oos_form', [OOSController::class, 'index'])->name('oos.index');
 // Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 
 //============================================OOS MICRO===================================
+
 Route::get('oos_micro', [OOSMicroController::class, 'index'])->name('oos_micro.index');
 Route::post('oos_micro_store', [OOSMicroController::class, 'store'])->name('oos_micro.store');
 Route::get('oos_micro_edit/{id}',[OOSMicroController::class, 'edit'])->name('oos_micro.edit');
@@ -432,8 +433,6 @@ Route::post('oos_micro/reject_stage/{id}', [OOSMicroController::class, 'reject_s
 
 Route::get('oos_micro/AuditTrial/{id}', [OOSMicroController::class, 'AuditTrial'])->name('audit_trial');
 Route::get('oos_micro/auditDetails/{id}', [OOSMicroController::class, 'auditDetails'])->name('audit_details');
-Route::get('oos_micro/audit_report/{id}', [OOSMicroController::class, 'auditReport'])->name('audit_report');
-Route::get('oos_micro/single_report/{id}', [OOSMicroController::class, 'singleReport'])->name('single_report');
 
 //============================================ OOS MICRO ROUTE CLOSE ===================================
 Route::view('market_complaint_new', 'frontend.market_complaint.market_complaint_new')->name('market_complaint_new');

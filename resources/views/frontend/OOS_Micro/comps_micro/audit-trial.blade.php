@@ -226,12 +226,12 @@
                                 </style>
 
                                 <!-- Modal Header -->
-                                <div class="modal-header">
+                                {{-- <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers Details</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+                                </div> --}}
 
-                                @php
+                                {{-- @php
                                     $reviewer = DB::table('audit_reviewers_details')
                                         ->where(['deviation_id' => $document->id, 'type' => 'Deviation'])
                                         ->get();
@@ -264,7 +264,7 @@
                                             @endif
                                         </tbody>
                                     </table>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -280,7 +280,7 @@
                                 </style>
 
                                 <!-- Modal Header -->
-                                <div class="modal-header">
+                                {{-- <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers</h4>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
@@ -314,7 +314,7 @@
                                             {!! $auditCollect ? '' : '<button type="submit" >Submit</button>' !!}
                                             <button type="button" data-bs-dismiss="modal">Close</button>
                                         </div>
-                                    </form>
+                                    </form> --}}
 
                             </div>
                         </div>
@@ -327,9 +327,9 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record_number, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->initiator : '' }}</div>
+                                :{{  $document->initiator  ? $document->initiator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
                                 {{ $document->description_gi }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
@@ -367,7 +367,7 @@
                         @foreach ($audit as $audits => $dataDemo)
                         <td>{{ $audits + 1 }} </td>
                         {{--{{ $dataDemo ? ($audit->current() - 1) * $audit->perPage() + $audits + 1 : 'Not Applicable' }}
-                             --}} 
+                             --}}
 
                             <td>
                                 <div><strong>Changed From :</strong>{{ $dataDemo->change_from }}</div>
@@ -379,9 +379,11 @@
                             <td>
                                 <div>
                                     <strong> Data Field Name :</strong><a
-                                        href="{{ route('oos.audit_details', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
+                                        href="{{ route('audit_details', $dataDemo->id) }}">{{ $dataDemo->activity_type ? $dataDemo->activity_type : 'Not Applicable' }}</a>
                                 </div>
                                 <div style="margin-top: 5px;">
+                                    {{-- {{dd($dataDemo)}} --}}
+
                                     @if($dataDemo->activity_type == "Activity Log")
                                         <strong>Change From :</strong>{{ $dataDemo->change_from ? $dataDemo->change_from : 'Not Applicable' }}
                                     @else
@@ -482,7 +484,7 @@
                         <div class="list-item">
                             <div class="head">Originator</div>
                             <div>:</div>
-                            <div>{{ $document->initiator }}</div>
+                            <div>{{ $document->originator }}</div>
                         </div>
                     </div>
                     <div id="auditTableinfo"></div>

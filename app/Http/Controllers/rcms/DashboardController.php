@@ -360,7 +360,7 @@ class DashboardController extends Controller
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
                 "division_id" => $data->division_id,
-                "type" => "OOS_MICRO",
+                "type" => "OOS Microbiology",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->description_gi ? $data->description_gi : "-",
@@ -378,7 +378,7 @@ class DashboardController extends Controller
         // return $table;
         // $paginatedData = json_encode($table);
 
-  
+
       //  $datag = $this->paginate($table);
         $datag = $this->paginate($table);
         //   $paginatedData = json_encode($datag);
@@ -778,7 +778,14 @@ class DashboardController extends Controller
             $audit = "managementReviewReport/" . $data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
-        } elseif ($type == "Root-Cause-Analysis") {
+        }elseif ($type == "OOS Microbiology") {
+            $data = OOS_micro::find($id);
+            $single = "oos_micro/single_report/" . $data->id;
+            $audit = "oos_micro/audit_report/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
+        }
+        elseif ($type == "Root-Cause-Analysis") {
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
