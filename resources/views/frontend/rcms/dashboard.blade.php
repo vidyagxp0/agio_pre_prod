@@ -131,11 +131,32 @@
 <style>
     #short_width{
         display: inline-block;
-    width: 520px !important;
+    width: 320px !important;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
     }
+    .table-container {
+  overflow: auto;
+  max-height: 350px; 
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white; 
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px; 
+}
+.td_c{
+    width: 100px !important;
+}
+.td_desc{
+    width: 10px;
+}
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -186,23 +207,7 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
 
-                        <style>
-.table-container {
-  overflow: auto;
-  max-height: 350px;
-}
-
-.table-header11 {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 1;
-}
-
-.table-body-new {
-  margin-top: 30px;
-}
-                        </style>
+                      
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">

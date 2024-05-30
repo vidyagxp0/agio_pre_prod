@@ -114,12 +114,18 @@
                                 </div>
                                 
                                 
-                                <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="CAPA Team">Date of Joining</label>
-                                        <input type="date" name="date_joining" id="date_joining" value="{{ $inductionTraining->date_joining }}">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Date of Joining</label>
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="date_joining"  value="{{  Helpers::getdateFormat($inductionTraining->date_joining) }}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_joining"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'date_joining')"/>
+                                        </div>
                                     </div>
                                 </div>
+
                                 
                                 <div class="col-12">
                                     <div class="group-input">
@@ -148,7 +154,16 @@
                                                             <textarea name="document_number_1" value="" >{{ $inductionTraining->{"document_number_1"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_1" value="{{ $inductionTraining->{"training_date_1"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_1"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_1) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_1"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_1')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -162,7 +177,16 @@
                                                             <textarea name="document_number_2" value="" >{{ $inductionTraining->{"document_number_2"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_2" value="{{ $inductionTraining->{"training_date_2"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_2"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_2) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_2"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_2')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -177,7 +201,16 @@
                                                             <textarea name="document_number_3" value="" >{{ $inductionTraining->{"document_number_3"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_3" value="{{ $inductionTraining->{"training_date_3"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_3"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_3) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_3"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_3')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -192,7 +225,16 @@
                                                             <textarea name="document_number_4" value="" >{{ $inductionTraining->{"document_number_4"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_4" value="{{ $inductionTraining->{"training_date_4"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_4"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_4) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_4"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_4')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -207,7 +249,16 @@
                                                             <textarea name="document_number_5" value="" >{{ $inductionTraining->{"document_number_5"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_5" value="{{ $inductionTraining->{"training_date_5"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_5"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_5) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_5"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_5')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -228,7 +279,16 @@
                                                             <textarea name="document_number_6" value="" >{{ $inductionTraining->{"document_number_6"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_6" value="{{ $inductionTraining->{"training_date_6"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_6"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_6) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_6"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_6')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -243,7 +303,16 @@
                                                             <textarea name="document_number_7" value="" >{{ $inductionTraining->{"document_number_7"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_7" value="{{ $inductionTraining->{"training_date_7"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_7"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_7) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_7"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_7')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -258,7 +327,16 @@
                                                             <textarea name="document_number_8" value="" >{{ $inductionTraining->{"document_number_8"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_8" value="{{ $inductionTraining->{"training_date_8"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_8"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_8) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_8"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_8')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -273,7 +351,16 @@
                                                             <textarea name="document_number_9" value="" >{{ $inductionTraining->{"document_number_9"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_9" value="{{ $inductionTraining->{"training_date_9"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_9"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_9) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_9"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_9')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -288,7 +375,16 @@
                                                             <textarea name="document_number_10" value="" >{{ $inductionTraining->{"document_number_10"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_10" value="{{ $inductionTraining->{"training_date_10"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_10"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_10) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_10"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_10')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -303,7 +399,16 @@
                                                             <textarea name="document_number_11" value="" >{{ $inductionTraining->{"document_number_11"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_11" value="{{ $inductionTraining->{"training_date_11"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_11"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_11) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_11"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_11')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -318,7 +423,16 @@
                                                             <textarea name="document_number_12" value="" >{{ $inductionTraining->{"document_number_12"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_12" value="{{ $inductionTraining->{"training_date_12"} }}">
+                                                            <div class=" new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                    <div class="calenderauditee">                                     
+                                                                        <input type="text"  id="training_date_12"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_12) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="training_date_12"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, 'training_date_12')"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         
                                                          <td>
@@ -331,7 +445,16 @@
                                                                 <textarea name="document_number_13" value="" >{{ $inductionTraining->{"document_number_13"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_13" value="{{ $inductionTraining->{"training_date_13"} }}">
+                                                                <div class=" new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">                                     
+                                                                            <input type="text"  id="training_date_13"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_13) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                            <input type="date" name="training_date_13"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input"
+                                                                            oninput="handleDateInput(this, 'training_date_13')"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                             
                                                              <td>
@@ -346,7 +469,16 @@
                                                                 <textarea name="document_number_14" value="" >{{ $inductionTraining->{"document_number_14"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_14" value="{{ $inductionTraining->{"training_date_14"} }}">
+                                                                <div class=" new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">                                     
+                                                                            <input type="text"  id="training_date_14"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_14) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                            <input type="date" name="training_date_14"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input"
+                                                                            oninput="handleDateInput(this, 'training_date_14')"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                             
                                                              <td>
@@ -361,7 +493,16 @@
                                                                 <textarea name="document_number_15" value="" >{{ $inductionTraining->{"document_number_15"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_15" value="{{ $inductionTraining->{"training_date_15"} }}">
+                                                                <div class=" new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                        <div class="calenderauditee">                                     
+                                                                            <input type="text"  id="training_date_15"  value="{{  Helpers::getdateFormat($inductionTraining->training_date_15) }}" readonly placeholder="DD-MMM-YYYY" />
+                                                                            <input type="date" name="training_date_15"    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                                            class="hide-input"
+                                                                            oninput="handleDateInput(this, 'training_date_15')"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </td>
                                                             
                                                              <td>
