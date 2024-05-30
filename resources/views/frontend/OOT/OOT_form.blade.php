@@ -119,10 +119,24 @@ $users = DB::table('users')->get();
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 ">
+                                {{-- <div class="col-md-6 ">
                                     <div class="group-input ">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <input type="date" name="due_date">
+                                    </div>
+                                </div> --}}
+
+                                <div class="col-lg-12 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Due Date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision
+                                                reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly placeholder="DD-MM-YYYY" />
+                                            <input type="date" name="due_date"
+                                                min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -174,6 +188,12 @@ $users = DB::table('users')->get();
                                             <option value="lab_incident">Lab Incident</option>
                                             <option value="others">Others </option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"> Short Description</label>
+                                        <textarea  name="short_description" value="" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">

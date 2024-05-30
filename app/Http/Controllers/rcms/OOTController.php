@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Helpers;
 use Illuminate\Support\Facades\Hash;
 
 class OOTController extends Controller
@@ -34,15 +35,16 @@ class OOTController extends Controller
         // return dd($request->all());
          
         $data = new Ootc();
-        $data->initiator_id   = Auth::user()->id;
-        $data->record_number   = ((RecordNumber::first()->value('counter')) + 1);
-        $data->intiation_date = $request->intiation_date;
-        $data->due_date       = $request->due_date;
-        $data->division_id        = $request->division_id;  
+        $data->initiator_id          = Auth::user()->id;
+        $data->record_number         = ((RecordNumber::first()->value('counter')) + 1);
+        $data->intiation_date        = $request->intiation_date;
+        $data->due_date              = $request->due_date;
+        $data->division_id           = $request->division_id;  
         $data->severity_level        = $request->severity_level;
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  = $request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;
@@ -52,16 +54,16 @@ class OOTController extends Controller
         $data->producct_history      = $request->producct_history;
         $data->probble_cause         = $request->probble_cause;
         $data->investigation_details = $request->investigation_details;
-        $data->comments               = $request->comments;
+        $data->comments              = $request->comments;
         $data->reference             = $request->reference;
         // dd($request->investigation_details);
          $data->productmaterialname   = $request->productmaterialname;
-        $data->grade_typeofwater     = $request->grade_typeofwater;
-        $data->sampleLocation_Point  = $request->sampleLocation_Point;
-        $data->market                = $request->market;
-        $data->customer              = $request->customer;
-        $data->analyst_name          = $request->analyst_name;
-        $data->others                = $request->others;
+        $data->grade_typeofwater      = $request->grade_typeofwater;
+        $data->sampleLocation_Point   = $request->sampleLocation_Point;
+        $data->market                 = $request->market;
+        $data->customer               = $request->customer;
+        $data->analyst_name           = $request->analyst_name;
+        $data->others                 = $request->others;
         
         if (is_array($request->reference_record )) {
             $data->reference_record = implode(',', $request->reference_record);
@@ -691,7 +693,10 @@ class OOTController extends Controller
 
     public function ootShow($id){
 
-       $data = Ootc::where('id',$id)->first();      
+       $data = Ootc::where('id',$id)->first();  
+       
+       $formattedDate = Helpers::getdateFormat($data->due_date);    
+       $occuredDate = Helpers::getdateFormat($data->oot_occured_on); 
        $grid_product_mat = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'product_materiel'])->first();
     //    dd($grid_product_mat);
        $gridStability = ProductGridOot::where(['ootcs_id' => $id, 'identifier' => 'details_of_stability'])->first();
@@ -704,7 +709,7 @@ class OOTController extends Controller
     //   dd($checkList);
        $record_number = ((RecordNumber::first()->value('counter')) + 1);
        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat'));
+        return view('frontend.OOT.ootView',compact('data','record_number','grid_product_mat','checkList','gridStability','GridOotRes','InfoProductMat','formattedDate','occuredDate'));
 
     }
 
@@ -720,6 +725,7 @@ class OOTController extends Controller
         $data->initiator_group       = $request->initiator_group;
         $data->initiator_group_code  =$request->initiator_group_code;
         $data->initiated_through     = $request->initiated_through;
+        $data->short_description     = $request->short_description;
         $data->if_others	         = $request->if_others;
         $data->is_repeat             = $request->is_repeat;
         $data->repeat_nature         = $request->repeat_nature;

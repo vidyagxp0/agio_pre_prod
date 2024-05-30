@@ -2782,14 +2782,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_1']))
+                                        @if($why_data && is_array($why_data->data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data['why_1'] as $whyData)
+                                            @foreach($why_data->data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">{{ $whyData }}</td>
+                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
+                                                <td class="w-15">{{ isset($whyData['why_1']) ? $whyData['why_1'] : 'Not Applicable' }}</td>
+
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2812,14 +2814,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_2']))
+                                        @if($why_data && is_array($why_data->data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data['why_2'] as $whyData)
+                                            @foreach($why_data->data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">{{ $whyData }}</td>
+                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
+                                                    <td class="w-15">{{ isset($whyData['why_2']) ? $whyData['why_2'] : 'Not Applicable' }}</td>
+ 
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2842,14 +2846,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_3']))
+                                        @if($why_data && is_array($why_data->data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data['why_3'] as $whyData)
+                                            @foreach($why_data->data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">{{ $whyData }}</td>
+                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
+                                                <td class="w-15">{{ isset($whyData['why_3']) ? $whyData['why_3'] : 'Not Applicable' }}</td>
+
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2872,14 +2878,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_4']))
+                                        @if($why_data && is_array($why_data->data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data['why_4'] as $whyData)
+                                            @foreach($why_data->data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">{{ $whyData }}</td>
+                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
+                                                <td class="w-15">{{ isset($whyData['why_4']) ? $whyData['why_4'] : 'Not Applicable' }}</td>
+
                                                 </tr>
                                             @endforeach
                                         @else
@@ -2902,14 +2910,16 @@
                                         <th class="w-60">Description</th>
                                     </tr>
                                     <tbody>
-                                        @if($why_data && is_array($why_data->data['why_5']))
+                                        @if($why_data && is_array($why_data->data))
                                         @php
                                             $serialNumber = 1;
                                         @endphp
-                                            @foreach($why_data->data['why_5'] as $whyData)
+                                            @foreach($why_data->data as $whyData)
                                                 <tr>
                                                     <td class="w-20">{{ $serialNumber++ }}</td>
-                                                    <td class="w-20">{{ $whyData }}</td>
+                                                    {{-- <td class="w-20">{{ $whyData }}</td> --}}
+                                                <td class="w-15">{{ isset($whyData['why_5']) ? $whyData['why_5'] : 'Not Applicable' }}</td>
+
                                                 </tr>
                                             @endforeach
                                         @else

@@ -891,7 +891,7 @@
                                             <label for="record_number"><b>Record Number</b></label>
                                             @if ($data->stage >= 3)
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/DEV/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/INC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             @else
                                                 <input disabled type="text" name="record">
                                             @endif
@@ -923,11 +923,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Date of Initiation"><b>Date of Initiation</b></label>
-                                            <input readonly type="text" value="{{ date('d-M-Y') }}"
-                                                name="initiation_date" id="initiation_date"
-                                                style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
-                                            <input type="hidden" value="{{ date('Y-m-d') }}"
-                                                name="initiation_date_hidden">
+                                            <input readonly type="text" value="{{ date('d-M-Y') }}" name="initiation_date" id="initiation_date" style="background-color: light-dark(rgba(239, 239, 239, 0.3), rgba(59, 59, 59, 0.3))">
+                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="initiation_date_hidden">
                                         </div>
                                     </div>
 
@@ -1830,8 +1827,8 @@
                                                     documents</small></div>
                                             <div class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="initial_file">
-                                                    @if ($data->initial_file)
-                                                        @foreach (json_decode($data->initial_file) as $file)
+                                                    @if ($data->Audit_file)
+                                                        @foreach (json_decode($data->Audit_file) as $file)
                                                             <h6 class="file-container text-dark"
                                                                 style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
@@ -1851,8 +1848,8 @@
                                                     <input
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         type="file" id="HOD_Attachments"
-                                                        name="initial_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                        oninput="addMultipleFiles(this, 'initial_file')" multiple>
+                                                        name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                 </div>
                                             </div>
                                         </div>
@@ -12472,7 +12469,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <input type="comment"  name="comment" required>
                         </div>
                     </div>
 

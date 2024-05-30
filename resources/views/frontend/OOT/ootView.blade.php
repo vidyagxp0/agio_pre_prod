@@ -253,7 +253,9 @@
                             <div class="col-md-6 ">
                                 <div class="group-input ">
                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                    <input type="date" name="due_date" value="{{ $data->due_date }}">
+                                    <input type="hidden" value="{{ $formattedDate }}" name="due_date">
+                                    <input disabled type="text" value="{{ $formattedDate }}" name="due_date_display">
+                                    {{-- <input type="hidden" value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"> --}}
                                 </div>
                             </div>
 
@@ -274,7 +276,6 @@
 
                                 </div>
                             </div>
-
 
                             <div class="col-lg-6">
                                 <div class="group-input">
@@ -318,6 +319,18 @@
                                     </select>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="Short Description">Short Description<span class="text-danger">
+                                            *</span></label><span id="rchars">255</span>characters remaining
+                                    <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="docname"
+                                        type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                </div>
+                                @error('short_description')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label class="mt-4" for="Audit Comments">If Others </label>
@@ -368,7 +381,10 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label>OOT Occured On</label>
-                                    <input type="date" name="oot_occured_on" value="{{ $data->oot_occured_on }}">
+                                
+                                    <input type="hidden" value="{{ $occuredDate }}" name="oot_occured_on">
+                                    <input disabled type="text" value="{{ $occuredDate }}" name="oot_occured_on">
+                                    <input type="hidden" value="{{ Helpers::getdateFormat($data->oot_occured_on) }}" name="oot_occured_on">
                                 </div>
                             </div>
 
@@ -2275,7 +2291,7 @@
                                                              <td>
                                                                
                                                                 <div style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                    <select name="response" id="response"
+                                                                    <select name="data[{{ $loop->index }}][response]" id="response"
                                                                         style="padding: 2px; width:90%; border: 1px solid rgb(125, 125, 125);  background-color: #f0f0f0;">
                                                                         <option value="">Select an Option</option>
                                                                         <option value="yes" @if (isset($gridData['response']) && $gridData['response'] == 'yes') selected @endif>
@@ -2300,7 +2316,7 @@
                                                         </tr>
                                                     @endforeach
                                                 @else
-                                                    <td>{{ $loop->index + 34 }}</td>
+                                                    {{-- <td>{{ $loop->index + 34 }}</td> --}}
                                                     <td><input type="text" name="data[0][questions]"></td>
                                                     <td><input type="text" name="data[0][response]"></td>
                                                     <td><input type="text" name="data[0][remarks]"></td>

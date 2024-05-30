@@ -3057,7 +3057,6 @@ class IncidentController extends Controller
             $incident = Incident::find($id);
             $lastDocument = Incident::find($id);
 
-
             $incident->stage = "0";
             $incident->status = "Closed-Cancelled";
             $incident->cancelled_by = Auth::user()->name;

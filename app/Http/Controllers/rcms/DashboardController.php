@@ -553,7 +553,7 @@ class DashboardController extends Controller
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
                 "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through,
+                "initiated_through" => $data->initiated_through ? $data->initiated_through : "-",
                 "intiation_date" => $data->intiation_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
