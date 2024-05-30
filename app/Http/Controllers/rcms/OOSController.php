@@ -1358,6 +1358,5 @@ class OOSController extends Controller
             return $pdf->stream('OOS Cemical' . $id . '.pdf');
         }
     }
-    
-    
+       
 }
