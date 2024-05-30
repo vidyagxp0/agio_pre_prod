@@ -871,8 +871,8 @@ class OOSService
         try {
 
             $input = $request->all();
-            $input['status'] = 'Opened';
-            $input['stage'] = 1;
+            // $input['status'] = 'Opened';
+            // $input['stage'] = 1;
 
             $file_input_names = [
                 'initial_attachment_gi',
@@ -1059,40 +1059,40 @@ class OOSService
                 $history->current = $request->source_document_type_gi;
                 $history->save();
             }
-            if (!empty($request->reference_system_document_gi)){
-                $history = new OosAuditTrial();
-                $history->oos_id = $oos->id;
-                $history->previous = "Null";
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $oos->status;
-                $history->stage = $oos->stage;
-                $history->change_to =   "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-                $history->activity_type = 'Reference System Document';
-                $history->current = $request->reference_system_document_gi;
-                $history->save();
-            }
-            if (!empty($request->reference_document)){
-                $history = new OosAuditTrial();
-                $history->oos_id = $oos->id;
-                $history->previous = "Null";
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $oos->status;
-                $history->stage = $oos->stage;
-                $history->change_to =   "Opened";
-                $history->change_from = "Initiator";
-                $history->action_name = 'Create';
-                $history->activity_type = 'Reference Document';
-                $history->current = $request->reference_document;
-                $history->save();
-            }
+            // if (!empty($request->reference_system_document_gi)){
+            //     $history = new OosAuditTrial();
+            //     $history->oos_id = $oos->id;
+            //     $history->previous = "Null";
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $oos->status;
+            //     $history->stage = $oos->stage;
+            //     $history->change_to =   "Opened";
+            //     $history->change_from = "Initiator";
+            //     $history->action_name = 'Create';
+            //     $history->activity_type = 'Reference System Document';
+            //     $history->current = $request->reference_system_document_gi;
+            //     $history->save();
+            // }
+            // if (!empty($request->reference_document)){
+            //     $history = new OosAuditTrial();
+            //     $history->oos_id = $oos->id;
+            //     $history->previous = "Null";
+            //     $history->comment = "Not Applicable";
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //     $history->origin_state = $oos->status;
+            //     $history->stage = $oos->stage;
+            //     $history->change_to =   "Opened";
+            //     $history->change_from = "Initiator";
+            //     $history->action_name = 'Create';
+            //     $history->activity_type = 'Reference Document';
+            //     $history->current = $request->reference_document;
+            //     $history->save();
+            // }
             if (!empty($request->sample_type_gi)){
                 $history = new OosAuditTrial();
                 $history->oos_id = $oos->id;
