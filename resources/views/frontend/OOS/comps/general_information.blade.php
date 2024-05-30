@@ -196,8 +196,8 @@
                     <label for="Source Document Type">Source Document Type</label>
                     <select name="source_document_type_gi">
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>doc</option>
-                        <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>pdf</option>
+                        <option value="1" {{ $data->source_document_type_gi == '1' ? 'selected' : '' }}>doc</option>
+                        <option value="2" {{ $data->source_document_type_gi == '2' ? 'selected' : '' }}>pdf</option>
                     </select>
                 </div>
             </div>
