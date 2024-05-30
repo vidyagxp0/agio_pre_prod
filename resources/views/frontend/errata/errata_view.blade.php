@@ -535,7 +535,7 @@
 
                                             <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ $showdata->Date_and_time_of_correction }}"/>
 
-                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" required />
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" />
                                         </div>
                                     </div>
                                     @error('Errata_date')
