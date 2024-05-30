@@ -174,10 +174,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Errata No.</strong>
+                    <strong>OOC No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($ooc->division_id) }}/OOC/{{ Helpers::year($ooc->created_at) }}/{{ $ooc->record }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -197,8 +197,8 @@
                     <tr>
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
-                            @if ($data->record_number)
-                                {{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                            @if ($data->record)
+                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                             @else
                                 Not Applicable
                             @endif
@@ -206,8 +206,8 @@
 
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
-                            @if ($data->division_id)
-                                {{ $data->division_id }}
+                            @if (Helpers::getDivisionName(session()->get('division')))
+                            {{ Helpers::getDivisionName(session()->get('division')) }}
                             @else
                                 Not Applicable
                             @endif
@@ -264,7 +264,7 @@
                         <th class="w-20">If Other</th>
                         <td class="w-80">
                             @if ($data->initiated_if_other)
-                                {{ $data->initiated_if_other }}
+                                {!! $data->initiated_if_other !!}
                             @else
                                 Not Applicable
                             @endif
@@ -352,7 +352,7 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                            <th class="w-20">SR no.</th>
+                            <th class="w-20" style="width: 20px;">Sr No.</th>
                             <th class="w-20">Instrument Name</th>
                             <th class="w-20">Instrument ID</th>
                             <th class="w-20">Remarks</th>
@@ -444,35 +444,52 @@
                                 OOC Evaluation Form
                             </div>
 
+
+                            @php
+                            $oocevaluations = [
+                                'Status of calibration for other instrument(s) used for performing calibration of the referred instrument',
+                                'Verification of calibration standards used Primary Standard: Physical appearance, validity, certificate. Secondary standard: Physical appearance, validity',
+                                'Verification of dilution, calculation, weighing, Titer values and readings',
+                                'Verification of glassware used',
+                                'Verification of chromatograms/spectrums/other instrument',
+                                'Adequacy of system suitability checks',
+                                'Instrument Malfunction',
+                                'Check for adherence to the calibration method',
+                                'Previous History of instrument',
+                                'Others',
+                            ];
+                            @endphp
+
                             <div style="font-weight: 200">OOC Evolution Form </div>
                             <div class="border-table">
                                 <table>
-                                    <tr class="table_bg">
-                                        <th class="w-20">SR no.</th>
-                                        <th class="w-20">Response</th>
-                                        <th class="w-20">Remarks</th>
-                                    </tr>
+                                    <thead>
+                                        <tr class="table_bg">
+                                            <th class="w-20" style="width: 20px;">Sr No.</th>
+                                            <th class="w-20" style="width: 55%;">Question</th>
+                                            <th class="w-20" style="width: 100px;">Response</th>
+                                            <th class="w-20" style="width: 100px;">Remarks</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                        @if ($oocevolutions && is_array($oocevolutions->data))
-                                        @foreach ($oocevolutions->data as $E_data)
+                                        @foreach ($oocevaluations as $index => $item)
+                                            @if (isset($oocevolution->data[$index]))
                                                 <tr>
-
-                                                    <td>{{ $loop->index + 1 }}</td>
-                                                    <td>{{ isset($E_data['response']) ? $E_data['response'] : '' }}
-
-                                                    <td>
-                                                        {{ isset($E_data['remarks']) ? $E_data['remarks'] : '' }}
-                                                    </td>
+                                                    <td>{{ $index + 1 }}</td>
+                                                    <td>{{ $item }}</td>
+                                                    <td>{{ $oocevolution->data[$index]['response'] }}</td>
+                                                    <td>{{ $oocevolution->data[$index]['remarks'] }}</td>
                                                 </tr>
-
-                                            @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="4">No data available</td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
                                     </tbody>
-                                    @else
-                                        <p>No data available</p>
-                                    @endif
-
                                 </table>
                             </div>
+<br>
 
                             <table>
                                 <tr>
@@ -570,7 +587,7 @@
                                         Calibration Results</th>
                                     <td class="w-80">
                                         @if ($data->calibration_results_stage_ooc)
-                                            {{ $data->calibration_results_stage_ooc }}
+                                            {!! $data->calibration_results_stage_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -589,7 +606,7 @@
                                     <th class="w-20">Review of Calibration Results of Analyst</th>
                                     <td class="w-80">
                                         @if ($data->review_of_calibration_results_of_analyst_ooc)
-                                            {{ $data->review_of_calibration_results_of_analyst_ooc }}
+                                            {!! $data->review_of_calibration_results_of_analyst_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -608,7 +625,7 @@
                                     <th class="w-20">Results Criteria</th>
                                     <td class="w-80">
                                         @if ($data->results_criteria_stage_ooc)
-                                            {{ $data->results_criteria_stage_ooc }}
+                                            {!! $data->results_criteria_stage_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -628,7 +645,7 @@
                                     <th class="w-20">Additinal Remarks (if any)</th>
                                     <td class="w-80">
                                         @if ($data->qa_comments_stage_ooc)
-                                            {{ $data->qa_comments_stage_ooc }}
+                                            {!! $data->qa_comments_stage_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -726,7 +743,7 @@
                                     <th class="w-20">Details of Impact Evaluation</th>
                                     <td class="w-80">
                                         @if ($data->initiated_through_stageii_ooc)
-                                            {{ $data->initiated_through_stageii_ooc }}
+                                            {!! $data->initiated_through_stageii_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -745,7 +762,7 @@
                                     <th class="w-20">Cause for failure</th>
                                     <td class="w-80">
                                         @if ($data->initiated_through_stageii_cause_failure_ooc)
-                                            {{ $data->initiated_through_stageii_cause_failure_ooc }}
+                                            {!! $data->initiated_through_stageii_cause_failure_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -774,7 +791,7 @@
                                     <th class="w-20">Corrective Action</th>
                                     <td class="w-80">
                                         @if (!empty($data->initiated_through_capas_ooc))
-                                            {{ $data->initiated_through_capas_ooc }}
+                                            {!! $data->initiated_through_capas_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -794,7 +811,7 @@
                                     <th class="w-20">Corrective & Preventive Action</th>
                                     <td class="w-80">
                                         @if (!empty($data->initiated_through_capa_corrective_ooc))
-                                            {{ $data->initiated_through_capa_corrective_ooc }}
+                                            {!! $data->initiated_through_capa_corrective_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -814,7 +831,7 @@
                                     <th class="w-20">CAPA Post Implementation Comments</th>
                                     <td class="w-80">
                                         @if (!empty($data->initiated_through_capa_ooc))
-                                            {{ $data->initiated_through_capa_ooc }}
+                                            {!! $data->initiated_through_capa_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
@@ -931,7 +948,7 @@
                                     <th class="w-20">Impact Assessment</th>
                                     <td class="w-80">
                                         @if ($data->initiated_through_impact_closure_ooc)
-                                            {{ $data->initiated_through_impact_closure_ooc }}
+                                            {!! $data->initiated_through_impact_closure_ooc !!}
                                         @else
                                             Not Applicable
                                         @endif
