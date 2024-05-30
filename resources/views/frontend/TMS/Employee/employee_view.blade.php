@@ -90,6 +90,15 @@
             });
         });
     </script>
+    <script>
+        function handleDateInput(input, targetId) {
+            const target = document.getElementById(targetId);
+            const date = new Date(input.value);
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
+            target.value = formattedDate;
+        }
+        </script>
     <div class="form-field-head">
         <div class="pr-id">
             Manage Employee
@@ -217,22 +226,40 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
                                     <label for="Actual Start Date">Actual Start Date</label>
-                                    <input type="date" name="start_date" value="{{ $employee->start_date }}">
+                                    <div class="calenderauditee">
+                                        <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->start_date ? \Carbon\Carbon::parse($employee->start_date)->format('d-M-Y') : '' }}" />
+                                        <input type="date" name="start_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="{{ $employee->start_date ?? '' }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'start_date')" />
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
+                            <div class="col-lg-6 new-date-data-field">
+                                <div class="group-input input-date">
                                     <label for="Joining Date">Joining Date</label>
-                                    <input type="date" name="joining_date" value="{{ $employee->joining_date }}">
+                                    <div class="calenderauditee">
+                                        <input type="text" id="joining_date" readonly placeholder="DD-MMM-YYYY" value="{{ $employee->joining_date ? \Carbon\Carbon::parse($employee->joining_date)->format('d-M-Y') : '' }}" />
+                                        <input type="date" name="joining_date"
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="{{ $employee->joining_date ?? '' }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'joining_date')" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="Employee ID">Employee ID</label>
                                     <input type="text" name="employee_id" value="{{ $employee->employee_id }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="employee_name">Employee Name</label>
+                                    <input type="text" name="employee_name" value="{{ $employee->employee_name }}">
                                 </div>
                             </div>
                             <div class="col-lg-6">
@@ -604,7 +631,22 @@
                                             <tr>
                                                 <td><input disabled type="text" name="external_training[{{ $loop->index }}][serial]" value="{{ $loop->index+1 }}"></td>
                                                 <td><input type="text" name="external_training[{{ $loop->index }}][topic]" value="{{ $external_grid['topic'] ?? '' }}"></td>
-                                                <td><input type="date" name="external_training[{{ $loop->index }}][external_training_date]" value="{{ $external_grid['external_training_date'] ?? '' }}"></td>
+                                                <td>
+                                                    <div class="new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <div class="calenderauditee">
+                                                                <input
+                                                                class="click_date"
+                                                                id="date_{{ $loop->index }}_external_training_date" type="text" name="external_training[{{ $loop->index }}][external_training_date]" placeholder="DD-MMM-YYYY" value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('d-M-Y') : '' }}" />
+                                                                <input type="date" name="external_training[{{ $loop->index }}][external_training_date]"
+                                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ array_key_exists('external_training_date', $external_grid) ? \Carbon\Carbon::parse($external_grid['external_training_date'])->format('Y-m-d') : '' }}"
+                                                                id="date_{{ $loop->index }}_external_training_date"
+                                                                class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_{{ $loop->index }}_external_training_date')" />
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><input type="text" name="external_training[{{ $loop->index }}][external_trainer]" value="{{ $external_grid['external_trainer'] ?? '' }}"></td>
                                                 <td><input type="text" name="external_training[{{ $loop->index }}][external_agency]" value="{{ $external_grid['external_agency'] ?? '' }}"></td>
                                                 <td>

@@ -224,7 +224,7 @@
                                                     <th>Training Criteria Met</th>
                                                 @elseif( $temp->due_dateDoc < now())
                                                     <th>Training Date Passed</th>
-                                                    
+
                                                 @else
                                                     <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -244,6 +244,7 @@
                         <thead>
                             <tr>
                                 <th style="width:10%;">Employee ID</th>
+                                <th>Employee Name</th>
                                 <th>Department</th>
                                 <th>Job Title</th>
                                 <th>Assigned To</th>
@@ -259,10 +260,11 @@
                             @foreach ($employees as $employee)
                                 <tr>
                                     <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
+                                    <td>{{ $employee->employee_name ? $employee->employee_name : 'NA' }}</td>
                                     <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
-                                    <td>{{ $employee->job_title }}</td>
+                                    <td>{{ $employee->job_title ? $employee->job_title : 'NA' }}</td>
                                     <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
-                                    <td>{{ $employee->joining_date }}</td>
+                                    <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
                                     <td>{{ $employee->status }}</td>
                                 </tr>
                             @endforeach
@@ -277,28 +279,19 @@
                             <thead>
                                 <tr>
                                     <th>Record No.</th>
-                                    <th>Site/Location Code</th>
-                                    <th>Initiator</th>
-                                    <th>Date Of Initiation</th>
-                                    <th>Due Date</th>
-                                    <th>Short Description</th>
                                     <th>Trainer Name</th>
                                     <th>Department</th>
+                                    <th>Due Date</th>
                                     <th>Status</th>
-                                </tr>
+                                    </tr>
                             </thead>
                             <tbody>
                                 @foreach ($trainers as $trainer)
                                     <tr>
-                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">{{ $trainer->record_number }}</a></td>
-                                        <td>{{ $trainer->division_record ? $trainer->division_record->name : 'NA' }}</td>
-                                        <td>{{ $trainer->initiator }}</td>
-                                        <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
-                                        <td>{{ $trainer->short_description }}</td>
-                                        <td>{{ $trainer->trainer_name }}</td>
+                                        <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
+                                        <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
                                         <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
-
+                                        <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
                                         <td>{{ $trainer->status }}</td>
                                     </tr>
                                 @endforeach
@@ -318,12 +311,12 @@
                                     <th>Department & Location</th>
                                     <th>Start Date of Training</th>
                                     <th>End Date of Training</th>
-                                    
+
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                               
+
 
 
                                 @foreach ($jobTrainings as $job_training)
@@ -357,8 +350,8 @@
 
                                     <th>Qualification</th>
                                     <th>Date Of Joining</th>
-                                  
-                                    
+
+
                                     <th>Status</th>
                                 </tr>
                             </thead>

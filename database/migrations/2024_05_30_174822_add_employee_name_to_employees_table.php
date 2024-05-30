@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('deviation_new_grid_datas', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('deviation_id')->nullable();
-            $table->string('identifier')->nullable();
-            $table->longText('data')->nullable();
-            $table->timestamps();
+        Schema::table('employees', function (Blueprint $table) {
+            $table->string('employee_name')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('deviation_new_grid_datas');
+        Schema::table('employees', function (Blueprint $table) {
+            //
+        });
     }
 };
