@@ -261,7 +261,7 @@
                                     <input readonly type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                    {{-- <div class="static">QMS-North America</div> --}}
+                                    {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                       </div>
                                 </div>
                                 <div class="col-lg-6">

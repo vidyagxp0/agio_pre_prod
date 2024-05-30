@@ -16,7 +16,7 @@
         /* 120deg, #87b2f8 0%, #a1c4fd 100%); middle */  
         /* 120deg, #2c73e6d1 0%, #2d72d899 100%); bottom */
         body {
-           background-image:linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+           /* background-image:linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%); */
             margin: 0;
             padding: 0;
             width: 100vw;
@@ -101,18 +101,18 @@
             height: 100%;
             display: flex;
             align-items: center;
-            justify-content: center;
+            /* justify-content: center; */
             background-size: cover;
             background-position: center;
         }
 
-        #rcms_login_block .login-form-block {
+        /* #rcms_login_block .login-form-block {
             width: 800px;
     background: #eee;
     border-radius: 20px;
     background-size: cover;
     background-position: center;
-        }
+        } */
 
         #rcms_login_block .login-form-block .top-block {
             padding: 10px 10px 15px;
@@ -124,7 +124,7 @@
 
         #rcms_login_block .login-form-block .logo {
             width: 280px;
-            margin: 0 auto 30px;
+            margin: 0 auto 0px;
             /* margin-top: 151px; */
             display: flex;
     flex-direction: column;
@@ -153,7 +153,7 @@
     grid-template-columns: 70px 1fr;
     align-items: center;
     background: white;
-    border: 2px solid rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(106, 137, 229, 0.5);
     padding: 5px;
     border-radius: 5px;
         }
@@ -184,10 +184,12 @@
             display: block;
             text-align: center;
             width: 100%;
-            padding: 10px;
+            padding: 9px;
             /* background: linear-gradient(180deg, rgba(255, 255, 255, .15) 0%, rgba(255, 255, 255, 0) 100%), #bec0c2; */
             /* color: black; */
-            background-image: linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%);
+            /* background-image: linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%); */
+            background-image: linear-gradient(120deg, #317bf2 0%, #317bf2 100%);
+
             /* linear-gradient(120deg, #ea8900 0%, #ff9c4594 100%) */
     color: white;
             margin-left: auto;
@@ -204,6 +206,22 @@
         .black-placeholder::placeholder {
         color: black;
         opacity: 1; /* Necessary to ensure the color is not translucent */
+    }
+    .main_image-side{
+        margin-left:74px;
+    }
+
+    body {
+        background: url('user/images/login_backgorund.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: top right;
+    }
+
+    @media (max-width: 768px) {
+        body {
+            background: none;
+        }    
     }
     </style>
 </head>
@@ -223,20 +241,28 @@
     <div id="rcms_login_block" style="background-image: url('{{ asset('user/images/main-bg.jg') }}')">
         <div class="login-form-block" style="background-image: url('{{ asset('user/images/rcms-login-bg2.p') }}')">
             <div style="display: flex" class="main-block ">
-                <div class="top-block">
-                    <div class="logo" style="display: flex">
+                {{-- <div class="top-block"> --}}
+                    {{-- <div class="logo" style="display: flex">
     <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 1; max-width: 100px; margin: auto; margin-bottom: 33px;">
 
 
     <img  src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 2; max-width: 100px; margin: auto">
 
 
-                    </div>
+                    </div> --}}
                     
-                </div>
-                <div style="padding: 24px; margin-top: 34px;" class="">
+                {{-- </div> --}}
+                <div style="padding: 24px; margin-top: 34px;" class="col-lg-6">
+                     <div class="logo" style="display: flex display: flex;flex-direction: row; gap: 65px;">
+                     <img src="{{ asset('user/images/agio-removebg-preview.png') }}" alt="..." style="filter: none; scale: 0.7; max-width: 100px; margin: auto; margin-bottom: 14px;">
+
+
+                     <img  src="{{ asset('user/images/vidhyaGxp.png') }}" alt="..." style="filter: none; scale: 1.8; max-width: 100px; margin: auto">
+
+
+                    </div> 
                     <div class="head">
-                        WELCOME To VIDYAGxP
+                        Welcome To VidyaGxP
                     </div>
                     <form action="{{ url('rcms_check') }}" method="POST">
                         @csrf
@@ -595,11 +621,18 @@
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
 
-
+<style>
+    .image_login{
+        width: 100%;
+        height: 580px;
+        margin: auto;
+    }
+</style>
 
     {{-- ======================================
                     SCRIPT TAGS

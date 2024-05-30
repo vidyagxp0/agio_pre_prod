@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('external_agencies')->nullable();
             $table->string('severity_level_form')->nullable();
              $table->integer('assign_to')->nullable();
- 
+
              $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
@@ -73,7 +73,7 @@ return new class extends Migration
             $table->text('Supplier_Site')->nullable();
             $table->text('refrence_record')->nullable();
 
-            
+
             $table->text('Comments')->nullable();
             $table->longText('Audit_file')->nullable();
             $table->text('Audit_Comments1')->nullable();
@@ -104,6 +104,19 @@ return new class extends Migration
             $table->string('audit_lead_more_info_reqd_on')->nullable();
             $table->string('audit_response_completed_on')->nullable();
             $table->string('response_feedback_verified_on')->nullable();
+
+
+               // $table->bigIncrements('id');
+
+                for ($i = 1; $i <= 64; $i++) {
+                    $table->text("response_$i")->nullable();
+
+                    $table->text("remark_$i")->nullable();
+                }
+
+
+                $table->string('Description_Deviation')->nullable();
+                $table->string('file_attach')->nullable();
             $table->timestamps();
         });
     }

@@ -21,6 +21,7 @@ $users = DB::table('users')->get();
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }}
             / OOT
         </div>
     </div>
@@ -83,7 +84,7 @@ $users = DB::table('users')->get();
                                 <div class="group-input">
                                     <label for="Initiator Group">Type </label>
                                     <select id="dynamicSelectType" name="type">
-                                        <option value="{{ route('oot.index');  }}">OOT</option>
+                                        <option value="{{ route('oot.index')  }}">OOT</option>
                                         <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
                                         <option value="{{ route('oos.index') }}">OOS Chemical</option>
                                     </select>

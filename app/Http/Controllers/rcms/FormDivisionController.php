@@ -32,7 +32,10 @@ class FormDivisionController extends Controller
             return redirect('root-cause-analysis');
         } elseif ($request->process_name == "Failure Investigation") {
             return redirect('rcms/failure-investigation');
-        } elseif ($request->process_name == "Change Control") {
+        }elseif ($request->process_name == "Non Conformance") {
+            return redirect('rcms/non-conformance');
+        }
+         elseif ($request->process_name == "Change Control") {
             return redirect()->route('CC.create');
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');

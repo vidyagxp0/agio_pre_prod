@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class OosAuditTrial extends Model
 {
     use HasFactory;
+    
+    public function oos_chemical() {
+        return $this->belongsTo(OOS::class);
+    }
 }
