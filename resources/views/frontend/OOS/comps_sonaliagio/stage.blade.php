@@ -263,7 +263,7 @@
                 <div class="modal-body">
                     <div class="group-input">
                         <label style="display: flex; align-items: baseline;" for="major">
-                        <input style="width: 10px;" type="radio" name="child_type" value="capa">CAPA
+                        <input style="width: 10px;" type="radio" name="child_type" value="capa">capa
                         </label>
                         <label style="display: flex; align-items: baseline;" for="major">
                         <input style="width: 10px;" type="radio" name="child_type" value="Action_Item">
