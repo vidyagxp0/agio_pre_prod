@@ -320,7 +320,7 @@
        
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS
         </div>
         <!-- <div class="button-bar">
                             <button type="button">Save</button>

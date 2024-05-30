@@ -309,7 +309,7 @@ $users = DB::table('users')
                     </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>
@@ -502,20 +502,22 @@ $users = DB::table('users')
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Initiator Group">Initial Attachment</label>
+                                <label for="Audit Attachments">Initial Attachments</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
-
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="file_attach"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="initial_attachment_gi[]" oninput="" multiple>
+                                        <input type="file" id="myfile" name="initial_attachment_gi[]"
+                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Tnitiaror Grouo">Source Document Type</label>
@@ -1055,10 +1057,9 @@ $users = DB::table('users')
                                     </textarea>
                             </div>
                         </div>
-
-                        <div class="col-12">
+                        <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="Audit Attachments"> Supporting Attachment </label>
+                                <label for="Audit Attachments">Supporting Attachment</label>
                                 <small class="text-primary">
                                     Please Attach all relevant or supporting documents
                                 </small>
@@ -1070,8 +1071,10 @@ $users = DB::table('users')
                                             oninput="addMultipleFiles(this, 'file_attach')" multiple>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
+                       
 
                         <div class="button-block">
                             <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
