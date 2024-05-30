@@ -102,7 +102,7 @@
                                 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Short Description">Qualification <span class="text-danger">*</span><span
+                                        <label for="Short Description">Qualification <span
                                                 class="text-danger">
                                         <input id="docname" type="text" name="qualification" >
                                     </div>
@@ -121,10 +121,19 @@
                                 
                                 
                                 <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="CAPA Team">Date of Joining</label>
-                                        <input type="date" name="date_joining" id="date_joining">
-                                    </div>
+                                    <div class="new-date-data-field">
+
+                                        <div class="group-input input-date">
+                                            <label for="repeat_nature">Date of Joining<span
+                                                class="text-danger d-none">*</span></label>
+                                                <div class="calenderauditee">                                     
+                                                    <input type="text"  id="date_joining"  readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="date_joining" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'date_joining')"/>
+                                                </div>
+                                            </div>
+                                        </div>
                                 </div>
                                 
                                 
@@ -158,10 +167,21 @@
                                                         <td>
                                                             <textarea name="document_number_1"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_1">
-                                                        </td>
                                                         
+                                                        <td>
+                                                        <div class="new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                                <div class="calenderauditee">                                     
+                                                                    <input type="text"  id="training_date_1"  readonly placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="training_date_1" value=""
+                                                                    class="hide-input"
+                                                                    oninput="handleDateInput(this, 'training_date_1')"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                         </td>
+                                                            
+                                                            
                                                          <td>
                                                             <textarea name="remark_1"></textarea>
                                                         </td>
@@ -172,9 +192,18 @@
                                                         <td>
                                                             <textarea name="document_number_2"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_2">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="2"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="2" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, '2')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                         
                                                          <td>
                                                             <textarea name="remark_2"></textarea>
@@ -187,9 +216,18 @@
                                                         <td>
                                                             <textarea name="document_number_3"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_3">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="3"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="3" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, '3')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                        
                                                          <td>
                                                             <textarea name="remark_3"></textarea>
@@ -202,10 +240,19 @@
                                                         <td>
                                                             <textarea name="document_number_4"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_4">
-                                                        </td>
-                                                       
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_4"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_4" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_4')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                           
+                                                         </td>
                                                          <td>
                                                             <textarea name="remark_4"></textarea>
                                                         </td>
@@ -217,9 +264,18 @@
                                                         <td>
                                                             <textarea name="document_number_5"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_5">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_5"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_5" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_5')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                        
                                                          <td>
                                                             <textarea name="remark_5"></textarea>
@@ -238,9 +294,18 @@
                                                         <td>
                                                             <textarea name="document_number_6"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_6">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_6"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_6" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_6')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                        
                                                          <td>
                                                             <textarea name="remark_6"></textarea>
@@ -254,7 +319,16 @@
                                                             <textarea name="document_number_7"></textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_7">
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_7"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_7" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_7')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
                                                         </td>
                                                         
                                                          <td>
@@ -269,7 +343,16 @@
                                                             <textarea name="document_number_8"></textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_8">
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_8"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_8" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_8')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
                                                         </td>
                                                        
                                                          <td>
@@ -284,9 +367,18 @@
                                                             <textarea name="document_number_9"></textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_9">
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_9"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_9" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_9')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                            
                                                         </td>
-                                                        
                                                          <td>
                                                             <textarea name="remark_9"></textarea>
                                                         </td>
@@ -298,9 +390,18 @@
                                                         <td>
                                                             <textarea name="document_number_10"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_10">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_10"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_10" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_10')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                         
                                                          <td>
                                                             <textarea name="remark_10"></textarea>
@@ -313,9 +414,18 @@
                                                         <td>
                                                             <textarea name="document_number_11"></textarea>
                                                         </td>
-                                                        <td>
-                                                           <input type="date" name="training_date_11">
-                                                        </td>
+                                                         <td>
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_11"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_11" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_11')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
+                                                         </td>
                                                        
                                                          <td>
                                                             <textarea name="remark_11"></textarea>
@@ -329,7 +439,16 @@
                                                             <textarea name="document_number_12"></textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_12">
+                                                            <div class="new-date-data-field">
+                                                                <div class="group-input input-date">
+                                                                     <div class="calenderauditee">                                     
+                                                                         <input type="text"  id="training_date_12"  readonly placeholder="DD-MMM-YYYY" />
+                                                                         <input type="date" name="training_date_12" value=""
+                                                                         class="hide-input"
+                                                                         oninput="handleDateInput(this, 'training_date_12')"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </div>
                                                         </td>
                                                        
                                                          <td>
@@ -341,9 +460,18 @@
                                                             <td>
                                                                 <textarea name="document_number_13"></textarea>
                                                             </td>
-                                                            <td>
-                                                               <input type="date" name="training_date_13">
-                                                            </td>
+                                                             <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                         <div class="calenderauditee">                                     
+                                                                             <input type="text"  id="training_date_13"  readonly placeholder="DD-MMM-YYYY" />
+                                                                             <input type="date" name="training_date_13" value=""
+                                                                             class="hide-input"
+                                                                             oninput="handleDateInput(this, 'training_date_13')"/>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                             </td>
                                                            
                                                              <td>
                                                                 <textarea name="remark_13"></textarea>
@@ -356,10 +484,19 @@
                                                             <td>
                                                                 <textarea name="document_number_14"></textarea>
                                                             </td>
-                                                            <td>
-                                                               <input type="date" name="training_date_14">
-                                                            </td>
-                                                            
+                                                             <td>
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                         <div class="calenderauditee">                                     
+                                                                             <input type="text"  id="training_date_14"  readonly placeholder="DD-MMM-YYYY" />
+                                                                             <input type="date" name="training_date_14" value=""
+                                                                             class="hide-input"
+                                                                             oninput="handleDateInput(this, 'training_date_14')"/>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div>
+                                                                
+                                                             </td>
                                                              <td>
                                                                 <textarea name="remark_14"></textarea>
                                                             </td>
@@ -372,9 +509,17 @@
                                                                 <textarea name="document_number_15"></textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_15">
+                                                                <div class="new-date-data-field">
+                                                                    <div class="group-input input-date">
+                                                                         <div class="calenderauditee">                                     
+                                                                             <input type="text"  id="training_date_1"  readonly placeholder="DD-MMM-YYYY" />
+                                                                             <input type="date" name="training_date_1" value=""
+                                                                             class="hide-input"
+                                                                             oninput="handleDateInput(this, 'training_date_1')"/>
+                                                                         </div>
+                                                                     </div>
+                                                                 </div> 
                                                             </td>
-                                                           
                                                              <td>
                                                                 <textarea name="remark_15"></textarea>
                                                             </td>
