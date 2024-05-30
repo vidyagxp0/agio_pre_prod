@@ -165,6 +165,7 @@
                         <div class="file-attachment-list" id="">
                             @if ($data->initial_attachment_gi)
                             @foreach ($data->initial_attachment_gi as $file)
+                            
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
