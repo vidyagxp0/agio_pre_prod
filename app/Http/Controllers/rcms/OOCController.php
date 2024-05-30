@@ -1343,9 +1343,13 @@ public function OOCAuditTrial($id){
 
 
     public function singleReports(Request $request, $id){
+        $ooc = OutOfCalibration::where('id', $id)->first();
+        $ooc->record = str_pad($ooc->record, 4, '0', STR_PAD_LEFT);
+        $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
+        $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
         $data = OutOfCalibration::find($id);
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
-        $oocevolutions = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+        $oocevolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
         //  $grid_Data = ErrataGrid::where(['e_id' => $id, 'identifier' => 'details'])->first();
         if (!empty($data)) {
             // $data->data = ErrataGrid::where('e_id', $id)->where('identifier', "details")->first();
@@ -1355,7 +1359,7 @@ public function OOCAuditTrial($id){
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolutions'))
+            $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolution','ooc'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
