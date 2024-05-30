@@ -21,19 +21,31 @@ class MarketComplaintController extends Controller
 {
     public function index()
     {
-        return view('frontend.market_complaint.market_complaint_new');
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('Y-m-d');
+        
+
+        return view('frontend.market_complaint.market_complaint_new',compact('due_date', 'record_number'));
     }
 
 
     public function store(Request $request)
     {
-// ============================================by using insta====================================
-
-$marketComplaint = new MarketComplaint();
 
 
-$marketComplaint->status = 'Opened';
-$marketComplaint->stage = 1;
+
+        if (!$request->description_gi) {
+            toastr()->info("Short Description is required");
+            return redirect()->back()->withInput();
+        }
+        $marketComplaint = new MarketComplaint();
+
+
+        $marketComplaint->status = 'Opened';
+        $marketComplaint->stage = 1;
 
 // Manually assigning each field from the request
         $marketComplaint->initiator_id = Auth::user()->id;
@@ -94,20 +106,20 @@ $marketComplaint->stage = 1;
 
 
 
+        //  dd($marketComplaint->record_number);
+            $marketComplaint->form_type="Market Complaint";
+        //    dd($marketComplaint);
+
         //  dd($marketComplaint);
-        $marketComplaint->form_type="Market Complaint";
-//    dd($marketComplaint);
-
-//  dd($marketComplaint);
 
 
 
-// $marketComplaint->save();
+        // $marketComplaint->save();
 
 
-        // ====================================intance end
-        // $input = $request->all();
-        // //  dd($request->all());
+            // ====================================intance end
+            // $input = $request->all();
+            // //  dd($request->all());
 
 
 
@@ -172,10 +184,21 @@ $marketComplaint->stage = 1;
             }
             // dd($marketComplaint);
 
+
+
+
             $marketComplaint->save();
 
-// ----------------------------------autid show  fileds ----------------------------------------------------------
-// -----------------------------------------------------------------------gi-------------
+
+
+
+            $record = RecordNumber::first();
+            $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+            $record->update();
+
+
+            // ----------------------------------autid show  fileds ----------------------------------------------------------
+            // -----------------------------------------------------------------------gi-------------
             if (!empty($marketComplaint->review_of_past_history_of_product_gi)) {
                 $history = new MarketComplaintAuditTrial();
                 $history->market_id = $marketComplaint->id;
@@ -553,8 +576,8 @@ $marketComplaint->stage = 1;
 
 
 
-// -------------------------------------------------------------------gi end aundit dtat------------------
-// -------------------------------------------------------------------hod end aundit dtat------------------
+                // -------------------------------------------------------------------gi end aundit dtat------------------
+                // -------------------------------------------------------------------hod end aundit dtat------------------
 
 
                 if (!empty($marketComplaint->conclusion_hodsr)) {
@@ -710,11 +733,11 @@ $marketComplaint->stage = 1;
                     $history->save();
                 }
 
-// ----------------------------------------------end hod audit data ----------------------
+                // ----------------------------------------------end hod audit data ----------------------
 
 
 
-// -----------------------------------------------------grid string data
+                // -----------------------------------------------------grid string data
 
 
             // For "Product Details"
@@ -832,6 +855,11 @@ return redirect()->to('rcms/qms-dashboard')->with('success', 'Market Complaint c
 public function update(Request $request,$id){
 
     // $marketComplaint = MarketComplaint::find($id);
+    if (!$request->description_gi) {
+        toastr()->info("Short Description is required");
+        return redirect()->back()->withInput();
+    }
+
     $marketComplaint = MarketComplaint::find($id);
     if (!$marketComplaint) {
         return redirect()->back()->with('error', 'Market Complaint not found.');
