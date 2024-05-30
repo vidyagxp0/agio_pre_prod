@@ -19,10 +19,10 @@
                     <label for="Report Attachments"> Manufact. Invest. Required? </label>
                     <select name="manufact_invest_required_piii">
                         <option value="0">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->manufact_invest_required_piii === '1' ? 'selected' :
-                                '' }}>1</option>
-                        <option value="2" {{ $data->manufact_invest_required_piii === '2' ? 'selected' : ''
-                                }}>2</option>
+                        <option value="Yes" {{ $data->manufact_invest_required_piii === 'Yes' ? 'selected' :
+                                '' }}>Yes</option>
+                        <option value="No" {{ $data->manufact_invest_required_piii === 'No' ? 'selected' : ''
+                                }}>No</option>
                     </select>
                 </div>
             </div>
@@ -39,48 +39,11 @@
                     </select>
                 </div>
             </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Manufacturing Invst. Ref.</label>
-                    <select multiple id="reference_record" name="manufacturing_invst_ref_piii[]" id="">
-                        <option value="0">--Select---</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments"> Re-sampling Required? </label>
-                    <select name="re_sampling_required_piii">
-                    <option value="0" {{ $data->re_sampling_required_piii == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="yes" {{ $data->re_sampling_required_piii == 'yes' ?
-                            'selected' : '' }}>yes</option>
-                        <option value="no" {{ $data->re_sampling_required_piii == 'n0' ?
-                            'selected' : '' }}>no</option>
-                    </select>
-                </div>
-            </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Comments"> Audit Comments </label>
-                    <textarea  input type="audit_comments_piii" name="audit_comments_piii">{{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
+                    <textarea  class="summernote" type="audit_comments_piii" name="audit_comments_piii">{{$data->audit_comments_piii ? $data->audit_comments_piii : ""}}
                     </textarea>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Re-sampling Ref. No.</label>
-                    <select multiple id="reference_record" name="re_sampling_ref_no_piii" id="">
-                        <option value="0">--Select---</option>
-                        <option value="yes" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
-                                '' }}>1</option>
-                        <option value="no" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''
-                                }}>2</option>
-                    </select>
                 </div>
             </div>
 
@@ -98,18 +61,11 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Reference Recores">Hypo/Exp. Reference</label>
-                    <select multiple id="reference_record" name="hypo_exp_reference_piii" id="">
-                        <option value="0" {{ $data->hypo_exp_reference_piii == '0' ? 'selected' : ''
-                            }}>Enter Your Selection Here</option>
-                        <option value="1" {{ $data->hypo_exp_reference_piii == '1' ?
-                            'selected' : '' }}>1</option>
-                        <option value="2" {{ $data->hypo_exp_reference_piii == '2' ?
-                            'selected' : '' }}>2</option>
-
-                    </select>
+                    <textarea class="summernote" name="hypo_exp_reference_piii" id="summernote-1">
+                    {{$data->hypo_exp_reference_piii ? $data->hypo_exp_reference_piii : ""}}</textarea>
                 </div>
             </div>
 

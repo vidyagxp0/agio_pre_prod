@@ -3,11 +3,28 @@
 
         <div class="sub-head">General Information</div>
         <div class="row">
-
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Initiator Group">Type </label>
+                    <select id="dynamicSelectType" name="type">
+                        <option value="{{ route('oos.index') }}">OOS Chemical</option>
+                        <option value="{{ route('oos_micro.index') }}">OOS Micro</option>
+                        <option value="{{ route('oot.index');  }}">OOT</option>
+                    </select>
+                </div>
+            </div>
+            <script>
+                 document.getElementById("dynamicSelectType").addEventListener("change", function() {
+                    var selectedRoute = this.value;
+                    window.location.href = selectedRoute; // Redirect to the selected route
+                });
+            </script>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator"> Record Number </label>
-                    <input type="number" value="{{ $data->record_number ?? '' }}">
+                     <input disabled type="text" name="record_number"
+                      value="{{ Helpers::getDivisionName($data->division_id) }}/OOS Chemical/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number, 4, "0", STR_PAD_LEFT ) : '1' }}">
+                                               
                 </div>
             </div>
 
@@ -34,8 +51,8 @@
                     <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
                     <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                     <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                    </div>
                 </div>
-            </div>
 
             <div class="col-lg-6">
                 <div class="group-input">
@@ -45,8 +62,8 @@
                     <small class="text-primary">
                         Please mention expected date of completion
                     </small>
-                    <input type="date" id="date" name="due_date" value="{{ $data->due_date ?? '' }}">
-
+                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
+                    class="hide-input" oninput="handleDateInput(this, 'due_date')" value="{{ $data->due_date ?? '' }}"/>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -54,18 +71,26 @@
                     <label for="Short Description"> Severity Level</label>
                     <select name="severity_level_gi">
                         <option value="o">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' :
-                            '' }}>1</option>
-                        <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' :
-                            '' }}>2</option>
+                        <option value="Major" {{ $data->severity_level_gi == 'Major' ? 'selected' :
+                            '' }}>Major</option>
+                        <option value="Minor" {{ $data->severity_level_gi == 'Minor' ? 'selected' :
+                            '' }}>Minor</option>
+                        <option value="Critical" {{ $data->severity_level_gi == 'Critical' ? 'selected' :
+                        '' }}>Critical</option>
                     </select>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="group-input">
+                    <label for="Initiator Group">Short Description</label>
+                    <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Short Description">Initiator Group <span
                             class="text-danger"></span></label>
-                    <select name="initiator_group">
+                    <select name="initiator_group" id="initiator_group">
                         <option selected disabled>---select---</option>
                         @foreach (Helpers::getInitiatorGroups() as $code => $initiator_group)
                         <option value="{{ $code }}" @if ($data->initiator_group == $code) selected
@@ -78,34 +103,27 @@
                 <div class="group-input">
                     <label for="Short Description">Initiator Group Code <span
                             class="text-danger"></span></label>
-                    <input type="text" name="initiator_group_code" readonly
+                    <input type="text" name="initiator_group_code"  id="initiator_group_code" readonly
                         value="{{ $data->initiator_group_code ?? '' }}">
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group Code">Initiated Through </label>
-                    <textarea type="text"
-                        name="initiated_through_gi">{{ $data->initiated_through_gi ? $data->initiated_through_gi :'' }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">If Others</label>
-                    <select name="if_others_gi">
-                        <option value="o" {{ $data->if_others_gi == 'o' ? 'selected' : '' }}>Enter Your
-                            Selection Here</option>
-                        <option value="1" {{ $data->if_others_gi == '1' ? 'selected' : '' }}>1</option>
-                        <option value="2" {{ $data->if_others_gi == '2' ? 'selected' : '' }}>2</option>
-                    </select>
+                    <textarea type="if_others_gi"
+                        name="if_others_gi">{{ $data->if_others_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group Code">Is Repeat?</label>
-                    <textarea type="is_repeat_gi"
-                        name="is_repeat_gi">{{ $data->is_repeat_gi }}</textarea>
+                    
+                        <select name="is_repeat_gi">
+                        <option value="o" {{ $data->is_repeat_gi == 'o' ? 'selected' : '' }}>Enter Your
+                            Selection Here</option>
+                        <option value="yes" {{ $data->is_repeat_gi == 'yes' ? 'selected' : '' }}>yes</option>
+                        <option value="No" {{ $data->is_repeat_gi == '2' ? 'selected' : '' }}>No</option>
+                    </select>
                 </div>
             </div>
             <div class="col-lg-6 mt-4">
@@ -119,22 +137,12 @@
                 <div class="group-input">
                     <label for="Initiator Group">Nature of Change</label>
                     <select name="nature_of_change_gi">
-                    <!-- <option value="Yes" {{ $data->action_plan_requirement_ocqr == 'Yes' ? 'selected' : '' }}>Yes
-                    </option> -->
-                        <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : ''
+                      <option value="0" {{ $data->nature_of_change_gi == '0' ? 'selected' : ''
                             }}>Enter Your Selection Here</option>
-                        <option value="lab_incident" {{ $data->nature_of_change_gi == 'lab_incident' ?
-                            'selected' : '' }}>Lab Incident</option>
-                        <option value="deviation" {{ $data->nature_of_change_gi == 'deviation' ?
-                            'selected' : '' }}>Deviation</option>
-                        <option value="product_nonconformance" {{ $data->nature_of_change_gi ==
-                            'product_nonconformance' ? 'selected' : '' }}>Product Non-conformance
-                        </option>
-                        <option value="inspectional_observation" {{ $data->nature_of_change_gi ==
-                            'inspectional_observation' ? 'selected' : '' }}>Inspectional Observation
-                        </option>
-                        <option value="others" {{ $data->nature_of_change_gi == 'others' ? 'selected' :
-                            '' }}>Others</option>
+                        <option value="temporary" {{ $data->nature_of_change_gi == 'temporary' ?
+                            'selected' : '' }}>temporary</option>
+                        <option value="permanent" {{ $data->nature_of_change_gi == 'permanent' ?
+                            'selected' : '' }}>permanent</option>
                     </select>
                 </div>
             </div>
@@ -144,12 +152,6 @@
                     <label for="Initiator Group">Deviation Occurred On</label>
                     <input type="date" name="deviation_occured_on_gi"
                         value="{{ $data->deviation_occured_on_gi }}">
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Initiator Group">Description</label>
-                    <textarea name="description_gi" required>{{ $data->description_gi }}</textarea>
                 </div>
             </div>
             <div class="col-lg-6">

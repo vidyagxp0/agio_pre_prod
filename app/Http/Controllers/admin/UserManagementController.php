@@ -108,8 +108,8 @@ class UserManagementController extends Controller
 
         if ($user->save()) {
             foreach ($request->roles as $roleId) {
-                $userRole = new UserRole();                
                 $checkRole = Roles::find($roleId);
+
 
                 // Split the string using the '-' delimiter
                 $roleArray = explode('-', $checkRole->name);
@@ -121,21 +121,25 @@ class UserManagementController extends Controller
 
                 // Assuming you have models for q_m_s_divisions and q_m_s_process
                 $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
-                $process = QMSProcess::where('process_name', $q_m_s_processes_name)->first();
+                $processes = QMSProcess::where('process_name', $q_m_s_processes_name)->get();
                 $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
-                $q_m_s_divisions_id = $division->id;
-                $q_m_s_processes_id = $process->id;
-                $q_m_s_roles_id = $qmsroles->id;
+                
+                foreach ($processes as $process) {
+                    $q_m_s_divisions_id = $division->id;
+                    $q_m_s_processes_id = $process->id;
+                    $q_m_s_roles_id = $qmsroles->id;
+                    
+                    $userRole = new UserRole();                
+                    // Concatenate the q_m_s_roles_id with previous ones
+                    $usertableRole .= $q_m_s_roles_id . ',';
 
-                // Concatenate the q_m_s_roles_id with previous ones
-                $usertableRole .= $q_m_s_roles_id . ',';
-
-                $userRole->user_id = $user->id;
-                $userRole->role_id = $roleId;
-                $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
-                $userRole->q_m_s_processes_id = $q_m_s_processes_id;
-                $userRole->q_m_s_roles_id = $q_m_s_roles_id;
-                $userRole->save();
+                    $userRole->user_id = $user->id;
+                    $userRole->role_id = $roleId;
+                    $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
+                    $userRole->q_m_s_processes_id = $q_m_s_processes_id;
+                    $userRole->q_m_s_roles_id = $q_m_s_roles_id;
+                    $userRole->save();
+                }
             }
 
             // Remove the trailing comma from the concatenated string

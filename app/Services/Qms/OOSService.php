@@ -27,7 +27,7 @@ class OOSService
         try {
 
             $input = $request->all();
-            $input['form_type'] = "OOS Cemical";
+            $input['form_type'] = "OOS Chemical";
             $input['status'] = 'Opened';
             $input['stage'] = 1;
            
@@ -135,9 +135,8 @@ class OOSService
         try {
 
             $input = $request->all();
-
-            $input['status'] = 1;
-            $input['stage'] = 'Opened';
+            $input['status'] = 'Opened';
+            $input['stage'] = 1;
 
             $file_input_names = [
                 'initial_attachment_gi',
