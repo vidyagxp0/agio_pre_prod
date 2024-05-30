@@ -84,7 +84,7 @@
                                     <div class="group-input">
                                         <label for="Division Code">Department & Location <span class="text-danger">*</span></label>
                                         <input  type="text" name="department_location" >
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                               

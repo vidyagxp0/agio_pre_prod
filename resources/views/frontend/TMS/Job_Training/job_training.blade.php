@@ -85,7 +85,7 @@
                                         {{--    value="{{ Helpers::getDivisionName(session()->get('division')) }}" --}}
                                         <input type="text" name="department_location">
                                         {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                               

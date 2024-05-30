@@ -16,7 +16,7 @@
     </div>
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        QMS-North America / CAPA
+        {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
     </div>
     {{-- <div class="button-bar">
         <button type="button">Save</button>

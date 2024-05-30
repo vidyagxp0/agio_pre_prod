@@ -347,7 +347,7 @@
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_code"
                                                     value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                {{-- <div class="static">QMS-North America</div> --}}
+                                                {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

@@ -1952,6 +1952,7 @@ class RoleGroupSeeder extends Seeder
 
         $processes = [
             'Effectiveness Check',
+            'Root Cause Analysis',
             'Change Control',
             'Lab Incident',
             'CAPA',

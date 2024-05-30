@@ -14,7 +14,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            QMS-North America / Child / Root Cause Analysis
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Child / Root Cause Analysis
         </div>
     </div>
     @php
@@ -56,7 +56,7 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input type="hidden" name="division_code">
-                                        <div class="static">QMS-North America</div>
+                                        <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
