@@ -1023,9 +1023,9 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
-
+                            
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
                                 New Document
