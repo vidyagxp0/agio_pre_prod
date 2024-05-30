@@ -32,7 +32,7 @@
 
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / CAPA
+            {{ Helpers::getDivisionName(session()->get('division')) }} / On the Job
         </div>
     </div>
 
@@ -90,23 +90,30 @@
                                     </div>
                                 </div>
                               
-                                
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">Start Date of Training </label>
-                                        <input type="date" name="startdate" 
-                                            value="{{ $jobTraining->startdate }}">
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Start Date of Training</label>
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="startdate"  value="{{ Helpers::getdateFormat($jobTraining->startdate) }}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="startdate" value="{{ Helpers::getdateFormat($jobTraining->startdate) }}"
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'startdate')"/>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Initiator Group Code">End Date of Training </label>
-                                        <input type="date" name="enddate" 
-                                            value="{{ $jobTraining->enddate }}">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">End Date of Training</label>
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="enddate" value="{{ Helpers::getdateFormat($jobTraining->enddate) }}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="enddate"  value="{{ Helpers::getdateFormat($jobTraining->enddate) }}"
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'enddate')"/>
+                                        </div>
                                     </div>
                                 </div>
-                   
-                                
                                 
                                
 

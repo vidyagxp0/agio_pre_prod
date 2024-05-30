@@ -1030,14 +1030,14 @@ class DeviationController extends Controller
         }
         if ($request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
-        $history->deviation_id = $deviation->id;
-        $history->activity_type = 'Immediate Action (if any)';
-        $history->previous = "Null";
-        $history->current = $deviation->Immediate_Action;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->change_to =   "Opened";
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Immediate Action (if any)';
+            $history->previous = "Null";
+            $history->current = $deviation->Immediate_Action;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
             $history->change_from = "Initiator";
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $deviation->status;
@@ -2876,7 +2876,6 @@ class DeviationController extends Controller
             $parent_name = "CAPA";
             $effectivenesschild = Deviation::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
-
             $effectivenesschild->save();
         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
@@ -2902,12 +2901,9 @@ class DeviationController extends Controller
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            // return $request;
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
-
-
             if ($deviation->stage == 2) {
 
                 $deviation->stage = "1";

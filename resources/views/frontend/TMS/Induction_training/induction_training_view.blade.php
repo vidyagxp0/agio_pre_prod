@@ -53,14 +53,15 @@
                 
             </div>
 
-            <form action="{{ route('induction_training.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('induction_training.update', $inductionTraining->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div id="step-form">
 
-                    @if (!empty($parent_id))
+                    {{-- @if (!empty($parent_id))
                         <input type="hidden" name="parent_id" value="{{ $parent_id }}">
                         <input type="hidden" name="parent_type" value="{{ $parent_type }}">
-                    @endif
+                    @endif --}}
                     <!-- General information content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -69,7 +70,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number">Employee ID <span class="text-danger">*</span></label>
                                         <input  type="text" name="employee_id" 
-                                            value="">
+                                            value="{{ $inductionTraining->employee_id }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -77,26 +78,22 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number">Name of Employee <span class="text-danger">*</span></label>
                                         <input  type="text" name="name_employee" id="name_employee"
-                                            value="">
+                                            value="{{ $inductionTraining->name_employee }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code">Department & Location <span class="text-danger">*</span></label>
-                                        <input  type="text" name="department_location" >
+                                        <input  type="text" name="department_location" value="{{ $inductionTraining->department_location }}" >
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                               
-                                
-                               
-                                
-                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Designation <span class="text-danger">*</span></label>
                                         <input type="text" name="designation" id="designation"
-                                            value="">
+                                            value="{{ $inductionTraining->designation }}">
                                     </div>
                                 </div>
                                 
@@ -104,18 +101,15 @@
                                     <div class="group-input">
                                         <label for="Short Description">Qualification <span class="text-danger">*</span><span
                                                 class="text-danger">
-                                        <input id="docname" type="text" name="qualification" >
+                                        <input id="docname" type="text" name="qualification" value="{{ $inductionTraining->qualification }}">
                                     </div>
                                 </div>
-                               
-                                
-                               
                                
                                 <div class="col-lg-6">
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat_nature">Experience (if any)<span
                                                 class="text-danger d-none">*</span></label>
-                                       <input type="text" name="experience_if_any">
+                                       <input type="text" name="experience_if_any" value="{{ $inductionTraining->experience_if_any }}">
                                     </div>
                                 </div>
                                 
@@ -123,15 +117,10 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="CAPA Team">Date of Joining</label>
-                                        <input type="date" name="date_joining" id="date_joining">
+                                        <input type="date" name="date_joining" id="date_joining" value="{{ $inductionTraining->date_joining }}">
                                     </div>
                                 </div>
                                 
-                                
-                                
-                                
-                               
-
                                 <div class="col-12">
                                     <div class="group-input">
                                         <div class="why-why-chart">
@@ -156,28 +145,28 @@
                                                         <td style="background: #DCD8D8">Introduction of Agio Plant</td>
                                                         
                                                         <td>
-                                                            <textarea name="document_number_1"></textarea>
+                                                            <textarea name="document_number_1" value="" >{{ $inductionTraining->{"document_number_1"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_1">
+                                                           <input type="date" name="training_date_1" value="{{ $inductionTraining->{"training_date_1"} }}">
                                                         </td>
                                                         
                                                          <td>
-                                                            <textarea name="remark_1"></textarea>
+                                                            <textarea name="remark_1">{{ $inductionTraining->{"remark_1"} }}</textarea>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
                                                         <td style="background: #DCD8D8">Personnel Hygiene</td>
                                                         <td>
-                                                            <textarea name="document_number_2"></textarea>
+                                                            <textarea name="document_number_2" value="" >{{ $inductionTraining->{"document_number_2"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_2">
+                                                           <input type="date" name="training_date_2" value="{{ $inductionTraining->{"training_date_2"} }}">
                                                         </td>
                                                         
                                                          <td>
-                                                            <textarea name="remark_2"></textarea>
+                                                            <textarea name="remark_2">{{ $inductionTraining->{"remark_2"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -185,29 +174,29 @@
                                                         <td>3</td>
                                                         <td style="background: #DCD8D8">Entry Exit Procedure in Factory premises</td>
                                                         <td>
-                                                            <textarea name="document_number_3"></textarea>
+                                                            <textarea name="document_number_3" value="" >{{ $inductionTraining->{"document_number_3"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_3">
+                                                           <input type="date" name="training_date_3" value="{{ $inductionTraining->{"training_date_3"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_3"></textarea>
+                                                            <textarea name="remark_3">{{ $inductionTraining->{"remark_3"} }}</textarea>
                                                         </td>
         
                                                     </tr>
                                                     <tr>
                                                         <td>4</td>
                                                         <td style="background: #DCD8D8">Good Documentation Practices</td>
-                                                        <td>
-                                                            <textarea name="document_number_4"></textarea>
+                                                       <td>
+                                                            <textarea name="document_number_4" value="" >{{ $inductionTraining->{"document_number_4"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_4">
+                                                           <input type="date" name="training_date_4" value="{{ $inductionTraining->{"training_date_4"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_4"></textarea>
+                                                            <textarea name="remark_4">{{ $inductionTraining->{"remark_4"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -215,14 +204,14 @@
                                                         <td>5</td>
                                                         <td style="background: #DCD8D8">Data Integrity</td>
                                                         <td>
-                                                            <textarea name="document_number_5"></textarea>
+                                                            <textarea name="document_number_5" value="" >{{ $inductionTraining->{"document_number_5"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_5">
+                                                           <input type="date" name="training_date_5" value="{{ $inductionTraining->{"training_date_5"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_5"></textarea>
+                                                            <textarea name="remark_5">{{ $inductionTraining->{"remark_5"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -236,14 +225,14 @@
                                                         <td>6 . a</td>
                                                         <td style="background: #DCD8D8">	GMP</td>
                                                         <td>
-                                                            <textarea name="document_number_6"></textarea>
+                                                            <textarea name="document_number_6" value="" >{{ $inductionTraining->{"document_number_6"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_6">
+                                                           <input type="date" name="training_date_6" value="{{ $inductionTraining->{"training_date_6"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_6"></textarea>
+                                                            <textarea name="remark_6">{{ $inductionTraining->{"remark_6"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -251,44 +240,44 @@
                                                         <td>6 . b</td>
                                                         <td style="background: #DCD8D8">	Documentation</td>
                                                         <td>
-                                                            <textarea name="document_number_7"></textarea>
+                                                            <textarea name="document_number_7" value="" >{{ $inductionTraining->{"document_number_7"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_7">
+                                                           <input type="date" name="training_date_7" value="{{ $inductionTraining->{"training_date_7"} }}">
                                                         </td>
                                                         
                                                          <td>
-                                                            <textarea name="remark_7"></textarea>
+                                                            <textarea name="remark_7">{{ $inductionTraining->{"remark_7"} }}</textarea>
                                                         </td>
         
                                                     </tr>
                                                     <tr>
-                                                        <td>6 .c</td>
+                                                        <td>6 . c</td>
                                                         <td style="background: #DCD8D8">	Process Control</td>
                                                         <td>
-                                                            <textarea name="document_number_8"></textarea>
+                                                            <textarea name="document_number_8" value="" >{{ $inductionTraining->{"document_number_8"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_8">
+                                                           <input type="date" name="training_date_8" value="{{ $inductionTraining->{"training_date_8"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_8"></textarea>
+                                                            <textarea name="remark_8">{{ $inductionTraining->{"remark_8"} }}</textarea>
                                                         </td>
         
                                                     </tr>
                                                     <tr>
                                                         <td>6 . d</td>
-                                                        <td style="background: #DCD8D8">d.	Cross Contamination</td>
+                                                        <td style="background: #DCD8D8">	Cross Contamination</td>
                                                         <td>
-                                                            <textarea name="document_number_9"></textarea>
+                                                            <textarea name="document_number_9" value="" >{{ $inductionTraining->{"document_number_9"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_9">
+                                                           <input type="date" name="training_date_9" value="{{ $inductionTraining->{"training_date_9"} }}">
                                                         </td>
                                                         
                                                          <td>
-                                                            <textarea name="remark_9"></textarea>
+                                                            <textarea name="remark_9">{{ $inductionTraining->{"remark_9"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -296,14 +285,14 @@
                                                         <td>6 . e</td>
                                                         <td style="background: #DCD8D8">	Sanitization and Hygiene</td>
                                                         <td>
-                                                            <textarea name="document_number_10"></textarea>
+                                                            <textarea name="document_number_10" value="" >{{ $inductionTraining->{"document_number_10"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_10">
+                                                           <input type="date" name="training_date_10" value="{{ $inductionTraining->{"training_date_10"} }}">
                                                         </td>
                                                         
                                                          <td>
-                                                            <textarea name="remark_10"></textarea>
+                                                            <textarea name="remark_10">{{ $inductionTraining->{"remark_10"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -311,14 +300,14 @@
                                                         <td>6 . f</td>
                                                         <td style="background: #DCD8D8">	Warehousing</td>
                                                         <td>
-                                                            <textarea name="document_number_11"></textarea>
+                                                            <textarea name="document_number_11" value="" >{{ $inductionTraining->{"document_number_11"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_11">
+                                                           <input type="date" name="training_date_11" value="{{ $inductionTraining->{"training_date_11"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_11"></textarea>
+                                                            <textarea name="remark_11">{{ $inductionTraining->{"remark_11"} }}</textarea>
                                                         </td>
         
                                                     </tr>
@@ -326,27 +315,27 @@
                                                         <td>6 . g</td>
                                                         <td style="background: #DCD8D8">	Complaint and Recall</td>
                                                         <td>
-                                                            <textarea name="document_number_12"></textarea>
+                                                            <textarea name="document_number_12" value="" >{{ $inductionTraining->{"document_number_12"} }}</textarea>
                                                         </td>
                                                         <td>
-                                                           <input type="date" name="training_date_12">
+                                                           <input type="date" name="training_date_12" value="{{ $inductionTraining->{"training_date_12"} }}">
                                                         </td>
-                                                       
+                                                        
                                                          <td>
-                                                            <textarea name="remark_12"></textarea>
+                                                            <textarea name="remark_12">{{ $inductionTraining->{"remark_12"} }}</textarea>
                                                         </td>
                                                         <tr>
                                                             <td>6 . h</td>
                                                             <td style="background: #DCD8D8">	Utilities</td>
                                                             <td>
-                                                                <textarea name="document_number_13"></textarea>
+                                                                <textarea name="document_number_13" value="" >{{ $inductionTraining->{"document_number_13"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_13">
+                                                               <input type="date" name="training_date_13" value="{{ $inductionTraining->{"training_date_13"} }}">
                                                             </td>
-                                                           
+                                                            
                                                              <td>
-                                                                <textarea name="remark_13"></textarea>
+                                                                <textarea name="remark_13">{{ $inductionTraining->{"remark_13"} }}</textarea>
                                                             </td>
             
                                                         </tr>
@@ -354,29 +343,29 @@
                                                             <td>6 . i</td>
                                                             <td style="background: #DCD8D8">	Water</td>
                                                             <td>
-                                                                <textarea name="document_number_14"></textarea>
+                                                                <textarea name="document_number_14" value="" >{{ $inductionTraining->{"document_number_14"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_14">
+                                                               <input type="date" name="training_date_14" value="{{ $inductionTraining->{"training_date_14"} }}">
                                                             </td>
                                                             
                                                              <td>
-                                                                <textarea name="remark_14"></textarea>
+                                                                <textarea name="remark_14">{{ $inductionTraining->{"remark_14"} }}</textarea>
                                                             </td>
             
                                                         </tr>
                                                         <tr>
-                                                            <td> 6 . j</td>
+                                                            <td>6 . j</td>
                                                             <td style="background: #DCD8D8">	Safety Module</td>
                                                             <td>
-                                                                <textarea name="document_number_15"></textarea>
+                                                                <textarea name="document_number_15" value="" >{{ $inductionTraining->{"document_number_15"} }}</textarea>
                                                             </td>
                                                             <td>
-                                                               <input type="date" name="training_date_15">
+                                                               <input type="date" name="training_date_15" value="{{ $inductionTraining->{"training_date_15"} }}">
                                                             </td>
-                                                           
+                                                            
                                                              <td>
-                                                                <textarea name="remark_15"></textarea>
+                                                                <textarea name="remark_15">{{ $inductionTraining->{"remark_15"} }}</textarea>
                                                             </td>
             
                                                         </tr>
@@ -390,9 +379,9 @@
                                     <div class="group-input">
                                         <label for="severity-level">HR Name</label>
                                         
-                                        <select name="hr_name">
+                                        <select name="hr_name" value="{{ $inductionTraining->hr_name }}" >
                                             <option value="0">-- Select --</option>
-                                            <option value="hr">HR </option>
+                                            <option value="hr" {{ $inductionTraining->hr_name == "hr" ? 'selected' : '' }}>HR </option>
 
                                         </select>
                                     </div>
@@ -401,9 +390,9 @@
                                     <div class="group-input">
                                         <label for="severity-level">Trainee Name</label>
                                         
-                                        <select name="trainee_name">
+                                        <select name="trainee_name" value="{{ $inductionTraining->trainee_name }}">
                                             <option value="0">-- Select --</option>
-                                            <option value="trainee1">trainee 1</option>
+                                            <option value="trainee1" {{ $inductionTraining->trainee_name == "trainee1" ? 'selected' : '' }}>trainee 1</option>
                                            
                                         </select>
                                     </div>
