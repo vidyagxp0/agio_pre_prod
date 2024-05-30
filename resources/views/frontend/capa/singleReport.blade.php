@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
                     </div>
                 </td>
             </tr>
@@ -203,7 +203,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_id){{ Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -218,17 +218,17 @@
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">{{ $data->severity_level_form }}</td>
 
-                       
+
                     </tr>
                     <tr>
                     <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                       
+
                     </tr>
 
-                   
+
                     <tr>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
@@ -254,7 +254,7 @@
                     <tr>
                             <th class="w-20">Reference Records</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
-                          
+
                         </tr>
                     <tr>
                         <th class="w-20">Initial Observation</th>
@@ -363,7 +363,7 @@
                         </table>
                       </div>
                     </table>
-                   
+
                 </div>
             </div> -->
             <!-- <div class="block">
@@ -433,9 +433,9 @@
                             <td class="w-15">{{unserialize($data->Material_Details->material_batch_no)[$key] ?  unserialize($data->Material_Details->material_batch_no)[$key] : "Not Applicable" }}</td>
                             <td class="w-5">{{unserialize($data->Material_Details->material_mfg_date)[$key] ?  unserialize($data->Material_Details->material_mfg_date)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_expiry_date)[$key] ?  unserialize($data->Material_Details->material_expiry_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_desposition)[$key] ?  unserialize($data->Material_Details->material_batch_desposition)[$key] : "Not Applicable" }}</td>  
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_desposition)[$key] ?  unserialize($data->Material_Details->material_batch_desposition)[$key] : "Not Applicable" }}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_remark)[$key] ?  unserialize($data->Material_Details->material_remark)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td> 
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td>
                         </tr>
                         @endforeach
                         @else
@@ -482,7 +482,7 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                          
+
                         @endif
                     </table>
                 </div>
@@ -499,7 +499,7 @@
                             <th class="w-20">Details</th>
                             <td class="w-80">@if($data->details){{ $data->details }}@else Not Applicable @endif</td>
                         </tr>
-                        
+
                          <tr>
                             <th class="w-20">Project Datails Application</th>
                             <td class="w-80"> {{ $data->project_details_application }}</td>
@@ -530,7 +530,8 @@
                         </tr> -->
                     </table>
                 </div>
-            
+
+            <br>
             <div class="block">
                 <div class="block-head">
                   Other type CAPA Details
@@ -579,7 +580,7 @@
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
 
                     </tr> --}}
-                  
+
                 <div class="block-head">
                     Closure Attachment
                  </div>

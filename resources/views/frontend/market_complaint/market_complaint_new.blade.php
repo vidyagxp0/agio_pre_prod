@@ -10,13 +10,16 @@
         }
     </style>
 
+@php
+        $users = DB::table('users')->get();
+    @endphp
     <div class="form-field-head">
         {{-- <div class="pr-id">
             New Child
         </div> --}}
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            / Market Complaint
+            {{ Helpers::getDivisionName(session()->get('division')) }}/ Market Complaint
         </div>
     </div>
 
@@ -139,6 +142,24 @@
         });
     </script>
 
+    <script>
+        function handleDateInput(input, targetId) {
+            const target = document.getElementById(targetId);
+            const date = new Date(input.value);
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            const formattedDate = date.toLocaleDateString('en-US', options).replace(/ /g, '-');
+            target.value = formattedDate;
+        }
+    </script>
+
+
+
+
+
+
+
+
+
 
 
 
@@ -160,7 +181,7 @@
 
             </div>
 
-            <form action="{{ route('actionItem.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('marketcomplaint.mcstore') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div id="step-form">
@@ -180,34 +201,34 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number" value="">
+                                        {{-- <input disabled type="text" name="record_number" value=" {{ Helpers::getDivisionName(session()->get('division')) }}/LI/{{ date('Y') }}/{{ $record_number}}"> --}}
 
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code </b></label>
-                                        <input disabled type="text" name="division_code" value="">
-                                        <input type="hidden" name="division_id" value="">
-
+                                        <label disabled for="Short Description">Division Code<span class="text-danger"></span></label>
+                                        <input disabled type="text" name="division_code"
+                                                value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" name="originator_id" value="" />
+                                        <input disabled type="text" name="initiator" value="{{ Auth::user()->name }}" />
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                <div class="col-md-6 ">
                                     <div class="group-input ">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="" name="intiation_date">
-                                        <input type="hidden" value="" name="intiation_date">
+                                        <label for="due-date"> Date Of Initiation<span class="text-danger"></span></label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
-
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -215,7 +236,7 @@
 
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
+                                            <input type="date" name="due_date_gi"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                                 class="hide-input" oninput="handleDateInput(this, 'due_date')" />
                                         </div>
@@ -226,50 +247,55 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiator_Group" id="initiator_group">
+                                        <select name="initiator_group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA">
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB">Quality
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>
+                                                Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC">Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                                Central
                                                 Quality Control</option>
-                                            <option value="MANU">
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG">Plasma
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS">Central
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
+                                                Central
                                                 Stores</option>
-                                            <option value="ITG">
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM">
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL">
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
                                                 Central Laboratory</option>
 
-                                            <option value="TT">Tech
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA">
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM">
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA">IT
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC">
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG">
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM">
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA">
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                        <input type="text" name="initiator_group_code_gi" id="initiator_group_code"
                                             value="">
                                     </div>
                                 </div>
@@ -278,7 +304,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through" onchange="">
+                                        <select name="initiated_through_gi" onchange="">
                                             <option value="">-- select --</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
@@ -297,7 +323,7 @@
                                         <label for="If Other">If Other</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="initiated_if_other" id="summernote-1">
+                                        <textarea class="summernote" name="if_other_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -305,9 +331,11 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Is Repeat</label>
-                                        <select name="is_repeat" onchange="">
+                                        <select name="is_repeat_gi" onchange="">
                                             <option value="">-- select --</option>
-                                            <option value=""></option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+
 
                                         </select>
                                     </div>
@@ -318,7 +346,7 @@
                                         <label for="Repeat Nature">Repeat Nature</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Repeat_Nature" id="summernote-1">
+                                        <textarea class="summernote" name="repeat_nature_gi" id="summernote-1">
 
                                     </textarea>
                                     </div>
@@ -331,7 +359,7 @@
                                         <label for="Description">Description</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Description" id="summernote-1">
+                                        <textarea class="summernote" name="description_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -346,10 +374,27 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id=""></div>
+                                            <div class="file-attachment-list" id="initial_attachment_gi">
+
+                                                {{-- @if (initial_attachment_gi)
+                                                @foreach (json_decode($data->initial_attachment_gi) as $file)
+                                                    <h6 type="button" class="file-container text-dark"
+                                                        style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}"
+                                                            target="_blank"><i class="fa fa-eye text-primary"
+                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a type="button" class="remove-file"
+                                                            data-file-name="{{ $file }}"><i
+                                                                class="fa-solid fa-circle-xmark"
+                                                                style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                                @endforeach
+                                            @endif --}}
+                                            </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="" oninput=""
+                                                <input type="file" id="initial_attachment_gi" name="initial_attachment_gi[]" oninput="addMultipleFiles(this,'initial_attachment_gi')"
                                                     multiple>
                                             </div>
                                         </div>
@@ -359,9 +404,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Complainant</label>
-                                        <select name="complainant" onchange="">
+                                        <select name="complainant_gi" onchange="">
                                             <option value="">-- select --</option>
-                                            <option value="">person</option>
+                                            <option value="person">person</option>
 
                                         </select>
                                     </div>
@@ -369,35 +414,53 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="OOC Logged On"> Complaint Reported On </label>
-
+                                        <label for="OOC Logged On">Complaint Reported On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date"
-                                                min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="" />
+                                            <input type="text" id="compalint_dat" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="complaint_reported_on_gi"
+                                            min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" value=""
+                                            class="hide-input" oninput="handleDateInput(this, 'compalint_dat')" />
                                         </div>
-
-
                                     </div>
                                 </div>
+
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', (event) => {
+                                        const dateInput = document.getElementById('complaint_date_picker');
+                                        const today = new Date().toISOString().split('T')[0];
+                                        dateInput.setAttribute('max', today);
+
+                                        // Show the date picker when clicking on the readonly input
+                                        const readonlyInput = document.getElementById('compalint_dat');
+                                        readonlyInput.addEventListener('click', () => {
+                                            dateInput.style.display = 'block';
+                                            dateInput.focus();
+                                        });
+
+                                        // Update the readonly input when a date is selected
+                                        dateInput.addEventListener('change', () => {
+                                            readonlyInput.value = new Date(dateInput.value).toLocaleDateString('en-GB');
+                                            dateInput.style.display = 'none';
+                                        });
+                                    });
+                                </script>
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="Details Of Nature Market Complaint">Details Of Nature Market
                                             Complaint</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="details_nature_market_complaint" id="summernote-1">
+                                        <textarea class="summernote" name="details_of_nature_market_complaint_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
+
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Product Details
-                                            <button type="button"
-                                                onclick="add4Input('root-cause-first-table')">+</button>
+                                            <button type="button" id="product_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -405,8 +468,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="root-cause-first-table"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="product_details_details" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
@@ -418,105 +480,184 @@
                                                         <th>Pack Size</th>
                                                         <th>Dispatch Quantity</th>
                                                         <th>Remarks</th>
-
+                                                        <th>Action</th>
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Instrument_Name[]"></td>
-                                                    <td><input type="text" name="Instrument_ID[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-                                                    <td><input type="text" name="Calibration_Parameter[]"></td>
-                                                    <td><input type="text" name="Acceptance_Criteria[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
-                                                    <td><input type="text" name="Results[]"></td>
-
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="root_cause">
-                                            Traceability
-                                            <button type="button" id="traceability_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
-                                                <thead>
                                                     <tr>
-                                                        <th style="width: 100px;">Row #</th>
-                                                        <th>Product Name</th>
-                                                        <th>Batch No.</th>
-                                                        <th>Manufacturing Location</th>
-
-                                                        <th>Remarks</th>
-
-
+                                                        <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
+                                                        {{-- <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td> --}}
+                                                        <td>
+                                                            <div class="calenderauditee">
+                                                                 <input
+                                                                 class="click_date"
+                                                                 id="date_0_mfg_date" type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY" />
+                                                                 <input type="date" name="serial_number_gi[0][info_mfg_date]"
+                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                 id="date_0_mfg_date"
+                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date')" />
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="calenderauditee">
+                                                                 <input
+                                                                 class="click_date"
+                                                                 id="date_0_expiry_date" type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY" />
+                                                                 <input type="date" name="serial_number_gi[0][info_expiry_date]"
+                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                 id="date_0_expiry_date"
+                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date')" />
+                                                            </div>
+                                                        </td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_batch_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
+                                                        <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    <td><input type="text" name="Instrument_Name[]"></td>
-                                                    <td><input type="text" name="Instrument_ID[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-                                                    <td><input type="text" name="Calibration_Parameter[]"></td>
-
-
-
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    })
+                                </script>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#product_details').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="serial_number_gi[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_product_name]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_no]"></td>' +
+                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_mfg_date" type="text" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_mfg_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_mfg_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_mfg_date\')" /> </div> </td>' +
+                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_expiry_date" type="text" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" placeholder="DD-MMM-YYYY" /> <input type="date" name="serial_number_gi[' + serialNumber + '][info_expiry_date]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_expiry_date" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_expiry_date\')" /> </div> </td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_batch_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_pack_size]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_dispatch_quantity]"></td>' +
+                                                    '<td><input type="text" name="serial_number_gi[' + serialNumber + '][info_remarks]"></td>' +
+                                                    '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#product_details_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
+                                                                {{-- {{ ---end s code }} --}}
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="root_cause">
+                                        Traceability
+                                        <button type="button" id="traceblity_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="traceblity" style="width: 100%;">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 100px;">Row #</th>
+                                                    <th>Product Name</th>
+                                                    <th>Batch No.</th>
+                                                    <th>Manufacturing Location</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input disabled type="text" name="trace_ability[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="trace_ability[0][product_name_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][batch_no_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][manufacturing_location_tr]"></td>
+                                                    <td><input type="text" name="trace_ability[0][remarks_tr]"></td>
+                                                    <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    $('#traceblity_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateTableRow(serialNumber) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="trace_ability[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][product_name_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][batch_no_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][manufacturing_location_tr]"></td>' +
+                                                '<td><input type="text" name="trace_ability[' + serialNumber + '][remarks_tr]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#traceblity tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initiator Group">Categorization of complaint</label>
-                                        <select name="categorization_of_complaint" onchange="">
+                                        <select name="categorization_of_complaint_gi" onchange="">
                                             <option value="">-- select --</option>
-                                            <option value="">Critical</option>
-                                            <option value="">Major</option>
-                                            <option value="">Minor</option>
+                                            <option value="Critical">Critical</option>
+                                            <option value="Critical">Major</option>
+                                            <option value="Critical">Minor</option>
                                         </select>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of Complaint Smaple">Review of Complaint Smaple</label>
+                                        <label for="Review of Complaint Sample">Review of Complaint Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_complaint_smaple" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_complaint_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Review of Control Smaple">Review of Control Smaple</label>
+                                        <label for="Review of Control Sample">Review of Control Sample</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_control_smaple" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_control_sample_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -525,43 +666,68 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Investingation Team
-                                            <button type="button" id="traceability_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Investigation Team
+                                            <button type="button" id="investigation_team_add">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="Investing_team" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
                                                         <th>Name</th>
                                                         <th>Department</th>
                                                         <th>Remarks</th>
-
-
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
+                                                    <tr>
+                                                        <td><input disabled type="text" name="Investing_team[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="Investing_team[0][name_inv_tem]"></td>
+                                                        <td><input type="text" name="Investing_team[0][department_inv_tem]"></td>
+                                                        <td><input type="text" name="Investing_team[0][remarks_inv_tem]"></td>
+                                                         <td><button type="text" class="removeRowBtn" >Remove</button></td>
 
-
-
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    })
+                                </script>
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#investigation_team_add').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Investing_team[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][name_inv_tem]"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][department_inv_tem]"></td>' +
+                                                    '<td><input type="text" name="Investing_team[' + serialNumber + '][remarks_inv_tem]"></td>' +
+                                                    '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#Investing_team tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
+
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
@@ -570,7 +736,7 @@
                                             record (BMR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_manufacturing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_batch_manufacturing_record_BMR_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -584,7 +750,7 @@
                                             manufacturing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_raw_materials" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_raw_materials_used_in_batch_manufacturing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -595,7 +761,7 @@
                                             (BPR)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_batch_packing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_Batch_Packing_record_bpr_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -607,7 +773,7 @@
                                             packing</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_packing_materials_used_in_batch_packing_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -617,7 +783,7 @@
                                         <label for="Review of Analytical Data">Review of Analytical Data</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_analytical_data" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_analytical_data_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -628,7 +794,7 @@
                                             of Concern Persons</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_training_record_of_concern_persons_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -639,7 +805,7 @@
                                             of Equipment/Instrument qualification/Calibration record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment" id="summernote-1">
+                                        <textarea class="summernote" name="rev_eq_inst_qual_calib_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -650,7 +816,7 @@
                                             Equipment Break-down and Maintainance Record</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_equipment_break_down_and_maintainance_record_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -661,7 +827,7 @@
                                             product</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="review_of_past_history_of_product" id="summernote-1">
+                                        <textarea class="summernote" name="review_of_past_history_of_product_gi" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -669,46 +835,68 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
-                                            Brain stroming Session/Discussion with Concered Person
-                                            <button type="button" id="traceability_details">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#document-details-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                            Brain Storming Session/Discussion with Concerned Person
+                                            <button type="button" id="brain_storming_add">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                                 (Launch Instruction)
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
-                                                style="width: %;">
+                                            <table class="table table-bordered" id="brain_stroming_details" style="width: 100%;">
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 100px;">Row #</th>
-                                                        <th>Possiblity</th>
+                                                        <th>Possibility</th>
                                                         <th>Facts/Controls</th>
                                                         <th>Probable Cause</th>
                                                         <th>Remarks</th>
-
-
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
-                                                            value="1">
-                                                    </td>
-                                                    {{-- <td><input type="text" name="row[]"></td> --}}
-                                                    <td><input type="text" name="Possiblity[]"></td>
-                                                    <td><input type="text" name="Facts/Controls[]"
-                                                            value="Facts Available"></td>
-                                                    <td><input type="text" name="Probable_Cause[]"></td>
-                                                    <td><input type="text" name="Remarks[]"></td>
-
-
-
+                                                    <tr>
+                                                        <td><input disabled type="text" name="brain_stroming_details[0][serial]" value="1"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][possibility_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][factscontrols_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][probable_cause_bssd]"></td>
+                                                        <td><input type="text" name="brain_stroming_details[0][remarks_bssd]"></td>
+                                                        <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                    </tr>
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+
+                                    $(document).ready(function() {
+                                        $('#brain_storming_add').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateTableRow(serialNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="brain_stroming_details[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][possibility_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][factscontrols_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][probable_cause_bssd]"></td>' +
+                                                    '<td><input type="text" name="brain_stroming_details[' + serialNumber + '][remarks_bssd]"></td>' +
+                                                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#brain_stroming_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
                                 <div class="button-block">
@@ -734,7 +922,7 @@
                                         <label for="Conclusion">Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Conclusion" id="summernote-1">
+                                        <textarea class="summernote" name="conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -744,7 +932,7 @@
                                         <label for="Root Cause Analysis">Root Cause Analysis</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Root_Cause_Analysis" id="summernote-1">
+                                        <textarea class="summernote" name="root_cause_analysis_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -756,7 +944,7 @@
                                             most probable root causes identified of the complaint are as below</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="The_most_probable_root" id="summernote-1">
+                                        <textarea class="summernote" name="probable_root_causes_complaint_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -766,7 +954,7 @@
                                         <label for="Impact Assessment">Impact Assessment :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Impact_Assessment" id="summernote-1">
+                                        <textarea class="summernote" name="impact_assessment_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -777,7 +965,7 @@
                                         <label for="Corrective Action">Corrective Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Corrective_Action" id="summernote-1">
+                                        <textarea class="summernote" name="corrective_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -788,7 +976,7 @@
                                         <label for="Preventive Action">Preventive Action :</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Preventive_Action" id="summernote-1">
+                                        <textarea class="summernote" name="preventive_action_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -798,7 +986,7 @@
                                         <label for="Summary and Conclusion">Summary and Conclusion</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Summary_and_Conclusion" id="summernote-1">
+                                        <textarea class="summernote" name="summary_and_conclusion_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -808,7 +996,7 @@
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Team Members
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" id="team_members_details">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -816,7 +1004,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
+                                            <table class="table table-bordered" id="team_members_details"
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
@@ -825,18 +1013,28 @@
                                                         <th>Department</th>
                                                         <th>Sign</th>
                                                         <th>Date</th>
+                                                        <th>Action</th>
 
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="Team_Members[0][serial]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
+                                                    <td><input type="text" name="Team_Members[0][names_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][department_tm]"></td>
+                                                    <td><input type="text" name="Team_Members[0][sign_tm]"></td>
+                                                    <td>
+                                                        <div class="calenderauditee">
+                                                             <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="Team_Members[0][date_tm]"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             id="date_0_date_tm"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_tm')" />
+                                                        </div>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
 
 
 
@@ -845,13 +1043,41 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <script>
+                                    $(document).ready(function() {
+                                        $('#team_members_details').click(function(e) {
+                                            function generateTableRow(serialNumber) {
+
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Team_Members[' + serialNumber + '][serial]" value="' + (serialNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][names_tm]"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][department_tm]"></td>' +
+                                                    '<td><input type="text" name="Team_Members[' + serialNumber + '][sign_tm]"></td>' +
+                                                    '<td> <div class="calenderauditee"><input id="date_'+ serialNumber +'_date_tm" type="text" name="Team_Members[' + serialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + serialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_tm\')" /> </div> </td>' +
+                                                   '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+
+                                                    '</tr>';
+
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#team_members_details tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount + 1);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
+
 
 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="root_cause">
                                             Report Approval
-                                            <button type="button" id="traceability_details">+</button>
+                                            <button type="button" id="Report_Approval">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#document-details-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -859,7 +1085,7 @@
                                             </span>
                                         </label>
                                         <div class="table-responsive">
-                                            <table class="table table-bordered" id="traceability_details_details"
+                                            <table class="table table-bordered" id="Report_Approval"
                                                 style="width: %;">
                                                 <thead>
                                                     <tr>
@@ -868,18 +1094,28 @@
                                                         <th>Department</th>
                                                         <th>Sign</th>
                                                         <th>Date</th>
+                                                        <th>Action</th>
 
 
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input disabled type="text" name="serial_number[]"
+                                                    <td><input disabled type="text" name="serial_number[0]"
                                                             value="1">
                                                     </td>
-                                                    <td><input type="text" name="Name[]"></td>
-                                                    <td><input type="text" name="Department[]"></td>
-                                                    <td><input type="text" name="Sign[]"></td>
-                                                    <td><input type="date" name="Date[]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][names_rrv]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][department_rrv]"></td>
+                                                    <td><input type="text" name="Report_Approval[0][sign_rrv]"></td>
+                                                    <td>
+                                                        <div class="calenderauditee">
+                                                             <input id="date_0_date_rrv" type="text" name="Report_Approval[0][date_rrv]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="Report_Approval[0][date_rrv]"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             id="date_0_date_rrv"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_rrv')" />
+                                                        </div>
+                                                    </td>
+                                                    <td><button type="button" class="removeRowBtn">Remove</button></td>
 
 
 
@@ -889,9 +1125,40 @@
                                     </div>
                                 </div>
 
+                                <script>
+                                    $(document).on('click', '.removeRowBtn', function() {
+                                        $(this).closest('tr').remove();
+                                    });
+
+                                    $(document).ready(function() {
+                                        $('#Report_Approval').click(function(e) {
+                                            e.preventDefault();
+
+                                            function generateTableRow(reportNumber) {
+                                                var html =
+                                                    '<tr>' +
+                                                    '<td><input disabled type="text" name="Report_Approval[' + reportNumber + '][serial]" value="' + (reportNumber + 1) + '"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][names_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][department_rrv]"></td>' +
+                                                    '<td><input type="text" name="Report_Approval[' + reportNumber + '][sign_rrv]"></td>' +
+                                                    '<td> <div class="calenderauditee"><input id="date_'+ reportNumber +'_date_rrv" type="text" name="Report_Approval[' + reportNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + reportNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ reportNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ reportNumber +'_date_rrv\')" /> </div> </td>' +
+
+                                                '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+
+                                                    '</tr>';
+                                                return html;
+                                            }
+
+                                            var tableBody = $('#Report_Approval tbody');
+                                            var rowCount = tableBody.children('tr').length;
+                                            var newRow = generateTableRow(rowCount);
+                                            tableBody.append(newRow);
+                                        });
+                                    });
+                                </script>
 
 
-                                <div class="col-12">
+                                                           <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
                                         <div>
@@ -900,10 +1167,10 @@
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id=""></div>
+                                            <div class="file-attachment-list" id="initial_attachment_hodsr"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="" oninput=""
+                                                <input type="file" id="initial_attachment_hodsr" name="initial_attachment_hodsr[]" oninput="addMultipleFiles(this,'initial_attachment_hodsr')"
                                                     multiple>
                                             </div>
                                         </div>
@@ -914,7 +1181,7 @@
                                         <label for="Comments">Comments(if Any)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="summernote" name="Comments" id="summernote-1">
+                                        <textarea class="summernote" name="comments_if_any_hodsr" id="summernote-1">
                                     </textarea>
                                     </div>
                                 </div>
@@ -959,7 +1226,7 @@
                                     <label for="Manufacturer name & Address">Manufacturer name & Address</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                             require completion</small></div>
-                                    <textarea class="summernote" name="Manufacturer_name_and_Address" id="summernote-1">
+                                    <textarea class="summernote" name="manufacturer_name_address_ca" id="summernote-1">
                                     </textarea>
                                 </div>
                             </div>
@@ -968,16 +1235,13 @@
                                 <div class="group-input">
                                     <label for="root_cause">
                                         Product/Material Details
-                                        <button type="button" onclick="add4Input('root-cause-first-table')">+</button>
-                                        <span class="text-primary" data-bs-toggle="modal"
-                                            data-bs-target="#document-details-field-instruction-modal"
-                                            style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        <button type="button" id="promate_add">+</button>
+                                        <span class="text-primary" data-bs-toggle="modal" data-bs-target="#document-details-field-instruction-modal" style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
                                             (Launch Instruction)
                                         </span>
                                     </label>
                                     <div class="table-responsive">
-                                        <table class="table table-bordered" id="root-cause-first-table"
-                                            style="width: %;">
+                                        <table class="table table-bordered" id="prod_mate_details" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th style="width: 100px;">Row #</th>
@@ -989,35 +1253,97 @@
                                                     <th>Pack Profile</th>
                                                     <th>Released Quantity</th>
                                                     <th>Remarks</th>
+                                                    <th></th>
 
 
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="Product_name[]"></td>
-                                                <td><input type="text" name="Batch_no[]"></td>
-                                                <td><input type="text" name="mfg_date[]"></td>
-                                                <td><input type="text" name="exp_date[]"></td>
-                                                <td><input type="text" name="batch_size[]"></td>
-                                                <td><input type="text" name="pack_profile[]"></td>
-                                                <td><input type="text" name="released_quantity[]"></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                <tr>
+                                                    <td><input disabled type="text" name="Product_MaterialDetails[0][serial]" value="1"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][product_name_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_no_pmd_ca]"></td>
+                                                    <td>
+                                                        <div class="calenderauditee">
+                                                             <input id="date_0_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[0][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="Product_MaterialDetails[0][mfg_date_pmd_ca]"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             id="date_0_mfg_date_pmd_ca"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date_pmd_ca')" />
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="calenderauditee">
+                                                             <input
+                                                             class="click_date"
+                                                             id="date_0_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[0][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" />
+                                                             <input type="date" name="Product_MaterialDetails[0][expiry_date_pmd_ca]"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             id="date_0_expiry_date_pmd_ca"
+                                                             class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date_pmd_ca')" />
+                                                        </div>
+                                                    </td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][batch_size_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][pack_profile_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][released_quantity_pmd_ca]"></td>
+                                                    <td><input type="text" name="Product_MaterialDetails[0][remarks_ca]"></td>
 
 
+
+                                                    <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                                $(document).on('click', '.removeRowBtn', function() {
+                                    $(this).closest('tr').remove();
+                                })
+                            </script>
+
+
+                            <script>
+                                $(document).ready(function() {
+                                    $('#promate_add').click(function(e) {
+                                        e.preventDefault();
+
+                                        function generateTableRow(productserialno) {
+                                            var html =
+                                                '<tr>' +
+                                                '<td><input disabled type="text" name="Product_MaterialDetails[' + productserialno + '][serial]" value="' + (productserialno + 1) + '"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][product_name_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_no_pmd_ca]"></td>' +
+                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_mfg_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][mfg_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_mfg_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_mfg_date_pmd_ca\')" /> </div> </td>' +
+                                                '<td> <div class="calenderauditee"><input id="date_'+ productserialno +'_expiry_date_pmd_ca" type="text" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Product_MaterialDetails[' + productserialno + '][expiry_date_pmd_ca]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ productserialno +'_expiry_date_pmd_ca" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ productserialno +'_expiry_date_pmd_ca\')" /> </div> </td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][batch_size_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][pack_profile_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][released_quantity_pmd_ca]"></td>' +
+                                                '<td><input type="text" name="Product_MaterialDetails[' + productserialno + '][remarks_ca]"></td>' +
+                                                '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
+
+                                                '</tr>';
+                                            return html;
+                                        }
+
+                                        var tableBody = $('#prod_mate_details tbody');
+                                        var rowCount = tableBody.children('tr').length;
+                                        var newRow = generateTableRow(rowCount);
+                                        tableBody.append(newRow);
+                                    });
+                                });
+                            </script>
+
+
 
 
 
                             <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="Complaint Sample Required">Complaint Sample Required</label>
-                                    <select name="Complaint_Sample_Required" onchange="">
+                                    <select name="complaint_sample_required_ca" onchange="">
                                         <option value="">-- select --</option>
                                         <option value="">Yes</option>
                                         <option value="">No</option>
@@ -1029,8 +1355,8 @@
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="Complaint Smaple Status">Complaint Smaple Status</label>
-                                    <input type="text" name="Complaint_Smaple_Status" id="date_of_initiation">
+                                    <label for="Complaint Sample Status">Complaint Sample Status</label>
+                                    <input type="text" name="complaint_sample_status_ca" id="date_of_initiation">
                                 </div>
                             </div>
 
@@ -1039,7 +1365,7 @@
                                     <label for="Brief Description of complaint">Brief Description of complaint:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Brief_Description_of_complaint" id="summernote-1">
+                                    <textarea class="summernote" name="brief_description_of_complaint_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1049,7 +1375,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Batch_Record_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="batch_record_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1059,7 +1385,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Analytical_Data_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="analytical_data_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1069,7 +1395,7 @@
                                         observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Retention_sample_review_observation" id="summernote-1">
+                                    <textarea class="summernote" name="retention_sample_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1078,7 +1404,7 @@
                                     <label for="Stablity study data review">Stablity study data review</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Stablity_study_data_review" id="summernote-1">
+                                    <textarea class="summernote" name="stability_study_data_review_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1088,7 +1414,7 @@
                                         Observation</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="QMS_Events_review_Observation" id="summernote-1">
+                                    <textarea class="summernote" name="qms_events_ifany_review_observation_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1098,7 +1424,7 @@
                                         for product:</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Repeated_complaints_queries_for_product" id="summernote-1">
+                                    <textarea class="summernote" name="repeated_complaints_queries_for_product_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1108,7 +1434,7 @@
                                         sample(if recieved)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Interpretation_on_compalint_sample" id="summernote-1">
+                                    <textarea class="summernote" name="interpretation_on_complaint_sample_ifrecieved_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1117,7 +1443,7 @@
                                     <label for="Comments">Comments(if Any)</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does
                                             not require completion</small></div>
-                                    <textarea class="summernote" name="Comments" id="summernote-1">
+                                    <textarea class="summernote" name="comments_ifany_ca" id="summernote-1">
                                 </textarea>
                                 </div>
                             </div>
@@ -1141,12 +1467,12 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td class="flex text-center">1</td>
+                                                    <td class="flex text-center" name="">1</td>
                                                     <td>Complaint sample Required</td>
                                                     <td>
 
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
 
 
@@ -1155,7 +1481,7 @@
 
                                                     <td style="vertical-align: middle;">
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="csr2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
 
@@ -1167,14 +1493,14 @@
                                                     <td>Additional info. From Complainant</td>
                                                     <td>
                                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="afc1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                     </div>
                                     </td>
 
                                     <td style="vertical-align: middle;">
                                         <div style="margin: auto; display: flex; justify-content: center;">
-                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                            <textarea name="afc2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                         </div>
                                     </td>
 
@@ -1186,13 +1512,13 @@
                                         <td>Analysis of complaint Sample</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="acs2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1205,13 +1531,13 @@
                                         <td>QRM Approach</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="qrm2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1223,13 +1549,13 @@
                                         <td>Others</td>
                                         <td>
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
                                         <td style="vertical-align: middle;">
                                             <div style="margin: auto; display: flex; justify-content: center;">
-                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                <textarea name="oth2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                             </div>
                                         </td>
 
@@ -1253,10 +1579,10 @@
                                     </small>
                                 </div>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id=""></div>
+                                    <div class="file-attachment-list" id="initial_attachment_ca"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="" oninput="" multiple>
+                                        <input type="file" id="initial_attachment_ca" name="initial_attachment_ca[]" oninput="addMultipleFiles(this,'initial_attachment_ca')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1289,7 +1615,7 @@
                             <label for="Closure Comment">Closure Comment</label>
                             <div><small class="text-primary">Please insert "NA" in the data field if it does not
                                     require completion</small></div>
-                            <textarea class="summernote" name="Closure_Comment" id="summernote-1">
+                            <textarea class="summernote" name="closure_comment_c" id="summernote-1">
                                     </textarea>
                         </div>
                     </div>
@@ -1303,10 +1629,10 @@
                                 </small>
                             </div>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id=""></div>
+                                <div class="file-attachment-list" id="initial_attachment_c"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="" oninput="" multiple>
+                                    <input type="file" id="initial_attachment_c" name="initial_attachment_c[]" oninput="addMultipleFiles(this,'initial_attachment_c')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -1461,6 +1787,7 @@
             ele: '#related_records, #hod'
         });
 
+
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
             cctabcontent = document.getElementsByClassName("cctabcontent");
@@ -1584,4 +1911,20 @@
             $('#rchars').text(textlen);
         });
     </script>
+
+<script>
+    document.getElementById('initiator_group').addEventListener('change', function() {
+        var selectedValue = this.value;
+        document.getElementById('initiator_group_code').value = selectedValue;
+    });
+
+    function setCurrentDate(item){
+        if(item == 'yes'){
+            $('#effect_check_date').val('{{ date('d-M-Y')}}');
+        }
+        else{
+            $('#effect_check_date').val('');
+        }
+    }
+</script>
 @endsection

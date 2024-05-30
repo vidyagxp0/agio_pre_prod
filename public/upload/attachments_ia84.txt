@@ -1,0 +1,115 @@
+
+
+warehouse
+---------------
+
+
+$table->string('name',40)->nullable();
+            $table->string('address')->nullable();
+            $table->integer('status', 3)->nullable();
+
+update_logs
+---------------
+
+$table->string('version',40)->nullable();
+            $table->string('update_log')->nullable();
+
+units
+---------------
+
+$table->string('name',40)->nullable();
+
+
+          
+transfer_details
+---------------
+
+$table->integer('transfer_id',10)->unsigned();
+            $table->integer('product_id',10)->unsigned();
+            $table->integer('quantity', 10)->unsigned()->nullable()->default(0);
+
+  transfers          
+---------------
+$table->string('tracking_no',40)->nullable();
+            $table->integer('from_warehouse_id',10)->unsigned();
+            $table->integer('to_warehouse_id', 10)->unsigned();
+	    $table->Date('transfer_date')->nullable();
+	    $table->string('note',255)->nullable();
+
+
+
+supplier_payments
+---------------
+		
+
+	$table->integer('supplier_id',10)->unsigned();
+            $table->integer('purchase_id',10)->unsigned();
+            $table->integer('purchase_return_id', 10)->unsigned();
+	    $table->Decimal('amount',28,2)->unsigned();
+	    $table->string('note',255)->nullable();
+	    $table->string('trx',40)->nullable();
+	    $table->string('remark',255)->nullable();
+
+
+
+
+suppliers
+---------------
+
+$table->string('name',40)->nullable();
+            $table->string('email',40)->nullable();
+            $table->string('mobile', 40)->nullable();
+	    $table->string('address')->nullable();
+	    $table->string('company_name',40)->nullable();
+	   
+
+sale_return_details
+---------------
+	    
+
+$table->integer('sale_return_id',10)->unsigned();
+            $table->integer('product_id',10)->unsigned();
+            $table->integer('quantity', 10)->unsigned()nullable()->default(0);
+	    $table->double('price',28,8)->nullable();
+	    $table->double('total',28,8)->nullable();
+	
+
+sale_returns
+---------------
+
+$table->integer('sale_id',10)->unsigned();
+            $table->integer('customer_id',10)->unsigned();
+            $table->date('return_date')->nullable();
+	    $table->decimal('total_price',28,8)->nullable();
+	    $table->decimal('discount_amount',28,8)->nullable();
+	    $table->decimal('payable_amount',28,8)->nullable();
+	    $table->decimal('paid_amount',28,8)->nullable();
+	    $table->decimal('due_amount',28,8)->nullable();
+	    $table->string('note')->nullable();
+
+sale_details
+---------------
+
+$table->integer('sale_id',10)->unsigned();
+            $table->integer('product_id',10)->unsigned();
+            $table->integer('quantity', 10)->unsigned()->nullable()->default(0);
+	    $table->double('price',28,8)->nullable();
+	     $table->double('total')->nullable();
+
+sales
+---------------
+
+
+
+$table->integer('customer_id',10)->unsigned();
+  $table->string('invoice_no',255)->nullable();
+  $table->integer('warehouse_id',10)->unsigned();
+  $table->date('sale_date')->nullable();
+  $table->decimal('total_price',28,8)->nullable(); 
+  $table->decimal('discount_amount',28,8)->nullable();
+  $table->decimal('receivable_amount',28,8)->nullable();
+  $table->decimal('received_amount',28,8)->nullable();
+  $table->decimal('due_amount',28,8)->nullable();
+  $table->string('note')->nullable();
+  $table->integer('return_status')->nullable();
+  

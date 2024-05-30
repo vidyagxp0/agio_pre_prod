@@ -9,8 +9,8 @@
                     <label for="Description Deviation">Conclusion Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="conclusion_review_comments_ocr" id="summernote-1">
-                        {{ $data->conclusion_review_comments_ocr ?? '' }}
-                        </textarea>
+                        {{ $data->conclusion_review_comments_ocr ? $data->conclusion_review_comments_ocr : '' }}
+                    </textarea>
                 </div>
             </div>
 
@@ -35,11 +35,6 @@
                                 <th style="width: 16%">Batch No.(s) / A.R. No. (s)</th>
                                 <th style="width: 16%">Any Other Information</th>
                                 <th style="width: 16%">Action Taken on Affec.batch</th>
-
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -64,9 +59,8 @@
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Action Taken on Affec.batch</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="action_taken_on_affec_batch_ocr" id="summernote-1">
-                    {{ $data->action_taken_on_affec_batch_ocr ?? 'NA' }}
+                    {{ $data->action_taken_on_affec_batch_ocr ? $data->action_taken_on_affec_batch_ocr :'NA' }}
                 </textarea>
                 </div>
             </div>
@@ -94,86 +88,15 @@
                 </div>
             </div>
 
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Report Attachments">Required Action Plan?</label>
-                    <select name="req_action_plan_ocr">
-                        <option value="Yes" {{ $data->req_action_plan_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
-                        <option value="No" {{ $data->req_action_plan_ocr == 'No' ? 'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Required Action Task?</label>
-                    <select name="req_action_task_ocr">
-                        <option value="Yes" {{ $data->req_action_task_ocr == 'Yes' ? 'selected' : '' }}>Yes</option>
-                        <option value="No" {{ $data->req_action_task_ocr == 'No' ? 'selected' : '' }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Action Task Reference</label>
-                    <select multiple id="reference_record" name="action_task_reference_ocr[]">
-                        <option value="0" {{ in_array('0', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ in_array('2', $data->action_task_reference_ocr ?? []) ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">Risk Assessment Req?</label>
-                    <select name="risk_assessment_req_ocr">
-                        <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Attachments">Risk Assessment Req?</label>
-                    <select name="risk_assessment_req_ocr">
-                        <option value="Yes" {{ $data->risk_assessment_req_ocr == 'Yes' ? 'selected' : '' }}>Yes
-                        </option>
-                        <option value="No" {{ $data->risk_assessment_req_ocr == 'No' ? 'selected' : '' }}>No
-                        </option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Risk Assessment Ref.</label>
-                    <select multiple id="reference_record" name="risk_assessment_ref_ocr[]">
-                        <option value="0" {{ in_array('0', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ in_array('1', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ in_array('2', $data->risk_assessment_ref_ocr ?? []) ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
-
             <div class="col-md-12 mb-4">
                 <div class="group-input">
                     <label for="Description Deviation">Justify if No Risk Assessment</label>
-                    <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="justify_if_no_risk_assessment_ocr" id="summernote-1">
-                            {{ $data->justify_if_no_risk_assessment_ocr ?? 'NA' }}
+                            {{ $data->justify_if_no_risk_assessment_ocr ? $data->justify_if_no_risk_assessment_ocr : 'NA' }}
                         </textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="group-input">
                     <label for="Reference Recores">Conclusion Attachment</label>
                     <small class="text-primary">
@@ -183,7 +106,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->conclusion_attachment_ocr)
-                            @foreach (json_decode($data->conclusion_attachment_ocr) as $file)
+                            @foreach ($data->conclusion_attachment_ocr as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>
@@ -208,7 +131,7 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Audit Attachments">CQ Approver</label>
-                    <input type="text" name="cq_approver" value="{{$data->cq_approver}}">
+                    <input type="text" name="cq_approver" value="{{$data->cq_approver ? $data->cq_approver : '' }}">
                 </div>
             </div>
 

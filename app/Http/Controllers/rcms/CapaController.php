@@ -191,7 +191,7 @@ class CapaController extends Controller
             }
             $capa->closure_attachment = json_encode($files);
         }
-
+        
         $capa->status = 'Opened';
         $capa->stage = 1;
         $capa->save();
@@ -737,7 +737,7 @@ class CapaController extends Controller
         $capa->cft_comments_form= $request->cft_comments_form;
         $capa->qa_comments_new = $request->qa_comments_new;
         $capa->designee_comments_new= $request->designee_comments_new;
-       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
         $capa->Engineering_comments_new = $request->Engineering_comments_new;
        $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
        $capa->Validation_comments_new = $request->Validation_comments_new;
@@ -760,6 +760,7 @@ class CapaController extends Controller
 
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
+
         $capa->capa_qa_comments= $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         // $capa->details = $request->details;
@@ -1735,7 +1736,7 @@ class CapaController extends Controller
         return view('frontend.capa.audit-trial', compact('audit', 'document', 'today'));
     }
 
-    public function auditDetailsCapa($id)
+    public function auditDetails($id)
     {
 
         $detail = CapaAuditTrial::find($id);

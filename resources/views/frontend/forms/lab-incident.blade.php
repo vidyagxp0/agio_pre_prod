@@ -159,78 +159,189 @@
                                 </div>
 
 
-                             {{-- Table --}}
-                             <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Material Details">
-                                    Incident Investigation Report<button type="button" name="ann" id="">+</button>
-                                    </label>
-                                    <table class="table table-bordered" id="">
-                                        <thead>
-                                            <tr>
-                                                <th>Sr. No.</th>
-                                                <th>Name of Product</th>
-                                                <th>B No./A.R. No.</th>
-                                                <th>Remarks</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><input type="text" name="sr_no_IIR_GI[]"></td>
+
+
+
+                            <!----------------------------------------------------------new table-------------------------------------------------------------------------->
+
+
+                        <div class="col-12">
+                            <div class="group-input" id="IncidentRow">
+                                <label for="audit-incident-grid">
+                                    Incident Investigation Report
+                                    <button type="button" name="audit-incident-grid" id="IncidentAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+
+                                <table class="table table-bordered" id="onservation-incident-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Name of Product</th>
+                                            <th>B No./A.R. No.</th>
+                                            <th>Remarks</th>
+                                            {{-- <th>Action</th> --}}
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                        $serialNumber = 1;
+                                    @endphp
+                                              {{-- @foreach ($report->data as  $item) --}}
+                                                    <tr>
+                                              <td> {{ $serialNumber++ }} </td>
+
+                                            {{-- <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="">
+                                              </td>
+                                            --}}
+                                              <td><input type="text" name="investrecord[0][name_of_product]" value="">
                                                </td>
-                                                  <td><input type="hidden" name="identifier_Incident_Investigation_report[]">
-                                                    <input type="text" name="name_of_product_IIR_GI[]" >
-                                                <td><input type="text" name="b_no_IIR_GI[]"
-                                                    />
-                                                </td>
-                                                 <td><input type="text" name="remarks_IIR_GI[]" >
-                                                 </td>
-                                            </tr>
-                                         </tbody>
-                                    </table>
-                                </div>
+                                            <td><input type="text" name="investrecord[0][batch_no]" value=""></td>
+                                             <td><input type="text" name="investrecord[0][remarks]" value="" ></td>
+
+
+                                        </tr>
+                                       {{-- @endforeach --}}
+                                     </tbody>
+                                </table>
+                            </div>
                             </div>
 
-                            {{-- Table --}}
+
+
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var selectField = document.getElementById('Facility_Equipment');
+                        var inputsToToggle = [];
+
+                        // Add elements with class 'facility-name' to inputsToToggle
+                        var facilityNameInputs = document.getElementsByClassName('facility-name');
+                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                            inputsToToggle.push(facilityNameInputs[i]);
+                        }
+
+                        // Add elements with class 'id-number' to inputsToToggle
+                        var idNumberInputs = document.getElementsByClassName('id-number');
+                        for (var j = 0; j < idNumberInputs.length; j++) {
+                            inputsToToggle.push(idNumberInputs[j]);
+                        }
+
+                        // Add elements with class 'remarks' to inputsToToggle
+                        var remarksInputs = document.getElementsByClassName('remarks');
+                        for (var k = 0; k < remarksInputs.length; k++) {
+                            inputsToToggle.push(remarksInputs[k]);
+                        }
+
+
+                        selectField.addEventListener('change', function() {
+                            var isRequired = this.value === 'yes';
+                            console.log(this.value, isRequired, 'value');
+
+                            inputsToToggle.forEach(function(input) {
+                                input.required = isRequired;
+                                console.log(input.required, isRequired, 'input req');
+                            });
+
+                            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+                            // Show or hide the asterisk icon based on the selected value
+                            var asteriskIcon = document.getElementById('asteriskInvi');
+                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                        });
+                    });
+                </script>
+
+
+    <script>
+        $(document).ready(function() {
+            let investdetails = 1;
+            $('#IncidentAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input  type="text" name="investrecord[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
+                        '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
+                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+
+
+                        '</tr>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
+                        '</tr>';
+                        investdetails++;
+
+                    return html;
+                }
+
+                var tableBody = $('#onservation-incident-table tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+        </script>
+
+
+
+
+
+
+                            <!-------------------------------incident grid----------------->
+
                                 {{-- New Added --}}
                                 <div class="col-lg-12">
-                                    <div class="group-input" id="Incident_invlvolved_others">
-                                        <label for="Incident_Involved">Instrument Involved<span
+                                    <div class="group-input" id="incident_involved_others_gi">
+                                        <label for="incident_involved_others_gi">Instrument Involved<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="Incident_involved_others"></textarea>
+                                        <textarea name="incident_involved_others_gi"></textarea>
                                     </div>
 
                                 </div>
 
 
                                 <div class="col-lg-4">
-                                    <div class="group-input" id="Incident_stage">
-                                        <label for="Incident_stage">Stage<span
+                                    <div class="group-input" id="stage_stage_gi">
+                                        <label for="stage_stage_gi">Stage<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="stage_stage">
+                                        <input type="text" name="stage_stage_gi">
                                     </div>
 
                                 </div><br>
                                 <div class="col-lg-4">
-                                    <div class="group-input" id="Incident_stability_cond">
-                                        <label for="Incident_stability_cond">Stability Condition (If Applicable)<span
+                                    <div class="group-input" id="incident_stability_cond_gi">
+                                        <label for="incident_stability_cond_gi">Stability Condition (If Applicable)<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_stability_cond">
+                                        <input type="text" name="incident_stability_cond_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-4">
-                                    <div class="group-input" id="Incident_interval_others">
-                                        <label for="Incident_interval_others">Interval (If Applicable)<span
+                                    <div class="group-input" id="incident_interval_others_gi">
+                                        <label for="incident_interval_others_gi">Interval (If Applicable)<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_interval_others">
+                                        <input type="text" name="incident_interval_others_gi">
                                     </div>
 
                                 </div>
 
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_test_others">
-                                        <label for="Incident_test_others">Test<span
+                                    <div class="group-input" id="test_gi">
+                                        <label for="test_gi">Test<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="text" name="test_gi">
                                     </div>
@@ -239,66 +350,66 @@
 
 
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_date_analysis">
+                                    <div class="group-input" id="incident_date_analysis_gi">
                                         <label for="Incident_date_analysis">Date Of Analysis<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="date" name="Incident_date_analysis">
+                                        <input type="date" name="incident_date_analysis_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_specification_no">
+                                    <div class="group-input" id="incident_specification_no_gi">
                                         <label for="Incident_specification_no">Specification Number<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_specification_no">
+                                        <input type="text" name="incident_specification_no_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_stp_no">
-                                        <label for="Incident_stp_no">STP Number<span
+                                    <div class="group-input" id="incident_stp_no_gi">
+                                        <label for="incident_stp_no_gi">STP Number<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_stp_no">
+                                        <input type="text" name="incident_stp_no_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_name_analyst_no">
+                                    <div class="group-input" id="Incident_name_analyst_no_gi">
                                         <label for="Incident_name_analyst_no">Name Of Analyst<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="text" name="Incident_name_analyst_no">
+                                        <input type="text" name="Incident_name_analyst_no_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="Incident_date_incidence">
+                                    <div class="group-input" id="incident_date_incidence_gi">
                                         <label for="Incident_date_incidence">Date Of Incidence<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="date" name="Incident_date_incidence">
+                                        <input type="date" name="incident_date_incidence_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-12">
-                                    <div class="group-input" id="Description_incidence">
+                                    <div class="group-input" id="description_incidence_gi">
                                         <label for="Description_incidence"> Description Of Incidence<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="Description_incidence"></textarea>
+                                        <textarea name="description_incidence_gi"></textarea>
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="analyst_sign_date">
+                                    <div class="group-input" id="analyst_sign_date_gi">
                                         <label for="analyst_sign_date">Analyst Sign Date<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="date" name="analyst_sign_date">
+                                        <input type="date" name="analyst_sign_date_gi">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="section_sign_date">
+                                    <div class="group-input" id="section_sign_date_gi">
                                         <label for="section_sign_date">Section Head Sign Date<span
                                                 class="text-danger d-none">*</span></label>
-                                        <input type="date" name="section_sign_date">
+                                        <input type="date" name="section_sign_date_gi">
                                     </div>
 
                                 </div>
@@ -383,11 +494,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="incident_initial_Attachment"></div>
+                                            <div class="file-attachment-list" id="attachments_gi"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="incident_initial_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'incident_initial_Attachment')" multiple>
+                                                <input type="file" id="attachments_gi" name="attachments_gi[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_gi')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -408,7 +519,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Immediate_action">Immediate Action</label>
-                                        <textarea name="immediate_action"></textarea>
+                                        <textarea name="immediate_action_ia"></textarea>
                                     </div>
                                 </div>
 
@@ -429,7 +540,7 @@
                                <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
-                                <textarea name="details_investigation"></textarea>
+                                <textarea name="details_investigation_ia"></textarea>
                             </div>
                         </div>
                         <div class="col-12">
@@ -443,57 +554,22 @@
                      <div class="col-12">
                         <div class="group-input">
                             <label for="Repeat Analysis Plan ">Repeat Analysis Plan</label>
-                        <textarea name="repeat_analysis_plan"></textarea>
+                        <textarea name="repeat_analysis_plan_ia"></textarea>
                       </div>
                          </div>
 
 
-                          {{-- selection field --}}
 
-                           <div class="col-md-6">
-                          <div class="group-input">
-                                <label for="search">
-                            Investigator (QC) <span class="text-danger"></span>
-                          </label>
-                          <select id="select-state" placeholder="Select..." name="investigation_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                         </select>
-                          @error('investigation_to')
-                            <p class="text-danger">{{ $message }}</p>
-                          @enderror
-                                   </div>
-                  </div>
-                <div class="col-md-6">
-                    <div class="group-input">
-                        <label for="search">
-                            QC Review <span class="text-danger"></span>
-                        </label>
-                        <select id="select-state" placeholder="Select..." name="assign_to">
-                            <option value="">Select a value</option>
-                            @foreach ($users as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
-                        </select>
-                        @error('assign_to')
-                            <p class="text-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-                </div>
-
-                {{-- selection field --}}
                 <div class="col-12">
                     <div class="group-input">
                         <label for="Result Of Repeat Analysis ">Result Of Repeat Analysis</label>
-                    <textarea name="result_of_repeat_analysis"></textarea>
+                    <textarea name="result_of_repeat_analysis_ia"></textarea>
                 </div>
             </div>
             <div class="col-12">
                 <div class="group-input">
                     <label for="Corrective and Preventive Action">Corrective and Preventive Action</label>
-                <textarea name="corrective_and_preventive_action"></textarea>
+                <textarea name="corrective_and_preventive_action_ia"></textarea>
             </div>
         </div>
         <div class="col-12">
@@ -506,7 +582,7 @@
          <div class="col-12">
             <div class="group-input">
                 <label for="Investigation Summary">Investigation Summary</label>
-            <textarea name="investigation_summary"></textarea>
+            <textarea name="investigation_summary_ia"></textarea>
         </div>
     </div>
 
@@ -517,7 +593,7 @@
     <div class="col-lg-12">
         <div class="group-input">
             <label for="Type Of Incidence"><b>Type Of Incidence</b></label>
-            <select name="Initiator_Group" id="initiator_group">
+            <select name="type_incidence_ia" id="initiator_group">
                 <option value="0">-- Select --</option>
                 <option value="Analyst Error">Analyst Error</option>
                 <option value="Instrument Error">Instrument Error</option>
@@ -589,11 +665,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Attachments"></div>
+                                            <div class="file-attachment-list" id="attachments_ia"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Attachments')" multiple>
+                                                <input type="file" id="attachments_ia" name="attachments_ia[]"
+                                                    oninput="addMultipleFiles(this, 'attachments_ia')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -625,21 +701,21 @@
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Incident Details">Reason For Extension</label>
-                                    <textarea name="reasoon_for_extension"></textarea>
+                                    <textarea name="reasoon_for_extension_e"></textarea>
                                 </div>
                             </div>
 
                             <div class="col-6">
                                 <div class="group-input">
                                 <label for="extension date">Extension Date (if required)</label>
-                                <input type="date" name="extension_date" id="extension_date">
+                                <input type="date" name="extension_date_esc" id="extension_date">
                                 </div>
                             </div>
 
                             <div class="col-6">
                                 <div class="group-input">
                                 <label for="extension date">Extension Initiator Date</label>
-                                <input type="date" name="extension_date" id="extension_date">
+                                <input type="date" name="extension_date_initiator" id="extension_date">
                                 </div>
                             </div>
 
@@ -690,7 +766,7 @@
                              <div class="col-12">
                                  <div class="group-input">
                                 <label for="reason for extension sc">Reason For Extension</label>
-                                <textarea name="reasoon_for_extension_sc"></textarea>
+                                <textarea name="reasoon_for_extension_esc"></textarea>
                                 </div>
                              </div>
 
@@ -698,7 +774,7 @@
                              <div class="col-6">
                                 <div class="group-input">
                                  <label for="extension date">Extension Date (if required)</label>
-                                  <input type="date" name="extension_date__sc" id="extension_date__sc">
+                                  <input type="date" name="extension_date_e" id="extension_date__sc">
                                 </div>
                              </div>
 
@@ -813,11 +889,11 @@
                             <label for="Attachments">Extension Attachments</label>
                             <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="extension_attachments"></div>
+                                <div class="file-attachment-list" id="extension_attachments_e"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="extension_attachments[]"
-                                        oninput="addMultipleFiles(this, 'extension_attachments')" multiple>
+                                    <input type="file" id="myfile" name="extension_attachments_e[]"
+                                        oninput="addMultipleFiles(this, 'extension_attachments_e')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -882,11 +958,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="Attachments"></div>
+                                            <div class="file-attachment-list" id="ccf_attachments"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="Attachments[]"
-                                                    oninput="addMultipleFiles(this, 'Attachments')" multiple>
+                                                <input type="file" id="myfile" name="ccf_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'ccf_attachments')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1136,39 +1212,148 @@
                   <div id="CCForm10" class="inner-block cctabcontent">
                     <div class="inner-block-content">
                             <div class="row">
-                                                         {{-- Table --}}
-                                                         <div class="col-12">
-                                                            <div class="group-input">
-                                                                <label for="Material Details">
-                                                                    System Suitability Failure Incidence<button type="button" name="ann" id="">+</button>
-                                                                </label>
-                                                                <table class="table table-bordered" id="">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>Sr. No.</th>
-                                                                            <th>Name of Product</th>
-                                                                            <th>B No./A.R. No.</th>
-                                                                            <th>Remarks</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <tr>
-                                                                            <td><input type="text" name="sr_no_SSFI[]"></td>
-                                                                           </td>
-                                                                              <td><input type="hidden" name="identifier_SSFI[]" >
-                                                                                <input type="text" name="name_of_product_SSFI[]" >
-                                                                            <td><input type="text" name="b_no_SSFI[]"
-                                                                                />
-                                                                            </td>
-                                                                             <td><input type="text" name="remarks_SSFI[]" >
-                                                                             </td>
-                                                                        </tr>
-                                                                     </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
 
-                        {{-- Table --}}
+                            <!----------------------------------------------------------new table-------------------------------------------------------------------------->
+
+                        {{-- new added table --}}
+                        <div class="col-12">
+                            <div class="group-input" id="suitabilityRow">
+                                <label for="audit-suitability-grid">
+                                    System Suitability Failure Incidence
+                                    <button type="button" name="audit-suitability-grid" id="ObservationAdd">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#observation-field-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+
+                                <table class="table table-bordered" id="onservation-field-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Sr. No.</th>
+                                            <th>Name of Product</th>
+                                            <th>B No./A.R. No.</th>
+                                            <th>Remarks</th>
+                                            {{-- <th>Action</th> --}}
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @php
+                                            $suitabilityNumber = 1;
+                                        @endphp
+                                              {{-- @foreach ($report->data as  $item) --}}
+                                                    <tr>
+                                            {{-- <td style="width: 6%"><input type="text" name="investigation[0][s_no]" value="">
+                                               </td>
+                                            --}}
+                                            <td>{{ $suitabilityNumber++ }}</td>
+                                              <td><input type="text" name="investigation[0][name_of_product_ssfi]" value="">
+                                               </td>
+                                            <td><input type="text" name="investigation[0][batch_no_ssfi]" value=""></td>
+                                             <td><input type="text" name="investigation[0][remarks_ssfi]" value="" ></td>
+
+
+                                        </tr>
+                                       {{-- @endforeach --}}
+                                     </tbody>
+                                </table>
+
+
+
+                </div>
+                            </div>
+
+
+
+                  <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var selectField = document.getElementById('Facility_Equipment');
+                        var inputsToToggle = [];
+
+                        // Add elements with class 'facility-name' to inputsToToggle
+                        var facilityNameInputs = document.getElementsByClassName('facility-name');
+                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                            inputsToToggle.push(facilityNameInputs[i]);
+                        }
+
+                        // Add elements with class 'id-number' to inputsToToggle
+                        var idNumberInputs = document.getElementsByClassName('id-number');
+                        for (var j = 0; j < idNumberInputs.length; j++) {
+                            inputsToToggle.push(idNumberInputs[j]);
+                        }
+
+                        // Add elements with class 'remarks' to inputsToToggle
+                        var remarksInputs = document.getElementsByClassName('remarks');
+                        for (var k = 0; k < remarksInputs.length; k++) {
+                            inputsToToggle.push(remarksInputs[k]);
+                        }
+
+
+                        selectField.addEventListener('change', function() {
+                            var isRequired = this.value === 'yes';
+                            console.log(this.value, isRequired, 'value');
+
+                            inputsToToggle.forEach(function(input) {
+                                input.required = isRequired;
+                                console.log(input.required, isRequired, 'input req');
+                            });
+
+                            document.getElementById('facilityRow').style.display = isRequired ? 'block' : 'none';
+                            // Show or hide the asterisk icon based on the selected value
+                            var asteriskIcon = document.getElementById('asteriskInvi');
+                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                        });
+                    });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
+            $('#ObservationAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="investigation[0][name_of_product]" value=""></td/>' +
+                        '<td><input type="text" name="investigation[0][batch_no]" value=""></td>' +
+                        '<td><input type="text" name="investigation[0][remarks]" value=""></td>' +
+                        // '<td><button class="removeRowBtn">Remove</button></td>' +
+
+
+                        '</tr>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#onservation-field-table tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+        </script>
+
+
+
+
+
+                            {{-- new added table --}}
+                                <!----------------------------------------------------------new table-------------------------------------------------------------------------->
+
 
 
                                                         {{-- New Added --}}
@@ -1241,23 +1426,7 @@
                                                             </div>
 
                                                         </div>
-                                                        <div class="col-lg-4">
-                                                            <div class="group-input">
-                                                                <label for="search">
-                                                                    Name Of Analyst <span class="text-danger"></span>
-                                                                </label>
-                                                                <select id="select-state" placeholder="Select..." name="name_of_analyst_SSFI">
-                                                                    <option value="">Select a value</option>
-                                                                    @foreach ($users as $data)
-                                                                        <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                                                    @endforeach
-                                                                </select>
-                                                                @error('name_of_analyst_SSFI')
-                                                                    <p class="text-danger">{{ $message }}</p>
-                                                                @enderror
-                                                            </div>
 
-                                                        </div>
                                                         <div class="col-lg-4">
                                                             <div class="group-input" id="date_of_incidence_SSFI">
                                                                 <label for="date_of_incidence_SSFI">Date Of Incidence<span
@@ -1314,7 +1483,7 @@
                                                             <div class="group-input" id="root_cause_SSFI">
                                                                 <label for="root_cause_SSFI"> Root Cause<span
                                                                         class="text-danger d-none">*</span></label>
-                                                                <textarea name="root_cause_SSFI"></textarea>
+                                                                <textarea name="root_cause_ssfi"></textarea>
                                                             </div>
 
                                                         </div>
@@ -1367,11 +1536,11 @@
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
-                                                            <div class="file-attachment-list" id="file_attachment_SSFI"></div>
+                                                            <div class="file-attachment-list" id="system_suitable_attachments"></div>
                                                             <div class="add-btn">
                                                                 <div>Add</div>
-                                                                <input type="file" id="myfile" name="file_attachment_SSFI[]"
-                                                                    oninput="addMultipleFiles(this, 'file_attachment_SSFI')" multiple>
+                                                                <input type="file" id="system_suitable_attachments" name="system_suitable_attachments[]"
+                                                                    oninput="addMultipleFiles(this, 'system_suitable_attachments')" multiple>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1409,7 +1578,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="affected documents closed"><b>Affected Documents Closed</b></label>
-                                        <select name="Initiator_Group" id="initiator_group" name="affected_documents_closed_closure">
+                                        <select name="affected_document_closure" id="affected_document_closure">
                                             <option value="0">-- Select --</option>
                                             <option value="Yes">Yes</option>
                                             <option value="No">No</option>
@@ -1488,13 +1657,13 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted By">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Submitted On">Submitted On</label>
                                         <div class="Date"></div>
@@ -1502,11 +1671,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Incident Review Completed By">Incident Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Incident Review Completed On">Incident Review Completed On</label>
                                         <div class="Date"></div>
@@ -1514,23 +1689,35 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Investigation Completed By">Investigation Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Investigation Completed On">Investigation Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                               <div class="col-lg-6">
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                               <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed On</label>
                                         <div class="Date"></div>
@@ -1538,53 +1725,83 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-
-
                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="All Activities Completed On">All Activities Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Review Completed By">Review Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Review Completed On">Review Completed On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Coment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Comment">Comment</label>
+                                            <div class="static"></div>
+                                        </div>
                                     </div>
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -1719,4 +1936,9 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchar').text(textlen);});
     </script>
+
+
+
+
+
 @endsection

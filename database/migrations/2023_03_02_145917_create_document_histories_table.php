@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('user_id');
             $table->string('user_name');
             $table->string('origin_state');
-            $table->string('user_role');
+            $table->string('user_role')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
