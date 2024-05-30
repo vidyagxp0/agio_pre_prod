@@ -44,7 +44,9 @@ class JobTrainingController extends Controller
 
        
 
-        return redirect()->route('job_training')->with('success', 'Job Training created successfully.');
+        toastr()->success('Job Training created successfully.');
+            return redirect('TMS');
+        // return redirect()->route('TMS')->with('success', '');
     }
 
 

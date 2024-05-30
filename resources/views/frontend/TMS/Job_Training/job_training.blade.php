@@ -74,9 +74,9 @@
                                 </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number">Name </label>
+                                        <label for="RLS Record Number">Name <span class="text-danger">*</span></label>
                                         <input  type="text" name="name" id="name_employee"
-                                            value="">
+                                            value="" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -136,6 +136,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        // Fetch the trainers' IDs
+                                                        $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
+                                                        $usersDetails = DB::table('users')->select('id', 'name')->get();
+                                                        // Fetch the user details using those trainer IDs
+                                                        $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
+                                                    @endphp
                                                     <tr>
                                                         <td>1</td>
                                                        
@@ -151,15 +158,18 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_1" id="">
-                                                                <option value="Person1">Person1</option>
-                                                                <option value="Person2">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_1" id="">
-                                                                <option value="Person1">Person1</option>
-                                                                <option value="Person2">Person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </td>
                                                     </tr>
@@ -176,15 +186,18 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_2" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_2" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </td>
         
@@ -202,14 +215,18 @@
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_3" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_3" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                          </td>
         
@@ -227,14 +244,18 @@
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_4" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_4" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                          </td>
         
@@ -252,20 +273,21 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_5" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}">{{ $trainer->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_5" id="">
-                                                                <option value="person1">person1</option>
-                                                                <option value="person2">person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}">{{ $u->name }}</option>
+                                                                @endforeach
                                                             </select>
                                                         </td>
                                                     </tr>
-                                                   
-                                                 
-                                                   
                                                 </tbody>
                                             </table>
                                         </div>

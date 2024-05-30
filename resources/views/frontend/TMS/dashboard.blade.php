@@ -93,13 +93,16 @@
                 </div>
                 <div class="cctab">
 
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
-                    <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
-
+                    @if (Helpers::checkRoles(6))
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">My Training</button>
+                        <button class="cctablinks " onclick="openCity(event, 'CCForm5')">On The Job Training</button>
+                        <button class="cctablinks " onclick="openCity(event, 'CCForm6')">Induction Training</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Employee</button>
+                        <button class="cctablinks " onclick="openCity(event, 'CCForm4')">Trainer Qualification</button>
+                    @endif
+                    @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Assigned To Me</button>
+                    @endif
                 </div>
 
                 {{-- <div class="tms-dashboard-tabs">

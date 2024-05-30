@@ -68,7 +68,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Employee ID <span class="text-danger">*</span></label>
-                                        <input  type="text" name="employee_id" 
+                                        <input  type="text" name="employee_id" required
                                             value="">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -77,7 +77,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number">Name of Employee <span class="text-danger">*</span></label>
                                         <input  type="text" name="name_employee" id="name_employee"
-                                            value="">
+                                            value="" required>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
