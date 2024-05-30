@@ -12781,15 +12781,15 @@
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
-                            <input type="text" name="username" required>
+                            <input class="form-control" type="text" name="username" required>
                         </div>
                         <div class="group-input">
                             <label for="password">Password <span class="text-danger">*</span></label>
-                            <input type="password" name="password" required>
+                            <input class="form-control"  type="password" name="password" required>
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <input  class="form-control" type="comment" name="comment">
                         </div>
                     </div>
 
