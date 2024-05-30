@@ -43,9 +43,9 @@ return new class extends Migration
             $table->string('customer')->nullable();
             // ------------------------grid----------------
             $table->text('analyst_name')->nullable();
-            $table->text('sample_type')->nullable();
+            $table->longtext('sample_type')->nullable();
             $table->text('others_specify')->nullable();
-            $table->text('stability_for')->nullable();
+            $table->longtext('stability_for')->nullable();
             // ------------------------grid----------------
             $table->text('specification_procedure_no')->nullable();
             $table->text('specification_limit')->nullable();
@@ -72,7 +72,7 @@ return new class extends Migration
             $table->longtext('root_cause_details')->nullable();
             $table->longtext('impact_of_root_cause')->nullable();
             $table->longtext('recommended_action_req')->nullable();
-            $table->text('recommend_action_refre')->nullable();
+            $table->longtext('recommend_action_refre')->nullable();
             $table->string('capa_required')->nullable();
             $table->longtext('capa_refrence_no')->nullable();
             $table->longtext('delay_justification')->nullable();
@@ -91,9 +91,9 @@ return new class extends Migration
             $table->longtext('manufacturing_invest')->nullable();
             $table->longtext('manufacturing_invest_ref')->nullable();
             $table->string('re_sampling_required')->nullable();
-            $table->text('re_sampling_ref_no')->nullable();
+            $table->longtext('re_sampling_ref_no')->nullable();
             $table->text('hypo_required')->nullable();
-            $table->text('hypo_expo_ref')->nullable();
+            $table->longtext('hypo_expo_ref')->nullable();
             $table->longtext('phase_inv_attachment')->nullable();
             //tab 6
             $table->longtext('summary_ofexp')->nullable();
@@ -108,7 +108,7 @@ return new class extends Migration
             $table->text('qcr_investigation_req')->nullable();
             $table->longtext('qcr_invest_refrence')->nullable();
             $table->longtext('qcr_justify_required')->nullable();
-            $table->text('qcr_attachment')->nullable();
+            $table->longtext('qcr_attachment')->nullable();
 
             //tab7
             $table->longtext('atp_review_comment')->nullable();
@@ -142,7 +142,7 @@ return new class extends Migration
                $table->string('risk_assessment_required_oot_cr')->nullable();
                $table->longtext('risk_assessment_reference_oot_cr')->nullable();
                $table->longtext('file_attachment_oot_cr')->nullable();
-               $table->string('cq_approver_oot_cr')->nullable();
+               $table->longtext('cq_approver_oot_cr')->nullable();
    
    
    
@@ -179,10 +179,10 @@ return new class extends Migration
                $table->string('add_testing_required_uae')->nullable();
                $table->longtext('add_testing_reference_uae')->nullable();
                $table->string('investigation_requirement_uae')->nullable();
-               $table->longtext('investigation_reference_uae')->nullable();
-               $table->longtext('hypothesis_experiment_requirement_uae')->nullable();
-               $table->longtext('hypothesis_experiment_reference_uae')->nullable();
-               $table->longtext('any_attachment_uae')->nullable();
+               $table->text('investigation_reference_uae')->nullable();
+               $table->text('hypothesis_experiment_requirement_uae')->nullable();
+               $table->text('hypothesis_experiment_reference_uae')->nullable();
+               $table->text('any_attachment_uae')->nullable();
    
    
    

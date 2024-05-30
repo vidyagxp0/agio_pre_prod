@@ -1,13 +1,13 @@
 <div id="CCForm13" class="inner-block cctabcontent">
     <div class="inner-block-content">
         <div class="sub-head">
-            Addendum Approval Comment
+             Approval Comment
         </div>
         <div class="row">
 
             <div class="col-md-12 mb-4">
                 <div class="group-input">
-                    <label for="Description Deviation">Reopen Approval Comments </label>
+                    <label for="Description Deviation"> Approval Comments </label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="reopen_approval_comments_uaa" id="summernote-1">
                                 {{ $data->reopen_approval_comments_uaa ?? '' }}
@@ -17,7 +17,7 @@
 
             <div class="col-12">
                 <div class="group-input">
-                    <label for="Reference Recores">Addendum Attachment</label>
+                    <label for="Reference Recores">Approval Attachment</label>
                     <small class="text-primary">
                         Please Attach all relevant or supporting documents
                     </small>
@@ -25,7 +25,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->addendum_attachment_uaa)
-                            @foreach (json_decode($data->addendum_attachment_uaa) as $file)
+                            @foreach ($data->addendum_attachment_uaa as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

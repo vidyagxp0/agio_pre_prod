@@ -25,6 +25,9 @@
                 <div class="group-input">
                     <label for="Cancelled By"> Root Casue Identified. </label>
                     <select name="root_casue_identified_piiqcr">
+                    <option value="0" {{ $data->oos_category_reason_identified_piiqcr === '0' ?
+                            'selected' : '' }}>Enter Your Selection Here</option>
+
                         <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
                             '' }}>Yes</option>
                         <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
@@ -63,7 +66,7 @@
                     <label for="Description Deviation">Details of Root Cause</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="details_of_root_cause_piiqcr" id="summernote-1">
-                {{$data->impact_assessment_piiqcr ? '$data->impact_assessment_piiqcr' : ''}}
+                {{$data->impact_assessment_piiqcr ? $data->impact_assessment_piiqcr : ''}}
                 </textarea>
                 </div>
             </div>
@@ -76,57 +79,6 @@
                 </textarea>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Mgr.more Info Reqd On">Recommended Action Required? </label>
-                    <select name="root_casue_identified_piiqcr">
-                        <option value="yes" {{ $data->root_casue_identified_piiqcr === 'yes' ? 'selected' :
-                            '' }}>Yes</option>
-                        <option value="no" {{ $data->root_casue_identified_piiqcr === 'no' ? 'selected' : ''
-                            }}>No</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Recommended Action Reference</label>
-                    <select multiple id="reference_record" name="recommended_action_reference_piiqcr[]">
-                        <option value="0" {{ $data->recommended_action_reference_piiqcr === '0' ? 'selected'
-                            : '' }}>--Select---</option>
-                        <option value="1" {{ $data->recommended_action_reference_piiqcr === '1' ? 'selected'
-                            : '' }}>1</option>
-                        <option value="2" {{ $data->recommended_action_reference_piiqcr === '2' ? 'selected'
-                            : '' }}>2</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Audit Observation Submitted On">Investi. Required</label>
-                    <select name="investi_required_piiqcr">
-                        <option value="yes" {{ $data->investi_required_piiqcr === 'yes' ? 'selected' : ''
-                            }}>Yes</option>
-                        <option value="no" {{ $data->investi_required_piiqcr === 'no' ? 'selected' : ''
-                            }}>No</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Records">Invest ref.</label>
-                    <select multiple id="reference_record" name="invest_ref_piiqcr[]">
-                        <option value="0" {{ $data->invest_ref_piiqcr === '0' ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ $data->invest_ref_piiqcr === '1' ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ $data->invest_ref_piiqcr === '2' ? 'selected' : '' }}>2
-                        </option>
-                    </select>
-                </div>
-            </div>
-
             <div class="col-12">
                 <div class="group-input">
                     <label for="Audit Lead More Info Reqd On">Attachments </label>
@@ -137,7 +89,7 @@
                         <div class="file-attachment-list" id="file_attach">
 
                             @if ($data->attachments_piiqcr)
-                            @foreach(json_decode($data->attachments_piiqcr) as $file)
+                            @foreach($data->attachments_piiqcr as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

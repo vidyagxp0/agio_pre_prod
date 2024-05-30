@@ -63,7 +63,7 @@
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
-
+{{-- {{ dd($data->stage);}} --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
                         @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))

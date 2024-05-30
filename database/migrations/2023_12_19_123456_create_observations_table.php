@@ -60,6 +60,7 @@ return new class extends Migration
             $table->string('Final_Approval_on')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
+            $table->longtext('action')->nullable();
             $table->timestamps();
 
         });

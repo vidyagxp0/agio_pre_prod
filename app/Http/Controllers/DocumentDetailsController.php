@@ -74,7 +74,7 @@ class DocumentDetailsController extends Controller
           $stage->comment = $request->comment;
 
           
-          if ($stage->stage == "In-Review") {
+        if ($stage->stage == "In-Review") {
             $deletePreviousApproval = StageManage::where('document_id', $request->document_id)->get();
             if ($deletePreviousApproval) {
               foreach ($deletePreviousApproval as $updateRecords) {
@@ -105,6 +105,31 @@ class DocumentDetailsController extends Controller
           $stage->stage = $request->stage_id;
           $stage->comment = $request->comment;
           $stage->save();
+
+          if ($request->stage_id == 'Close-by-HOD') {
+            $stage = new StageManage;
+            $stage->document_id = $request->document_id;
+            $stage->user_id = Auth::user()->id;
+            $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $stage->stage = 'Close-by-HOD';
+            $stage->comment = $request->comment;
+            $stage->save();
+
+            $history = new DocumentHistory();
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Close-by-HOD';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'In-HOD Review';
+            $history->change_to = 'Closed/Cancel';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = 'In-HOD Review';
+            $history->save();
+          }
 
           if ($request->stage_id == 'HOD Review Complete') {
             $stage = new StageManage;
@@ -197,7 +222,7 @@ class DocumentDetailsController extends Controller
         }
 
         
-        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers))) {
+        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers)) && ($document->stage == 4 || $document->stage == 5)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
               $document->stage = 1;
               $document->status = "Draft";
@@ -339,7 +364,8 @@ class DocumentDetailsController extends Controller
           }
 
         }
-        if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers))) {
+        
+        if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers)) && ($document->stage == 6 || $document->stage == 7)) {
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = 1;
@@ -491,7 +517,32 @@ class DocumentDetailsController extends Controller
           }
         }
 
-        if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods))) {
+        if (Helpers::checkRoles(4) && in_array(Auth::user()->id, explode(",", $document->hods)) && ($document->stage == 2 || $document->stage == 3)) {
+          if ($request->stage_id == "Close-by-HOD") {
+              
+              $document->status = "Closed/Cancel";
+              $document->stage = 13;
+
+              $history = new DocumentHistory();
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Close-by-HOD';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'In-HOD Review';
+              $history->change_to = 'Closed/Cancel';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = 'In-HOD Review';
+              $history->save();
+
+              $document->save();
+
+              return redirect()->back();
+          }
+
           if ($request->stage_id == "Cancel-by-HOD") {
             $document->status = "Draft";
             $document->stage = 1;

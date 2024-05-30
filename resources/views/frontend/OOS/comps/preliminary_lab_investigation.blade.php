@@ -7,11 +7,8 @@
                     <label for="Description Deviation">Review Comments</label>
                     <!-- <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div> -->
                     <textarea class="summernote" name="review_comments_plir" id="summernote-1"
-                        value="">
-
-           {{  $data->review_comments_plir ?'' : '' }}
-
-                </textarea>
+                        value="">{{  $data->review_comments_plir ?  $data->review_comments_plir : '' }}
+                    </textarea>
                 </div>
             </div>
 
@@ -111,7 +108,7 @@
 
 
                             @if ($data->supporting_attachments_plir)
-                            @foreach (json_decode($data->supporting_attachments_plir) as $file)
+                            @foreach ($data->supporting_attachments_plir as $file)
                             <h6 type="button" class="file-container text-dark"
                                 style="background-color: rgb(243, 242, 240);">
                                 <b>{{ $file }}</b>

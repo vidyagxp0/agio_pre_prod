@@ -14,7 +14,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Lora', serif;
-        }
+         }
 
         #main-container {
             width: 100%;

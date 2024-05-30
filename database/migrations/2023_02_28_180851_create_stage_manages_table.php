@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('document_id');
             $table->string('user_id');
-            $table->string('role');
+            $table->string('role')->nullable();
             $table->string('stage')->default(0);
             $table->string('comment')->nullable();
             $table->softDeletes();
