@@ -331,9 +331,9 @@ class OOCController extends Controller
             $history->save();
         }
 
-        
 
-     
+
+
 
         $oocGrid = $data->id;
         // if($request->has('instrumentDetail')){
@@ -344,17 +344,17 @@ class OOCController extends Controller
         $instrumentDetail->data = $request->instrumentdetails;
         $instrumentDetail->save();
         }
-       
+
     //    if($request->has('oocevoluation')){
         if (!empty($request->instrumentdetails)) {
-       
+
         $oocevaluation = OOC_Grid::where(['ooc_id'=>$oocGrid,'identifier'=>'OOC Evaluation'])->firstOrNew();
         $oocevaluation->ooc_id = $oocGrid;
         $oocevaluation->identifier = 'OOC Evaluation';
         $oocevaluation->data = $request->oocevoluation;
         $oocevaluation->save();
         }
-       
+
 
 
         toastr()->success('Record is created Successfully');
@@ -367,12 +367,12 @@ class OOCController extends Controller
     }
 
     public function OutofCalibrationShow($id){
-        
+
         $ooc = OutOfCalibration::where('id', $id)->first();
         $ooc->record = str_pad($ooc->record, 4, '0', STR_PAD_LEFT);
         $ooc->assign_to_name = User::where('id', $ooc->assign_id)->value('name');
         $ooc->initiator_name = User::where('id', $ooc->initiator_id)->value('name');
-        
+
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
         $oocEvolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
         // foreach ($oocgrid->data as $oogrid)
@@ -385,7 +385,7 @@ class OOCController extends Controller
 
     public function updateOutOfCalibration(Request $request,$id )
     {
-        
+
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -448,7 +448,7 @@ class OOCController extends Controller
         $ooc->initiated_through_impact_closure_ooc = $request->initiated_through_impact_closure_ooc;
 
 
-        
+
         if (!empty($request->initial_attachment_ooc)) {
             $files = [];
             if ($request->hasfile('initial_attachment_ooc')) {
@@ -725,15 +725,15 @@ $oocevaluation->save();
 
 
 
-        
+
 
         //=====================Second Grid ===========================//
 
-    
-        
 
 
-        
+
+
+
         //=====================Second Grid ===========================//
 
 
@@ -741,7 +741,7 @@ $oocevaluation->save();
 
     }
 
-  
+
     private function generateResponseKey($question) {
         return str_replace(' ', '_', strtolower($question)) . '_response';
     }
@@ -749,7 +749,7 @@ $oocevaluation->save();
     private function generateRemarkKey($question) {
         return str_replace(' ', '_', strtolower($question)) . '_remark';
     }
-   
+
     public function OOCStateChange(Request $request,$id)
             {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -777,7 +777,7 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Submited';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -803,7 +803,7 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Initial Phase I Investigation';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -830,12 +830,12 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Assignable Cause Found';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            
+
 
             if ($oocchange->stage == 4) {
                 $oocchange->stage = "6";
@@ -857,7 +857,7 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Completed';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -884,10 +884,10 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Obvious Results Not Found';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
-    
+
                 return back();
             }
             if ($oocchange->stage == 8) {
@@ -910,10 +910,10 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Complete';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
-    
+
                 return back();
             }
             if ($oocchange->stage == 7) {
@@ -936,10 +936,10 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Cause Identification';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
-    
+
                 return back();
             }
             if ($oocchange->stage == 10) {
@@ -962,10 +962,10 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Correction Complete';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
-    
+
                 return back();
             }
             if ($oocchange->stage == 12) {
@@ -988,19 +988,19 @@ $oocevaluation->save();
                 $history->change_from = $lastDocumentOOC->status;
                 $history->stage='Approved';
                 $history->save();
-               
+
                 $oocchange->update();
                 toastr()->success('Document Sent');
-    
+
                 return back();
             }
-           
 
 
 
 
 
-            
+
+
 
             }
 public function OOCStateChangetwo(Request $request , $id){
@@ -1030,7 +1030,7 @@ public function OOCStateChangetwo(Request $request , $id){
             $history->change_from = $lastDocumentOOC->status;
             $history->stage='Assignable Cause Not Found';
             $history->save();
-           
+
             $oocchange->update();
             toastr()->success('Document Sent');
 
@@ -1061,7 +1061,7 @@ public function OOCStateChangetwo(Request $request , $id){
             $history->change_from = $lastDocumentOOC->status;
             $history->stage='Cause Failed';
             $history->save();
-           
+
             $oocchange->update();
             toastr()->success('Document Sent');
             return redirect()->back();
@@ -1087,7 +1087,7 @@ public function OOCStateChangetwo(Request $request , $id){
             $history->change_from = $lastDocumentOOC->status;
             $history->stage='Obvious Results Found';
             $history->save();
-           
+
             $oocchange->update();
             toastr()->success('Document Sent');
 
@@ -1114,7 +1114,7 @@ public function OOCStateChangetwo(Request $request , $id){
             $history->change_from = $lastDocumentOOC->status;
             $history->stage='Cause Not Identified';
             $history->save();
-           
+
             $oocchange->update();
             toastr()->success('Document Sent');
 
@@ -1141,17 +1141,17 @@ public function OOCStateChangetwo(Request $request , $id){
             $history->change_from = $lastDocumentOOC->status;
             $history->stage='QA Review Complete';
             $history->save();
-           
+
             $oocchange->update();
             toastr()->success('Document Sent');
 
             return back();
         }
-        
 
-        
+
+
     }
-    
+
 }
 public function RejectoocStateChange(Request $request, $id)
 {
@@ -1196,8 +1196,8 @@ public function OOCAuditTrial($id){
     $document->initiator = User::where('id',$document->initiator_id)->value('name');
 
     return view('frontend.OOC.audit-trail',compact('audit','document','today'));
-    
-        
+
+
 }
     public function OOCStateCancel(Request $request , $id){
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -1238,19 +1238,19 @@ public function OOCAuditTrial($id){
                $oocOpen = OpenStage::find(1);
                if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
 
-               
+
                if ($request->revision == "capa-child") {
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
                 }
-               
+
                if ($request->revision == "Action-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
                }
 
-               
-               
+
+
     }
     public function oo_c_capa_child(Request $request ,$id)
     {
@@ -1275,7 +1275,7 @@ public function OOCAuditTrial($id){
                $oocOpen = OpenStage::find(1);
                if (!empty($oocOpen->cft)) $cft = explode(',', $oocOpen->cft);
 
-               
+
                if ($request->revision == "extension-child") {
                     $parent_due_date = "";
                     $parent_id = $id;
@@ -1283,24 +1283,24 @@ public function OOCAuditTrial($id){
                     if ($request->due_date) {
                    $parent_due_date = $request->due_date;
                                              }
-                    
+
 
                 $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                 return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
-                
+
             }
-               
+
                if ($request->revision == "risk-Item") {
                    $cc->originator = User::where('id', $cc->initiator_id)->value('name');
                    return view('frontend.forms.risk-management', compact('record_number', 'due_date', 'parent_id','old_record', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
-                   
+
                }
     }
 
     public function auditDetailsooc($id){
-       
+
         $detail = OOCAuditTrail::find($id);
-       
+
         $detail_data = OOCAuditTrail::where('activity_type', $detail->activity_type)->where('ooc_id', $detail->ooc_id)->latest()->get();
 
         $doc = OOCAuditTrail::where('id', $detail->ooc_id)->first();
@@ -1317,8 +1317,8 @@ public function OOCAuditTrial($id){
         if (!empty($doc)) {
             $doc->originator = User::where('id', $doc->initiator_id)->value('name');
             $data = OOCAuditTrail::where('ooc_id', $id)->get();
-            
-            
+
+
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.OOC.auditReport', compact('data', 'doc'))
@@ -1339,5 +1339,38 @@ public function OOCAuditTrial($id){
         }
 
     }
-    
+
+
+
+    public function singleReports(Request $request, $id){
+        $data = OutOfCalibration::find($id);
+        $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
+        $oocevolutions = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
+        //  $grid_Data = ErrataGrid::where(['e_id' => $id, 'identifier' => 'details'])->first();
+        if (!empty($data)) {
+            // $data->data = ErrataGrid::where('e_id', $id)->where('identifier', "details")->first();
+            // $data->Instruments_Details = ErrataGrid::where('e_id', $id)->where('type', "Instruments_Details")->first();
+            // $data->Material_Details = Erratagrid::where('e_id', $id)->where('type', "Material_Details")->first();
+            // dd($data->all());
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.OOC.ooc_singleReport', compact('data','oocgrid','oocevolutions'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('OOC' . $id . '.pdf');
+        }
+    }
+
 }
