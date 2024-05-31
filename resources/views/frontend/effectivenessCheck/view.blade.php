@@ -25,7 +25,7 @@
             <div class="inner-block">
                 <div class="head">PR-0001</div>
                 <div class="slogan">
-                    <strong>Division / Project :</strong>
+                    <strong>Site Division/Project :</strong>
                     QMS-EMEA / Change Control
                 </div>
             </div>
@@ -152,7 +152,7 @@
             <div class="form-field-head">
                 <div class="division-bar">
                     <!-- <strong>Site Division/Project</strong> :
-                    QMS-North America / Effectiveness-Check -->
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check -->
                     <strong>Site Division/Project :</strong>
                     {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
                 </div>
@@ -1106,7 +1106,7 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
 
                             <label for="minor">

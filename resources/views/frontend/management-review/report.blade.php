@@ -1864,7 +1864,7 @@
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($managementReview->assign_to){{ Helpers::getInitiatorName($managementReview->assign_to) }} @else Not Applicable @endif</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -1881,7 +1881,7 @@
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($managementReview->type){{ $managementReview->type }}@else Not Applicable @endif</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Description</th>
@@ -1893,10 +1893,10 @@
 
                     </tr>
                     <tr>
-                        
+
                         <th class="w-20">Attendess</th>
                         <td class="w-30">@if($managementReview->attendees){{ $managementReview->attendees }}@else Not Applicable @endif</td>
-                        
+
 
                     </tr>
 
@@ -1933,7 +1933,7 @@
             {{-- <div class="block">
                 {{-- <div class="head">
                     <div class="block-head">
-                       
+
                     </div>
                     <table>
                         <tr>
@@ -1977,27 +1977,35 @@
                     Operational planning and control
                 </div>
                 <table>
-                 <tr>
+                    <tr>
                         <th class="w-20">Operations </th>
-                        <td class="w-30">@if($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif</td>
-                        <th class="w-20">Requirements for Products and Services
-                        </th>
-                        <td class="w-30">@if($managementReview->requirement_products_services){{ $managementReview->requirement_products_services }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Requirements for Products and Services</th>
+                        <td class="w-80">@if($managementReview->requirement_products_services){{ $managementReview->requirement_products_services }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Design and Development of Products and Services</th>
-                        <td class="w-30">@if($managementReview->design_development_product_services){{($managementReview->design_development_product_services)}} @else Not Applicable @endif</td>
-                        <th class="w-20">Control of Externally Provided Processes, Products and Services</th>
-                        <td class="w-30">@if($managementReview->control_externally_provide_services){{ $managementReview->control_externally_provide_services }}@else Not Applicable @endif</td>
-                    </tr> 
-                     <tr>  
-                        <th class="w-20">Production and Service Provision</th>
-                        <td class="w-30">@if($managementReview->production_service_provision){{ $managementReview->production_service_provision }}@else Not Applicable @endif</td>
-                        <th class="w-20">Release of Products and Services</th>
-                        <td class="w-30">@if($managementReview->release_product_services){{ $managementReview->release_product_services }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($managementReview->design_development_product_services){{($managementReview->design_development_product_services)}} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Control of Externally Provided Processes, Products and Services</th>
+                        <td class="w-80">@if($managementReview->control_externally_provide_services){{ $managementReview->control_externally_provide_services }}@else Not Applicable @endif</td>
+
+                    </tr>
+                     <tr>
+                        <th class="w-20">Production and Service Provision</th>
+                        <td class="w-80">@if($managementReview->production_service_provision){{ $managementReview->production_service_provision }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Release of Products and Services</th>
+                        <td class="w-80">@if($managementReview->release_product_services){{ $managementReview->release_product_services }}@else Not Applicable @endif</td>
+
+                    </tr>
+                    <tr>
                         <th class="w-20">Control of Non-conforming Outputs </th>
-                        <td class="w-30">@if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif</td>
                     </tr>
 
                     <tr>
@@ -2067,7 +2075,7 @@
                         Meetings and summary
                     </div>
                     <table>
-                   
+
                         <tr>
                             <th class="w-20">Risk & Opportunities</th>
                             <td class="w-30">
@@ -2090,7 +2098,7 @@
                                     @if($managementReview->customer_satisfaction_level){{ $managementReview->customer_satisfaction_level }}@else Not Applicable @endif
                                 </div>
                             </td>
-                            <th class="w-20">Budget Estimatesn</th>
+                            <th class="w-20">Budget Estimation</th>
                             <td class="w-30">
                                     <div>
                                         @if($managementReview->budget_estimates){{ $managementReview->budget_estimates }}@else Not Applicable @endif
@@ -2208,8 +2216,8 @@
             </div>
         </div>
     </div>
-    
-                
+
+
                 <div class="border-table">
                     <div class="block-head">
                         Closure Attachments
@@ -2265,7 +2273,7 @@
 
 
 
-            
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">

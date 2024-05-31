@@ -131,11 +131,32 @@
 <style>
     #short_width{
         display: inline-block;
-    width: 520px !important;
+    width: 320px !important;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
     }
+    .table-container {
+  overflow: auto;
+  max-height: 350px;
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px;
+}
+.td_c{
+    width: 100px !important;
+}
+.td_desc{
+    width: 10px;
+}
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -186,23 +207,8 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
 
-                        <style>
-.table-container {
-  overflow: auto;
-  max-height: 350px;
-}
 
-.table-header11 {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 1;
-}
-
-.table-body-new {
-  margin-top: 30px;
-}
-                        </style>
+                        <div class="main-scope-table table-container">
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">
@@ -229,7 +235,7 @@
                                         <tr>
                                             <td>
                                                 @if ($datas->type == 'Change-Control')
-                                                    <a href="{{ route('CC.show', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('CC.show', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
@@ -276,7 +282,7 @@
 
 
                                                 @elseif ($datas->type == 'Risk-Assesment')
-                                                    <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('showRiskManagement', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -290,7 +296,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'Lab-Incident')
-                                                    <a href="{{ route('ShowLabIncident', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('ShowLabIncident', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -319,7 +325,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'External-Audit')
-                                                    <a href="{{ route('showExternalAudit', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('showExternalAudit', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -334,7 +340,7 @@
                                                     @endif
 
                                                 @elseif ($datas->type == 'Audit-Program')
-                                                    <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('ShowAuditProgram', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -348,7 +354,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif ($datas->type == 'Observation')
-                                                    <a href="{{ route('showobservation', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('showobservation', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -363,7 +369,7 @@
                                                     @endif
                                                     {{-- ----------------------------------------------- --}}
                                                 @elseif($datas->type == 'Action-Item')
-                                                    <a href="{{ route('actionItem.show', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('actionItem.show', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -377,7 +383,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Extension')
-                                                    <a href="{{ route('extension.show', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('extension.show', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -389,7 +395,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Effectiveness-Check')
-                                                    <a href="{{ route('effectiveness.show', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('effectiveness.show', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -403,7 +409,7 @@
                                                         </a>
                                                     @endif
                                                 @elseif($datas->type == 'Capa')
-                                                    <a href="{{ route('capashow', $datas->id) }}" style="color: blue">
+                                                    <a href="{{ route('capashow', $datas->id) }}" style="color: blue" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -415,9 +421,9 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'OOS Chemical')
+                                                    @elseif($datas->type == 'OOS Chemical Chemical')
                                                     <a href="{{ route('oos.oos_view', $datas->id) }}">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id  }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
@@ -443,7 +449,34 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                    @elseif($datas->type == 'OOS Microbiology')
+                                                    <a href="{{ route('oos_micro.edit', $datas->id) }}">
+                                                        {{ str_pad($datas->id, 4, '0', STR_PAD_LEFT) }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
 
+                                                    @elseif($datas->type == 'errata')
+                                                    <a href="{{ route('errata.show', $datas->id) }}">
+                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id }}
+                                                    </a>
+                                                    @if (!empty($datas->parent_id))
+                                                        <a
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
+                                                            <div class="icon" onclick="showChild()"
+                                                                data-bs-toggle="tooltip" title="Related Records">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
+                                                            </div>
+                                                        </a>
+                                                    @endif
                                                 @elseif($datas->type == 'Management-Review')
                                                     <a href="{{ route('manageshow', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -472,8 +505,8 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'Failure Investigation')
-                                                    <a href="{{ route('failure-investigation-show', $datas->id) }}" style="color: blue">
+                                                    @elseif($datas->type == 'Deviation')
+                                                    <a href="{{ route('devshow', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
                                                     @if (!empty($datas->parent_id))
@@ -486,6 +519,34 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                    @elseif($datas->type == 'Failure Investigation')
+                                                        <a href="{{ route('failure-investigation-show', $datas->id) }}" style="color: blue">
+                                                            {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                        </a>
+                                                        @if (!empty($datas->parent_id))
+                                                            <a
+                                                                href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
+                                                                <div class="icon" onclick="showChild()"
+                                                                    data-bs-toggle="tooltip" title="Related Records">
+                                                                    {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                        alt="..." class="w-100 h-100"> --}}
+                                                                </div>
+                                                            </a>
+                                                        @endif
+                                                    @elseif($datas->type == 'Non Conformance')
+                                                        <a href="{{ route('non-conformance-show', $datas->id) }}" style="color: blue">
+                                                            {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                        </a>
+                                                        @if (!empty($datas->parent_id))
+                                                            <a
+                                                                href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
+                                                                <div class="icon" onclick="showChild()"
+                                                                    data-bs-toggle="tooltip" title="Related Records">
+                                                                    {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                        alt="..." class="w-100 h-100"> --}}
+                                                                </div>
+                                                            </a>
+                                                        @endif
                                                 @elseif($datas->type == 'Root-Cause-Analysis')
                                                     <a href="{{ route('root_show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -524,16 +585,14 @@
                                                         <td>
                                                             -
                                                         </td>
-                                                    @endif
-                                            <td
-                                            class="viewdetails" data-id="{{ $datas->id }}"
+                                            @endif
+                                            <tdclass="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
-                                                    KSA
-                                                    KSA
+                                                    -
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -569,7 +628,7 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if (property_exists($datas, 'due_date'))
-                                                    {{ $datas->type !== 'Extension' ? Helpers::getDueDate($datas->due_date, false) : ''  }}
+                                                    {{ $datas->type !== 'Extension' ? Helpers::getdateFormat($datas->due_date) : ''  }}
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

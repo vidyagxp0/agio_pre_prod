@@ -218,7 +218,7 @@
                         <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Justification of Extention</th>
+                        <th class="w-20">Justification of Extension</th>
                         <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
@@ -230,7 +230,7 @@
                         <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
                     </tr>
                     <div class="block-head">
-                        Extention Attachments
+                        Extension Attachments
                     </div>
                       <div class="border-table">
                         <table>

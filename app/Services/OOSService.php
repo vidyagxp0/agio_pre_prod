@@ -834,8 +834,8 @@ class OOSService
 
             $input = $request->all();
 
-            $input['status'] = 1;
-            $input['stage'] = 'Opened';
+            $input['status'] = 'Opened';
+            $input['stage'] = 1;
 
             $file_input_names = [
                 'initial_attachment_gi',
