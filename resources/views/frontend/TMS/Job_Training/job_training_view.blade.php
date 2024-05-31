@@ -86,7 +86,7 @@
                                         <input  type="text" name="department_location" value="{{ $jobTraining->department_location }}">
                                             {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}"> --}}
                                         {{-- <input type="hidden" name="division_id" value="{{ session()->get('division') }}"> --}}
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                               
@@ -136,6 +136,13 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        // Fetch the trainers' IDs
+                                                        $trainerIds = DB::table('user_roles')->where('q_m_s_roles_id', 6)->pluck('user_id');
+                                                        $usersDetails = DB::table('users')->select('id', 'name')->get();
+                                                        // Fetch the user details using those trainer IDs
+                                                        $trainers = DB::table('users')->whereIn('id', $trainerIds)->select('id', 'name')->get();
+                                                    @endphp
                                                     <tr>
                                                         <td>1</td>
                                                        
@@ -151,16 +158,18 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_1" id="" >
-                                                                <option value="{{ $jobTraining->trainee_name_1}}">person1</option>
-                                                                <option value="{{ $jobTraining->trainee_name_1}}">person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($trainers as $trainer)
+                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_1 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                    @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_1" id="">
-                                                                <option value="{{ $jobTraining->trainer_1}}">person1</option>
-                                                                <option value="{{ $jobTraining->trainer_1}}">person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($usersDetails as $u)
+                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_1 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                    @endforeach
                                                             </select>
                                                         </td>
                                                     </tr>
@@ -177,16 +186,18 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_2" id="" >
-                                                                <option value="{{ $jobTraining->trainee_name_2}}">Person1</option>
-                                                                <option value="{{ $jobTraining->trainee_name_2}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($trainers as $trainer)
+                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_2 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                    @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_2" id="">
-                                                                <option value="{{ $jobTraining->trainer_2}}">Person1</option>
-                                                                <option value="{{ $jobTraining->trainer_2}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($usersDetails as $u)
+                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_2 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                    @endforeach
                                                             </select>
                                                         </td>
         
@@ -204,16 +215,18 @@
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_3" id="" >
-                                                                 <option value="{{ $jobTraining->trainee_name_3}}">Person1</option>
-                                                                 <option value="{{ $jobTraining->trainee_name_3}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_3 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_3" id="">
-                                                                 <option value="{{ $jobTraining->trainer_3}}">Person1</option>
-                                                                 <option value="{{ $jobTraining->trainer_3}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}" @if($jobTraining->trainer_3 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                          </td>
         
@@ -231,16 +244,18 @@
                                                           </td>
                                                           <td>
                                                              <select name="trainee_name_4" id="">
-                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">person1</option>
-                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($trainers as $trainer)
+                                                                    <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_4 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                           </td>
                                                           <td>
                                                              <select name="trainer_4" id="">
-                                                                 <option  value="{{ $jobTraining->trainer_4}}">Perosn1</option>
-                                                                 <option  value="{{ $jobTraining->trainee_name_4}}">Person2</option>
-
+                                                                <option value="">-- Select --</option>
+                                                                @foreach ($usersDetails as $u)
+                                                                    <option value="{{ $u->id }}" @if($jobTraining->trainer_4 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                @endforeach
                                                              </select>
                                                          </td>
         
@@ -258,14 +273,18 @@
                                                          </td>
                                                          <td>
                                                             <select name="trainee_name_5" id="">
-                                                                <option  value="{{ $jobTraining->trainee_name_5}}">Person1</option>
-                                                                <option  value="{{ $jobTraining->trainee_name_5}}">Person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($trainers as $trainer)
+                                                                        <option value="{{ $trainer->id }}" @if($jobTraining->trainee_name_5 == $trainer->id) selected @endif>{{ $trainer->name }}</option>
+                                                                    @endforeach
                                                             </select>
                                                          </td>
                                                          <td>
                                                             <select name="trainer_5" id="">
-                                                                <option  value="{{ $jobTraining->trainer_5}}">Perosn1</option>
-                                                                <option  value="{{ $jobTraining->trainer_5}}">Person2</option>
+                                                                <option value="">-- Select --</option>
+                                                                    @foreach ($usersDetails as $u)
+                                                                        <option value="{{ $u->id }}" @if($jobTraining->trainer_5 == $u->id) selected @endif>{{ $u->name }}</option>
+                                                                    @endforeach
 
                                                             </select>
                                                         </td>

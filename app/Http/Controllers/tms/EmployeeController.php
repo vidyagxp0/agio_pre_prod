@@ -30,7 +30,8 @@ class EmployeeController extends Controller
             $employee->assigned_to = $request->assigned_to;
             $employee->start_date = $request->start_date;
             $employee->joining_date = $request->joining_date;
-            $employee->employee_id = 'AO-' . $request->employee_id;
+            $employee->employee_id = $request->employee_id;
+            $employee->employee_name = $request->employee_name;
             $employee->gender = $request->gender;
             $employee->department = $request->department;
             $employee->job_title = $request->job_title;
@@ -147,6 +148,7 @@ class EmployeeController extends Controller
             $employee->start_date = $request->start_date;
             $employee->joining_date = $request->joining_date;
             $employee->employee_id = $request->employee_id;
+            $employee->employee_name = $request->employee_name;
             $employee->gender = $request->gender;
             $employee->department = $request->department;
             $employee->job_title = $request->job_title;

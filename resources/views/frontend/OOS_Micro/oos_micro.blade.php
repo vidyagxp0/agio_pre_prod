@@ -339,7 +339,7 @@
                                                 </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            QMS-North America / OOS_Micro
+            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS_Micro
         </div>
         <!-- <div class="button-bar">
                                                         <button type="button">Save</button>

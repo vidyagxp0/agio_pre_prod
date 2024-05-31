@@ -14,6 +14,7 @@ use App\Models\OutOfCalibration;
 use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
+use App\Models\NonConformance;
 use App\Models\AuditProgram;
 use App\Models\{Division,Deviation};
 use App\Models\RootCauseAnalysis;
@@ -84,6 +85,7 @@ class DashboardController extends Controller
         $datas16 = errata::orderByDesc('id')->get();
         $datas14 = OOS_micro::orderByDesc('id')->get();
 
+        $datas25 = NonConformance::orderByDesc('id')->get();
         foreach ($datas as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -329,12 +331,11 @@ class DashboardController extends Controller
         }
         foreach ($datas12 as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
-
             array_push($table, [
                 "id" => $data->id,
                 "parent" => $data->parent_record ? $data->parent_record : "-",
                 "record" => $data->record,
-                "division_id" => $data->division_id,
+                "division_id" => $data->division_code,
                 "type" => "Observation",
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
@@ -675,6 +676,26 @@ class DashboardController extends Controller
                 "stage" => $data->status,
 
                 "date_open" => $data->create,
+                "date_close" => $data->updated_at,
+            ]);
+        }
+        foreach ($datas25 as $data) {
+            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
+            array_push($table, [
+                "id" => $data->id,
+                "parent" => $data->cc_id ? $data->cc_id : "-",
+                "record" => $data->record,
+                "type" => "Non Conformance",
+                "parent_id" => $data->parent_id,
+                "parent_type" => $data->parent_type,
+                "division_id" => $data->division_id,
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "initiator_id" => $data->initiator_id,
+                "initiated_through" => $data->initiated_through,
+                "intiation_date" => $data->intiation_date,
+                "stage" => $data->status,
+                "date_open" => $data->create,
+                "due_date" => $data->due_date,
                 "date_close" => $data->updated_at,
             ]);
         }

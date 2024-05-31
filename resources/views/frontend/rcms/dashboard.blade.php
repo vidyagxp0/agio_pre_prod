@@ -131,11 +131,32 @@
 <style>
     #short_width{
         display: inline-block;
-    width: 520px !important;
+    width: 320px !important;
     white-space: nowrap;
     overflow: hidden !important;
     text-overflow: ellipsis;
     }
+    .table-container {
+  overflow: auto;
+  max-height: 350px;
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white;
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px;
+}
+.td_c{
+    width: 100px !important;
+}
+.td_desc{
+    width: 10px;
+}
 </style>
 @section('rcms_container')
     <div id="rcms-dashboard">
@@ -186,23 +207,7 @@
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
 
-                        <style>
-.table-container {
-  overflow: auto;
-  max-height: 350px;
-}
 
-.table-header11 {
-  position: sticky;
-  top: 0;
-  background-color: white;
-  z-index: 1;
-}
-
-.table-body-new {
-  margin-top: 30px;
-}
-                        </style>
                         <div class="main-scope-table table-container">
                         <div class="main-scope-table table-container">
                             <table class="table table-bordered" id="auditTable">
@@ -515,19 +520,33 @@
                                                         </a>
                                                     @endif
                                                     @elseif($datas->type == 'Failure Investigation')
-                                                    <a href="{{ route('failure-investigation-show', $datas->id) }}" style="color: blue">
-                                                        {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
-                                                    </a>
-                                                    @if (!empty($datas->parent_id))
-                                                        <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
-                                                            <div class="icon" onclick="showChild()"
-                                                                data-bs-toggle="tooltip" title="Related Records">
-                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100"> --}}
-                                                            </div>
+                                                        <a href="{{ route('failure-investigation-show', $datas->id) }}" style="color: blue">
+                                                            {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                         </a>
-                                                    @endif
+                                                        @if (!empty($datas->parent_id))
+                                                            <a
+                                                                href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
+                                                                <div class="icon" onclick="showChild()"
+                                                                    data-bs-toggle="tooltip" title="Related Records">
+                                                                    {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                        alt="..." class="w-100 h-100"> --}}
+                                                                </div>
+                                                            </a>
+                                                        @endif
+                                                    @elseif($datas->type == 'Non Conformance')
+                                                        <a href="{{ route('non-conformance-show', $datas->id) }}" style="color: blue">
+                                                            {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
+                                                        </a>
+                                                        @if (!empty($datas->parent_id))
+                                                            <a
+                                                                href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/deviation">
+                                                                <div class="icon" onclick="showChild()"
+                                                                    data-bs-toggle="tooltip" title="Related Records">
+                                                                    {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                        alt="..." class="w-100 h-100"> --}}
+                                                                </div>
+                                                            </a>
+                                                        @endif
                                                 @elseif($datas->type == 'Root-Cause-Analysis')
                                                     <a href="{{ route('root_show', $datas->id) }}" style="color: blue">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -573,7 +592,7 @@
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
-                                                    KSA
+                                                    -
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -609,7 +628,7 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if (property_exists($datas, 'due_date'))
-                                                    {{ $datas->type !== 'Extension' ? Helpers::getDueDate($datas->due_date, false) : ''  }}
+                                                    {{ $datas->type !== 'Extension' ? Helpers::getdateFormat($datas->due_date) : ''  }}
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

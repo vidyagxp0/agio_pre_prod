@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
-use App\Models\InternalAuditTrial;
+use App\Models\{InternalAuditTrial,IA_checklist_tablet_compression,IA_checklist_tablet_coating,Checklist_Capsule, IA_checklist_dispensing, IA_checklist_engineering, IA_checklist_hr, IA_checklist_stores, IA_dispencing_manufacturing, IA_ointment_paking, IA_quality_control};
+use App\Models\{IA_checklist_capsule_paking};
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\User;
+use App\Models\IA_checklist_compression;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -32,9 +34,9 @@ class InternalauditController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
-        
+
         return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
-    
+
     }
     public function create(request $request)
     {
@@ -73,7 +75,7 @@ class InternalauditController extends Controller
         $internalAudit->Others= $request->Others;
         // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category= $request->Audit_Category;
-        
+
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -91,11 +93,147 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
-        
+
         $internalAudit->audit_end_date = $request->audit_end_date;
         // $internalAudit->external_others=$request->external_others;
-        
-        
+        $internalAudit->response_1 = $request->response_1;
+        $internalAudit->response_2 = $request->response_2;
+        $internalAudit->response_3 = $request->response_3;
+        $internalAudit->response_4 = $request->response_4;
+        $internalAudit->response_5 = $request->response_5;
+        $internalAudit->response_6 = $request->response_6;
+        $internalAudit->response_7 = $request->response_7;
+        $internalAudit->response_8 = $request->response_8;
+        $internalAudit->response_9 = $request->response_9;
+        $internalAudit->response_10 = $request->response_10;
+        $internalAudit->response_11 = $request->response_11;
+        $internalAudit->response_12 = $request->response_12;
+        $internalAudit->response_13 = $request->response_13;
+        $internalAudit->response_14 = $request->response_14;
+        $internalAudit->response_15 = $request->response_15;
+        $internalAudit->response_16 = $request->response_16;
+        $internalAudit->response_17 = $request->response_17;
+        $internalAudit->response_18 = $request->response_18;
+        $internalAudit->response_19 = $request->response_19;
+        $internalAudit->response_20 = $request->response_20;
+        $internalAudit->response_21 = $request->response_21;
+        $internalAudit->response_22 = $request->response_22;
+        $internalAudit->response_23 = $request->response_23;
+        $internalAudit->response_24 = $request->response_24;
+        $internalAudit->response_25 = $request->response_25;
+        $internalAudit->response_26 = $request->response_26;
+        $internalAudit->response_27 = $request->response_27;
+        $internalAudit->response_28 = $request->response_28;
+        $internalAudit->response_29 = $request->response_29;
+        $internalAudit->response_30 = $request->response_30;
+        $internalAudit->response_31 = $request->response_31;
+        $internalAudit->response_32 = $request->response_32;
+        $internalAudit->response_33 = $request->response_33;
+        $internalAudit->response_34 = $request->response_34;
+        $internalAudit->response_35 = $request->response_35;
+        $internalAudit->response_36 = $request->response_36;
+        $internalAudit->response_37 = $request->response_37;
+        $internalAudit->response_38 = $request->response_38;
+        $internalAudit->response_39 = $request->response_39;
+        $internalAudit->response_40 = $request->response_40;
+        $internalAudit->response_41 = $request->response_41;
+        $internalAudit->response_42 = $request->response_42;
+        $internalAudit->response_43 = $request->response_43;
+        $internalAudit->response_44 = $request->response_44;
+        $internalAudit->response_45 = $request->response_45;
+        $internalAudit->response_46 = $request->response_46;
+        $internalAudit->response_47 = $request->response_47;
+        $internalAudit->response_48 = $request->response_48;
+        $internalAudit->response_49 = $request->response_49;
+        $internalAudit->response_50 = $request->response_50;
+        $internalAudit->response_51 = $request->response_52;
+        $internalAudit->response_52 = $request->response_52;
+        $internalAudit->response_53 = $request->response_53;
+        $internalAudit->response_54 = $request->response_54;
+        $internalAudit->response_55 = $request->response_55;
+        $internalAudit->response_56 = $request->response_56;
+        $internalAudit->response_57 = $request->response_57;
+        $internalAudit->response_58 = $request->response_58;
+        $internalAudit->response_59 = $request->response_59;
+        $internalAudit->response_60 = $request->response_60;
+        $internalAudit->response_61 = $request->response_61;
+        $internalAudit->response_62 = $request->response_62;
+        $internalAudit->response_63 = $request->response_63;
+
+
+        $internalAudit->remark_1 = $request->remark_1;
+        $internalAudit->remark_2 = $request->remark_2;
+        $internalAudit->remark_3 = $request->remark_3;
+        $internalAudit->remark_4 = $request->remark_4;
+        $internalAudit->remark_5 = $request->remark_5;
+        $internalAudit->remark_6 = $request->remark_6;
+        $internalAudit->remark_7 = $request->remark_7;
+        $internalAudit->remark_8 = $request->remark_8;
+        $internalAudit->remark_9 = $request->remark_9;
+        $internalAudit->remark_10 = $request->remark_10;
+        $internalAudit->remark_11 = $request->remark_11;
+        $internalAudit->remark_12 = $request->remark_12;
+        $internalAudit->remark_13 = $request->remark_13;
+        $internalAudit->remark_14 = $request->remark_14;
+        $internalAudit->remark_15 = $request->remark_15;
+        $internalAudit->remark_16 = $request->remark_16;
+        $internalAudit->remark_17 = $request->remark_17;
+        $internalAudit->remark_18 = $request->remark_18;
+        $internalAudit->remark_19 = $request->remark_19;
+        $internalAudit->remark_20 = $request->remark_20;
+        $internalAudit->remark_21 = $request->remark_21;
+        $internalAudit->remark_22 = $request->remark_22;
+        $internalAudit->remark_23 = $request->remark_23;
+        $internalAudit->remark_24 = $request->remark_24;
+        $internalAudit->remark_25 = $request->remark_25;
+        $internalAudit->remark_26 = $request->remark_26;
+        $internalAudit->remark_27 = $request->remark_27;
+        $internalAudit->remark_28 = $request->remark_28;
+        $internalAudit->remark_29 = $request->remark_29;
+        $internalAudit->remark_30 = $request->remark_30;
+        $internalAudit->remark_31 = $request->remark_31;
+        $internalAudit->remark_32 = $request->remark_32;
+        $internalAudit->remark_33 = $request->remark_33;
+        $internalAudit->remark_34 = $request->remark_34;
+        $internalAudit->remark_35 = $request->remark_35;
+        $internalAudit->remark_36 = $request->remark_36;
+        $internalAudit->remark_37 = $request->remark_37;
+        $internalAudit->remark_38 = $request->remark_38;
+        $internalAudit->remark_39 = $request->remark_39;
+        $internalAudit->remark_40 = $request->remark_40;
+        $internalAudit->remark_41 = $request->remark_41;
+        $internalAudit->remark_42 = $request->remark_42;
+        $internalAudit->remark_43 = $request->remark_43;
+        $internalAudit->remark_44 = $request->remark_44;
+        $internalAudit->remark_45 = $request->remark_45;
+        $internalAudit->remark_46 = $request->remark_46;
+        $internalAudit->remark_47 = $request->remark_47;
+        $internalAudit->remark_48 = $request->remark_48;
+        $internalAudit->remark_49 = $request->remark_49;
+        $internalAudit->remark_50 = $request->remark_50;
+        $internalAudit->remark_51 = $request->remark_51;
+        $internalAudit->remark_52 = $request->remark_52;
+        $internalAudit->remark_53 = $request->remark_53;
+        $internalAudit->remark_54 = $request->remark_54;
+        $internalAudit->remark_55 = $request->remark_55;
+        $internalAudit->remark_56 = $request->remark_56;
+        $internalAudit->remark_57 = $request->remark_57;
+        $internalAudit->remark_58 = $request->remark_58;
+        $internalAudit->remark_59 = $request->remark_59;
+        $internalAudit->remark_60 = $request->remark_60;
+        $internalAudit->remark_61 = $request->remark_61;
+        $internalAudit->remark_62 = $request->remark_62;
+        $internalAudit->remark_63 = $request->remark_63;
+
+        $internalAudit->save();
+//------------------------------------response and remarks input---------------------------------
+//$internalaudit   = new table_cc_impactassement();
+
+//$internalAudit->save();
+
+
+
+
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -242,7 +380,7 @@ class InternalauditController extends Controller
         // if (!empty($request->severity_level)) {
         //     $data4->severity_level = serialize($request->severity_level);
         // }
-        if (!empty($request->area)) { 
+        if (!empty($request->area)) {
             $data4->area = serialize($request->area);
         }
         // if (!empty($request->observation_category)) {
@@ -806,6 +944,390 @@ class InternalauditController extends Controller
         $internalAudit->due_date= $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
+
+
+        // ===================update==============checklist=========
+
+        $internalAudit->response_1 = $request->response_1;
+        $internalAudit->response_2 = $request->response_2;
+        $internalAudit->response_3 = $request->response_3;
+        $internalAudit->response_4 = $request->response_4;
+        $internalAudit->response_5 = $request->response_5;
+        $internalAudit->response_6 = $request->response_6;
+        $internalAudit->response_7 = $request->response_7;
+        $internalAudit->response_8 = $request->response_8;
+        $internalAudit->response_9 = $request->response_9;
+        $internalAudit->response_10 = $request->response_10;
+        $internalAudit->response_11 = $request->response_11;
+        $internalAudit->response_12 = $request->response_12;
+        $internalAudit->response_13 = $request->response_13;
+        $internalAudit->response_14 = $request->response_14;
+        $internalAudit->response_15 = $request->response_15;
+        $internalAudit->response_16 = $request->response_16;
+        $internalAudit->response_17 = $request->response_17;
+        $internalAudit->response_18 = $request->response_18;
+        $internalAudit->response_19 = $request->response_19;
+        $internalAudit->response_20 = $request->response_20;
+        $internalAudit->response_21 = $request->response_21;
+        $internalAudit->response_22 = $request->response_22;
+        $internalAudit->response_23 = $request->response_23;
+        $internalAudit->response_24 = $request->response_24;
+        $internalAudit->response_25 = $request->response_25;
+        $internalAudit->response_26 = $request->response_26;
+        $internalAudit->response_27 = $request->response_27;
+        $internalAudit->response_28 = $request->response_28;
+        $internalAudit->response_29 = $request->response_29;
+        $internalAudit->response_30 = $request->response_30;
+        $internalAudit->response_31 = $request->response_31;
+        $internalAudit->response_32 = $request->response_32;
+        $internalAudit->response_33 = $request->response_33;
+        $internalAudit->response_34 = $request->response_34;
+        $internalAudit->response_35 = $request->response_35;
+        $internalAudit->response_36 = $request->response_36;
+        $internalAudit->response_37 = $request->response_37;
+        $internalAudit->response_38 = $request->response_38;
+        $internalAudit->response_39 = $request->response_39;
+        $internalAudit->response_40 = $request->response_40;
+        $internalAudit->response_41 = $request->response_41;
+        $internalAudit->response_42 = $request->response_42;
+        $internalAudit->response_43 = $request->response_43;
+        $internalAudit->response_44 = $request->response_44;
+        $internalAudit->response_45 = $request->response_45;
+        $internalAudit->response_46 = $request->response_46;
+        $internalAudit->response_47 = $request->response_47;
+        $internalAudit->response_48 = $request->response_48;
+        $internalAudit->response_49 = $request->response_49;
+        $internalAudit->response_50 = $request->response_50;
+        $internalAudit->response_51 = $request->response_52;
+        $internalAudit->response_52 = $request->response_52;
+        $internalAudit->response_53 = $request->response_53;
+        $internalAudit->response_54 = $request->response_54;
+        $internalAudit->response_55 = $request->response_55;
+        $internalAudit->response_56 = $request->response_56;
+        $internalAudit->response_57 = $request->response_57;
+        $internalAudit->response_58 = $request->response_58;
+        $internalAudit->response_59 = $request->response_59;
+        $internalAudit->response_60 = $request->response_60;
+        $internalAudit->response_61 = $request->response_61;
+        $internalAudit->response_62 = $request->response_62;
+        $internalAudit->response_63 = $request->response_63;
+
+
+        $internalAudit->remark_1 = $request->remark_1;
+        $internalAudit->remark_2 = $request->remark_2;
+        $internalAudit->remark_3 = $request->remark_3;
+        $internalAudit->remark_4 = $request->remark_4;
+        $internalAudit->remark_5 = $request->remark_5;
+        $internalAudit->remark_6 = $request->remark_6;
+        $internalAudit->remark_7 = $request->remark_7;
+        $internalAudit->remark_8 = $request->remark_8;
+        $internalAudit->remark_9 = $request->remark_9;
+        $internalAudit->remark_10 = $request->remark_10;
+        $internalAudit->remark_11 = $request->remark_11;
+        $internalAudit->remark_12 = $request->remark_12;
+        $internalAudit->remark_13 = $request->remark_13;
+        $internalAudit->remark_14 = $request->remark_14;
+        $internalAudit->remark_15 = $request->remark_15;
+        $internalAudit->remark_16 = $request->remark_16;
+        $internalAudit->remark_17 = $request->remark_17;
+        $internalAudit->remark_18 = $request->remark_18;
+        $internalAudit->remark_19 = $request->remark_19;
+        $internalAudit->remark_20 = $request->remark_20;
+        $internalAudit->remark_21 = $request->remark_21;
+        $internalAudit->remark_22 = $request->remark_22;
+        $internalAudit->remark_23 = $request->remark_23;
+        $internalAudit->remark_24 = $request->remark_24;
+        $internalAudit->remark_25 = $request->remark_25;
+        $internalAudit->remark_26 = $request->remark_26;
+        $internalAudit->remark_27 = $request->remark_27;
+        $internalAudit->remark_28 = $request->remark_28;
+        $internalAudit->remark_29 = $request->remark_29;
+        $internalAudit->remark_30 = $request->remark_30;
+        $internalAudit->remark_31 = $request->remark_31;
+        $internalAudit->remark_32 = $request->remark_32;
+        $internalAudit->remark_33 = $request->remark_33;
+        $internalAudit->remark_34 = $request->remark_34;
+        $internalAudit->remark_35 = $request->remark_35;
+        $internalAudit->remark_36 = $request->remark_36;
+        $internalAudit->remark_37 = $request->remark_37;
+        $internalAudit->remark_38 = $request->remark_38;
+        $internalAudit->remark_39 = $request->remark_39;
+        $internalAudit->remark_40 = $request->remark_40;
+        $internalAudit->remark_41 = $request->remark_41;
+        $internalAudit->remark_42 = $request->remark_42;
+        $internalAudit->remark_43 = $request->remark_43;
+        $internalAudit->remark_44 = $request->remark_44;
+        $internalAudit->remark_45 = $request->remark_45;
+        $internalAudit->remark_46 = $request->remark_46;
+        $internalAudit->remark_47 = $request->remark_47;
+        $internalAudit->remark_48 = $request->remark_48;
+        $internalAudit->remark_49 = $request->remark_49;
+        $internalAudit->remark_50 = $request->remark_50;
+        $internalAudit->remark_51 = $request->remark_51;
+        $internalAudit->remark_52 = $request->remark_52;
+        $internalAudit->remark_53 = $request->remark_53;
+        $internalAudit->remark_54 = $request->remark_54;
+        $internalAudit->remark_55 = $request->remark_55;
+        $internalAudit->remark_56 = $request->remark_56;
+        $internalAudit->remark_57 = $request->remark_57;
+        $internalAudit->remark_58 = $request->remark_58;
+        $internalAudit->remark_59 = $request->remark_59;
+        $internalAudit->remark_60 = $request->remark_60;
+        $internalAudit->remark_61 = $request->remark_61;
+        $internalAudit->remark_62 = $request->remark_62;
+        $internalAudit->remark_63 = $request->remark_63;
+        $internalAudit->Description_Deviation = $request->Description_Deviation;
+
+        // =======================new teblet compresion ====
+        $checklistTabletCompression = IA_checklist_tablet_compression::where(['ia_id' => $id])->firstOrCreate();
+        $checklistTabletCompression->ia_id = $id;
+
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_compress_response_'. $i;
+            $checklistTabletCompression->$string = $request->$string;
+        }
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_compress_remark_'. $i;
+            $checklistTabletCompression->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
+        $checklistTabletCompression->tablet_compress_response_final_comment = $request->tablet_compress_response_final_comment;
+        $checklistTabletCompression->save();
+
+
+        // =======================new teblet coating ====
+        $checklistTabletCoating = IA_checklist_tablet_coating::where(['ia_id' => $id])->firstOrCreate();
+        $checklistTabletCoating->ia_id = $id;
+
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_coating_response_'. $i;
+            $checklistTabletCoating->$string = $request->$string;
+        }
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_coating_remark_'. $i;
+            $checklistTabletCoating->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
+        $checklistTabletCoating->tablet_coating_remark_comment = $request->tablet_coating_remark_comment;
+        $checklistTabletCoating->save();
+
+//======================================  Checklist_Capsule==========================================================================================================================================================
+
+$Checklist_Capsule = Checklist_Capsule::where(['ia_id' => $id])->firstOrCreate();
+$Checklist_Capsule->ia_id = $id;
+
+
+for ($i = 1; $i <= 50; $i++)
+{
+    $string = 'capsule_response_'. $i;
+    $Checklist_Capsule->$string = $request->$string;
+}
+
+for ($i = 1; $i <= 50; $i++)
+{
+    $string = 'capsule_remark_'. $i;
+    $Checklist_Capsule->$string = $request->$string;
+}
+// dd($checklistTabletCompression->tablet_compress_remark_1)
+$Checklist_Capsule->Description_Deviation = $request->Description_Deviation;
+$Checklist_Capsule->save();
+
+//=========================================================================================
+
+
+
+        // =======================new teblet paking====
+        $checklistTabletPaking = IA_checklist_capsule_paking::where(['ia_id' => $id])->firstOrCreate();
+        $checklistTabletPaking->ia_id = $id;
+
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_capsule_packing_'. $i;
+            $checklistTabletPaking->$string = $request->$string;
+        }
+
+        for ($i = 1; $i <= 49; $i++)
+        {
+            $string = 'tablet_capsule_packing_remark_'. $i;
+            $checklistTabletPaking->$string = $request->$string;
+        }
+        // dd($checklistTabletCompression->tablet_compress_remark_1)
+        $checklistTabletPaking->tablet_capsule_packing_comment = $request->tablet_capsule_packing_comment;
+        $checklistTabletPaking->save();
+
+  // =======================new teblet dispencing_and_manufactuirng ====
+  $dispencing_and_manufactuirng = IA_dispencing_manufacturing::where(['ia_id' => $id])->firstOrCreate();
+  $dispencing_and_manufactuirng->ia_id = $id;
+
+
+  for ($i = 1; $i <= 66; $i++)
+  {
+      $string = 'dispensing_and_manufacturing_'. $i;
+      $dispencing_and_manufactuirng->$string = $request->$string;
+  }
+
+  for ($i = 1; $i <= 66; $i++)
+  {
+      $string = 'dispensing_and_manufacturing_remark_'. $i;
+      $dispencing_and_manufactuirng->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $dispencing_and_manufactuirng->dispensing_and_manufacturing_comment = $request->dispensing_and_manufacturing_comment;
+  $dispencing_and_manufactuirng->save();
+
+  // =======================new tebletointment packing ====
+  $ointment_packing = IA_ointment_paking::where(['ia_id' => $id])->firstOrCreate();
+  $ointment_packing->ia_id = $id;
+
+
+  for ($i = 1; $i <= 51; $i++)
+  {
+      $string = 'ointment_packing_'. $i;
+      $ointment_packing->$string = $request->$string;
+  }
+
+  for ($i = 1; $i <= 51; $i++)
+  {
+      $string = 'ointment_packing_remark_'. $i;
+      $ointment_packing->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $ointment_packing->ointment_packing_comment = $request->ointment_packing_comment;
+  $ointment_packing->save();
+
+   // =======================new engneering checklist ====
+   $engineering_checklist = IA_checklist_engineering::where(['ia_id' => $id])->firstOrCreate();
+   $engineering_checklist->ia_id = $id;
+ 
+ 
+   for ($i = 1; $i <= 34; $i++)
+   {
+       $string = 'engineering_response_'. $i;
+       $engineering_checklist->$string = $request->$string;
+   }
+ 
+   for ($i = 1; $i <= 34; $i++)
+   {
+       $string = 'engineering_remark_'. $i;
+       $engineering_checklist->$string = $request->$string;
+   }
+   // dd($checklistTabletCompression->tablet_compress_remark_1)
+   $engineering_checklist->engineering_response_comment = $request->engineering_response_comment;
+   $engineering_checklist->save();
+
+    // =======================new quality control checklist ====
+    $quality_control_checklist = IA_quality_control::where(['ia_id' => $id])->firstOrCreate();
+    $quality_control_checklist->ia_id = $id;
+  
+  
+    for ($i = 1; $i <= 84; $i++)
+    {
+        $string = 'quality_control_response_'. $i;
+        $quality_control_checklist->$string = $request->$string;
+    }
+  
+    for ($i = 1; $i <= 84; $i++)
+    {
+        $string = 'quality_control_remark__'. $i;
+        $quality_control_checklist->$string = $request->$string;
+    }
+    // dd($checklistTabletCompression->tablet_compress_remark_1)
+    $quality_control_checklist->quality_control_response_comment = $request->quality_control_response_comment;
+    $quality_control_checklist->save();
+
+ // =======================new checklist stores ====
+ $checklist_stores = IA_checklist_stores::where(['ia_id' => $id])->firstOrCreate();
+ $checklist_stores->ia_id = $id;
+
+
+ for ($i = 1; $i <= 31; $i++)
+ {
+     $string = 'checklist_stores_response_'. $i;
+     $checklist_stores->$string = $request->$string;
+ }
+
+ for ($i = 1; $i <= 31; $i++)
+ {
+     $string = 'checklist_stores_remark_'. $i;
+     $checklist_stores->$string = $request->$string;
+ }
+ // dd($checklistTabletCompression->tablet_compress_remark_1)
+ $checklist_stores->checklist_stores_response_comment = $request->checklist_stores_response_comment;
+ $checklist_stores->save();
+
+
+  // =======================new human resources ====
+  $checklist_human_resources = IA_checklist_hr::where(['ia_id' => $id])->firstOrCreate();
+  $checklist_human_resources->ia_id = $id;
+ 
+ 
+  for ($i = 1; $i <= 35; $i++)
+  {
+      $string = 'checklist_hr_response_'. $i;
+      $checklist_human_resources->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 35; $i++)
+  {
+      $string = 'checklist_hr_remark_'. $i;
+      $checklist_human_resources->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $checklist_human_resources->checklist_hr_response_comment = $request->checklist_hr_response_comment;
+  $checklist_human_resources->save();
+
+  // =======================new human resources ====
+  $checklist_production_dispensing = IA_checklist_dispensing::where(['ia_id' => $id])->firstOrCreate();
+  $checklist_production_dispensing->ia_id = $id;
+ 
+ 
+  for ($i = 1; $i <= 14; $i++)
+  {
+      $string = 'response_dispensing_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 14; $i++)
+  {
+      $string = 'remark_dispensing_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 50; $i++)
+  {
+      $string = 'response_injection_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 50; $i++)
+  {
+      $string = 'remark_injection_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+  for ($i = 1; $i <= 7; $i++)
+  {
+      $string = 'response_documentation_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+ 
+  for ($i = 1; $i <= 7; $i++)
+  {
+      $string = 'remark_documentation_'. $i;
+      $checklist_production_dispensing->$string = $request->$string;
+  }
+  // dd($checklistTabletCompression->tablet_compress_remark_1)
+  $checklist_production_dispensing->remark_documentation_name_comment = $request->remark_documentation_name_comment;
+  $checklist_production_dispensing->save();
+
+
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -1452,13 +1974,31 @@ class InternalauditController extends Controller
     {
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         $data = InternalAudit::find($id);
+        $checklist1 = IA_checklist_tablet_compression::where('ia_id', $id)->first();
+        $checklist2 = IA_checklist_tablet_coating::where('ia_id', $id)->first();
+        $checklist4 = Checklist_Capsule::where('ia_id', $id)->first();
+        $checklist3 = IA_checklist_capsule_paking::where('ia_id', $id)->first();
+        $checklist6 = IA_dispencing_manufacturing::where('ia_id', $id)->first();
+        $checklist7 = IA_ointment_paking::where('ia_id', $id)->first();
+        $checklist9 = IA_checklist_engineering::where('ia_id', $id)->first();
+        $checklist10 = IA_quality_control::where('ia_id', $id)->first();
+        $checklist11 = IA_checklist_stores::where('ia_id', $id)->first();
+        $checklist12 = IA_checklist_hr::where('ia_id', $id)->first();
+        $checklist13 = IA_checklist_dispensing::where('ia_id', $id)->first();
+
+
+
+
+
+        // dd($checklist1);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
-        return view('frontend.internalAudit.view', compact('data', 'old_record','grid_data','grid_data1'));
+        // return dd($checklist1);
+        return view('frontend.internalAudit.view', compact('data','checklist1','checklist2','checklist3', 'checklist4','checklist6','checklist7','checklist9','checklist10','checklist11','checklist12','checklist13','old_record','grid_data','grid_data1'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)
@@ -1477,7 +2017,7 @@ class InternalauditController extends Controller
                             $history->activity_type = 'Activity Log';
                             $history->current = $changeControl->audit_schedule_by;
                             $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;                   
+                            $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
@@ -1486,9 +2026,9 @@ class InternalauditController extends Controller
                 //        $list = Helpers::getLeadAuditorUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);                           
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                       
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1498,7 +2038,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1534,7 +2074,7 @@ class InternalauditController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1544,7 +2084,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1572,7 +2112,7 @@ class InternalauditController extends Controller
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
 
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changeControl],
@@ -1582,9 +2122,9 @@ class InternalauditController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
-                      
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1635,8 +2175,8 @@ class InternalauditController extends Controller
                 return back();
             }
 
-            
-            
+
+
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1685,7 +2225,7 @@ class InternalauditController extends Controller
                         //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                         //             $email = Helpers::getInitiatorEmail($u->user_id);
                         //              if ($email !== null) {
-                                  
+
                         //               Mail::send(
                         //                   'mail.view-mail',
                         //                    ['data' => $changeControl],
@@ -1695,9 +2235,9 @@ class InternalauditController extends Controller
                         //                 }
                         //               );
                         //             }
-                        //      } 
+                        //      }
                         //   }
-                   
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -1757,7 +2297,7 @@ class InternalauditController extends Controller
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                 //             $email = Helpers::getLeadAuditorUserList($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $changeControl],
@@ -1767,7 +2307,7 @@ class InternalauditController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();

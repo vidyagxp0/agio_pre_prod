@@ -20,6 +20,7 @@ use App\Http\Controllers\rcms\OOSController;
 use App\Http\Controllers\rcms\MarketComplaintController;
 use App\Http\Controllers\rcms\FailureInvestigationController;
 use App\Http\Controllers\OOSMicroController;
+use App\Http\Controllers\rcms\NonConformaceController;
 use App\Http\Controllers\rcms\RootCauseController;
 use App\Http\Controllers\RiskManagementController;
 use App\Http\Controllers\rcms\DeviationController;
@@ -209,6 +210,36 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Deviation Routes Ends *******************/
 
+            Route::get('action-items-create', [ActionItemController::class, 'showAction']);
+
+            /********************* Non Conformance Routes Starts *******************/
+
+            Route::get('non-conformance', [NonConformaceController::class, 'index']);
+            Route::post('nonConformaceStore', [NonConformaceController::class, 'store'])->name('nonConformaceStore');
+            Route::get('non-conformance-show/{id}', [NonConformaceController::class, 'show'])->name('non-conformance-show');
+            Route::post('non-conformance-update/{id}', [NonConformaceController::class, 'update'])->name('non-conformance-update');
+            Route::post('non_conformance_reject/{id}', [NonConformaceController::class, 'nonConformaceReject'])->name('non_conformance_reject');
+            Route::post('nonConformaceCancel/{id}', [NonConformaceController::class, 'nonConformaceCancel'])->name('nonConformaceCancel');
+            Route::post('nonConformaceIsCFTRequired/{id}', [NonConformaceController::class, 'nonConformaceCftNotrequired'])->name('nonConformaceIsCFTRequired');
+            Route::post('nonConformaceCheck/{id}', [NonConformaceController::class, 'nonConformaceCheck'])->name('nonConformaceCheck');
+            Route::post('nonConformaceCheck2/{id}', [NonConformaceController::class, 'nonConformaceCheck2'])->name('nonConformaceCheck2');
+            Route::post('nonConformaceCheck3/{id}', [NonConformaceController::class, 'nonConformaceCheck3'])->name('nonConformaceCheck3');
+            // Route::post('pending_initiator_update/{id}', [NonConformaceController::class, 'pending_initiator_update'])->name('pending_initiator_update');
+            Route::post('nonConformaceStageChange/{id}', [NonConformaceController::class, 'non_conformance_send_stage'])->name('nonConformaceStageChange');
+            Route::post('nonConformaceCftnotreqired/{id}', [NonConformaceController::class, 'cftnotreqired'])->name('nonConformaceCftnotreqired');
+            Route::post('nonConformaceQaMoreInfo/{id}', [NonConformaceController::class, 'failure_inv_qa_more_info'])->name('nonConformaceQaMoreInfo');
+
+            Route::get('non-conformance-audit-trail/{id}', [NonConformaceController::class, 'NonConformaceAuditTrail'])->name('non-conformance-audit-trail');
+            Route::get('non-conformance-audit-pdf/{id}', [NonConformaceController::class, 'NonConformaceAuditTrailPdf'])->name('non-conformance-audit-pdf');
+            Route::get('non-conformance-single-report/{id}', [NonConformaceController::class, 'singleReport'])->name('non-conformance-single-report');
+
+            Route::post('launch-extension-non-conformance/{id}', [NonConformaceController::class, 'launchExtensionDeviation'])->name('launch-extension-non-conformance');
+            Route::post('launch-extension-capa/{id}', [NonConformaceController::class, 'launchExtensionCapa'])->name('launch-extension-capa');
+            Route::post('launch-extension-qrm/{id}', [NonConformaceController::class, 'launchExtensionQrm'])->name('launch-extension-qrm');
+            Route::post('launch-extension-investigation/{id}', [NonConformaceController::class, 'launchExtensionInvestigation'])->name('launch-extension-investigation');
+
+            /********************* Non Conformance Routes Ends *******************/
+
             /********************* Fallure Investigation Routes Starts *******************/
 
             Route::get('failure-investigation', [FailureInvestigationController::class, 'index']);
@@ -317,6 +348,8 @@ Route::group(['prefix' => 'rcms'], function () {
             });
             // Route::get('rcms/marketComplaintSingleReport/{id}', [MarketComplaintController::class, 'singleReport']);
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
+
+
 
 
 

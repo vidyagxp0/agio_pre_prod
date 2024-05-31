@@ -406,8 +406,14 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-
-            <form id="auditform" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
+            <script>
+                $(document).ready(function() {
+                    <?php if ($trainer->stage == 3): ?>
+                        $("#target :input").prop("disabled", true);
+                    <?php endif; ?>
+                });
+            </script>
+            <form id="target" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -435,8 +441,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="PL-01-109">
-                                        <input type="hidden" name="record_number" value="PL-01-109">
+                                        <input disabled type="text" name="record_number" value="">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
@@ -519,10 +524,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="trainer">Trainer Name</label>
-                                        <select name="trainer_name" id="trainer_name">
-                                            <option value="">Select</option>
-                                            <option value="trainer1" @if ($trainer->trainer_name == "trainer1") selected @endif>Trainer 1</option>
-                                        </select>
+                                        <input id="trainer_name" type="text" name="trainer_name" maxlength="255" value="{{ $trainer->trainer_name }}">
                                     </div>
                                 </div>
 

@@ -16,7 +16,14 @@ class FormDivisionController extends Controller
             return redirect('audit');
         } elseif ($request->process_name == "External Audit") {
             return redirect('auditee');
-        } elseif ($request->process_name == "CAPA") {
+        }
+        elseif ($request->process_name == "Observation") {
+            return redirect('observation');
+        }
+        elseif ($request->process_name == "Action Item") {
+            return redirect('rcms/action-items-create');
+        }
+         elseif ($request->process_name == "CAPA") {
             return redirect('capa');
         } elseif ($request->process_name == "Audit Program") {
             return redirect('audit-program');
@@ -32,7 +39,10 @@ class FormDivisionController extends Controller
             return redirect('root-cause-analysis');
         } elseif ($request->process_name == "Failure Investigation") {
             return redirect('rcms/failure-investigation');
-        } elseif ($request->process_name == "Change Control") {
+        }elseif ($request->process_name == "Non Conformance") {
+            return redirect('rcms/non-conformance');
+        }
+         elseif ($request->process_name == "Change Control") {
             return redirect()->route('CC.create');
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');
