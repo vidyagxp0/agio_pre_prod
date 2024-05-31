@@ -75,6 +75,7 @@ class QuestionController extends Controller
             $question->question = $request->question;
             $question->options = serialize($request->options);
             $question->answers = serialize($request->answers);
+            // dd($question->answers);
             $question->save();
             toastr()->success('Question Created Successfuly !!');
             return back();

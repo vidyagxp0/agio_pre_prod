@@ -130,7 +130,7 @@
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -169,7 +169,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -260,13 +260,13 @@
                                                 <label for="Short_Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
+
                                                 <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
-                                           
+
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
-        
+
                                         </div>
-        
+
                                  </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -306,7 +306,7 @@
                                         </div>
                                     </div>
                                 </div>
-                         
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
@@ -319,23 +319,23 @@
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
                                     </div>
-                                </div> --}} 
+                                </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Start Date">Scheduled Start Date</label>
-                                            <div class="calenderauditee">                                     
+                                            <div class="calenderauditee">
                                                 <input type="text"  id="start_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                  />
                                                 <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
-                                            </div>    
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit End Date">Scheduled end date</label>
-                                            <div class="calenderauditee">                                     
+                                            <div class="calenderauditee">
                                             <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                              />
                                             <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}"
@@ -345,7 +345,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">   
+                                    <div class="group-input">
                                         <label for="Attendees">Attendess</label>
                                         <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->attendees}}</textarea>
                                     </div>
@@ -358,40 +358,42 @@
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
                                                 <tr>
-                                                    <th>Row #</th>
+                                                    <th style="width:5%">Row #</th>
                                                     <th>Date</th>
                                                     <th>Topic</th>
                                                     <th>Responsible</th>
                                                     <th>Time Start</th>
                                                     <th>Time End</th>
                                                     <th>Comment</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 @foreach (unserialize($agenda->topic) as $key => $temps)
                                                     <tr>
-                                                        <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
-                                                        
+
                                                                 <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
                                                                     <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
-                                                                    <input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
+                                                                    <input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input"
                                                                     oninput="handleDateInput(this, `date{{$key }}`)" /></div></div></div></td>
-                                                        <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
                                                         </td>
-                                                        <td><input type="text" name="responsible[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="responsible[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="time" name="start_time[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="time" name="start_time[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->start_time)[$key] ? unserialize($agenda->start_time)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="time" name="end_time[]"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="time" name="end_time[]"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->end_time)[$key] ? unserialize($agenda->end_time)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="comment[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="comment[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($agenda->comment)[$key] ? unserialize($agenda->comment)[$key] : '' }}">
                                                         </td>
+                                                        <td></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -419,7 +421,7 @@
                                     <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
-                                                <th>Row #</th>
+                                                <th style="width:5%">Row #</th>
                                                 <th>Invited Person</th>
                                                 <th>Designee</th>
                                                 <th>Department</th>
@@ -427,34 +429,37 @@
                                                 <th>Designee Name</th>
                                                 <th>Designee Department/Designation</th>
                                                 <th>Remarks</th>
+                                                <th>Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                                 @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
                                                     <tr>
-                                                        <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
-                                                        <td><input type="text" name="invited_Person[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="invited_Person[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="designee[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="designee[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="meeting_Attended[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="meeting_Attended[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="designee_Name[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="designee_Name[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="designee_Department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="designee_Department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="remarks[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="remarks[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}">
                                                         </td>
+                                                        <td></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -594,11 +599,12 @@
                                 <table class="table table-bordered" id="performance_evaluation">
                                     <thead>
                                         <tr>
-                                            <th>Row #</th>
+                                            <th style="width:5%">Row #</th>
                                             <th>Monitoring</th>
                                             <th>Measurement</th>
                                             <th>Analysis</th>
                                             <th>Evalutaion</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <!-- <tbody>
@@ -613,20 +619,21 @@
                                     <tbody>
                                                 @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
                                                     <tr>
-                                                        <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
-                                                        <td><input type="text" name="monitoring[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="monitoring[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="measurement[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="measurement[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="analysis[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="analysis[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : '' }}">
                                                         </td>
-                                                        <td><input type="text" name="evaluation[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="evaluation[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : '' }}">
                                                         </td>
+                                                        <td></td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -699,7 +706,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attchment_if_any[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                        <input type="file" id="myfile" name="file_attchment_if_any[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
@@ -722,7 +729,7 @@
                                 <table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
-                                            <th>Row #</th>
+                                            <th style="width:5%">Row #</th>
                                             <th>Short Description</th>
                                             <th>Due Date</th>
                                             <th>Site / Division</th>
@@ -730,60 +737,62 @@
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
                                             <th>Remarks</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody>
                                                 @foreach (unserialize($action_item_details->date_due) as $key => $temps)
                                                     <tr>
-                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ $key + 1 }}"></td>
-                                                        <td><input type="text" name="short_desc[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="short_desc[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($action_item_details->short_desc)[$key] ? unserialize($action_item_details->short_desc)[$key] : '' }}">
                                                         </td>
-                                                      
+
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         <input type="text"   id="date_due{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
                                                                         <input type="date"  id="date_due{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{unserialize($action_item_details->date_due)[$key]}}"  name="date_due[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}
-                                                                        "class="hide-input" 
+                                                                        "class="hide-input"
                                                                         oninput="handleDateInput(this, `date_due{{$key}}`);checkDate('date_due{{$key}}_checkdate','date_closed{{$key}}_checkdate')"  /></div></div></div></td>
-                                                                     
-                                                        <td><input type="text" name="site[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+
+                                                        <td><input type="text" name="site[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($action_item_details->site)[$key] ?? null }}">
                                                         </td>
-                                                         
+
                                                         <td> <select id="select-state" placeholder="Select..."
-                                                                     name="responsible_person[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} > 
+                                                                     name="responsible_person[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} >
                                                                       <option value="">Select a value</option>
                                                                         @foreach ($users as $undata)
-                                                                            
+
                                                                         <option {{ (unserialize($action_item_details->responsible_person)[$key] ?? null) ? (unserialize($action_item_details->responsible_person)[$key] == $undata->id ? 'selected' : ' ') : '' }}
                                                                                         value="{{ $undata->id }}">
                                                                                         {{ $undata->name }}
                                                                         </option>
                                                                 @endforeach
                                                                 </select></td>
-                                                        <td><input type="text" name="current_status[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="current_status[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ (unserialize($action_item_details->current_status)[$key] ?? null ) ? unserialize($action_item_details->current_status)[$key] : '' }}">
                                                         </td>
-                                                        
+
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         {{-- <input type="text" id="date_closed{{$key}}" readonly placeholder="DD-MMM-YYYY" value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}"/>
-                                                                        <input type="date" name="date_closed[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}" id="date_closed{{$key}}_checkdate" value="{{ unserialize($action_item_details->date_closed)[$key]}} "class="hide-input" 
+                                                                        <input type="date" name="date_closed[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}" id="date_closed{{$key}}_checkdate" value="{{ unserialize($action_item_details->date_closed)[$key]}} "class="hide-input"
                                                                         oninput="handleDateInput(this, `date_closed{{$key}}`);checkDate(`date_due{{$key}}_checkdate`,`date_closed{{$key}}_checkdate`)" /></div></div></div></td>' --}}
                                                                         <input type="text"   id="date_closed{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}" />
-                                                                        <input type="date" id="date_closed{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{unserialize($action_item_details->date_closed)[$key]}}"  name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"class="hide-input" 
+                                                                        <input type="date" id="date_closed{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{unserialize($action_item_details->date_closed)[$key]}}"  name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"class="hide-input"
                                                                         oninput="handleDateInput(this, `date_closed{{$key}}`);checkDate('date_due{{$key}}_checkdate','date_closed{{$key}}_checkdate')"  /></div></div></div></td>
-                                                        <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                        <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($action_item_details->remark)[$key] ?? '' }}">
                                                         </td>
+                                                        <td></td>
                                                     </tr>
                                                 @endforeach
-                                            </tbody>               
+                                            </tbody>
                                 </table>
                             </div>
                             <div class="group-input">
@@ -793,7 +802,7 @@
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
                                         <tr>
-                                            <th>Row #</th>
+                                            <th style="width:5%">Row #</th>
                                             <th>CAPA Details</th>
                                             <th>CAPA Type</th>
                                             {{-- <th>CAPA Type112 (Corrective Action / Preventive Action)</th>
@@ -805,91 +814,101 @@
                                             {{-- <th>Person Responsible</th> --}}
                                             <th>Date Closed</th>
                                             <th>Remark</th>
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                                 @if(!empty($capa_detail_details->date_closed2))
-                                                 @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps) 
-                                                    <tr>
-                                                        <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ $key + 1 }}"></td>
-                                                        <td><input type="text" name="Details[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   
-                                                                value="{{ unserialize($capa_detail_details->Details)[$key] ? unserialize($capa_detail_details->Details)[$key] : '' }}">
-                                                        </td>
-                                                        {{-- <td> <select id="select-state" placeholder="Select..." 
-                                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="capa_type[]"  > 
-                                                                      <option value="">Select a value</option>
-                                                               @foreach ($users as $undata)
-                                                                            <!-- <option value="{{ $undata->id }}">{{ $undata->name }}
-                                                                                        </option> -->
-                                                                    <option {{ unserialize($capa_detail_details->capa_type)[$key] ? (unserialize($capa_detail_details->capa_type)[$key] == $undata->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $undata->id }}">
-                                                                        {{ $undata->name }}
-                                                        </option>
-                                                                     @endforeach
-                                                            </select></td> --}}
-                                                            {{-- <td>
-                                                                <select id="select-state" placeholder="Select..."
-                                                                    name="capa_type[]"value="{{ unserialize($capa_detail_details->capa_type)[$key] ? unserialize($capa_detail_details->capa_type)[$key] : '' }}" >
+                                        @if(!empty($capa_detail_details->date_closed2))
+                                            @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
+                                                <tr>
+                                                    <td>
+                                                        <input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{ $key + 1 }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="Details[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                            value="{{ unserialize($capa_detail_details->Details)[$key] ? unserialize($capa_detail_details->Details)[$key] : '' }}">
+                                                    </td>
+                                                    {{-- <td> <select id="select-state" placeholder="Select..."
+                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="capa_type[]"  >
                                                                     <option value="">Select a value</option>
-                                                                    <option value="corrective">Corrective Action</option>
-                                                                    <option value="preventive">Preventive Action</option>
-                                                                    <option value="corrective_preventive">Corrective & Preventive Action</option>
-                                                                    value="{{unserialize($capa_detail_details->capa_type)[$key]}}"
-                                                                </select>
-                                                            </td> --}}
-                                                            <td>
-                                                                <select id="select-state" placeholder="Select..." name="capa_type[]" >
-                                                                    <option value="">Select a value</option>
-                                                                    <option value="corrective" {{ (unserialize($capa_detail_details->capa_type)[$key] == "corrective")?"selected":""}}>Corrective Action</option>
-                                                                    <option value="preventive" {{ (unserialize($capa_detail_details->capa_type)[$key] == "preventive")?"selected":""}}>Preventive Action</option>
-                                                                    <option value="corrective_preventive" {{ (unserialize($capa_detail_details->capa_type)[$key] == "corrective_preventive")?"selected":""}}>Corrective & Preventive Action</option>
-                                                                </select>
+                                                            @foreach ($users as $undata)
+                                                                        <!-- <option value="{{ $undata->id }}">{{ $undata->name }}
+                                                                                    </option> -->
+                                                                <option {{ unserialize($capa_detail_details->capa_type)[$key] ? (unserialize($capa_detail_details->capa_type)[$key] == $undata->id ? 'selected' : ' ') : '' }}
+                                                                    value="{{ $undata->id }}">
+                                                                    {{ $undata->name }}
+                                                    </option>
+                                                                    @endforeach
+                                                        </select></td> --}}
+                                                        {{-- <td>
+                                                            <select id="select-state" placeholder="Select..."
+                                                                name="capa_type[]"value="{{ unserialize($capa_detail_details->capa_type)[$key] ? unserialize($capa_detail_details->capa_type)[$key] : '' }}" >
+                                                                <option value="">Select a value</option>
+                                                                <option value="corrective">Corrective Action</option>
+                                                                <option value="preventive">Preventive Action</option>
+                                                                <option value="corrective_preventive">Corrective & Preventive Action</option>
+                                                                value="{{unserialize($capa_detail_details->capa_type)[$key]}}"
+                                                            </select>
+                                                        </td> --}}
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..." name="capa_type[]" >
+                                                            <option value="">Select a value</option>
+                                                            <option value="corrective" {{ (unserialize($capa_detail_details->capa_type)[$key] == "corrective")?"selected":""}}>Corrective Action</option>
+                                                            <option value="preventive" {{ (unserialize($capa_detail_details->capa_type)[$key] == "preventive")?"selected":""}}>Preventive Action</option>
+                                                            <option value="corrective_preventive" {{ (unserialize($capa_detail_details->capa_type)[$key] == "corrective_preventive")?"selected":""}}>Corrective & Preventive Action</option>
+                                                        </select>
 
-                                                            </td>
-                                                            <td><input type="text" name="site2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($capa_detail_details->site2)[$key] ? unserialize($capa_detail_details->site2)[$key] : '' }}">
-                                                        </td>
-                                                        <td> <select id="select-state" placeholder="Select..."
-                                                                     name="responsible_person2[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} > 
-                                                                      <option value="">Select a value</option>
-                                                               @foreach ($users as $undata)
-                                                                            <!-- <option value="{{ $undata->id }}">{{ $undata->name }}
-                                                                                        </option> -->
-                                                                    <option {{ unserialize($capa_detail_details->responsible_person2)[$key] ? (unserialize($capa_detail_details->responsible_person2)[$key] == $undata->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $undata->id }}">
-                                                                        {{ $undata->name }}
-                                                        </option>
-                                                                     @endforeach
-                                                            </select></td>
-                                                      
-                                                        <td><input type="text" name="current_status2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($capa_detail_details->current_status2)[$key] ? unserialize($capa_detail_details->current_status2)[$key] : '' }}">
-                                                        </td>
-                                                       
-                                                        <td><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div
-                                                                         class="calenderauditee">
-                                                              <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
-                                                                <input type="date" id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($capa_detail_details->date_closed2)[$key]}}"  name="date_closed2[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `date_closed2{{$key}}`)"  /></div></div></div></td>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="site2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            value="{{ unserialize($capa_detail_details->site2)[$key] ? unserialize($capa_detail_details->site2)[$key] : '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..." name="responsible_person2[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} >
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $undata)
+                                                                <option {{ unserialize($capa_detail_details->responsible_person2)[$key] ? (unserialize($capa_detail_details->responsible_person2)[$key] == $undata->id ? 'selected' : ' ') : '' }}
+                                                                    value="{{ $undata->id }}">
+                                                                    {{ $undata->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
 
+                                                    <td>
+                                                        <input type="text" name="current_status2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            value="{{ unserialize($capa_detail_details->current_status2)[$key] ? unserialize($capa_detail_details->current_status2)[$key] : '' }}">
+                                                    </td>
 
-                                                        <td><input type="text" name="remark2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}">
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                                @endif
-                                                
-                                            </tbody>  
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
+                                                                    <input type="date" id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($capa_detail_details->date_closed2)[$key]}}"  name="date_closed2[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"class="hide-input"
+                                                                        oninput="handleDateInput(this, `date_closed2{{$key}}`)"  />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+
+                                                    <td>
+                                                        <input type="text" name="remark2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                                            value="{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}">
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            @endforeach
+                                        @endif
+
+                                    </tbody>
                                 </table>
                             </div>
                              <div class="new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_managment_review_date" readonly  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                        <input type="text" id="next_managment_review_date" readonly  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
                                         <input type="date" name="next_managment_review_date"   {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->next_managment_review_date }} "
                                         class="hide-input" oninput="handleDateInput(this, 'next_managment_review_date')" />
@@ -922,7 +941,7 @@
                                     </div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="closure_attachments[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                        <input type="file" id="myfile" name="closure_attachments[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                             oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                     </div>
                                 </div>
@@ -952,26 +971,26 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
-                                         <div class="static">{{ $data->completed_by }}</div> 
+                                         <div class="static">{{ $data->completed_by }}</div>
                                     </div>
                                 </div>
-                           
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
-                                         <div class="static">{{ $data->completed_on}}</div> 
+                                         <div class="static">{{ $data->completed_on}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Submited By</label>
-                                         <div class="static">{{ $data->Submited_by }}</div> 
+                                         <div class="static">{{ $data->Submited_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Submited On</label>
-                                         <div class="static">{{ $data->Submited_on }}</div> 
+                                         <div class="static">{{ $data->Submited_on }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1174,10 +1193,16 @@
     </style>
 
     <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
+    <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee'
         });
-        
+
         function addActionItemDetails(tableId) {
             var users = @json($users);
             var table = document.getElementById(tableId);
@@ -1202,17 +1227,21 @@
                         userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
                     userHtml +='</select>';
-            
+
             cell5.innerHTML = userHtml;
 
             var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='text' name='current_status[]'>"; 
+            cell6.innerHTML = "<input type='text' name='current_status[]'>";
 
             var cell7 = newRow.insertCell(6);
             cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
-              
+
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML = "<input type='text' name='remark[]'>";
+
+            var cell9 = newRow.insertCell(8);
+            cell9.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -1237,12 +1266,16 @@
 
             var cell5 = newRow.insertCell(4);
             cell5.innerHTML = "<input type='text' name='evaluation[]'>";
+
+            var cell6 = newRow.insertCell(5);
+            cell6.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
             }
         }
-        
+
         // ================================ SIX INPUTS
         function addAgendaManRev(tableId) {
             var table = document.getElementById(tableId);
@@ -1269,6 +1302,10 @@
 
             var cell7 = newRow.insertCell(6);
             cell7.innerHTML = "<input type='text' name='comment[]'>";
+
+            var cell8 = newRow.insertCell(7);
+            cell8.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
+
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -1358,7 +1395,7 @@
             }
         }
     </script>
-    
+
         <script>
             // JavaScript
             document.getElementById('initiator_group').addEventListener('change', function() {
@@ -1376,7 +1413,7 @@
                                 '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                                 '"></td>' +
-                               
+
                                 '<td><input type="text" name="Details[]">' +
                                 '<td><select id="select-state" placeholder="Select..." name="capa_type[]">'+
                                 '<option value="">Select a value</option>'+
@@ -1384,35 +1421,37 @@
                                 '<option value="preventive">Preventive Action</option>'+
                                 '<option value="corrective_preventive">Corrective & Preventive Action</option>'+
                                 '</select></td>'+
-        
+
                                 '<td><input type="text" name="site2[]">' +
                                 '<td><select name="responsible_person2[]">' +
                                 '<option value="">Select a value</option>';
-        
+
                             for (var i = 0; i < users.length; i++) {
                                 html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                             }
-        
+
                             html += '</select></td>' +
-                                
+
                                 '<td><input type="text" name="current_status2[]">' +
-                               
+
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>' +
-        
+
                                 '<td><input type="text" name="remark2[]"></td>' +
-        
+
+                                '<td><button type="text" class="removeRowBtn" name="Action[]" readonly>Remove</button></td>' +
+
                                 '</tr>';
                             return html;
                         }
-        
+
                         var tableBody = $('#capa_detail_details tbody');
                         var rowCount = tableBody.children('tr').length;
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
                     });
-                }); 
-                  
-               </script>      
+                });
+
+               </script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
                 const removeButtons = document.querySelectorAll('.remove-file');

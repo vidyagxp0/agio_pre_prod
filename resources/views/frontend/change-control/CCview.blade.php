@@ -64,7 +64,7 @@
 
 
                 <div class="slogan">
-                    <strong>Site Division / Project </strong>:
+                    <strong>Site Site Division/Project </strong>:
                     {{ Helpers::getDivisionName(session()->get('division')) }} / Change Control
                 </div>
             </div>
@@ -277,7 +277,7 @@
 
                                                 </div>
                                             </div>
-                                            {{-- <div class="static">QMS-North America</div> --}}
+                                            {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>

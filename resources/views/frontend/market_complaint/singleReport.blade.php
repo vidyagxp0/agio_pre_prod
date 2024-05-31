@@ -166,7 +166,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100" width="40px" height="40px">
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" >
                     </div>
                 </td>
             </tr>
@@ -177,7 +177,7 @@
                     {{-- <strong>Lab Incident No.</strong> --}}
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -281,7 +281,7 @@
 
 
 
-                   <tr>
+                   {{-- <tr>
                     <table class="table table-bordered" id="onservation-incident-table">
                         <thead>
                             <tr>
@@ -306,7 +306,7 @@
                                  
                                         <tr>
                                 {{-- <td style="width: 6%">{{ $item['serial'] }}</td> --}}
-                               
+{{--                                
                                   <td>{{ $item['info_product_name'] }}</td>
                                   <td>{{ $item['info_batch_no'] }}</td>
                                   <td>{{ $item['info_mfg_date'] }}</td>
@@ -332,7 +332,7 @@
                     </table>
 
 
-                   </tr>
+                   </tr> --}} 
 
                 </table>
             </div>

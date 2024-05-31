@@ -150,7 +150,7 @@
                         '"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
                         // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">' 
+                        // '<td><select name="auditorG[]">'
                         +'<option value="">Select a value</option>';
 
                     // for (var i = 0; i < users.length; i++) {
@@ -164,7 +164,7 @@
                         // for (var i = 0; i < users.length; i++) {
                         //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                         // }
-                        // html += '</select></td>' 
+                        // html += '</select></td>'
                         '<td><input type="text" name="observation_description[]"></td>' +
                         // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
@@ -262,50 +262,50 @@
                       Granulation</button>
                      <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Checklist - Tablet Compression</button>
                      <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Checklist - Tablet Coating </button>
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing 
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Checklist - Tablet/Capsule Packing
                     </button>
-                      <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule 
+                      <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Checklist - Capsule
                     </button>
-                    
-                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing 
-                    </button>    
+
+                     <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Checklist - Liquid/Ointment Dispensing & Manufacturing
+                    </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm13')">Checklist - Liquid/Ointment Packing
-                    </button>  
-                    
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm14')">Checklist - Quality Assurance
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm15')">Checklist - Engineering
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm16')">Checklist - Quality Control
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm17')">Checklist - Stores
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm18')">Checklist - Human Resource
-                    </button>    
-             
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing) 
-                    </button>    
-             
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist - 
+                    </button>
+
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm19')">Checklist - Production (Injection Dispensing & Manufacturing)
+                    </button>
+
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm20')">Checklist -
                         Production (Injection Packing)
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm21')">Checklist - Production (Powder Manufacturing and Packing)
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm22')">Checklist - Analytical Research and Development
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm23')">Checklist - Formulation Research and Development
-                    </button>    
-             
+                    </button>
+
                     <button class="cctablinks" onclick="openCity(event, 'CCForm24')">Checklist -LL / P2P
-                    </button>    
-             
+                    </button>
+
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
 
@@ -340,7 +340,7 @@
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
+                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -1191,7 +1191,7 @@
 
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
-                                    <div class="group-input">   
+                                    <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -1209,10 +1209,10 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name=" response_1" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
-                                                                    <option value="Yes">Yes</option>
+                                                                    <option value="">Select an Option</option>
+                                                                    <option value="">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
                                                                 </select>
@@ -1223,7 +1223,7 @@
                                                              <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_1" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1235,9 +1235,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_2" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1248,7 +1248,7 @@
                                                             <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_2" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1260,9 +1260,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_3" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1273,7 +1273,7 @@
                                                             <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_3" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1285,9 +1285,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_4" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1298,7 +1298,7 @@
                                                             <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_4" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1314,9 +1314,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_5" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1327,7 +1327,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_5" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1342,9 +1342,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_6" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1355,7 +1355,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_6" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1367,9 +1367,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_7" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1380,7 +1380,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_7" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1392,9 +1392,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_8" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1405,7 +1405,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_8" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1420,9 +1420,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_9" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1433,7 +1433,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_9" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1447,9 +1447,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_10" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1460,7 +1460,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_10" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1475,9 +1475,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_11" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1488,7 +1488,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_11" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1503,9 +1503,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_12" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1516,7 +1516,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_12" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1531,9 +1531,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_13" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1543,7 +1543,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_13" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1556,9 +1556,9 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION 
+                                    Checklist for : INJECTION MANUFACTURING / FILTERATION / FILLING /VISUAL INSPECTION
                                 </div>
-                               
+
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
@@ -1580,9 +1580,9 @@
 
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_14" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1596,7 +1596,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_14" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1609,9 +1609,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response-15" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1622,7 +1622,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_15" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1635,9 +1635,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_16" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1648,7 +1648,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_16" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1665,9 +1665,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_17" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1678,7 +1678,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_17" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1694,9 +1694,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_18" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1707,7 +1707,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_18" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1723,9 +1723,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_19" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1733,7 +1733,7 @@
                                                             </div>
                                                         </td>
 
-                                                        <td style="vertical-align: middle;">
+                                                        <td style="remark_19">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
                                                                 <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
@@ -1751,9 +1751,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_20" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1764,7 +1764,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_20" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1778,9 +1778,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_21" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1791,7 +1791,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_21" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1806,9 +1806,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_22" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1819,7 +1819,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_22" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1832,9 +1832,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_23" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1845,7 +1845,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_23" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1860,9 +1860,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_24" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1873,7 +1873,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_24" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1887,9 +1887,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_25" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1902,7 +1902,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_25" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1917,9 +1917,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_26" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1929,7 +1929,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_26" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -1945,9 +1945,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_27" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1957,7 +1957,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_27" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1967,9 +1967,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_28" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -1979,7 +1979,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_28" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -1990,9 +1990,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_29" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2002,7 +2002,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_29" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2013,9 +2013,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_30" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2025,7 +2025,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_30" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2036,9 +2036,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_31" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2048,7 +2048,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_31" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2060,9 +2060,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_32" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2072,7 +2072,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_32" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2086,9 +2086,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_33" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2098,7 +2098,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_33" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2109,9 +2109,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_34" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2121,7 +2121,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_34" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2132,9 +2132,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_35" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2144,7 +2144,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_35" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2155,9 +2155,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_36" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2167,7 +2167,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_36" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2178,9 +2178,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_37" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2190,7 +2190,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="37" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2201,9 +2201,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_38" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2213,7 +2213,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_38" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2224,9 +2224,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_39" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2236,7 +2236,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_39" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2247,9 +2247,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_40" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2259,7 +2259,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_40" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2271,9 +2271,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_41" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2283,7 +2283,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_41" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2294,9 +2294,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_42" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2306,7 +2306,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_42" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2317,9 +2317,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_43" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2329,7 +2329,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_43" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2340,9 +2340,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_44" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2352,7 +2352,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_44" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2363,9 +2363,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_45" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2375,7 +2375,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_45" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2385,9 +2385,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_46" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2397,7 +2397,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_46" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2407,9 +2407,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_47" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2419,7 +2419,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_47" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2429,9 +2429,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_48" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2441,7 +2441,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_48" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2451,9 +2451,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_49" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2463,7 +2463,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_49" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2474,9 +2474,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_50" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2486,7 +2486,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_50" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2497,9 +2497,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_51" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2509,7 +2509,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_51" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2520,9 +2520,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_52" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2532,7 +2532,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_52" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2542,9 +2542,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_53" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2554,7 +2554,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_53" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2565,9 +2565,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_54" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2577,7 +2577,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_54" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2588,9 +2588,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_55" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2600,7 +2600,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_55" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2611,9 +2611,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_56" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2623,7 +2623,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_56" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2634,9 +2634,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_57" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2646,7 +2646,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_57" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
                                                     </tr>
@@ -2684,9 +2684,9 @@
 
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_58" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2699,7 +2699,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_58" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2714,9 +2714,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_59" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2727,7 +2727,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_59" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2741,9 +2741,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_60" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2754,7 +2754,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_60" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2768,9 +2768,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_61" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2781,7 +2781,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_62" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2795,9 +2795,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_63" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2808,7 +2808,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2822,9 +2822,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_63" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2835,7 +2835,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_63" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2857,7 +2857,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -2911,9 +2911,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2924,7 +2924,7 @@
                                                             <textarea name="what_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2936,9 +2936,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2949,7 +2949,7 @@
                                                             <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2961,9 +2961,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2974,7 +2974,7 @@
                                                             <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_3" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -2986,9 +2986,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -2999,7 +2999,7 @@
                                                             <textarea name="coverage_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3013,9 +3013,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3026,7 +3026,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3040,9 +3040,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3053,7 +3053,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3065,9 +3065,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_7" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3078,7 +3078,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3090,9 +3090,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3103,7 +3103,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3117,9 +3117,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3130,7 +3130,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3144,9 +3144,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3157,7 +3157,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3171,9 +3171,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3184,7 +3184,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3197,9 +3197,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3210,7 +3210,7 @@
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3225,9 +3225,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3237,12 +3237,12 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.14</td>
                                                         <td>
@@ -3251,9 +3251,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3263,7 +3263,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3277,9 +3277,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3289,7 +3289,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3303,9 +3303,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3315,7 +3315,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3329,9 +3329,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3341,7 +3341,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3355,9 +3355,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3367,7 +3367,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3381,9 +3381,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3393,7 +3393,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3403,15 +3403,15 @@
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
                                                             Are all weighing and measuring performed by one qualified person and checked by a second person
-                                                            Check the weighing balance record 
-                                                            
+                                                            Check the weighing balance record
+
                                                         </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3421,7 +3421,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3435,9 +3435,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3447,7 +3447,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3461,9 +3461,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3473,7 +3473,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3487,9 +3487,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3499,7 +3499,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3513,9 +3513,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3525,7 +3525,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3539,9 +3539,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3551,7 +3551,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3565,9 +3565,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3577,7 +3577,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3591,9 +3591,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3603,7 +3603,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3617,9 +3617,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3629,7 +3629,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3643,9 +3643,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3655,7 +3655,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3669,9 +3669,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3681,7 +3681,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3695,9 +3695,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3707,7 +3707,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3721,9 +3721,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3733,7 +3733,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3747,9 +3747,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3759,7 +3759,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3773,9 +3773,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3785,7 +3785,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_34" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3799,9 +3799,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3811,7 +3811,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3825,9 +3825,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3837,7 +3837,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3851,9 +3851,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3863,7 +3863,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3877,9 +3877,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3889,7 +3889,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3903,9 +3903,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3915,7 +3915,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3929,9 +3929,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3941,7 +3941,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_40" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3955,9 +3955,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3967,7 +3967,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_41" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -3981,9 +3981,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -3993,7 +3993,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4030,7 +4030,7 @@
 
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
@@ -4046,7 +4046,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4059,9 +4059,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4072,7 +4072,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4085,9 +4085,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_45" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4098,7 +4098,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_45" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4112,7 +4112,7 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_46" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                     <option value="Yes">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
@@ -4125,7 +4125,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_46" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4139,9 +4139,9 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_47" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4152,7 +4152,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_47" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
                                                         </td>
 
@@ -4161,14 +4161,14 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.6</td>
-                                                        <td> Is there any area cleaning record available for all individual areas? 
+                                                        <td> Is there any area cleaning record available for all individual areas?
                                                         </td>
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_48" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
@@ -4179,7 +4179,7 @@
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                                 style="margin: auto; display: flex; justify-content: center;">
-                                                                <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                <textarea name="remark_48" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                             </div>
 
 
@@ -4192,20 +4192,20 @@
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                <select name="response" id="response"
+                                                                <select name="response_49" id="response"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                    <option value="Yes">Select an Option</option>
+                                                                    <option value="">Select an Option</option>
                                                                     <option value="Yes">Yes</option>
                                                                     <option value="No">No</option>
                                                                     <option value="N/A">N/A</option>
                                                                 </select>
                                                             </div>
                                                         </td>
-                                                        
+
                                                         <td style="vertical-align: middle;">
                                                             <div
                                                             style="margin: auto; display: flex; justify-content: center;">
-                                                            <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                            <textarea name="remark_49" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -4215,19 +4215,19 @@
                                     </div>
 
 
-                                                  
-                                                 
 
-                               
+
+
+
 
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
                                         <div class="why-why-chart">
                                             <table class="table table-bordered">
-                                               
+
                                                 <tbody>
-                                                  
+
 
                                                 </tbody>
                                             </table>
@@ -4243,7 +4243,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -4656,7 +4656,7 @@
 
                                                     </tr>
 
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
@@ -5570,7 +5570,7 @@
                                                         </td>
 
                                                     </tr>
-                                                   
+
 
 
                                                 </tbody>
@@ -5586,7 +5586,7 @@
                                             </textarea>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Supporting Attachment </label>
@@ -5604,7 +5604,7 @@
                                     </div>
                                 </div>
 
-                               
+
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -6048,7 +6048,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.17</td>
                                                         <td>
-                                                        Where you keep the rejected strips / blisters / containers / cartons? 
+                                                        Where you keep the rejected strips / blisters / containers / cartons?
                                                         </td>
                                                         <td>
                                                             <div
@@ -6268,7 +6268,7 @@
                                                     <tr>
                                                         <td class="flex text-center">2.5</td>
                                                         <td>
-                                                        Is there any area cleaning record available for all individual areas? 
+                                                        Is there any area cleaning record available for all individual areas?
                                                         </td>
                                                         <td>
                                                             <div
@@ -6333,7 +6333,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -7570,7 +7570,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.5</td>
-                                                        <td>Is there any area cleaning record available for all individual areas? 
+                                                        <td>Is there any area cleaning record available for all individual areas?
                                                         </td>
                                                         <td>
                                                             <div
@@ -7630,7 +7630,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -9254,7 +9254,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.5</td>
-                                                        <td> Is there any area cleaning record available for all individual areas? 
+                                                        <td> Is there any area cleaning record available for all individual areas?
                                                         </td>
                                                         <td>
                                                             <div
@@ -9314,7 +9314,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -9348,7 +9348,7 @@
                                     Checklist for  Liquid/ Ointment Packing
 
                                 </div>
-                        
+
                                 <div class="col-12">
                                     {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
                                     <div class="group-input">
@@ -9385,7 +9385,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9410,7 +9410,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9435,7 +9435,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9460,7 +9460,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9487,7 +9487,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9514,7 +9514,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9539,7 +9539,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9564,7 +9564,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9591,7 +9591,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9618,7 +9618,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9645,7 +9645,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9672,7 +9672,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -9698,7 +9698,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.14</td>
@@ -9723,7 +9723,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.15</td>
@@ -9748,7 +9748,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.16</td>
@@ -9773,7 +9773,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.17</td>
@@ -9798,7 +9798,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.18</td>
@@ -9823,7 +9823,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.19</td>
@@ -9848,12 +9848,12 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.20</td>
                                                                                 <td>
-                                                                                Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record 
+                                                                                Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
                                                                                 </td>
                                                                                 <td>
                                                                                     <div
@@ -9873,7 +9873,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.21</td>
@@ -9898,7 +9898,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.22</td>
@@ -9923,7 +9923,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.23</td>
@@ -9948,7 +9948,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.24</td>
@@ -9973,7 +9973,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.25</td>
@@ -9998,7 +9998,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.26</td>
@@ -10023,7 +10023,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.27</td>
@@ -10048,7 +10048,7 @@
                                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                     </div>
                                                                                 </td>
-                        
+
                                                                             </tr>
                                                                             <tr>
                                                                                 <td class="flex text-center">1.28</td>
@@ -10072,7 +10072,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.29</td>
@@ -10097,7 +10097,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.30</td>
@@ -10122,7 +10122,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.31</td>
@@ -10147,7 +10147,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.32</td>
@@ -10172,7 +10172,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.33</td>
@@ -10197,7 +10197,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.34</td>
@@ -10222,7 +10222,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.35</td>
@@ -10247,7 +10247,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.36</td>
@@ -10272,7 +10272,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.37</td>
@@ -10297,7 +10297,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.38</td>
@@ -10322,7 +10322,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.39</td>
@@ -10347,7 +10347,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.40</td>
@@ -10372,7 +10372,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.41</td>
@@ -10397,7 +10397,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.42</td>
@@ -10422,7 +10422,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.43</td>
@@ -10447,7 +10447,7 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">1.44</td>
@@ -10472,19 +10472,19 @@
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                 </tr>
-                            
-                            
-                            
-                                                                            
+
+
+
+
                                                                             </tbody>
                                                                         </table>
-                            
+
                                                                     </div>
                                                                 </div>
                                                             </div>
-                            
+
                                                             <div class="sub-head">
                                                                 Checklist for Documentation
                                                             </div>
@@ -10506,7 +10506,7 @@
                                                                                     <td class="flex text-center">2.1</td>
                                                                                     <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record. </td>
                                                                                     <td>
-                            
+
                                                                                         <div
                                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                             <select name="response" id="response"
@@ -10517,20 +10517,20 @@
                                                                                                 <option value="N/A">N/A</option>
                                                                                             </select>
                                                                                         </div>
-                            
-                            
+
+
                                                                                     </td>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
-                            
-                            
+
+
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">2.2</td>
@@ -10547,16 +10547,16 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
-                            
-                            
+
+
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">2.3</td>
@@ -10573,17 +10573,17 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
-                            
-                            
-                            
+
+
+
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">2.4</td>
@@ -10600,20 +10600,20 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
-                            
-                            
+
+
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">2.5</td>
-                                                                                    <td> Is there any area cleaning record available for all individual areas? 
+                                                                                    <td> Is there any area cleaning record available for all individual areas?
                                                                                     </td>
                                                                                     <td>
                                                                                         <div
@@ -10627,16 +10627,16 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
                                                                                     </td>
-                            
-                            
-                            
+
+
+
                                                                                 </tr>
                                                                                 <tr>
                                                                                     <td class="flex text-center">2.6</td>
@@ -10654,20 +10654,20 @@
                                                                                             </select>
                                                                                         </div>
                                                                                     </td>
-                            
+
                                                                                     <td style="vertical-align: middle;">
                                                                                         <div
                                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                                         </div>
-                            
-                            
+
+
                                                                                     </td>
-                            
+
                                                                                 </tr>
-                                                                               
-                            
-                            
+
+
+
                                                 </tbody>
                                             </table>
                                         </div>
@@ -10682,7 +10682,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -10708,7 +10708,7 @@
                             </div>
                         </div>
                         </div>
-                    
+
                       <div id="CCForm14" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -11170,7 +11170,7 @@
                                                     <tr>
                                                         <td class="flex text-center">18</td>
                                                         <td>
-                                                        Check for Change control proposal system 
+                                                        Check for Change control proposal system
                                                         </td>
                                                         <td>
                                                             <div
@@ -11771,7 +11771,7 @@
                                                         <td class="flex text-center">42</td>
                                                         <td>
                                                         Does QA have authority to review and approve or reject?
-    
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -11933,7 +11933,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -12009,14 +12009,14 @@
                                                     <tr>
                                                         <td class="flex text-center">1.2</td>
                                                         <td>Are written procedures available for:
-                                                            
+
                                                             </td>
                                                         <td>
-                                                           
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="where_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                         </td>
@@ -12025,7 +12025,7 @@
                                                         <td class="flex text-center">1.2.1</td>
                                                         <td>
                                                             	Set-up of equipment
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12052,7 +12052,7 @@
                                                         <td class="flex text-center">1.2.2</td>
                                                         <td>
                                                             	Maintenance of equipment
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12079,7 +12079,7 @@
                                                         <td class="flex text-center">1.2.3</td>
                                                         <td>
                                                             	Cleaning of equipment
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12106,7 +12106,7 @@
                                                         <td class="flex text-center">1.2.4</td>
                                                         <td>
                                                             	Calibration of manufacturing equipment
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12159,14 +12159,14 @@
                                                     <tr>
                                                         <td class="flex text-center">1.3</td>
                                                         <td> Are records kept for:
-                                                            
+
                                                             </td>
                                                         <td>
-                                                           
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="when_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                         </td>
@@ -12175,8 +12175,8 @@
                                                         <td class="flex text-center">1.3.1</td>
                                                         <td>
                                                             	The sequence of products manufactured on particular equipment
-                                                            
-                                                            
+
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12203,7 +12203,7 @@
                                                         <td class="flex text-center">1.3.2</td>
                                                         <td>
                                                             	Maintenance and cleaning logs
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12230,7 +12230,7 @@
                                                         <td class="flex text-center">1.3.3</td>
                                                         <td>
                                                             	Calibration of manufacturing equipment
-                                                            
+
                                                             </td>
                                                         <td>
                                                             <div
@@ -12255,7 +12255,7 @@
                                                         </td>
                                                     </tr> <tr>
                                                         <td class="flex text-center">1.3.4</td>
-                                                        <td> 
+                                                        <td>
                                                             	Calibration of control instruments
                                                             </td>
                                                         <td>
@@ -12467,8 +12467,8 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11</td>
                                                         <td>
-                                                            Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments? 
-                                                            
+                                                            Are there SOPs for inspection (monitoring the condition) and maintenance of equipment and of measuring and testing instruments?
+
 
                                                         </td>
                                                         <td>
@@ -12496,7 +12496,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.11.1</td>
                                                         <td>
-                                                            
+
                                                             	Do SOPs assign responsibilities; include schedules; describe methods, equipment, and materials to be used; and require maintenance of records?
 
                                                         </td>
@@ -12576,14 +12576,14 @@
                                                         </td>
 
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.14</td>
                                                         <td>
                                                           	Are there SOPs for calibration of critical equipment, and measuring and testing instruments?
 
-                                                          
-                                                           
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -12608,15 +12608,15 @@
                                                     <tr>
                                                         <td class="flex text-center">1.14.1</td>
                                                         <td>
-                                                            
 
-                                                                 Do SOPs assign responsibilities; include 
-                                                                 schedules; describe methods; equipment, and  
-                                                                 materials to be used, including calibration over 
-                                                                 actual range of use and standards traceable to 
-                                                                 national standards; and include specifications 
+
+                                                                 Do SOPs assign responsibilities; include
+                                                                 schedules; describe methods; equipment, and
+                                                                 materials to be used, including calibration over
+                                                                 actual range of use and standards traceable to
+                                                                 national standards; and include specifications
                                                                  and tolerances?
-                                                           
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -12746,7 +12746,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.19</td>
                                                         <td>
-                                                            Is there any standard procedure for maintenance and calibration operations? 
+                                                            Is there any standard procedure for maintenance and calibration operations?
                                                         </td>
                                                         <td>
                                                             <div
@@ -12772,7 +12772,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                            Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly. 
+                                                            Check the filter drying room. Is there procedure for the filter drying? Check 2- 3 filter randomly.
                                                         </td>
                                                         <td>
                                                             <div
@@ -13007,7 +13007,7 @@
 
                                                         </td>
 
-                                                 
+
 
                                                 </tbody>
                                             </table>
@@ -13089,7 +13089,7 @@
 
 
                                                     </tr>
-                                                   
+
 
                                                 </tbody>
                                             </table>
@@ -13105,7 +13105,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -13255,15 +13255,15 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            Have the employees undergone training in the following areas? 
+                                                            Have the employees undergone training in the following areas?
 
                                                         </td>
                                                         <td>
-                                                           
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                         </td>
@@ -13271,8 +13271,8 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5.1</td>
                                                         <td>
-                                                            
-                                                          cGLP (Related: SOP for Good Laboratory Practices) 
+
+                                                          cGLP (Related: SOP for Good Laboratory Practices)
 
                                                         </td>
                                                         <td>
@@ -13299,9 +13299,9 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.5.2</td>
                                                         <td>
-                                                            
-                                                          	SOPs 
-                                                          
+
+                                                          	SOPs
+
 
                                                         </td>
                                                         <td>
@@ -13328,7 +13328,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.5.3</td>
                                                         <td>
-                                                            
+
                                                           Analytical Techniques
 
                                                         </td>
@@ -13356,7 +13356,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.5.4</td>
                                                         <td>
-                                                            
+
                                                           EU_GMP
 
                                                         </td>
@@ -13544,13 +13544,13 @@
                                                         <td class="flex text-center">1.12</td>
                                                         <td>
                                                             Are all reagents and solutions
-                                                            
+
                                                         <td>
-                                                           
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                         </td>
@@ -13558,9 +13558,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.12.1</td>
                                                         <td>
-                                                            
+
                                                             	Clearly, labeled with their proper name?
-                                                            
+
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -13585,9 +13585,9 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">1.12.2</td>
                                                         <td>
-                                                            
+
                                                             	Labeled with the date of receipt and/or expiration date?
-                                                            
+
                                                         <td>
                                                             <div
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -13615,24 +13615,24 @@
                                                         <td class="flex text-center">1.13</td>
                                                         <td>
                                                             Are prepared solutions labeled with the
-                                                            
+
                                                         </td>
                                                         <td>
-                                                           
+
                                                         </td>
                                                         <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.13.1</td>
                                                         <td>
-                                                            
+
                                                             	Name of the person who prepared them?
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13654,14 +13654,14 @@
                                                         </td>
 
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.13.2</td>
                                                         <td>
-                                                            
+
                                                             	Date of preparation?
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13683,13 +13683,13 @@
                                                         </td>
 
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">1.13.3</td>
                                                         <td>
-                                                            
+
                                                             	Expiration date?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13711,13 +13711,13 @@
                                                         </td>
 
                                                     </tr>
-                                                    
-                                                    
+
+
                                                     <tr>
                                                         <td class="flex text-center">1.14</td>
                                                         <td>
                                                             	Is there any written procedure available for status labeling?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13744,7 +13744,7 @@
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
                                                             Is the area qualified? Have any modification in the facility in the last 6 months?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13771,7 +13771,7 @@
                                                         <td class="flex text-center">1.16</td>
                                                         <td>
                                                             		Are the entire area log books updated?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13798,7 +13798,7 @@
                                                         <td class="flex text-center">1.17</td>
                                                         <td>
                                                             	Is there an approved preventive maintenance program for all equipment/instruments used in the laboratory?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13825,7 +13825,7 @@
                                                         <td class="flex text-center">1.18</td>
                                                         <td>
                                                             	Is there an SOP for corrective action if an instrument is found to be out of calibration?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13878,7 +13878,7 @@
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
                                                             	Is a specific person responsible for the receipt of samples for testing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13905,7 +13905,7 @@
                                                         <td class="flex text-center">1.21</td>
                                                         <td>
                                                             Is there a written SOP describing sample receipt and recording (logging in)?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13932,7 +13932,7 @@
                                                         <td class="flex text-center">1.22</td>
                                                         <td>
                                                             	Where are samples stored before and after testing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13959,7 +13959,7 @@
                                                         <td class="flex text-center">1.23</td>
                                                         <td>
                                                             Are samples retained after completion of testing and reporting? If not, What happens to samples after testing and reporting are complete?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -13986,7 +13986,7 @@
                                                         <td class="flex text-center">1.24</td>
                                                         <td>
                                                             Is there a time limit on how long a sample may remain in the laboratory prior to testing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14013,7 +14013,7 @@
                                                         <td class="flex text-center">1.25</td>
                                                         <td>
                                                             Is the approved vendor list for all raw materials and packing materials available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14040,7 +14040,7 @@
                                                         <td class="flex text-center">1.26</td>
                                                         <td>
                                                             		Is there any data backup policy available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14067,7 +14067,7 @@
                                                         <td class="flex text-center">1.27</td>
                                                         <td>
                                                             Is there any written procedure for the Audit trail?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14120,7 +14120,7 @@
                                                         <td class="flex text-center">1.29</td>
                                                         <td>
                                                             Are there approved test procedures available for all tests performed in the laboratory?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14147,7 +14147,7 @@
                                                         <td class="flex text-center">1.30</td>
                                                         <td>
                                                             		Is there a written procedure for ensuring that all pharmacopoeial procedures are updated when a supplemental monograph is issued?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14174,7 +14174,7 @@
                                                         <td class="flex text-center">1.31</td>
                                                         <td>
                                                             	Has the test method been validated for precision and reliability?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14201,7 +14201,7 @@
                                                         <td class="flex text-center">1.32</td>
                                                         <td>
                                                             Examine the work currently being performed on the HPLCs.
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14228,7 +14228,7 @@
                                                         <td class="flex text-center">1.33</td>
                                                         <td>
                                                             	Has the analyst recorded all the relevant details of the product being tested, including the attachment of printouts or record of weighing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14255,7 +14255,7 @@
                                                         <td class="flex text-center">1.34</td>
                                                         <td>
                                                             Is there documented evidence that system suitability was determined prior to the use of the chromatography in the analysis?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14282,7 +14282,7 @@
                                                         <td class="flex text-center">1.35</td>
                                                         <td>
                                                             	Is there a reference to the test method used in the analyst’s Test Data Sheet (TDS)?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14309,7 +14309,7 @@
                                                         <td class="flex text-center">1.36</td>
                                                         <td>
                                                             Are laboratory records indicating the date of receipt of the sample and expiry date?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14336,7 +14336,7 @@
                                                         <td class="flex text-center">1.37</td>
                                                         <td>
                                                             Are appropriate reference standards used and are they stored in a proper manner to ensure stability?  Are their expiration dates adequately monitored so they are not used beyond the expiration dates?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14363,7 +14363,7 @@
                                                         <td class="flex text-center">1.38</td>
                                                         <td>
                                                             	Is reference standard kept under proper storage condition?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14390,7 +14390,7 @@
                                                         <td class="flex text-center">1.39</td>
                                                         <td>
                                                             Are working standards prepared as per the protocol? Check for its storage condition
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14416,8 +14416,8 @@
                                                     <tr>
                                                         <td class="flex text-center">1.40</td>
                                                         <td>
-                                                            Is there a record of the preparation of volumetric solutions? 
-                                                            
+                                                            Is there a record of the preparation of volumetric solutions?
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14443,8 +14443,8 @@
                                                     <tr>
                                                         <td class="flex text-center">1.41</td>
                                                         <td>
-                                                            	Are volumetric solutions freshly prepared? If stored, what expiration date is given? 
-                                                            
+                                                            	Are volumetric solutions freshly prepared? If stored, what expiration date is given?
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14497,7 +14497,7 @@
                                                         <td class="flex text-center">1.43</td>
                                                         <td>
                                                             	Check method validation for any product which is done in between two self-inspections with respect to SOP.
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14524,7 +14524,7 @@
                                                         <td class="flex text-center">1.44</td>
                                                         <td>
                                                             	Is a stability study schedule available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14551,7 +14551,7 @@
                                                         <td class="flex text-center">1.45</td>
                                                         <td>
                                                             	Are protocols for all stability study samples available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14578,7 +14578,7 @@
                                                         <td class="flex text-center">1.46</td>
                                                         <td>
                                                             	Does the procedure for keeping stability samples available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14605,7 +14605,7 @@
                                                         <td class="flex text-center">1.47</td>
                                                         <td>
                                                             	Are stability samples kept as per the storage requirement?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14632,7 +14632,7 @@
                                                         <td class="flex text-center">1.48</td>
                                                         <td>
                                                             Is the stability summary available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14659,7 +14659,7 @@
                                                         <td class="flex text-center">1.49</td>
                                                         <td>
                                                             Are records maintained of nonconforming materials, related investigations and corrective actions?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14686,7 +14686,7 @@
                                                         <td class="flex text-center">1.50</td>
                                                         <td>
                                                             	For active ingredients, is there an SOP for investigation of out-of-specification (OOS) test results to assure that a uniform procedure is followed to determine why the OOS result occurred and that corrective actions are implemented?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14713,7 +14713,7 @@
                                                         <td class="flex text-center">1.51</td>
                                                         <td>
                                                             Raw Material control - Is a list of acceptable suppliers (i.e. approved vendor list)  maintained and are incoming raw materials checked against it?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14740,7 +14740,7 @@
                                                         <td class="flex text-center">1.52</td>
                                                         <td>
                                                             	Are statistical sampling plans used to assure that the samples are representative of the lot?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14767,7 +14767,7 @@
                                                         <td class="flex text-center">1.53</td>
                                                         <td>
                                                             	Are sampled containers labeled with sampler’s name and date of sampling?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14794,7 +14794,7 @@
                                                         <td class="flex text-center">1.54</td>
                                                         <td>
                                                             	Are there complete written instructions for testing and approving raw materials, including methods, equipment, operating parameters, acceptance specifications?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14821,9 +14821,9 @@
                                                         <td class="flex text-center">1.55</td>
                                                         <td>
                                                             		Are raw materials approved before being used in production?
-                                                            
-                                                            
-                                                            
+
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14848,10 +14848,10 @@
                                                     <tr>
                                                         <td class="flex text-center">1.55.1</td>
                                                         <td>
-                                                            	
+
                                                             Are appropriate controls exercised to assure that they are not used in a batch prior to release by Quality Control?
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14878,7 +14878,7 @@
                                                         <td class="flex text-center">1.56</td>
                                                         <td>
                                                             	If raw materials are accepted on certificates of analysis, have suppliers been appropriately certified or qualified, have results on the COA been verified by in-house testing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14905,7 +14905,7 @@
                                                         <td class="flex text-center">1.57</td>
                                                         <td>
                                                             	Is raw materials identification test performed on every batch and receipt?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14932,7 +14932,7 @@
                                                         <td class="flex text-center">1.58</td>
                                                         <td>
                                                             	Is there an effective system for monitoring and retesting or re-evaluating stored raw materials to assure that they are not used beyond their recommended use date?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14959,7 +14959,7 @@
                                                         <td class="flex text-center">1.59</td>
                                                         <td>
                                                             	In-process testing - Are there complete written instructions for testing and approving in-process materials, including methods, equipment, operating parameters, acceptance specifications?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -14986,7 +14986,7 @@
                                                         <td class="flex text-center">1.60</td>
                                                         <td>
                                                             		If operators perform in-process testing, have they been trained and was the training documented?  Does QC periodically verify their results?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15013,7 +15013,7 @@
                                                         <td class="flex text-center">1.61</td>
                                                         <td>
                                                             Final product control - Is every batch sampled according to a plan that assures that the sample is representative of the batch?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15040,7 +15040,7 @@
                                                         <td class="flex text-center">1.62</td>
                                                         <td>
                                                             	When and where is the finished product sampled for release?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15067,7 +15067,7 @@
                                                         <td class="flex text-center">1.63</td>
                                                         <td>
                                                             Is every product batch tested and approved before shipment?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15120,7 +15120,7 @@
                                                         <td class="flex text-center">1.65</td>
                                                         <td>
                                                             	If skip lot testing is done, does the COA clearly indicate which tests are performed on every lot and which are critical via skip lot testing?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15147,7 +15147,7 @@
                                                         <td class="flex text-center">1.66</td>
                                                         <td>
                                                             	Have non-compendial methods been validated, including accuracy, linearity, specificity, ruggedness, and comparison with compendial methods, OR have compendial methods been verified to function properly in the company’s laboratory?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15174,7 +15174,7 @@
                                                         <td class="flex text-center">1.67</td>
                                                         <td>
                                                             Is the stability protocol available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15202,24 +15202,24 @@
                                                         <td>
                                                             Are these stability chambers available to carryout stability of the product at
 
-                                                            
+
                                                         </td>
                                                         <td>
-                                                           
+
                                                         </td>
                                                         <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.68.1</td>
                                                         <td>
-                                                            
-                                                                	25°C / 60% Rh
-                                                                
 
-                                                            
+                                                                	25°C / 60% Rh
+
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15244,11 +15244,11 @@
                                                     <tr>
                                                         <td class="flex text-center">1.68.2</td>
                                                         <td>
-                                                           
-                                                                	30°C / 75% Rh
-                                                                
 
-                                                            
+                                                                	30°C / 75% Rh
+
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15273,10 +15273,10 @@
                                                     <tr>
                                                         <td class="flex text-center">1.68.3</td>
                                                         <td>
-                                                            
+
                                                                 	40°C / 75% Rh
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15301,10 +15301,10 @@
                                                     <tr>
                                                         <td class="flex text-center">1.68.4</td>
                                                         <td>
-                                                            
+
                                                                 	30°C/65% Rh
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15329,10 +15329,10 @@
                                                     <tr>
                                                         <td class="flex text-center">1.68.5</td>
                                                         <td>
-                                                           
+
                                                                 	Stand By Chamber
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15360,7 +15360,7 @@
                                                         <td class="flex text-center">1.69</td>
                                                         <td>
                                                             Do you keep both hard copy and electronic copy of temperature/Rh monitoring?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15387,7 +15387,7 @@
                                                         <td class="flex text-center">1.70</td>
                                                         <td>
                                                             		Are the stability results reviewed by a qualified, experienced person?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15414,7 +15414,7 @@
                                                         <td class="flex text-center">1.71</td>
                                                         <td>
                                                             Is stability study in primary pack done for different products?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15441,7 +15441,7 @@
                                                         <td class="flex text-center">1.72</td>
                                                         <td>
                                                             Laboratories – Do laboratories have adequate space and are they clean and orderly, with appropriate equipment for required tests?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15468,7 +15468,7 @@
                                                         <td class="flex text-center">1.73</td>
                                                         <td>
                                                             	Are calibrated instruments labeled with date calibrated and date next calibration is due?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15495,7 +15495,7 @@
                                                         <td class="flex text-center">1.74</td>
                                                         <td>
                                                             	Are daily or weekly calibration verifications performed on analytical balances using a range of weights (high, middle, low) based on the operating range of the balance?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15522,7 +15522,7 @@
                                                         <td class="flex text-center">1.75</td>
                                                         <td>
                                                             	Are in- process materials tested at appropriate phases for identity, strength, quality, and purity and are they approved or rejected by Quality control?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15549,7 +15549,7 @@
                                                         <td class="flex text-center">1.76</td>
                                                         <td>
                                                             Are there laboratory controls including sampling and testing procedures to assure conformance of containers, closures in process materials and finished product specifications?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15576,7 +15576,7 @@
                                                         <td class="flex text-center">1.77</td>
                                                         <td>
                                                             Are written sampling and testing procedures and acceptance criteria available for each product?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15603,7 +15603,7 @@
                                                         <td class="flex text-center">1.78</td>
                                                         <td>
                                                             		Are specific tests for foreign particles done?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15630,7 +15630,7 @@
                                                         <td class="flex text-center">1.79</td>
                                                         <td>
                                                             	Are Packing materials approved before being used in production?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15657,7 +15657,7 @@
                                                         <td class="flex text-center">1.80</td>
                                                         <td>
                                                             		Check for compliance of stability data and its summary
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15684,7 +15684,7 @@
                                                         <td class="flex text-center">1.81</td>
                                                         <td>
                                                             Check for Analytical Data Sheet
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15711,7 +15711,7 @@
                                                         <td class="flex text-center">1.82</td>
                                                         <td>
                                                             	Are reagents and microbiological media adequately controlled and monitored to assure that they are periodically replaced and that old reagents are not used?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15765,7 +15765,7 @@
                                                         <td class="flex text-center">1.84</td>
                                                         <td>
                                                             	Are data recorded in notebooks or on pre-numbered sheets, including appropriate cross-reference to the location of relevant spectra and chromatograms?  Are equipment ID numbers recorded for each analysis?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15792,7 +15792,7 @@
                                                         <td class="flex text-center">1.85</td>
                                                         <td>
                                                             	Are data and calculations checked by a second person and countersigned?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15819,7 +15819,7 @@
                                                         <td class="flex text-center">1.86</td>
                                                         <td>
                                                             	Are Material safety data sheet (MSDS) of chemical which are used is available?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15845,25 +15845,25 @@
                                                     <tr>
                                                         <td class="flex text-center">1.87</td>
                                                         <td>
-                                                            	Microbiological Laboratories 
+                                                            	Microbiological Laboratories
 
-                                                            
+
                                                         </td>
                                                         <td>
-                                                            
+
                                                         </td>
                                                         <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.87.1</td>
                                                         <td>
-                                                            	
+
                                                               Are positive and negative controls used for testing?  Are their results recorded?
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15887,11 +15887,11 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">1.87.2</td>
                                                         <td>
-                                                            	
-                                                              	Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
-                                                              
 
-                                                            
+                                                              	Is growth support testing with low levels of organisms performed on all incoming media lots and is it documented?
+
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15915,10 +15915,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">1.87.3</td>
                                                         <td>
-                                                            	
+
                                                               Is an expiration date assigned to prepared media and are prepared media stored at manufacturers’ recommended storage temperatures?
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15942,10 +15942,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">1.87.4</td>
                                                         <td>
-                                                            	
+
                                                               	Are isolates from microbiological testing identified if appropriate?
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -15969,10 +15969,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">1.87.5</td>
                                                         <td>
-                                                            	
+
                                                               	Is each lot of microbial ID systems checked with positive and negative controls?
 
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -16002,12 +16002,12 @@
                                     </div>
                                 </div>
 
-                               
-                               
 
-                               
 
-                               
+
+
+
+
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="group-input">
@@ -16017,7 +16017,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -16451,7 +16451,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.16</td>
                                                         <td>
-                                                        Is cleaning record maintained for store? 
+                                                        Is cleaning record maintained for store?
                                                         </td>
                                                         <td>
                                                             <div
@@ -16499,7 +16499,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.18</td>
                                                         <td>
-                                                        Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF? 
+                                                        Is sampling of raw material, primary packing label, Aluminum foil & PVC / PVDC done in the LAF?
                                                         </td>
                                                         <td>
                                                             <div
@@ -16547,7 +16547,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                        Check the Dispensing and sampling area records. 
+                                                        Check the Dispensing and sampling area records.
                                                     </td>
                                                         <td>
                                                             <div
@@ -16783,7 +16783,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -16960,7 +16960,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.6</td>
                                                         <td>
-                                                        Check the data for the pest & rodent control for the last 3 months, is it ok? 
+                                                        Check the data for the pest & rodent control for the last 3 months, is it ok?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17118,7 +17118,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.12</td>
                                                         <td>
-                                                        Do you have a written procedure for linen washing? 
+                                                        Do you have a written procedure for linen washing?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17145,7 +17145,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
                                                         <td>
-                                                        Is the linen for washing is collected from respective area in polybags? 
+                                                        Is the linen for washing is collected from respective area in polybags?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17245,7 +17245,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.17</td>
                                                         <td>
-                                                        Check the induction training record for one new recruit in the production, store, QA, QC.    
+                                                        Check the induction training record for one new recruit in the production, store, QA, QC.
                                                         </td>
                                                         <td>
                                                             <div
@@ -17320,7 +17320,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                        Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections? 
+                                                        Is there any procedure for reporting illness such as cuts, wounds, rashes, any skin aliment, cold, cough, or any communicable diseases / infections?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17345,7 +17345,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.21</td>
                                                         <td>
-                                                        Is there a procedure for issue, storage, washing and collection of used garments? 
+                                                        Is there a procedure for issue, storage, washing and collection of used garments?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17370,7 +17370,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.22</td>
                                                         <td>
-                                                        Is there any color code for garments and foot wear followed? 
+                                                        Is there any color code for garments and foot wear followed?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17445,7 +17445,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.25</td>
                                                         <td>
-                                                        Check the training record for the SOP related changes for two person for production, QA and QC 
+                                                        Check the training record for the SOP related changes for two person for production, QA and QC
                                                         </td>
                                                         <td>
                                                             <div
@@ -17520,7 +17520,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.28</td>
                                                         <td>
-                                                        Is there any emergency evacuation system in factory premises? 
+                                                        Is there any emergency evacuation system in factory premises?
                                                         </td>
                                                         <td>
                                                             <div
@@ -17620,7 +17620,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.32</td>
                                                         <td>
-                                                        Check the scrap record for last 2 months. 
+                                                        Check the scrap record for last 2 months.
                                                         </td>
                                                         <td>
                                                             <div
@@ -17699,11 +17699,11 @@
                                     </div>
                                 </div>
 
-                                
 
-                               
 
-                                
+
+
+
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="group-input">
@@ -17713,7 +17713,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -18112,8 +18112,8 @@
                                 </div>
 
                                 <div class="sub-head">
-                                    Checklist for - Injection Manufacturing / Filteration / Filling /Visual Inspection 
-                                </div>  
+                                    Checklist for - Injection Manufacturing / Filteration / Filling /Visual Inspection
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <div class="why-why-chart">
@@ -18603,7 +18603,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                    
+
                                                     <tr>
                                                         <td class="flex text-center">2.19</td>
                                                         <td>Are written records maintained on equipment cleaning, sanitizing
@@ -18628,11 +18628,11 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.20</td>
                                                         <td>Are all weighing and measuring performed by one qualified person and checked by a second person
-                                                            Check the weighing balance record 
+                                                            Check the weighing balance record
                                                             </td>
                                                         <td>
                                                             <div
@@ -18653,7 +18653,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.21</td>
                                                         <td>All the person working in manufacturing area having proper gowning?</td>
@@ -18676,7 +18676,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.22</td>
                                                         <td>Is the Mfg tank calibrated?</td>
@@ -18699,7 +18699,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.23</td>
                                                         <td>Check the CIP-SIP system in place and verify the records.</td>
@@ -18722,7 +18722,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.24</td>
                                                         <td>Is the pressure differential of every particular area are within limit?</td>
@@ -18745,7 +18745,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.25</td>
                                                         <td>Is there a define procedure for filtration and verify the records.</td>
@@ -18768,7 +18768,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.26</td>
                                                         <td>Is there any procedure to carryout integrity test of the filter used in process?</td>
@@ -18791,7 +18791,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.27</td>
                                                         <td>Is there any procedure for cleaning of filling machine?</td>
@@ -18814,7 +18814,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.28</td>
                                                         <td>Is there any procedure to expose the settle plate during complete filling activity?</td>
@@ -18837,7 +18837,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.29</td>
                                                         <td>Have you any SOP regarding Hold time of material during staging?</td>
@@ -18860,7 +18860,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.30</td>
                                                         <td>Is there a written procedure specifying the frequency of inspection and replacement for air filters?</td>
@@ -18883,7 +18883,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.31</td>
                                                         <td>Are written operating procedures available for each piece of equipment used in the manufacturing, processing? Check for SOP compliance. Check the list of equipment and equipment details.</td>
@@ -18906,7 +18906,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.32</td>
                                                         <td>Does each piece of equipment have written instructions for maintenance that includes a schedule for maintenance?</td>
@@ -18929,7 +18929,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.33</td>
                                                         <td>Does the process control address all issues to ensure identity, strength, quality and purity of product?</td>
@@ -18952,7 +18952,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.34</td>
                                                         <td>Check the calibration labels for instrument calibration status</td>
@@ -18975,7 +18975,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.35</td>
                                                         <td>Temperature & RH record log book is available for each staging area.</td>
@@ -18998,7 +18998,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.36</td>
                                                         <td>Is there any procedure for operation and cleaning of tunnel, verify the records</td>
@@ -19021,7 +19021,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.37</td>
                                                         <td>Check is there any sop for operations & cleaning of autoclave verify the records.</td>
@@ -19044,7 +19044,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.38</td>
                                                         <td>Is there any procedure for operation and cleaning of washing machine, verify the records.</td>
@@ -19067,7 +19067,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.39</td>
                                                         <td>Is there any procedure for operation and cleaning of leak test apparatus, verify the records.</td>
@@ -19090,7 +19090,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.40</td>
                                                         <td>Is there any procedure for operation and cleaning of ampoule visual inspection machine, verify the records.</td>
@@ -19113,7 +19113,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.41</td>
                                                         <td>Check for area activity record</td>
@@ -19136,7 +19136,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.42</td>
                                                         <td>Check for equipment usage record</td>
@@ -19159,7 +19159,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.43</td>
                                                         <td>Check for general equipment details and accessory details.</td>
@@ -19182,7 +19182,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.44</td>
                                                         <td>Check for man & material movement in the area</td>
@@ -19205,7 +19205,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.45</td>
                                                         <td>Air handling system qualification, cleaning details and PAO test reports</td>
@@ -19228,7 +19228,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.46</td>
                                                         <td>Check for WFI hose pipe status and water hold up.</td>
@@ -19251,7 +19251,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.47</td>
                                                         <td>Check for the status labeling in the area and, material randomly</td>
@@ -19274,7 +19274,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
-                                                  
+
                                                     <tr>
                                                         <td class="flex text-center">2.48</td>
                                                         <td>Check the in-process equipments cleaning status & records.</td>
@@ -19298,8 +19298,8 @@
                                                         </td>
                                                     </tr>
 
-                                                    
-                                                  
+
+
                                                     <tr>
                                                         <td class="flex text-center">2.49</td>
                                                         <td>Have you any SOP regarding Hold time of material during staging?</td>
@@ -19334,7 +19334,7 @@
                                     </div>
                                                     <div class="col-12">
                                                         {{-- <label for="Audit Attachments">PHASE- I B INVESTIGATION REPORT</label> --}}
-                                                        
+
                                                         <div class="group-input">
                                                             <div class="why-why-chart">
                                                                 <table class="table table-bordered">
@@ -19351,7 +19351,7 @@
                                                                             <td class="flex text-center">3.1</td>
                                                                             <td>Do records have doer & checker signatures?  Check the timings, date and yield etc in the batch production record.</td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19362,10 +19362,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19377,7 +19377,7 @@
                                                                             <td class="flex text-center">3.2</td>
                                                                             <td>Is each batch assigned a distinctive code, so that material can be traced through manufacturing and distribution? Check for In process analytical reports</td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19388,10 +19388,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19402,7 +19402,7 @@
                                                                             <td class="flex text-center">3.3</td>
                                                                             <td>Is the batch record is on line up to the current stage of a process?</td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19413,10 +19413,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19427,7 +19427,7 @@
                                                                             <td class="flex text-center">3.4</td>
                                                                             <td>In process carried out as per the written instruction describe in batch record?</td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19438,10 +19438,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19452,7 +19452,7 @@
                                                                             <td class="flex text-center">3.5</td>
                                                                             <td>Is there any area cleaning record available for all individual areas? </td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19463,10 +19463,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19477,7 +19477,7 @@
                                                                             <td class="flex text-center">3.6</td>
                                                                             <td>Current version of SOP’s is available in respective areas?</td>
                                                                             <td>
-                    
+
                                                                                 <div
                                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                                     <select name="response" id="response"
@@ -19488,10 +19488,10 @@
                                                                                         <option value="N/A">N/A</option>
                                                                                     </select>
                                                                                 </div>
-                    
-                    
+
+
                                                                             </td>
-                    
+
                                                                             <td style="vertical-align: middle;">
                                                                                 <div
                                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -19499,14 +19499,14 @@
                                                                                 </div>
                                                                             </td>
                                                                         </tr>
-                    
-                    
+
+
                                                                     </tbody>
                                                                 </table>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="col-md-12 mb-4">
                                                         <div class="group-input">
                                                             <label for="Description Deviation">Final Comments</label>
@@ -19515,7 +19515,7 @@
                                                                 </textarea>
                                                         </div>
                                                     </div>
-                            
+
                                                     <div class="col-12">
                                                         <div class="group-input">
                                                             <label for="Audit Attachments"> Supporting Attachment </label>
@@ -19544,7 +19544,7 @@
                           <div id="CCForm20" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">  
+                                <div class="sub-head">
                                 Checklist for Injection Packing
                                 </div>
 
@@ -20027,9 +20027,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.19</td>
                                                         <td>
-                                                        Are all weighing and measuring performed by one qualified person and checked by a second person 
-                                                                                                                   
-            
+                                                        Are all weighing and measuring performed by one qualified person and checked by a second person
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -20429,7 +20429,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.35</td>
                                                         <td>
-                                                        Where you keep the rejected ampoule / cartons? 
+                                                        Where you keep the rejected ampoule / cartons?
                                                         </td>
                                                         <td>
                                                             <div
@@ -20736,7 +20736,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.5</td>
-                                                        <td> Is there any area cleaning record available for all individual areas? 
+                                                        <td> Is there any area cleaning record available for all individual areas?
                                                         </td>
                                                         <td>
                                                             <div
@@ -20789,7 +20789,7 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>                           
+                                </div>
                            </div> <div class="col-md-12 mb-4">
                             <div class="group-input">
                                 <label for="Description Deviation">Final Comments</label>
@@ -20824,7 +20824,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="CCForm21" class="inner-block cctabcontent">    
+                    <div id="CCForm21" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
@@ -21335,7 +21335,7 @@
                                                     <tr>
                                                         <td class="flex text-center">1.20</td>
                                                         <td>
-                                                        Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record 
+                                                        Are all weighing and measuring performed by one qualified person and checked by a second personCheck the weighing balance record
                                                         </td>
                                                         <td>
                                                             <div
@@ -21960,7 +21960,7 @@
 
 
 
-                                                
+
                                                 </tbody>
                                             </table>
 
@@ -22041,8 +22041,8 @@
 
 
                                                     </tr>
-                                                    
-                                                   
+
+
 
                                                 </tbody>
                                             </table>
@@ -22057,7 +22057,7 @@
                                             </textarea>
                                     </div>
                                 </div>
-        
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments"> Supporting Attachment </label>
@@ -22085,19 +22085,19 @@
                         </div>
                     </div>
 
-                    
-                   
+
+
 
 
                     <!-- Activity Log content -->
-                   
+
 
                 </div>
                    <div id="CCForm22" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Checklist for Analytical Research and Development 
+                                    Checklist for Analytical Research and Development
                                 </div>
 
                                 <div class="col-12">
@@ -22216,7 +22216,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
-                                                        <td>Do you receive working standards along with COA from manufacturer?    
+                                                        <td>Do you receive working standards along with COA from manufacturer?
                                                         </td>
                                                         <td>
                                                             <div
@@ -22417,19 +22417,19 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.13</td>
-                                                        <td>Are stability study carried out for the product at 
+                                                        <td>Are stability study carried out for the product at
                                                             </td>
                                                         <td>
-                                                            
+
                                                         </td>
                                                         <td style="vertical-align: middle;">
-                                                            
+
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.13.1</td>
                                                         <td>
-                                                        25°C / 60% RH 
+                                                        25°C / 60% RH
                                                             </td>
                                                         <td>
                                                             <div
@@ -22452,7 +22452,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.13.2</td>
                                                         <td>
-                                                             
+
                                                               30°C / 70% RH
                                                             </td>
                                                         <td>
@@ -22476,7 +22476,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.13.3</td>
                                                         <td>
-                                                             
+
                                                              40°C / 75% RH
                                                             </td>
                                                         <td>
@@ -22752,7 +22752,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -22777,7 +22777,7 @@
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                     <div id="CCForm23" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -23164,24 +23164,24 @@
                                                     <tr>
                                                         <td class="flex text-center">1.15</td>
                                                         <td>
-                                                        Are these stability chambers available to carryout stability of the product at - 
+                                                        Are these stability chambers available to carryout stability of the product at -
 
 
                                                         </td>
                                                         <td>
-                                                            
+
                                                         </td>
                                                         <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.15.1</td>
                                                         <td>
-                                                        
+
                                                         25°C / 60% Rh
-                                                        
+
 
 
                                                         </td>
@@ -23207,7 +23207,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.15.2</td>
                                                         <td>
-                                                        
+
                                                         30°C / 65% Rh
 
 
@@ -23234,7 +23234,7 @@
                                                     </tr><tr>
                                                         <td class="flex text-center">1.15.3</td>
                                                         <td>
-                                                        
+
                                                     	40°C / 75% Rh
 
 
@@ -23391,9 +23391,9 @@
                                     </div>
                                 </div>
 
-                               
 
-                             
+
+
                             </div>
                             <div class="col-md-12 mb-4">
                                 <div class="group-input">
@@ -23403,7 +23403,7 @@
                                         </textarea>
                                 </div>
                             </div>
-    
+
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="Audit Attachments"> Supporting Attachment </label>
@@ -23433,7 +23433,7 @@
                     <div id="CCForm24" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="sub-head">  
+                                <div class="sub-head">
                                 Checklist for Audit Assesment
                                 </div>
 
@@ -23478,8 +23478,8 @@
                                                         <td>Provide details of regulatory agencies from whom you have obtained Certificate / Registration / Approval. (Provide the certificate number and attach the copy of certificate) </td>
 
                                                         <td>
-                                                            
-                                                            
+
+
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="number"
@@ -23524,7 +23524,7 @@
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">1.4</td>
-                                                        <td>Is there an FDA Drug Master File? 
+                                                        <td>Is there an FDA Drug Master File?
                                                             And is it periodically updated?
                                                              </td>
                                                         <td>
@@ -23552,9 +23552,9 @@
                                                     <tr>
                                                         <td class="flex text-center">1.5</td>
                                                         <td>
-                                                            Is there an Site Master File? 
+                                                            Is there an Site Master File?
                                                             And is it periodically updated?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -23586,16 +23586,16 @@
                                                         </td>
                                                         <td>
 
-                                                             
+
                                                             </td>
-                                                               
+
                                                         <td style="vertical-align: middle;">
-                                                           
+
                                                         </td>
 
                                                         </td>
                                                     </tr>
-                                                               
+
                                                     <tr>
                                                         <td class="flex text-center">1.6.1</td>
                                                         <td>
@@ -23612,17 +23612,17 @@
                                                     placeholder="Enter  value here"
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
-                                                                    
-                                                                  
+
+
                                                                 </div>
-                                                                
+
 
                                                             </td>
-                                                               
 
-                                                                
-                                                              
-                                                              
+
+
+
+
 
                                                         <td style="vertical-align: middle;">
                                                             <div
@@ -23642,24 +23642,24 @@
                                                               <div
                                                                 style="display: flex;   margin: 5%; gap:5px">
                                                                 <div style="display: flex; flex-direction: column; width: 300px;">
-                                                                  
+
                                                                     <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                     placeholder="Enter  value here"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
-                                                                    
-                                                                   
+
+
                                                                 </div>
-                                                                
+
 
                                                             </td>
-                                                               
 
-                                                                
-                                                              
-                                                              
+
+
+
+
 
                                                         <td style="vertical-align: middle;">
                                                             <div
@@ -23679,8 +23679,8 @@
                                                               <div
                                                                 style="display: flex;   margin: 5%; gap:5px">
                                                                 <div style="display: flex; flex-direction: column; width: 300px;">
-                                                                   
-                                                                    
+
+
                                                                     <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
@@ -23688,14 +23688,14 @@
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                 </div>
-                                                                
+
 
                                                             </td>
-                                                               
 
-                                                                
-                                                              
-                                                              
+
+
+
+
 
                                                         <td style="vertical-align: middle;">
                                                             <div
@@ -23789,14 +23789,14 @@
                                                         <td class="flex text-center">1.10</td>
                                                         <td>
                                                             Do you make use of the service of sub-contractors?
-                                                            If yes, which firm and for which material? 
-                                                            
+                                                            If yes, which firm and for which material?
+
 
                                                         </td>
-                                                        
+
                                                         <td>
-                                                           
-                                                            
+
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -23812,19 +23812,19 @@
                                                     <tr>
                                                         <td class="flex text-center">1.10.1</td>
                                                         <td>
-                                                           a : 
-                                                            
+                                                           a :
+
 
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="text" placeholder="Enter value here"
                                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-        
+
                                                         </div>
-                                                            
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -23839,18 +23839,18 @@
                                                         <td class="flex text-center">1.10.2</td>
                                                         <td>
                                                             b :
-                                                            
+
 
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <div
                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                             <input type="text"placeholder="Enter value here"
                                                                 style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
-        
+
                                                         </div>
-                                                            
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -23865,10 +23865,10 @@
                                                         <td class="flex text-center">1.10.3</td>
                                                         <td>
                                                             c :
-                                                            
+
 
                                                         </td>
-                                                        
+
                                                         <td>
                                                             <div
                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
@@ -23876,7 +23876,7 @@
                                                         style="padding: 2px; width:80%; border: 1px solid black;  background-color: #f0f0f0;">
 
                                                 </div>
-                                                            
+
                                                         </td>
                                                         {{--    <td>
                                                             <textarea name="who_will_not_be"></textarea> --}} <td style="vertical-align: middle;">
@@ -24081,15 +24081,15 @@
                                                         <td class="flex text-center">2.4</td>
                                                         <td>
                                                             Does the Training Program in place have the following elements: <br>
-                                                                                                                        
+
                                                         </td>
-                                                      
+
                                                     </tr>
                                                     <tr>
                                                         <td class="flex text-center">2.4.1</td>
                                                         <td>
                                                             	Formal Introduction to Regulatory Guidance (GMP, ISO, etc.)<br>
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24113,10 +24113,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">2.4.2</td>
                                                         <td>
-                                                          
+
                                                             Training program for freshly recruited personnel?<br>
-                                                          
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24140,10 +24140,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">2.4.3</td>
                                                         <td>
-                                                            
+
                                                             Periodic refresher training programs for established employees?<br>
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24167,10 +24167,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">2.4.4</td>
                                                         <td>
-                                                            
+
                                                             At the start of new product manufacturing?<br>
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24194,10 +24194,10 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">2.4.5</td>
                                                         <td>
-                                                            
+
                                                             When new methods are used?<br>
-                                                            
-                                                            
+
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24221,9 +24221,9 @@
                                                     </tr>  <tr>
                                                         <td class="flex text-center">2.4.6</td>
                                                         <td>
-                                                            
+
                                                             Quality techniques for production people?
-                                                            
+
                                                         </td>
                                                         <td>
                                                             <div
@@ -24247,12 +24247,12 @@
                                                     </tr>
 
 
-                                                   
+
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
-                                </div>          
+                                </div>
                                 <div class="sub-head">
                                     Checklist for Facility and Utilities
                                     </div>
@@ -24274,7 +24274,7 @@
                                                             <td class="flex text-center">3.1</td>
                                                             <td>Were the premises designed or adapted for the present use?</td>
                                                             <td>
-    
+
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
@@ -24282,46 +24282,46 @@
                                                                         <option value="Yes">Select an Option</option>
                                                                         <option value="Yes">Designed</option>
                                                                         <option value="No">Adapted</option>
-                                                                       
+
                                                                     </select>
                                                                 </div>
-    
-    
+
+
                                                             </td>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">3.2</td>
                                                             <td>
-                                                                Are there separate areas for: 
-                                                                
-                                                                
+                                                                Are there separate areas for:
+
+
                                                             </td>
                                                             <td>
-                                                               
+
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
-                                                               
+
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">3.2.1</td>
                                                             <td>
-                                                                
+
                                                                 	Handling of starting materials?<br>
-                                                                
-                                                                
+
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24335,23 +24335,23 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.2</td>
                                                             <td>
-                                                                
+
                                                                 	Manufacturing?
-                                                                
-                                                                
+
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24365,23 +24365,23 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.3</td>
                                                             <td>
-                                                                
+
                                                                 	Quarantined finished products or are other control systems in place?<br>
-                                                                
-                                                                
+
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24395,23 +24395,23 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.4</td>
                                                             <td>
-                                                                
+
                                                                 	Approved finished products?<br>
-                                                                
-                                                                
+
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24425,23 +24425,23 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.5</td>
                                                             <td>
-                                                                
+
                                                                 	Packaging and dispatch?<br>
-                                                                
-                                                                
+
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24455,22 +24455,22 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.2.6</td>
                                                             <td>
-                                                                
+
                                                                 	Rest and eating?
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24484,40 +24484,40 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr>
-    
-    
+
+
                                                         <tr>
                                                             <td class="flex text-center">3.3</td>
                                                             <td>
                                                                 Does the present design prevent:
-                                                                
+
 
                                                                 </td>
                                                             <td>
-                                                               
+
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
-                                                               
+
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">3.3.1</td>
                                                             <td>
-                                                                
+
                                                                 	Chemical contamination?<br>
-                                                                
+
 
                                                                 </td>
                                                             <td>
@@ -24532,7 +24532,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24542,9 +24542,9 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.3.2</td>
                                                             <td>
-                                                                
+
                                                                 	Physical contamination?
-                                                                
+
 
                                                                 </td>
                                                             <td>
@@ -24559,7 +24559,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24569,7 +24569,7 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.3.3</td>
                                                             <td>
-                                                                
+
                                                                 	Microbial contamination?
 
                                                                 </td>
@@ -24585,7 +24585,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24597,24 +24597,24 @@
                                                         <tr>
                                                             <td class="flex text-center">3.4</td>
                                                             <td>
-                                                                Are your working-rooms: 
-                                                                
+                                                                Are your working-rooms:
+
                                                             </td>
                                                             <td>
-                                                              
+
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
-                                                                
+
                                                             </td>
                                                         </tr>
 
                                                         <tr>
                                                             <td class="flex text-center">3.4.1</td>
                                                             <td>
-                                                                
+
                                                                 	Of proper size for the intended functions? <br>
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24628,7 +24628,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24638,9 +24638,9 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.4.2</td>
                                                             <td>
-                                                                
+
                                                                 	Satisfactorily lighted, air-conditioned? <br>
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24654,7 +24654,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24665,7 +24665,7 @@
                                                             <td class="flex text-center">3.4.3</td>
                                                             <td>
                                                                	Clean and cleaned-up?<br>
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24679,7 +24679,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24689,9 +24689,9 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.4.4</td>
                                                             <td>
-                                                                
+
                                                                 	Designed to avoid cross-contamination?
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -24705,7 +24705,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24715,7 +24715,7 @@
                                                         </tr> <tr>
                                                             <td class="flex text-center">3.4.5</td>
                                                             <td>
-                                                                
+
                                                                 	Supplied with security and fire protection measurements?
                                                             </td>
                                                             <td>
@@ -24730,7 +24730,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24756,7 +24756,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24782,7 +24782,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24808,7 +24808,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24834,7 +24834,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24860,7 +24860,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24886,7 +24886,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24912,7 +24912,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24938,7 +24938,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24964,7 +24964,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -24990,7 +24990,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -25016,7 +25016,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -25042,7 +25042,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -25068,7 +25068,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -25094,7 +25094,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -25102,18 +25102,18 @@
                                                                 </div>
                                                             </td>
                                                         </tr>
-    
-    
-    
-    
-    
-    
-                                                       
+
+
+
+
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="sub-head">
                                         Checklist for Machines and Equipment
                                         </div>
@@ -25135,7 +25135,7 @@
                                                                 <td class="flex text-center">4.1</td>
                                                                 <td>Is the production line ? multipurpose or single purpose?</td>
                                                                 <td>
-        
+
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
@@ -25143,29 +25143,29 @@
                                                                             <option value="Yes">Select an Option</option>
                                                                             <option value="Yes">Multi</option>
                                                                             <option value="No">Single</option>
-                                                                          
+
                                                                         </select>
                                                                     </div>
-        
-        
+
+
                                                                 </td>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">4.2</td>
                                                                 <td>
                                                                     Is there a maintenance and preventative maintenance program for all pieces of equipment?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -25179,22 +25179,22 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">4.3</td>
                                                                 <td>
                                                                     Do you have written maintenance and calibration procedures for critical equipment?
-    
+
                                                                     </td>
                                                                 <td>
                                                                     <div
@@ -25208,7 +25208,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25216,7 +25216,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.4</td>
                                                                 <td>
@@ -25234,7 +25234,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25242,7 +25242,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.5</td>
                                                                 <td>
@@ -25260,7 +25260,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25268,7 +25268,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.6</td>
                                                                 <td>
@@ -25286,7 +25286,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25294,7 +25294,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.7</td>
                                                                 <td>
@@ -25312,7 +25312,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25320,7 +25320,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.8</td>
                                                                 <td>
@@ -25338,7 +25338,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25346,7 +25346,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.9</td>
                                                                 <td>
@@ -25364,7 +25364,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25372,7 +25372,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.10</td>
                                                                 <td>
@@ -25390,7 +25390,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25398,7 +25398,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.11</td>
                                                                 <td>
@@ -25416,7 +25416,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25424,7 +25424,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.12</td>
                                                                 <td>
@@ -25442,7 +25442,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25450,29 +25450,29 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.13</td>
                                                                 <td>
                                                                     If yes,
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
-                                                                   
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                    
+
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">4.13.1</td>
                                                                 <td>
-                                                                    
+
                                                                     	Is the software validated?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -25486,7 +25486,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25496,9 +25496,9 @@
                                                             </tr> <tr>
                                                                 <td class="flex text-center">4.13.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	Are modifications of software (or its use) implemented by manufacturing personnel?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -25512,7 +25512,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25522,10 +25522,10 @@
                                                             </tr> <tr>
                                                                 <td class="flex text-center">4.13.3</td>
                                                                 <td>
-                                                                    
+
                                                                     	Is there a procedure concerning change of software and its copying?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -25539,7 +25539,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25549,9 +25549,9 @@
                                                             </tr> <tr>
                                                                 <td class="flex text-center">4.13.4</td>
                                                                 <td>
-                                                                    
+
                                                                     	Is the security of software controlled?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -25565,7 +25565,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25573,28 +25573,28 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.14</td>
                                                                 <td>
                                                                     Do you contract out any of the following services
-                                                                    
+
 
                                                                 </td>
                                                                 <td>
-                                                                  
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                  
+
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">4.14.1</td>
                                                                 <td>
-                                                                    
+
                                                                     	Instrument Calibration?
-                                                                    
+
 
                                                                 </td>
                                                                 <td>
@@ -25609,7 +25609,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25619,7 +25619,7 @@
                                                             </tr> <tr>
                                                                 <td class="flex text-center">4.14.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	Preventative / Breakdown Maintenance?
 
                                                                 </td>
@@ -25635,7 +25635,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25643,7 +25643,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">4.15</td>
                                                                 <td>
@@ -25661,7 +25661,7 @@
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -25669,7 +25669,7 @@
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                          
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -25695,7 +25695,7 @@
                                                                     <td class="flex text-center">5.1</td>
                                                                     <td>Is the workflow organized in the manufacturing area?</td>
                                                                     <td>
-            
+
                                                                         <div
                                                                             style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                             <select name="response" id="response"
@@ -25706,26 +25706,26 @@
                                                                                 <option value="N/A">N/A</option>
                                                                             </select>
                                                                         </div>
-            
-            
+
+
                                                                     </td>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-            
-            
-            
+
+
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">5.2</td>
                                                                     <td>
                                                                         Is your manufacturing process validated?
-                                                                        
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -25739,22 +25739,22 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-            
-            
-            
+
+
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">5.3</td>
                                                                     <td>
                                                                         If not, do you have plans to do so?
-        
+
                                                                         </td>
                                                                     <td>
                                                                         <div
@@ -25768,7 +25768,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25776,7 +25776,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.4</td>
                                                                     <td>
@@ -25790,7 +25790,7 @@
 
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25798,7 +25798,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.5</td>
                                                                     <td>
@@ -25816,7 +25816,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25824,11 +25824,11 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.6</td>
                                                                     <td>
-                                                                        Do have procedure for general housekeeping and environmental control? 
+                                                                        Do have procedure for general housekeeping and environmental control?
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -25842,7 +25842,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25850,7 +25850,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.7</td>
                                                                     <td>
@@ -25864,7 +25864,7 @@
 
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25872,7 +25872,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.8</td>
                                                                     <td>
@@ -25890,7 +25890,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25898,7 +25898,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.9</td>
                                                                     <td>
@@ -25916,7 +25916,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25924,7 +25924,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.10</td>
                                                                     <td>
@@ -25942,7 +25942,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25950,7 +25950,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.11</td>
                                                                     <td>
@@ -25968,7 +25968,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -25976,28 +25976,28 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.12</td>
                                                                     <td>
-                                                                        If yes, do the batch records detail the following: 
-                                                                        
+                                                                        If yes, do the batch records detail the following:
+
 
                                                                     </td>
                                                                     <td>
-                                                                       
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
-                                                                       
+
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">5.12.1</td>
                                                                     <td>
-                                                                        
+
                                                                         	Description, Lot Number & Quantities of Material used?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26008,7 +26008,7 @@
 
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26018,9 +26018,9 @@
                                                                 </tr><tr>
                                                                     <td class="flex text-center">5.12.2</td>
                                                                     <td>
-                                                                        
+
                                                                         	Processing Conditions (Temperature, Time etc.)?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26031,7 +26031,7 @@
 
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26041,9 +26041,9 @@
                                                                 </tr><tr>
                                                                     <td class="flex text-center">5.12.3</td>
                                                                     <td>
-                                                                        
+
                                                                         	The identification of the Person who performed the particular step?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26054,7 +26054,7 @@
 
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26064,9 +26064,9 @@
                                                                 </tr><tr>
                                                                     <td class="flex text-center">5.12.4</td>
                                                                     <td>
-                                                                        
+
                                                                         	Results of any In-process tests?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26077,7 +26077,7 @@
                                                                         </div>
 
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26088,9 +26088,9 @@
                                                                 <tr>
                                                                     <td class="flex text-center">5.12.5</td>
                                                                     <td>
-                                                                        
+
                                                                         	All deviations from standard conditions?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26100,7 +26100,7 @@
                                                                          style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26108,13 +26108,13 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.12.6</td>
                                                                     <td>
-                                                                        
+
                                                                         All cleaning operations carried out before & after batch manufacture?
-                                                                        
+
 
                                                                     </td>
                                                                     <td>
@@ -26124,7 +26124,7 @@
                                                                          style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26146,7 +26146,7 @@
                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                 </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26154,7 +26154,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.14</td>
                                                                     <td>
@@ -26172,7 +26172,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26180,7 +26180,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.15</td>
                                                                     <td>
@@ -26198,7 +26198,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26206,7 +26206,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.16</td>
                                                                     <td>
@@ -26224,7 +26224,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26232,7 +26232,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.17</td>
                                                                     <td>
@@ -26250,7 +26250,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26258,7 +26258,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.18</td>
                                                                     <td>
@@ -26276,7 +26276,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26284,7 +26284,7 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-            
+
                                                                 <tr>
                                                                     <td class="flex text-center">5.18</td>
                                                                     <td>
@@ -26302,7 +26302,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26326,7 +26326,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26350,7 +26350,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26374,7 +26374,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26398,7 +26398,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26422,7 +26422,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26446,7 +26446,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26470,7 +26470,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26494,7 +26494,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26518,7 +26518,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26542,7 +26542,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26566,7 +26566,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26590,7 +26590,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26614,7 +26614,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26638,7 +26638,7 @@
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -26646,12 +26646,12 @@
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-            
+
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
                                             <div class="sub-head">
                                     Checklist for Materials Control
                                     </div>
@@ -26673,7 +26673,7 @@
                                                             <td class="flex text-center">6.1</td>
                                                             <td>Do you have an approved supplier list?</td>
                                                             <td>
-    
+
                                                                 <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <select name="response" id="response"
@@ -26684,26 +26684,26 @@
                                                                         <option value="N/A">N/A</option>
                                                                     </select>
                                                                 </div>
-    
-    
+
+
                                                             </td>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">6.2</td>
                                                             <td>
                                                                 Do you have agreements in place with all your suppliers that require them to notify you of any change in raw material or the manufacturing process of the product supplied?
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -26717,16 +26717,16 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
-    
-    
+
+
+
                                                         </tr>
                                                         <tr>
                                                             <td class="flex text-center">6.3</td>
@@ -26746,7 +26746,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26768,7 +26768,7 @@
 
                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26794,7 +26794,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26820,7 +26820,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26846,7 +26846,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26872,7 +26872,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26898,7 +26898,7 @@
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26910,7 +26910,7 @@
                                                         <tr>
                                                             <td class="flex text-center">6.10</td>
                                                             <td>
-                                                                Are starting materials visibly controlled and marked with 
+                                                                Are starting materials visibly controlled and marked with
 Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                             </td>
@@ -26926,7 +26926,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26935,27 +26935,27 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                         </tr>
 
-                                                        
+
 
                                                         <tr>
                                                             <td class="flex text-center">6.11</td>
                                                             <td>
-                                                                Do you maintain information records for raw materials which include the following: 
+                                                                Do you maintain information records for raw materials which include the following:
 
                                                             </td>
                                                             <td>
-                                                              
+
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
-                                                               
+
                                                             </td>
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.1</td>
                                                             <td>
-                                                              
+
                                                               	Your lot Identity?<br>
-                                                              
+
 
                                                             </td>
                                                             <td>
@@ -26966,7 +26966,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26976,9 +26976,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.2</td>
                                                             <td>
-                                                                
+
                                                                   	Suppliers Lot No?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -26989,7 +26989,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -26999,9 +26999,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.3</td>
                                                             <td>
-                                                                
+
                                                                 	Date of Receipt?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27009,10 +27009,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <input type="date"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-            
+
                                                             </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27022,9 +27022,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.4</td>
                                                             <td>
-                                                                
+
                                                                     	Quantity?
-                                                                    
+
 
                                                             </td>
                                                             <td>
@@ -27035,7 +27035,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27045,9 +27045,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.5</td>
                                                             <td>
-                                                                
+
                                                                 	Suppliers name?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27058,7 +27058,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27068,9 +27068,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.6</td>
                                                             <td>
-                                                                
+
                                                                 	Shelf Life?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27078,10 +27078,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <input type="text"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-            
+
                                                             </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27091,9 +27091,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.7</td>
                                                             <td>
-                                                                
+
                                                                 	Test Results?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27101,10 +27101,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <input type="text"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-            
+
                                                             </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27114,9 +27114,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         </tr> <tr>
                                                             <td class="flex text-center">6.11.8</td>
                                                             <td>
-                                                                
+
                                                                 	Specification?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27124,23 +27124,23 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <input type="text"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-            
+
                                                             </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-                                                        </tr> 
+                                                        </tr>
                                                         <tr>
                                                             <td class="flex text-center">6.11.9</td>
                                                             <td>
-                                                                
+
                                                                 	Accepted/Rejected?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27155,7 +27155,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27167,9 +27167,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                         <tr>
                                                             <td class="flex text-center">6.11.10</td>
                                                             <td>
-                                                                
+
                                                                 	Retained Sample ?
-                                                                
+
 
                                                             </td>
                                                             <td>
@@ -27184,7 +27184,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27209,7 +27209,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27235,7 +27235,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27261,7 +27261,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27287,7 +27287,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27313,7 +27313,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27339,7 +27339,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27365,7 +27365,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27390,7 +27390,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27414,7 +27414,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -27438,14 +27438,14 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-                                                        </tr>                                                   
+                                                        </tr>
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -27471,7 +27471,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 <td class="flex text-center">7.1</td>
                                                                 <td>Is Quality Control (QC) independent of Production?</td>
                                                                 <td>
-        
+
                                                                     <div
                                                                         style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                         <select name="response" id="response"
@@ -27482,26 +27482,26 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             <option value="N/A">N/A</option>
                                                                         </select>
                                                                     </div>
-        
-        
+
+
                                                                 </td>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">7.2</td>
                                                                 <td>
                                                                     Are records kept of all samples that are submitted to the laboratories?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -27515,22 +27515,22 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
-        
-        
+
+
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">7.3</td>
                                                                 <td>
                                                                     Are there formal written procedures for all performed tests?
-    
+
                                                                     </td>
                                                                 <td>
                                                                     <div
@@ -27544,7 +27544,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27552,7 +27552,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.4</td>
                                                                 <td>
@@ -27570,7 +27570,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27578,7 +27578,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.5</td>
                                                                 <td>
@@ -27596,7 +27596,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27604,7 +27604,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.6</td>
                                                                 <td>
@@ -27622,7 +27622,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27630,7 +27630,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.7</td>
                                                                 <td>
@@ -27648,7 +27648,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27656,7 +27656,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.8</td>
                                                                 <td>
@@ -27674,7 +27674,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27682,7 +27682,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.9</td>
                                                                 <td>
@@ -27700,7 +27700,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27708,7 +27708,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.10</td>
                                                                 <td>
@@ -27726,7 +27726,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27734,31 +27734,31 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
-                                                           
-    
+
+
+
                                                             <tr>
                                                                 <td class="flex text-center">7.11</td>
                                                                 <td>
-                                                                    Are quality standards or written control procedures available for: 
-                                                                   
-                                                                    
+                                                                    Are quality standards or written control procedures available for:
+
+
                                                                 </td>
                                                                 <td>
-                                                                  
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                   
+
                                                                 </td>
-                                                            </tr> 
+                                                            </tr>
                                                              <tr>
                                                                 <td class="flex text-center">7.11.1</td>
                                                                 <td>
-                                                                    
+
                                                                     	Starting materials?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -27772,7 +27772,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27782,10 +27782,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr>  <tr>
                                                                 <td class="flex text-center">7.11.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	In-process control?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -27799,7 +27799,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27809,9 +27809,9 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr>  <tr>
                                                                 <td class="flex text-center">7.11.3</td>
                                                                 <td>
-                                                                    
+
                                                                     	Physical identification at all stages (e.g. labeling of semi-finished products)?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -27825,35 +27825,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
-                                                                <td style="vertical-align: middle;">
-                                                                    <div
-                                                                        style="margin: auto; display: flex; justify-content: center;">
-                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>  
-                                                            <tr>
-                                                                <td class="flex text-center">7.11.4</td>
-                                                                <td>
-                                                                    
-                                                                    	Finished products?
-                                                                    
-                                                                    
-                                                                </td>
-                                                                <td>
-                                                                    <div
-                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
-                                                                        <select name="response" id="response"
-                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                                                                            <option value="Yes">Select an Option</option>
-                                                                            <option value="Yes">Yes</option>
-                                                                            <option value="No">No</option>
-                                                                            <option value="N/A">N/A</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27861,14 +27833,13 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
- 
                                                             <tr>
-                                                                <td class="flex text-center">7.11.5</td>
+                                                                <td class="flex text-center">7.11.4</td>
                                                                 <td>
-                                                                    
-                                                                    Microbiological control?
-                                                                    
-                                                                    
+
+                                                                    	Finished products?
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -27882,7 +27853,36 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
+                                                                <td style="vertical-align: middle;">
+                                                                    <div
+                                                                        style="margin: auto; display: flex; justify-content: center;">
+                                                                        <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+
+                                                            <tr>
+                                                                <td class="flex text-center">7.11.5</td>
+                                                                <td>
+
+                                                                    Microbiological control?
+
+
+                                                                </td>
+                                                                <td>
+                                                                    <div
+                                                                        style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
+                                                                        <select name="response" id="response"
+                                                                            style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
+                                                                            <option value="Yes">Select an Option</option>
+                                                                            <option value="Yes">Yes</option>
+                                                                            <option value="No">No</option>
+                                                                            <option value="N/A">N/A</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27908,7 +27908,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27916,7 +27916,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.13</td>
                                                                 <td>
@@ -27934,7 +27934,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27942,7 +27942,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.14</td>
                                                                 <td>
@@ -27960,7 +27960,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -27968,30 +27968,30 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
-                                                          
+
+
 
                                                             <tr>
                                                                 <td class="flex text-center">7.15</td>
                                                                 <td>
-                                                                    If yes: 
-                                                                   
-                                                                    
+                                                                    If yes:
+
+
                                                                 </td>
                                                                 <td>
-                                                                   
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                   
+
                                                                 </td>
                                                             </tr><tr>
                                                                 <td class="flex text-center">7.15.1</td>
                                                                 <td>
-                                                                    
+
                                                                     	Do you have a calibration scheme?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28005,7 +28005,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28015,10 +28015,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr><tr>
                                                                 <td class="flex text-center">7.15.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	Do you have calibration instructions?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28032,7 +28032,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28043,10 +28043,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <tr>
                                                                 <td class="flex text-center">7.15.3</td>
                                                                 <td>
-                                                                    
+
                                                                     	Do you keep all records of calibration performances?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28060,7 +28060,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28071,10 +28071,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <tr>
                                                                 <td class="flex text-center">7.15.4</td>
                                                                 <td>
-                                                                    
+
                                                                     Does any laboratory equipment have software control?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28088,7 +28088,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28096,7 +28096,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.16</td>
                                                                 <td>
@@ -28114,7 +28114,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28122,7 +28122,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.17</td>
                                                                 <td>
@@ -28140,7 +28140,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28148,7 +28148,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">7.18</td>
                                                                 <td>
@@ -28166,7 +28166,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28187,7 +28187,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;" >
                                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28211,7 +28211,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28235,7 +28235,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28259,7 +28259,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28283,7 +28283,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28307,7 +28307,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28315,12 +28315,12 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-               
+
                                                         </tbody>
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                         <div class="sub-head">
                                     Checklist for Quality Assurance
                                     </div>
@@ -28342,7 +28342,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <td class="flex text-center">8.1</td>
                                                             <td>
                                                                 Is there an independent Quality Assurance (QA) department within the company?
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -28356,21 +28356,21 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
-    
+
                                                         <tr>
                                                             <td class="flex text-center">8.2</td>
                                                             <td>
                                                                 Do you have procedures covering the release or rejection of material?
-                                                                
+
                                                             </td>
                                                             <td>
                                                                 <div
@@ -28384,17 +28384,17 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
                                                                     <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                 </div>
                                                             </td>
-    
+
                                                         </tr>
-    
-    
+
+
                                                         <tr>
                                                             <td class="flex text-center">8.3</td>
                                                             <td>
@@ -28406,10 +28406,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                 style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                 <input type="text"
                                                                     style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-            
+
                                                             </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28435,7 +28435,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28461,7 +28461,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28487,7 +28487,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28513,7 +28513,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28539,7 +28539,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28565,7 +28565,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28591,7 +28591,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28617,7 +28617,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28643,7 +28643,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28669,7 +28669,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28695,7 +28695,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28721,7 +28721,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28747,7 +28747,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </select>
                                                                 </div>
                                                             </td>
-    
+
                                                             <td style="vertical-align: middle;">
                                                                 <div
                                                                     style="margin: auto; display: flex; justify-content: center;">
@@ -28756,8 +28756,8 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </td>
                                                         </tr>
 
-                                                       
-                                                        
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -28783,29 +28783,29 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <tr>
                                                                 <td class="flex text-center">9.1</td>
                                                                 <td>
-                                                                    Are written procedures and specifications are available for 
-                                                                    
-                                                                    
-                                                                    
+                                                                    Are written procedures and specifications are available for
+
+
+
                                                                 </td>
                                                                 <td>
-                                                                   
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                   
+
                                                                 </td>
-        
+
                                                             </tr>
-        
+
                                                             <tr>
                                                                 <td class="flex text-center">9.1.1</td>
                                                                 <td>
-                                                                    
-                                                                    	Packaging components 
-                                                                    
-                                                                    
-                                                                    
+
+                                                                    	Packaging components
+
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28819,22 +28819,22 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.1.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	Packing operation
-                                                                    
-                                                                    
-                                                                    
+
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28848,24 +28848,24 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
 
                                                             <tr>
                                                                 <td class="flex text-center">9.1.3</td>
                                                                 <td>
-                                                                    
+
                                                                     Labels and labeling
-                                                                    
-                                                                    
-                                                                    
+
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28879,20 +28879,20 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">9.2</td>
                                                                 <td>
                                                                     Will each bag/container on a pallet have the lot/batch no. and/or description clearly visible on it?
-                                                                    
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -28906,22 +28906,22 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
                                                                         <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                     </div>
                                                                 </td>
-        
+
                                                             </tr>
-        
-        
+
+
                                                             <tr>
                                                                 <td class="flex text-center">9.3</td>
                                                                 <td>
                                                                     Do you use your own transport for shipping to customers or do you use a contractor?
-    
+
                                                                     </td>
                                                                 <td>
                                                                     <div
@@ -28931,11 +28931,11 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             <option value="Yes">Select an Option</option>
                                                                             <option value="Yes">Supplier-Contractor</option>
                                                                             <option value="No">Owned</option>
-                                                                            
+
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28943,7 +28943,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.4</td>
                                                                 <td>
@@ -28961,7 +28961,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -28969,7 +28969,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.5</td>
                                                                 <td>
@@ -28977,19 +28977,19 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                                 </td>
                                                                 <td>
-                                                                   
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                    
+
                                                                 </td>
                                                             </tr>
                                                             <tr>
                                                                 <td class="flex text-center">9.5.1</td>
                                                                 <td>
-                                                                    
-                                                                    Packaging operation? 
-                                                                    
+
+                                                                    Packaging operation?
+
 
                                                                 </td>
                                                                 <td>
@@ -29004,7 +29004,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29014,7 +29014,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.5.2</td>
                                                                 <td>
-                                                                    
+
                                                                     Labels and labeling?
 
                                                                 </td>
@@ -29030,7 +29030,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29038,7 +29038,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.6</td>
                                                                 <td>
@@ -29056,7 +29056,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29064,7 +29064,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.7</td>
                                                                 <td>
@@ -29082,7 +29082,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29090,7 +29090,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.8</td>
                                                                 <td>
@@ -29108,7 +29108,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29116,30 +29116,30 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
-                                                           
+
+
 
                                                             <tr>
                                                                 <td class="flex text-center">9.9</td>
                                                                 <td>
-                                                                    Does your labeling indicate: 
-                                                                    
+                                                                    Does your labeling indicate:
+
                                                                 </td>
                                                                 <td>
-                                                                  
+
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
-                                                                   
+
                                                                 </td>
-                                                            </tr> 
+                                                            </tr>
                                                             <tr>
                                                                 <td class="flex text-center">9.9.1</td>
                                                                 <td>
-                                                                    
+
                                                                     	Material Name with Pharmacopoeial grade?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -29153,7 +29153,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29163,10 +29163,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.9.2</td>
                                                                 <td>
-                                                                    
+
                                                                     	Batch Number?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -29176,7 +29176,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29186,10 +29186,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.9.3</td>
                                                                 <td>
-                                                                    
+
                                                                     	Site of manufacturing?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -29203,7 +29203,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </select>
                                                                     </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29213,19 +29213,19 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.9.4</td>
                                                                 <td>
-                                                                    
+
                                                                     	Batch Number?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td> <div
                                                                     style="display: flex; justify-content: space-around; align-items: center;  margin: 5%; gap:5px">
                                                                     <input type="number"
                                                                         style="padding: 2px; width:90%; border: 1px solid black;  background-color: #f0f0f0;">
-                
+
                                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29235,10 +29235,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             </tr> <tr>
                                                                 <td class="flex text-center">9.9.5</td>
                                                                 <td>
-                                                                    
+
                                                                     	Expiry / retest date?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -29248,7 +29248,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29259,10 +29259,10 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                             <tr>
                                                                 <td class="flex text-center">9.9.6</td>
                                                                 <td>
-                                                                    
+
                                                                     	Quantity ?
-                                                                    
-                                                                    
+
+
                                                                 </td>
                                                                 <td>
                                                                     <div
@@ -29272,7 +29272,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29280,7 +29280,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                             <tr>
                                                                 <td class="flex text-center">9.10</td>
                                                                 <td>
@@ -29294,7 +29294,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
 
                                                 </div>
                                                                 </td>
-        
+
                                                                 <td style="vertical-align: middle;">
                                                                     <div
                                                                         style="margin: auto; display: flex; justify-content: center;">
@@ -29302,7 +29302,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     </div>
                                                                 </td>
                                                             </tr>
-    
+
                                                         </tbody>
                                                     </table>
                                                 </div>
@@ -29329,8 +29329,8 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                     <td class="flex text-center">10.1</td>
                                                                     <td>
                                                                         Do you have an operational management system(s) for Safety, Health and Environment (SHE)?
-                                                                        
-                                                                        
+
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -29344,40 +29344,40 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-            
+
                                                                 </tr>
-            
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.2</td>
                                                                     <td>
                                                                         If so, are these systems <br>
-                                                                        
-                                                                        
-                                                                        
+
+
+
                                                                     </td>
                                                                     <td>
-                                                                       
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
-                                                                       
+
                                                                     </td>
-            
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.2.1</td>
                                                                     <td>
-                                                                        
+
                                                                         	based on an international standard (ISO 9001/14001/18001)?
-                                                                        
-                                                                        
+
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -29391,22 +29391,22 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-            
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.2.2</td>
                                                                     <td>
-                                                                        
+
                                                                         certified by a accredited third party auditing body?
-                                                                        
-                                                                        
+
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -29420,47 +29420,47 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-            
+
                                                                 </tr>
-            
-            
-            
+
+
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.3</td>
-                                                                    
+
                                                                     <td>
-                                                                        Are the following subjects regulated by law and/or specific standards: 
+                                                                        Are the following subjects regulated by law and/or specific standards:
                                                                     </td>
 
-        
+
 
                                                                         <td>
-                                                                           
-                                                                            
+
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
-                                                                        
+
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.1</td>
-                                                                    
+
                                                                     <td>
-                                                                        
+
                                                                         	discharge of waste water
-                                                                        
+
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29470,31 +29470,31 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.2</td>
-                                                                    
+
                                                                     <td>
-                                                                        
+
                                                                         	emissions to air
-                                                                        
+
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29504,31 +29504,31 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.3</td>
-                                                                    
+
                                                                     <td>
-                                                                        
+
                                                                         	disposal of hazardous waste
-                                                                        
+
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29538,32 +29538,32 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.4</td>
-                                                                    
+
                                                                     <td>
-                                                                        
-                                                                        	protection against/remediation of 
+
+                                                                        	protection against/remediation of
                                                                             soil pollution
-                                                                        
+
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29573,31 +29573,31 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.5</td>
-                                                                    
+
                                                                     <td>
-                                                                        
+
                                                                         	risk control and reduction
-                                                                        
+
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29607,30 +29607,30 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
+
                                                                 </tr>
                                                                 <tr>
                                                                     <td class="flex text-center">10.3.6</td>
-                                                                    
+
                                                                     <td>
-                                                                        
+
                                                                         	nuisance by noise/odour
                                                                     </td>
 
-        
+
 
                                                                         <td>
                                                                             <div style="display: flex; justify-content: space-around; align-items: center; margin: 5%; gap: 5px; flex-direction: column;">
@@ -29640,24 +29640,24 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                                     <option value="No">No</option>
                                                                                     <option value="N/A">N/A</option>
                                                                                 </select>
-                                                                               
-                                                                               
-                                                                               
+
+
+
                                                                             </div>
-                                                                            
+
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
                                                                             <textarea name="what_will_not_be" style="border-radius: 7px; border: 1.5px solid black;"></textarea>
                                                                         </div>
                                                                     </td>
-                                                                    
-                                                                </tr>
-        
 
-        
+                                                                </tr>
+
+
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.4</td>
                                                                     <td>
@@ -29675,7 +29675,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29683,12 +29683,12 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.5</td>
                                                                     <td>
                                                                         Does your site operate its own wastewater treatment installation?
-    
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -29702,7 +29702,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29710,7 +29710,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.6</td>
                                                                     <td>
@@ -29728,7 +29728,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29736,7 +29736,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.7</td>
                                                                     <td>
@@ -29754,7 +29754,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29762,7 +29762,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.8</td>
                                                                     <td>
@@ -29780,7 +29780,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29788,12 +29788,12 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.9</td>
                                                                     <td>
                                                                         Are extinguisher locations conspicuously marked?
-                                                                        
+
                                                                     </td>
                                                                     <td>
                                                                         <div
@@ -29807,7 +29807,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29815,7 +29815,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                                 <tr>
                                                                     <td class="flex text-center">10.10</td>
                                                                     <td>
@@ -29833,7 +29833,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29858,7 +29858,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                             </select>
                                                                         </div>
                                                                     </td>
-            
+
                                                                     <td style="vertical-align: middle;">
                                                                         <div
                                                                             style="margin: auto; display: flex; justify-content: center;">
@@ -29866,7 +29866,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                                                                         </div>
                                                                     </td>
                                                                 </tr>
-        
+
                                                             </tbody>
                                                         </table>
                                                     </div>
@@ -29907,7 +29907,7 @@ Quarantine/Under test / Sampled / Approved / Rejected / Recalled
                             </div>
                         </div>
                     </div>
-                    
+
 
 
                     <!-- Activity Log content -->

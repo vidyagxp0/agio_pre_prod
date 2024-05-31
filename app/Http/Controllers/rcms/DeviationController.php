@@ -141,7 +141,7 @@ class DeviationController extends Controller
         $deviation->Disposition_Batch = $request->Disposition_Batch;
         $deviation->Facility_Equipment = $request->Facility_Equipment;
         $deviation->Document_Details_Required = $request->Document_Details_Required;
-      
+
         if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
             $list = Helpers::getHeadoperationsUserList();
                     foreach ($list as $u) {
@@ -1030,14 +1030,14 @@ class DeviationController extends Controller
         }
         if ($request->Immediate_Action[0] !== null){
             $history = new DeviationAuditTrail();
-        $history->deviation_id = $deviation->id;
-        $history->activity_type = 'Immediate Action (if any)';
-        $history->previous = "Null";
-        $history->current = $deviation->Immediate_Action;
-        $history->comment = "Not Applicable";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->change_to =   "Opened";
+            $history->deviation_id = $deviation->id;
+            $history->activity_type = 'Immediate Action (if any)';
+            $history->previous = "Null";
+            $history->current = $deviation->Immediate_Action;
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->change_to =   "Opened";
             $history->change_from = "Initiator";
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $deviation->status;
@@ -1105,7 +1105,7 @@ class DeviationController extends Controller
     public function update(Request $request, $id)
     {
         $form_progress = null;
-        
+
         $lastDeviation = deviation::find($id);
         $deviation = deviation::find($id);
         $deviation->Delay_Justification = $request->Delay_Justification;
@@ -2072,7 +2072,7 @@ class DeviationController extends Controller
             $newDataGridFishbone->identifier = 'fishbone';
             $newDataGridFishbone->data = $request->fishbone;
             $newDataGridFishbone->save();
-            
+
         }
 
 
@@ -2136,7 +2136,7 @@ class DeviationController extends Controller
             $history->origin_state = $lastDeviation->status;
             $history->change_to =   "Not Applicable";
             $history->change_from = $lastDeviation->status;
-            $history->action_name = "Uppdate";
+            $history->action_name = "Update";
             $history->save();
         }
         if ($lastDeviation->Initiator_Group != $deviation->Initiator_Group || !empty ($request->comment)) {
@@ -2876,7 +2876,6 @@ class DeviationController extends Controller
             $parent_name = "CAPA";
             $effectivenesschild = Deviation::find($id);
             $effectivenesschild->effectivenesschild = $record_number;
-
             $effectivenesschild->save();
         return view('frontend.forms.effectiveness-check', compact('old_record','parent_short_description','parent_record', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id',  'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
@@ -2902,12 +2901,9 @@ class DeviationController extends Controller
     {
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
-            // return $request;
             $deviation = Deviation::find($id);
             $lastDocument = Deviation::find($id);
             $list = Helpers::getInitiatorUserList();
-
-
             if ($deviation->stage == 2) {
 
                 $deviation->stage = "1";
@@ -3523,40 +3519,40 @@ class DeviationController extends Controller
     }
 
     public function deviation_send_stage(Request $request, $id)
-    { 
+    {
         try {
             if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
                 $deviation = Deviation::find($id);
                 $updateCFT = DeviationCft::where('deviation_id', $id)->latest()->first();
                 $lastDocument = Deviation::find($id);
                 $cftDetails = DeviationCftsResponse::withoutTrashed()->where(['status' => 'In-progress', 'deviation_id' => $id])->distinct('cft_user_id')->count();
-    
+
                 if ($deviation->stage == 1) {
                     if ($deviation->form_progress !== 'general-open')
                     {
-                        dd('emnter');
+                        // dd('emnter');
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'General Information Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
-                        
+
                         Session::flash('swal', [
                             'type' => 'success',
                             'title' => 'Success',
                             'message' => 'Sent for HOD review state'
                         ]);
                     }
-                    
+
                     $deviation->stage = "2";
                     $deviation->status = "HOD Review";
                     $deviation->submit_by = Auth::user()->name;
                     $deviation->submit_on = Carbon::now()->format('d-M-Y');
                     $deviation->submit_comment = $request->comment;
-                    
+
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -3572,14 +3568,14 @@ class DeviationController extends Controller
                     $history->change_from = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-    
-    
+
+
                     // $list = Helpers::getHodUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             try {
                     //                 Mail::send(
                     //                     'mail.view-mail',
@@ -3595,13 +3591,13 @@ class DeviationController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     // $list = Helpers::getHeadoperationsUserList();
                     // foreach ($list as $u) {
                     //     if ($u->q_m_s_divisions_id == $deviation->division_id) {
                     //         $email = Helpers::getInitiatorEmail($u->user_id);
                     //         if ($email !== null) {
-    
+
                     //             Mail::send(
                     //                 'mail.Categorymail',
                     //                 ['data' => $deviation],
@@ -3618,16 +3614,16 @@ class DeviationController extends Controller
                     return back();
                 }
                 if ($deviation->stage == 2) {
-    
+
                     // Check HOD remark value
                     if (!$deviation->HOD_Remarks) {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields Required!',
                             'message' => 'HOD Remarks is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3636,7 +3632,7 @@ class DeviationController extends Controller
                             'message' => 'Sent for QA initial review state'
                         ]);
                     }
-    
+
                     $deviation->stage = "3";
                     $deviation->status = "QA Initial Review";
                     $deviation->HOD_Review_Complete_By = Auth::user()->name;
@@ -3678,8 +3674,8 @@ class DeviationController extends Controller
                     //         }
                     //     }
                     // }
-    
-    
+
+
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
@@ -3692,7 +3688,7 @@ class DeviationController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'QA initial review / CFT Mandatory Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3701,10 +3697,10 @@ class DeviationController extends Controller
                             'message' => 'Sent for CFT review state'
                         ]);
                     }
-    
+
                     $deviation->stage = "4";
                     $deviation->status = "CFT Review";
-    
+
                     // Code for the CFT required
                     $stage = new DeviationCftsResponse();
                     $stage->deviation_id = $id;
@@ -3714,7 +3710,7 @@ class DeviationController extends Controller
                     $stage->comment = $request->comment;
                     $stage->is_required = 1;
                     $stage->save();
-    
+
                     $deviation->QA_Initial_Review_Complete_By = Auth::user()->name;
                     $deviation->QA_Initial_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $deviation->QA_Initial_Review_Comments = $request->comment;
@@ -3753,7 +3749,7 @@ class DeviationController extends Controller
                     //         }
                     //     }
                     // }
-    
+
                     if ($request->Deviation_category == 'major' || $request->Deviation_category == 'minor' || $request->Deviation_category == 'critical') {
                         $list = Helpers::getHeadoperationsUserList();
                                 // foreach ($list as $u) {
@@ -3771,7 +3767,7 @@ class DeviationController extends Controller
                                 //                     );
                                 //                 } catch (\Exception $e) {
                                 //                 }
-    
+
                                 //         }
                                 //     }
                                 // }
@@ -3795,7 +3791,7 @@ class DeviationController extends Controller
                                         //                 } catch (\Exception $e) {
                                         //                     //log error
                                         //                 }
-    
+
                                         //         }
                                         //     }
                                         // }
@@ -3819,18 +3815,18 @@ class DeviationController extends Controller
                                                 //                 } catch (\Exception $e) {
                                                 //                     //log error
                                                 //                 }
-    
+
                                                 //         }
                                                 //     }
                                                 // }
                                             }
-    
+
                     $deviation->update();
                     toastr()->success('Document Sent');
                     return back();
                 }
                 if ($deviation->stage == 4) {
-    
+
                     // CFT review state update form_progress
                     if ($deviation->form_progress !== 'cft')
                     {
@@ -3839,7 +3835,7 @@ class DeviationController extends Controller
                             'title' => 'Mandatory Fields!',
                             'message' => 'CFT Tab is yet to be filled'
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -3848,17 +3844,17 @@ class DeviationController extends Controller
                             'message' => 'Sent for Investigation and CAPA review state'
                         ]);
                     }
-    
-    
+
+
                     $IsCFTRequired = DeviationCftsResponse::withoutTrashed()->where(['is_required' => 1, 'deviation_id' => $id])->latest()->first();
                     $cftUsers = DB::table('deviationcfts')->where(['deviation_id' => $id])->first();
                     // Define the column names
                     $columns = ['Production_person', 'Warehouse_notification', 'Quality_Control_Person', 'QualityAssurance_person', 'Engineering_person', 'Analytical_Development_person', 'Kilo_Lab_person', 'Technology_transfer_person', 'Environment_Health_Safety_person', 'Human_Resource_person', 'Information_Technology_person', 'Project_management_person','Other1_person','Other2_person','Other3_person','Other4_person','Other5_person'];
                     // $columns2 = ['Production_review', 'Warehouse_review', 'Quality_Control_review', 'QualityAssurance_review', 'Engineering_review', 'Analytical_Development_review', 'Kilo_Lab_review', 'Technology_transfer_review', 'Environment_Health_Safety_review', 'Human_Resource_review', 'Information_Technology_review', 'Project_management_review'];
-    
+
                     // Initialize an array to store the values
                     $valuesArray = [];
-    
+
                     // Iterate over the columns and retrieve the values
                     foreach ($columns as $index => $column) {
                         $value = $cftUsers->$column;
@@ -3931,7 +3927,7 @@ class DeviationController extends Controller
                             $updateCFT->Other5_on = Carbon::now()->format('Y-m-d');
                         }
                         $updateCFT->update();
-    
+
                         // Check if the value is not null and not equal to 0
                         if ($value != null && $value != 0) {
                             $valuesArray[] = $value;
@@ -3957,19 +3953,19 @@ class DeviationController extends Controller
                             $stage->save();
                         }
                     }
-    
+
                     $checkCFTCount = DeviationCftsResponse::withoutTrashed()->where(['status' => 'Completed', 'deviation_id' => $id])->count();
                     // dd(count(array_unique($valuesArray)), $checkCFTCount);
-    
-    
+
+
                     if (!$IsCFTRequired || $checkCFTCount) {
-    
+
                         $deviation->stage = "5";
                         $deviation->status = "QA Final Review";
                         $deviation->CFT_Review_Complete_By = Auth::user()->name;
                         $deviation->CFT_Review_Complete_On = Carbon::now()->format('d-M-Y');
                         $deviation->CFT_Review_Comments = $request->comment;
-    
+
                         $history = new DeviationAuditTrail();
                         $history->deviation_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -4010,9 +4006,9 @@ class DeviationController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
+
                 if ($deviation->stage == 5) {
-    
+
                     if ($deviation->form_progress === 'capa' && !empty($deviation->QA_Feedbacks))
                     {
                         Session::flash('swal', [
@@ -4020,24 +4016,24 @@ class DeviationController extends Controller
                             'title' => 'Success',
                             'message' => 'Sent for QA Head/Manager Designee Approval'
                         ]);
-    
+
                     } else {
                         Session::flash('swal', [
                             'type' => 'warning',
                             'title' => 'Mandatory Fields!',
                             'message' => 'Investigation and CAPA / QA Final review Tab is yet to be filled!'
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
-    
+
+
                     $deviation->stage = "6";
                     $deviation->status = "QA Head/Manager Designee Approval";
                     $deviation->QA_Final_Review_Complete_By = Auth::user()->name;
                     $deviation->QA_Final_Review_Complete_On = Carbon::now()->format('d-M-Y');
                     $deviation->QA_Final_Review_Comments = $request->comment;
-    
+
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4078,16 +4074,16 @@ class DeviationController extends Controller
                     return back();
                 }
                 if ($deviation->stage == 6) {
-    
+
                     if ($deviation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4096,39 +4092,39 @@ class DeviationController extends Controller
                             'message' => 'Deviation sent to Intiator Update'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $deviation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $deviation->stage = "7";
                     $deviation->status = "Pending Initiator Update";
                     $deviation->QA_head_approved_by = Auth::user()->name;
                     $deviation->QA_head_approved_on = Carbon::now()->format('d-M-Y');
                     $deviation->QA_head_approved_comment	 = $request->comment;
-    
+
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4169,16 +4165,16 @@ class DeviationController extends Controller
                     return back();
                 }
                 if ($deviation->stage == 7) {
-    
+
                     if ($deviation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4187,39 +4183,39 @@ class DeviationController extends Controller
                             'message' => 'Deviation sent to QA Final Approval.'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $deviation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $deviation->stage = "8";
                     $deviation->status = "QA Final Approval";
                     $deviation->pending_initiator_approved_by = Auth::user()->name;
                     $deviation->pending_initiator_approved_on = Carbon::now()->format('d-M-Y');
                     $deviation->pending_initiator_approved_comment = $request->comment;
-    
+
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4259,19 +4255,19 @@ class DeviationController extends Controller
                     toastr()->success('Document Sent');
                     return back();
                 }
-    
-    
+
+
                 if ($deviation->stage == 8) {
-    
+
                     if ($deviation->form_progress !== 'qah')
                     {
-    
+
                         Session::flash('swal', [
                             'title' => 'Mandatory Fields!',
                             'message' => 'QAH/Designee Approval Tab is yet to be filled!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     } else {
                         Session::flash('swal', [
@@ -4280,39 +4276,39 @@ class DeviationController extends Controller
                             'message' => 'Deviation sent to Closed/Done state'
                         ]);
                     }
-    
+
                     $extension = Extension::where('parent_id', $deviation->id)->first();
-    
+
                     $rca = RootCauseAnalysis::where('parent_record', str_pad($deviation->id, 4, 0, STR_PAD_LEFT))->first();
-    
+
                     if ($extension && $extension->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'Extension record pending!',
                             'message' => 'There is an Extension record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     if ($rca && $rca->status !== 'Closed-Done') {
                         Session::flash('swal', [
                             'title' => 'RCA record pending!',
                             'message' => 'There is an Root Cause Analysis record which is yet to be closed/done!',
                             'type' => 'warning',
                         ]);
-    
+
                         return redirect()->back();
                     }
-    
+
                     // return "PAUSE";
-    
+
                     $deviation->stage = "9";
                     $deviation->status = "Closed-Done";
                     $deviation->QA_final_approved_by = Auth::user()->name;
                     $deviation->QA_final_approved_on = Carbon::now()->format('d-M-Y');
                     $deviation->QA_final_approved_comment = $request->comment;
-    
+
                     $history = new DeviationAuditTrail();
                     $history->deviation_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -4362,7 +4358,7 @@ class DeviationController extends Controller
                 'message' => $th->getMessage()
             ], 500);
         }
-        
+
     }
 
     public function cftnotreqired(Request $request, $id)
@@ -4568,7 +4564,7 @@ class DeviationController extends Controller
     public function store_audit_review(Request $request, $id)
     {
             $history = new AuditReviewersDetails;
-            $history->deviation_id = $id;
+            $history->doc_id = $id;
             $history->user_id = Auth::user()->id;
             $history->type = $request->type;
             $history->reviewer_comment = $request->reviewer_comment;
@@ -4595,7 +4591,7 @@ class DeviationController extends Controller
         $today = Carbon::now()->format('d-m-y');
         $document = Deviation::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
-        
+
         return view('frontend.forms.deviation.deviation_audit', compact('audit', 'document', 'today'));
     }
 
