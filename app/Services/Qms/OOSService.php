@@ -871,8 +871,6 @@ class OOSService
         try {
 
             $input = $request->all();
-            // $input['status'] = 'Opened';
-            // $input['stage'] = 1;
 
             $file_input_names = [
                 'initial_attachment_gi',
@@ -892,14 +890,21 @@ class OOSService
                 'required_attachment_uar',
                 'verification_attachment_uar',
             ];
-
+            $oos = OOS::findOrFail($id);
             foreach ($file_input_names as $file_input_name)
             {
-                $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+                // dd($input[$file_input_name]);
+                if (empty($request->file($file_input_name)) && !empty($oos[$file_input_name])) {
+                    // If the request does not contain file data but existing data is present, retain the existing data
+                    $input[$file_input_name] = $oos[$file_input_name];
+                } else {
+                    // If the request contains file data or existing data is not present, upload new files
+                    $input[$file_input_name] = FileService::uploadMultipleFiles($request, $file_input_name);
+                }
+            
             }
 
-            
-            $oos = OOS::findOrFail($id); // Find the OOS record by ID
+             // Find the OOS record by ID
 
             $oos->update($input);
 
