@@ -507,11 +507,11 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="initial_attachment_gi"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="initial_attachment_gi[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'initial_attachment_gi')" multiple>
                                     </div>
                                 </div>
 
@@ -725,7 +725,7 @@ $users = DB::table('users')
                                             <td><input type="text" name="oos_detail[0][oos_results_obtained]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_specification_limit]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_details_obvious_error]"></td>
-                                            <td><input type="file" name="oos_detail[0][oos_file_attachment]"></td>
+                                            <td><input type="text" name="oos_detail[0][oos_file_attachment]"></td>
                                             <td><input type="text" name="oos_detail[0][oos_submit_by]"></td>
                                             <td><input type="date" name="oos_detail[0][oos_submit_on]"></td>
                                         </tr>
@@ -833,13 +833,14 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="file_attachments_pli"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attachments_pli[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
+                                            oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                                     </div>
                                 </div>
+                               
 
                             </div>
                         </div>
@@ -1044,11 +1045,11 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="supporting_attachment_plic"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
                                     </div>
                                 </div>
 
@@ -1147,11 +1148,11 @@ $users = DB::table('users')
                                     Please Attach all relevant or supporting documents
                                 </small>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attach"></div>
+                                    <div class="file-attachment-list" id="supporting_attachments_plir"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="supporting_attachments_plir[]"
-                                            oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                            oninput="addMultipleFiles(this, 'supporting_attachments_plir')" multiple>
                                     </div>
                                 </div>
                             </div>
@@ -1242,11 +1243,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attachments_pli"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
-                                    <input type="file" id="myfile" name="file_attachments_pli[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                    <input type="file" id="file_attachments_pli" name="file_attachments_pli[]"
+                                        oninput="addMultipleFiles(this, 'file_attachments_pli')" multiple>
                                 </div>
                             </div>
 
@@ -1416,11 +1417,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="attachments_piiqcr"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="attachments_piiqcr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'attachments_piiqcr')" multiple>
                                 </div>
                             </div>
 
@@ -1494,11 +1495,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="additional_testing_attachment_atp"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="additional_testing_attachment_atp[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'additional_testing_attachment_atp')" multiple>
                                 </div>
                             </div>
 
@@ -1668,11 +1669,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="file_attachments_if_any_ooscattach"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'file_attachments_if_any_ooscattach')" multiple>
                                 </div>
                             </div>
 
@@ -1783,11 +1784,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="conclusion_attachment_ocr"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="conclusion_attachment_ocr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'conclusion_attachment_ocr')" multiple>
                                 </div>
                             </div>
 
@@ -1833,11 +1834,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="cq_attachment_ocqr"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="cq_attachment_ocqr[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'cq_attachment_ocqr')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -1990,11 +1991,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="disposition_attachment_bd"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="disposition_attachment_bd[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'disposition_attachment_bd')" multiple>
                                 </div>
                             </div>
 
@@ -2035,11 +2036,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="reopen_attachment_ro"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="reopen_attachment_ro[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -2077,11 +2078,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="addendum_attachment_uaa"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="addendum_attachment_uaa[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -2209,11 +2210,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="addendum_attachments_uae"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="addendum_attachments_uae[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'addendum_attachments_uae')" multiple>
                                 </div>
                             </div>
 
@@ -2256,11 +2257,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="required_attachment_uar"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="required_attachment_uar[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'required_attachment_uar')" multiple>
                                 </div>
                             </div>
                         </div>
@@ -2303,11 +2304,11 @@ $users = DB::table('users')
                                 Please Attach all relevant or supporting documents
                             </small>
                             <div class="file-attachment-field">
-                                <div class="file-attachment-list" id="file_attach"></div>
+                                <div class="file-attachment-list" id="verification_attachment_uar"></div>
                                 <div class="add-btn">
                                     <div>Add</div>
                                     <input type="file" id="myfile" name="verification_attachment_uar[]"
-                                        oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                        oninput="addMultipleFiles(this, 'verification_attachment_uar')" multiple>
                                 </div>
                             </div>
 

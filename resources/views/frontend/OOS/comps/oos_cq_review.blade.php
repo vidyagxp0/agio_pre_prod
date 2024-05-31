@@ -21,7 +21,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="cq_attachment_ocqr">
 
                             @if ($data->cq_attachment_ocqr)
                             @foreach ($data->cq_attachment_ocqr as $file)
@@ -40,7 +40,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="cq_attachment_ocqr[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'cq_attachment_ocqr')" multiple>
                         </div>
                     </div>
 

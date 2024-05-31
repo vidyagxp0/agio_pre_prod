@@ -66,7 +66,7 @@
                     </small>
 
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="">
+                        <div class="file-attachment-list" id="file_attachments_pli">
                             @if ($data->file_attachments_pli)
                             @foreach ($data->file_attachments_pli as $file)
                             <h6 type="button" class="file-container text-dark"
@@ -84,7 +84,8 @@
                         </div>
                         <div class="add-btn">
                             <div>Add</div>
-                            <input type="file" id="myfile" name="file_attachments_pli[]" oninput=""
+                            <input type="file" id="myfile" name="file_attachments_pli[]" 
+                            oninput="addMultipleFiles(this, 'file_attachments_pli')"
                                 multiple>
                         </div>
                     </div>
