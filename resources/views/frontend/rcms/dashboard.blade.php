@@ -586,7 +586,7 @@
                                                             -
                                                         </td>
                                             @endif
-                                            <tdclass="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
