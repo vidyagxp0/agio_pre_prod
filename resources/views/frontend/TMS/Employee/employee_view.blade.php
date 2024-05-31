@@ -195,7 +195,15 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Activity Log</button>
 
             </div>
-            <form action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
+            <script>
+                $(document).ready(function() {
+                    <?php if ($employee->stage == 3): ?>
+                        $("#target :input").prop("disabled", true);
+                    <?php endif; ?>
+                });
+            </script>
+
+            <form id="target" action="{{ route('employee.update', $employee->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <!-- Tab content -->
             <div id="step-form">
