@@ -150,6 +150,7 @@ return new class extends Migration
             $table->text('extension_date__tc')->nullable();
             $table->text('extension_date_idtc')->nullable();
             $table->longtext('extension_attachments_e')->nullable();
+            $table->text('severity_level3')->nullable();
             
 
 

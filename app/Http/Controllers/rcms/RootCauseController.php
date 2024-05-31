@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
- class RootCauseController extends Controller
+class RootCauseController extends Controller
 {
     public function rootcause()
     {
@@ -33,13 +33,13 @@ use Illuminate\Support\Facades\Hash;
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
     public function root_store(Request $request)
-    { 
+    {
         if (!$request->short_description) {
-           toastr()->error("Short description is required");
-             return redirect()->back();
+            toastr()->error("Short description is required");
+            return redirect()->back();
         }
         $root = new RootCauseAnalysis();
-        $root->form_type = "Root-cause-analysis"; 
+        $root->form_type = "Root-cause-analysis";
         $openState->parent_id = $request->parent_id;
         $openState->parent_type = $request->parent_type;
         $root->originator_id = $request->originator_id;
@@ -47,15 +47,15 @@ use Illuminate\Support\Facades\Hash;
         $root->division_id = $request->division_id;
         $root->priority_level = $request->priority_level;
         $root->severity_level = $request->severity_level;
-        $root->short_description =($request->short_description);
+        $root->short_description = ($request->short_description);
         $root->assigned_to = $request->assigned_to;
         $root->assign_to = $request->assign_to;
         $root->root_cause_description = $request->root_cause_description;
         $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
-         $root->Type= $request->Type;
-        
-         $root->investigators = $request->investigators;
+        $root->Type = $request->Type;
+
+        $root->investigators = $request->investigators;
         // $root->investigators = implode(',', $request->investigators);
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = $request->initiated_if_other;
@@ -65,19 +65,19 @@ use Illuminate\Support\Facades\Hash;
         $root->related_url = ($request->related_url);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
         //Fishbone or Ishikawa Diagram 
-        if (!empty($request->measurement  )) {
+        if (!empty($request->measurement)) {
             $root->measurement = serialize($request->measurement);
         }
-        if (!empty($request->materials  )) {
+        if (!empty($request->materials)) {
             $root->materials = serialize($request->materials);
         }
-        if (!empty($request->environment  )) {
+        if (!empty($request->environment)) {
             $root->environment = serialize($request->environment);
         }
-        if (!empty($request->manpower  )) {
+        if (!empty($request->manpower)) {
             $root->manpower = serialize($request->manpower);
         }
-        if (!empty($request->machine  )) {
+        if (!empty($request->machine)) {
             $root->machine = serialize($request->machine);
         }
         if (!empty($request->methods)) {
@@ -88,19 +88,19 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
         }
-        if (!empty($request->why_1  )) {
+        if (!empty($request->why_1)) {
             $root->why_1 = serialize($request->why_1);
         }
-        if (!empty($request->why_2  )) {
+        if (!empty($request->why_2)) {
             $root->why_2 = serialize($request->why_2);
         }
-        if (!empty($request->why_3  )) {
+        if (!empty($request->why_3)) {
             $root->why_3 = serialize($request->why_3);
         }
-        if (!empty($request->why_4 )) {
+        if (!empty($request->why_4)) {
             $root->why_4 = serialize($request->why_4);
         }
-        if (!empty($request->why_5  )) {
+        if (!empty($request->why_5)) {
             $root->why_5 = serialize($request->why_5);
         }
         if (!empty($request->why_root_cause)) {
@@ -127,7 +127,7 @@ use Illuminate\Support\Facades\Hash;
         $root->who_will_be = ($request->who_will_be);
         $root->who_will_not_be = ($request->who_will_not_be);
         $root->who_rationable = ($request->who_rationable);
-        
+
         $root->investigation_summary = ($request->investigation_summary);
         // $root->zone = ($request->zone);
         // $root->country = ($request->country);
@@ -135,11 +135,11 @@ use Illuminate\Support\Facades\Hash;
         // $root->city = ($request->city);
         $root->submitted_by = ($request->submitted_by);
 
-        if (!empty($request->Root_Cause_Category  )) {
+        if (!empty($request->Root_Cause_Category)) {
             $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
         }
         if (!empty($request->Root_Cause_Sub_Category)) {
-            $root->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+            $root->Root_Cause_Sub_Category = serialize($request->Root_Cause_Sub_Category);
         }
         if (!empty($request->Probability)) {
             $root->Probability = serialize($request->Probability);
@@ -184,7 +184,7 @@ use Illuminate\Support\Facades\Hash;
             }
             $root->cft_attchament_new = json_encode($files);
         }
-        
+
         //Failure Mode and Effect Analysis+
 
         if (!empty($request->risk_factor)) {
@@ -243,7 +243,7 @@ use Illuminate\Support\Facades\Hash;
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
-        
+
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
         $history->activity_type = 'Division Code';
@@ -303,7 +303,7 @@ use Illuminate\Support\Facades\Hash;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $root->status;
         $history->save();
- 
+
 
         $history = new RootAuditTrial();
         $history->root_id = $root->id;
@@ -390,18 +390,17 @@ use Illuminate\Support\Facades\Hash;
         $history->save();
 
         if (!empty($root->due_date)) {
-        $history = new RootAuditTrial();
-        $history->root_id = $root->id;
-        $history->activity_type = 'Due Date';
-        $history->previous = "Null";
-        $history->current = $root->due_date;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $root->status;
-        $history->save();
-
+            $history = new RootAuditTrial();
+            $history->root_id = $root->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current = $root->due_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $root->status;
+            $history->save();
         }
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -419,29 +418,29 @@ use Illuminate\Support\Facades\Hash;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
         $root->due_date = $request->due_date;
-        $root->severity_level= $request->severity_level;
-        $root->Type= ($request->Type);
+        $root->severity_level = $request->severity_level;
+        $root->Type = ($request->Type);
         $root->priority_level = ($request->priority_level);
         $root->department = ($request->department);
         $root->description = ($request->description);
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
-       
-         $root->investigators = ($request->investigators);
+
+        $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
         // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
-         
+
         // Root Cause +
-        if (!empty($request->Root_Cause_Category  )) {
+        if (!empty($request->Root_Cause_Category)) {
             $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
         }
         if (!empty($request->Root_Cause_Sub_Category)) {
-            $root->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+            $root->Root_Cause_Sub_Category = serialize($request->Root_Cause_Sub_Category);
         }
         if (!empty($request->Probability)) {
             $root->Probability = serialize($request->Probability);
@@ -451,47 +450,47 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->why_problem_statement)) {
             $root->why_problem_statement = $request->why_problem_statement;
-        } 
-        if (!empty($request->why_1  )) {
+        }
+        if (!empty($request->why_1)) {
             $root->why_1 = serialize($request->why_1);
         }
-        if (!empty($request->why_2  )) {
+        if (!empty($request->why_2)) {
             $root->why_2 = serialize($request->why_2);
         }
-        if (!empty($request->why_3  )) {
+        if (!empty($request->why_3)) {
             $root->why_3 = serialize($request->why_3);
         }
-        if (!empty($request->why_4 )) {
+        if (!empty($request->why_4)) {
             $root->why_4 = serialize($request->why_4);
         }
-        if (!empty($request->why_5  )) {
+        if (!empty($request->why_5)) {
             $root->why_5 = serialize($request->why_5);
         }
         if (!empty($request->why_root_cause)) {
             $root->why_root_cause = $request->why_root_cause;
         }
 
-         // Is/Is Not Analysis (Launch Instruction)
-         $root->what_will_be = ($request->what_will_be);
-         $root->what_will_not_be = ($request->what_will_not_be);
-         $root->what_rationable = ($request->what_rationable);
- 
-         $root->where_will_be = ($request->where_will_be);
-         $root->where_will_not_be = ($request->where_will_not_be);
-         $root->where_rationable = ($request->where_rationable);
- 
-         $root->when_will_be = ($request->when_will_be);
-         $root->when_will_not_be = ($request->when_will_not_be);
-         $root->when_rationable = ($request->when_rationable);
- 
-         $root->coverage_will_be = ($request->coverage_will_be);
-         $root->coverage_will_not_be = ($request->coverage_will_not_be);
-         $root->coverage_rationable = ($request->coverage_rationable);
- 
-         $root->who_will_be = ($request->who_will_be);
-         $root->who_will_not_be = ($request->who_will_not_be);
-         $root->who_rationable = ($request->who_rationable);
-         
+        // Is/Is Not Analysis (Launch Instruction)
+        $root->what_will_be = ($request->what_will_be);
+        $root->what_will_not_be = ($request->what_will_not_be);
+        $root->what_rationable = ($request->what_rationable);
+
+        $root->where_will_be = ($request->where_will_be);
+        $root->where_will_not_be = ($request->where_will_not_be);
+        $root->where_rationable = ($request->where_rationable);
+
+        $root->when_will_be = ($request->when_will_be);
+        $root->when_will_not_be = ($request->when_will_not_be);
+        $root->when_rationable = ($request->when_rationable);
+
+        $root->coverage_will_be = ($request->coverage_will_be);
+        $root->coverage_will_not_be = ($request->coverage_will_not_be);
+        $root->coverage_rationable = ($request->coverage_rationable);
+
+        $root->who_will_be = ($request->who_will_be);
+        $root->who_will_not_be = ($request->who_will_not_be);
+        $root->who_rationable = ($request->who_rationable);
+
         if (!empty($request->root_cause_initial_attachment)) {
             $files = [];
             if ($request->hasfile('root_cause_initial_attachment')) {
@@ -516,10 +515,10 @@ use Illuminate\Support\Facades\Hash;
             $root->cft_attchament_new = json_encode($files);
         }
 
-        
+
         // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
-        
+
         $root->comments = $request->comments;
         $root->lab_inv_concl = $request->lab_inv_concl;
         //Failure Mode and Effect Analysis+
@@ -596,7 +595,7 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->problem_statement)) {
             $root->problem_statement = $request->problem_statement;
         }
-        $root->update(); 
+        $root->update();
 
         if ($lastDocument->division_code != $root->division_code || !empty($request->division_code_comment)) {
 
@@ -800,14 +799,14 @@ use Illuminate\Support\Facades\Hash;
     public function root_show($id)
     {
         $data = RootCauseAnalysis::find($id);
-        if(empty($data)) {
+        if (empty($data)) {
             toastr()->error('Invalid ID.');
             return back();
         }
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-          return view('frontend.root-cause-analysis.root_cause_analysisView', compact(
+        return view('frontend.root-cause-analysis.root_cause_analysisView', compact(
             'data'
         ));
     }
@@ -823,8 +822,8 @@ use Illuminate\Support\Facades\Hash;
             if ($root->stage == 1) {
                 $root->stage = "2";
                 $root->status = "Investigation in Progress";
-                $root->acknowledge_by= Auth::user()->name;
-                $root->acknowledge_on= Carbon::now()->format('d-M-Y');
+                $root->acknowledge_by = Auth::user()->name;
+                $root->acknowledge_on = Carbon::now()->format('d-M-Y');
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -835,27 +834,27 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Acknowledge';
+                $history->stage = 'Acknowledge';
 
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                        
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $root],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                //     $list = Helpers::getQAUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $root->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
+
+
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $root],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document sent ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -875,7 +874,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage = 'Submited';
 
                 $history->save();
                 $root->update();
@@ -913,7 +912,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='QA Review Complete';
+                $history->stage = 'QA Review Complete';
                 $history->save();
 
                 $root->update();
@@ -936,7 +935,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 // $history->origin_state = $lastDocument->status;
-                $history->stage='Completed';
+                $history->stage = 'Completed';
                 $history->save();
                 $root->update();
                 toastr()->success('Document Sent');
@@ -968,26 +967,26 @@ use Illuminate\Support\Facades\Hash;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-             $history->origin_state = $lastDocument->status;
-            $history->stage='Cancelled ';
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'Cancelled ';
             $history->save();
-        //     $list = Helpers::getQAUserList();
-        //     foreach ($list as $u) {
-        //         if($u->q_m_s_divisions_id == $root->division_id){
-        //             $email = Helpers::getInitiatorEmail($u->user_id);
-        //              if ($email !== null) {
-                  
-        //               Mail::send(
-        //                   'mail.view-mail',
-        //                    ['data' => $root],
-        //                 function ($message) use ($email) {
-        //                     $message->to($email)
-        //                         ->subject("Document sent ".Auth::user()->name);
-        //                 }
-        //               );
-        //             }
-        //      } 
-        //   }
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $root->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
+
+            //               Mail::send(
+            //                   'mail.view-mail',
+            //                    ['data' => $root],
+            //                 function ($message) use ($email) {
+            //                     $message->to($email)
+            //                         ->subject("Document sent ".Auth::user()->name);
+            //                 }
+            //               );
+            //             }
+            //      } 
+            //   }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
@@ -1065,7 +1064,7 @@ use Illuminate\Support\Facades\Hash;
     }
 
     public static function singleReport($id)
-    {    
+    {
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');

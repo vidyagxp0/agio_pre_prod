@@ -266,8 +266,7 @@
     
                     var html =
                         '<tr>' +
-                        '<td><input  type="text" name="investrecord[]" value="' + serialNumber +
-                        '"></td>' +
+                         '<td>' + serialNumber + '</td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
@@ -349,14 +348,30 @@
                                 </div>
 
                                  
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="incident_date_analysis_gi">
                                         <label for="Incident_date_analysis">Date Of Analysis<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="incident_date_analysis_gi">
+                                    </div> --}}
+
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Of Analysis">Date Of Analysis</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="incident_date_analysis_gi" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="incident_date_analysis_gi" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'incident_date_analysis_gi')" />
+                                        </div>
                                     </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
 
                                 </div>
+                                <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input" id="incident_specification_no_gi">
                                         <label for="Incident_specification_no">Specification Number<span
@@ -371,8 +386,9 @@
                                                 class="text-danger d-none">*</span></label>
                                         <input type="text" name="incident_stp_no_gi">
                                     </div>
-
+</div>
                                 </div>
+                                 <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input" id="Incident_name_analyst_no_gi">
                                         <label for="Incident_name_analyst_no">Name Of Analyst<span
@@ -381,14 +397,26 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="incident_date_incidence_gi">
-                                        <label for="Incident_date_incidence">Date Of Incidence<span
-                                                class="text-danger d-none">*</span></label>
-                                        <input type="date" name="incident_date_incidence_gi">
+                                  <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Of Incidence">Date Of Incidence</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="Incident_date_incidence" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="Incident_date_incidence" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Incident_date_incidence')" />
+                                        </div>
                                     </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                               
 
                                 </div>
+                                
+
+                                
+                                
                                 <div class="col-lg-12">
                                     <div class="group-input" id="description_incidence_gi">
                                         <label for="Description_incidence"> Description Of Incidence<span
@@ -397,25 +425,76 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
+                                
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="analyst_sign_date_gi">
                                         <label for="analyst_sign_date">Analyst Sign Date<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="analyst_sign_date_gi">
                                     </div>
 
+                                </div> --}}
+                                             {{-- <div class="col-lg-6">
+                                    <div class="group-input" id="analyst_name_gi">
+                                        <label for="analyst_name">Analyst Name<span
+                                                class="text-danger d-none">*</span></label>
+                                        <input type="text" name="analyst_name_gi">
+                                    </div>
+
+                                </div> --}}
+                                <div class="row"> 
+                                  <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Analyst Name <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="analyst_name_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('analyst_name_gi')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="section_sign_date_gi">
                                         <label for="section_sign_date">Section Head Sign Date<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="section_sign_date_gi">
                                     </div>
 
+                                </div> --}}
+                                  {{-- <div class="col-lg-6">
+                                    <div class="group-input" id="section_name_gi">
+                                        <label for="section_name">Section Head Name<span
+                                                class="text-danger d-none">*</span></label>
+                                        <input type="text" name="section_name_gi">
+                                    </div>
+
+                                </div> --}}
+                                 <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                           Section Head Name <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="section_name_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('section_name_gi')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
                                 </div>
                                 {{-- New Added --}}
 
-                                <div class="col-12">
+                                <div class="col-16">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
@@ -490,7 +569,7 @@
                                 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Initial Attachments">Incident Investigation Attachment</label>
+                                        <label for="Initial Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                         <div class="file-attachment-field">
@@ -503,12 +582,13 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="button-block">
+                                       <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
+                            </div>
+                     
                         </div>
                     </div>
 
@@ -523,20 +603,14 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="immediate_date_ia">
                                         <label for="immediate_date_ia">Analyst Sign/Date<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="immediate_date_ia">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="section_date_ia">
-                                        <label for="section_date_ia">Section Head Sign/Date<span
-                                                class="text-danger d-none">*</span></label>
-                                        <input type="date" name="section_date_ia">
-                                    </div>
-                                </div>
+                                </div> --}}
+               
                                <div class="col-12">
                                 <div class="group-input">
                                     <label for="detail investigation ">Detail Investigation / Probable Root Cause</label>
@@ -549,6 +623,7 @@
                             <textarea name="proposed_correctivei_ia"></textarea>
                         </div>
                      </div>
+                     
                 
                     
                      <div class="col-12">
@@ -607,7 +682,7 @@
     
                 {{-- selection field --}}
                 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
                             Investigator (QC) <span class="text-danger"></span>
@@ -623,7 +698,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
                             QC Review <span class="text-danger"></span>
@@ -639,7 +714,7 @@
                         @enderror
                     </div>
                 </div>
-                {{-- <div class="col-md-4">
+                <div class="col-md-4">
                     <div class="group-input">
                         <label for="search">
                             QC Approved By <span class="text-danger"></span>
@@ -654,14 +729,14 @@
                             <p class="text-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </div> --}}
+                </div>
                 {{-- selection field --}}
                 
 
                                
-                                <div class="col-12">
+                             <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="Attachments">Immediate Actions Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
@@ -674,14 +749,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                            </div>
-                            <div class="button-block">
+                                   <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
+                            </div>
+                         
                         </div>
                     </div>
                     
@@ -704,20 +779,51 @@
                                     <textarea name="reasoon_for_extension_e"></textarea>
                                 </div>
                             </div>
-
+{{-- 
                             <div class="col-6">
                                 <div class="group-input">
                                 <label for="extension date">Extension Date (if required)</label>
                                 <input type="date" name="extension_date_esc" id="extension_date">
                                 </div>
-                            </div>
-                               
+                            </div> --}}
+                               <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Date (if required)">Extension Date (if required)</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date_esc" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date_esc" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date_esc')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+{{--                                
                             <div class="col-6">
                                 <div class="group-input">
                                 <label for="extension date">Extension Initiator Date</label>
                                 <input type="date" name="extension_date_initiator" id="extension_date">
                                 </div>
-                            </div>
+                            </div> --}}
+                            
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Initiator Date">Extension Initiator Date</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date_initiator" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date_initiator" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date_initiator')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+
+                                
 
 
                             <div class="col-md-12">
@@ -771,19 +877,47 @@
                              </div>
 
                           
-                             <div class="col-6">
+                             {{-- <div class="col-6">
                                 <div class="group-input">
                                  <label for="extension date">Extension Date (if required)</label>
                                   <input type="date" name="extension_date_e" id="extension_date__sc">
                                 </div>
-                             </div>
+                             </div> --}}
+                               <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Date (if required)">Extension Date (if required)</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date_e" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date_e" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date_e')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
                            
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                     <label for="extension date">Extension Initiator Date</label>
                                     <input type="date" name="extension_date_idsc" id="extension_date_idsc">
                                     </div>
-                                </div>
+                                </div> --}}
+                                 <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Initiator Date">Extension Initiator Date</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date_idsc" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date_idsc" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date_idsc')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
 
 
                                     <div class="col-md-12">
@@ -835,20 +969,52 @@
                              </div>
                           </div>
 
-                       
+{{--                        
                           <div class="col-6">
                              <div class="group-input">
                               <label for="extension date">Extension Date (if required)</label>
                                <input type="date" name="extension_date__tc" id="extension_date__tc">
                              </div>
-                          </div>
+                          </div> --}}
+                           <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Date (if required)">Extension Date (if required)</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date__tc" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date__tc" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date__tc')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+                           
                         
-                             <div class="col-6">
+                             {{-- <div class="col-6">
                                  <div class="group-input">
                                  <label for="extension date">Extension Initiator Date</label>
                                  <input type="date" name="extension_date_idtc" id="extension_date_idtc">
                                  </div>
-                             </div>
+                             </div> --}}
+                                 <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Extension Initiator Date">Extension Initiator Date</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="extension_date_idtc" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="extension_date_idtc" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'extension_date_idtc')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+
+
+                             
 
 
                                  <div class="col-md-6">
@@ -897,12 +1063,13 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="button-block">
+                        <div class="button-block">
                         <button type="submit" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                    </div>
+                    
                     </div>
                     
                 
@@ -954,7 +1121,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="Attachments">Incident Details Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
@@ -1045,9 +1212,29 @@
 
                     <!-- CAPA content -->
                     <div id="CCForm4" class="inner-block cctabcontent">
+                        
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12">
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="CAPAn">CAPA</label>
+                                        <textarea name="CAPA"></textarea>
+                                    </div>
+                                </div> --}}
+                                   <div class="col-16">
+                                    <div class="group-input">
+                                        <label for="severity-level">CAPA</label>
+                                     
+                                        <select name="severity_level3">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Corrective Action">Corrective Action</option>
+                                            <option value="Preventive Action">Preventive Action</option>
+                                            <option value="Corrective & Preventive Action">Corrective & Preventive Action</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Currective Action">Corrective Action</label>
                                         <textarea name="Currective_Action"></textarea>
@@ -1102,15 +1289,15 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Head Attachments">QA Head Attachment</label>
+                                        <label for="QA Review Attachments">QA Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="QA_Head_Attachment"></div>
+                                            <div class="file-attachment-list" id="QA_Review_Attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="QA_Head_Attachment[]"
-                                                    oninput="addMultipleFiles(this, 'QA_Head_Attachment')" multiple>
+                                                <input type="file" id="myfile" name="QA_Review_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'QA_Review_Attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1190,7 +1377,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <span id="rchar">240</span> characters remaining
+                                        {{-- <span id="rchar">240</span> characters remaining --}}
                                         <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
                                     </div>
                                 </div>
@@ -1400,14 +1587,22 @@
                                                         </div>
                         
                                                          
-                                                        <div class="col-lg-6">
-                                                            <div class="group-input" id="Incident_date_analysis">
-                                                                <label for="Incident_date_analysis">Date Of Analysis<span
-                                                                        class="text-danger d-none">*</span></label>
-                                                                <input type="date" name="Incident_date_analysis_ssfi">
-                                                            </div>
-                        
-                                                        </div>
+                                                      <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Of Analysis">Date Of Analysis</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="incident_date_analysis_gi" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="incident_date_analysis_gi" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'incident_date_analysis_gi')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+
+                                
                                                         <div class="col-lg-6">
                                                             <div class="group-input" id="Incident_specification_no">
                                                                 <label for="Incident_specification_no">Specification Number<span
@@ -1424,15 +1619,71 @@
                                                             </div>
                         
                                                         </div>
+                                                         <div class="row">
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input" id="Incident_name_analyst_no_gi">
+                                        <label for="Incident_name_analyst_no">Name Of Analyst<span
+                                                class="text-danger d-none">*</span></label>
+                                        <input type="text" name="Incident_name_analyst_no_gi">
+                                    </div> --}}
+                                        <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                           Name Of Analyst <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="Incident_name_analyst_no_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('Incident_name_analyst_no_gi')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due"> Due Date</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY"/>
+                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')"  />
+                                        </div>
+                                    </div> --}}
+                                </div>
                                                         
-                                                        <div class="col-lg-4">
+                                                        
+                                                        
+                                                        {{-- <div class="col-lg-4">
                                                             <div class="group-input" id="Incident_date_incidence">
                                                                 <label for="Incident_date_incidence">Date Of Incidence<span
                                                                         class="text-danger d-none">*</span></label>
                                                                 <input type="date" name="Incident_date_incidence_ssfi">
                                                             </div>
                         
-                                                        </div>
+                                                        </div> --}}
+                                                        
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Of Incidence">Date Of Incidence</label>
+                                        <div class="calenderauditee">
+                                             <input type="text" id="Incident_date_incidence_ssfi" readonly placeholder="DD-MMM-YYYY" /> 
+                                            {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+                                            <input  type="date"  name="Incident_date_incidence_ssfi" max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'Incident_date_incidence_ssfi')" />
+                                        </div>
+                                    </div>
+                                    @error('Deviation_date')
+                                        <div class="text-danger">{{  $message  }}</div>
+                                    @enderror
+                                </div>
+
+                          
+
 
                                                         <div class="col-lg-4">
                                                             <div class="group-input">
@@ -1495,7 +1746,7 @@
                         
                                                         </div>
 
-                                                        <div class="col-md-6">
+                                                        {{-- <div class="col-md-6">
                                                             <div class="group-input">
                                                                   <label for="search">
                                                               Investigator(QC) <span class="text-danger"></span>
@@ -1527,10 +1778,10 @@
                                                           <p class="text-danger">{{ $message }}</p>
                                                         @enderror
                                                                  </div>
-                                                </div>
+                                                </div> --}}
                                                 <div class="col-lg-12">
                                                     <div class="group-input">
-                                                        <label for="system_suitable_attachments">File Attachment</label>
+                                                        <label for="system_suitable_attachments">Failure Inicidence Attachment</label>
                                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                         {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                                         <div class="file-attachment-field">
@@ -1611,17 +1862,17 @@
                             </div>
 
 
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for=" qa head remark"><b>QA Head Remark</b></label>
                                    <textarea name="qa_hear_remark_c"></textarea>
                                 </div>
-                            </div>
+                            </div> --}}
 
 
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for="closure_attachments">File Attachment</label>
+                                    <label for="closure_attachments">Closure Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
                                     <div class="file-attachment-field">
@@ -1667,8 +1918,9 @@
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
-                                    </div>
+                                    </div></div>
                                 </div>
+                                   <div class="row">
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Incident Review Completed By">Incident Review Completed By</label>
@@ -1679,14 +1931,15 @@
                                     <div class="group-input">
                                         <label for="Incident Review Completed On">Incident Review Completed On</label>
                                         <div class="Date"></div>
-                                    </div>
-                                </div>
+                                  
+                                </div></div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div>  </div>
+                                   <div class="row">
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Investigation Completed By">Investigation Completed By</label>
@@ -1697,14 +1950,16 @@
                                     <div class="group-input">
                                         <label for="Investigation Completed On">Investigation Completed On</label>
                                         <div class="Date"></div>
-                                    </div>
-                                </div>
+                                 
+                                </div></div>
+
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
-                                    </div>
+                                    </div>   </div>
                                 </div>
+                                   <div class="row">
                                <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
@@ -1716,13 +1971,15 @@
                                         <label for="QA Review Completed By">QA Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
+                               
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>
+                                </div> </div>
+                                   <div class="row">
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
@@ -1734,15 +1991,16 @@
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div> 
+                               
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
-                                </div> 
+                                </div>  </div> 
                                
-                              
+                                 <div class="row">
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
@@ -1753,14 +2011,15 @@
                                     <div class="group-input">
                                         <label for="All Activities Completed On">All Activities Completed On</label>
                                         <div class="Date"></div>
-                                    </div>
-                                </div>
+                              
+                                </div></div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
-                                    </div>
+                                    </div>      </div>
                                 </div>
+                                   <div class="row">
                                  <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Review Completed By">Review Completed By</label>
@@ -1771,14 +2030,15 @@
                                     <div class="group-input">
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="static"></div>
-                                    </div>
-                                </div>  
+                                 
+                                </div>  </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Coment">Comment</label>
                                         <div class="static"></div>
-                                    </div>
+                                    </div>   </div>
                                 </div>
+                                   <div class="row">
                                 <div class="col-lg-3">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
@@ -1789,13 +2049,13 @@
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
-                                    </div>
-                                    </div>
+                                    
+                                    </div></div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Comment">Comment</label>
                                             <div class="static"></div>
-                                        </div>
+                                        </div></div>
                                     </div>                   
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>

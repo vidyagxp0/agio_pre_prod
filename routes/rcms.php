@@ -91,7 +91,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::resource('effectiveness', EffectivenessCheckController::class);
             Route::post('send-effectiveness/{id}', [EffectivenessCheckController::class, 'stageChange']);
             Route::post('effectiveness-reject/{id}', [EffectivenessCheckController::class, 'reject']);
-            Route::post('cancel/{id}',[EffectivenessCheckController::class,'cancel'])->name('moreinfo_effectiveness');
+            Route::post('cancel/{id}', [EffectivenessCheckController::class, 'cancel'])->name('moreinfo_effectiveness');
             Route::view('helpdesk-personnel', 'frontend.rcms.helpdesk-personnel');
             Route::view('send-notification', 'frontend.rcms.send-notification');
             Route::get('new-change-control', [CCController::class, 'changecontrol']);
@@ -116,6 +116,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');
             Route::post('LabIncidentChildRoot/{id}', [LabIncidentController::class, 'lab_incident_root_child'])->name('lab_incident_root_child');
+            Route::post('LabIncidentChildRootC/{id}', [LabIncidentController::class, 'lab_incident_rootc_child'])->name('lab_incident_rootc_child');
+
             Route::get('LabIncidentAuditTrial/{id}', [LabIncidentController::class, 'LabIncidentAuditTrial'])->name('audittrialLabincident');
             Route::get('auditDetailsLabIncident/{id}', [LabIncidentController::class, 'auditDetailsLabIncident'])->name('LabIncidentauditDetails');
             Route::post('root_cause_analysis/{id}', [LabIncidentController::class, 'root_cause_analysis'])->name('Child_root_cause_analysis');
@@ -123,7 +125,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');
@@ -198,18 +200,18 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::get('oot/', [OOTController::class, 'index']);
             Route::post('oot/create', [OOTController::class, 'store'])->name('oot.store');
-            Route::get('oot_view/{id}', [OOTController::class,'ootShow'])->name('rcms/oot_view');
-            Route::post('oot/update/{id}',[OOTController::class, 'update'])->name('update');
+            Route::get('oot_view/{id}', [OOTController::class, 'ootShow'])->name('rcms/oot_view');
+            Route::post('oot/update/{id}', [OOTController::class, 'update'])->name('update');
             // Route::get('oot_audit/{id}',[OOTController::class,'OotAuditTrial']);
-            Route::post('oot/stage/{id}',[OOTController::class,'oot_send_stage'])->name('ootStage');
+            Route::post('oot/stage/{id}', [OOTController::class, 'oot_send_stage'])->name('ootStage');
             Route::get('oot_audit_history/{id}', [OOTController::class, 'OotAuditTrial']);
             Route::get('rcms/auditdetails/{id}', [OOTController::class, 'OotAuditDetail'])->name('auditdetails');
             Route::get('ootcSingleReport/{id}', [OOTController::class, 'singleReport']);
-            Route::post('sendstage/{id}',[OOTController::class,'oot_send_stage']);
+            Route::post('sendstage/{id}', [OOTController::class, 'oot_send_stage']);
             Route::post('cancel/{id}', [OOTController::class, 'ootCancel']);
             Route::post('thirdStage/{id}', [OOTController::class, 'stageChange']);
             Route::post('reject/{id}', [OOTController::class, 'oot_reject']);
-            Route::get('audit_pdf/{id}',[OOTController::class,'auditTiailPdf']);
+            Route::get('audit_pdf/{id}', [OOTController::class, 'auditTiailPdf']);
 
 
 
@@ -221,7 +223,7 @@ Route::group(['prefix' => 'rcms'], function () {
             /**
              * OOT
              */
-            Route::group(['prefix' => 'oot', 'as' => 'oot.'], function() {
+            Route::group(['prefix' => 'oot', 'as' => 'oot.'], function () {
                 Route::get('/', [OOTController::class, 'index'])->name('index');
                 Route::post('/ootstore', [OOTController::class, 'store'])->name('ootstore');
             });
@@ -229,14 +231,12 @@ Route::group(['prefix' => 'rcms'], function () {
             /**
              * OOS
              */
-            Route::group(['prefix' => 'oos', 'as' => 'oos.'], function() {
-            Route::get('/',[OOSController::class, 'index'])->name('index');
-            Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
-            Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
-            Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
-
+            Route::group(['prefix' => 'oos', 'as' => 'oos.'], function () {
+                Route::get('/', [OOSController::class, 'index'])->name('index');
+                Route::post('/oosstore', [OOSController::class, 'store'])->name('oosstore');
+                Route::get('oos_view/{id}', [OOSController::class, 'show'])->name('oos_view');
+                Route::post('oosupdate/{id}', [OOSController::class, 'update'])->name('oosupdate');
             });
-
         }
     );
 });
