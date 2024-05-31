@@ -108,6 +108,7 @@
     }
 
     .inner-block {
+        margin-top: 20px;
         padding: 10px;
     }
 
@@ -155,7 +156,9 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                        {{-- <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100"> --}}
+                        <img src="https://navin.mydemosoftware.com/public/user/images/logo.png" alt="" class="w-100" style="scale: 0.5" >
+
                     </div>
                 </td>
             </tr>
@@ -166,16 +169,16 @@
                     <strong>Market Complaint No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/Market Complaint/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName($doc->division_id) }}/Market Complaint/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($doc->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
     </header>
 
-    <div class="inner-block">
+    <div class="inner-block ">
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
 

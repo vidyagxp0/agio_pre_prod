@@ -22,7 +22,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="reopen_attachment_ro">
 
                             @if ($data->reopen_attachment_ro)
                             @foreach ($data->reopen_attachment_ro as $file)
@@ -41,7 +41,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="reopen_attachment_ro[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'reopen_attachment_ro')" multiple>
                         </div>
                     </div>
 

@@ -503,10 +503,11 @@ class OOSController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
-
-        return redirect()->route('qms.dashboard');
-
-
+        toastr()->success('Record is Update Successfully');
+        return back();
+        // return redirect()->route('qms.dashboard');
+        
+        
     }
 
     public function send_stage(Request $request, $id)
