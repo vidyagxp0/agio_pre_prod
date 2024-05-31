@@ -117,7 +117,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="supporting_attachment_plic">
 
                             @if ($data->supporting_attachment_plic)
                             @foreach ($data->supporting_attachment_plic as $file)
@@ -138,7 +138,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="supporting_attachment_plic[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'supporting_attachment_plic')" multiple>
                         </div>
                     </div>
 
