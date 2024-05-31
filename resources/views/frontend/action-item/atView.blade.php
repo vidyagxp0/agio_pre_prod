@@ -41,7 +41,7 @@
             <div class="inner-block">
                 {{-- <div class="head">PR-0001</div> --}}
                 <div class="slogan">
-                    <strong>Division / Project :</strong>
+                    <strong>Site Division/Project :</strong>
                     {{ Helpers::getDivisionName($data->division_id) }} / Action item
                 </div>
             </div>
@@ -60,8 +60,8 @@
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 {{-- {{ dd($data->stage);}} --}}
                         <button class="button_theme1"> <a class="text-white"

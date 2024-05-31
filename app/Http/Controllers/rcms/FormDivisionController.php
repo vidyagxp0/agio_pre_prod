@@ -16,7 +16,14 @@ class FormDivisionController extends Controller
             return redirect('audit');
         } elseif ($request->process_name == "External Audit") {
             return redirect('auditee');
-        } elseif ($request->process_name == "CAPA") {
+        }
+        elseif ($request->process_name == "Observation") {
+            return redirect('observation');
+        }
+        elseif ($request->process_name == "Action Item") {
+            return redirect('rcms/action-items-create');
+        }
+         elseif ($request->process_name == "CAPA") {
             return redirect('capa');
         } elseif ($request->process_name == "Audit Program") {
             return redirect('audit-program');

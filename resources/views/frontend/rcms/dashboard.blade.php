@@ -551,8 +551,7 @@
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
-                                                    KSA
-                                                    KSA
+                                                    -
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -588,7 +587,7 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if (property_exists($datas, 'due_date'))
-                                                    {{ $datas->type !== 'Extension' ? Helpers::getDueDate($datas->due_date, false) : ''  }}
+                                                    {{ $datas->type !== 'Extension' ? Helpers::getdateFormat($datas->due_date) : ''  }}
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

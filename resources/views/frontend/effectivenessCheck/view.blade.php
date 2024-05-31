@@ -25,7 +25,7 @@
             <div class="inner-block">
                 <div class="head">PR-0001</div>
                 <div class="slogan">
-                    <strong>Division / Project :</strong>
+                    <strong>Site Division/Project :</strong>
                     QMS-EMEA / Change Control
                 </div>
             </div>

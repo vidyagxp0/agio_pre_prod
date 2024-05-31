@@ -206,6 +206,8 @@ Route::group(['prefix' => 'rcms'], function () {
 
             /********************* Deviation Routes Ends *******************/
 
+            Route::get('action-items-create', [ActionItemController::class, 'showAction']);
+
             /********************* Non Conformance Routes Starts *******************/
 
             Route::get('non-conformance', [NonConformaceController::class, 'index']);
