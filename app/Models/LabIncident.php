@@ -12,4 +12,5 @@ class LabIncident extends Model
     public function grids() {
         return $this->hasMany(lab_incidents_grid::class, 'lab_incident_id');
     }
+    // protected $fillable=[];
 }

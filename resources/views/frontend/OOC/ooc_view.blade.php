@@ -57,6 +57,7 @@ $users = DB::table('users')->get();
         </div> --}}
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
+        {{ Helpers::getDivisionName(session()->get('division')) }}
         / Out Of Calibration
     </div>
 </div>
