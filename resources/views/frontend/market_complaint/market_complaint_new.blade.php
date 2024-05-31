@@ -242,7 +242,17 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                            class="text-danger">*</span></label>
+                                            <span id="rchars">255</span>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                                not require completion</small></div>
+                                        <textarea class="summernote" name="description_gi" id="summernote-1" required >
+                                    </textarea>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -354,16 +364,7 @@
 
 
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span
-                                            class="text-danger">*</span></label><span id="rchars">255</span>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                                not require completion</small></div>
-                                        <textarea class="summernote" name="description_gi" id="summernote-1" required >
-                                    </textarea>
-                                    </div>
-                                </div>
+                                
 
 
                                 <div class="col-12">

@@ -844,6 +844,15 @@
                             }
                             </script>
 
+                        <div class="col-md-12 mb-3">
+                            <div class="group-input">
+                                <label for="Description"> Short Description</label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does
+                                        not require completion</small></div>
+                                <textarea class="summernote" name="description_gi" id="summernote-1">{{ $data->description_gi }}
+                                </textarea>
+                            </div>
+                        </div>
 
 
                             <div class="col-lg-6">
@@ -951,15 +960,7 @@
 
 
 
-                            <div class="col-md-12 mb-3">
-                                <div class="group-input">
-                                    <label for="Description">Description</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does
-                                            not require completion</small></div>
-                                    <textarea class="summernote" name="description_gi" id="summernote-1">{{ $data->description_gi }}
-                                    </textarea>
-                                </div>
-                            </div>
+                           
 
 
                             <div class="col-12">
