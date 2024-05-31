@@ -319,6 +319,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('pdf-report/{id}', [MarketComplaintController::class, 'singleReport']);
 
 
+
         }
     );
 });
