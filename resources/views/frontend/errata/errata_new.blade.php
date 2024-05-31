@@ -85,7 +85,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="search">
+                                        <label for="Initiated Through">
                                             Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by">
@@ -1939,7 +1939,7 @@
                         '<td><input type="text" name="details[' + serialNumber + '][PreparedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][CheckedBy]"></td>' +
                         '<td><input type="text" name="details[' + serialNumber + '][ApprovedBy]"></td>' +
-                        '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
+                        '<td><button type="text" class="removeRowBtn" >Remove</button></td>' +
                         '</tr>';
 
                     // for (var i = 0; i < users.length; i++) {

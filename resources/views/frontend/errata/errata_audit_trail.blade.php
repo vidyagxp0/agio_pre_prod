@@ -189,7 +189,7 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($document->id, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
                                 :{{ $document->originator ? $document->originator : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
