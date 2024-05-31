@@ -421,7 +421,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
-                                                    @elseif($datas->type == 'OOS Chemical Chemical')
+                                                    @elseif($datas->type == 'OOS Chemical')
                                                     <a href="{{ route('oos.oos_view', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}{{ $datas->id  }}
                                                     </a>
@@ -586,7 +586,7 @@
                                                             -
                                                         </td>
                                             @endif
-                                            <tdclass="viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
