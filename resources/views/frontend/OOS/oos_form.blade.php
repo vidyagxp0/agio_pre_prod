@@ -343,7 +343,7 @@ $users = DB::table('users')
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
@@ -542,17 +542,6 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Reference Document</label>
-                                <select multiple id="reference_record" name="reference_document" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
-
                         <div class="sub-head pt-3">OOS Information</div>
                         <div class="col-lg-6">
                             <div class="group-input">
@@ -836,16 +825,7 @@ $users = DB::table('users')
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="group-input">
-                                <label for="Reference Recores">Phase I Investigation Ref.</label>
-                                <select multiple id="reference_record" name="phase_i_investigation_ref_pli" id="">
-                                    <option value="0">--Select---</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Audit Attachments">File Attachments</label>
@@ -1218,11 +1198,11 @@ $users = DB::table('users')
                     <div class="col-lg-6">
                         <div class="group-input">
                             <label for="Auditee"> Manufacturing Invest. Type </label>
-                            <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
+                            <select name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                                 data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="0">Chemical</option>
-                                <option value="1">Microbiology</option>
-
+                                <option value="0">---Enter Select ---</option>
+                                <option value="Chemical">Chemical</option>
+                                <option value="Microbiology">Microbiology</option>
                             </select>
                         </div>
                     </div>
@@ -1846,45 +1826,6 @@ $users = DB::table('users')
                                     </textarea>
                         </div>
                     </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Report Attachments"> CAPA Required ?</label>
-                            <select name="capa_required_ocqr">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-
-                            </select>
-                        </div>
-                    </div>
-
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Reference Recores">Reference of CAPA </label>
-                            <input type="text" name="reference_of_capa_ocqr">
-                        </div>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <div class="group-input">
-
-
-                            <label for="Auditee"> Action plan requirement ? </label>
-                            <select multiple name="action_plan_requirement_ocqr" placeholder="Select Nature of Deviation"
-                                data-search="false" data-silent-initial-value-set="true" id="auditee">
-                                <option value="0">Enter Your Selection Here</option>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="group-input">
-                            <label for="Audit Attachments"> Ref Action Plan </label>
-                            <input type="text" name="ref_action_plan_ocqr">
-                        </div>
-                    </div>
                     <div class="col-12">
                         <div class="group-input">
                             <label for="Audit Attachments"> CQ Attachment</label>
@@ -2494,14 +2435,14 @@ $users = DB::table('users')
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done By</label>
+                            <label for="Audit Attachments">QA Review Done By</label>
                             <div class=" static"></div>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="group-input">
-                            <label for="Audit Attachments">CQ Review Done On</label>
+                            <label for="Audit Attachments">QA Review Done On</label>
                             <div class="date"></div>
                         </div>
                     </div>

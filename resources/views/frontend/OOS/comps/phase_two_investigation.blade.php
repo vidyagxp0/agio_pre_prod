@@ -30,8 +30,9 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Auditee"> Manufacturing Invest. Type </label>
-                    <select multiple name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
+                    <select  name="manufacturing_invest_type_piii" placeholder="Select Nature of Deviation"
                         data-search="false" data-silent-initial-value-set="true" id="auditee">
+                        <option value="0">Enter Your Selection Here</option>
                         <option value="1" {{ $data->root_casue_identified_piiqcr === '1' ? 'selected' :
                                 '' }}>Chemical</option>
                         <option value="2" {{ $data->root_casue_identified_piiqcr === '2' ? 'selected' : ''

@@ -57,19 +57,7 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Phase I Investigation Ref.</label>
-                    <select multiple id="reference_record" name="phase_i_investigation_ref_pli">
-                        <option value="0" {{ $data->phase_i_investigation_ref_pli == 0 ? 'selected' : ''
-                            }}>--Select---</option>
-                        <option value="1" {{ $data->phase_i_investigation_ref_pli == 1 ? 'selected' : ''
-                            }}>1</option>
-                        <option value="2" {{ $data->phase_i_investigation_ref_pli == 2 ? 'selected' : ''
-                            }}>2</option>
-                    </select>
-                </div>
-            </div>
+           
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Initiator Group">File Attachment</label>

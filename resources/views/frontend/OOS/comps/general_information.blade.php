@@ -205,25 +205,10 @@
             <div class="col-lg-6">
                 <div class="group-input">
                     <label for="Reference Recores">Reference System Document</label>
-                    <select multiple id="reference_record" name="reference_system_document_gi" id="">
+                    <select multiple id="reference_record" name="reference_system_document_gi[]" id="">
                         <option value="o">Enter Your Selection Here</option>
-                        <option value="1" {{ $data->severity_level_gi == '1' ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ $data->severity_level_gi == '2' ? 'selected' : '' }}>2
-                        </option>
-
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="group-input">
-                    <label for="Reference Recores">Reference Document</label>
-                    <select multiple id="reference_record" name="reference_document[]" id="">
-                        <option value="0">--Select---</option>
-                        <option value="1" {{ $data->reference_document == '1' ? 'selected' : '' }}>1
-                        </option>
-                        <option value="2" {{ $data->reference_document == '2' ? 'selected' : '' }}>2
-                        </option>
+                        <option value="1" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 1)) ? 'selected' : '' }}>1</option>
+                        <option value="2" {{ (!empty($data->reference_system_document_gi) && str_contains($data->reference_system_document_gi, 2)) ? 'selected' : '' }}>2</option>
                     </select>
                 </div>
             </div>

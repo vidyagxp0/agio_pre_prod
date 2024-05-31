@@ -122,13 +122,8 @@
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]">
                         <option value="0">--Select---</option>
-                        {{-- {{ in_array('0', $data->capa_ref_no_oosc ?? []) ? 'selected' : '' }} --}}
-                        
-                        <option value="1">1
-                        </option>
-
-                        <option value="2">2
-                        </option>
+                        <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
+                        <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
                     </select>
                 </div>
             </div>

@@ -357,7 +357,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Additional Testing Proposal </button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">OOS Conclusion</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm9')">OOS Conclusion Review</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS CQ Review</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm10')">OOS QA Review</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm11')">Batch Disposition</button>
                 <!-- <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Re-Open</button> -->
                 <button class="cctablinks" onclick="openCity(event, 'CCForm13')">QA Head/Designee Approval</button>
