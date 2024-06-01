@@ -325,19 +325,19 @@
                                     <td>
                                         <select name="info_product_material[{{ $loop->index }}][info_packing_material_type]">
                                             <option value="">--Select--</option>
-                                            <option value="Primary" {{ $info_product_material['info_packing_material_type'] == 'Primary' ? 'selected' : '' }}>Primary</option>
-                                            <option value="Secondary" {{ $info_product_material['info_packing_material_type'] == 'Secondary' ? 'selected' : '' }}>Secondary</option>
-                                            <option value="Tertiary" {{ $info_product_material['info_packing_material_type'] == 'Tertiary' ? 'selected' : '' }}>Tertiary</option>
-                                            <option value="Not Applicable" {{ $info_product_material['info_packing_material_type'] == 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
+                                            <option value="Primary" >Primary</option>
+                                            <option value="Secondary" >Secondary</option>
+                                            <option value="Tertiary" >Tertiary</option>
+                                            <option value="Not Applicable">Not Applicable</option>
                                         </select>
                                     </td>
                                     <td>
                                         <select name="info_product_material[{{ $loop->index }}][info_stability_for]">
                                             <option value="">--Select--</option>
-                                            <option value="Submission" {{ $info_product_material['info_stability_for'] == 'Submission' ? 'selected' : '' }}>Submission</option>
-                                            <option value="Commercial" {{ $info_product_material['info_stability_for'] == 'Commercial' ? 'selected' : '' }}>Commercial</option>
-                                            <option value="Pack Evaluation" {{ $info_product_material['info_stability_for'] == 'Pack Evaluation' ? 'selected' : '' }}>Pack Evaluation</option>
-                                            <option value="Not Applicable" {{ $info_product_material['info_stability_for'] == 'Not Applicable' ? 'selected' : '' }}>Not Applicable</option>
+                                            <option value="Submission">Submission</option>
+                                            <option value="Commercial">Commercial</option>
+                                            <option value="Pack Evaluation">Pack Evaluation</option>
+                                            <option value="Not Applicable">Not Applicable</option>
                                         </select>
                                     </td>
                                 </tr>
