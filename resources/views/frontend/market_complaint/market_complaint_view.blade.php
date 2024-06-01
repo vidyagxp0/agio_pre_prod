@@ -1684,6 +1684,7 @@
                                                     <th>Department</th>
                                                     <th>Sign</th>
                                                     <th>Date</th>
+                                                    <th>Action</th>
 
 
                                                 </tr>
@@ -1715,6 +1716,8 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
                                                     </tr>
 
 
@@ -1745,6 +1748,7 @@
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][department_tm]"></td>' +
                                                 '<td><input type="text" name="Team_Members[' + teamserialNumber + '][sign_tm]"></td>' +
                                                 '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ teamserialNumber +'_date_tm" type="text" name="Team_Members[' + teamserialNumber + '][date_tm]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Team_Members[' + teamserialNumber + '][date_tm]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ teamserialNumber +'_date_tm" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ teamserialNumber +'_date_tm\')" /> </div> </div></td>' +
+                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                                                 '</tr>';
                                             return html;
@@ -1783,6 +1787,8 @@
                                                     <th>Department</th>
                                                     <th>Sign</th>
                                                     <th>Date</th>
+                                                 <th>Action</th>
+
 
 
                                                 </tr>
@@ -1813,6 +1819,8 @@
                                                                 </div>
                                                             </div>
                                                         </td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+
                                                     </tr>
                                                     @endforeach
 
@@ -1836,6 +1844,7 @@
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][department_rrv]"></td>' +
                                                 '<td><input type="text" name="Report_Approval[' + serialNumber + '][sign_rrv]"></td>' +
                                                 '<td>  <div class="new-date-data-field"><div class="group-input input-date"><div class="calenderauditee"><input id="date_'+ serialNumber +'_date_rrv" type="text" name="Report_Approval[' + serialNumber + '][date_rrv]" placeholder="DD-MMM-YYYY" /> <input type="date" name="Report_Approval[' + serialNumber + '][date_rrv]" min="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" value="{{ \Carbon\Carbon::now()->format("Y-m-d") }}" id="date_'+ serialNumber +'_date_rrv" class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, \'date_'+ serialNumber +'_date_rrv\')" /> </div> </div></td>' +
+                                                '<td><button type="text" class="removeRowBtn" ">Remove</button></td>' +
 
                                                 '</tr>';
                                             return html;
@@ -1965,6 +1974,8 @@
                                                 <th>Pack Profile</th>
                                                 <th>Released Quantity</th>
                                                 <th>Remarks</th>
+                                                <th>Action</th>
+
 
                                             </tr>
                                         </thead>
@@ -2012,6 +2023,7 @@
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][pack_profile_pmd_ca]" value="{{ array_key_exists('pack_profile_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['pack_profile_pmd_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][released_quantity_pmd_ca]" value="{{ array_key_exists('released_quantity_pmd_ca', $Prodmateriyal) ? $Prodmateriyal['released_quantity_pmd_ca'] : '' }}"></td>
                                                         <td><input type="text" name="Product_MaterialDetails[{{ $loop->index }}][remarks_ca]" value="{{ array_key_exists('remarks_ca', $Prodmateriyal) ? $Prodmateriyal['remarks_ca'] : '' }}"></td>
+                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
                                                     </tr>
                                                 @endforeach
                                             @else
