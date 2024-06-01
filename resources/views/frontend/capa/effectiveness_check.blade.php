@@ -16,7 +16,7 @@
     </div>
     <div class="division-bar">
         <strong>Site Division/Project</strong> :
-        {{ Helpers::getDivisionName(session()->get('division')) }} / Capa Child / Effectivezvzsfcszness-Check
+        QMS-North America / Capa Child / Effectivezvzsfcszness-Check
     </div>
 
 </div>

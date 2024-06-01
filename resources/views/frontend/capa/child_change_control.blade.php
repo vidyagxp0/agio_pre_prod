@@ -11,7 +11,7 @@
 
 
                 <div class="slogan">
-                    <strong>Site Division/Project :</strong>
+                    <strong>Division / Project :</strong>
                     QMS-EMEA /Capa Child / Change Control
                 </div>
             </div>

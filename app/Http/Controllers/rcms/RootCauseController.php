@@ -40,8 +40,8 @@ use Illuminate\Support\Facades\Hash;
         }
         $root = new RootCauseAnalysis();
         $root->form_type = "Root-cause-analysis"; 
-        $root->parent_id = $request->parent_id;
-        $root->parent_type = $request->parent_type;
+        $openState->parent_id = $request->parent_id;
+        $openState->parent_type = $request->parent_type;
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
         $root->division_id = $request->division_id;

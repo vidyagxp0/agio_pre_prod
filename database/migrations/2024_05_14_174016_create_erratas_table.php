@@ -29,7 +29,7 @@ return new class extends Migration
             $table->longText('brief_description')->nullable();
             $table->string('type_of_error')->nullable();
             $table->longtext('details')->nullable();
-            $table->dateTime('Date_and_time_of_correction')->nullable();
+            $table->date('Date_and_time_of_correction')->nullable();
             $table->longText('QA_Feedbacks')->nullable();
             $table->string('QA_Attachments')->nullable();
             // $table->string('file_path')->nullable();

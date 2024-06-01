@@ -452,7 +452,6 @@ class DocumentController extends Controller
        
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
-            $document->legacy_number = $request->legacy_number;
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
@@ -617,9 +616,6 @@ class DocumentController extends Controller
             }
             if (! empty($request->responsibility)) {
                 $content->responsibility = serialize($request->responsibility);
-            }
-            if (! empty($request->accountability)) {
-                $content->accountability = serialize($request->accountability);
             }
             if (! empty($request->abbreviation)) {
                 $content->abbreviation = serialize($request->abbreviation);
@@ -808,7 +804,6 @@ class DocumentController extends Controller
                 $document->description = $request->description;
 
 
-                $document->legacy_number = $request->legacy_number;
                 $document->due_dateDoc = $request->due_dateDoc;
                 $document->sop_type = $request->sop_type;
                 $document->department_id = $request->department_id;
@@ -1333,7 +1328,6 @@ class DocumentController extends Controller
             $documentcontet->safety_precautions = $request->safety_precautions;
             
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
-            $documentcontet->accountability = $request->accountability ? serialize($request->accountability) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
             $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);
@@ -1770,7 +1764,7 @@ class DocumentController extends Controller
         $canvas->page_text(
             $width / 4,
             $height / 2,
-            Helpers::getDocStatusByStage($data->stage),
+            $data->status,
             null,
             25,
             [0, 0, 0],

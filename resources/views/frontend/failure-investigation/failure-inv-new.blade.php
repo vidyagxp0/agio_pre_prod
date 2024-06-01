@@ -563,13 +563,14 @@
 
                 <button id="CAPA_button" class="cctablinks" style="display: none"
                     onclick="openCity(event, 'CCForm10')">CAPA</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Investigation & CAPA</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Initiator Update</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">QAH/Designee Approval</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm12')">Extension</button>
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-            <form id="auditform" action="{{ route('failureInvestigationStore') }}" method="post" enctype="multipart/form-data">
+            <form id="auditform" action="{{ route('deviationstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="form_name" id="formNameField" value="">
                 <div id="step-form">
@@ -605,7 +606,7 @@
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -748,7 +749,7 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="short_description_required">Repeat Failure Investigation?</label>
+                                        <label for="short_description_required">Repeat Deviation?</label>
                                         <select name="short_description_required" id="short_description_required"
                                             required>
                                             <option value="0">-- Select --</option>
@@ -808,7 +809,7 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Failure Investigation date">Failure Investigation Observed On</label>
+                                        <label for="Deviation date">Deviation Observed On</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="failure_investigation_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -826,7 +827,7 @@
 
                                 <div class="col-lg-6 new-time-data-field">
                                     <div class="group-input input-time">
-                                        <label for="failure_investigation_time">Failure Investigation Observed On (Time)</label>
+                                        <label for="failure_investigation_time">Deviation Observed On (Time)</label>
                                         <input type="text" name="failure_investigation_time" id="failure_investigation_time">
                                     </div>
                                     @error('failure_investigation_date')
@@ -855,13 +856,13 @@
                                 </script>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="facility">Failure Investigation Observed By</label>
-                                        <input type="text" name="Facility" id="failure_investigation_observed_by" placeholder="Enter Facility Name">
+                                        <label for="facility">Deviation Observed By</label>
+                                        <input type="text" name="Facility" id="deviation_observed_by" placeholder="Enter Facility Name">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Failure Investigation Reported on</label>
+                                        <label for="Audit Schedule End Date">Deviation Reported on</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="failure_investigation_reported_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -875,18 +876,18 @@
                                     $('.delayJustificationBlock').hide();
 
                                     function calculateDateDifference() {
-                                        let failureInvestigationDate = $('input[name=failure_investigation_date]').val();
+                                        let deviationDate = $('input[name=failure_investigation_date]').val();
                                         let reportedDate = $('input[name=failure_investigation_reported_date]').val();
 
-                                        if (!failureInvestigationDate || !reportedDate) {
-                                            console.error('Failure Investigation date or reported date is missing.');
+                                        if (!deviationDate || !reportedDate) {
+                                            console.error('Deviation date or reported date is missing.');
                                             return;
                                         }
 
-                                        let failureInvestigationDateMoment = moment(failureInvestigationDate);
+                                        let deviationDateMoment = moment(deviationDate);
                                         let reportedDateMoment = moment(reportedDate);
 
-                                        let diffInDays = reportedDateMoment.diff(failureInvestigationDateMoment, 'days');
+                                        let diffInDays = reportedDateMoment.diff(deviationDateMoment, 'days');
 
                                         if (diffInDays > 0) {
                                             $('.delayJustificationBlock').show();
@@ -907,7 +908,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="audit type">Failure Investigation Related To </label>
+                                        <label for="audit type">Deviation Related To </label>
                                         <select multiple name="audit_type[]" id="audit_type">
                                             {{-- <option value="">Enter Your Selection Here</option> --}}
                                             <option value="Facility">Facility</option>
@@ -931,7 +932,7 @@
                                 </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="audit type">Failure Investigation Related To </label>
+                                        <label for="audit type">Deviation Related To </label>
                                         <select name="audit_type[]" id="audit_type" multiple class="form-control">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Facility">Facility</option>
@@ -1356,13 +1357,13 @@
 
                                 {{-- <div class="col-6">
                                     <div class="group-input">
-                                        <label for="Description Failure Investigation">Description of Failure Investigation</label>
+                                        <label for="Description Deviation">Description of Deviation</label>
                                         <textarea class="" id="Description_failure_investigation" name="Description_failure_investigation[]"></textarea>
                                     </div>
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Description Failure Investigation">Description of Failure Investigation</label>
+                                        <label for="Description Deviation">Description of Deviation</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="Description_failure_investigation[]" id="summernote-1" required>
@@ -1393,13 +1394,13 @@
                                 </div>
                                 {{-- <div class="col-6">
                                 <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Failure Investigation</label>
+                                        <label for="Preliminary Impact">Preliminary Impact of Deviation</label>
                                         <textarea class="" id="Preliminary_Impact" name="Preliminary_Impact[]"></textarea>
                                     </div>
                                 </div> --}}
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Preliminary Impact">Preliminary Impact of Failure Investigation </label>
+                                        <label for="Preliminary Impact">Preliminary Impact of Deviation </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
                                         <textarea class="tiny" name="Preliminary_Impact[]" id="summernote-3" required>
@@ -1533,8 +1534,8 @@
 
 
 
-                                    // Function to handle the change event of the Initial Failure Investigation Category dropdown
-                                    function handlefailureInvestigationCategoryChange() {
+                                    // Function to handle the change event of the Initial Deviation Category dropdown
+                                    function handleDeviationCategoryChange() {
                                         var selectElement = document.getElementById("failure_investigation_category");
                                         var selectedOption = selectElement.options[selectElement.selectedIndex].value;
 
@@ -1593,9 +1594,9 @@
 
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
-                                        <label for="failure_investigation_category">Initial Failure Investigation Category</label>
+                                        <label for="failure_investigation_category">Initial Deviation Category</label>
                                         <select name="failure_investigation_category" id="failure_investigation_category" disabled
-                                            onchange="handlefailureInvestigationCategoryChange()">
+                                            onchange="handleDeviationCategoryChange()">
                                             <option value="0">-- Select -- </option>
                                             <option value="minor">Minor </option>
                                             <option value="major">Major </option>
@@ -1719,7 +1720,7 @@
                             $('#failure_investigation_category, #Investigation_required, #qrm_required, #capa_required').change(
                                 function() {
                                     // Get the selected values
-                                    var failureInvestigationCategory = $('#failure_investigation_category').val();
+                                    var deviationCategory = $('#failure_investigation_category').val();
                                     var investigationRequired = $('#Investigation_required').val();
                                     var capaRequired = $('#capa_required').val();
                                     var qrmRequired = $('#qrm_required').val();
@@ -4860,10 +4861,10 @@
                                 </div>
                                 <div style="margin-bottom: 0px;" class="col-lg-12 new-date-data-field ">
                                     <div class="group-input input-date">
-                                        <label for="Failure Investigation category">Source of CAPA</label>
+                                        <label for="Deviation category">Source of CAPA</label>
                                         <select name="failure_investigation_category" id="failure_investigation_category">
                                             <option value="0">-- Select -- </option>
-                                            <option value="Failure Investigation">Failure Investigation </option>
+                                            <option value="Deviation">Deviation </option>
                                             <option value="OS/OT">OS/OT</option>
                                             <option value="Audit_Obs">Audit Observation </option>
 
@@ -5108,8 +5109,8 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Failure Investigation">Post Categorization Of Failure Investigation</label>
-                                       <div><small class="text-primary">Please Refer Intial Failure Investigation category before updating.</small></div>
+                                        <label for="Post Categorization Of Deviation">Post Categorization Of Deviation</label>
+                                       <div><small class="text-primary">Please Refer Intial deviation category before updating.</small></div>
                                         {{-- <textarea class="" name="Post_Categorization" id="summernote-12"> --}}
                     {{-- <select name="Post_Categorization" id="Post_Categorization">
                                                 <option value=""> -- Select --</option>
@@ -5241,9 +5242,9 @@
                             <div class="row">
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Post Categorization Of Failure Investigation">Post Categorization Of
-                                            Failure Investigation</label>
-                                        <div><small class="text-primary">Please Refer Intial Failure Investigation category before
+                                        <label for="Post Categorization Of Deviation">Post Categorization Of
+                                            Deviation</label>
+                                        <div><small class="text-primary">Please Refer Intial deviation category before
                                                 updating.</small></div>
                                         <select name="Post_Categorization" id="Post_Categorization" disabled>
                                             <option value=""> -- Select --</option>
@@ -5321,39 +5322,39 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="sub-head">
-                                    Failure Investigation Extension
+                                    Deviation Extension
                                 </div>
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Proposed Due Date (Failure Investigation)</label>
+                                        <label for="Audit Schedule End Date">Proposed Due Date (Deviation)</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="Proposed_Due_date_failure_investigation" readonly
+                                            <input type="text" id="Proposed_Due_date_deviation" readonly
                                                 placeholder="DD-MMM-YYYY" disabled/>
-                                            <input type="date" name="Proposed_Due_date_failure_investigation"
+                                            <input type="date" name="Proposed_Due_date_deviation"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Proposed_Due_date_failure_investigation')" disabled />
+                                                oninput="handleDateInput(this, 'Proposed_Due_date_deviation')" disabled />
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Extension_Justification_failure_investigation">Extension Justification
-                                            (Failure Investigation)</label>
+                                        <label for="Extension_Justification_deviation">Extension Justification
+                                            (Deviation)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Extension_Justification_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="Extension_Justification_deviation" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for=" failure_investigation_Extension_Completed_By"> Failure Investigation Extension Completed By
+                                        <label for=" Deviation_Extension_Completed_By"> Deviation Extension Completed By
                                         </label>
-                                        <select name="failure_investigation_Extension_Completed_By"
-                                            id="failure_investigation_Extension_Completed_By" disabled>
+                                        <select name="Deviation_Extension_Completed_By"
+                                            id="Deviation_Extension_Completed_By" disabled>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $user)
                                                 <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5364,13 +5365,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Audit Schedule End Date">Failure Investigation Extension Completed On</label>
+                                        <label for="Audit Schedule End Date">Deviation Extension Completed On</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="failure_investigation_Extension_Completed_On" readonly
+                                            <input type="text" id="Deviation_Extension_Completed_On" readonly
                                                 placeholder="DD-MMM-YYYY" disabled/>
-                                            <input type="date" name="failure_investigation_Extension_Completed_On"
+                                            <input type="date" name="Deviation_Extension_Completed_On"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'failure_investigation_Extension_Completed_On')" disabled/>
+                                                oninput="handleDateInput(this, 'Deviation_Extension_Completed_On')" disabled/>
                                         </div>
                                     </div>
                                 </div>
@@ -5564,16 +5565,16 @@
 
 
                                 {{-- <div class="sub-head">
-                                    Failure Investigation Effectiveness Check
+                                    Deviation Effectiveness Check
                                 </div>
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="Effectiveness_Check_Plan_failure_investigation">Effectiveness Check
-                                            Plan(Failure Investigation)</label>
+                                        <label for="Effectiveness_Check_Plan_Deviation">Effectiveness Check
+                                            Plan(Deviation)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="Effectiveness_Check_Plan_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="Effectiveness_Check_Plan_Deviation" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
@@ -5583,10 +5584,10 @@
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for=" failure_investigation_Effectiveness_Check_Plan_Proposed_By">Failure Investigation
+                                            <label for=" Deviation_Effectiveness_Check_Plan_Proposed_By">Deviation
                                                 Effectiveness Check Plan Proposed By </label>
-                                            <select name="failure_investigation_Effectiveness_Check_Plan_Proposed_By"
-                                                id="failure_investigation_Effectiveness_Check_Plan_Proposed_By">
+                                            <select name="Deviation_Effectiveness_Check_Plan_Proposed_By"
+                                                id="Deviation_Effectiveness_Check_Plan_Proposed_By">
                                                 <option value="">-- Select --</option>
                                                 @foreach ($users as $user)
                                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
@@ -5597,15 +5598,15 @@
 
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="failure_investigation_EC_Plan_Proposed_On"> Failure Investigation Effectiveness Check Plan
+                                            <label for="deviation_EC_Plan_Proposed_On"> Deviation Effectiveness Check Plan
                                                 Proposed On</label>
                                             <div class="calenderauditee">
-                                                <input type="text" id="failure_investigation_EC_Plan_Proposed_On" readonly
+                                                <input type="text" id="deviation_EC_Plan_Proposed_On" readonly
                                                     placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="failure_investigation_EC_Plan_Proposed_On"
+                                                <input type="date" name="deviation_EC_Plan_Proposed_On"
                                                     max="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'failure_investigation_EC_Plan_Proposed_On')" />
+                                                    oninput="handleDateInput(this, 'deviation_EC_Plan_Proposed_On')" />
                                             </div>
                                         </div>
                                     </div>
@@ -5615,11 +5616,11 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
-                                        <label for="EC_Closure_comments_failure_investigation">Effectiveness Check Closure
-                                            Comments(Failure Investigation)</label>
+                                        <label for="EC_Closure_comments_deviation">Effectiveness Check Closure
+                                            Comments(Deviation)</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does
                                                 not require completion</small></div>
-                                        <textarea class="tiny" name="EC_Closure_comments_failure_investigation" id="summernote-10">
+                                        <textarea class="tiny" name="EC_Closure_comments_deviation" id="summernote-10">
                                     </textarea>
                                     </div>
                                 </div>
@@ -5627,13 +5628,13 @@
 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Next_review_date_failure_investigation">Next Review Date(Failure Investigation)</label>
+                                        <label for="Next_review_date_deviation">Next Review Date(Deviation)</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="Next_review_date_failure_investigation" readonly
+                                            <input type="text" id="Next_review_date_deviation" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="Next_review_date_failure_investigation"
+                                            <input type="date" name="Next_review_date_deviation"
                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'Next_review_date_failure_investigation')" />
+                                                oninput="handleDateInput(this, 'Next_review_date_deviation')" />
                                         </div>
                                     </div>
                                 </div>
@@ -5641,7 +5642,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for=" deviaiton_EC_Closed_By">Failure Investigation Effectiveness Check Closed
+                                            <label for=" deviaiton_EC_Closed_By">Deviation Effectiveness Check Closed
                                                 By</label>
                                             <select name="deviaiton_EC_Closed_By" id="deviaiton_EC_Closed_By">
                                                 <option value="">-- Select --</option>
@@ -5654,15 +5655,15 @@
 
                                     <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
-                                            <label for="failure_investigation_Effectiveness_Check_Closed_On">Failure Investigation Effectiveness
+                                            <label for="deviation_Effectiveness_Check_Closed_On">Deviation Effectiveness
                                                 Check Closed On</label>
                                             <div class="calenderauditee">
-                                                <input type="text" id="failure_investigation_Effectiveness_Check_Closed_On"
+                                                <input type="text" id="deviation_Effectiveness_Check_Closed_On"
                                                     readonly placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="failure_investigation_Effectiveness_Check_Closed_On"
+                                                <input type="date" name="deviation_Effectiveness_Check_Closed_On"
                                                     min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                     class="hide-input"
-                                                    oninput="handleDateInput(this, 'failure_investigation_Effectiveness_Check_Closed_On')" />
+                                                    oninput="handleDateInput(this, 'deviation_Effectiveness_Check_Closed_On')" />
                                             </div>
                                         </div>
                                     </div>
@@ -6218,7 +6219,7 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation Workflow</h4>
+                        <h4 class="modal-title">Deviation Workflow</h4>
                     </div>
                     <div style="padding: 2px; " class="modal-body">
 
@@ -6365,7 +6366,7 @@
                                     </li>
                                     <li>
                                         <div> <a href="" data-bs-toggle="modal"
-                                                data-bs-target="#failure_investigation_extension"> Failure Investigation</a></div>
+                                                data-bs-target="#deviation_extension"> Deviation</a></div>
                                     </li>
                                 </ul>
                             </div>
@@ -6557,15 +6558,14 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade" id="failure_investigation_extension">
+        {{-- ===============================deviation=========== --}}
+        <div class="modal fade" id="deviation_extension">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation-Extension</h4>
+                        <h4 class="modal-title">Deviation-Extension</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -6583,25 +6583,25 @@
                                 <input class="extension_modal_signature" type="password" name="password" required>
                             </div>
                             <div class="group-input">
-                                <label for="password">Proposed Due Date (Failure Investigation)</label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_due_capa">
+                                <label for="password">Proposed Due Date (Deviation)</label>
+                                <input class="extension_modal_signature" type="date" name="deviation_due_capa">
                             </div>
                             <div class="group-input">
-                                <label for="password">Extension Justification (Failure Investigation)<span
+                                <label for="password">Extension Justification (Deviation)<span
                                         class="text-danger">*</span></label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_justification">
+                                    name="deviation_justification">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Extension Completed By </label>
-                                <select class="extension_modal_signature" name="failure_investigation_extension_by"
+                                <label for="password">Deviation Extension Completed By </label>
+                                <select class="extension_modal_signature" name="deviation_extension_by"
                                     id="">
                                     <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Extension Completed On </label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_on">
+                                <label for="password">Deviation Extension Completed On </label>
+                                <input class="extension_modal_signature" type="date" name="deviation_on">
                             </div>
 
                         </div>
@@ -6639,7 +6639,7 @@
                                 <ul>
                                     <li>
                                         <div> <a href="" data-bs-toggle="modal"
-                                                data-bs-target="#failure_investigation_effectiveness"> Failure Investigation Effectiveness
+                                                data-bs-target="#deviation_effectiveness"> Deviation Effectiveness
                                                 Check</a></div>
                                     </li>
 
@@ -6670,15 +6670,14 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="modal fade" id="failure_investigation_effectiveness">
+        {{-- ===============================deviation effectiveness=========== --}}
+        <div class="modal fade" id="deviation_effectiveness">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">Failure Investigation-Effectiveness</h4>
+                        <h4 class="modal-title">Deviation-Effectiveness</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -6696,41 +6695,41 @@
                                 <input class="extension_modal_signature" type="password" name="password" required>
                             </div>
                             <div class="group-input">
-                                <label for="Failure Investigation">Effectiveness Check Plan(Failure Investigation)</label>
+                                <label for="deviation">Effectiveness Check Plan(Deviation)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="effectiveness_failure_investigation">
+                                    name="effectiveness_deviation">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check Plan Proposed By<span
+                                <label for="password">Deviation Effectiveness Check Plan Proposed By<span
                                         class="text-danger">*</span></label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="effectiveness_failure_investigation_proposed_by">
+                                    name="effectiveness_deviation_proposed_by">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check Plan Proposed On </label>
+                                <label for="password">Deviation Effectiveness Check Plan Proposed On </label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_effectiveness_by">
+                                    name="deviation_effectiveness_by">
                             </div>
                             <div class="group-input">
-                                <label for="password">Effectiveness Check Colsure Comments(Failure Investigation)</label>
+                                <label for="password">Effectiveness Check Colsure Comments(Deviation)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="deviation_effectiveness_on">
                             </div>
                             <div class="group-input">
-                                <label for="password">Next Review Date(Failure Investigation)</label>
-                                <input class="extension_modal_signature" type="date" name="next_review_failure_investigation">
+                                <label for="password">Next Review Date(Deviation)</label>
+                                <input class="extension_modal_signature" type="date" name="next_review_deviation">
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check closed By </label>
-                                <select class="extension_modal_signature" name="failure_investigation_feectiveness_closed_by"
+                                <label for="password">Deviation Effectiveness Check closed By </label>
+                                <select class="extension_modal_signature" name="deviation_feectiveness_closed_by"
                                     id="">
                                     <option value="">-- Select --</option>
                                 </select>
                             </div>
                             <div class="group-input">
-                                <label for="password">Failure Investigation Effectiveness Check CLosed On</label>
+                                <label for="password">Deviation Effectiveness Check CLosed On</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="deviation_effectiveness_on">
                             </div>
 
                         </div>
@@ -6784,12 +6783,12 @@
                             <div class="group-input">
                                 <label for="password">CAPA Effectiveness Check Plan Proposed On </label>
                                 <input class="extension_modal_signature" type="text"
-                                    name="failure_investigation_effectiveness_by">
+                                    name="deviation_effectiveness_by">
                             </div>
                             <div class="group-input">
                                 <label for="password">Effectiveness Check Colsure Comments(CAPA)</label>
                                 <input class="extension_modal_signature" type="date"
-                                    name="failure_investigation_effectiveness_on">
+                                    name="deviation_effectiveness_on">
                             </div>
                             <div class="group-input">
                                 <label for="password">Next Review Date(CAPA)</label>
@@ -6849,7 +6848,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="password">Effectiveness Check Plan(QRM)</label>
-                                <input class="extension_modal_signature" type="date" name="failure_investigation_due_capa">
+                                <input class="extension_modal_signature" type="date" name="deviation_due_capa">
                             </div>
                             <div class="group-input">
                                 <label for="password">QRM Effectiveness Check Plan Proposed By<span

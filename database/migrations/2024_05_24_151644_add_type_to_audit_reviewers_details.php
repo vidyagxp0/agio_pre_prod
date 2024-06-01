@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('legacy_number')->nullable();
-        });
-
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->longText('accountability')->nullable();
+        Schema::table('audit_reviewers_details', function (Blueprint $table) {
+            $table->text('type')->nullable();
         });
     }
 
@@ -29,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('documents', function (Blueprint $table) {
+        Schema::table('audit_reviewers_details', function (Blueprint $table) {
             //
         });
     }

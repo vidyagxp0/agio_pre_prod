@@ -619,9 +619,6 @@ function addManagementReviewParticipants(tableId) {
     cell7.innerHTML = "<input type='text' name='designee_Department[]'>";
     let cell8 = newRow.insertCell(7);
     cell8.innerHTML = "<input type='text' name='remarks[]'>";
-    let cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<button type='text' class='removeRowBtn' name='Action[]' readonly>Remove</button>";
-
 
     for (let i = 1; i < currentRowCount; i++) {
         let row = table.rows[i];
@@ -1004,7 +1001,7 @@ function openDivision(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
-
+ 
 function handleDateInput(element, textInputID) {
     let textInput = document.getElementById(textInputID)
     const date = new Date(element.value);
@@ -1014,20 +1011,20 @@ function handleDateInput(element, textInputID) {
     const year = date.getFullYear();
     textInput.setAttribute('value', `${day}-${month}-${year}`)
   }
-
+ 
   function isStartDateLessThanEndDate(startDate, endDate) {
     // Convert date strings to Date objects
     const startDateObj = new Date(startDate);
-    const endDateObj = new Date(endDate);
+    const endDateObj = new Date(endDate); 
     // Compare the dates
     return startDateObj <= endDateObj;
   }
-
+  
   function checkDate(textInputID,textInputID2){
     const startDate = $('#'+textInputID).val();  // Replace with your start date
-    const endDate = $('#'+textInputID2).val();    // Replace with your end date
+    const endDate = $('#'+textInputID2).val();    // Replace with your end date 
     if ((startDate.trim() !== '') && (endDate.trim() !== '')) {
-        let endDataStr = textInputID2.replace(/_checkdate/g, "");
+        let endDataStr = textInputID2.replace(/_checkdate/g, ""); 
         if (isStartDateLessThanEndDate(startDate, endDate)) {
             console.log("Start date is less than end date.");
             //let textInput = document.getElementById(endDataStr)
@@ -1037,7 +1034,7 @@ function handleDateInput(element, textInputID) {
             // const day = date.getDate();
             // const year = date.getFullYear();
             // textInput.setAttribute('value', `${day}-${month}-${year}`)
-        } else {
+        } else { 
         alert("Start date is not less than end date.");
         let textInput = document.getElementById(endDataStr)
         textInput.setAttribute('value', ``)

@@ -9,7 +9,7 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                           Record - 00000 {{ $doc->id }}
+                                Record - 00000{{ $doc->id }}
                             </div>
                             <div class="info-list">
 

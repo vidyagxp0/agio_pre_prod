@@ -309,7 +309,7 @@ $users = DB::table('users')
                     </div> -->
         <div class="division-bar pt-3">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / OOS
+            QMS-North America / OOS
         </div>
         <!-- <div class="button-bar">
             <button type="button">Save</button>

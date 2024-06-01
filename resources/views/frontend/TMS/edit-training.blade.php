@@ -343,12 +343,12 @@
                     <div class="col-lg-6">
                         <div class="inner-block">
                             <div class="main-head">
-                                Selecting Document's
+                                Selecting SOP's
                             </div>
                             <div class="inner-block-content">
                                 <div class="search-bar">
 
-                                    <input type="text" name="search" placeholder="Search Document's">
+                                    <input type="text" name="search" placeholder="Search SOP's">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
 
                                 </div>
@@ -363,12 +363,12 @@
                                             </tr>
                                         </thead>  --}}
                                         <tbody >
-                                            <h6 style="color: red">Sorry !! You can not change the Document group of training plan.</h6>
+                                            <h6 style="color: red">Sorry !! You can not change the SOP group of training plan.</h6>
 
                                         </tbody>
                                     </table>
                                     <p id="SOPType" style="color: red">
-                                        ** Please Select atliest one Document...
+                                        ** Please Select atliest one SOP...
                                     </p>
                                 </div>
                             </div>

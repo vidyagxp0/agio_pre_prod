@@ -293,7 +293,7 @@
                                 </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Initiator Group">Initiator Group </label>
+                                                <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"

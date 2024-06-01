@@ -139,7 +139,7 @@
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
                                         <input type="hidden" name="division_id" value="{{$_GET['id']}}">
-                                        {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                         @else
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         {{-- <input readonly type="text" name="division_id"
@@ -235,20 +235,12 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
                                         <div class="default-name">Not available</div>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="legacy_number">Legacy Document Number</label>
-                                        <input type="text" id="legacy_number" name="legacy_number" maxlength="255">
-                                    </div>
-                                </div>
-
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="link-doc">Reference Record</label>
@@ -733,7 +725,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="purpose">Objective</label>
+                                        <label for="purpose">Purpose</label>
                                         <textarea name="purpose"></textarea>
                                     </div>
                                 </div>
@@ -743,7 +735,6 @@
                                         <textarea name="scope"></textarea>
                                     </div>
                                 </div>
-                                
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         
@@ -769,58 +760,6 @@
                                             </div>
                                         </div>
 
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        
-                                        <label for="accountability" id="accountability">
-                                            Accountability<button type="button" id="accountabilitybtnadd"
-                                                name="button">+</button>
-                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        </label>
-                                        
-                                        <div id="accountabilitydiv">
-                                            <div class="singleAccountabilityBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="accountability[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subAccountabilityAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12">
-                                    <div class="group-input">
-                                        <label for="references" id="references">
-                                            References<button type="button" id="referencesbtadd" >+</button>
-                                        </label>
-                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <div id="referencesdiv">
-                                            <div class="singleReferencesBlock">
-                                                <div class="row">
-                                                    <div class="col-sm-10">
-                                                        <textarea name="references[]" class="myclassname"></textarea>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-dark subReferencesAdd">+</button>
-                                                    </div>
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
@@ -887,7 +826,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            General Instructions<button type="button" id="materialsbtadd"
+                                            Materials and Equipments<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
@@ -911,6 +850,16 @@
                                     </div>
                                 </div>
 
+                                {{-- SAFETY & PRECATIONS START --}}
+                                    <div class="col-md-12">
+                                        <div class="group-input">
+                                            <label for="procedure">Safety & Precautions</label>
+                                            <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                            <textarea name="safety_precautions" class="summernote"></textarea>
+                                        </div>
+                                    </div>
+                                {{-- SAFETY & PRECATIONS END --}}
+
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
@@ -925,7 +874,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Cross References<button type="button" id="reportingbtadd" name="button">+</button> 
+                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button> 
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         
@@ -948,8 +897,29 @@
                                     </div>
                                 </div>
 
-                                
-
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="references" id="references">
+                                            References<button type="button" id="referencesbtadd" >+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <div id="referencesdiv">
+                                            <div class="singleReferencesBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="ann" id="ann">
@@ -1074,12 +1044,86 @@
 
                     <div id="annexures" class="tabcontent">
                         <div class="input-fields">
-                            @for ($i = 1; $i <= 30; $i++)
-                                <div class="group-input">
-                                    <label for="annexure-{{ $i }}">Annexure</label>
-                                    <textarea class="summernote" name="annexuredata[]" id="annexure-{{ $i }}"></textarea>
-                                </div>
-                            @endfor
+                            <div class="group-input">
+                                <label for="annexure-1">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-1"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-2">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-2"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-3">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-3"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-4">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-4"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-5">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-5"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-6">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-6"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-7">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-7"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-8">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-8"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-9">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-9"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-10">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-10"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-11">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-11"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-12">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-12"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-13">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-13"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-14">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-14"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-15">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-15"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-16">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-16"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-17">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-17"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-18">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-18"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-19">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-19"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-20">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-20"></textarea>
+                            </div>
                         </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>

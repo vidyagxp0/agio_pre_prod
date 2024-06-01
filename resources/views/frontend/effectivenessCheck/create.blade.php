@@ -18,7 +18,7 @@
             </div>
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Effectiveness-Check
+                QMS-North America / Effectiveness-Check
             </div>
         </div>
         {{-- ======================================
