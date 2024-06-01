@@ -89,7 +89,7 @@ class OOSController extends Controller
         $cft = [];
         $revised_date = "";
         $data = OOS::find($id);
-
+        // dd($data);
         $old_record = OOS::select('id', 'division_id', 'record_number')->get();
         // $revised_date = Extension::where('parent_id', $id)->where('parent_type', "OOS Chemical")->value('revised_date');
         $data->record_number = str_pad($data->record_number, 4, '0', STR_PAD_LEFT);
