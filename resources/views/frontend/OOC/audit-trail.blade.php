@@ -189,12 +189,14 @@
                                 Audit Trail
                             </div>
 
-                            <div> <strong>Record ID.</strong> {{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
-                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
+                            <div> <strong>Record ID.</strong> {{ str_pad($auditrecord->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            {{-- <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
+                                :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div> --}}
+                                <div style="margin-bottom: 5px;  font-weight: bold;"> Originator
+                                    :{{ $document->record_initiator ? $document->record_initiator->name : '' }}</div>
                             <div style="margin-bottom: 5px; font-weight: bold;">Short Description :
-                                {{ $document->short_description }}</div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $document->due_date }}</div>
+                                {{ $auditrecord->description_ooc }}</div>
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $auditrecord->due_date }}</div>
 
                         </div>
         </div>
@@ -259,7 +261,7 @@
                             <td>
                                 <div>
                                     <strong> Action Name
-                                        :</strong>{{ $dataDemo->action ? $dataDemo->action : 'Not Applicable' }}
+                                        :</strong>{{ $dataDemo->action_name ? $dataDemo->action_name : 'Not Applicable' }}
 
                                 </div>
                             </td>

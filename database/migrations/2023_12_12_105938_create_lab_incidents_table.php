@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->longtext('Incident_Category_others')->nullable();
+            $table->text('capa_capa')->nullable();
 
             $table->string('initiator_group_code')->nullable();
             $table->string('Other_Ref')->nullable();

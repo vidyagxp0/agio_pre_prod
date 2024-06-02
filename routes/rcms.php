@@ -39,6 +39,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
     
     Route::get('/qms-logs/{slug}', [LogController::class, 'index'])->name('rcms.logs.show');
+    
 
 
     Route::middleware(['rcms'])->group(
@@ -124,6 +125,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');
             Route::post('LabIncidentChildRoot/{id}', [LabIncidentController::class, 'lab_incident_root_child'])->name('lab_incident_root_child');
+            Route::post('labincidentRiskChild/{id}', [LabIncidentController::class, 'labincidentRiskChild'])->name('labincidentRisk_Child');
             Route::get('LabIncidentAuditTrial/{id}', [LabIncidentController::class, 'LabIncidentAuditTrial'])->name('audittrialLabincident');
             Route::get('auditDetailsLabIncident/{id}', [LabIncidentController::class, 'auditDetailsLabIncident'])->name('LabIncidentauditDetails');
             Route::post('root_cause_analysis/{id}', [LabIncidentController::class, 'root_cause_analysis'])->name('Child_root_cause_analysis');

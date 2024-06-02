@@ -195,7 +195,7 @@
                                     @endphp
                                               {{-- @foreach ($report->data as  $item) --}}
                                                     <tr>
-                                              <td> {{ $serialNumber++ }} </td>
+                                              <td style="width: 6%"> {{ $serialNumber++ }} </td>
 
                                             {{-- <td style="width: 6%"><input type="text" name="investrecord[0][s_no]" value="">
                                               </td>
@@ -267,7 +267,7 @@
                     var html =
                         '<tr>' +
                         '<td><input  type="text" name="investrecord[]" value="' + serialNumber +
-                        '"></td>' +
+                        '"disabled></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][name_of_product]" value=""></td/>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][batch_no]" value=""></td>' +
                         '<td><input type="text" name="investrecord['+ investdetails +'][remarks]" value=""></td>' +
@@ -348,15 +348,56 @@
 
                                 </div>
 
-                                 
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="incident_date_analysis_gi">
-                                        <label for="Incident_date_analysis">Date Of Analysis<span
-                                                class="text-danger d-none">*</span></label>
-                                        <input type="date" name="incident_date_analysis_gi">
-                                    </div>
+                                {{-- <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="due-date">Date Of Analysis <span class="text-danger"></span></label> --}}
+                                        {{-- <p class="text-primary"> </p> --}}
+                                        
+                                        {{-- <div class="calenderauditee">
+                                            <input type="text" id="incident_date_analysis_gi" readonly
+                                                placeholder="DD-MMM-YYYY"/>
+                                            <input type="date" name="incident_date_analysis_gi"   class="hide-input" oninput="handleDateInput(this, 'incident_date_analysis_gi')"  />
+                                        </div>
+                                         --}}
+                                    {{-- </div>
+                                </div> --}}
 
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Analysis Date Due"> Date Of Analysis</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="incident_date_analysis_gi" readonly
+                                                placeholder="DD-MMM-YYYY"/>
+                                            <input type="date" name="incident_date_analysis_gi"   class="hide-input"
+                                                oninput="handleDateInput(this, 'incident_date_analysis_gi')"  />
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input" id="incident_date_analysis_gi">
+                                        <label for="incident_date_analysis_gi">Date of Analysis<span
+                                                class="text-danger d-none">*</span></label>
+                                        <input type="date" name="incident_date_analysis_gi" id="incident_date_analysis_gi" value="">
+                                    </div>
+        
+                                </div> --}}
+                                <script>
+                                    function formatDate(input) {
+                                        var dateValue = new Date(input.value);
+                                        var day = dateValue.getDate();
+                                        var month = dateValue.toLocaleString('default', { month: 'long' });
+                                        var year = dateValue.getFullYear();
+                                        var formattedDate = day + '-' + month + '-' + year;
+                                        input.value = formattedDate;
+                                    }
+                                </script>
+                                 
+                                
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input" id="incident_specification_no_gi">
                                         <label for="Incident_specification_no">Specification Number<span
@@ -381,13 +422,16 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input" id="incident_date_incidence_gi">
-                                        <label for="Incident_date_incidence">Date Of Incidence<span
-                                                class="text-danger d-none">*</span></label>
-                                        <input type="date" name="incident_date_incidence_gi">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="incident_date_incidence_gi">Date Of Incidence <span class="text-danger"></span></label>
+                                        
+                                        <div class="calenderauditee">
+                                            <input type="text" id="incident_date_incidence_gi_display" readonly
+                                                placeholder="DD-MMM-YYYY"/>
+                                            <input type="date" name="incident_date_incidence_gi" id="incident_date_incidence_gi" class="hide-input" oninput="handleDateInput(this, 'incident_date_incidence_gi_display')" />
+                                        </div>
                                     </div>
-
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input" id="description_incidence_gi">
@@ -397,21 +441,54 @@
                                     </div>
 
                                 </div>
-                                <div class="col-lg-6">
+                                
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Analyst Name <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="section_sign_date_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('section_sign_date_gi')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="analyst_sign_date_gi">
                                         <label for="analyst_sign_date">Analyst Sign Date<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="analyst_sign_date_gi">
                                     </div>
 
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input" id="section_sign_date_gi">
                                         <label for="section_sign_date">Section Head Sign Date<span
                                                 class="text-danger d-none">*</span></label>
                                         <input type="date" name="section_sign_date_gi">
                                     </div>
 
+                                </div> --}}
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Analyst Name <span class="text-danger"></span>
+                                        </label>
+                                        <select id="select-state" placeholder="Select..." name="analyst_sign_date_gi">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('analyst_sign_date_gi')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
                                 </div>
                                 {{-- New Added --}}
 
@@ -488,11 +565,11 @@
                                     </div> 
                                 </div>
                                 
-                                <div class="col-lg-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Initial Attachments">Incident Investigation Attachment</label>
+                                        <label for="Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment"> --}}
+                                        {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachments_gi"></div>
                                             <div class="add-btn">
@@ -705,19 +782,46 @@
                                 </div>
                             </div>
 
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
-                                <label for="extension date">Extension Date (if required)</label>
-                                <input type="date" name="extension_date_esc" id="extension_date">
+                                    <label for="extension_date">Extension Date (if required)</label>
+                                    <input type="date" name="extension_date_esc" id="extension_date">
                                 </div>
-                            </div>
+                            </div> --}}
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="extension_date_esc">Extension Date <span class="text-danger"></span></label>
+                                    
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_esc_display" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="extension_date_esc" id="extension_date_esc" class="hide-input" oninput="handleDateInput(this, 'extension_date_esc_display')" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+     
                                
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                 <label for="extension date">Extension Initiator Date</label>
                                 <input type="date" name="extension_date_initiator" id="extension_date">
                                 </div>
-                            </div>
+                            </div> --}}
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="extension_date_initiator">Extension Initiator Date <span class="text-danger"></span></label>
+                                    
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_initiator_display" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="extension_date_initiator" id="extension_date_initiator" class="hide-input" oninput="handleDateInput(this, 'extension_date_initiator_display')" />
+                                    </div>
+                                </div>
+                            </div>
 
 
                             <div class="col-md-12">
@@ -771,19 +875,45 @@
                              </div>
 
                           
-                             <div class="col-6">
+                             {{-- <div class="col-6">
                                 <div class="group-input">
                                  <label for="extension date">Extension Date (if required)</label>
                                   <input type="date" name="extension_date_e" id="extension_date__sc">
                                 </div>
                              </div>
-                           
-                                <div class="col-6">
+                            --}}
+
+
+
+                            <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="extension_date_e">Extension Date <span class="text-danger"></span></label>
+                                    
+                                    <div class="calenderauditee">
+                                        <input type="text" id="extension_date_e_display" readonly
+                                            placeholder="DD-MMM-YYYY"/>
+                                        <input type="date" name="extension_date_e" id="extension_date_e" class="hide-input" oninput="handleDateInput(this, 'extension_date_e_display')" />
+                                    </div>
+                                </div>
+                            </div>
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                     <label for="extension date">Extension Initiator Date</label>
                                     <input type="date" name="extension_date_idsc" id="extension_date_idsc">
                                     </div>
-                                </div>
+                                </div> --}}
+
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="extension_date_idsc">Extension Initiator Date <span class="text-danger"></span></label>
+                                        
+                                        <div class="calenderauditee">
+                                            <input type="text" id="extension_date_idsc_display" readonly
+                                                placeholder="DD-MMM-YYYY"/>
+                                            <input type="date" name="extension_date_idsc" id="extension_date_idsc" class="hide-input" oninput="handleDateInput(this, 'extension_date_idsc_display')" />
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                     <div class="col-md-12">
@@ -849,6 +979,13 @@
                                  <input type="date" name="extension_date_idtc" id="extension_date_idtc">
                                  </div>
                              </div>
+
+
+                             {{-- check --}}
+                             
+
+
+                             {{-- check --}}
 
 
                                  <div class="col-md-6">
@@ -1047,6 +1184,14 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
+                                
+                                
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="capa">Capa</label>
+                                        <textarea name="capa_capa"></textarea>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Currective Action">Corrective Action</label>
@@ -1190,7 +1335,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <span id="rchar">240</span> characters remaining
+                                        {{-- <span id="rchar">240</span> characters remaining --}}
                                         <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
                                     </div>
                                 </div>
@@ -1651,152 +1796,263 @@
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-3">
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Submitted
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted By">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Submitted On">Submitted On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Verification 
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Incident Review Completed By">Incident Review Completed By</label>
+                                        <label for="Verification Complete">Verification Complete
+                                            By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Incident Review Completed On">Incident Review Completed On</label>
+                                        <label for="Incident Review Completed On">Verification Complete
+                                            On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Preliminary Investigation
+                                </div>
+                                
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed By">Investigation Completed By</label>
+                                        <label for="Investigation Completed By"> Preliminary Investigation Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Investigation Completed On">Investigation Completed On</label>
+                                        <label for="Investigation Completed On"> Preliminary Investigation Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                               <div class="col-lg-3">
+                                
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Assignable Cause Identification
+                                </div>
+                                
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Review Completed By">QA Review Completed By</label>
+                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="QA Review Completed By">QA Review Completed On</label>
+                                        <label for="Assignable Cause Identification Completed">Assignable Cause Identification Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
+                               <div class="col-12 sub-head" style="font-size: 16px">
+                                    No Assignable Cause Identification
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="No Assignable Completed By">No Assignable Cause Identification  Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="No Assignable Completed On">No Assignable Cause Identification Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Comment">Comment</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div> 
                                
-                              
-                                <div class="col-lg-3">
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Extended Inv
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Activities Completed By">All Activities Completed By</label>
+                                        <label for="Extended Inv Completed By">Extended Inv Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <label for="Extended Inv Completed On">Extended Inv Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-3">
+                              
+                                
+                                
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Solution Validation 
+                                </div>
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Review Completed By">Review Completed By</label>
+                                        <label for="Solution Validation Completed By">Solution Validation Completed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
-                                    <div class="group-input">
-                                        <label for="Review Completed On">Review Completed On</label>
-                                        <div class="static"></div>
+                                <div class="col-lg-4">
+                                    <div class="group-input" >
+                                        <label for="Solution Validation Completed On">Solution Validation Completed On</label>
+                                        <div class="Date"></div>
                                     </div>
-                                </div>  
-                                <div class="col-lg-6">
+                                </div>                                
+                                <div class="col-lg-4">
                                     <div class="group-input">
-                                        <label for="Coment">Comment</label>
+                                        <label for="Comment">Comment</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    All Action Approved
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="All Action Approved Completed By">All Action Approved Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="All Action Approved Completed On">All Action Approved Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                               
+                               
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Assessment 
+                                </div>
+                                 <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Assessment Completed By">Assessment Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Assemssment Completed On">Assessment Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Closure
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed By">Closure Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Closure Completed On">Closure Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment" >Comment</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div> 
+                                
+
+                                <div class="col-12 sub-head" style="font-size: 16px">
+                                    Cancel
+                                </div>
+
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3">
+                                <div class="col-lg-4">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="group-input">
+                                        <label for="Comment">Comment</label>
+                                        <div class="static"></div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Comment">Comment</label>
-                                            <div class="static"></div>
-                                        </div>
-                                    </div>                   
+                                </div>
+                  
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1925,7 +2181,7 @@
             $('#rchars').text(textlen);});
     </script>
     <script>
-        var maxLength = 240;
+        var maxLength = 255;
         $('#duedoc').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchar').text(textlen);});

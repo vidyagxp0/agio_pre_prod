@@ -24,24 +24,15 @@ class OOCController extends Controller
 {
     public function index()
     {
-        return view('frontend.OOC.out_of_calibration');
-    }
-
-    public function ooc()
-    {
-
-
+        $record = RecordNumber::first();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-
-
-
-
-	return view('frontend.OOC.out_of_calibration', compact('due_date', 'record_number'));
+        return view('frontend.OOC.out_of_calibration',compact('due_date', 'record_number'));
     }
+
 
     public function create(request $request)
     {
@@ -206,6 +197,15 @@ class OOCController extends Controller
 
 
         $data->save();
+        
+
+
+        // ====================counter===================//
+        $record = RecordNumber::first();
+        $record->counter = ((RecordNumber::first()->value('counter')) + 1);
+        $record->update();
+
+        //===================counter=======================//
 
         //=========================================================Audit Trail Create ===========================================================================================//
 
@@ -385,6 +385,11 @@ class OOCController extends Controller
 
     public function updateOutOfCalibration(Request $request,$id )
     {
+        // $validatedData = $request->validate([
+        //     'due_date' => 'required|date',
+        //     'ooc_due_date' => 'required|date',
+        //     // other validations...
+        // ]);
 
         if (!$request->description_ooc) {
             toastr()->info("Short Description is required");
@@ -396,6 +401,7 @@ class OOCController extends Controller
         $ooc->initiator_id = Auth::user()->id;
         $ooc->assign_to = $request->assign_to;
         $ooc->due_date = $request->due_date;
+        // $ooc->due_date = $validatedData['due_date'];
         $ooc->description_ooc = $request->description_ooc;
         $ooc->Initiator_Group= $request->Initiator_Group;
         $ooc->initiator_group_code= $request->initiator_group_code;
@@ -404,6 +410,7 @@ class OOCController extends Controller
         $ooc->is_repeat_ooc= $request->is_repeat_ooc;
         $ooc->Repeat_Nature= $request->Repeat_Nature;
         $ooc->ooc_due_date= $request->ooc_due_date;
+        // $ooc->ooc_due_date = $validatedData['ooc_due_date'];
         $ooc->Delay_Justification_for_Reporting= $request->Delay_Justification_for_Reporting;
         $ooc->HOD_Remarks = $request->HOD_Remarks;
         // $ooc->attachments_hod_ooc = $request->attachments_hod_ooc;
@@ -560,7 +567,7 @@ if ($lastDocumentOoc->initiated_if_other != $ooc->initiated_if_other) {
     $history->change_from = $lastDocumentOoc->status;
     $history->action_name = "Update";
     $history->save();
-    // dd($history);
+    
 }
 
 
@@ -755,7 +762,7 @@ $oocevaluation->save();
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $oocchange = OutOfCalibration::find($id);
             $lastDocumentOOC =  OutOfCalibration::find($id);
-            $ooc =  OutOfCalibration::find($id);
+            // $ooc =  OutOfCalibration::find($id);
 
             if ($oocchange->stage == 1) {
                 $oocchange->stage = "2";
@@ -775,6 +782,7 @@ $oocevaluation->save();
                 $history->origin_state = $lastDocumentOOC->status;
                 $history->change_to = "Pending Incident Verification";
                 $history->change_from = $lastDocumentOOC->status;
+                $history->action_name = $lastDocumentOOC->status;
                 $history->stage='Submited';
                 $history->save();
 
@@ -808,7 +816,7 @@ $oocevaluation->save();
                 toastr()->success('Document Sent');
                 return back();
             }
-            }
+            
 
             if ($oocchange->stage == 3) {
                 $oocchange->stage = "4";
@@ -838,7 +846,7 @@ $oocevaluation->save();
 
 
             if ($oocchange->stage == 4) {
-                $oocchange->stage = "6";
+                $oocchange->stage = "12";
                 $oocchange->correction_completed_by= Auth::user()->name;
                 $oocchange->correction_completed_on = Carbon::now()->format('d-M-Y');
                 $oocchange->correction_completed_comment =$request->comment;
@@ -891,7 +899,7 @@ $oocevaluation->save();
                 return back();
             }
             if ($oocchange->stage == 8) {
-                $oocchange->stage = "9";
+                $oocchange->stage = "12";
                 $oocchange->correction_r_completed_by= Auth::user()->name;
                 $oocchange->correction_r_completed_on = Carbon::now()->format('d-M-Y');
                 $oocchange->correction_r_ncompleted_comment =$request->comment;
@@ -1000,7 +1008,7 @@ $oocevaluation->save();
 
 
 
-
+        }
 
             }
 public function OOCStateChangetwo(Request $request , $id){
@@ -1190,12 +1198,17 @@ public function RejectoocStateChange(Request $request, $id)
 
 
 public function OOCAuditTrial($id){
+    $auditrecord = OutOfCalibration::find($id);
     $audit = OOCAuditTrail::where('ooc_id',$id)->orderByDesc('id')->paginate();
     $today = Carbon::now()->format('d-m-y');
-    $document = OOCAuditTrail::where('id',$id)->first();
+    $document = OOCAuditTrail::where('ooc_id',$id)->first();
     $document->initiator = User::where('id',$document->initiator_id)->value('name');
 
-    return view('frontend.OOC.audit-trail',compact('audit','document','today'));
+//   foreach($document as $d)
+//   {
+//     return $document;
+//   }
+    return view('frontend.OOC.audit-trail',compact('audit','document','today','auditrecord'));
 
 
 }
@@ -1350,12 +1363,8 @@ public function OOCAuditTrial($id){
         $data = OutOfCalibration::find($id);
         $oocgrid = OOC_Grid::where('ooc_id',$id)->first();
         $oocevolution = OOC_Grid::where(['ooc_id'=>$id, 'identifier'=>'OOC Evaluation'])->first();
-        //  $grid_Data = ErrataGrid::where(['e_id' => $id, 'identifier' => 'details'])->first();
         if (!empty($data)) {
-            // $data->data = ErrataGrid::where('e_id', $id)->where('identifier', "details")->first();
-            // $data->Instruments_Details = ErrataGrid::where('e_id', $id)->where('type', "Instruments_Details")->first();
-            // $data->Material_Details = Erratagrid::where('e_id', $id)->where('type', "Material_Details")->first();
-            // dd($data->all());
+
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

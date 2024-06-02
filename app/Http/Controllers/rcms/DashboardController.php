@@ -21,6 +21,7 @@ use App\Models\Observation;
 use App\Models\QMSDivision;
 use App\Models\FailureInvestigation;
 use App\Models\Ootc;
+use App\Models\RecordNumber;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -457,28 +458,7 @@ class DashboardController extends Controller
                 "date_close" => $data->updated_at,
             ]);
         }
-        foreach ($ooc as $data) {
-            $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
-            array_push($table, [
-                "id" => $data->id,
-                "parent" => $data->parent_record ? $data->parent_record : "-",
-                "record" => $data->record,
-                "type" => "OOC",
-                "parent_id" => $data->parent_id,
-                "parent_type" => $data->parent_type,
-                "division_id" => $data->division_id,
-                "short_description" => $data->description_ooc ? $data->description_ooc : "-",
-                "initiator_id" => $data->initiator_id,
-                "initiated_through" => $data->initiated_through,
-                "intiation_date" => $data->intiation_date,
-                "stage" => $data->status,
-                "date_open" => $data->create,
-                "date_close" => $data->updated_at,
-            ]);
-        }
-
-        //   dd($data);
         foreach ($failureInvestigation as $data) {
             $data->create = Carbon::parse($data->created_at)->format('d-M-Y h:i A');
 
@@ -929,6 +909,7 @@ class DashboardController extends Controller
             $division_name = $division->name;
         } elseif ($type == "Out_Of_Calibration") {
             $data = OutOfCalibration::find($id);
+            $recordno = ((RecordNumber::first()->value('counter')) + 1);
             $single = "OOCSingleReport/" . $data->id;
             $audit = "ooc_Audit_Report/" . $data->id;
             $division = QMSDivision::find($data->division_id);
