@@ -491,34 +491,51 @@
                                                         <td><input disabled type="text" name="serial_number_gi[0][serial]" value="1"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_product_name]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_batch_no]"></td>
-                                                        {{-- <td><input type="date" name="serial_number_gi[0][info_mfg_date]"></td> --}}
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_0_mfg_date" type="text" name="serial_number_gi[0][info_mfg_date]" placeholder="DD-MMM-YYYY" />
-                                                                 <input type="date" name="serial_number_gi[0][info_mfg_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                 id="date_0_mfg_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_mfg_date')" />
-                                                            </div>
+                                                                    <div class="calenderauditee">
+                                                                        <input
+                                                                            class="click_date"
+                                                                            id="date_0_mfg_date"
+                                                                            type="text"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                        />
+                                                                        <input
+                                                                            type="date"
+                                                                            name="serial_number_gi[0][info_mfg_date]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            id="date_0_mfg_date"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            oninput="handleDateInput(this, 'date_0_mfg_date')"
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="new-date-data-field">
                                                                 <div class="group-input input-date">
-                                                            <div class="calenderauditee">
-                                                                 <input
-                                                                 class="click_date"
-                                                                 id="date_0_expiry_date" type="text" name="serial_number_gi[0][info_expiry_date]" placeholder="DD-MMM-YYYY" />
-                                                                 <input type="date" name="serial_number_gi[0][info_expiry_date]"
-                                                                 min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                 id="date_0_expiry_date"
-                                                                 class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_expiry_date')" />
-                                                            </div>
+                                                                    <div class="calenderauditee">
+                                                                        <input
+                                                                            class="click_date"
+                                                                            id="date_0_expiry_date"
+                                                                            type="text"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            placeholder="DD-MMM-YYYY"
+                                                                        />
+                                                                        <input
+                                                                            type="date"
+                                                                            name="serial_number_gi[0][info_expiry_date]"
+                                                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                            id="date_0_expiry_date"
+                                                                            class="hide-input show_date"
+                                                                            style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                                            oninput="handleDateInput(this, 'date_0_expiry_date')"
+                                                                        />
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -526,8 +543,9 @@
                                                         <td><input type="text" name="serial_number_gi[0][info_pack_size]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_dispatch_quantity]"></td>
                                                         <td><input type="text" name="serial_number_gi[0][info_remarks]"></td>
-                                                        <td><button type="text" class="removeRowBtn" >Remove</button></td>
+                                                        <td><button type="text" class="removeRowBtn">Remove</button></td>
                                                     </tr>
+                                                    
                                                 </tbody>
                                             </table>
                                         </div>
@@ -1041,7 +1059,7 @@
                                                         <div class="calenderauditee">
                                                              <input id="date_0_date_tm" type="text" name="Team_Members[0][date_tm]" placeholder="DD-MMM-YYYY" />
                                                              <input type="date" name="Team_Members[0][date_tm]"
-                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                                              id="date_0_date_tm"
                                                              class="hide-input show_date" style="position: absolute; top: 0; left: 0; opacity: 0;" oninput="handleDateInput(this, 'date_0_date_tm')" />
                                                         </div>
