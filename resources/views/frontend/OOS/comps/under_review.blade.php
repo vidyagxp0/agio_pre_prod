@@ -23,7 +23,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="addendum_attachment_uaa">
 
                             @if ($data->required_attachment_uar)
                             @foreach ($data->required_attachment_uar as $file)
@@ -42,7 +42,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="required_attachment_uar[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'addendum_attachment_uaa')" multiple>
                         </div>
                     </div>
 

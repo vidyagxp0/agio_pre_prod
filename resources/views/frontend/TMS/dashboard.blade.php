@@ -260,7 +260,7 @@
                             // dd($employees);
                         @endphp --}}
                         <tbody>
-                            @foreach ($employees as $employee)
+                            @foreach ($employees->sortbyDesc('id') as $employee)
                                 <tr>
                                     <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
                                     <td>{{ $employee->employee_name ? $employee->employee_name : 'NA' }}</td>
@@ -289,7 +289,7 @@
                                     </tr>
                             </thead>
                             <tbody>
-                                @foreach ($trainers as $trainer)
+                                @foreach ($trainers->sortbyDesc('id') as $trainer)
                                     <tr>
                                         <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
                                         <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>

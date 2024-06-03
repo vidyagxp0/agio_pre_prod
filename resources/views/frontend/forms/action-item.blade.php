@@ -58,7 +58,7 @@
                                     <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -78,7 +78,7 @@
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input disabled type="text"
-                                            value="{{ Helpers::getInitiatorName($parent_initiator_id) }}">
+                                            value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -86,9 +86,9 @@
                                         <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
+                                            value="{{ date('d-M-Y') }}"
                                             name="intiation_date">
-                                        <input type="hidden" value="{{ $parent_intiation_date }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">

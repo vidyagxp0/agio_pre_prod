@@ -406,8 +406,14 @@
 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
             </div>
-
-            <form id="auditform" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
+            <script>
+                $(document).ready(function() {
+                    <?php if ($trainer->stage == 3): ?>
+                        $("#target :input").prop("disabled", true);
+                    <?php endif; ?>
+                });
+            </script>
+            <form id="target" action="{{ route('trainer.update', $trainer->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 

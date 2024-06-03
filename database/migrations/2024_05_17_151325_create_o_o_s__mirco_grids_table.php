@@ -13,8 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('audit_reviewers_details', function (Blueprint $table) {
-            $table->text('type')->nullable();
+        Schema::create('o_o_s__mirco_grids', function (Blueprint $table) {
+            $table->id();
+            $table->integer('oos_micro_id')->default(0);
+            $table->string('identifier')->nullable();
+            $table->longText('data')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('audit_reviewers_details', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('o_o_s__mirco_grids');
     }
 };

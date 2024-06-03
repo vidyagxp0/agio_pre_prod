@@ -40,24 +40,10 @@
                         '<td><input type="text" name="material_name[]"></td>' +
                         '<td><input type="text" name="material_batch_no[]"></td>' +
 
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' +
-                        serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' +
-                        serialNumber +
-                        '_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' +
-                    serialNumber + '`);checkDate(`material_mfg_date1' + serialNumber +
-                    '_checkdate`,`material_expiry_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
 
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' +
-                        serialNumber +
-                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date' +
-                        serialNumber +
-                        '_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' +
-                    serialNumber + '`);checkDate(`material_mfg_date' + serialNumber +
-                    '_checkdate`,`material_expiry_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="material_batch_desposition[]"></td>' +
                         '<td><input type="text" name="material_remark[]"></td>' +
@@ -270,7 +256,7 @@
                                             required>
                                     </div>
                                 </div>
-                                <p id="docnameError" style="color:red">**Short Description is required</p>
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -425,7 +411,7 @@
 
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="CAPA Attachments">CAPA Attachment</label>
+                                        <label for="CAPA Attachments">CAPA Attachment </label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -645,59 +631,59 @@
                                                     </select>
                                                 </td>
                                             </tbody> --}}
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-12 sub-head">
-                                Equipment/Instruments Details
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Material Details">
-                                        Equipment/Instruments Details<button type="button" name="ann"
-                                            id="equipment">+</button>
-                                    </label>
-                                    <table class="table table-bordered" id="equipment_details">
-                                        <thead>
-                                            <tr>
-                                                <th>Row #</th>
-                                                <th>Equipment/Instruments Name</th>
-                                                <th>Equipment/Instruments ID</th>
-                                                <th>Equipment/Instruments Comments</th>
-                                            </tr>
-                                        </thead>
+                                <div class="col-12 sub-head">
+                                    Equipment/Instruments Details
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Material Details">
+                                            Equipment/Instruments Details<button type="button" name="ann"
+                                                id="equipment">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="equipment_details">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row #</th>
+                                                    <th>Equipment/Instruments Name</th>
+                                                    <th>Equipment/Instruments ID</th>
+                                                    <th>Equipment/Instruments Comments</th>
+                                                </tr>
+                                            </thead>
 
 
 
-                                        <tbody>
-                                            <td><input disabled type="text" name="serial_number[]" value="1">
-                                            </td>
-                                            <td><input type="text" name="equipment[]"></td>
-                                            <td><input type="text" name="equipment_instruments[]"></td>
-                                            <td><input type="text" name="equipment_comments[]"></td>
-                                        </tbody>
-                                    </table>
+                                         <tbody>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
+                                                <td><input type="text" name="equipment[]"></td>
+                                                <td><input type="text" name="equipment_instruments[]"></td>
+                                                <td><input type="text" name="equipment_comments[]"></td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head">
+                                    Other type CAPA Details
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Details">Details</label>
+                                        <input type="text" name="details_new">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments"> CAPA QA Comments </label>
+                                        <textarea name="capa_qa_comments2"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-12 sub-head">
-                                Other type CAPA Details
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Details">Details</label>
-                                    <input type="text" name="details_new">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Comments"> CAPA QA Comments </label>
-                                    <textarea name="capa_qa_comments2"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
@@ -720,50 +706,50 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Protocol/Study Number">Initiator Group</label>
-                                    <select name="project_initiator_group">
-                                        <option value="">Enter Your Selection Here</option>
-                                        <option value="yes">Yes</option>
-                                        <option value="no">No</option>
-                                    </select>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Protocol/Study Number">Initiator Group</label>
+                                        <select name="project_initiator_group">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Site Number">Site Number</label>
+                                        <input type="text" name="site_number">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Subject Number">Subject Number</label>
+                                        <input type="text" name="subject_number">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Subject Initials">Subject Initials</label>
+                                        <input type="text" name="subject_initials">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Sponsor">Sponsor</label>
+                                        <input type="text" name="sponsor">
+                                    </div>
+                                </div>
+                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="General Deviation">General Deviation</label>
+                                        <textarea name="general_deviation"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Site Number">Site Number</label>
-                                    <input type="text" name="site_number">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Subject Number">Subject Number</label>
-                                    <input type="text" name="subject_number">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Subject Initials">Subject Initials</label>
-                                    <input type="text" name="subject_initials">
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="Sponsor">Sponsor</label>
-                                    <input type="text" name="sponsor">
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="General Deviation">General Deviation</label>
-                                    <textarea name="general_deviation"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
@@ -951,206 +937,205 @@
                             <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit </a> </button>
 
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="CCForm6" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="sub-head">
-                            CFT Feedback
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="comments">CFT Comments</label>
-                                    <textarea name="cft_comments_form"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="comments">CFT Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="cft_attchament_new"> </div>
-
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="cft_attchament_new[]"
-                                                oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
+                    <div id="CCForm6" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
                             <div class="sub-head">
-                                Concerned Group Feedback
+                                CFT Feedback
                             </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">QA Comments</label>
-                                    <textarea name="qa_comments_new"></textarea>
+                            <div class="row">
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">CFT Comments</label>
+                                        <textarea name="cft_comments_form"></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">QA Head Designee Comments</label>
-                                    <textarea name="designee_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Warehouse Comments</label>
-                                    <textarea name="Warehouse_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Engineering Comments</label>
-                                    <textarea name="Engineering_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Instrumentation Comments</label>
-                                    <textarea name="Instrumentation_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Validation Comments</label>
-                                    <textarea name="Validation_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Others Comments</label>
-                                    <textarea name="Others_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <div class="group-input">
-                                    <label for="comments">Group Comments</label>
-                                    <textarea name="Group_comments_new"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="group-attachments">Group Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="group_attachments_new"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="group_attachments_new[]"
-                                                oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">CFT Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="cft_attchament_new"> </div>
+
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                            <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                    Exit </a> </button>
-                        </div>
-                    </div>
-                </div>
-                <!-- CAPA Closure content -->
-                <div id="CCForm7" class="inner-block cctabcontent">
-                    <div class="inner-block-content">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="QA Review & Closure">QA Review & Closure</label>
-                                    <textarea name="qa_review"></textarea>
+                            <div class="row">
+                                <div class="sub-head">
+                                    Concerned Group Feedback
                                 </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="Closure Attachments">Closure Attachment</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                            documents</small></div>
-                                    {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
-                                    <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="closure_attachment"></div>
-                                        <div class="add-btn">
-                                            <div>Add</div>
-                                            <input type="file" id="myfile" name="closure_attachment[]"
-                                                oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">QA Comments</label>
+                                        <textarea name="qa_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">QA Head Designee Comments</label>
+                                        <textarea name="designee_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Warehouse Comments</label>
+                                        <textarea name="Warehouse_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Engineering Comments</label>
+                                        <textarea name="Engineering_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Instrumentation Comments</label>
+                                        <textarea name="Instrumentation_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Validation Comments</label>
+                                        <textarea name="Validation_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Others Comments</label>
+                                        <textarea name="Others_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Group Comments</label>
+                                        <textarea name="Group_comments_new"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="group-attachments">Group Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="group_attachments_new"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="group_attachments_new[]"
+                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-12 sub-head">
-                                            Effectiveness Check Details
-                                        </div> -->
-                            <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Effectiveness Check Required">Effectiveness Check
-                                                    Required?</label>
-                                                <select name="effect_check" onChange="setCurrentDate(this.value)">
-                                                    <option value="">Enter Your Selection Here</option>
-                                                    <option value="yes">Yes</option>
-                                                    <option value="no">No</option>
-                                                </select>
-                                            </div>
-                                        </div> -->
-                            <!-- <div class="col-6 new-date-data-field">
-                                            <div class="group-input input-date">
-                                                <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
-                                                {{-- <input type="date" name="effect_check_date"> --}}
-                                                <div class="calenderauditee">
-                                                    <input type="text" name="effect_check_date" id="effect_check_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="effect_check_date" class="hide-input"
-                                                        oninput="handleDateInput(this, 'effect_check_date')" />
-                                                </div>
-                                            </div>
-                                        </div> -->
-                            <!-- <div class="col-6">
-                                            <div class="group-input">
-                                                <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
-                                                    <option value="">Select a person</option>
-                                                    @foreach ($users as $value)
-    <option value="{{ $value->id }}">{{ $value->name }}</option>
-    @endforeach
-                                                </select>
-                                            </div>
-                                        </div> -->
-                            <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                <textarea name="effective_check_plan"></textarea>
-                                            </div>
-                                        </div> -->
-                            <div class="col-12 sub-head">
-                                Extension Justification
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
                             </div>
-                            <div class="col-12">
-                                <div class="group-input">
-                                    <label for="due_date_extension">Due Date Extension Justification</label>
-                                    <div><small class="text-primary">Please Mention justification if due date is
-                                            crossed</small></div>
-                                    <textarea name="due_date_extension"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="button-block">
-                            <button type="submit" class="saveButton">Save</button>
-                            <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
-                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
-                                </a> </button>
                         </div>
                     </div>
-                </div>
+                    <!-- CAPA Closure content -->
+                    <div id="CCForm7" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="QA Review & Closure">QA Review & Closure</label>
+                                        <textarea name="qa_review"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Closure Attachments">Closure Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="closure_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'closure_attachment')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12 sub-head">
+                                    Effectiveness Check Details
+                                </div> -->
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Effectiveness Check Required">Effectiveness Check
+                                            Required?</label>
+                                        <select name="effect_check" onChange="setCurrentDate(this.value)">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
+                                        {{-- <input type="date" name="effect_check_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="effect_check_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'effect_check_date')" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                        <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
+                                            <option value="">Select a person</option>
+                                            @foreach ($users as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> -->
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                        <textarea name="effective_check_plan"></textarea>
+                                    </div>
+                                </div> -->
+                                <div class="col-12 sub-head">
+                                    Extension Justification
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="due_date_extension">Due Date Extension Justification</label>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
+                                        <textarea name="due_date_extension"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
 
                 <!-- Activity Log content -->
                 <div id="CCForm8" class="inner-block cctabcontent">
@@ -1391,10 +1376,11 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
 
-        function setCurrentDate(item) {
-            if (item == 'yes') {
-                $('#effect_check_date').val('{{ date('d-M-Y') }}');
-            } else {
+        function setCurrentDate(item){
+            if(item == 'yes'){
+                $('#effect_check_date').val('{{ date('d-M-Y')}}');
+            }
+            else{
                 $('#effect_check_date').val('');
             }
         }

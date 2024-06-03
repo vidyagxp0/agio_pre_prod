@@ -122,13 +122,8 @@
                     <label for="Reference Records">CAPA Ref No.</label>
                     <select multiple id="reference_record" name="capa_ref_no_oosc[]">
                         <option value="0">--Select---</option>
-                        {{-- {{ in_array('0', $data->capa_ref_no_oosc ?? []) ? 'selected' : '' }} --}}
-                        
-                        <option value="1">1
-                        </option>
-
-                        <option value="2">2
-                        </option>
+                        <option value="1" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 1)) ? 'selected' : '' }}>1</option>
+                        <option value="2" {{ (!empty($data->capa_ref_no_oosc) && str_contains($data->capa_ref_no_oosc, 2)) ? 'selected' : '' }}>2</option>
                     </select>
                 </div>
             </div>
@@ -183,7 +178,7 @@
                         Please Attach all relevant or supporting documents
                     </small>
                     <div class="file-attachment-field">
-                        <div class="file-attachment-list" id="file_attach">
+                        <div class="file-attachment-list" id="file_attachments_if_any_ooscattach">
                             @if ($data->file_attachments_if_any_ooscattach)
                             @foreach($data->file_attachments_if_any_ooscattach as $file)
                             <h6 type="button" class="file-container text-dark"
@@ -201,7 +196,7 @@
                         <div class="add-btn">
                             <div>Add</div>
                             <input type="file" id="myfile" name="file_attachments_if_any_ooscattach[]"
-                                oninput="addMultipleFiles(this, 'file_attach')" multiple>
+                                oninput="addMultipleFiles(this, 'file_attachments_if_any_ooscattach')" multiple>
                         </div>
                     </div>
 

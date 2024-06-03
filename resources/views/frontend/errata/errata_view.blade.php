@@ -191,8 +191,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number">Record Number</label>
-                                        <input disabled type="text" name="record_number">
-                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}"> --}}
+                                        <input disabled type="text" name="record">
+                                        {{-- value="{{ Helpers::getDivisionName(session()->get('division')) }}/ERRATA/{{ date('Y') }}/{{ $record }}"> --}}
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -229,7 +229,7 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="Initiated By">
+                                        <label for="Initiated Through">
                                             Initiated Through <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="initiated_by"
@@ -535,7 +535,7 @@
 
                                             <input type="text" id="displayErrataDate" nmae="Date_and_time_of_correction" readonly placeholder="DD-MM-YYYY HH:MM" value="{{ $showdata->Date_and_time_of_correction }}"/>
 
-                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" required />
+                                            <input type="datetime-local" id="Errata_date" name="Date_and_time_of_correction" max="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}" onchange="updateDisplayDateTime(this)" class="hide-input" />
                                         </div>
                                     </div>
                                     @error('Errata_date')
@@ -2244,8 +2244,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2285,8 +2285,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2326,8 +2326,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2367,8 +2367,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2408,8 +2408,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2449,8 +2449,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2490,8 +2490,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2531,8 +2531,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2572,8 +2572,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
@@ -2613,8 +2613,8 @@
                             <input class="input_width" type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input class="input_width" type="comment" name="comment">
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input class="input_width" type="comment" name="comment" required>
                         </div>
                     </div>
 
