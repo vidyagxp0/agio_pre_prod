@@ -49,39 +49,55 @@
                             @php
                             
                                 $process = DB::table('q_m_s_processes')->get();
+                                // dd($process);
                             @endphp
                             @foreach ($process as $temp)
                                 <div id="{{ $temp->division_id }}" class="divisioncontent bg-light">
                                     @php
-                            
                                         // Get the user's roles
-                                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $temp->division_id])->get();
+                                        $userRoles = DB::table('user_roles')
+                                                        ->where([
+                                                            'user_id' => Auth::user()->id,
+                                                            'q_m_s_divisions_id' => $temp->division_id
+                                                        ])->get();
 
-                                        // Initialize an empty array to store division IDs
+                                        // Initialize an empty array to store process IDs
                                         $processIds = [];
 
-                                        // Loop through user's roles
+                                        // Loop through user's roles to store process IDs
                                         foreach($userRoles as $role) {
-                                            // Store division IDs from user's roles
                                             $processIds[] = $role->q_m_s_processes_id;
                                         }
 
-                                        // dd($processIds);
+                                        // Ensure process IDs are unique
+                                        $uniqueProcessIds = array_unique($processIds);
 
+                                        // Fetch processes using unique process IDs
                                         $pro = DB::table('q_m_s_processes')
-                                                ->whereIn('id', $processIds)
+                                                ->whereIn('id', $uniqueProcessIds)
                                                 ->get();
-                                    @endphp
-                                    @foreach ($pro as $test)
-                                        <label for="process">
-                                            <input type="hidden" name="process_id" value="{{ $test->id }}">
-                                            <input type="submit" class="bg-light text-dark"
-                                                style="width: 100%; height: 60%; background-color: #011627; color: #fdfffc; padding: 7px; border: 0px;"
-                                                bgcolor="#011627" border="0" type="submit" for="process"
-                                                value="{{ $test->process_name }}" name="process_name" required>
-                                        </label>
-                                        <br>
-                                    @endforeach
+
+                                        // Use an associative array to store unique process names
+                                        $uniqueProcesses = [];
+
+                                        // Loop through processes to ensure unique process names
+                                        foreach ($pro as $process) {
+                                            if (!isset($uniqueProcesses[$process->process_name])) {
+                                                $uniqueProcesses[$process->process_name] = $process;
+                                            }
+                                        }
+                                        @endphp
+
+                                        @foreach ($uniqueProcesses as $process)
+                                            <label for="process">
+                                                <input type="hidden" name="process_id" value="{{ $process->id }}">
+                                                <input type="submit" class="bg-light text-dark"
+                                                    style="width: 100%; height: 60%; background-color: #011627; color: #fdfffc; padding: 7px; border: 0px;"
+                                                    bgcolor="#011627" border="0" type="submit" for="process"
+                                                    value="{{ $process->process_name }}" name="process_name" required>
+                                            </label>
+                                            <br>
+                                        @endforeach
                                 </div>
                             @endforeach
                         </div>

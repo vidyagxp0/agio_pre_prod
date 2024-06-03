@@ -186,10 +186,12 @@
                                 <input type="text" name="search" id="searchInput" placeholder="Search...">
                             </form>
                         </div>
-                        <div class="create">
-                            <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
-                                    Record</button> </a>
-                        </div>
+                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(14))
+                            <div class="create">
+                                <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
+                                        Record</button> </a>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

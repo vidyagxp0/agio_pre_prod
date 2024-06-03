@@ -122,12 +122,21 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            @if($temp->traningstatus->status == 'Complete')
-                                            <th>{{$temp->traningstatus->status}}</th>
+                                            <td>
+                                                {{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}
+                                            </td>
+                                            @if($trainingStatusCheck)
+                                            <th>Completed</th>
                                             @else
-                                            <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                class="fa-solid fa-eye"></i></a></td>
+                                                @if($temp->traningstatus->status == "Complete")
+                                                    <th>Training Criteria Met</th>
+                                                @elseif( $temp->due_dateDoc < date('Y-m-d H:i:s'))
+                                                    <th>Training Date Passed</th>
+
+                                                @else
+                                                    <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                        class="fa-solid fa-eye"></i></a></td>
+                                                @endif
                                             @endif
                                         </tr>
                                     @endforeach
@@ -135,12 +144,15 @@
                             </table>
                         </div>
                     @endif
-{{-- ========================================employee Data================ --}}
-                    <div class="block-table" style="margin-top:50px;">
+                </div>
+                {{-- ================employee Data================ --}}
+                @if (Helpers::checkRoles(6))
+                    <div id="CCForm3" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
                                     <th style="width:10%;">Employee ID</th>
+                                    <th>Employee Name</th>
                                     <th>Department</th>
                                     <th>Job Title</th>
                                     <th>Assigned To</th>
@@ -153,57 +165,129 @@
                                 // dd($employees);
                             @endphp --}}
                             <tbody>
-                                @foreach ($employees as $employee)
+                                @foreach ($employees->sortbyDesc('id') as $employee)
                                     <tr>
-                                        <td>{{ $employee->employee_id }}</td>
+                                        <td><a href="{{ url('employee_view', $employee->id) }}">{{ $employee->employee_id }}</a></td>
+                                        <td>{{ $employee->employee_name ? $employee->employee_name : 'NA' }}</td>
                                         <td>{{ $employee->department_record ? $employee->department_record->name : 'NA' }}</td>
-                                        <td>{{ $employee->job_title }}</td>
+                                        <td>{{ $employee->job_title ? $employee->job_title : 'NA' }}</td>
                                         <td>{{ $employee->user_assigned ? $employee->user_assigned->name : 'NA' }}</td>
-                                        <td>{{ $employee->joining_date }}</td>
-                                        <td></td>
+                                        <td>{{ Helpers::getdateFormat($employee->joining_date) }}</td>
+                                        <td>{{ $employee->status }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
-{{-- ================================ --}}
-{{-- ========================================training Data================ --}}
-                    <div class="block-table" style="margin-top:50px;">
+                @endif
+                {{-- ===============training Data================ --}}
+
+                @if (Helpers::checkRoles(6))
+                    <div id="CCForm4" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                        <div>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Record No.</th>
+                                        <th>Trainer Name</th>
+                                        <th>Department</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($trainers->sortbyDesc('id') as $trainer)
+                                        <tr>
+                                            <td><a href="{{ url('trainer_qualification_view', $trainer->id) }}">000{{ $trainer->id }}</a></td>
+                                            <td>{{ $trainer->trainer_name ? $trainer->trainer_name : 'NA' }}</td>
+                                            <td>{{ $trainer->department_record ? $trainer->department_record->name : 'NA' }}</td>
+                                            <td>{{ Helpers::getdateFormat($trainer->due_date) }}</td>
+                                            <td>{{ $trainer->status }}</td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                @endif
+                
+                {{-- ===============On the job================ --}}
+                @if (Helpers::checkRoles(6))
+                <div id="CCForm5" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <div>
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Record No.</th>
-                                    <th>Site/Location Code</th>
-                                    <th>Initiator</th>
-                                    <th>Date Of Initiation</th>
-                                    <th>Due Date</th>
-                                    <th>Short Description</th>
-                                    <th>Trainer Name</th>
-                                    <th>Department</th>
+                                    <th>Name</th>
+                                    <th>Department & Location</th>
+                                    <th>Start Date of Training</th>
+                                    <th>End Date of Training</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+
+
+                                @foreach ($jobTrainings as $job_training)
+                                <tr>
+                                    <td>{{ $job_training->name }}</td>
+                                    <td>{{ $job_training->department_location }}</td>
+                                    <td>{{ Helpers::getdateFormat($job_training->startdate) }}</td>
+                                    <td>{{ Helpers::getdateFormat($job_training->enddate )}}</td>
+                                    <td>
+                                        <a href="{{ route('job_training_view', $job_training->id) }}">
+                                        <i class="fa-solid fa-pencil"></i>
+                                     </td>
+                                </tr>
+                            @endforeach
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+                {{-- ===============Induction training================ --}}
+                @if (Helpers::checkRoles(6))
+                <div id="CCForm6" class="inner-block tms-block cctabcontent" style="margin-top:50px;">
+                    <div>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Name Of Employee</th>
+                                    <th>Department/Location</th>
+
+                                    <th>Qualification</th>
+                                    <th>Date Of Joining</th>
+
+
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($trainers as $trainer)
+                                @foreach ($inductionTraining->sortbyDesc('id') as $induction)
                                     <tr>
-                                        <td>{{ $trainer->record_number }}</td>
-                                        <td>{{ $trainer->site_code }}</td>
-                                        <td>{{ $trainer->initiator }}</td>
-                                        <td>{{ $trainer->date_of_initiation }}</td>
-                                        <td>{{ $trainer->due_date }}</td>
-                                        <td>{{ $trainer->short_description }}</td>
-                                        <td>{{ $trainer->trainer_name }}</td>
-                                        <td>{{ $trainer->department }}</td>
-                                        <td></td>
+                                        <td>{{ $induction->employee_id }}</td>
+                                        <td>{{ $induction->name_employee }}</td>
+                                        <td>{{ $induction->department_location }}</td>
+                                        <td>{{ $induction->qualification }}</td>
+                                        <td>{{ $induction->date_joining }}</td>
+
+                                        <td> <a href="{{ route('induction_training_view', $induction->id) }}">
+                                            <i style="margin-left: 25px;" class="fa-solid fa-pencil"></i></td>
                                     </tr>
                                 @endforeach
 
                             </tbody>
                         </table>
                     </div>
-{{-- ================================ --}}
                 </div>
-                <div class="inner-block tms-block" id="tms-due-block">
+                @endif
+                {{-- ========================================== --}}
+
+                {{-- <div class="inner-block tms-block cctabcontent" id="CCForm2">
                     @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
